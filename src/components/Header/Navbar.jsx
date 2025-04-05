@@ -1,5 +1,4 @@
 import NavItem from './NavItem';
-import Corporate from '../../assets/shopping-bag-outline.svg';
 
 function handleClick() {
     alert("Cliked!");
