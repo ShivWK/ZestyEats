@@ -1,7 +1,12 @@
-import PageHeader from './components/Header/PageHeader';
+import { createBrowserRouter, Route, RouterProvider, createRoutesFromElements } from 'react-router-dom';
+import Layout from './components/Layout';
 
 export default function App() {
-    return <>
-        <PageHeader />
-    </>;
+
+    const router = createBrowserRouter(createRoutesFromElements(
+        <Route path='/' element={<Layout />}>
+            
+        </Route>
+    ))
+    return <RouterProvider router={router} />
 }
