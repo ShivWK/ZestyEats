@@ -1,0 +1,169 @@
+{
+"statusCode": 0,
+"data": [
+{
+"formatted_address": "Mumbai, Maharashtra, India",
+"address_components": [
+{
+"long_name": "Mumbai",
+"short_name": "Mumbai",
+"types": [
+"city"
+]
+},
+{
+"long_name": "Konkan Division",
+"short_name": "Konkan Division",
+"types": [
+"district"
+]
+},
+{
+"long_name": "Maharashtra",
+"short_name": "MH",
+"types": [
+"state"
+]
+},
+{
+"long_name": "India",
+"short_name": "IN",
+"types": [
+"country"
+]
+},
+{
+"long_name": "Hotel Grand Heritage",
+"short_name": "Hotel Grand Heritage",
+"types": [
+"nearby"
+],
+"bounds": [
+{
+"lat": 19.07536213708219,
+"lng": 72.8773449395274
+},
+{
+"lat": 19.07528355950091,
+"lng": 72.87728324823505
+},
+{
+"lat": 19.07540396684664,
+"lng": 72.87710756111963
+},
+{
+"lat": 19.0754876194173,
+"lng": 72.87717327475549
+},
+{
+"lat": 19.07536213708219,
+"lng": 72.8773449395274
+}
+]
+},
+{
+"long_name": "Kanakia Zillion",
+"short_name": "Kanakia Zillion",
+"types": [
+"nearby"
+],
+"bounds": [
+{
+"lat": 19.07623209966825,
+"lng": 72.87547182040886
+},
+{
+"lat": 19.07633349621136,
+"lng": 72.8757668634005
+},
+{
+"lat": 19.076351240600026,
+"lng": 72.87606995301918
+},
+{
+"lat": 19.076320821646863,
+"lng": 72.87640791135506
+},
+{
+"lat": 19.076171261712613,
+"lng": 72.87677939730362
+},
+{
+"lat": 19.07592030490938,
+"lng": 72.87715624767021
+},
+{
+"lat": 19.07468094846866,
+"lng": 72.87626164628792
+},
+{
+"lat": 19.07528240569628,
+"lng": 72.87533963169074
+},
+{
+"lat": 19.07623209966825,
+"lng": 72.87547182040886
+}
+]
+},
+{
+"long_name": "Noor Hospital",
+"short_name": "Noor Hospital",
+"types": [
+"nearby"
+],
+"bounds": [
+{
+"lat": 19.076229089584682,
+"lng": 72.87780359387399
+},
+{
+"lat": 19.07630893936903,
+"lng": 72.8780128090871
+},
+{
+"lat": 19.076145434152313,
+"lng": 72.87807584002897
+},
+{
+"lat": 19.076071916187853,
+"lng": 72.87786528080136
+},
+{
+"lat": 19.076229089584682,
+"lng": 72.87780359387399
+}
+]
+}
+],
+"place_id": "ChIJwe1EZjDG5zsRaYxkjY_tpF0",
+"geometry": {
+"location": {
+"lat": 19.0759837,
+"lng": 72.8776559
+},
+"location_type": "APPROXIMATE",
+"viewport": {
+"northeast": {
+"lat": 19.2717056,
+"lng": 72.9823065
+},
+"southwest": {
+"lat": 18.8934053,
+"lng": 72.77557589999999
+}
+}
+},
+"types": [
+"locality",
+"political",
+"DEFAULT"
+],
+"place_type": "Others"
+}
+],
+"tid": "1c21a25d-572a-4395-a3b3-882502e30dde",
+"sid": "k3yf3d9a-d521-481a-8c5f-41fe4462c8ac",
+"deviceId": "d1b12bfa-90a5-6675-3827-6e93ab5515c9",
+"csrfToken": "lfOvUhvwQUwW-KWWuW49TGJefbwUgIbhFw-GpudI"
+}
