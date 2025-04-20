@@ -1,6 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { initializeFirestore } from "firebase/firestore";
+import { 
+  initializeFirestore,
+  persistentLocalCache, 
+  persistentSingleTabManager 
+} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -16,7 +20,10 @@ const firebaseConfig = {
   measurementId: "G-HGQVPJXNE8"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-initializeFirestore(app, {});
+export const app = initializeApp(firebaseConfig);
+export const analytics = getAnalytics(app);
+export const FirestoreDB = initializeFirestore(app, {
+  localCache: persistentLocalCache({
+    tabManager: persistentSingleTabManager(),
+  })
+});
