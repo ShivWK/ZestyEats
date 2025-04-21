@@ -1,18 +1,30 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const homeApiSlice = createApi({
-    reducerPath: "homeApiSlice",
-    baseQuery: fetchBaseQuery({baseUrl: "https://www.swiggy.com"}),
-    endpoints: function(builder) {
-        return {
-            getfoodieThoughts : builder.query({
-                query: () => "/dapi/restaurants/list/v5?lat=18.9690247&lng=72.8205292&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING",
-            }),
-        }
-    }
+    reducerPath: "homeFirestoreApi",
+    baseQuery: fetchBaseQuery({baseUrl: "https://www.swiggy.com/"}),
+
+    endpoints : builder => ({
+        getfoodieThoughts : builder.query({
+            query: () => "/mapi/restaurants/list/v5?offset=0&is-seo-homepage-enabled=true&lat=21.99740&lng=79.00110&carousel=true&third_party_vendor=1",
+
+            transformResponse : (response) => {
+                const cards = response?.data?.cards?.find(
+                   item => item?.card?.card?.header?.title === "What's on your mind?"
+                ) ;
+
+                return cards?.card?.card?.imageGridCards?.info || [];
+            }
+        }),
+        
+        
+    })
 })
 
 export const { useGetfoodieThoughtsQuery } = homeApiSlice;
 export default homeApiSlice;
 
-// console.log(useGetfoodieThoughtsQuery)
+
+// https://www.swiggy.com/mapi/restaurants/list/v5?offset=0&is-seo-homepage-enabled=true&lat=21.99740&lng=79.00110&carousel=true&third_party_vendor=1 // Home API
+
+//https://media-assets.swiggy.com/swiggy/image/upload/{imageId} this url is required to fetch the images

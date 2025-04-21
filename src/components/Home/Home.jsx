@@ -6,8 +6,8 @@ import NearByRestaurants from './NearByRestaurants';
 import { useGetfoodieThoughtsQuery } from '../../features/home/homeApiSlice';
 
 export default function Home() {
-    // const data = useGetfoodieThoughtsQuery();
-    // console.log(data)
+    const data = useGetfoodieThoughtsQuery();
+    console.log(data)
 
     return <main className='w-full max-w-[1040px] border-2 mx-auto' >
         <section>
