@@ -17,3 +17,4 @@ export default function NavItem({ icon, text, onClick, superScript }) {
 }
 
 // If take any element out of the noemal flow of the document, then parents inherited props wont work on it nly its own props will worf.
+
