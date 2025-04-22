@@ -6,11 +6,11 @@ import NearByRestaurants from './NearByRestaurants';
 
 export default function Home() {
 
-    return <main className='w-full max-w-[1040px] mx-auto' >
-        <section>
+    return <main className='w-full max-w-[1080px] mx-auto ' >
+        <section className='w-full max-w-[1040px] mx-auto'>
             <FoodieThoughts />
         </section>
-        <section className='mt-60'>
+        <section className='mt-32'>
             <TopRestaurantChains />
         </section>
         <section>
