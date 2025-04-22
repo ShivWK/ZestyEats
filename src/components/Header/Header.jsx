@@ -2,9 +2,11 @@ import Navbar from './Navbar';
 import Logo from './Logo';
 
 export default function Header() {
-    return <header className="mx-auto h-20 w-full max-w-[1210px] flex justify-between items-center">
-        <Logo className="" />
-        <Navbar />
+    return <header>
+            <div className="mx-auto h-20 w-full max-w-[1210px] flex justify-between items-center">
+            <Logo className="" />
+            <Navbar />
+        </div>
     </header>;
 }
 

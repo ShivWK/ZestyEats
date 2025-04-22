@@ -1,33 +1,25 @@
-import FoodieThoughts from './FoodieThoughts';
+import FoodieThoughts from './FoodieThoughts/FoodieThoughts';
 import TopRestaurantChains from './TopRestaurantChains';
 import OnlineDeliveryRestaurant from './OnlineDeliveryRestaurant';
 import BestPlacesToEat from './BestPlacesToEat';
 import NearByRestaurants from './NearByRestaurants';
-import { useGetfoodieThoughtsQuery } from '../../features/home/homeApiSlice';
 
 export default function Home() {
-    const data = useGetfoodieThoughtsQuery();
-    console.log(data)
 
-    return <main className='w-full max-w-[1040px] border-2 mx-auto' >
+    return <main className='w-full max-w-[1040px] mx-auto' >
         <section>
-            <h1>What's on your mind?</h1>
             <FoodieThoughts />
         </section>
-        <section>
-            <h2>Top restaurant chains in Chhindwara</h2>
+        <section className='mt-60'>
             <TopRestaurantChains />
         </section>
         <section>
-            <h2>Restaurants with online food delivery in Chhindwara</h2>
             <OnlineDeliveryRestaurant />
         </section>
         <section>
-            <h2>Best Places to Eat Across Cities</h2>
             <BestPlacesToEat />
         </section>
         <section>
-            <h2>Explore Every Restaurants Near Me</h2>
             <NearByRestaurants />
         </section>
     </main>
