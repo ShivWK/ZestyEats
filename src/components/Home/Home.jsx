@@ -10,17 +10,17 @@ export default function Home() {
         <section className='w-full max-w-[1040px] mx-auto'>
             <FoodieThoughts />
         </section>
-        <section className='mt-32'>
-            <TopRestaurantChains />
+        <section>
+            {/* <TopRestaurantChains /> */}
         </section>
         <section>
-            <OnlineDeliveryRestaurant />
+            {/* <OnlineDeliveryRestaurant /> */}
         </section>
         <section>
-            <BestPlacesToEat />
+            {/* <BestPlacesToEat /> */}
         </section>
         <section>
-            <NearByRestaurants />
+            {/* <NearByRestaurants /> */}
         </section>
     </main>
 }

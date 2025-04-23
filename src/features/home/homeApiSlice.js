@@ -2,12 +2,12 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const homeApiSlice = createApi({
     reducerPath: "homeFirestoreApi",
-    baseQuery: fetchBaseQuery({baseUrl: "https://www.swiggy.com/"}),
+    baseQuery: fetchBaseQuery({baseUrl: "http://localhost:5000/api"}),
     keepUnusedDataFor: 60,
 
     endpoints : builder => ({
         getfoodieThoughts : builder.query({
-            query: () => "/mapi/restaurants/list/v5?offset=0&is-seo-homepage-enabled=true&lat=26.8496217&lng=81.0072193&carousel=true&third_party_vendor=1",
+            query: () => '/swiggy-restaurants',
 
             transformResponse : (response) => {
                 const cards = response?.data?.cards?.find(
