@@ -1,9 +1,10 @@
 import { useGetfoodieThoughtsQuery } from "../../../features/home/homeApiSlice";
 import { useEffect, useRef, useState } from "react";
 import Cards from "./Cards";
+import Button from "./Button";
 
-export default function FoodieThoughts() {
-  const { data = [], isLoading } = useGetfoodieThoughtsQuery();
+export default function FoodieThoughts({ data=[] , isLoading }) {
+  // const { data = [], isLoading } = useGetfoodieThoughtsQuery();
   const containerRef = useRef();
   const rightBtnRef = useRef();
   const leftBtnRef = useRef();
@@ -36,27 +37,25 @@ export default function FoodieThoughts() {
   }
 
   function handleRightClick(e) {
-    console.log("clicked Right");
     leftBtnRef.current.disabled = false;
 
     const container = containerRef.current;
-    if (!container) return; // important because there can be case when carousel container not loaded and user clicks the button then we will get error.
+    if (!container) return; // important because there can be a case when carousel container not loaded and user clicks the button then we will get error.
 
     container.scrollBy({
-      left: 400,
+      left: 600,
       behavior: "smooth",
     });
   }
 
   function handleLeftClick(e) {
-    console.log("clicked Left");
     rightBtnRef.current.disabled = false;
 
     const container = containerRef.current;
     if (!container) return;
 
     container.scrollBy({
-      left: -400,
+      left: -600,
       behavior: "smooth",
     });
   }
@@ -64,29 +63,17 @@ export default function FoodieThoughts() {
   return (
     <>
       <div className="flex justify-between flex-wrap items-center">
-        <h3 className="text-[21px] font-bold">{`${user}, what's on your mind?`}</h3>
+        <h3>{`${user}, what's on your mind?`}</h3>
         <div className="flex justify-between gap-1">
-          <button
-            ref={leftBtnRef}
-            onClick={handleLeftClick}
-            className="group disabled:cursor-not-allowed cursor-pointer"
-          >
-            <i className="ri-arrow-left-circle-fill text-[40px] text-[#ff5200] group-disabled:text-gray-400"></i>
-          </button>
-          <button
-            ref={rightBtnRef}
-            onClick={handleRightClick}
-            className="group disabled:cursor-not-allowed cursor-pointer"
-          >
-            <i className="ri-arrow-right-circle-fill text-[40px] text-[#ff5200] group-disabled: group-disabled:text-gray-400"></i>
-          </button>
+          <Button ref={leftBtnRef} clickHandler={handleLeftClick} iconClass="left"/>
+          <Button ref={rightBtnRef} clickHandler={handleRightClick} iconClass="right"/>
         </div>
       </div>
       <div className="relative">
         <div
           onScroll={handleScroll}
           ref={containerRef}
-          className="flex gap-2 overflow-x-auto "
+          className="flex gap-6 p- overflow-x-auto hide-scrollbar"
         >
           {isLoading ? (
             <h2>Loading</h2>

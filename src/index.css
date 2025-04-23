@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
-/* @utility scroll {
+@layer utilities {
+    .hide-scrollbar::-webkit-scrollbar{
+        display: none;
+    }
+}
 
-} */
+@layer base {
+    h3 {
+        font-weight: 700;
+        font-size: 21px;
+    }
+}
