@@ -3,10 +3,15 @@ const axios = require("axios");
 const cors = require("cors");
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000; // Use environment variable for port
 
 app.use(cors()); // Allow all origins
 app.use(express.json());
+
+// Root endpoint
+app.get("/", (req, res) => {
+  res.send("Swiggy Proxy API is running. Use /api/swiggy-restaurants to fetch data.");
+});
 
 // Proxy for Swiggy API
 app.get("/api/swiggy-restaurants", async (req, res) => {
@@ -35,7 +40,11 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
   }
 });
 
-// 👇 This was missing!
+// Handle 404 for undefined routes
+app.use((req, res) => {
+  res.status(404).send("Not Found");
+});
+
 app.listen(PORT, () => {
   console.log(`Proxy server running on http://localhost:${PORT}`);
 });
