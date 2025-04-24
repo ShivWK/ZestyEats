@@ -7,6 +7,6 @@ export default function Layout() {
     return <>
         <PageHeader />
         <Outlet/>
-        <PageFooter />
+        {/* <PageFooter /> */}
     </>
 }

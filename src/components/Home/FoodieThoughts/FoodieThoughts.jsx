@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import Cards from "./Cards";
-import Button from "./Button";
+import Button from "../Button";
 import { useSelector } from "react-redux";
 import { selectFoodieThoughtsData } from "../../../features/home/homeSlice";
 
-export default function FoodieThoughts({ isLoading }) {
+const FoodieThoughts = ({ isLoading }) => {
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const containerRef = useRef();
   const rightBtnRef = useRef();
@@ -74,10 +74,10 @@ export default function FoodieThoughts({ isLoading }) {
         <div
           onScroll={handleScroll}
           ref={containerRef}
-          className="flex gap-6 p- overflow-x-auto hide-scrollbar"
+          className="flex gap-6 overflow-x-auto hide-scrollbar"
         >
           {isLoading ? (
-            <h2>Loading</h2>
+            <h2>Loading...</h2>
           ) : foodieThoughtsData.length ? (
             foodieThoughtsData.map((item) => <Cards key={item.id} data={item} />)
           ) : (
@@ -88,3 +88,5 @@ export default function FoodieThoughts({ isLoading }) {
     </>
   );
 }
+
+export default FoodieThoughts

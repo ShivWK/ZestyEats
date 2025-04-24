@@ -37,4 +37,4 @@ export default homeApiSlice;
 
 // <img class="sc-bXCLTC jRHowI" src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/RX_THUMBNAIL/IMAGES/VENDOR/2025/3/24/cf070431-66f9-46d7-8a1e-8b8a6fa77412_226044.jpg" alt="Burger King">
 
-// https://media-assets.swiggy.com/swiggy/image/upload/{cloudinaryImageId} // URL for top restrorents cards
+// https://media-assets.swiggy.com/swiggy/image/upload/RX_THUMBNAIL/IMAGES/VENDOR/2024/9/26/0c0ae244-e26d-483f-ba69-c4d2e6f83930_327277 (1).jpg // URL for top restrorents cards
