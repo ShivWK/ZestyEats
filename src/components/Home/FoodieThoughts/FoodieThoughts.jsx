@@ -1,22 +1,23 @@
-import { useGetfoodieThoughtsQuery } from "../../../features/home/homeApiSlice";
 import { useEffect, useRef, useState } from "react";
 import Cards from "./Cards";
 import Button from "./Button";
+import { useSelector } from "react-redux";
+import { selectFoodieThoughtsData } from "../../../features/home/homeSlice";
 
-export default function FoodieThoughts({ data=[] , isLoading }) {
-  // const { data = [], isLoading } = useGetfoodieThoughtsQuery();
+export default function FoodieThoughts({ isLoading }) {
+  const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const containerRef = useRef();
   const rightBtnRef = useRef();
   const leftBtnRef = useRef();
   const [user, setUser] = useState("Shivendra");
 
   useEffect(() => {
-    if (data.length) {
+    if (foodieThoughtsData.length) {
       setTimeout(()=> {
         handleScroll();
       }, 0)
     }
-  }, [data])
+  }, [foodieThoughtsData])
 
   function handleScroll() {
     const container = containerRef.current;
@@ -77,8 +78,8 @@ export default function FoodieThoughts({ data=[] , isLoading }) {
         >
           {isLoading ? (
             <h2>Loading</h2>
-          ) : data.length ? (
-            data.map((item) => <Cards key={item.id} data={item} />)
+          ) : foodieThoughtsData.length ? (
+            foodieThoughtsData.map((item) => <Cards key={item.id} data={item} />)
           ) : (
             <h2>No data found</h2>
           )}
