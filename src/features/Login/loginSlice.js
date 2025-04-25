@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const initialState = {
+    isOpen: false,
+}
 const loginSlice = createSlice({
     name: "login",
-    initialState: {
-        isOpen: false,
-    },
+    initialState: initialState,
 
     reducers: {
         openLogInModal: (state) => {
@@ -19,4 +20,5 @@ const loginSlice = createSlice({
 
 export const selectlogInModal = (state) => state.login.isOpen;
 export const loginReducer = loginSlice.reducer;
-export const { openLogInmodal, closeLogInModal } = loginSlice.actions;
+export const { openLogInModal, closeLogInModal } = loginSlice.actions;
+

@@ -11,8 +11,6 @@ const TopRestaurantChains = ({ isLoading }) => {
   const leftBtnRef = useRef();
   const [location, setLocation] = useState("Your Location");
 
-  console.log(topRestaurantsChainsData)
-
   useEffect(() => {
     if (topRestaurantsChainsData.length) {
       setTimeout(() => {

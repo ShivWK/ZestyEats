@@ -17,6 +17,7 @@ export default function Home() {
     const { data, isLoading } = useGetHomePageDataQuery();
     
     useEffect(()=> {
+        if (!data) return;
         dispatch(addApiData(data));
         dispatch(addFoodieThoughtsData(data))
         dispatch(addTopRestaurantsData(data))

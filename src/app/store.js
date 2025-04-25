@@ -1,13 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import homeApiSlice from "../features/home/homeApiSlice";
 import HomeReducer from "../features/home/homeSlice";
-import LoginModel from "../components/Login/LoginModel";
+import { loginReducer } from "../features/Login/loginSlice";
 
 const store = configureStore({
     reducer : {
         [homeApiSlice.reducerPath] : homeApiSlice.reducer,
         home: HomeReducer,
-        login: LoginModel,
+        login: loginReducer,
     },
     middleware:(defaultMiddlewares) => [...defaultMiddlewares(), homeApiSlice.middleware],
 })
