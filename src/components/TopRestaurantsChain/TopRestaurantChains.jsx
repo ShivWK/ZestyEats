@@ -64,29 +64,29 @@ const TopRestaurantChains = ({ isLoading }) => {
   }
 
   return <>
-        <div className="flex justify-between flex-wrap items-center">
-          <h3>{`Top restaurant chains in ${location}`}</h3>
-          <div className="flex justify-between gap-1">
-            <Button ref={leftBtnRef} clickHandler={handleLeftClick} iconClass="left"/>
-            <Button ref={rightBtnRef} clickHandler={handleRightClick} iconClass="right"/>
+          <div className="flex justify-between flex-wrap items-center">
+            <h3>{`Top restaurant chains in ${location}`}</h3>
+            <div className="flex justify-between gap-1">
+              <Button ref={leftBtnRef} clickHandler={handleLeftClick} iconClass="left"/>
+              <Button ref={rightBtnRef} clickHandler={handleRightClick} iconClass="right"/>
+            </div>
           </div>
-        </div>
-        <div className="relative">
-          <div
-            onScroll={handleScroll}
-            ref={containerRef}
-            className="flex gap-6 overflow-x-auto hide-scrollbar"
-          >
-            {isLoading ? (
-              <h2>Loading...</h2>
-            ) : topRestaurantsChainsData.length ? (
-              topRestaurantsChainsData.map((item) => <Cards key={item.info.id} data={item.info} />)
-            ) : (
-              <h2>No data found</h2>
-            )}
+          <div className="relative">
+            <div
+              onScroll={handleScroll}
+              ref={containerRef}
+              className="flex gap-6 overflow-x-auto hide-scrollbar"
+            >
+              {isLoading ? (
+                <h2>Loading...</h2>
+              ) : topRestaurantsChainsData.length ? (
+                topRestaurantsChainsData.map((item) => <Cards key={item.info.id} data={item.info} />)
+              ) : (
+                <h2>No data found</h2>
+              )}
+            </div>
           </div>
-        </div>
-      </>;
+        </>;
 }
 
-export default TopRestaurantChains
+export default TopRestaurantChains;
