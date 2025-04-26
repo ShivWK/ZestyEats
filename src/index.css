@@ -9,25 +9,16 @@
         display: none;
     }
 
-    .modal {
-        position: fixed;
-        margin: 0;
-        top: 0;
-        right: 0;
-        height: 100vh;
-        width: 35%;
-        background-color: white;
-        z-index: 50;
-        transform: translate(100%,0);
+    .modal-slide-enter {
+        transform: translateX(0);
+        transition: transfor 0.3s ease-in-out;
     }
 
-    .show-modal {
-        transform: translate(0,0);
+    .modal-slide-exit {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
     }
-}
 
-.smooth {
-    transition: all 0.3s ease-in-out;
 }
 
 @layer base {
@@ -40,4 +31,8 @@
         font-weight: 700;
         font-size: 30px;
     }
+}
+
+body {
+    scrollbar-gutter: stable;
 }

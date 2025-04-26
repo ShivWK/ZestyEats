@@ -23,7 +23,7 @@ export default function Home() {
         dispatch(addTopRestaurantsData(data))
     }, [data])
 
-    return <main className='w-full max-w-[1070px] mx-auto pb-14' >
+    return <main className='w-full max-w-[1070px] mx-auto pb-14 pr-1' >
         <section className='w-full max-w-[1040px] mx-auto'>
             <FoodieThoughts isLoading={isLoading}/>
         </section>

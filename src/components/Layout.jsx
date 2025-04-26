@@ -10,12 +10,20 @@ export default function Layout() {
     const isOpen = useSelector(selectlogInModal);
 
     useEffect(() => {
+        const scrollbarWidth = "15px";   
+
         if (isOpen) {
-            document.body.style.overflow = "hidden";
-        } else {
-            document.body.style.overflow = "auto";
-        }
-        return () => document.body.style.overflow = "auto";
+                document.body.classList.add('overflow-hidden');
+                document.body.style.paddingRight = scrollbarWidth;
+              } else {
+                document.body.classList.remove('overflow-hidden');
+                document.body.style.paddingRight = "0px";
+              }
+        // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
+            return () => {
+                document.body.classList.remove('overflow-hidden');
+                document.body.style.paddingRight = "0px";
+            }
     }, [isOpen])
      
     return <>
