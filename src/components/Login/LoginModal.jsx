@@ -1,10 +1,10 @@
 import Overlay from "./Overlay";
-import Model from "./Model";
+import Modal from "./Modal";
 
 const LoginModel = () => {
     return <>
         <Overlay />
-        <Model />
+        <Modal />
     </>
 }
 

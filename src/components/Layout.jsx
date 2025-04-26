@@ -1,7 +1,7 @@
 import { Outlet } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
-import LoginModel from "./Login/LoginModel";
+import LoginModal from "./Login/LoginModal";
 import { selectlogInModal } from "../features/Login/loginSlice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -29,7 +29,7 @@ export default function Layout() {
     return <>
         <PageHeader />
         <Outlet/>
-        {isOpen && <LoginModel />}
+        {isOpen && <LoginModal />}
         {/* <PageFooter /> */}
     </>
 }
