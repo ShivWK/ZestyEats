@@ -23,7 +23,16 @@ const Model = () => {
     
     const handleSignIn = (e) => {
         e.preventDefault();
-        console.log("Sign In");
+        e.stopPropagation();
+
+        if (inputRef.current.value.length === 0) {
+            setPhone(false);
+            setHasValue(true)
+        } else if (inputRef.current.value.length < 10) {
+            setHasValue(true)
+        } else {    
+            console.log("Sign In");
+        }
     }
 
     const handleSignUp = (e) => {
@@ -50,8 +59,6 @@ const Model = () => {
         }
     }
 
-    console.log(phone, hasValue);
-
     const handleInput = (e) => {
         e.target.value = e.target.value.replace(/[^0-9]*/g, "")
     }
@@ -73,7 +80,7 @@ const Model = () => {
                         </div>
                         <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/Image-login_btpq7r" height="110px" width="110px" alt="Profile_dummy_image" />
                     </div>
-                    <form onSubmit={handleSignIn} className={`mt-10 ${!member ? "hidden" : ""}`}>
+                    <form className={`mt-10 ${!member ? "hidden" : ""}`}>
                         {/* <div onClick={handleInputClick} className="relative p-2.5 border-2 border-gray-400 h-[70px] rounded-lg cursor-text">
                             <p className={`absolute font-bold ${hasValue ? "text-red-500" : "text-gray-500"} transition-all duration-300 ${phone ? "top-2.5 text-xs" : "top-[19px] text-lg"}`}>{hasValue ? "Enter your phone number" : "Phone number"}</p>
                             <input ref={inputRef} onChange={handleInput} className="relative top-5 font-bold text-lg outline-none" type="tel" />
@@ -88,15 +95,15 @@ const Model = () => {
                             focus={phone}
                         />
                         
-                        <button className="bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-pointer">LOGIN</button>
-                        <button className="font-bold text-[#6e6e6e] w-full h-11 mt-2 rounded-lg cursor-pointer hover:text-primary">Login as Guest</button>
+                        <button onClick={handleSignIn} className="bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-pointer">LOGIN</button>
+                        <button type="button" className="font-bold text-[#6e6e6e] w-full h-11 mt-2 rounded-lg cursor-pointer hover:text-primary">Login as Guest</button>
 
                         <p className="text-xs font-semibold text-gray-800 mt-1 text-center">
                             By clicking on Login, I accept the 
                             <NavLink className="font-bold text-black"> Terms & Conditions & Privacy Policy</NavLink>
                         </p>
                     </form>
-                    <form onSubmit={handleSignUp} className={`${member ? "hidden" : ""} mt-10`}>
+                    <form className={`${member ? "hidden" : ""} mt-10`}>
                         {/* <EnteryDiv />
                         <EnteryDiv />
                         <EnteryDiv /> */}
