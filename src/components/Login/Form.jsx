@@ -7,6 +7,7 @@ const Form = ({
   handleGuestLogin = null,
   buttonText,
   signingStatement,
+  isOtpSend = false,
 }) => {
   return (
     <form className="mt-10">
@@ -17,7 +18,7 @@ const Form = ({
       >
         {buttonText}
       </button>
-      {guestLogin && (
+      {guestLogin && !isOtpSend && (
         <button
           type="button"
           onClick={handleGuestLogin}
@@ -26,13 +27,15 @@ const Form = ({
           Login as Guest
         </button>
       )}
-      <p className="text-xs font-semibold text-gray-800 mt-1 text-center">
-        {`${signingStatement}, I accept the`}
-        <NavLink className="font-bold text-black">
-          {" "}
+      { !isOtpSend && (
+        <p className="text-center text-xs mt-2 font-bold text-gray-600">
+          {signingStatement} , I accept the{" "}   
+          <NavLink to="/terms" className="text-black">
           Terms & Conditions & Privacy Policy
-        </NavLink>
-      </p>
+          </NavLink>
+        </p>
+        )
+      }
     </form>
   );
 };
