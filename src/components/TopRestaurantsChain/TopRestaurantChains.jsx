@@ -73,7 +73,7 @@ const TopRestaurantChains = ({ isLoading }) => {
             <div
               onScroll={handleScroll}
               ref={containerRef}
-              className="flex gap-6 overflow-x-auto hide-scrollbar"
+              className="flex mt-0 gap-6 overflow-x-auto hide-scrollbar "
             >
               {isLoading ? (
                 <h2>Loading...</h2>
@@ -82,6 +82,11 @@ const TopRestaurantChains = ({ isLoading }) => {
               ) : (
                 <h2>No data found</h2>
               )}
+            </div>
+            <div className="w-full flex justify-center mt-6">
+              <div className="w-[70px] h-1.5 rounded-full bg-gray-200 ">
+                <div className="w-1/6 rounded-full bg-primary h-full relative left-9"></div>
+              </div>
             </div>
           </div>
         </>;

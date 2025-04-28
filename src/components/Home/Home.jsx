@@ -27,7 +27,7 @@ export default function Home() {
         <section className='w-full max-w-[1040px] mx-auto'>
             <FoodieThoughts isLoading={isLoading}/>
         </section>
-        <hr className='mt-12 mb-9 text-gray-300'/>
+        <hr className='mt-10 mb-9 text-gray-300'/>
         <section className='w-full max-w-[1040px] mx-auto'>
             <TopRestaurantChains isLoading={isLoading} />
         </section>
