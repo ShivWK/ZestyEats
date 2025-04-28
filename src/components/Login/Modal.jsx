@@ -171,6 +171,7 @@ const Modal = () => {
               placeholder="Phone number"
               fallbackPlacehoder="Enter your phone number"
               focus={phone1Entry}
+              isReadOnly={isOtpSend}
             />
             {
               isOtpSend && (
