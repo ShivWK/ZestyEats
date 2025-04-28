@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useSelector , useDispatch} from "react-redux";
 import EnteryDiv from "./EntryDiv";
-import Form from "./form";
+import Form from "./Form";
 import ModalSubContainer from "./ModalSubContainer";
 import { selectlogInModal, closeLogInModal} from "../../features/Login/loginSlice";
 
