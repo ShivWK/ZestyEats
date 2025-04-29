@@ -3,17 +3,17 @@ import { NavLink } from "react-router-dom";
 const Form = ({
   children,
   guestLogin,
-  handleClick,
+  handleSubmit,
   handleGuestLogin = null,
   buttonText,
   signingStatement,
   isOtpSend = false,
 }) => {
   return (
-    <form className="mt-10">
+    <form className="mt-10" onSubmit={handleSubmit}>
       {children}
       <button
-        onClick={handleClick}
+        type="submit"
         className="bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-pointer"
       >
         {buttonText}

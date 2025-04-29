@@ -93,7 +93,7 @@ const FoodieThoughts = ({ isLoading }) => {
           )}
         </div>
         <div className="w-full flex justify-center mt-2.5">
-              <div className="w-[70px] h-1.5 rounded-full bg-gray-200 ">
+              <div className="w-[70px] h-1 rounded-full bg-gray-200 ">
                 <div className="w-1/6 rounded-full bg-primary h-full relative left-9"></div>
               </div>
             </div>
