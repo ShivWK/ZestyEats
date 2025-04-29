@@ -149,8 +149,8 @@ const Modal = () => {
   return (
     <div
       onClick={handleModelClick}
-      className={`fixed top-0 right-0 h-screen w-[35%] bg-white z-50 flex items-start justify-center transform 
-            ${isOpen ? "modal-slide-enter" : "modal-slide-exit"}`}
+      className={`fixed top-0 right-0 h-screen w-[0%] bg-white z-50 flex items-start justify-center transform
+            ${isOpen && "w-[35%]"} transition-all duration-300 ease-in-out`}  
     >
       <ModalSubContainer member={member} handleSwitch={handleSwitch} isOtpSend={isOtpSend}>
         {member ? (

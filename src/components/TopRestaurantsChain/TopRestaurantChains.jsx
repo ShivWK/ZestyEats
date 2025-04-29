@@ -61,12 +61,20 @@ const TopRestaurantChains = ({ isLoading }) => {
     });
   }
 
+  function createDebounce(toCall, delay) {
+    let timer;
+    return () => {
+      clearTimeout(timer);
+      timer = setTimeout(toCall, delay)
+    }
+  } 
+
   return <>
           <div className="flex justify-between flex-wrap items-center">
             <h3>{`Top restaurant chains in ${location}`}</h3>
             <div className="flex justify-between gap-1">
-              <Button ref={leftBtnRef} clickHandler={handleLeftClick} iconClass="left"/>
-              <Button ref={rightBtnRef} clickHandler={handleRightClick} iconClass="right"/>
+              <Button ref={leftBtnRef} clickHandler={createDebounce(handleLeftClick, 200)} iconClass="left"/>
+              <Button ref={rightBtnRef} clickHandler={createDebounce(handleRightClick, 200)} iconClass="right"/>
             </div>
           </div>
           <div className="relative">
@@ -83,7 +91,7 @@ const TopRestaurantChains = ({ isLoading }) => {
                 <h2>No data found</h2>
               )}
             </div>
-            <div className="w-full flex justify-center mt-6">
+            <div className="w-full flex justify-center mt-4">
               <div className="w-[70px] h-1.5 rounded-full bg-gray-200 ">
                 <div className="w-1/6 rounded-full bg-primary h-full relative left-9"></div>
               </div>

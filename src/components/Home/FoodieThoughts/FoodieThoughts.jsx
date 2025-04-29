@@ -61,13 +61,21 @@ const FoodieThoughts = ({ isLoading }) => {
     });
   }
 
+  function createDebounce(toCall, delay) {
+    let timer;
+    return () => {
+      clearTimeout(timer);
+      timer = setTimeout(toCall, delay)
+    }
+  }
+
   return (
     <>
       <div className="flex justify-between flex-wrap items-center">
         <h3>{`${user}, what's on your mind?`}</h3>
         <div className="flex justify-between gap-1">
-          <Button ref={leftBtnRef} clickHandler={handleLeftClick} iconClass="left"/>
-          <Button ref={rightBtnRef} clickHandler={handleRightClick} iconClass="right"/>
+          <Button ref={leftBtnRef} clickHandler={createDebounce(handleLeftClick, 200)} iconClass="left"/>
+          <Button ref={rightBtnRef} clickHandler={createDebounce(handleRightClick,200)} iconClass="right"/>
         </div>
       </div>
       <div className="relative">

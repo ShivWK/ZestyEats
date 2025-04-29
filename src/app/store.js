@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { setupListeners } from "@reduxjs/toolkit/query";
 import homeApiSlice from "../features/home/homeApiSlice";
 import HomeReducer from "../features/home/homeSlice";
 import { loginReducer } from "../features/Login/loginSlice";
@@ -11,5 +12,7 @@ const store = configureStore({
     },
     middleware:(defaultMiddlewares) => [...defaultMiddlewares(), homeApiSlice.middleware],
 })
+
+setupListeners(store.dispatch)
 
 export default store;
