@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     isOpen: false,
-    isEntryMade: false,
+    isLoginOtpSend: false,
 }
 const loginSlice = createSlice({
     name: "login",
@@ -10,25 +10,25 @@ const loginSlice = createSlice({
 
     reducers: {
         openLogInModal: (state) => {
-            state.isOpen = true
+            state.isOpen = true;
         },
 
         closeLogInModal: (state) => {
             state.isOpen = false;
         },
 
-        disableEntry : (state) => {
-            state.isEntryMade = false;
+        loginOtpSend: (state) => {
+            state.isLoginOtpSend = true;
         },
 
-        enableEntry : (state) => {
-            state.isEntryMade = false;
+        loginOtpNotSend: (state) => {
+            state.isLoginOtpSend = false;
         },
     }
 });
 
 export const selectlogInModal = (state) => state.login.isOpen;
-export const selectEntry = (state) => state.login.initialState
+export const selectLoginOtp = (state) => state.login.isLoginOtpSend
 export const loginReducer = loginSlice.reducer;
-export const { openLogInModal, closeLogInModal, enableEntry, disableEntry } = loginSlice.actions;
+export const { openLogInModal, closeLogInModal, loginOtpSend, loginOtpNotSend } = loginSlice.actions;
 

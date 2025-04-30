@@ -1,11 +1,12 @@
 import { useDispatch } from "react-redux";
-import { closeLogInModal } from "../../features/Login/loginSlice";
+import { closeLogInModal, loginOtpNotSend } from "../../features/Login/loginSlice";
 
 const ModalSubContainer = ({ children, member, handleSwitch, isOtpSend  }) => {
     const dispatch = useDispatch();
 
     const handleClose = () => {
         dispatch(closeLogInModal());
+        dispatch(loginOtpNotSend());
       };
 
     return (<div className="w-[80%] h-auto mt-7">

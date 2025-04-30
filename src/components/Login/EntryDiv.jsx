@@ -1,25 +1,32 @@
 import { useState, useRef, useEffect } from "react";
 
-const EnteryDiv = ({
+const EntryDiv = ({
   type,
   inputMode,
   purpose,
   value,
+  focus = false,
   onChangeHandler,
   placeholder,
   fallbackPlacehoder,
   isReadOnly = false,
   changeIsEntryMade,
-  changeHasValue
+  changeHasValue,
 }) => {
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const inputRef = useRef(null);
 
-  useEffect(()=> {
+  useEffect(() => {
+    if (focus) {
+      inputRef.current.focus();
+    }
+  }, []);
+
+  useEffect(() => {
     if (changeHasValue) setHasValue(true);
     if (changeIsEntryMade) setIsEntryMade(false);
-  }, [changeHasValue, changeIsEntryMade])
+  }, [changeHasValue, changeIsEntryMade]);
 
   const handleDivClick = (e) => {
     e.stopPropagation();
@@ -49,29 +56,49 @@ const EnteryDiv = ({
     } else if (inputRef.current.value.length == 0) {
       setHasValue(false);
       setIsEntryMade(false);
-    } 
-  };
-
-  const onNameBlur = () => {};
-
-  const onEmailBlur = () => {
-    if (inputRef.current.value.length == 0 ) {
-      setIsEntryMade(false);
-      setHasValue(false);
-    } else if (!(/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputRef.current.value))) {
-      setHasValue(true);
     }
   };
 
-   // Handle the input event on phone and otp to check if the input is empty or not
+  const onNameBlur = () => {
+    if (inputRef.current.value.length == 0) {
+      setIsEntryMade(false);
+      setHasValue(false);
+    }
+  };
+
+  const onEmailBlur = () => {
+    if (inputRef.current.value.length == 0) {
+      setIsEntryMade(false);
+      setHasValue(false);
+    } else if (
+      !/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+        inputRef.current.value
+      )
+    ) {
+      setHasValue(true);
+    } else {
+      setHasValue(false);
+    }
+  };
+
   const handlePhoneInput = (e) => {
+    setHasValue(false);
     e.target.value = e.target.value.replace(/[^0-9]*/g, "");
     e.target.value = e.target.value.slice(0, 10);
   };
 
   const handleOtpInput = (e) => {
+    setHasValue(false);
     e.target.value = e.target.value.replace(/[^0-9]*/g, "");
     e.target.value = e.target.value.slice(0, 6);
+  };
+
+  const handleGeneralInput = () => {
+    setHasValue(false);
+  };
+
+  const handleFocus = () => {
+    setIsEntryMade(true);
   };
 
   const handleBlur =
@@ -88,7 +115,7 @@ const EnteryDiv = ({
       ? handlePhoneInput
       : purpose == "otp"
       ? handleOtpInput
-      : null;
+      : handleGeneralInput;
 
   return (
     <div
@@ -96,9 +123,9 @@ const EnteryDiv = ({
       className="relative p-2.5 border-2 border-gray-300 h-[70px] cursor-text"
     >
       <p
-        className={`absolute font-bold ${
-          hasValue ? "text-red-500" : "text-gray-500"
-        } transition-all duration-150 ease-in-out ${
+        className={`absolute font-semibold ${
+          hasValue ? "text-red-500" : "text-gray-400"
+        } transition-all duration-200 ease-in-out ${
           isEntryMade ? "top-2.5 text-xs" : "top-[19px] text-lg"
         }`}
       >
@@ -107,7 +134,9 @@ const EnteryDiv = ({
       <input
         name={purpose}
         value={value}
+        type={type}
         onBlur={handleBlur}
+        onFocus={handleFocus}
         inputMode={inputMode}
         readOnly={isReadOnly}
         ref={inputRef}
@@ -115,11 +144,10 @@ const EnteryDiv = ({
           handleInput(event);
           onChangeHandler(event);
         }}
-        className="relative top-5 font-bold text-lg outline-none bg-transparent"
-        type={type}
+        className="relative top-5 font-bold text-lg outline-none"
       />
     </div>
   );
 };
 
-export default EnteryDiv;
+export default EntryDiv;
