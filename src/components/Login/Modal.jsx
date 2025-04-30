@@ -3,7 +3,7 @@ import { useSelector , useDispatch} from "react-redux";
 import EntryDiv from "./EntryDiv";
 import Form from "./Form";
 import ModalSubContainer from "./ModalSubContainer";
-import { selectlogInModal, closeLogInModal} from "../../features/Login/loginSlice";
+import { selectlogInModal, closeLogInModal } from "../../features/Login/loginSlice";
 
 const Modal = () => {
   const [member, setMember] = useState(true);
@@ -11,12 +11,23 @@ const Modal = () => {
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(false);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(false);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(false);
+  const [changeNameIsEntryMade, setChangeNameIsEntryMade] = useState(false);
+  const [changeNameHasValue, setChangeNameHasValue] = useState(false);
+  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(false);
+  const [changeEmailHasValue, setChangeEmailHasValue] = useState(false);
   const [isOtpSend, setIsOtpSend] = useState(false);
+  const [loginFormData, setLoginFormData] = useState({phone:"", otp:""});
+  const [signUpFormData, setSignUpFormData] = useState({phone:"", name:"", email:"", opt: ""});
 
   const isOpen = useSelector(selectlogInModal);
   const dispatch = useDispatch();
  
   const handleSwitch = () => {
+    setIsOtpSend(false);
+    setChangePhoneIsEntryMade(false);
+    setChangePhoneHasValue(false);
+    setChangeOtpIsEntryMade(false);
+    setChangeOtpHasValue(false);
     setMember(!member);
   };
 
@@ -53,7 +64,7 @@ const Modal = () => {
       }
     }
   }
-  
+
   // Handle the Sign Up button click event
   const handleSignUp = () => {
     console.log("Sign Up");
@@ -63,8 +74,18 @@ const Modal = () => {
     console.log("Guest Login");
   };
 
-  const handleFocus = () => {
-    console.log("Focus");
+  const handleLoginChange = (e) => {
+    setLoginFormData({
+      ...loginFormData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSignChange = (e) => {
+    setSignUpFormData({
+      ...signUpFormData,
+      [e.target.name]: e.target.value
+    });
   };
 
   return (
@@ -87,7 +108,8 @@ const Modal = () => {
               type="tel"
               inputMode="numeric"
               purpose={"phone"}
-              handleFocus={handleFocus}
+              value={loginFormData.phone}
+              onChangeHandler={handleLoginChange}
               placeholder="Phone number"
               fallbackPlacehoder="Enter your phone number"
               isReadOnly={isOtpSend}
@@ -100,7 +122,8 @@ const Modal = () => {
                   type="text"
                   inputMode="numeric"
                   purpose={"otp"}
-                  handleFocus={handleFocus}
+                  value={loginFormData.otp}
+                  onChangeHandler={handleLoginChange}
                   placeholder="One Time Password"
                   fallbackPlacehoder="One Time Password"
                   changeIsEntryMade={changeOtpIsEntryMade}
@@ -113,46 +136,44 @@ const Modal = () => {
         ) : (
           <Form
             guestLogin={false}
-            handleClick={handleSignUp}
+            handleCSubmit={handleSignUp}
             buttonText="CONTINUE"
             signingStatement={"By creating an account"}
+            isOtpSend={isOtpSend} // same otp state used in Login and SignUp
           >
-            {/* <EntryDiv
-                  handleDivClick={handleInputClick}
+            <EntryDiv
                   type={"tel"}
                   inputMode={"numeric"}
-                  hasValue={otp1HasValue}
-                  inputRef={otp1InputRef}
-                  handleInput={handleOtpInput}
-                  handleFocus={handleFocus}
-                  placeholder="One Time Password"
-                  fallbackPlacehoder="One Time Password"
-                  focus={otp1Entry}
+                  purpose={"phone"}
+                  value={signUpFormData.phone}
+                  onChangeHandler={handleSignChange}
+                  placeholder="Phone number"
+                  fallbackPlacehoder="Enter your phone number"
+                  changeIsEntryMade={changePhoneIsEntryMade}
+                  changeHasValue={changePhoneHasValue}
                 />
             <EntryDiv
-                  handleDivClick={handleOtpInputClick}
                   type={"text"}
                   inputMode={"text"}
-                  hasValue={otp1HasValue}
-                  inputRef={otp1InputRef}
-                  handleInput={handleOtpInput}
-                  handleFocus={handleFocus}
-                  placeholder="One Time Password"
-                  fallbackPlacehoder="One Time Password"
-                  focus={otp1Entry}
+                  purpose={"name"}
+                  value={signUpFormData.name}
+                  onChangeHandler={handleSignChange}
+                  placeholder="Name"
+                  fallbackPlacehoder="Name"
+                  changeIsEntryMade={changeNameIsEntryMade}
+                  changeHasValue={changeNameHasValue}
                 />
-            <EntryDiv
-                  handleDivClick={handleOtpInputClick}
+           <EntryDiv
                   type={"email"}
                   inputMode={"text"}
-                  hasValue={otp1HasValue}
-                  inputRef={otp1InputRef}
-                  handleInput={handleOtpInput}
-                  handleFocus={handleFocus}
-                  placeholder="One Time Password"
-                  fallbackPlacehoder="One Time Password"
-                  focus={otp1Entry}
-                /> */}
+                  purpose={"email"}
+                  value={signUpFormData.email}
+                  onChangeHandler={handleSignChange}
+                  placeholder="Email"
+                  fallbackPlacehoder="Invaid email address"
+                  changeIsEntryMade={changeEmailIsEntryMade}
+                  changeHasValue={changeEmailHasValue}
+                />
           </Form>
         )}
       </ModalSubContainer>

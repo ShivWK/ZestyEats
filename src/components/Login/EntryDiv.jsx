@@ -4,7 +4,8 @@ const EnteryDiv = ({
   type,
   inputMode,
   purpose,
-  handleFocus,
+  value,
+  onChangeHandler,
   placeholder,
   fallbackPlacehoder,
   isReadOnly = false,
@@ -53,7 +54,14 @@ const EnteryDiv = ({
 
   const onNameBlur = () => {};
 
-  const onEmailBlur = () => {};
+  const onEmailBlur = () => {
+    if (inputRef.current.value.length == 0 ) {
+      setIsEntryMade(false);
+      setHasValue(false);
+    } else if (!(/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputRef.current.value))) {
+      setHasValue(true);
+    }
+  };
 
    // Handle the input event on phone and otp to check if the input is empty or not
   const handlePhoneInput = (e) => {
@@ -85,12 +93,12 @@ const EnteryDiv = ({
   return (
     <div
       onClick={handleDivClick}
-      className="relative p-2.5 border-2 border-gray-400 h-[70px] cursor-text"
+      className="relative p-2.5 border-2 border-gray-300 h-[70px] cursor-text"
     >
       <p
         className={`absolute font-bold ${
           hasValue ? "text-red-500" : "text-gray-500"
-        } transition-all duration-300 ${
+        } transition-all duration-150 ease-in-out ${
           isEntryMade ? "top-2.5 text-xs" : "top-[19px] text-lg"
         }`}
       >
@@ -98,12 +106,15 @@ const EnteryDiv = ({
       </p>
       <input
         name={purpose}
+        value={value}
         onBlur={handleBlur}
         inputMode={inputMode}
         readOnly={isReadOnly}
-        // onFocus={handleFocus}
         ref={inputRef}
-        onChange={handleInput}
+        onChange={(event) => {
+          handleInput(event);
+          onChangeHandler(event);
+        }}
         className="relative top-5 font-bold text-lg outline-none bg-transparent"
         type={type}
       />

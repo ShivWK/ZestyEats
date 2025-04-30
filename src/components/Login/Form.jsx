@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 const Form = ({
@@ -9,6 +10,10 @@ const Form = ({
   signingStatement,
   isOtpSend = false,
 }) => {
+  useEffect(()=> {
+    
+  })
+
   return (
     <form className="mt-10 li-notfirst-andlast" onSubmit={handleSubmit}>
       {children}
