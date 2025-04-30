@@ -19,6 +19,10 @@
         transition: transform 0.3s ease-in-out;
     }
 
+    .li-notfirst-andlast > :not(:first-child):not(:last-child) {
+        @apply border-t-0
+    }
+
 }
 
 @layer base {

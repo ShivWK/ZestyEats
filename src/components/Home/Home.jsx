@@ -1,5 +1,5 @@
 import FoodieThoughts from './FoodieThoughts/FoodieThoughts';
-import TopRestaurantChains from '../TopRestaurantsChain/TopRestaurantChains';
+import TopRestaurantChains from './TopRestaurantsChain/TopRestaurantChains';
 import OnlineDeliveryRestaurant from './OnlineDeliveryRestaurant';
 import BestPlacesToEat from './BestPlacesToEat';
 import NearByRestaurants from './NearByRestaurants';

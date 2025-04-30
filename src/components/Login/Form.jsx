@@ -10,7 +10,7 @@ const Form = ({
   isOtpSend = false,
 }) => {
   return (
-    <form className="mt-10" onSubmit={handleSubmit}>
+    <form className="mt-10 li-notfirst-andlast" onSubmit={handleSubmit}>
       {children}
       <button
         type="submit"

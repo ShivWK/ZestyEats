@@ -1,13 +1,10 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import fallbackImage from "../../assets/images/fallback.png";
 
 const Cards = ({ data }) => {
     const imageId = data?.cloudinaryImageId?.trim();
     const imageEncoded = imageId ? encodeURIComponent(imageId) : null;
-    const imageUrl = imageEncoded 
-    ? `https://media-assets.swiggy.com/swiggy/image/upload/${imageEncoded}`
-    : fallbackImage; // Use fallback image if imageId is not available
+    const imageUrl = imageEncoded && `https://media-assets.swiggy.com/swiggy/image/upload/${imageEncoded}`;
 
   return (
     <NavLink className="flex flex-col items-center w-[275px] rounded-2xl overflow-hidden pb-0 mb-0 shrink-0 hover:scale-95 transition-all duration-300 ease-in-out">

@@ -3,21 +3,25 @@ import Cards from "./Cards";
 import Button from "../Button";
 import { useSelector } from "react-redux";
 import { selectFoodieThoughtsData } from "../../../features/home/homeSlice";
+import ScrollBar from "../ScroolBar";
 
 const FoodieThoughts = ({ isLoading }) => {
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
+  const [scrollPercentage, setScrollPercentage] = useState(0);
   const containerRef = useRef();
   const rightBtnRef = useRef();
   const leftBtnRef = useRef();
+  const scrollContainerRef = useRef();
+  const scrrollBarRef = useRef();
   const [user, setUser] = useState("Shivendra");
 
   useEffect(() => {
     if (foodieThoughtsData.length) {
-      setTimeout(()=> {
+      setTimeout(() => {
         handleScroll();
-      }, 0)
+      }, 0);
     }
-  }, [foodieThoughtsData])
+  }, [foodieThoughtsData]);
 
   function handleScroll() {
     const container = containerRef.current;
@@ -35,6 +39,9 @@ const FoodieThoughts = ({ isLoading }) => {
     if (!(scrollLeft > 0)) {
       leftBtnRef.current.disabled = true;
     }
+
+    const scrolledPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+    setScrollPercentage(scrolledPercentage);
   }
 
   function handleRightClick(e) {
@@ -65,8 +72,8 @@ const FoodieThoughts = ({ isLoading }) => {
     let timer;
     return () => {
       clearTimeout(timer);
-      timer = setTimeout(toCall, delay)
-    }
+      timer = setTimeout(toCall, delay);
+    };
   }
 
   return (
@@ -74,8 +81,16 @@ const FoodieThoughts = ({ isLoading }) => {
       <div className="flex justify-between flex-wrap items-center">
         <h3>{`${user}, what's on your mind?`}</h3>
         <div className="flex justify-between gap-1">
-          <Button ref={leftBtnRef} clickHandler={createDebounce(handleLeftClick, 200)} iconClass="left"/>
-          <Button ref={rightBtnRef} clickHandler={createDebounce(handleRightClick,200)} iconClass="right"/>
+          <Button
+            ref={leftBtnRef}
+            clickHandler={createDebounce(handleLeftClick, 200)}
+            iconClass="left"
+          />
+          <Button
+            ref={rightBtnRef}
+            clickHandler={createDebounce(handleRightClick, 200)}
+            iconClass="right"
+          />
         </div>
       </div>
       <div className="relative">
@@ -87,19 +102,20 @@ const FoodieThoughts = ({ isLoading }) => {
           {isLoading ? (
             <h2>Loading...</h2>
           ) : foodieThoughtsData.length ? (
-            foodieThoughtsData.map((item) => <Cards key={item.id} data={item} />)
+            foodieThoughtsData.map((item) => (
+              <Cards key={item.id} data={item} />
+            ))
           ) : (
             <h2>No data found</h2>
           )}
         </div>
-        <div className="w-full flex justify-center mt-2.5">
-              <div className="w-[70px] h-1 rounded-full bg-gray-200 ">
-                <div className="w-1/6 rounded-full bg-primary h-full relative left-9"></div>
-              </div>
-            </div>
+        <ScrollBar
+          scrolledPercentage={scrollPercentage}
+          marginTop={10}
+        />
       </div>
     </>
   );
-}
+};
 
-export default FoodieThoughts
+export default FoodieThoughts;

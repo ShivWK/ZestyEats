@@ -1,11 +1,13 @@
-import { selectTopRestaurantsData } from "../../features/home/homeSlice";
+import { selectTopRestaurantsData } from "../../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 import Cards from './Cards'
-import Button from "../Home/Button";
+import Button from "../Button";
+import Scrollbar from "../ScroolBar";
 
 const TopRestaurantChains = ({ isLoading }) => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
+  const [scrollPercentage, setScrollPercentage] = useState(0);
   const containerRef = useRef();
   const rightBtnRef = useRef();
   const leftBtnRef = useRef();
@@ -35,6 +37,10 @@ const TopRestaurantChains = ({ isLoading }) => {
     if (!(scrollLeft > 0)) {
       leftBtnRef.current.disabled = true;
     }
+
+    const scrolledPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+    setScrollPercentage(scrolledPercentage);
+    
   }
 
   function handleRightClick(e) {
@@ -47,6 +53,8 @@ const TopRestaurantChains = ({ isLoading }) => {
       left: 600,
       behavior: "smooth",
     });
+
+
   }
 
   function handleLeftClick(e) {
@@ -91,11 +99,14 @@ const TopRestaurantChains = ({ isLoading }) => {
                 <h2>No data found</h2>
               )}
             </div>
-            <div className="w-full flex justify-center mt-4">
+            <Scrollbar scrolledPercentage={scrollPercentage} marginTop={10}/>
+            {/* <div className="w-full flex justify-center mt-4">
               <div className="w-[70px] h-1 rounded-full bg-gray-200 ">
-                <div className="w-1/6 rounded-full bg-primary h-full relative left-9"></div>
+                <div className="w-1/6 rounded-full transition-all ease-in-out bg-primary h-full relative" 
+                style={{ left: `${scrollPercentage}%` }}
+                ></div>
               </div>
-            </div>
+            </div> */}
           </div>
         </>;
 }
