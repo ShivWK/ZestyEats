@@ -1,19 +1,23 @@
 import { useState } from "react";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
-import { useDispatch } from "react-redux";
-import { closeLogInModal } from "../../features/Login/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeLogInModal,
+  selectSignUpOtp,
+  signUpOtpSend,
+  signUpOtpNotSend,
+} from "../../features/Login/loginSlice";
 
 const SignUp = () => {
-  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(false);
-  const [changePhoneHasValue, setChangePhoneHasValue] = useState(false);
-  const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(false);
-  const [changeOtpHasValue, setChangeOtpHasValue] = useState(false);
-  const [changeNameIsEntryMade, setChangeNameIsEntryMade] = useState(false);
-  const [changeNameHasValue, setChangeNameHasValue] = useState(false);
-  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(false);
-  const [changeEmailHasValue, setChangeEmailHasValue] = useState(false);
-  const [isOtpSend, setIsOtpSend] = useState(false);
+  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
+  const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
+  const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
+  const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
+  const [changeNameIsEntryMade, setChangeNameIsEntryMade] = useState(undefined);
+  const [changeNameHasValue, setChangeNameHasValue] = useState(undefined);
+  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(undefined);
+  const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
   const [signUpFormData, setSignUpFormData] = useState({
     phone: "",
     name: "",
@@ -21,10 +25,7 @@ const SignUp = () => {
     opt: "",
   });
   const dispatch = useDispatch();
-
-  const handleSignUp = () => {
-    console.log("Sign Up");
-  };
+  const isSignUpOtpSend = useSelector(selectSignUpOtp);
 
   const handleSignUpChange = (e) => {
     setSignUpFormData({
@@ -33,43 +34,59 @@ const SignUp = () => {
     });
   };
 
-//   const handleSignIn = (e) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     const data = new FormData(e.target);
+    const handleSignUp= (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const data = new FormData(e.target);
 
-//     if (!isOtpSend) {
-//       if (data.get("phone").length === 0) {
-//         setChangePhoneIsEntryMade(true);
-//         setChangePhoneHasValue(true);
-//       } else if (data.get("phone").length < 10) {
-//         setChangePhoneHasValue(true);
-//       } else {
-//         // handle the OTP sending logic
-//         setIsOtpSend(true);
-//       }
-//     } else {
-//       if (data.get("otp").length === 0) {
-//         setChangeOtpHasValue(true);
-//         setChangeOtpIsEntryMade(true);
-//       } else if (data.get("otp").length < 6) {
-//         setChangeOtpHasValue(true);
-//       } else {
-//         // handle the OTP verification logic here
-//         console.log("OTP Verified");
-//         // Reset the Profile for logged in user
-//         dispatch(closeLogInModal());
-//         setIsOtpSend(false);
-//       }
-//     }
-//   };
+      if (!isSignUpOtpSend) {
+        if (data.get("phone").length === 0) {
+          // setChangePhoneIsEntryMade(true);
+          setChangePhoneHasValue(true);
+
+        } else if (data.get("phone").length < 10) {
+          setChangePhoneIsEntryMade(true);
+          setChangePhoneHasValue(true);
+
+        } else if (data.get("name").length === 0) {
+          // setChangeNameIsEntryMade(true);
+          setChangeNameHasValue(true);
+
+        } else if (data.get("email").length === 0) {
+          // setChangeEmailIsEntryMade();
+          setChangeEmailHasValue(true);
+
+        } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
+          setChangeEmailIsEntryMade(true);
+          setChangeEmailHasValue(true);
+
+        } else {
+          // handle the OTP sending logic
+          dispatch(signUpOtpSend());
+        }
+      } else {
+        if (data.get("otp").length === 0) {
+          setChangeOtpHasValue(true);
+          // setChangeOtpIsEntryMade(true);
+        } else if (data.get("otp").length < 6) {
+          setChangeOtpIsEntryMade(true);
+          setChangeOtpHasValue(true);
+        } else {
+          // handle the OTP verification logic here
+          console.log("OTP Verified");
+          // Reset the Profile for logged in user
+          dispatch(signUpOtpNotSend());
+          dispatch(closeLogInModal());
+        }
+      }
+    };
 
   return (
     <Form
       handleSubmit={handleSignUp}
-      buttonText={isOtpSend ? "VERIFY OTP" : "CONTINUE"}
+      buttonText={isSignUpOtpSend ? "VERIFY OTP" : "CONTINUE"}
       signingStatement={"By creating an account"}
-      isOtpSend={isOtpSend}
+      isOtpSend={isSignUpOtpSend}
     >
       <EntryDiv
         type={"tel"}
@@ -81,9 +98,10 @@ const SignUp = () => {
         fallbackPlacehoder="Enter your phone number"
         changeIsEntryMade={changePhoneIsEntryMade}
         changeHasValue={changePhoneHasValue}
-        isReadOnly={isOtpSend}
+        isReadOnly={isSignUpOtpSend}
+        focus="true"
       />
-      {!isOtpSend && (
+      {!isSignUpOtpSend && (
         <EntryDiv
           type={"text"}
           inputMode={"text"}
@@ -96,9 +114,9 @@ const SignUp = () => {
           changeHasValue={changeNameHasValue}
         />
       )}
-      {!isOtpSend && (
+      {!isSignUpOtpSend && (
         <EntryDiv
-          type={"email"}
+          type={"text"}
           inputMode={"text"}
           purpose={"email"}
           value={signUpFormData.email}
@@ -109,7 +127,7 @@ const SignUp = () => {
           changeHasValue={changeEmailHasValue}
         />
       )}
-      {isOtpSend && (
+      {isSignUpOtpSend && (
         <EntryDiv
           type="text"
           inputMode="numeric"

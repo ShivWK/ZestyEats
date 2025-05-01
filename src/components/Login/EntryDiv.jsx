@@ -20,18 +20,20 @@ const EntryDiv = ({
   useEffect(() => {
     if (focus) {
       inputRef.current.focus();
+      setIsEntryMade(true);
     }
-  }, []);
+  }, [focus]);
 
   useEffect(() => {
-    if (changeHasValue) setHasValue(true);
-    if (changeIsEntryMade) setIsEntryMade(false);
+    if (changeHasValue !== undefined) setHasValue(changeHasValue);
+    if (changeIsEntryMade !== undefined) setIsEntryMade(changeIsEntryMade);
   }, [changeHasValue, changeIsEntryMade]);
 
   const handleDivClick = (e) => {
     e.stopPropagation();
-    setIsEntryMade(true);
-    inputRef.current.focus();
+    
+      setIsEntryMade(true);
+      inputRef.current.focus();
   };
 
   const onPhoneBlur = () => {
@@ -119,13 +121,14 @@ const EntryDiv = ({
 
   return (
     <div
+      // onBlur={()=> {console.log("Blured Div")}}
       onClick={handleDivClick}
       className="relative p-2.5 border-2 border-gray-300 h-[70px] cursor-text"
     >
       <p
         className={`absolute font-semibold ${
           hasValue ? "text-red-500" : "text-gray-400"
-        } transition-all duration-200 ease-in-out ${
+        } transition-all duration-[250ms] ease-in-out ${
           isEntryMade ? "top-2.5 text-xs" : "top-[19px] text-lg"
         }`}
       >
@@ -133,7 +136,7 @@ const EntryDiv = ({
       </p>
       <input
         name={purpose}
-        value={value}
+        // value={value}
         type={type}
         onBlur={handleBlur}
         onFocus={handleFocus}
@@ -142,9 +145,9 @@ const EntryDiv = ({
         ref={inputRef}
         onChange={(event) => {
           handleInput(event);
-          onChangeHandler(event);
+          // onChangeHandler(event);
         }}
-        className="relative top-5 font-bold text-lg outline-none"
+        className="relative top-5 font-bold text-lg outline-none "
       />
     </div>
   );

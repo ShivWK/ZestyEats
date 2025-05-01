@@ -5,10 +5,10 @@ import { useDispatch, useSelector} from "react-redux";
 import { closeLogInModal, loginOtpSend, loginOtpNotSend, selectLoginOtp } from "../../features/Login/loginSlice";
 
 const Login = () => {
-  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(false);
-  const [changePhoneHasValue, setChangePhoneHasValue] = useState(false);
-  const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(false);
-  const [changeOtpHasValue, setChangeOtpHasValue] = useState(false);
+  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
+  const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
+  const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
+  const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
   const [loginFormData, setLoginFormData] = useState({ phone: "", otp: "" });
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
@@ -31,9 +31,9 @@ const Login = () => {
 
     if (!isOtpSend) {
       if (data.get("phone").length === 0) {
-        setChangePhoneIsEntryMade(true);
         setChangePhoneHasValue(true);
       } else if (data.get("phone").length < 10) {
+        setChangePhoneIsEntryMade(true);
         setChangePhoneHasValue(true);
       } else {
         // handle the OTP sending logic 
@@ -42,8 +42,8 @@ const Login = () => {
     } else {
       if (data.get("otp").length === 0) {
         setChangeOtpHasValue(true);
-        setChangeOtpIsEntryMade(true);
       } else if (data.get("otp").length < 6) {
+        setChangeOtpIsEntryMade(true);
         setChangeOtpHasValue(true);
       } else {
         // handle the OTP verification logic here
