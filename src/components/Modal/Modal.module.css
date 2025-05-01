@@ -13,9 +13,20 @@
     transition: transform 0.5s ease-in-out;
 }
 
-/* .modal-right {
-
-} */
+.modal-right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 35%;
+    height: 100vh;
+    z-index: 50;
+    background-color: #fff;
+    transform: translate(-100%, 0);
+    transition: transform 0.5s ease-in-out;
+}
 
 .show-modal {
     transform: translate(0, 0);

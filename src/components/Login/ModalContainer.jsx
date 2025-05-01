@@ -7,6 +7,7 @@ import {
 } from "../../features/Login/loginSlice";
 import Login from "./Login";
 import SignUp from "./SignUp";
+import Modal from "../Modal/Modal";
 
 const ModalContainer = () => {
   const [member, setMember] = useState(true);
@@ -18,11 +19,7 @@ const ModalContainer = () => {
   };
 
   return (
-    <div
-      className={`fixed top-0 right-0 h-screen bg-white z-50 flex items-start justify-center transform ${
-        isOpen && "w-[35%]"
-      } transition-all duration-300 ease-in-out`}
-    >
+    <Modal modal={"right"}>
       <ModalSubContainer
         member={member}
         handleSwitch={handleSwitch}
@@ -30,7 +27,7 @@ const ModalContainer = () => {
       >
         {member ? <Login /> : <SignUp />}
       </ModalSubContainer>
-    </div>
+    </Modal>
   );
 };
 

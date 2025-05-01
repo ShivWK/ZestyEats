@@ -5,7 +5,7 @@ import {
   selectlogInModal,
 } from "../../features/Login/loginSlice";
 
-const Modal = ({ modal }) => {
+const Modal = ({ children, modal }) => {
   const isLoginOpen = useSelector(selectlogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
 
@@ -14,7 +14,9 @@ const Modal = ({ modal }) => {
       className={`${
         modal == "left" ? Style["modal-left"] : Style["modal-right"]
       } ${(isLoginOpen || isLocationOpen) && Style["show-modal"]}`}
-    ></div>
+    >
+        {children}
+    </div>
   );
 };
 
