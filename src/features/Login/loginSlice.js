@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    isOpen: false,
+    isLoginModalOpen: false,
+    isLocationModalOpen: false,
     isLoginOtpSend: false,
     isSignUpOtpSend: false,
 }
@@ -11,11 +12,19 @@ const loginSlice = createSlice({
 
     reducers: {
         openLogInModal: (state) => {
-            state.isOpen = true;
+            state.isLoginModalOpen = true;
         },
 
         closeLogInModal: (state) => {
-            state.isOpen = false;
+            state.isLoginModalOpen = false;
+        },
+
+        openLocationModal: (state) => {
+            state.isLocationModalOpen = true;
+        },
+
+        closeLocationInModal: (state) => {
+            state.isLocationModalOpen = false;
         },
 
         loginOtpSend: (state) => {
@@ -36,9 +45,10 @@ const loginSlice = createSlice({
     }
 });
 
-export const selectlogInModal = (state) => state.login.isOpen;
+export const selectlogInModal = (state) => state.login.isLoginModalOpen;
 export const selectLoginOtp = (state) => state.login.isLoginOtpSend;
 export const selectSignUpOtp = (state) => state.login.isSignUpOtpSend;
+export const selectLocationModal = (state) => state.login.isLocationModalOpen;
 export const loginReducer = loginSlice.reducer;
 export const { 
     openLogInModal, 
@@ -46,6 +56,8 @@ export const {
     loginOtpSend, 
     loginOtpNotSend,
     signUpOtpSend,
-    signUpOtpNotSend
+    signUpOtpNotSend,
+    openLocationModal,
+    closeLocationInModal
 } = loginSlice.actions;
 

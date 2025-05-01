@@ -2,17 +2,19 @@ import { Outlet } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
 import LoginModal from "./Login/LoginModal";
-import { selectlogInModal } from "../features/Login/loginSlice";
+import LocationModal from "./Location/LocationModal";
+import { selectlogInModal, selectLocationModal } from "../features/Login/loginSlice";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 
 export default function Layout() {
-    const isOpen = useSelector(selectlogInModal);
+    const isLoginOpen = useSelector(selectlogInModal);
+    const isLocationOpen = useSelector(selectLocationModal);
 
     useEffect(() => {
         const scrollbarWidth = "15px";   
 
-        if (isOpen) {
+        if (isLoginOpen || isLocationOpen) {
                 document.body.classList.add('overflow-hidden');
                 document.body.style.paddingRight = scrollbarWidth;
               } else {
@@ -24,12 +26,13 @@ export default function Layout() {
                 document.body.classList.remove('overflow-hidden');
                 document.body.style.paddingRight = "0px";
             }
-    }, [isOpen])
+    }, [isLoginOpen, isLocationOpen])
      
     return <>
         <PageHeader />
         <Outlet/>
-        {isOpen && <LoginModal />}
+        {isLoginOpen && <LoginModal />}
+        {isLocationOpen && <LocationModal />}
         {/* <PageFooter /> */}
     </>
 }

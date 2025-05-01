@@ -135,6 +135,7 @@ const EntryDiv = ({
         {hasValue ? fallbackPlacehoder : placeholder}
       </p>
       <input
+        id="elem"
         name={purpose}
         // value={value}
         type={type}

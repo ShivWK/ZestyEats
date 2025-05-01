@@ -8,7 +8,7 @@ import {
 import Login from "./Login";
 import SignUp from "./SignUp";
 
-const Modal = () => {
+const ModalContainer = () => {
   const [member, setMember] = useState(true);
   const isOpen = useSelector(selectlogInModal);
   const isLoginOtpSend = useSelector(selectLoginOtp);
@@ -19,7 +19,7 @@ const Modal = () => {
 
   return (
     <div
-      className={`fixed top-0 right-0 h-screen modal-slide-out bg-white z-50 flex items-start justify-center transform ${
+      className={`fixed top-0 right-0 h-screen bg-white z-50 flex items-start justify-center transform ${
         isOpen && "w-[35%]"
       } transition-all duration-300 ease-in-out`}
     >
@@ -34,5 +34,5 @@ const Modal = () => {
   );
 };
 
-export default Modal;
+export default ModalContainer;
 

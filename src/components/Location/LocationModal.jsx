@@ -1,12 +1,12 @@
 import Overlay from "../Modal/Overlay";
 import ModalContainer from "./ModalContainer";
 
-const LoginModel = () => {
-    return <>
+const LocationMaodal = () => {
+    return ( <>
         <Overlay />
         <ModalContainer />
-    </>
+    </>)
 }
 
-export default LoginModel;
+export default LocationMaodal;
 
