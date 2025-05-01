@@ -1,5 +1,5 @@
 import Modal from "../Modal/Modal"
-import ModalSubContainer from "./ModalSubContainer";
+import ModalSubContainer from "./LocationModalSubContainer";
 
 const ModalContainer = () => {
     return (
