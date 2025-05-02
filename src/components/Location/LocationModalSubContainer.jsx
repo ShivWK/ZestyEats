@@ -1,6 +1,6 @@
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import RecentLocation from "./RecentLoacations";
 
 const ModalSubContainer = () => {
@@ -9,12 +9,44 @@ const ModalSubContainer = () => {
   const [ Focused , setFocused ] = useState(false);
   const [ recentLocation, setRecentLocation ] = useState([]);
 
+  // Store the debounced function in a ref so that:
+  // 1. It is created only once on initial render.
+  // 2. It preserves the internal timer between re-renders.
+  // This avoids creating a new debounced function on every input change,
+  // which would break debounce behavior by resetting the timer each time.
+  // Use function declaration for debounceCreater to avoid hoisting issues.
+  // and to ensure it is defined before being used in the useRef hook.
+
+  const debouncedHandleInputChange = useRef(debounceCreater(async (value) => {
+    try {
+      // Do this with RTK query
+
+      const response = await fetch(`https://www.swiggy.com/dapi/misc/place-autocomplete?input=${value}&types=`)
+      const data = await response.json();
+      console.log(data);
+    } catch (err) {
+      alert(err.message);
+    }
+  }, 200));
+  
   const handleClose = () => {
     dispatch(closeLocationInModal());
   };
 
+  function debounceCreater(func, delay){ 
+    let timer = null;
+    return function(...value) {
+      if (timer) clearTimeout(timer);
+
+      timer = setTimeout(() => {
+        func(...value);
+      }, delay);
+    }
+  }
+
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
+    debouncedHandleInputChange.current(e.target.value);
   }
 
   const handleDivClick = (e) => {

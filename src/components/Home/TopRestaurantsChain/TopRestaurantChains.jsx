@@ -21,6 +21,17 @@ const TopRestaurantChains = ({ isLoading }) => {
     }
   }, [topRestaurantsChainsData]);
 
+  // Store the debounced function in a ref so that:
+  // 1. It is created only once on initial render.
+  // 2. It preserves the internal timer between re-renders.
+  // This avoids creating a new debounced function on every input change,
+  // which would break debounce behavior by resetting the timer each time.
+  // Use function declaration for debounceCreate, and passed functions to avoid hoisting issues.
+  // and to ensure it is defined before being used in the useRef hook
+
+  const debouncedHandleRightClick = useRef(createDebounce(handleRightClick, 100));
+  const debouncedHandleLeftClick = useRef(createDebounce(handleLeftClick, 100));
+
   function handleScroll() {
     const container = containerRef.current;
     if (!container) return; 
@@ -81,8 +92,8 @@ const TopRestaurantChains = ({ isLoading }) => {
           <div className="flex justify-between flex-wrap items-center">
             <h3>{`Top restaurant chains in ${location}`}</h3>
             <div className="flex justify-between gap-1">
-              <Button ref={leftBtnRef} clickHandler={createDebounce(handleLeftClick, 200)} iconClass="left"/>
-              <Button ref={rightBtnRef} clickHandler={createDebounce(handleRightClick, 200)} iconClass="right"/>
+              <Button ref={leftBtnRef} clickHandler={debouncedHandleLeftClick.current} iconClass="left"/>
+              <Button ref={rightBtnRef} clickHandler={debouncedHandleRightClick.current} iconClass="right"/>
             </div>
           </div>
           <div className="relative">
@@ -100,13 +111,6 @@ const TopRestaurantChains = ({ isLoading }) => {
               )}
             </div>
             <Scrollbar scrolledPercentage={scrollPercentage} marginTop={10}/>
-            {/* <div className="w-full flex justify-center mt-4">
-              <div className="w-[70px] h-1 rounded-full bg-gray-200 ">
-                <div className="w-1/6 rounded-full transition-all ease-in-out bg-primary h-full relative" 
-                style={{ left: `${scrollPercentage}%` }}
-                ></div>
-              </div>
-            </div> */}
           </div>
         </>;
 }

@@ -11,9 +11,18 @@ const FoodieThoughts = ({ isLoading }) => {
   const containerRef = useRef();
   const rightBtnRef = useRef();
   const leftBtnRef = useRef();
-  const scrollContainerRef = useRef();
-  const scrrollBarRef = useRef();
   const [user, setUser] = useState("Shivendra");
+
+  // Store the debounced function in a ref so that:
+  // 1. It is created only once on initial render.
+  // 2. It preserves the internal timer between re-renders.
+  // This avoids creating a new debounced function on every input change,
+  // which would break debounce behavior by resetting the timer each time.
+  // Use function declaration for debounceCreate, and passed functions to avoid hoisting issues.
+  // and to ensure it is defined before being used in the useRef hook
+  
+  const debouncedHandleRightClick = useRef(createDebounce(handleRightClick, 100));
+  const debouncedHandleLeftClick = useRef(createDebounce(handleLeftClick, 100));
 
   useEffect(() => {
     if (foodieThoughtsData.length) {
@@ -83,12 +92,12 @@ const FoodieThoughts = ({ isLoading }) => {
         <div className="flex justify-between gap-1">
           <Button
             ref={leftBtnRef}
-            clickHandler={createDebounce(handleLeftClick, 200)}
+            clickHandler={debouncedHandleLeftClick.current}
             iconClass="left"
           />
           <Button
             ref={rightBtnRef}
-            clickHandler={createDebounce(handleRightClick, 200)}
+            clickHandler={debouncedHandleRightClick.current}
             iconClass="right"
           />
         </div>
