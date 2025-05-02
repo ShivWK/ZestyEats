@@ -1,11 +1,13 @@
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
 import { useState } from "react";
+import RecentLocation from "./RecentLoacations";
 
 const ModalSubContainer = () => {
   const dispatch = useDispatch();
   const [ searchValue, setSearchValue ] = useState('');
-  const [ Focused , setFocused ] = useState(false)
+  const [ Focused , setFocused ] = useState(false);
+  const [ recentLocation, setRecentLocation ] = useState([]);
 
   const handleClose = () => {
     dispatch(closeLocationInModal());
@@ -28,6 +30,29 @@ const ModalSubContainer = () => {
     setSearchValue('');
   }
 
+  const handleLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat = position.coords.latitude;
+        const long = position.coords.longitude;
+        // alert(`Latitude: ${lat}, Longitude: ${lon}`);
+
+        try {
+          setSearchValue("Fetching your location...");
+          const response = await fetch( `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${long}`);
+          setSearchValue('');
+          const data = await response.json();
+          alert(`Location: ${data.display_name}`);
+        } catch (err) {
+          setSearchValue('');
+          alert("Error fetching location data. Please try again later.");
+        }
+      })
+    } else {
+      alert("Geolocation is not supported by this browser.");
+    }
+  }
+
   return (
     <div onClick={handleContainerClick} className="flex flex-col mt-7 w-[75%] h-[90%]">
       <button onClick={handleClose} className="cursor-pointer self-start">
@@ -44,9 +69,9 @@ const ModalSubContainer = () => {
         />
         {(searchValue.length !== 0) && <button onClick={handeCancelClick} className="font-bold text-primary cursor-pointer">Cancel</button>}
       </div>
-        <div className="group cursor-pointer border-[1px] border-gray-400 py-4 px-7 mt-8">
+        <div onClick={handleLocation} className="group cursor-pointer border-[1px] border-gray-400 py-4 px-7 mt-8">
             <div className="flex gap-2.5">
-                <i class="ri-crosshair-2-line text-xl text-gray-500"></i>
+                <i className="ri-crosshair-2-line text-xl text-gray-500"></i>
                 <div>
                     <p className="font-medium group-hover:text-primary text-lg">Get current location</p>
                     <p className="text-sm font-semibold text-gray-400">Using GPS</p>
@@ -55,6 +80,12 @@ const ModalSubContainer = () => {
         </div>
         <div className="border-[1px] border-gray-400 mt-6 p-6">
             <p className="text-sm font-semibold text-gray-400">RECENT SEARCHES</p>
+            {recentLocation.length !== 0 ? 
+             (recentLocation.map((location, index) => (
+                <RecentLocation />
+             )))
+             : (<p className="">No Recent Locatons</p>)
+            }
         </div>
     </div>
   );
