@@ -4,29 +4,16 @@ const homeApiSlice = createApi({
     reducerPath: "homeFirestoreApi",
     baseQuery: fetchBaseQuery({baseUrl: "https://swiggy-clone-klzu.onrender.com/api"}),
     keepUnusedDataFor: 60,
-    refetchOnReconnect: true,
+    // refetchOnReconnect: true,
 
     endpoints : builder => ({
         getHomePageData : builder.query({
             query: () => '/swiggy-restaurants'
         }),
-
-        // getTopRestaurantChain : builder.query({
-        //     query: () => '/swiggy-restaurants',
-
-        //     transformResponse : (response) => {
-        //         const cards = response?.data?.cards?.find(
-        //            item => item?.card?.card?.id === "top_brands_for_you"
-        //         ) ;
-
-        //         return cards?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
-        //     }
-        // }),
-
     })
 })
 
-export const { useGetfoodieThoughtsQuery,  useGetHomePageDataQuery, useGetTopRestaurantChainQuery } = homeApiSlice;
+export const { useGetHomePageDataQuery } = homeApiSlice;
 export default homeApiSlice;
 
 // https://www.swiggy.com/mapi/restaurants/list/v5?offset=0&is-seo-homepage-enabled=true&lat=21.99740&lng=79.00110&carousel=true&third_party_vendor=1 // Home API
