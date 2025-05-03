@@ -82,23 +82,18 @@ const ModalSubContainer = () => {
     setSearchValue("");
   };
 
-  const updateHomeRestaurantData = async (location) => {
-    const res1 = await triggerLocationCall(location["place_id"]).unwrap();
-    const { lat, lng } = res1;
-    const res2 = await triggerRestaurentDataCall({ lat, lng });
-
-    if (res2?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
+  const updateHomeRestaurantData = async (res) => {
+    if (res?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
       alert("We don't server in this location");
     } else {
-      console.log(res2);
-      dispatch(addApiData(res2.data));
-      dispatch(addFoodieThoughtsData(res2.data));
-      dispatch(addTopRestaurantsData(res2.data));
+      console.log(res);
+      dispatch(addApiData(res.data));
+      dispatch(addFoodieThoughtsData(res.data));
+      dispatch(addTopRestaurantsData(res.data));
     }
   };
 
   const handleSearchedLocationClick = async (location) => {
-    // console.log(location?.terms[0]?.value);
     const city = location?.terms[0]?.value || "";
     const address =
       location?.terms[1]?.value === undefined
@@ -123,7 +118,11 @@ const ModalSubContainer = () => {
     dispatch(closeLocationInModal());
 
     try {
-      updateHomeRestaurantData(location);
+      const res1 = await triggerLocationCall(location["place_id"]).unwrap();
+      const { lat, lng } = res1;
+      const res2 = await triggerRestaurentDataCall({ lat, lng });
+
+      updateHomeRestaurantData(res2);
     } catch (err) {
       alert(err.message);
     }
@@ -133,16 +132,17 @@ const ModalSubContainer = () => {
   const handleLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
+        const lat1 = position.coords.latitude;
+        const lng1 = position.coords.longitude;
 
         try {
           setSearchValue("Fetching your location...");
           const response = await fetch(
-            `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat}%2C${lng}`
+            `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`
           );
           setSearchValue("");
           const data = await response.json();
+   
           const localityObject = data?.data?.[0]?.["address_components"].find(
             (item) => item?.["types"].includes("locality")
           );
@@ -151,6 +151,19 @@ const ModalSubContainer = () => {
           dispatch(
             addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
           );
+
+          const lat2 = data?.data?.[0]?.geometry?.location?.lat;
+          const lng2 = data?.data?.[0]?.geometry?.location?.lng;
+
+          console.log(lat2, lng2)
+
+          try {
+            const res = await triggerRestaurentDataCall({ lat2, lng2 });
+            console.log(res)
+            updateHomeRestaurantData(res);
+          } catch (err) {
+            alert(err.message);
+          }
 
           dispatch(closeLocationInModal());
         } catch (err) {
