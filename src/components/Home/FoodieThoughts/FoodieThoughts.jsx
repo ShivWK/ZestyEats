@@ -20,7 +20,7 @@ const FoodieThoughts = ({ isLoading }) => {
   // which would break debounce behavior by resetting the timer each time.
   // Use function declaration for debounceCreate, and passed functions to avoid hoisting issues.
   // and to ensure it is defined before being used in the useRef hook
-  
+
   const debouncedHandleRightClick = useRef(createDebounce(handleRightClick, 100));
   const debouncedHandleLeftClick = useRef(createDebounce(handleLeftClick, 100));
 
@@ -33,7 +33,7 @@ const FoodieThoughts = ({ isLoading }) => {
 
     const container = containerRef.current;
     container.scrollTo({
-      left:0,
+      left: 0,
       behavior: "smooth"
     })
   }, [foodieThoughtsData]);
@@ -92,6 +92,7 @@ const FoodieThoughts = ({ isLoading }) => {
   }
 
   return (
+    foodieThoughtsData &&
     <>
       <div className="flex justify-between flex-wrap items-center">
         <h3>{`${user}, what's on your mind?`}</h3>

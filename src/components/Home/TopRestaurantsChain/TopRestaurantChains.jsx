@@ -24,7 +24,7 @@ const TopRestaurantChains = ({ isLoading }) => {
 
     const container = containerRef.current;
     container.scrollTo({
-      left:0,
+      left: 0,
       behavior: "smooth"
     })
   }, [topRestaurantsChainsData]);
@@ -46,7 +46,7 @@ const TopRestaurantChains = ({ isLoading }) => {
 
   function handleScroll() {
     const container = containerRef.current;
-    if (!container) return; 
+    if (!container) return;
 
     const clientWidth = container.clientWidth;
     const scrollLeft = container.scrollLeft;
@@ -63,7 +63,7 @@ const TopRestaurantChains = ({ isLoading }) => {
 
     const scrolledPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
     setScrollPercentage(scrolledPercentage);
-    
+
   }
 
   function handleRightClick(e) {
@@ -98,33 +98,36 @@ const TopRestaurantChains = ({ isLoading }) => {
       clearTimeout(timer);
       timer = setTimeout(toCall, delay)
     }
-  } 
+  }
 
-  return <>
-          <div className="flex justify-between flex-wrap items-center">
-            <h3>{`Top restaurant chains in ${searchedCity}`}</h3>
-            <div className="flex justify-between gap-1">
-              <Button ref={leftBtnRef} clickHandler={debouncedHandleLeftClick.current} iconClass="left"/>
-              <Button ref={rightBtnRef} clickHandler={debouncedHandleRightClick.current} iconClass="right"/>
-            </div>
-          </div>
-          <div className="relative">
-            <div
-              onScroll={handleScroll}
-              ref={containerRef}
-              className="flex mt-0 gap-6 overflow-x-auto hide-scrollbar "
-            >
-              {isLoading ? (
-                <p>Loading...</p>
-              ) : topRestaurantsChainsData.length ? (
-                topRestaurantsChainsData.map((item) => <Cards key={item.info.id} data={item.info} />)
-              ) : (
-                <p>No data found</p>
-              )}
-            </div>
-            <Scrollbar scrolledPercentage={scrollPercentage} marginTop={10}/>
-          </div>
-        </>;
+  return (
+    topRestaurantsChainsData &&
+    <>
+      <div className="flex justify-between flex-wrap items-center">
+        <h3>{`Top restaurant chains in ${searchedCity}`}</h3>
+        <div className="flex justify-between gap-1">
+          <Button ref={leftBtnRef} clickHandler={debouncedHandleLeftClick.current} iconClass="left" />
+          <Button ref={rightBtnRef} clickHandler={debouncedHandleRightClick.current} iconClass="right" />
+        </div>
+      </div>
+      <div className="relative">
+        <div
+          onScroll={handleScroll}
+          ref={containerRef}
+          className="flex mt-0 gap-6 overflow-x-auto hide-scrollbar "
+        >
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : topRestaurantsChainsData.length ? (
+            topRestaurantsChainsData.map((item) => <Cards key={item.info.id} data={item.info} />)
+          ) : (
+            <p>No data found</p>
+          )}
+        </div>
+        <Scrollbar scrolledPercentage={scrollPercentage} marginTop={10} />
+      </div>
+    </>
+  )
 }
 
 export default TopRestaurantChains;
