@@ -30,6 +30,12 @@ const FoodieThoughts = ({ isLoading }) => {
         handleScroll();
       }, 0);
     }
+
+    const container = containerRef.current;
+    container.scrollTo({
+      left:0,
+      behavior: "smooth"
+    })
   }, [foodieThoughtsData]);
 
   function handleScroll() {
@@ -109,13 +115,13 @@ const FoodieThoughts = ({ isLoading }) => {
           className="flex gap-6 overflow-x-auto hide-scrollbar"
         >
           {isLoading ? (
-            <h2>Loading...</h2>
+            <p>Loading...</p>
           ) : foodieThoughtsData.length ? (
             foodieThoughtsData.map((item) => (
               <Cards key={item.id} data={item} />
             ))
           ) : (
-            <h2>No data found</h2>
+            <p>No data found</p>
           )}
         </div>
         <ScrollBar

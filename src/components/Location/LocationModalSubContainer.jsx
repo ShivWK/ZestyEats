@@ -2,6 +2,19 @@ import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
 import { useState, useRef } from "react";
 import Location from "./Loacations";
+import {
+  useLazySearchedLocationQuery,
+  useLazySearchedLocationDataQuery,
+} from "../../features/home/searchApiSlice";
+import {
+  addApiData,
+  addFoodieThoughtsData,
+  addTopRestaurantsData,
+  addSearchedCity,
+  addSearchedCityAddress,
+  addYourCurrentCity,
+  removeYourCurrentCity,
+} from "../../features/home/homeSlice";
 
 const ModalSubContainer = () => {
   const dispatch = useDispatch();
@@ -9,6 +22,8 @@ const ModalSubContainer = () => {
   const [searchedLocation, setSearchedLocation] = useState([]);
   const [Focused, setFocused] = useState(false);
   const [recentLocation, setRecentLocation] = useState([]);
+  const [triggerLocationCall] = useLazySearchedLocationQuery();
+  const [triggerRestaurentDataCall] = useLazySearchedLocationDataQuery();
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -67,54 +82,80 @@ const ModalSubContainer = () => {
     setSearchValue("");
   };
 
+  const updateHomeRestaurantData = async (location) => {
+    const res1 = await triggerLocationCall(location["place_id"]).unwrap();
+    const { lat, lng } = res1;
+    const res2 = await triggerRestaurentDataCall({ lat, lng });
+
+    if (res2?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
+      alert("We don't server in this location");
+    } else {
+      console.log(res2);
+      dispatch(addApiData(res2.data));
+      dispatch(addFoodieThoughtsData(res2.data));
+      dispatch(addTopRestaurantsData(res2.data));
+    }
+  };
+
   const handleSearchedLocationClick = async (location) => {
-    setRecentLocation((prev) => { 
+    // console.log(location?.terms[0]?.value);
+    const city = location?.terms[0]?.value || "";
+    const address =
+      location?.terms[1]?.value === undefined
+        ? ""
+        : ", "+location?.terms[1]?.value + ", " + location?.terms[2]?.value;
+    dispatch(addSearchedCity(city));
+    dispatch(addSearchedCityAddress(address));
+
+    setRecentLocation((prev) => {
       return [
         ...prev,
         {
           place_id: location["place_id"],
           terms: location["terms"],
-        }
-      ]
-    })
+        },
+      ];
+    });
 
     setSearchedLocation([]);
     setSearchValue("");
+    dispatch(removeYourCurrentCity());
+    dispatch(closeLocationInModal());
+
     try {
-      const response1 = await fetch(`https://www.swiggy.com/dapi/misc/address-recommend?place_id=${location["place_id"]}`);
-      const data = await response1.json();
-      
-      const lat = data?.data?.[0]?.geometry?.location.lat;
-      const log = data?.data?.[0]?.geometry?.location.lng;
-
-      const response2 = await fetch(`https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${log}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`);
-
-      const data2 = await response2.json();
-      console.log(data2);
-
+      updateHomeRestaurantData(location);
     } catch (err) {
       alert(err.message);
     }
-  }
+  };
 
   // Geo Location API
   const handleLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat = position.coords.latitude;
-        const long = position.coords.longitude;
-        // alert(`Latitude: ${lat}, Longitude: ${lon}`);
+        const lng = position.coords.longitude;
 
         try {
           setSearchValue("Fetching your location...");
           const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${long}`
+            `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat}%2C${lng}`
           );
           setSearchValue("");
           const data = await response.json();
-          alert(`Location: ${data.display_name}`);
+          const localityObject = data?.data?.[0]?.["address_components"].find(
+            (item) => item?.["types"].includes("locality")
+          );
+
+          dispatch(addYourCurrentCity(localityObject?.["short_name"]));
+          dispatch(
+            addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
+          );
+
+          dispatch(closeLocationInModal());
         } catch (err) {
           setSearchValue("");
+          dispatch(closeLocationInModal());
           alert("Error fetching location data. Please try again later.");
         }
       });
@@ -196,10 +237,10 @@ const ModalSubContainer = () => {
       {searchValue.length !== 0 && (
         <div className="mt-6 overflow-auto last:border-none">
           {searchedLocation.map((location, index) => (
-            <Location 
+            <Location
               key={location["place_id"]}
               icon="ri-map-pin-line"
-              item={location} 
+              item={location}
               handleClick={handleSearchedLocationClick}
             />
           ))}
@@ -213,12 +254,17 @@ export default ModalSubContainer;
 
 // <i class="ri-history-line"></i>
 
-// API on click on location to fetch the food data there is  https://www.swiggy.com/dapi/misc/address-recommend?place_id=ChIJYZ39KLyhoDkRs32YFql7rnw change the place_id to get the data for that location
+// API on click on location to fetch the food data there is change the place_id to get the data for that location, here you will get lat and long of the location according to the Swiggy
+// https://www.swiggy.com/dapi/misc/address-recommend?place_id=ChIJYZ39KLyhoDkRs32YFql7rnw
 
-// API to get location on search https://www.swiggy.com/dapi/misc/place-autocomplete?input=${value}&types=
+// API to get location on search
+// https://www.swiggy.com/dapi/misc/place-autocomplete?input=${value}&types=
 
-// API to get current location after getting the lat and long https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${long} to get the location name from lat and long
+// API to get the lat and long from the location name
+// https://nominatim.openstreetmap.org/search?q=${location}&format=json&addressdetails=1&limit=1
 
-// API to get the lat and long from the location name https://nominatim.openstreetmap.org/search?q=${location}&format=json&addressdetails=1&limit=1
-
+// API to get Restaurant's data of searched city
 // https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.407075192182013&lng=78.47801461815835&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
+
+// Api to get live location area name after getting lat and lng
+// https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat}%2C${long}

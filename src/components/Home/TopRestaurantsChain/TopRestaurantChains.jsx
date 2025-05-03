@@ -4,6 +4,8 @@ import { useEffect, useState, useRef } from "react";
 import Cards from './Cards'
 import Button from "../Button";
 import Scrollbar from "../ScroolBar";
+import { selectSearchedCity, selectSearchedCityAddress } from "../../../features/home/homeSlice";
+
 
 const TopRestaurantChains = ({ isLoading }) => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
@@ -11,7 +13,7 @@ const TopRestaurantChains = ({ isLoading }) => {
   const containerRef = useRef();
   const rightBtnRef = useRef();
   const leftBtnRef = useRef();
-  const [location, setLocation] = useState("Your Location");
+  const searchedCity = useSelector(selectSearchedCity);
 
   useEffect(() => {
     if (topRestaurantsChainsData.length) {
@@ -19,7 +21,17 @@ const TopRestaurantChains = ({ isLoading }) => {
         handleScroll();
       }, 0);
     }
+
+    const container = containerRef.current;
+    container.scrollTo({
+      left:0,
+      behavior: "smooth"
+    })
   }, [topRestaurantsChainsData]);
+
+  useEffect(() => {
+
+  }, [topRestaurantsChainsData])
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -90,7 +102,7 @@ const TopRestaurantChains = ({ isLoading }) => {
 
   return <>
           <div className="flex justify-between flex-wrap items-center">
-            <h3>{`Top restaurant chains in ${location}`}</h3>
+            <h3>{`Top restaurant chains in ${searchedCity}`}</h3>
             <div className="flex justify-between gap-1">
               <Button ref={leftBtnRef} clickHandler={debouncedHandleLeftClick.current} iconClass="left"/>
               <Button ref={rightBtnRef} clickHandler={debouncedHandleRightClick.current} iconClass="right"/>
@@ -103,11 +115,11 @@ const TopRestaurantChains = ({ isLoading }) => {
               className="flex mt-0 gap-6 overflow-x-auto hide-scrollbar "
             >
               {isLoading ? (
-                <h2>Loading...</h2>
+                <p>Loading...</p>
               ) : topRestaurantsChainsData.length ? (
                 topRestaurantsChainsData.map((item) => <Cards key={item.info.id} data={item.info} />)
               ) : (
-                <h2>No data found</h2>
+                <p>No data found</p>
               )}
             </div>
             <Scrollbar scrolledPercentage={scrollPercentage} marginTop={10}/>
