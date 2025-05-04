@@ -14,8 +14,14 @@ import {
 
 export default function Home() {
     const dispatch = useDispatch();
-    const { data, isLoading } = useGetHomePageDataQuery();
+    const { data, isLoading } = useGetHomePageDataQuery({
+        lat: 26.8496217,
+        lng: 81.0072193,
+    });
     
+// lat: 26.8496217
+// lng: 81.0072193
+
     useEffect(()=> {
         if (!data) return;
         dispatch(addApiData(data));
