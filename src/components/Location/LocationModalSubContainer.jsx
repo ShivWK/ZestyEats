@@ -4,13 +4,13 @@ import { useState, useRef } from "react";
 import Location from "./Loacations";
 import {
   useLazySearchedLocationQuery,
-  useLazySearchedLocationDataQuery,
   useLazyGetAutoCompleteSearchQuery,
+  useLazyLocationByCoordinatesQuery
 } from "../../features/home/searchApiSlice";
 
-// import {
-//   useLazyGetAutoCompleteSearchQuery,
-// } from "../..//features/home/homeApiSlice";
+import {
+  useLazyGetHomePageDataQuery
+} from "../..//features/home/homeApiSlice";
 
 import {
   addApiData,
@@ -29,8 +29,9 @@ const ModalSubContainer = () => {
   const [Focused, setFocused] = useState(false);
   const [recentLocation, setRecentLocation] = useState([]);
   const [triggerLocationCall] = useLazySearchedLocationQuery();
-  const [triggerRestaurentDataCall] = useLazySearchedLocationDataQuery();
-  const [trigggerAutoCompleteSearch, { isLoading }] = useLazyGetAutoCompleteSearchQuery()
+  const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const [trigggerAutoCompleteSearch, { isLoading: AutocompleteLoading }] = useLazyGetAutoCompleteSearchQuery();
+  const [triggerLoactionByCoordinates, { isLoading: LocationByCoordinatesLoading }] = useLazyLocationByCoordinatesQuery();
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -125,9 +126,10 @@ const ModalSubContainer = () => {
     try {
       const res1 = await triggerLocationCall(location["place_id"]).unwrap();
       const { lat, lng } = res1;
-      const res2 = await triggerRestaurentDataCall({ lat, lng });
 
+      const res2 = await triggerRestaurentDataCall({ lat, lng });
       updateHomeRestaurantData(res2);
+
     } catch (err) {
       alert(err.message);
     }
@@ -135,6 +137,12 @@ const ModalSubContainer = () => {
 
   // Geo Location API
   const handleLocation = () => {
+
+    // 1: Get live lat and lng by GeoLoaction API.
+    // 2: Give this lat and lng to Swiggy API , which will give you the loaction according to it.
+    // 3: Swiggy given location will a new approx lat and lng , extarct that.
+    // 4: Now give this new lat and lng to the home API to ftech Restaurant's data.
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
@@ -142,12 +150,14 @@ const ModalSubContainer = () => {
 
         try {
           setSearchValue("Fetching your location...");
-          const response = await fetch(
-            `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`
-          );
+          // const response = await fetch(
+          //   `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`
+          // );
+          // setSearchValue("");
+          // const data = await response.json();
+
+          const data = await triggerLoactionByCoordinates({ lat1, lng1 }).unwrap();
           setSearchValue("");
-          const data = await response.json();
-   
           const localityObject = data?.data?.[0]?.["address_components"].find(
             (item) => item?.["types"].includes("locality")
           );

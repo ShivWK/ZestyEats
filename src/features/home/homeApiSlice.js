@@ -16,7 +16,7 @@ const homeApiSlice = createApi({
     })
 })
 
-export const { useGetHomePageDataQuery } = homeApiSlice;
+export const { useGetHomePageDataQuery, useLazyGetHomePageDataQuery } = homeApiSlice;
 export default homeApiSlice;
 
 

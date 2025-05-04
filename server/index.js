@@ -128,6 +128,7 @@ app.get("/", (req, res) => {
       <li>/api/swiggy-restaurants?lat=YOUR_LAT&lng=YOUR_LNG</li>
       <li>/api/place-autocomplete?input=SEARCH_TERM</li>
       <li>/api/address-recommend?place_id=PLACE_ID</li>
+      <li>/api/address-from-coordinates??latlng=latitude%2Clongitude</li>
     </ul>
   `);
 });
@@ -212,6 +213,38 @@ app.get("/api/address-recommend", async (req, res) => {
   } catch (error) {
     console.error("Address Recommend Error:", error.message);
     res.status(500).json({ error: "Failed to fetch address recommendation" });
+  }
+});
+
+app.get("/api/address-from-coordinates", async (req, res) => {
+  try {
+    const { lat1, lng1 } = req.query;
+    
+    if (!lat1 || !lng1) {
+      return res.status(400).json({ 
+        error: "Both lat and lng query parameters are required" 
+      });
+    }
+
+    const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
+
+    const response = await axios.get(swiggyURL, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+        'Accept': 'application/json',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://www.swiggy.com/',
+        'Origin': 'https://www.swiggy.com',
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Address from Coordinates Error:", error.message);
+    res.status(500).json({ 
+      error: "Failed to fetch address from coordinates",
+      details: error.message 
+    });
   }
 });
 
