@@ -5,11 +5,12 @@ import Location from "./Loacations";
 import {
   useLazySearchedLocationQuery,
   useLazySearchedLocationDataQuery,
+  useLazyGetAutoCompleteSearchQuery,
 } from "../../features/home/searchApiSlice";
 
-import {
-  useLazyGetAutoCompleteSearchQuery,
-} from "../..//features/home/homeApiSlice";
+// import {
+//   useLazyGetAutoCompleteSearchQuery,
+// } from "../..//features/home/homeApiSlice";
 
 import {
   addApiData,
@@ -40,17 +41,12 @@ const ModalSubContainer = () => {
   // and to ensure it is defined before being used in the useRef hook.
 
   const debouncedHandleInputChange = useRef(
-    debounceCreater(async (value) => {
+    debounceCreater(async (input) => {
       try {
-        // const response = await fetch(
-        //   `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${value}&types=`
-        // );
-        // const data = await response.json();
-        // setSearchedLocation(data?.data);
-
-        const data = await trigggerAutoCompleteSearch({ value }).unwrap();
-        // if (isLoading) setSearchedLocation("")
-        if (data) setSearchedLocation(data?.data);
+        if (input) {
+          const data = await trigggerAutoCompleteSearch(input).unwrap();
+          if (data) setSearchedLocation(data?.data);
+        }
 
       } catch (err) {
         alert(err.message);

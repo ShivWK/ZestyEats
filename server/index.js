@@ -127,6 +127,7 @@ app.get("/", (req, res) => {
     <ul>
       <li>/api/swiggy-restaurants?lat=YOUR_LAT&lng=YOUR_LNG</li>
       <li>/api/place-autocomplete?input=SEARCH_TERM</li>
+      <li>/api/address-recommend?place_id=PLACE_ID</li>
     </ul>
   `);
 });
@@ -184,6 +185,33 @@ app.get("/api/place-autocomplete", async (req, res) => {
   } catch (error) {
     console.error("Place Autocomplete Error:", error.message);
     res.status(500).json({ error: "Failed to fetch place suggestions" });
+  }
+});
+
+app.get("/api/address-recommend", async (req, res) => {
+  try {
+    const { place_id } = req.query;
+    
+    if (!place_id) {
+      return res.status(400).json({ error: "place_id query parameter is required" });
+    }
+
+    const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
+
+    const response = await axios.get(swiggyURL, {
+      headers: {
+        'User-Agent': 'Mozilla/5.0',
+        'Accept': 'application/json',
+        'Accept-Language': 'en-US,en;q=0.9',
+        'Referer': 'https://www.swiggy.com/',
+        'Origin': 'https://www.swiggy.com',
+      },
+    });
+
+    res.json(response.data);
+  } catch (error) {
+    console.error("Address Recommend Error:", error.message);
+    res.status(500).json({ error: "Failed to fetch address recommendation" });
   }
 });
 
