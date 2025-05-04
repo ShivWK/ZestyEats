@@ -44,8 +44,18 @@ const homeApiSlice = createApi({
                 params: { lat, lng }
             }),
         }),
+
+        getAutoCompleteSearch: builder.query({
+            query: (input) => ({
+                url: '/place-autocomplete',
+                params: { input }
+            })
+        })
     })
 })
 
-export const { useGetHomePageDataQuery } = homeApiSlice;
+export const { 
+    useGetHomePageDataQuery,
+    useLazyGetAutoCompleteSearchQuery,
+ } = homeApiSlice;
 export default homeApiSlice;

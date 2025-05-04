@@ -6,6 +6,11 @@ import {
   useLazySearchedLocationQuery,
   useLazySearchedLocationDataQuery,
 } from "../../features/home/searchApiSlice";
+
+import {
+  useLazyGetAutoCompleteSearchQuery,
+} from "../..//features/home/homeApiSlice";
+
 import {
   addApiData,
   addFoodieThoughtsData,
@@ -24,6 +29,7 @@ const ModalSubContainer = () => {
   const [recentLocation, setRecentLocation] = useState([]);
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazySearchedLocationDataQuery();
+  const [trigggerAutoCompleteSearch, { isLoading }] = useLazyGetAutoCompleteSearchQuery()
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -36,13 +42,16 @@ const ModalSubContainer = () => {
   const debouncedHandleInputChange = useRef(
     debounceCreater(async (value) => {
       try {
-        // Do this with RTK query
+        // const response = await fetch(
+        //   `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${value}&types=`
+        // );
+        // const data = await response.json();
+        // setSearchedLocation(data?.data);
 
-        const response = await fetch(
-          `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${value}&types=`
-        );
-        const data = await response.json();
-        setSearchedLocation(data?.data);
+        const data = await trigggerAutoCompleteSearch({ value }).unwrap();
+        // if (isLoading) setSearchedLocation("")
+        if (data) setSearchedLocation(data?.data);
+
       } catch (err) {
         alert(err.message);
       }
