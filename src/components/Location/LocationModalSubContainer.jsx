@@ -123,7 +123,7 @@ const ModalSubContainer = () => {
     setSearchedLocation([]);
     setSearchValue("");
     dispatch(removeYourCurrentCity());
-    // dispatch(closeLocationInModal());
+    dispatch(closeLocationInModal());
 
     try {
       const res1 = await triggerLocationCall(location["place_id"]).unwrap();

@@ -15,19 +15,19 @@ const Cards = ({ data }) => {
         }}
       >
         <p className="font-bold text-white text-xl">
-          {data.aggregatedDiscountInfoV3?.header+" "+data.aggregatedDiscountInfoV3?.subHeader}
+          {(data.aggregatedDiscountInfoV3?.header || "") + " " + (data.aggregatedDiscountInfoV3?.subHeader || "")}
         </p>
       </div>
       <div className="mt-2 w-[95%]">
-        <p className="font-bold text-[17px]">{data?.name}</p>
+        <p className="font-bold text-[17px]">{data?.name || ""}</p>
         <div className="flex gap-1 items-center -mt-0.5">
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
-          <p className="font-semibold">{data?.avgRatingString}</p>
+          <p className="font-semibold">{data?.avgRatingString || ""}</p>
           <p className="">•</p>
-          <p className="font-bold">{data?.sla?.slaString}</p>
+          <p className="font-bold">{data?.sla?.slaString || ""}</p>
         </div>
-        <p className="mt-0.5 truncate font-semibold text-gray-700">{data?.cuisines.join(", ")}</p>
-        <p className="font-semibold text-gray-700">{data.areaName}</p>
+        <p className="mt-0.5 truncate font-semibold text-gray-700">{data?.cuisines.join(", ") || "" }</p>
+        <p className="font-semibold text-gray-700">{data.areaName || ""}</p>
       </div>
     </NavLink>
   );
