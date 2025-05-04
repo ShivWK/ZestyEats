@@ -5,12 +5,10 @@ import Location from "./Loacations";
 import {
   useLazySearchedLocationQuery,
   useLazyGetAutoCompleteSearchQuery,
-  useLazyLocationByCoordinatesQuery
+  useLazyLocationByCoordinatesQuery,
 } from "../../features/home/searchApiSlice";
 
-import {
-  useLazyGetHomePageDataQuery
-} from "../..//features/home/homeApiSlice";
+import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
 
 import {
   addApiData,
@@ -20,6 +18,7 @@ import {
   addSearchedCityAddress,
   addYourCurrentCity,
   removeYourCurrentCity,
+  addTopRestaurantsTitle,
 } from "../../features/home/homeSlice";
 
 const ModalSubContainer = () => {
@@ -30,8 +29,12 @@ const ModalSubContainer = () => {
   const [recentLocation, setRecentLocation] = useState([]);
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
-  const [trigggerAutoCompleteSearch, { isLoading: AutocompleteLoading }] = useLazyGetAutoCompleteSearchQuery();
-  const [triggerLoactionByCoordinates, { isLoading: LocationByCoordinatesLoading }] = useLazyLocationByCoordinatesQuery();
+  const [trigggerAutoCompleteSearch, { isLoading: AutocompleteLoading }] =
+    useLazyGetAutoCompleteSearchQuery();
+  const [
+    triggerLoactionByCoordinates,
+    { isLoading: LocationByCoordinatesLoading },
+  ] = useLazyLocationByCoordinatesQuery();
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -48,7 +51,6 @@ const ModalSubContainer = () => {
           const data = await trigggerAutoCompleteSearch(input).unwrap();
           if (data) setSearchedLocation(data?.data);
         }
-
       } catch (err) {
         alert(err.message);
       }
@@ -104,7 +106,7 @@ const ModalSubContainer = () => {
     const address =
       location?.terms[1]?.value === undefined
         ? ""
-        : ", "+location?.terms[1]?.value + ", " + location?.terms[2]?.value;
+        : ", " + location?.terms[1]?.value + ", " + location?.terms[2]?.value;
     dispatch(addSearchedCity(city));
     dispatch(addSearchedCityAddress(address));
 
@@ -121,15 +123,15 @@ const ModalSubContainer = () => {
     setSearchedLocation([]);
     setSearchValue("");
     dispatch(removeYourCurrentCity());
-    dispatch(closeLocationInModal());
+    // dispatch(closeLocationInModal());
 
     try {
       const res1 = await triggerLocationCall(location["place_id"]).unwrap();
       const { lat, lng } = res1;
 
       const res2 = await triggerRestaurentDataCall({ lat, lng });
+      dispatch(addTopRestaurantsTitle(res2));
       updateHomeRestaurantData(res2);
-
     } catch (err) {
       alert(err.message);
     }
@@ -137,7 +139,6 @@ const ModalSubContainer = () => {
 
   // Geo Location API
   const handleLocation = () => {
-
     // 1: Get live lat and lng by GeoLoaction API.
     // 2: Give this lat and lng to Swiggy API , which will give you the loaction according to it.
     // 3: Swiggy given location will a new approx lat and lng , extarct that.
@@ -150,37 +151,33 @@ const ModalSubContainer = () => {
 
         try {
           setSearchValue("Fetching your location...");
-          // const response = await fetch(
-          //   `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`
-          // );
-          // setSearchValue("");
-          // const data = await response.json();
 
-          const data = await triggerLoactionByCoordinates({ lat1, lng1 }).unwrap();
+          const data = await triggerLoactionByCoordinates({
+            lat1,
+            lng1,
+          }).unwrap();
           setSearchValue("");
           const localityObject = data?.data?.[0]?.["address_components"].find(
             (item) => item?.["types"].includes("locality")
           );
-
+          // Loader required
+          dispatch(closeLocationInModal());
           dispatch(addYourCurrentCity(localityObject?.["short_name"]));
           dispatch(
             addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
           );
 
-          const lat2 = data?.data?.[0]?.geometry?.location?.lat;
-          const lng2 = data?.data?.[0]?.geometry?.location?.lng;
-
-          console.log(lat2, lng2)
+          const lat = data?.data?.[0]?.geometry?.location?.lat;
+          const lng = data?.data?.[0]?.geometry?.location?.lng;
 
           try {
-            const res = await triggerRestaurentDataCall({ lat2, lng2 });
-            console.log(res)
-            updateHomeRestaurantData(res);
+            const res2 = await triggerRestaurentDataCall({ lat, lng });
+            console.log(res2);
+            updateHomeRestaurantData(res2); //loader rquired
+            dispatch(addTopRestaurantsTitle(res2));
           } catch (err) {
             alert(err.message);
           }
-
-          dispatch(closeLocationInModal());
         } catch (err) {
           setSearchValue("");
           dispatch(closeLocationInModal());

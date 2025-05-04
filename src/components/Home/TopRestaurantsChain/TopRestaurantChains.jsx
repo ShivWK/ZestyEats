@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Cards from './Cards'
 import Button from "../Button";
 import Scrollbar from "../ScroolBar";
-import { selectSearchedCity, selectSearchedCityAddress } from "../../../features/home/homeSlice";
+import { selectTopRestaurantsTitle } from "../../../features/home/homeSlice";
 
 
 const TopRestaurantChains = ({ isLoading }) => {
@@ -13,7 +13,7 @@ const TopRestaurantChains = ({ isLoading }) => {
   const containerRef = useRef();
   const rightBtnRef = useRef();
   const leftBtnRef = useRef();
-  const searchedCity = useSelector(selectSearchedCity);
+  const title = useSelector(selectTopRestaurantsTitle);
 
   useEffect(() => {
     if (topRestaurantsChainsData.length) {
@@ -104,7 +104,7 @@ const TopRestaurantChains = ({ isLoading }) => {
     topRestaurantsChainsData &&
     <>
       <div className="flex justify-between flex-wrap items-center">
-        <h3>{`Top restaurant chains in ${searchedCity}`}</h3>
+        <h3>{title}</h3>
         <div className="flex justify-between gap-1">
           <Button ref={leftBtnRef} clickHandler={debouncedHandleLeftClick.current} iconClass="left" />
           <Button ref={rightBtnRef} clickHandler={debouncedHandleRightClick.current} iconClass="right" />

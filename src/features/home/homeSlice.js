@@ -7,6 +7,7 @@ const initialState = {
     yourCurrentCity: "",
     searchedCity:"",
     searchedCityAddress: "",
+    topRestaurantsTitle: "Top restaurant chains in your location",
 }
 
 const homeSlice = createSlice({
@@ -36,7 +37,27 @@ const homeSlice = createSlice({
         },
 
         addSearchedCity: (state, action) => {
-            state.searchedCity = action.payload;
+            if( typeof action.payload !== "object" || action.payload === null) {
+                // we are checking for null because type of null is alos object
+                state.searchedCity = action.payload;
+            } else {
+                const city = action.payload?.data?.cards?.find(
+                    item => item?.card?.card?.id === "top_brands_for_you"
+                 )
+                 ?.card?.card?.header?.title || "your location";
+
+                 state.searchedCity = city; 
+            }
+
+        },
+
+        addTopRestaurantsTitle : (state, action) => {
+            const title = action.payload?.data?.data?.cards?.find(
+                item => item?.card?.card?.id === "top_brands_for_you"
+             )
+             ?.card?.card?.header?.title;
+             
+             state.topRestaurantsTitle = title; 
         },
 
         addSearchedCityAddress: (state, action) => {
@@ -56,6 +77,7 @@ const homeSlice = createSlice({
 export default homeSlice.reducer;
 export const selectApiData = state => state.home.apiData;
 export const selectFoodieThoughtsData = state => state.home.foodieThoughtsData;
+export const selectTopRestaurantsTitle = state => state.home.topRestaurantsTitle; 
 export const selectTopRestaurantsData = state => state.home.topRestaurantsData; 
 export const selectYourCurrentCity = state => state.home.yourCurrentCity; 
 export const selectSearchedCity = state => state.home.searchedCity; 
@@ -69,6 +91,7 @@ export const {
     addSearchedCityAddress,
     addYourCurrentCity,
     removeYourCurrentCity,
+    addTopRestaurantsTitle,
 } = homeSlice.actions;
 
 
