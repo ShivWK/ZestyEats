@@ -1,6 +1,6 @@
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Location from "./Loacations";
 import {
   useLazySearchedLocationQuery,
@@ -24,14 +24,22 @@ import {
 
 const ModalSubContainer = () => {
   const dispatch = useDispatch();
-  const [ searchValue, setSearchValue ] = useState("");
-  const [ searchedLocation, setSearchedLocation ] = useState([]);
-  const [ Focused, setFocused ] = useState(false);
-  const [ recentLocation, setRecentLocation ] = useState([]);
-  const [ triggerLocationCall ] = useLazySearchedLocationQuery();
-  const [ triggerRestaurentDataCall ] = useLazyGetHomePageDataQuery();
-  const [ trigggerAutoCompleteSearch ] = useLazyGetAutoCompleteSearchQuery();
-  const [ triggerLoactionByCoordinates ] = useLazyLocationByCoordinatesQuery();
+  const [searchValue, setSearchValue] = useState("");
+  const [searchedLocation, setSearchedLocation] = useState([]);
+  const [Focused, setFocused] = useState(false);
+  const [recentLocation, setRecentLocation] = useState([]);
+  const [triggerLocationCall] = useLazySearchedLocationQuery();
+  const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const [trigggerAutoCompleteSearch] = useLazyGetAutoCompleteSearchQuery();
+  const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
+
+  useEffect(() => {
+    const recentLocations = JSON.parse(localStorage.getItem('recentLocations'));
+    if (recentLocations !== null) {
+      setRecentLocation(recentLocations);
+    }
+  }, [])
+
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -91,14 +99,16 @@ const ModalSubContainer = () => {
     if (res?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
       alert("We don't server in this location");
     } else {
-      console.log(res);
       dispatch(addApiData(res.data));
       dispatch(addFoodieThoughtsData(res.data));
       dispatch(addTopRestaurantsData(res.data));
+      dispatch(addTopRestaurantsTitle(res));
     }
   };
 
-  const handleSearchedLocationClick = async (location) => {
+  // handle clicks on recent locations
+  
+  const handleRecentLocationClick = async (location) => {
     dispatch(setLoading(true));
     const city = location?.terms[0]?.value || "";
     const address =
@@ -108,15 +118,33 @@ const ModalSubContainer = () => {
     dispatch(addSearchedCity(city));
     dispatch(addSearchedCityAddress(address));
 
-    setRecentLocation((prev) => {
-      return [
-        ...prev,
-        {
-          place_id: location["place_id"],
-          terms: location["terms"],
-        },
-      ];
-    });
+    dispatch(removeYourCurrentCity());
+    dispatch(closeLocationInModal());
+
+    try {
+      const res1 = await triggerLocationCall(location["place_id"]).unwrap();
+      const { lat, lng } = res1;
+
+      const res2 = await triggerRestaurentDataCall({ lat, lng });
+      updateHomeRestaurantData(res2);
+      dispatch(setLoading(false));
+
+    } catch (err) {
+      alert(err.message);
+      dispatch(setLoading(false));
+    }
+  }
+
+  // handles clicks on searched locations  
+  const handleSearchedLocationClick = async (location) => {
+    dispatch(setLoading(true));
+    const city = location?.terms[0]?.value || "";
+    const address =
+      location?.terms[1]?.value === undefined
+        ? ""
+        : ", " + location?.terms[1]?.value + ", " + location?.terms[2]?.value;
+    dispatch(addSearchedCity(city));
+    dispatch(addSearchedCityAddress(address));
 
     setSearchedLocation([]);
     setSearchValue("");
@@ -128,8 +156,30 @@ const ModalSubContainer = () => {
       const { lat, lng } = res1;
 
       const res2 = await triggerRestaurentDataCall({ lat, lng });
-      dispatch(addTopRestaurantsTitle(res2));
       updateHomeRestaurantData(res2);
+
+      if (!(res2?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present")) {
+        setRecentLocation((prev) => {
+          return [
+            ...prev,
+            {
+              place_id: location["place_id"],
+              terms: location["terms"],
+            },
+          ];
+        });
+
+        let previousLocations = JSON.parse(localStorage.getItem("recentLocations"));
+        if (!Array.isArray(previousLocations)) previousLocations = [];
+
+        previousLocations.push({
+          place_id: location["place_id"],
+          terms: location["terms"],
+        })
+        localStorage.setItem("recentLocations", JSON.stringify(previousLocations));
+
+      }
+
       dispatch(setLoading(false));
     } catch (err) {
       alert(err.message);
@@ -176,7 +226,7 @@ const ModalSubContainer = () => {
             updateHomeRestaurantData(res2); //loader rquired
             dispatch(addTopRestaurantsTitle(res2));
             dispatch(setLoading(false));
-            
+
           } catch (err) {
             alert(err.message);
             dispatch(setLoading(false));
@@ -204,9 +254,8 @@ const ModalSubContainer = () => {
       {/* Search locations */}
       <div
         onClick={handleDivClick}
-        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-3 cursor-text ${
-          Focused && "shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]"
-        }`}
+        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-3 cursor-text ${Focused && "shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]"
+          }`}
       >
         <input
           type="text"
@@ -254,6 +303,7 @@ const ModalSubContainer = () => {
                 key={location["place_id"]}
                 icon="ri-history-line"
                 item={location}
+                handleClick={handleRecentLocationClick}
               />
             ))
           ) : (
@@ -280,8 +330,6 @@ const ModalSubContainer = () => {
 };
 
 export default ModalSubContainer;
-
-// <i class="ri-history-line"></i>
 
 // API on click on location to fetch the food data there is change the place_id to get the data for that location, here you will get lat and long of the location according to the Swiggy
 // https://www.swiggy.com/dapi/misc/address-recommend?place_id=ChIJYZ39KLyhoDkRs32YFql7rnw
