@@ -8,6 +8,7 @@ const initialState = {
     searchedCity:"",
     searchedCityAddress: "",
     topRestaurantsTitle: "Top restaurant chains in your location",
+    isLoading: false,
 }
 
 const homeSlice = createSlice({
@@ -70,6 +71,10 @@ const homeSlice = createSlice({
 
         removeYourCurrentCity: (state) => {
             state.yourCurrentCity = "";
+        },
+
+        setLoading: (state, action) => {
+            state.isLoading = action.payload;
         }
     }
 });
@@ -82,6 +87,7 @@ export const selectTopRestaurantsData = state => state.home.topRestaurantsData;
 export const selectYourCurrentCity = state => state.home.yourCurrentCity; 
 export const selectSearchedCity = state => state.home.searchedCity; 
 export const selectSearchedCityAddress = state => state.home.searchedCityAddress; 
+export const selectIsLoading = state => state.home.isLoading;
 
 export const { 
     addApiData, 
@@ -92,6 +98,7 @@ export const {
     addYourCurrentCity,
     removeYourCurrentCity,
     addTopRestaurantsTitle,
+    setLoading,
 } = homeSlice.actions;
 
 

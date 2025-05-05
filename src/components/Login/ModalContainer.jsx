@@ -19,7 +19,7 @@ const ModalContainer = () => {
   };
 
   return (
-    <Modal modal={"right"}>
+    <Modal modal={"right"} isOpen={isOpen}>
       <ModalSubContainer
         member={member}
         handleSwitch={handleSwitch}

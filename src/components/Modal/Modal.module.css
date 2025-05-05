@@ -10,7 +10,7 @@
     z-index: 50;
     background-color: #fff;
     transform: translate(-100%, 0);
-    transition: transform 0.5s ease-in-out;
+    transition: transform 0.3s ease-in-out;
 }
 
 .modal-right {
@@ -24,11 +24,10 @@
     height: 100vh;
     z-index: 50;
     background-color: #fff;
-    transform: translate(-100%, 0);
-    transition: transform 0.5s ease-in-out;
+    transform: translate(100%, 0);
+    transition: transform 0.3s ease-in-out;
 }
 
 .show-modal {
     transform: translate(0, 0);
-    transition: transform 0.3s ease-in-out;
 }

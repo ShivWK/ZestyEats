@@ -19,22 +19,19 @@ import {
   addYourCurrentCity,
   removeYourCurrentCity,
   addTopRestaurantsTitle,
+  setLoading,
 } from "../../features/home/homeSlice";
 
 const ModalSubContainer = () => {
   const dispatch = useDispatch();
-  const [searchValue, setSearchValue] = useState("");
-  const [searchedLocation, setSearchedLocation] = useState([]);
-  const [Focused, setFocused] = useState(false);
-  const [recentLocation, setRecentLocation] = useState([]);
-  const [triggerLocationCall] = useLazySearchedLocationQuery();
-  const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
-  const [trigggerAutoCompleteSearch, { isLoading: AutocompleteLoading }] =
-    useLazyGetAutoCompleteSearchQuery();
-  const [
-    triggerLoactionByCoordinates,
-    { isLoading: LocationByCoordinatesLoading },
-  ] = useLazyLocationByCoordinatesQuery();
+  const [ searchValue, setSearchValue ] = useState("");
+  const [ searchedLocation, setSearchedLocation ] = useState([]);
+  const [ Focused, setFocused ] = useState(false);
+  const [ recentLocation, setRecentLocation ] = useState([]);
+  const [ triggerLocationCall ] = useLazySearchedLocationQuery();
+  const [ triggerRestaurentDataCall ] = useLazyGetHomePageDataQuery();
+  const [ trigggerAutoCompleteSearch ] = useLazyGetAutoCompleteSearchQuery();
+  const [ triggerLoactionByCoordinates ] = useLazyLocationByCoordinatesQuery();
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -102,6 +99,7 @@ const ModalSubContainer = () => {
   };
 
   const handleSearchedLocationClick = async (location) => {
+    dispatch(setLoading(true));
     const city = location?.terms[0]?.value || "";
     const address =
       location?.terms[1]?.value === undefined
@@ -132,8 +130,10 @@ const ModalSubContainer = () => {
       const res2 = await triggerRestaurentDataCall({ lat, lng });
       dispatch(addTopRestaurantsTitle(res2));
       updateHomeRestaurantData(res2);
+      dispatch(setLoading(false));
     } catch (err) {
       alert(err.message);
+      dispatch(setLoading(false));
     }
   };
 
@@ -151,7 +151,8 @@ const ModalSubContainer = () => {
 
         try {
           setSearchValue("Fetching your location...");
-
+          dispatch(setLoading(true));
+          dispatch(closeLocationInModal());
           const data = await triggerLoactionByCoordinates({
             lat1,
             lng1,
@@ -160,8 +161,7 @@ const ModalSubContainer = () => {
           const localityObject = data?.data?.[0]?.["address_components"].find(
             (item) => item?.["types"].includes("locality")
           );
-          // Loader required
-          dispatch(closeLocationInModal());
+
           dispatch(addYourCurrentCity(localityObject?.["short_name"]));
           dispatch(
             addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
@@ -175,12 +175,16 @@ const ModalSubContainer = () => {
             console.log(res2);
             updateHomeRestaurantData(res2); //loader rquired
             dispatch(addTopRestaurantsTitle(res2));
+            dispatch(setLoading(false));
+            
           } catch (err) {
             alert(err.message);
+            dispatch(setLoading(false));
           }
         } catch (err) {
           setSearchValue("");
           dispatch(closeLocationInModal());
+          dispatch(setLoading(false));
           alert("Error fetching location data. Please try again later.");
         }
       });

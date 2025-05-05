@@ -3,6 +3,7 @@ import TopRestaurantChains from "./TopRestaurantsChain/TopRestaurantChains";
 import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurant";
 import BestPlacesToEat from "./BestPlacesToEat";
 import NearByRestaurants from "./NearByRestaurants";
+import Loader from "./Loader";
 import { useGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,11 +13,14 @@ import {
   addApiData,
   selectFoodieThoughtsData,
   selectTopRestaurantsData,
+  selectIsLoading,
+  setLoading
 } from "../../features/home/homeSlice";
 
 export default function Home() {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const FoodieThoughtsData = useSelector(selectFoodieThoughtsData);
+  const isLoadingMain = useSelector(selectIsLoading);
   // const [
   //     triggerLoactionByCoordinates,
   //     { isLoading: LocationByCoordinatesLoading },
@@ -79,6 +83,12 @@ export default function Home() {
     lng: 81.0072193,
   });
 
+  // useEffect(() => {
+  //   if (isLoading) dispatch(setLoading(true));
+  //   else dispatch(setLoading(false));
+  //   console.log(isLoadingMain);
+  // }, [isLoading])
+
   useEffect(() => {
     if (!data) return;
     dispatch(addApiData(data));
@@ -86,8 +96,9 @@ export default function Home() {
     dispatch(addTopRestaurantsData(data));
   }, [data]);
 
-  return (
-    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1">
+  return ((isLoadingMain || isLoading) ? 
+    <Loader />
+    : <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1">
       {FoodieThoughtsData && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">
