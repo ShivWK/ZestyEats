@@ -138,7 +138,7 @@ export default function Home() {
     <Loader />
   ) : (
     <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1">
-      {FoodieThoughtsData && (
+      {FoodieThoughtsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">
             <FoodieThoughts isLoading={isLoading} />
@@ -146,7 +146,7 @@ export default function Home() {
           <hr className="mt-10 mb-9 text-gray-300" />
         </>
       )}
-      {topRestaurantsChainsData && (
+      {topRestaurantsChainsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">
             <TopRestaurantChains isLoading={isLoading} />
