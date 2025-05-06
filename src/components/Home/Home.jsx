@@ -37,21 +37,9 @@ export default function Home() {
   const [triggerHomeAPI, { data, isLoading, isError, error }] =
     useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
-
-  const fetchDefaultHomeAPIData = async () => {
-    try {
-      let apiResponse = await triggerHomeAPI({ lat: 12.9715987, lng: 77.5945627 }).unwrap();
-      console.log(apiResponse)
-      if (!apiResponse) return;
-      updateHomeRestaurantData(apiResponse);
-    } catch (err) {
-      dispatch(setLoading(false));
-      alert(err.message)
-    }
-  }
+  const [ firstRender, setFirstRender ] = useState(true);
   
   const updateHomeRestaurantData = async (res) => {
-    console.log(res)
     if (res?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
       alert("We don't server in this location");
     } else {
@@ -65,6 +53,26 @@ export default function Home() {
     }
   };
 
+  if (firstRender) {
+    dispatch(setLoading(true));
+    const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
+    if (HomeData) {
+      updateHomeRestaurantData(HomeData);
+      setFirstRender(false);
+    }
+  }
+
+  const fetchDefaultHomeAPIData = async () => {
+    try {
+      let apiResponse = await triggerHomeAPI({ lat: 12.9715987, lng: 77.5945627 }).unwrap();
+      if (!apiResponse) return;
+      updateHomeRestaurantData(apiResponse);
+    } catch (err) {
+      dispatch(setLoading(false));
+      alert(err.message)
+    }
+  }
+
   const updateCityAndAddress = (data) => {
     const localityObject = data?.data?.[0]?.["address_components"].find(
       (item) => item?.["types"].includes("locality")
@@ -77,11 +85,9 @@ export default function Home() {
   }
 
   useEffect(() => {
-    dispatch(setLoading(true));
-    const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
-    if (HomeData) {
-      updateHomeRestaurantData(HomeData);
-    } else if (navigator.geolocation) {
+    if (!firstRender) return;
+
+    if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
         const lng1 = position.coords.longitude;
