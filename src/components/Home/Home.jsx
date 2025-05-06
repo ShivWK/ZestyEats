@@ -4,7 +4,16 @@ import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurant";
 import BestPlacesToEat from "./BestPlacesToEat";
 import NearByRestaurants from "./NearByRestaurants";
 import Loader from "./Loader";
-import { useGetHomePageDataQuery } from "../../features/home/homeApiSlice";
+
+import {
+  useGetHomePageDataQuery,
+  useLazyGetHomePageDataQuery,
+} from "../../features/home/homeApiSlice";
+
+import {
+  useLazyLocationByCoordinatesQuery
+} from "../../features/home/searchApiSlice";
+
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,91 +23,102 @@ import {
   selectFoodieThoughtsData,
   selectTopRestaurantsData,
   selectIsLoading,
-  setLoading
+  setLoading,
+  addTopRestaurantsTitle,
+  addYourCurrentCity,
+  addSearchedCityAddress
 } from "../../features/home/homeSlice";
 
 export default function Home() {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const FoodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const isLoadingMain = useSelector(selectIsLoading);
-  // const [
-  //     triggerLoactionByCoordinates,
-  //     { isLoading: LocationByCoordinatesLoading },
-  //   ] = useLazyLocationByCoordinatesQuery();
-  // const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
-
-  // useEffect(() => {
-  //   if (navigator.geolocation) {
-  //         navigator.geolocation.getCurrentPosition(async (position) => {
-  //           const lat1 = position.coords.latitude;
-  //           const lng1 = position.coords.longitude;
-    
-  //           try {
-  //             const data = await triggerLoactionByCoordinates({
-  //               lat1,
-  //               lng1,
-  //             }).unwrap();
-
-  //             const localityObject = data?.data?.[0]?.["address_components"].find(
-  //               (item) => item?.["types"].includes("locality")
-  //             );
-  //             // Loader required
-  //             dispatch(addYourCurrentCity(localityObject?.["short_name"]));
-  //             dispatch(
-  //               addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
-  //             );
-    
-  //             const lat = data?.data?.[0]?.geometry?.location?.lat;
-  //             const lng = data?.data?.[0]?.geometry?.location?.lng;
-    
-  //             try {
-  //               const res2 = await triggerRestaurentDataCall({ lat, lng });
-  //               console.log(res2);
-  //               updateHomeRestaurantData(res2); //loader rquired
-  //               dispatch(addTopRestaurantsTitle(res2));
-  //             } catch (err) {
-  //               alert(err.message);
-  //             }
-  //           } catch (err) {
-  //             console.log("Error fetching current location data.");
-  //           }
-  //         });
-  //       } else {
-  //         // const lat: 26.8496217,
-  //         // const lng: 81.0072193,
-  //         // try {
-  //         //   const res2 = await triggerRestaurentDataCall({ lat, lng });
-  //         //   console.log(res2);
-  //         //   updateHomeRestaurantData(res2); //loader rquired
-  //         //   dispatch(addTopRestaurantsTitle(res2));
-  //         // } catch (err) {
-  //         //   alert(err.message);
-  //         // }
-  //       }
-  // }, [])
-  
   const dispatch = useDispatch();
-  const { data, isLoading } = useGetHomePageDataQuery({
-    lat: 26.8496217,
-    lng: 81.0072193,
-  });
+  const [triggerHomeAPI, { data, isLoading, isError, error }] =
+    useLazyGetHomePageDataQuery();
+  const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
 
-  // useEffect(() => {
-  //   if (isLoading) dispatch(setLoading(true));
-  //   else dispatch(setLoading(false));
-  //   console.log(isLoadingMain);
-  // }, [isLoading])
+  const fetchDefaultHomeAPIData = async () => {
+    try {
+      let apiResponse = await triggerHomeAPI({ lat: 12.9715987, lng: 77.5945627 }).unwrap();
+      console.log(apiResponse)
+      if (!apiResponse) return;
+      updateHomeRestaurantData(apiResponse);
+    } catch (err) {
+      dispatch(setLoading(false));
+      alert(err.message)
+    }
+  }
+  
+  const updateHomeRestaurantData = async (res) => {
+    console.log(res)
+    if (res?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
+      alert("We don't server in this location");
+    } else {
+      localStorage.setItem("HomeAPIData", JSON.stringify(res));
+
+      dispatch(addApiData(res));
+      dispatch(addFoodieThoughtsData(res));
+      dispatch(addTopRestaurantsData(res));
+      dispatch(addTopRestaurantsTitle(res));
+      dispatch(setLoading(false));
+    }
+  };
+
+  const updateCityAndAddress = (data) => {
+    const localityObject = data?.data?.[0]?.["address_components"].find(
+      (item) => item?.["types"].includes("locality")
+    );
+
+    dispatch(addYourCurrentCity(localityObject?.["short_name"]));
+    dispatch(
+      addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
+    );
+  }
 
   useEffect(() => {
-    if (!data) return;
-    dispatch(addApiData(data));
-    dispatch(addFoodieThoughtsData(data));
-    dispatch(addTopRestaurantsData(data));
-  }, [data]);
+    dispatch(setLoading(true));
+    const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
+    if (HomeData) {
+      updateHomeRestaurantData(HomeData);
+    } else if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat1 = position.coords.latitude;
+        const lng1 = position.coords.longitude;
 
-  return ((isLoadingMain || isLoading) ? 
+        try {
+          const data = await triggerLoactionByCoordinates({
+            lat1,
+            lng1,
+          }).unwrap();
+
+          updateCityAndAddress(data);
+
+          const lat = data?.data?.[0]?.geometry?.location?.lat;
+          const lng = data?.data?.[0]?.geometry?.location?.lng;
+
+          try {
+            const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
+            console.log(res2);
+            updateHomeRestaurantData(res2);
+          } catch (err) {
+            alert(err.message);
+            fetchDefaultHomeAPIData();
+          }
+        } catch (err) {
+          console.log("Error fetching current location data.");
+          fetchDefaultHomeAPIData();
+        }
+      });
+    } else {
+     fetchDefaultHomeAPIData();
+    }
+  }, []);
+
+  return isLoadingMain || isLoading ? (
     <Loader />
-    : <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1">
+  ) : (
+    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1">
       {FoodieThoughtsData && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">

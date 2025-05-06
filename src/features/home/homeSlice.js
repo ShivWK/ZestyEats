@@ -53,7 +53,7 @@ const homeSlice = createSlice({
         },
 
         addTopRestaurantsTitle : (state, action) => {
-            const title = action.payload?.data?.data?.cards?.find(
+            const title = action.payload?.data?.cards?.find(
                 item => item?.card?.card?.id === "top_brands_for_you"
              )
              ?.card?.card?.header?.title;

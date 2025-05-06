@@ -30,7 +30,7 @@ const ModalSubContainer = () => {
   const [recentLocation, setRecentLocation] = useState([]);
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
-  const [trigggerAutoCompleteSearch] = useLazyGetAutoCompleteSearchQuery();
+  const [triggerAutoCompleteSearch] = useLazyGetAutoCompleteSearchQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const ModalSubContainer = () => {
     debounceCreater(async (input) => {
       try {
         if (input) {
-          const data = await trigggerAutoCompleteSearch(input).unwrap();
+          const data = await triggerAutoCompleteSearch(input).unwrap();
           if (data) setSearchedLocation(data?.data);
         }
       } catch (err) {
@@ -96,12 +96,15 @@ const ModalSubContainer = () => {
   };
 
   const updateHomeRestaurantData = async (res) => {
+    console.log(res)
     if (res?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
       alert("We don't server in this location");
     } else {
-      dispatch(addApiData(res.data));
-      dispatch(addFoodieThoughtsData(res.data));
-      dispatch(addTopRestaurantsData(res.data));
+      localStorage.setItem("HomeAPIData", JSON.stringify(res));
+
+      dispatch(addApiData(res));
+      dispatch(addFoodieThoughtsData(res));
+      dispatch(addTopRestaurantsData(res));
       dispatch(addTopRestaurantsTitle(res));
     }
   };
@@ -125,7 +128,7 @@ const ModalSubContainer = () => {
       const res1 = await triggerLocationCall(location["place_id"]).unwrap();
       const { lat, lng } = res1;
 
-      const res2 = await triggerRestaurentDataCall({ lat, lng });
+      const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
       updateHomeRestaurantData(res2);
       dispatch(setLoading(false));
 
@@ -155,7 +158,7 @@ const ModalSubContainer = () => {
       const res1 = await triggerLocationCall(location["place_id"]).unwrap();
       const { lat, lng } = res1;
 
-      const res2 = await triggerRestaurentDataCall({ lat, lng });
+      const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
       updateHomeRestaurantData(res2);
 
       if (!(res2?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present")) {
@@ -177,7 +180,6 @@ const ModalSubContainer = () => {
           terms: location["terms"],
         })
         localStorage.setItem("recentLocations", JSON.stringify(previousLocations));
-
       }
 
       dispatch(setLoading(false));
@@ -221,10 +223,10 @@ const ModalSubContainer = () => {
           const lng = data?.data?.[0]?.geometry?.location?.lng;
 
           try {
-            const res2 = await triggerRestaurentDataCall({ lat, lng });
+            const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
             console.log(res2);
             updateHomeRestaurantData(res2); //loader rquired
-            dispatch(addTopRestaurantsTitle(res2));
+            // dispatch(addTopRestaurantsTitle(res2));
             dispatch(setLoading(false));
 
           } catch (err) {
