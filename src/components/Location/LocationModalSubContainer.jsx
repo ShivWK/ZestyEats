@@ -109,10 +109,7 @@ const ModalSubContainer = () => {
     }
   };
 
-  // handle clicks on recent locations
-  
-  const handleRecentLocationClick = async (location) => {
-    dispatch(setLoading(true));
+  const updateCityAndAddress = (location) => {
     const city = location?.terms[0]?.value || "";
     const address =
       location?.terms[1]?.value === undefined
@@ -120,6 +117,24 @@ const ModalSubContainer = () => {
         : ", " + location?.terms[1]?.value + ", " + location?.terms[2]?.value;
     dispatch(addSearchedCity(city));
     dispatch(addSearchedCityAddress(address));
+
+    localStorage.setItem("searchedCity", JSON.stringify(city));
+    localStorage.setItem("searchedCityAddress", JSON.stringify(address));
+    localStorage.removeItem("currentCity");
+  }
+
+
+  // handle clicks on recent locations
+  const handleRecentLocationClick = async (location) => {
+    dispatch(setLoading(true));
+    // const city = location?.terms[0]?.value || "";
+    // const address =
+    //   location?.terms[1]?.value === undefined
+    //     ? ""
+    //     : ", " + location?.terms[1]?.value + ", " + location?.terms[2]?.value;
+    // dispatch(addSearchedCity(city));
+    // dispatch(addSearchedCityAddress(address));
+    updateCityAndAddress(location);
 
     dispatch(removeYourCurrentCity());
     dispatch(closeLocationInModal());
@@ -141,13 +156,14 @@ const ModalSubContainer = () => {
   // handles clicks on searched locations  
   const handleSearchedLocationClick = async (location) => {
     dispatch(setLoading(true));
-    const city = location?.terms[0]?.value || "";
-    const address =
-      location?.terms[1]?.value === undefined
-        ? ""
-        : ", " + location?.terms[1]?.value + ", " + location?.terms[2]?.value;
-    dispatch(addSearchedCity(city));
-    dispatch(addSearchedCityAddress(address));
+    // const city = location?.terms[0]?.value || "";
+    // const address =
+    //   location?.terms[1]?.value === undefined
+    //     ? ""
+    //     : ", " + location?.terms[1]?.value + ", " + location?.terms[2]?.value;
+    // dispatch(addSearchedCity(city));
+    // dispatch(addSearchedCityAddress(address));
+    updateCityAndAddress(location);
 
     setSearchedLocation([]);
     setSearchValue("");
@@ -214,10 +230,14 @@ const ModalSubContainer = () => {
             (item) => item?.["types"].includes("locality")
           );
 
-          dispatch(addYourCurrentCity(localityObject?.["short_name"]));
-          dispatch(
-            addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
-          );
+          const city = localityObject?.["short_name"];
+          const address = data?.data?.[0]?.["formatted_address"];
+
+          localStorage.setItem("currentCity", JSON.stringify(city))
+          localStorage.setItem("searchedCityAddress", JSON.stringify(address))
+
+          dispatch(addYourCurrentCity(city));
+          dispatch(addSearchedCityAddress(address));
 
           const lat = data?.data?.[0]?.geometry?.location?.lat;
           const lng = data?.data?.[0]?.geometry?.location?.lng;

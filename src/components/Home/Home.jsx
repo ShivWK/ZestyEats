@@ -26,6 +26,7 @@ import {
   setLoading,
   addTopRestaurantsTitle,
   addYourCurrentCity,
+  addSearchedCity,
   addSearchedCityAddress
 } from "../../features/home/homeSlice";
 
@@ -60,6 +61,14 @@ export default function Home() {
       updateHomeRestaurantData(HomeData);
       setFirstRender(false);
     }
+
+    const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
+    const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
+    const currentCity = JSON.parse(localStorage.getItem("currentCity"));
+
+    dispatch(addSearchedCity(searchedCity || ""));
+    dispatch(addSearchedCityAddress(searchedCityAddress || ""));
+    dispatch(addYourCurrentCity(currentCity || ""));
   }
 
   const fetchDefaultHomeAPIData = async () => {
@@ -78,10 +87,14 @@ export default function Home() {
       (item) => item?.["types"].includes("locality")
     );
 
-    dispatch(addYourCurrentCity(localityObject?.["short_name"]));
-    dispatch(
-      addSearchedCityAddress(data?.data?.[0]?.["formatted_address"])
-    );
+    const city = localityObject?.["short_name"];
+    const address = data?.data?.[0]?.["formatted_address"];
+
+    localStorage.setItem("currentCity", JSON.stringify(city))
+    localStorage.setItem("searchedCityAddress", JSON.stringify(address))
+
+    dispatch(addYourCurrentCity(city));
+    dispatch(addSearchedCityAddress(address));
   }
 
   useEffect(() => {
