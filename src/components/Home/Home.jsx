@@ -5,14 +5,9 @@ import BestPlacesToEat from "./BestPlacesToEat";
 import NearByRestaurants from "./NearByRestaurants";
 import Loader from "./Loader";
 
-import {
-  useGetHomePageDataQuery,
-  useLazyGetHomePageDataQuery,
-} from "../../features/home/homeApiSlice";
+import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 
-import {
-  useLazyLocationByCoordinatesQuery
-} from "../../features/home/searchApiSlice";
+import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +18,7 @@ import {
   setLoading,
   addYourCurrentCity,
   addSearchedCity,
-  addSearchedCityAddress
+  addSearchedCityAddress,
 } from "../../features/home/homeSlice";
 
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
@@ -34,10 +29,9 @@ export default function Home() {
   const FoodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const isLoadingMain = useSelector(selectIsLoading);
   const dispatch = useDispatch();
-  const [triggerHomeAPI, { isLoading, isError, error }] =
-    useLazyGetHomePageDataQuery();
+  const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
-  const [ firstRender, setFirstRender ] = useState(true);
+  const [firstRender, setFirstRender] = useState(true);
 
   if (firstRender) {
     dispatch(setLoading(true));
@@ -48,7 +42,9 @@ export default function Home() {
     }
 
     const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
-    const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
+    const searchedCityAddress = JSON.parse(
+      localStorage.getItem("searchedCityAddress")
+    );
     const currentCity = JSON.parse(localStorage.getItem("currentCity"));
 
     dispatch(addSearchedCity(searchedCity || ""));
@@ -58,14 +54,17 @@ export default function Home() {
 
   const fetchDefaultHomeAPIData = async () => {
     try {
-      let apiResponse = await triggerHomeAPI({ lat: 12.9715987, lng: 77.5945627 }).unwrap();
+      let apiResponse = await triggerHomeAPI({
+        lat: 12.9715987,
+        lng: 77.5945627,
+      }).unwrap();
       if (!apiResponse) return;
       updateHomeRestaurantData(apiResponse, dispatch);
     } catch (err) {
       dispatch(setLoading(false));
-      alert(err.message)
+      alert(err.message);
     }
-  }
+  };
 
   useEffect(() => {
     if (!firstRender) return;
@@ -81,7 +80,7 @@ export default function Home() {
             lng1,
           }).unwrap();
 
-          updateCurrentCity(data, dispatch)
+          updateCurrentCity(data, dispatch);
 
           const lat = data?.data?.[0]?.geometry?.location?.lat;
           const lng = data?.data?.[0]?.geometry?.location?.lng;
@@ -100,7 +99,7 @@ export default function Home() {
         }
       });
     } else {
-     fetchDefaultHomeAPIData();
+      fetchDefaultHomeAPIData();
     }
   }, []);
 
