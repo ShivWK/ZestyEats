@@ -4,9 +4,7 @@ const EntryDiv = ({
   type,
   inputMode,
   purpose,
-  value,
   focus = false,
-  onChangeHandler,
   placeholder,
   fallbackPlacehoder,
   isReadOnly = false,
@@ -15,6 +13,7 @@ const EntryDiv = ({
 }) => {
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
+  const [fieldValue, setFiledValue] = useState("");
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -25,14 +24,18 @@ const EntryDiv = ({
   }, [focus]);
 
   useEffect(() => {
+    if (fieldValue !== "" && fieldValue !== null && fieldValue !== undefined) {
+      inputRef.current.focus();
+    }
+  }, [fieldValue])
+
+  useEffect(() => {
     if (changeHasValue !== undefined) setHasValue(changeHasValue);
     if (changeIsEntryMade !== undefined) setIsEntryMade(changeIsEntryMade);
   }, [changeHasValue, changeIsEntryMade]);
 
   const handleDivClick = (e) => {
     e.stopPropagation();
-    
-      setIsEntryMade(true);
       inputRef.current.focus();
   };
 
@@ -103,6 +106,10 @@ const EntryDiv = ({
     setIsEntryMade(true);
   };
 
+  const handleChange = (e) => {
+    setFiledValue(e.target.value);
+  }
+
   const handleBlur =
     purpose == "phone"
       ? onPhoneBlur
@@ -137,7 +144,6 @@ const EntryDiv = ({
       <input
         id="elem"
         name={purpose}
-        // value={value}
         type={type}
         onBlur={handleBlur}
         onFocus={handleFocus}
@@ -146,7 +152,7 @@ const EntryDiv = ({
         ref={inputRef}
         onChange={(event) => {
           handleInput(event);
-          // onChangeHandler(event);
+          handleChange(event);
         }}
         className="relative top-5 font-bold text-lg outline-none "
       />
