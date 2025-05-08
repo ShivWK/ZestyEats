@@ -47,9 +47,11 @@ export default function Home() {
     );
     const currentCity = JSON.parse(localStorage.getItem("currentCity"));
 
-    dispatch(addSearchedCity(searchedCity || ""));
-    dispatch(addSearchedCityAddress(searchedCityAddress || ""));
-    dispatch(addYourCurrentCity(currentCity || ""));
+    console.log(typeof searchedCityAddress, "From Home")
+
+    dispatch(addSearchedCity(searchedCity === "undefined" ? "" : searchedCity));
+    dispatch(addSearchedCityAddress(searchedCityAddress === "undefined" ? "" : searchedCityAddress));
+    dispatch(addYourCurrentCity(currentCity === "undefined" ? "" : currentCity));
   }
 
   const fetchDefaultHomeAPIData = async () => {

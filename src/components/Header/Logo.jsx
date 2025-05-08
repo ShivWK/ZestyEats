@@ -16,6 +16,8 @@ export default function Logo() {
     dispatch(openLocationModal());
   };
 
+  // console.log(searchedCity + " City", searchedCityAddress + " Address")
+
   return (
     <div className="flex gap-11">
       <a href="#">

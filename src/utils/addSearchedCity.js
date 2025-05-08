@@ -5,7 +5,7 @@ export const updateSearchedCity = (location, dispatch) => {
     const address =
         location?.terms[1]?.value === undefined
             ? ""
-            : ", " + location?.terms[1]?.value + ", " + location?.terms[2]?.value;
+            : ", " + location?.terms[1]?.value + (location?.terms[2]?.value ? ", " + location?.terms[2]?.value : "");
     dispatch(addSearchedCity(city));
     dispatch(addSearchedCityAddress(address));
 

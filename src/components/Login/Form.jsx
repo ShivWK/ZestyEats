@@ -15,7 +15,7 @@ const Form = ({
   })
 
   return (
-    <form className="mt-10 li-notfirst-andlast" onSubmit={handleSubmit} autocomplete="off">
+    <form className="mt-10 li-notfirst-andlast" onSubmit={handleSubmit} autoComplete="off">
       {children}
       <button
         type="submit"
