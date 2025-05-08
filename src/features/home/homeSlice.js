@@ -9,6 +9,7 @@ const initialState = {
     searchedCityAddress: "",
     topRestaurantsTitle: "Top restaurant chains in your location",
     isLoading: false,
+    recentLocations: [],
 }
 
 const homeSlice = createSlice({
@@ -73,6 +74,24 @@ const homeSlice = createSlice({
             state.yourCurrentCity = "";
         },
 
+        addRecentLocations: (state, action) => {
+            const newItem = Array.isArray(action.payload) ?  action.payload : [action.payload];
+
+            const combine = [...newItem, ...state.recentLocations].reduce((acc, item) => {
+                if (!acc.some(element => element.place_id === item.place_id)) {
+                    acc.push(item);
+                }
+
+                return acc
+            }, [])
+
+            state.recentLocations = combine;
+        },
+
+        removeARecentLocation: (state, action) => {
+            state.recentLocations.splice(action.payload, 1);
+        },
+
         setLoading: (state, action) => {
             state.isLoading = action.payload;
         }
@@ -88,6 +107,7 @@ export const selectYourCurrentCity = state => state.home.yourCurrentCity;
 export const selectSearchedCity = state => state.home.searchedCity; 
 export const selectSearchedCityAddress = state => state.home.searchedCityAddress; 
 export const selectIsLoading = state => state.home.isLoading;
+export const selectRecentLocations = state => state.home.recentLocations;
 
 export const { 
     addApiData, 
@@ -98,7 +118,9 @@ export const {
     addYourCurrentCity,
     removeYourCurrentCity,
     addTopRestaurantsTitle,
+    addRecentLocations,
     setLoading,
+    removeARecentLocation
 } = homeSlice.actions;
 
 

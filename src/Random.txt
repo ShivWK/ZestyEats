@@ -1,1 +1,16 @@
 time : 1:00:00 part 1
+
+API on click on location to fetch the food data there is change the place_id to get the data for that location, here you will get lat and long of the location according to the Swiggy
+// https://www.swiggy.com/dapi/misc/address-recommend?place_id=ChIJYZ39KLyhoDkRs32YFql7rnw
+
+API to get location on search
+// https://www.swiggy.com/dapi/misc/place-autocomplete?input=${value}&types=
+
+API to get the lat and long from the location name
+// https://nominatim.openstreetmap.org/search?q=${location}&format=json&addressdetails=1&limit=1
+
+API to get Restaurant's data of searched city
+// https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.407075192182013&lng=78.47801461815835&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING
+
+Api to get live location area name after getting lat and lng
+// https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat}%2C${long}

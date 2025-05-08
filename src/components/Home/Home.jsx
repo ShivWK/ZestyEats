@@ -17,48 +17,33 @@ import {
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  addFoodieThoughtsData,
-  addTopRestaurantsData,
-  addApiData,
   selectFoodieThoughtsData,
   selectTopRestaurantsData,
   selectIsLoading,
   setLoading,
-  addTopRestaurantsTitle,
   addYourCurrentCity,
   addSearchedCity,
   addSearchedCityAddress
 } from "../../features/home/homeSlice";
+
+import { updateHomeRestaurantData } from "../../utils/updateHomeData";
+import { updateCurrentCity } from "../../utils/addCurrentCity";
 
 export default function Home() {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const FoodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const isLoadingMain = useSelector(selectIsLoading);
   const dispatch = useDispatch();
-  const [triggerHomeAPI, { data, isLoading, isError, error }] =
+  const [triggerHomeAPI, { isLoading, isError, error }] =
     useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [ firstRender, setFirstRender ] = useState(true);
-  
-  const updateHomeRestaurantData = async (res) => {
-    if (res?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
-      alert("We don't server in this location");
-    } else {
-      localStorage.setItem("HomeAPIData", JSON.stringify(res));
-
-      dispatch(addApiData(res));
-      dispatch(addFoodieThoughtsData(res));
-      dispatch(addTopRestaurantsData(res));
-      dispatch(addTopRestaurantsTitle(res));
-      dispatch(setLoading(false));
-    }
-  };
 
   if (firstRender) {
     dispatch(setLoading(true));
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
     if (HomeData) {
-      updateHomeRestaurantData(HomeData);
+      updateHomeRestaurantData(HomeData, dispatch);
       setFirstRender(false);
     }
 
@@ -75,26 +60,11 @@ export default function Home() {
     try {
       let apiResponse = await triggerHomeAPI({ lat: 12.9715987, lng: 77.5945627 }).unwrap();
       if (!apiResponse) return;
-      updateHomeRestaurantData(apiResponse);
+      updateHomeRestaurantData(apiResponse, dispatch);
     } catch (err) {
       dispatch(setLoading(false));
       alert(err.message)
     }
-  }
-
-  const updateCityAndAddress = (data) => {
-    const localityObject = data?.data?.[0]?.["address_components"].find(
-      (item) => item?.["types"].includes("locality")
-    );
-
-    const city = localityObject?.["short_name"];
-    const address = data?.data?.[0]?.["formatted_address"];
-
-    localStorage.setItem("currentCity", JSON.stringify(city))
-    localStorage.setItem("searchedCityAddress", JSON.stringify(address))
-
-    dispatch(addYourCurrentCity(city));
-    dispatch(addSearchedCityAddress(address));
   }
 
   useEffect(() => {
@@ -111,7 +81,7 @@ export default function Home() {
             lng1,
           }).unwrap();
 
-          updateCityAndAddress(data);
+          updateCurrentCity(data, dispatch)
 
           const lat = data?.data?.[0]?.geometry?.location?.lat;
           const lng = data?.data?.[0]?.geometry?.location?.lng;
@@ -119,7 +89,7 @@ export default function Home() {
           try {
             const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
             console.log(res2);
-            updateHomeRestaurantData(res2);
+            updateHomeRestaurantData(res2, dispatch);
           } catch (err) {
             alert(err.message);
             fetchDefaultHomeAPIData();

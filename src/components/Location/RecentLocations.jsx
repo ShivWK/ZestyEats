@@ -1,0 +1,72 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  addRecentLocations,
+  selectRecentLocations,
+} from "../../features/home/homeSlice";
+import Location from "./Loacations";
+import { useLazySearchedLocationQuery } from "../../features/home/searchApiSlice";
+import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
+import {
+  setLoading,
+  removeYourCurrentCity,
+} from "../../features/home/homeSlice";
+import { closeLocationInModal } from "../../features/Login/loginSlice";
+import { updateSearchedCity } from "../../utils/addSearchedCity";
+import { updateHomeRestaurantData } from "../../utils/updateHomeData";
+
+const RecentLocations = () => {
+  const recentLocations = useSelector(selectRecentLocations);
+  // console.log(recentLocations, "From recentLocations");
+  const dispatch = useDispatch();
+  const [triggerLocationCall] = useLazySearchedLocationQuery();
+  const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+
+  useEffect(() => {
+    const recentLocations = JSON.parse(localStorage.getItem("recentLocations"));
+    // console.log(recentLocations, "from localStorage");
+    if (recentLocations !== null) {
+      dispatch(addRecentLocations(recentLocations));
+    }
+  }, []);
+
+  const handleRecentLocationClick = async (location) => {
+    dispatch(setLoading(true));
+    updateSearchedCity(location, dispatch);
+
+    dispatch(removeYourCurrentCity());
+    dispatch(closeLocationInModal());
+
+    try {
+      const res1 = await triggerLocationCall(location.place_id).unwrap();
+      const { lat, lng } = res1;
+
+      const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
+      updateHomeRestaurantData(res2, dispatch);
+    } catch (err) {
+      alert(err.message);
+      dispatch(setLoading(false));
+    }
+  };
+
+  return (
+    <div className="border-[1px] border-gray-400 mt-6 p-6 overflow-auto">
+      <p className="text-sm font-semibold text-gray-400">RECENT SEARCHES</p>
+      {recentLocations.length !== 0 ? (
+        recentLocations.map((location, index) => (
+          <Location
+            index={index}
+            key={location["place_id"]}
+            icon="ri-history-line"
+            item={location}
+            handleClick={() => handleRecentLocationClick(location)}
+          />
+        ))
+      ) : (
+        <p className="">No Recent Locatons</p>
+      )}
+    </div>
+  );
+};
+
+export default RecentLocations;
