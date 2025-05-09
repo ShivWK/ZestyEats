@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,6 +26,7 @@ const SignUp = () => {
   });
   const dispatch = useDispatch();
   const isSignUpOtpSend = useSelector(selectSignUpOtp);
+  const formRef = useRef(null);
 
   const handleSignUpChange = (e) => {
     setSignUpFormData({
@@ -37,7 +38,7 @@ const SignUp = () => {
     const handleSignUp= (e) => {
       e.preventDefault();
       e.stopPropagation();
-      const data = new FormData(e.target);
+      const data = new FormData(formRef);
 
       if (!isSignUpOtpSend) {
         if (data.get("phone").length === 0) {
@@ -83,6 +84,7 @@ const SignUp = () => {
 
   return (
     <Form
+      refference={formRef}
       handleSubmit={handleSignUp}
       buttonText={isSignUpOtpSend ? "VERIFY OTP" : "CONTINUE"}
       signingStatement={"By creating an account"}

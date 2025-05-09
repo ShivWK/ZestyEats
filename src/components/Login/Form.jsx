@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const Form = ({
   children,
+  refference,
   guestLogin = false,
   handleSubmit,
   handleGuestLogin = null,
@@ -15,7 +16,7 @@ const Form = ({
   })
 
   return (
-    <form className="mt-10 li-notfirst-andlast" onSubmit={handleSubmit} autoComplete="off">
+    <form ref={refference} className="mt-10 li-notfirst-andlast" onSubmit={handleSubmit} autoComplete="off">
       {children}
       <button
         type="submit"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector} from "react-redux";
@@ -12,6 +12,7 @@ const Login = () => {
   const [loginFormData, setLoginFormData] = useState({ phone: "", otp: "" });
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
+  const formRef = useRef(null);
 
   const handleGuestLogin = () => {
     console.log("Guest Login");
@@ -27,7 +28,7 @@ const Login = () => {
   const handleSignIn = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const data = new FormData(e.target);
+    const data = new FormData(formRef);
 
     if (!isOtpSend) {
       if (data.get("phone").length === 0) {
@@ -57,6 +58,7 @@ const Login = () => {
 
   return (
     <Form
+      refference={formRef}
       guestLogin={true}
       handleSubmit={handleSignIn}
       handleGuestLogin={handleGuestLogin}
