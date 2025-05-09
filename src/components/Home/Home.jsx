@@ -3,7 +3,7 @@ import TopRestaurantChains from "./TopRestaurantsChain/TopRestaurantChains";
 import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurant";
 import BestPlacesToEat from "./BestPlacesToEat";
 import NearByRestaurants from "./NearByRestaurants";
-import Loader from "./Loader";
+import Loader from "../Loader";
 
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 
@@ -46,8 +46,6 @@ export default function Home() {
       localStorage.getItem("searchedCityAddress")
     );
     const currentCity = JSON.parse(localStorage.getItem("currentCity"));
-
-    console.log(typeof searchedCityAddress, "From Home")
 
     dispatch(addSearchedCity(searchedCity === "undefined" ? "" : searchedCity));
     dispatch(addSearchedCityAddress(searchedCityAddress === "undefined" ? "" : searchedCityAddress));
@@ -106,7 +104,7 @@ export default function Home() {
   }, []);
 
   return isLoadingMain || isLoading ? (
-    <Loader />
+    <Loader size={"large"} />
   ) : (
     <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1">
       {FoodieThoughtsData.length !== 0 && (

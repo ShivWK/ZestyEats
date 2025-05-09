@@ -5,24 +5,39 @@
 }
 
 @layer utilities {
-    .hide-scrollbar::-webkit-scrollbar{
+    .hide-scrollbar::-webkit-scrollbar {
         display: none;
     }
 
-    .modal-slide-enter {
-        transform: translateX(0);
-        transition: transfor 0.3s ease-in-out;
+    .main-large {
+        height: 20vh;
+        width: 20vh;
+        border-radius: 50%;
+        border: 0.5em solid white;
+        border-top-color: #ff5200;
+        background-color: transparent;
+        animation: loader 1s ease infinite;
     }
 
-    .modal-slide-exit {
-        transform: translateX(100%);
-        transition: transform 0.3s ease-in-out;
+    .main-small {
+        height: 4.5vh;
+        width: 4.5vh;
+        border-radius: 50%;
+        border: 0.3em solid white;
+        border-top-color: black;
+        background-color: transparent;
+        animation: loader 1s ease infinite;
     }
 
-    .li-notfirst-andlast > :not(:first-child):not(:last-child) {
-        @apply border-t-0
-    }
+    @keyframes loader {
+        0% {
+            transform: rotate(0deg);
+        }
 
+        100% {
+            transform: rotate(360deg);
+        }
+    }
 }
 
 @layer base {

@@ -9,7 +9,9 @@ import {
   loginOtpSend,
   loginOtpNotSend,
   selectLoginOtp,
+  selectIsLoading,
   setIsLoggedIn,
+  setLoading,
 } from "../../features/Login/loginSlice";
 
 const Login = () => {
@@ -18,46 +20,70 @@ const Login = () => {
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
+  const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
-
-  useEffect(() => {
-    if (!window.recatchaVerifier) {
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, "LoginBtn", {
-        size: "invisible",
-      });
-    }
-
-    return () => {
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear();
-        window.recaptchaVerifier = null;
-      }
-    };
-  }, []);
 
   const handleGuestLogin = () => {
     console.log("Guest Login");
   };
 
-  const handleLoginChange = (e) => {
-    setLoginFormData({
-      ...loginFormData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
   const handleSubmit = (e) => {
+    console.log("Clicked")
     e.preventDefault();
     e.stopPropagation();
+    dispatch(setLoading(true));
 
-    window.recaptchaVerifier.verify().then(() => {
-      console.log("called");
-      sendOTP();
-    });
+    const data = new FormData(formRef.current);
+
+    if (data.get("phone").length === 0) {
+      setChangePhoneHasValue(true);
+      dispatch(setLoading(false));
+    } else if (data.get("phone").length < 10) {
+      setChangePhoneIsEntryMade(true);
+      setChangePhoneHasValue(true);
+      dispatch(setLoading(false));
+    } else {
+      if (window.recaptchaVerifier) {
+        window.recaptchaVerifier.clear(); // clearing it because if it exists then new recaptcha wont be gerated or u cant resend otp
+        window.recaptchaVerifier = null;
+      }
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, "LoginBtn", {
+        size: "invisible",
+      });
+
+      window.recaptchaVerifier
+        .verify()
+        .then(() => {
+          dispatch(setLoading(true));
+          sendOTP();
+        })
+        .catch((err) => {
+          dispatch(setLoading(false));
+          console.log("Recaptcha verification failed", err);
+          alert("Recaptcha verification failed, please try again.");
+        });
+    }
   };
+
+  function sendOTP() {
+    const data = new FormData(formRef.current);
+    const appVerifier = window.recaptchaVerifier;
+    const number = "+91" + data.get("phone");
+
+    signInWithPhoneNumber(auth, number, appVerifier)
+      .then((confirmationResult) => {
+        window.confirmationResult = confirmationResult;
+        dispatch(setLoading(false));
+        dispatch(loginOtpSend());
+      })
+      .catch((err) => {
+        console.log("Error in Sending OTP", err);
+        window.recaptchaVerifier.clear();
+        window.recaptchaVerifier = null;
+      });
+  }
 
   function handleOtpVerification() {
     const data = new FormData(formRef.current);
@@ -68,49 +94,30 @@ const Login = () => {
       setChangeOtpIsEntryMade(true);
       setChangeOtpHasValue(true);
     } else {
+      dispatch(setLoading(true));
       const otp = data.get("otp");
 
       window.confirmationResult
         .confirm(otp)
         .then((result) => {
           console.log("OTP Verified");
-          console.log(result.user);
+          // console.log(result.user);
           dispatch(closeLogInModal());
           dispatch(loginOtpNotSend());
-          window.recatchaVerifier = null;
-          window.confirmationResult = null;
           window.recaptchaVerifier.clear();
+          window.recaptchaVerifier = null;
+          window.confirmationResult = null;
+          dispatch(setLoading(false));
           dispatch(setIsLoggedIn(true));
         })
         .catch((err) => {
+          dispatch(setLoading(false));
+          window.recaptchaVerifier.clear();
+          window.recaptchaVerifier = null;
           alert("OTP not verified");
           console.log(err);
         });
-
       // Reset the Profile for logged in user
-    }
-  }
-
-  function sendOTP() {
-    const data = new FormData(formRef.current);
-
-    if (data.get("phone").length === 0) {
-      setChangePhoneHasValue(true);
-    } else if (data.get("phone").length < 10) {
-      setChangePhoneIsEntryMade(true);
-      setChangePhoneHasValue(true);
-    } else {
-      const appVerifier = window.recaptchaVerifier;
-      const number = "+91" + data.get("phone");
-
-      signInWithPhoneNumber(auth, number, appVerifier)
-        .then((confirmationResult) => {
-          window.confirmationResult = confirmationResult;
-          dispatch(loginOtpSend());
-        })
-        .catch((err) => {
-          console.log("Error in Sending OTP", err);
-        });
     }
   }
 
@@ -124,6 +131,7 @@ const Login = () => {
       handleOtpVerification={handleOtpVerification}
       signingStatement={"By clicking on Login"}
       isOtpSend={isOtpSend}
+      isLoading={isLoading}
     >
       <EntryDiv
         type="tel"

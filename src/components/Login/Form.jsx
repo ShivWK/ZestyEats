@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { selectlogInModal } from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
+import Loader from "../Loader";
 
 const Form = ({
   btnId,
@@ -13,6 +14,7 @@ const Form = ({
   handleOtpVerification,
   signingStatement,
   isOtpSend = false,
+  isLoading,
 }) => {
   const isLogInModelOpen = useSelector(selectlogInModal);
 
@@ -28,18 +30,31 @@ const Form = ({
       {isOtpSend ? (
         <button
           type="button"
+          disabled={isLoading ? true : false}
           onClick={handleOtpVerification}
-          className="bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-pointer"
+          className="flex justify-center items-center
+           bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg"
+          style={{ cursor: isLoading ? "not-allowed" : "pointer" }}
         >
-          VERIFY OTP
+          {isLoading ? <Loader size="small" /> : "VERIFY OTP"}
         </button>
       ) : (
         <button
           id={btnId}
+          disabled={isLoading ? true : false}
           type="submit"
-          className="bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-pointer"
+          className="flex justify-center items-center
+           bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg"
+          style={{ cursor: isLoading ? "not-allowed" : "pointer",
+           }}
         >
-          {isLogInModelOpen ? "LOGIN" : "CONTINUE"}
+          {isLoading ? (
+            <Loader size="small" />
+          ) : isLogInModelOpen ? (
+            "LOGIN"
+          ) : (
+            "CONTINUE"
+          )}
         </button>
       )}
       {guestLogin && !isOtpSend && (
