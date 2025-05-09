@@ -35,58 +35,63 @@ const SignUp = () => {
     });
   };
 
-    const handleSignUp= (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      const data = new FormData(formRef);
+  function handleOtpVerification() {
+    
+  }
 
-      if (!isSignUpOtpSend) {
-        if (data.get("phone").length === 0) {
-          // setChangePhoneIsEntryMade(true);
-          setChangePhoneHasValue(true);
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const data = new FormData(formRef);
 
-        } else if (data.get("phone").length < 10) {
-          setChangePhoneIsEntryMade(true);
-          setChangePhoneHasValue(true);
+    if (!isSignUpOtpSend) {
+      if (data.get("phone").length === 0) {
+        // setChangePhoneIsEntryMade(true);
+        setChangePhoneHasValue(true);
 
-        } else if (data.get("name").length === 0) {
-          // setChangeNameIsEntryMade(true);
-          setChangeNameHasValue(true);
+      } else if (data.get("phone").length < 10) {
+        setChangePhoneIsEntryMade(true);
+        setChangePhoneHasValue(true);
 
-        } else if (data.get("email").length === 0) {
-          // setChangeEmailIsEntryMade();
-          setChangeEmailHasValue(true);
+      } else if (data.get("name").length === 0) {
+        // setChangeNameIsEntryMade(true);
+        setChangeNameHasValue(true);
 
-        } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
-          setChangeEmailIsEntryMade(true);
-          setChangeEmailHasValue(true);
+      } else if (data.get("email").length === 0) {
+        // setChangeEmailIsEntryMade();
+        setChangeEmailHasValue(true);
 
-        } else {
-          // handle the OTP sending logic
-          dispatch(signUpOtpSend());
-        }
+      } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
+        setChangeEmailIsEntryMade(true);
+        setChangeEmailHasValue(true);
+
       } else {
-        if (data.get("otp").length === 0) {
-          setChangeOtpHasValue(true);
-          // setChangeOtpIsEntryMade(true);
-        } else if (data.get("otp").length < 6) {
-          setChangeOtpIsEntryMade(true);
-          setChangeOtpHasValue(true);
-        } else {
-          // handle the OTP verification logic here
-          console.log("OTP Verified");
-          // Reset the Profile for logged in user
-          dispatch(signUpOtpNotSend());
-          dispatch(closeLogInModal());
-        }
+        // handle the OTP sending logic
+        dispatch(signUpOtpSend());
       }
-    };
+    } else {
+      if (data.get("otp").length === 0) {
+        setChangeOtpHasValue(true);
+        // setChangeOtpIsEntryMade(true);
+      } else if (data.get("otp").length < 6) {
+        setChangeOtpIsEntryMade(true);
+        setChangeOtpHasValue(true);
+      } else {
+        // handle the OTP verification logic here
+        console.log("OTP Verified");
+        // Reset the Profile for logged in user
+        dispatch(signUpOtpNotSend());
+        dispatch(closeLogInModal());
+      }
+    }
+  };
 
   return (
     <Form
+      btnId={"SignUpBtn"}
       refference={formRef}
       handleSubmit={handleSignUp}
-      buttonText={isSignUpOtpSend ? "VERIFY OTP" : "CONTINUE"}
+      handleOtpVerification={handleOtpVerification}
       signingStatement={"By creating an account"}
       isOtpSend={isSignUpOtpSend}
     >

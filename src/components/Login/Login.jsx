@@ -1,18 +1,42 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
+import { auth } from "../../firebaseConfig";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
-import { useDispatch, useSelector} from "react-redux";
-import { closeLogInModal, loginOtpSend, loginOtpNotSend, selectLoginOtp } from "../../features/Login/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  closeLogInModal,
+  loginOtpSend,
+  loginOtpNotSend,
+  selectLoginOtp,
+  setIsLoggedIn,
+} from "../../features/Login/loginSlice";
 
 const Login = () => {
-  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
+  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] =
+    useState(undefined);
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
-  const [loginFormData, setLoginFormData] = useState({ phone: "", otp: "" });
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
   const formRef = useRef(null);
+
+  useEffect(() => {
+    if (!window.recatchaVerifier) {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, "LoginBtn", {
+        size: "invisible",
+      });
+    }
+
+    return () => {
+      if (window.recaptchaVerifier) {
+        window.recaptchaVerifier.clear();
+        window.recaptchaVerifier = null;
+      }
+    };
+  }, []);
 
   const handleGuestLogin = () => {
     console.log("Guest Login");
@@ -25,44 +49,79 @@ const Login = () => {
     });
   };
 
-  const handleSignIn = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    const data = new FormData(formRef);
 
-    if (!isOtpSend) {
-      if (data.get("phone").length === 0) {
-        setChangePhoneHasValue(true);
-      } else if (data.get("phone").length < 10) {
-        setChangePhoneIsEntryMade(true);
-        setChangePhoneHasValue(true);
-      } else {
-        // handle the OTP sending logic 
-        dispatch(loginOtpSend());
-      }
-    } else {
-      if (data.get("otp").length === 0) {
-        setChangeOtpHasValue(true);
-      } else if (data.get("otp").length < 6) {
-        setChangeOtpIsEntryMade(true);
-        setChangeOtpHasValue(true);
-      } else {
-        // handle the OTP verification logic here
-        console.log("OTP Verified");
-        // Reset the Profile for logged in user
-        dispatch(closeLogInModal());
-        dispatch(loginOtpNotSend());
-      }
-    }
+    window.recaptchaVerifier.verify().then(() => {
+      console.log("called");
+      sendOTP();
+    });
   };
+
+  function handleOtpVerification() {
+    const data = new FormData(formRef.current);
+
+    if (data.get("otp").length === 0) {
+      setChangeOtpHasValue(true);
+    } else if (data.get("otp").length < 6) {
+      setChangeOtpIsEntryMade(true);
+      setChangeOtpHasValue(true);
+    } else {
+      const otp = data.get("otp");
+
+      window.confirmationResult
+        .confirm(otp)
+        .then((result) => {
+          console.log("OTP Verified");
+          console.log(result.user);
+          dispatch(closeLogInModal());
+          dispatch(loginOtpNotSend());
+          window.recatchaVerifier = null;
+          window.confirmationResult = null;
+          window.recaptchaVerifier.clear();
+          dispatch(setIsLoggedIn(true));
+        })
+        .catch((err) => {
+          alert("OTP not verified");
+          console.log(err);
+        });
+
+      // Reset the Profile for logged in user
+    }
+  }
+
+  function sendOTP() {
+    const data = new FormData(formRef.current);
+
+    if (data.get("phone").length === 0) {
+      setChangePhoneHasValue(true);
+    } else if (data.get("phone").length < 10) {
+      setChangePhoneIsEntryMade(true);
+      setChangePhoneHasValue(true);
+    } else {
+      const appVerifier = window.recaptchaVerifier;
+      const number = "+91" + data.get("phone");
+
+      signInWithPhoneNumber(auth, number, appVerifier)
+        .then((confirmationResult) => {
+          window.confirmationResult = confirmationResult;
+          dispatch(loginOtpSend());
+        })
+        .catch((err) => {
+          console.log("Error in Sending OTP", err);
+        });
+    }
+  }
 
   return (
     <Form
+      btnId="LoginBtn"
       refference={formRef}
       guestLogin={true}
-      handleSubmit={handleSignIn}
+      handleSubmit={handleSubmit}
       handleGuestLogin={handleGuestLogin}
-      buttonText={isOtpSend ? "VERIFY OTP" : "LOGIN"}
+      handleOtpVerification={handleOtpVerification}
       signingStatement={"By clicking on Login"}
       isOtpSend={isOtpSend}
     >
@@ -70,8 +129,6 @@ const Login = () => {
         type="tel"
         inputMode="numeric"
         purpose={"phone"}
-        value={loginFormData.phone}
-        onChangeHandler={handleLoginChange}
         placeholder="Phone number"
         fallbackPlacehoder="Enter your phone number"
         isReadOnly={isOtpSend}
@@ -84,8 +141,6 @@ const Login = () => {
           type="text"
           inputMode="numeric"
           purpose={"otp"}
-          value={loginFormData.otp}
-          onChangeHandler={handleLoginChange}
           placeholder="One Time Password"
           fallbackPlacehoder="One Time Password"
           changeIsEntryMade={changeOtpIsEntryMade}

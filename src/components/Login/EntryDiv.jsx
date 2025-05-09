@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../features/Login/loginSlice";
 
 const EntryDiv = ({
   type,
@@ -15,6 +17,7 @@ const EntryDiv = ({
   const [hasValue, setHasValue] = useState(false);
   const [fieldValue, setFiledValue] = useState("");
   const inputRef = useRef(null);
+  let isLoggedIn = useSelector(selectIsLoggedIn);
 
   useEffect(() => {
     if (focus) {
@@ -22,6 +25,13 @@ const EntryDiv = ({
       setIsEntryMade(true);
     }
   }, [focus]);
+
+  useEffect(() => {
+    if (isLoggedIn === true) {
+      setFiledValue("");
+      setIsEntryMade(false);
+    }
+  }, [isLoggedIn])
 
   useEffect(() => {
     if (fieldValue !== "" && fieldValue !== null && fieldValue !== undefined) {
@@ -145,6 +155,7 @@ const EntryDiv = ({
         id="elem"
         name={purpose}
         type={type}
+        value={fieldValue}
         onBlur={handleBlur}
         onFocus={handleFocus}
         inputMode={inputMode}

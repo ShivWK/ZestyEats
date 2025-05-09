@@ -28,7 +28,7 @@ const isSigUpOtpSend = useSelector(selectSignUpOtp);
     <div className="w-[80%] h-auto mt-7">
       <button className="group cursor-pointer mb-4" onClick={isLoginOtpSend || isSigUpOtpSend ? handleBack : handleClose}>
         {isLoginOtpSend || isSigUpOtpSend ? (
-          <i class="ri-arrow-left-line text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
+          <i className="ri-arrow-left-line text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
         ) : (
           <i className="ri-close-large-fill text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
         )}
