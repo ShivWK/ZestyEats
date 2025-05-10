@@ -101,7 +101,7 @@ const Login = () => {
         .confirm(otp)
         .then((result) => {
           console.log("OTP Verified");
-          // console.log(result.user);
+          // console.log(result.user);npm run dev
           dispatch(closeLogInModal());
           dispatch(loginOtpNotSend());
           window.recaptchaVerifier.clear();
@@ -109,6 +109,11 @@ const Login = () => {
           window.confirmationResult = null;
           dispatch(setLoading(false));
           dispatch(setIsLoggedIn(true));
+
+          // const widgetId = window.recaptchaVerifier.widgetId;
+          // if (widgetId !== undefined) {
+          //   window.recaptchaVerifier.recaptcha.reset(widgetId);
+          // }
         })
         .catch((err) => {
           dispatch(setLoading(false));

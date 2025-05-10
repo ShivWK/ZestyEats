@@ -113,7 +113,7 @@ const FoodieThoughts = ({ isLoading }) => {
         <div
           onScroll={handleScroll}
           ref={containerRef}
-          className="flex justify-between overflow-x-auto hide-scrollbar"
+          className="flex justify-between gap-4 overflow-x-auto hide-scrollbar"
         >
           {isLoading ? (
             <p>Loading...</p>
