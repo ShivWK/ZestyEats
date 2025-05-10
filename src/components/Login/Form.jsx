@@ -34,7 +34,7 @@ const Form = ({
           onClick={handleOtpVerification}
           className="flex justify-center items-center
            bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg"
-          style={{ cursor: isLoading ? "none" : "pointer" }}
+          style={{ cursor: isLoading ? "auto" : "pointer" }}
         >
           {isLoading ? <Loader size="small" /> : "VERIFY OTP"}
         </button>
@@ -45,7 +45,7 @@ const Form = ({
           type="submit"
           className="flex justify-center items-center
            bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-"
-          style={{ cursor: isLoading ? "none" : "pointer",
+          style={{ cursor: isLoading ? "auto" : "pointer",
            }}
         >
           {isLoading ? (
