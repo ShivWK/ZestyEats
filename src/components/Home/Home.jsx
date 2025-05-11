@@ -106,10 +106,10 @@ export default function Home() {
   return isLoadingMain || isLoading ? (
     <Loader size={"large"} />
   ) : (
-    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1">
+    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1 pt-20">
       {FoodieThoughtsData.length !== 0 && (
         <>
-          <section className="w-full max-w-[1040px] mx-auto">
+          <section className="w-full max-w-[1040px] mx-auto ">
             <FoodieThoughts isLoading={isLoading} />
           </section>
           <hr className="mt-10 mb-9 text-gray-300" />

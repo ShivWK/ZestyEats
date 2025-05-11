@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { motion } from 'motion/react';
 import { openLocationModal } from "../../features/Login/loginSlice";
 import {
   selectSearchedCity,
@@ -21,11 +22,13 @@ export default function Logo() {
   return (
     <div className="flex gap-11">
       <a href="#">
-        <svg
-          className="VXJlj hover:scale-110 hover:cursor-pointer transition-transform duration-300"
+        <motion.svg
+          className="VXJlj hover:scale-125 active:scale-95 hover:cursor-pointer transition-transform duration-300"
           viewBox="0 0 61 61"
           height="49"
           width="49"
+          initial={{ scale: 0}}
+          animate={{ scale: 1}}
         >
           <g clipPath="url(#a)">
             <path
@@ -44,7 +47,7 @@ export default function Logo() {
               <path fill="#fff" d="M.32.5h60v60h-60z"></path>
             </clipPath>
           </defs>
-        </svg>
+        </motion.svg>
       </a>
       <button
         onClick={handleClick}

@@ -7,7 +7,7 @@ const Cards = ({ data }) => {
     const imageUrl = imageEncoded && `https://media-assets.swiggy.com/swiggy/image/upload/${imageEncoded}`;
 
   return (
-    <NavLink className="flex flex-col items-center w-[275px] rounded-2xl overflow-hidden pb-0 mb-0 shrink-0 hover:scale-95 transition-all duration-300 ease-in-out">
+    <NavLink className="flex flex-col items-center w-[275px] rounded-2xl overflow-hidden pb-0 mb-0 shrink-0 hover:scale-95 transition-all duration-200 ease-in-out">
       <div
         className="w-full h-44 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2"
         style={{

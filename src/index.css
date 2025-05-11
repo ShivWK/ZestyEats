@@ -38,6 +38,10 @@
             transform: rotate(360deg);
         }
     }
+
+    .notFirst-notLast > div:not(:first-child):not(:last-child) {
+        border-top:none;
+    }
 }
 
 @layer base {

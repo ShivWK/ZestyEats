@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { selectlogInModal } from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
 import Loader from "../Loader";
+import { motion } from 'motion/react';
 
 const Form = ({
   btnId,
@@ -21,32 +22,33 @@ const Form = ({
   return (
     <form
       ref={refference}
-      className="mt-10 li-notfirst-andlast"
+      className="mt-10 notFirst-notLast"
       onSubmit={handleSubmit}
       autoComplete="off"
     >
       {children}
 
       {isOtpSend ? (
-        <button
+        <motion.button
           type="button"
-          disabled={isLoading ? true : false}
+          disabled={isLoading}
           onClick={handleOtpVerification}
           className="flex justify-center items-center
            bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg"
           style={{ cursor: isLoading ? "auto" : "pointer" }}
+          whileTap={{ scale: 0.95}}
         >
           {isLoading ? <Loader size="small" /> : "VERIFY OTP"}
-        </button>
+        </motion.button>
       ) : (
-        <button
+        <motion.button
           id={btnId}
-          disabled={isLoading ? true : false}
+          disabled={isLoading}
           type="submit"
           className="flex justify-center items-center
            bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-"
-          style={{ cursor: isLoading ? "auto" : "pointer",
-           }}
+          style={{ cursor: isLoading ? "auto" : "pointer"}}
+          whileTap={{ scale: 0.95 }}
         >
           {isLoading ? (
             <Loader size="small" />
@@ -55,16 +57,18 @@ const Form = ({
           ) : (
             "CONTINUE"
           )}
-        </button>
+        </motion.button>
       )}
       {guestLogin && !isOtpSend && (
-        <button
+        <motion.button
           type="button"
           onClick={handleGuestLogin}
           className="font-bold text-[#6e6e6e] w-full h-11 mt-2 rounded-lg cursor-pointer hover:text-primary"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
         >
           Login as Guest
-        </button>
+        </motion.button>
       )}
       {!isOtpSend && (
         <p className="text-center text-xs mt-2 font-bold text-gray-600">
