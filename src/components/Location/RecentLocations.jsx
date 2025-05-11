@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { motion, useScroll } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addRecentLocations,
@@ -17,7 +18,9 @@ import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 
 const RecentLocations = () => {
   const recentLocations = useSelector(selectRecentLocations);
-  // console.log(recentLocations, "From recentLocations");
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({container: containerRef});
+  // console.log(scrollYProgress)
   const dispatch = useDispatch();
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
@@ -50,7 +53,10 @@ const RecentLocations = () => {
   };
 
   return (
-    <div className="border-[1px] border-gray-400 mt-6 p-6 overflow-auto">
+    <div ref={containerRef} className="relative border-[1px] border-gray-400 mt-6 p-6 overflow-auto">
+      <motion.div className="fixed top-0 h-2bg-primary left-0 origin-left"
+        style={{ scaleX: scrollYProgress}}
+       />
       <p className="text-sm font-semibold text-gray-400">RECENT SEARCHES</p>
       {recentLocations.length !== 0 ? (
         recentLocations.map((location, index) => (

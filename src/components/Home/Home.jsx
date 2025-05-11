@@ -33,7 +33,8 @@ export default function Home() {
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [firstRender, setFirstRender] = useState(true);
 
-  if (firstRender) {
+ useEffect(()=>{
+   if (firstRender) {
     dispatch(setLoading(true));
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
     if (HomeData) {
@@ -51,6 +52,7 @@ export default function Home() {
     dispatch(addSearchedCityAddress(searchedCityAddress === "undefined" ? "" : searchedCityAddress));
     dispatch(addYourCurrentCity(currentCity === "undefined" ? "" : currentCity));
   }
+ }, [])
 
   const fetchDefaultHomeAPIData = async () => {
     try {
