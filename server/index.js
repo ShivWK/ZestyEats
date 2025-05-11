@@ -154,7 +154,6 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
         'Cookie': req.headers.cookie || '',
       },
     });
-    console.log(response);
     res.json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
