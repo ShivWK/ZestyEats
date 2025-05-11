@@ -235,6 +235,7 @@ app.get("/api/address-from-coordinates", async (req, res) => {
         'Accept-Language': 'en-US,en;q=0.9',
         'Referer': 'https://www.swiggy.com/',
         'Origin': 'https://www.swiggy.com',
+        'Cookie': req.headers.cookie || '',
       },
     });
 
