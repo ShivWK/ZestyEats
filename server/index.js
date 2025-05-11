@@ -235,7 +235,7 @@ app.get("/api/address-from-coordinates", async (req, res) => {
         'Accept-Language': 'en-US,en;q=0.9',
         'Referer': 'https://www.swiggy.com/',
         'Origin': 'https://www.swiggy.com',
-        'Cookie': req.headers.cookie || '',
+        'Cookie': '__SW=O0eWTlPnGwOjUkaIZw6DKGyTUbcUNfXA; _device_id=d1b12bfa-90a5-6675-3827-6e93ab5515c9; _gcl_au=1.1.92825078.1742806418; _swuid=d1b12bfa-90a5-6675-3827-6e93ab5515c9; application_name=; category=; x-channel=; _ot=REGULAR; _ga_YD063E4XCC=GS1.2.1745251713.1.0.1745251713.0.0.0; _ga_76P34S6XQ2=GS1.1.1745251712.1.1.1745251763.0.0.0; _ga_LK8E6WBG6G=GS1.1.1745251713.1.1.1745251763.0.0.0; fontsLoaded=1; _gid=GA1.2.1664181634.1746628755; _ga_X3K3CELKLV=GS2.1.s1746873571$o11$g1$t1746875630$j0$l0$h0; userLocation={%22lat%22:12.9715987%2C%22lng%22:77.5945627%2C%22address%22:%22Bengaluru%2C%20Karnataka%2C%20India%22%2C%22area%22:%22%22%2C%22showUserDefaultAddressHint%22:false}; _guest_tid=4216899c-4191-4e4c-b870-a0b833fa655e; _sid=kjc16afe-b8ad-4652-8119-07a155709b33; _gat_0=1; _ga=GA1.2.1598272018.1727292903; _ga_YE38MFJRBZ=GS2.1.s1746991189$o86$g1$t1746991207$j0$l0$h0; _ga_34JYJ0BCRN=GS2.1.s1746991190$o99$g1$t1746991208$j0$l0$h0',
       },
     });
 
