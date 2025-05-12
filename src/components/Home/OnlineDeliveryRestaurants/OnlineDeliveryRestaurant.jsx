@@ -20,11 +20,11 @@ export default function OnlineDeliveryRestaurant({ isLoading }) {
                 <Filter applied={false} text="Ratings 4.0+"/>
             </div>
         </div>
-        <div className="flex flex-wrap gap-y-7 gap-x-8  justify-center w-full mt-8 mx-auto">
+        <div className="flex flex-wrap gap-y-7 gap-x-8 justify-start w-full mt-8 mx-auto">
             { isLoading ? 
             <p>Loading...</p>
             : data.length !== 0 ?
-            (data.map(item => <Cards key={item.info.id} data={item.info} imageWidth={240} imageHeight={40}/>))
+            (data.map(item => <Cards key={item.info.id} data={item.info} imageWidth={240} imageHeight={40} from={"online"}/>))
             : <p>No data found</p>
             }
         </div>
