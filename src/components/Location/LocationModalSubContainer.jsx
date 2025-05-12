@@ -11,6 +11,7 @@ const ModalSubContainer = () => {
   const [searchValue, setSearchValue] = useState("");
   const [searchedLocation, setSearchedLocation] = useState([]);
   const [Focused, setFocused] = useState(false);
+  const inputRef = useRef(null);
   const [triggerAutoCompleteSearch] = useLazyGetAutoCompleteSearchQuery();
 
   // Store the debounced function in a ref so that:
@@ -56,6 +57,7 @@ const ModalSubContainer = () => {
 
   const handleDivClick = (e) => {
     e.stopPropagation();
+    inputRef.current.focus();
     setFocused(true);
   };
 
@@ -84,6 +86,7 @@ const ModalSubContainer = () => {
       >
         <input
           type="text"
+          ref={inputRef}
           value={searchValue}
           onChange={handleInputChange}
           className="p-0.5 outline-none font-semibold"

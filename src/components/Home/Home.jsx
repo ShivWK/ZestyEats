@@ -1,6 +1,6 @@
 import FoodieThoughts from "./FoodieThoughts/FoodieThoughts";
 import TopRestaurantChains from "./TopRestaurantsChain/TopRestaurantChains";
-import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurant";
+import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant";
 import BestPlacesToEat from "./BestPlacesToEat";
 import NearByRestaurants from "./NearByRestaurants";
 import Loader from "../Loader";
@@ -26,7 +26,8 @@ import { updateCurrentCity } from "../../utils/addCurrentCity";
 
 export default function Home() {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
-  const FoodieThoughtsData = useSelector(selectFoodieThoughtsData);
+  const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
+  const onlineDeliveryRestaurant = useSelector(selectOnlineDeliveryRestaurants);
   const isLoadingMain = useSelector(selectIsLoading);
   const dispatch = useDispatch();
   const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
@@ -106,12 +107,12 @@ export default function Home() {
     <Loader size={"large"} />
   ) : (
     <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1 pt-20">
-      {FoodieThoughtsData.length !== 0 && (
+      {foodieThoughtsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto ">
             <FoodieThoughts isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-9 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-300" />
         </>
       )}
       {topRestaurantsChainsData.length !== 0 && (
@@ -119,15 +120,15 @@ export default function Home() {
           <section className="w-full max-w-[1040px] mx-auto">
             <TopRestaurantChains isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-9 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-300" />
         </>
       )}
-      {selectFoodieThoughtsData.length !== 0 && (
+      {onlineDeliveryRestaurant.length !== 0 && (
         <>
-          <section className="w-full max-w-[1040px]">
+          <section className="w-full">
             <OnlineDeliveryRestaurant isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-9 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-300" />
         </>
       )}
       <section>{/* <BestPlacesToEat /> */}</section>
