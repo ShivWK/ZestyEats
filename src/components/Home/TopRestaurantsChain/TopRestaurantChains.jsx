@@ -1,7 +1,7 @@
 import { selectTopRestaurantsData } from "../../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
-import Cards from './Cards'
+import Cards from '../Cards'
 import Button from "../Button";
 import Scrollbar from "../ScroolBar";
 import { selectTopRestaurantsTitle } from "../../../features/home/homeSlice";
@@ -101,10 +101,9 @@ const TopRestaurantChains = ({ isLoading }) => {
   }
 
   return (
-    topRestaurantsChainsData &&
     <>
       <div className="flex justify-between flex-wrap items-center">
-        <h3>{title}</h3>
+        <h2>{title}</h2>
         <div className="flex justify-between gap-1">
           <Button ref={leftBtnRef} clickHandler={debouncedHandleLeftClick.current} iconClass="left" />
           <Button ref={rightBtnRef} clickHandler={debouncedHandleRightClick.current} iconClass="right" />

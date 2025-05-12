@@ -4,10 +4,12 @@ const initialState = {
     apiData : null,
     foodieThoughtsData : [],
     topRestaurantsData : [],
+    restaurantsWithOnlineDelivery: [],
     yourCurrentCity: "",
     searchedCity:"",
     searchedCityAddress: "",
-    topRestaurantsTitle: "Top restaurant chains in your location",
+    topRestaurantsTitle: "Top restaurant chains in Bangalore",
+    onlineDeliveryTitle: "Restaurants with online food delivery in Bangalore",
     isLoading: true,
     recentLocations: [],
 }
@@ -38,6 +40,16 @@ const homeSlice = createSlice({
             state.topRestaurantsData = result;
         },
 
+        
+        addRestaurantsWithOnineDelivery : (state, action) => {
+            const result = action.payload?.data?.cards?.find(
+                item => item?.card?.card?.id === "restaurant_grid_listing_v2"
+             )
+             ?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
+
+            state.restaurantsWithOnlineDelivery = result;
+        },
+
         addSearchedCity: (state, action) => {
             if( typeof action.payload !== "object" || action.payload === null) {
                 // we are checking for null because type of null is alos object
@@ -60,6 +72,15 @@ const homeSlice = createSlice({
              ?.card?.card?.header?.title;
              
              state.topRestaurantsTitle = title; 
+        },
+
+        addOnlineDeliveryTitle: (state, action) => {
+            const title = action.payload.data.cards.find(item => {
+                return item?.card?.card?.id === "popular_restaurants_title";
+            })
+            ?.card?.card?.title;
+
+            state.onlineDeliveryTitle = title;
         },
 
         addSearchedCityAddress: (state, action) => {
@@ -108,6 +129,8 @@ export const selectSearchedCity = state => state.home.searchedCity;
 export const selectSearchedCityAddress = state => state.home.searchedCityAddress; 
 export const selectIsLoading = state => state.home.isLoading;
 export const selectRecentLocations = state => state.home.recentLocations;
+export const selectOnlineDeliveryRestaurants = state => state.home.restaurantsWithOnlineDelivery;
+export const selectOnlineDeliveryTitle = state => state.home.onlineDeliveryTitle;
 
 export const { 
     addApiData, 
@@ -120,7 +143,9 @@ export const {
     addTopRestaurantsTitle,
     addRecentLocations,
     setLoading,
-    removeARecentLocation
+    removeARecentLocation,
+    addRestaurantsWithOnineDelivery,
+    addOnlineDeliveryTitle,
 } = homeSlice.actions;
 
 

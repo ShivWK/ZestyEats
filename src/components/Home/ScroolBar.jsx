@@ -28,7 +28,7 @@ const Scrollbar = ({
     >
       <div
         ref={scrollContainerRef}
-        className="w-[70px] h-1 rounded-full bg-gray-200 relative"
+        className="w-[70px] h-[3px] rounded-full bg-gray-200 relative"
       >
         <div
           ref={scrrollBarRef}

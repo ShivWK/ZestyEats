@@ -6,7 +6,6 @@ import NearByRestaurants from "./NearByRestaurants";
 import Loader from "../Loader";
 
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
-
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 
 import { useEffect, useState } from "react";
@@ -14,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   selectFoodieThoughtsData,
   selectTopRestaurantsData,
+  selectOnlineDeliveryRestaurants,
   selectIsLoading,
   setLoading,
   addYourCurrentCity,
@@ -50,7 +50,6 @@ export default function Home() {
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
     if (HomeData) {
-
       updateHomeRestaurantData(HomeData, dispatch);
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
       const searchedCityAddress = JSON.parse(
@@ -58,9 +57,17 @@ export default function Home() {
       );
       const currentCity = JSON.parse(localStorage.getItem("currentCity"));
 
-      dispatch(addSearchedCity(searchedCity === "undefined" ? "" : searchedCity));
-      dispatch(addSearchedCityAddress(searchedCityAddress === "undefined" ? "" : searchedCityAddress));
-      dispatch(addYourCurrentCity(currentCity === "undefined" ? "" : currentCity));
+      dispatch(
+        addSearchedCity(searchedCity === "undefined" ? "" : searchedCity)
+      );
+      dispatch(
+        addSearchedCityAddress(
+          searchedCityAddress === "undefined" ? "" : searchedCityAddress
+        )
+      );
+      dispatch(
+        addYourCurrentCity(currentCity === "undefined" ? "" : currentCity)
+      );
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
@@ -112,9 +119,17 @@ export default function Home() {
           <section className="w-full max-w-[1040px] mx-auto">
             <TopRestaurantChains isLoading={isLoading} />
           </section>
+          <hr className="mt-10 mb-9 text-gray-300" />
         </>
       )}
-      <section>{/* <OnlineDeliveryRestaurant /> */}</section>
+      {selectFoodieThoughtsData.length !== 0 && (
+        <>
+          <section className="w-full max-w-[1040px]">
+            <OnlineDeliveryRestaurant isLoading={isLoading} />
+          </section>
+          <hr className="mt-10 mb-9 text-gray-300" />
+        </>
+      )}
       <section>{/* <BestPlacesToEat /> */}</section>
       <section>{/* <NearByRestaurants /> */}</section>
     </main>

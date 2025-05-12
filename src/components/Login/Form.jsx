@@ -44,7 +44,7 @@ const Form = ({
       ) : (
         <motion.button
           id={btnId}
-          // disabled={isLoading}
+          disabled={isLoading}
           type="button"
           onClick={handleSubmit}
           className="flex justify-center items-center

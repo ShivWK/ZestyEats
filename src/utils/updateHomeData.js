@@ -3,7 +3,9 @@ import {
     addFoodieThoughtsData,
     addTopRestaurantsData,
     addTopRestaurantsTitle,
-    setLoading
+    addRestaurantsWithOnineDelivery,
+    setLoading,
+    addOnlineDeliveryTitle
 } from '../features/home/homeSlice';
 
 export const updateHomeRestaurantData = async (res, dispatch) => {
@@ -15,7 +17,9 @@ export const updateHomeRestaurantData = async (res, dispatch) => {
         dispatch(addApiData(res));
         dispatch(addFoodieThoughtsData(res));
         dispatch(addTopRestaurantsData(res));
+        dispatch(addRestaurantsWithOnineDelivery(res));
         dispatch(addTopRestaurantsTitle(res));
+        dispatch(addOnlineDeliveryTitle(res));
         dispatch(setLoading(false));
     }
 };

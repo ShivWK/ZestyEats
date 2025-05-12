@@ -92,10 +92,9 @@ const FoodieThoughts = ({ isLoading }) => {
   }
 
   return (
-    foodieThoughtsData &&
     <>
       <div className="flex justify-between flex-wrap items-center">
-        <h3>{user ? `${user}, what's on your mind?` : "What's on your mind?"}</h3>
+        <h2>{user ? `${user}, what's on your mind?` : "What's on your mind?"}</h2>
         <div className="flex justify-between gap-1">
           <Button
             ref={leftBtnRef}
