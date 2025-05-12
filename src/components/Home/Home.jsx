@@ -33,27 +33,6 @@ export default function Home() {
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [firstRender, setFirstRender] = useState(true);
 
- useEffect(()=>{
-   if (firstRender) {
-    dispatch(setLoading(true));
-    const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
-    if (HomeData) {
-      updateHomeRestaurantData(HomeData, dispatch);
-      setFirstRender(false);
-    }
-
-    const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
-    const searchedCityAddress = JSON.parse(
-      localStorage.getItem("searchedCityAddress")
-    );
-    const currentCity = JSON.parse(localStorage.getItem("currentCity"));
-
-    dispatch(addSearchedCity(searchedCity === "undefined" ? "" : searchedCity));
-    dispatch(addSearchedCityAddress(searchedCityAddress === "undefined" ? "" : searchedCityAddress));
-    dispatch(addYourCurrentCity(currentCity === "undefined" ? "" : currentCity));
-  }
- }, [])
-
   const fetchDefaultHomeAPIData = async () => {
     try {
       let apiResponse = await triggerHomeAPI({
@@ -69,9 +48,20 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (!firstRender) return;
+    const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
+    if (HomeData) {
 
-    if (navigator.geolocation) {
+      updateHomeRestaurantData(HomeData, dispatch);
+      const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
+      const searchedCityAddress = JSON.parse(
+        localStorage.getItem("searchedCityAddress")
+      );
+      const currentCity = JSON.parse(localStorage.getItem("currentCity"));
+
+      dispatch(addSearchedCity(searchedCity === "undefined" ? "" : searchedCity));
+      dispatch(addSearchedCityAddress(searchedCityAddress === "undefined" ? "" : searchedCityAddress));
+      dispatch(addYourCurrentCity(currentCity === "undefined" ? "" : currentCity));
+    } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
         const lng1 = position.coords.longitude;

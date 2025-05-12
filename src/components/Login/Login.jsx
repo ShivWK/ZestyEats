@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { auth } from "../../firebaseConfig";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { RecaptchaVerifier, signInWithPhoneNumber, signOut } from "firebase/auth";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,6 +29,33 @@ const Login = () => {
     console.log("Guest Login");
   };
 
+  const doSignOut = () => {
+    signOut(auth).then(() => {
+      console.log("out");
+      dispatch(setIsLoggedIn(false));
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+
+  function resetRecaptcha() {
+    if (window.recaptchaVerifier) {
+      try {
+        window.recaptchaVerifier.clear();
+
+        const recaptchaWidgetId = window.recaptchaVerifier.widgetId;
+        console.log(recaptchaWidgetId);
+        if (resetRecaptcha && typeof grecaptcha !== undefined) {
+          grecaptcha.reset(recaptchaWidgetId);
+        }
+      } catch (err) {
+        console.error("Error in resetting recaptcha ", err);
+      } finally {
+        window.recaptchaVerifier = null;
+      }
+    }
+  }
+
   const handleSubmit = (e) => {
     console.log("Clicked")
     e.preventDefault();
@@ -45,10 +72,9 @@ const Login = () => {
       setChangePhoneHasValue(true);
       dispatch(setLoading(false));
     } else {
-      if (window.recaptchaVerifier) {
-        window.recaptchaVerifier.clear(); // clearing it because if it exists then new recaptcha wont be gerated or u cant resend otp
-        window.recaptchaVerifier = null;
-      }
+      resetRecaptcha();
+      window.confirmationResult = null;
+
       window.recaptchaVerifier = new RecaptchaVerifier(auth, "LoginBtn", {
         size: "invisible",
       });
@@ -80,8 +106,7 @@ const Login = () => {
       })
       .catch((err) => {
         console.log("Error in Sending OTP", err);
-        window.recaptchaVerifier.clear();
-        window.recaptchaVerifier = null;
+        resetRecaptcha();
       });
   }
 
@@ -101,23 +126,16 @@ const Login = () => {
         .confirm(otp)
         .then((result) => {
           console.log("OTP Verified");
-          // console.log(result.user);npm run dev
           dispatch(closeLogInModal());
           dispatch(loginOtpNotSend());
-          window.recaptchaVerifier.clear();
-          window.recaptchaVerifier = null;
+          resetRecaptcha();
           window.confirmationResult = null;
           dispatch(setLoading(false));
           dispatch(setIsLoggedIn(true));
-
-          // const widgetId = window.recaptchaVerifier.widgetId;
-          // if (widgetId !== undefined) {
-          //   window.recaptchaVerifier.recaptcha.reset(widgetId);
-          // }
         })
         .catch((err) => {
           dispatch(setLoading(false));
-          window.recaptchaVerifier.clear();
+          resetRecaptcha();
           window.recaptchaVerifier = null;
           alert("OTP not verified");
           console.log(err);
@@ -137,6 +155,7 @@ const Login = () => {
       signingStatement={"By clicking on Login"}
       isOtpSend={isOtpSend}
       isLoading={isLoading}
+      signout={doSignOut}
     >
       <EntryDiv
         type="tel"

@@ -16,6 +16,7 @@ const Form = ({
   signingStatement,
   isOtpSend = false,
   isLoading,
+  signout = null,
 }) => {
   const isLogInModelOpen = useSelector(selectlogInModal);
 
@@ -23,7 +24,7 @@ const Form = ({
     <form
       ref={refference}
       className="mt-10 notFirst-notLast"
-      onSubmit={handleSubmit}
+      // onSubmit={handleSubmit}
       autoComplete="off"
     >
       {children}
@@ -36,19 +37,20 @@ const Form = ({
           className="flex justify-center items-center
            bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg"
           style={{ cursor: isLoading ? "auto" : "pointer" }}
-          whileTap={{ scale: 0.95}}
+          whileTap={{ scale: isLoading ? 0 : 0.95 }}
         >
           {isLoading ? <Loader size="small" /> : "VERIFY OTP"}
         </motion.button>
       ) : (
         <motion.button
           id={btnId}
-          disabled={isLoading}
-          type="submit"
+          // disabled={isLoading}
+          type="button"
+          onClick={handleSubmit}
           className="flex justify-center items-center
            bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-"
           style={{ cursor: isLoading ? "auto" : "pointer"}}
-          whileTap={{ scale: 0.95 }}
+          whileTap={{ scale: isLoading ? 0 : 0.95 }}
         >
           {isLoading ? (
             <Loader size="small" />
@@ -59,6 +61,8 @@ const Form = ({
           )}
         </motion.button>
       )}
+      {/* <button onClick={handleSubmit}>click</button> <br></br>
+      <button onClick={signout}>" "signout</button> */}
       {guestLogin && !isOtpSend && (
         <motion.button
           type="button"

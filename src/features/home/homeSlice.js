@@ -8,7 +8,7 @@ const initialState = {
     searchedCity:"",
     searchedCityAddress: "",
     topRestaurantsTitle: "Top restaurant chains in your location",
-    isLoading: false,
+    isLoading: true,
     recentLocations: [],
 }
 
