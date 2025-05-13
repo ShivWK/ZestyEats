@@ -5,7 +5,10 @@ import {
     addTopRestaurantsTitle,
     addRestaurantsWithOnineDelivery,
     setLoading,
-    addOnlineDeliveryTitle
+    addOnlineDeliveryTitle,
+    addBestPlacesToEat,
+    addBestNearCuisions,
+    addNearByRestaurants
 } from '../features/home/homeSlice';
 
 export const updateHomeRestaurantData = async (res, dispatch) => {
@@ -20,6 +23,9 @@ export const updateHomeRestaurantData = async (res, dispatch) => {
         dispatch(addRestaurantsWithOnineDelivery(res));
         dispatch(addTopRestaurantsTitle(res));
         dispatch(addOnlineDeliveryTitle(res));
+        dispatch(addBestPlacesToEat(res));
+        dispatch(addBestNearCuisions(res));
+        dispatch(addNearByRestaurants(res));
         dispatch(setLoading(false));
     }
 };

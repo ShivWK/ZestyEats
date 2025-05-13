@@ -2,10 +2,10 @@ import PlaceCards from "./PlaceCards";
 import ShowMoreBtn from "./ShowMoreBtn";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { selectBestPlacesToEat } from "../../features/home/homeSlice";
+import { selectBestCuisionsNearMe } from "../../features/home/homeSlice";
 
-export default function BestPlacesToEat() {
-  const places = useSelector(selectBestPlacesToEat);
+export default function CuisionsNearMe() {
+  const places = useSelector(selectBestCuisionsNearMe);
   const [shownPlaces, setShownPlaces] = useState([]);
 
   useEffect(() => {
@@ -20,7 +20,7 @@ export default function BestPlacesToEat() {
 
   return (
     <>
-      <h3 className="self-start">Best Places to Eat Across Cities</h3>
+      <h3 className="self-start">Best Cuisines Near Me</h3>
       <div className="flex flex-wrap justify-start gap-y-5 gap-x-8">
         {shownPlaces.map((item) => (
           <PlaceCards key={item.link} data={item} />

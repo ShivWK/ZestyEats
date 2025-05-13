@@ -1,7 +1,8 @@
 import FoodieThoughts from "./FoodieThoughts/FoodieThoughts";
-import TopRestaurantChains from "./TopRestaurantsChain/TopRestaurantChains";
+import TopRestaurantChains from "./TopRestaurantChains";
 import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant";
 import BestPlacesToEat from "./BestPlacesToEat";
+import CuisionsNearMe from "./CuisionsNearMe";
 import NearByRestaurants from "./NearByRestaurants";
 import Loader from "../Loader";
 
@@ -19,6 +20,9 @@ import {
   addYourCurrentCity,
   addSearchedCity,
   addSearchedCityAddress,
+  selectBestPlacesToEat,
+  selectBestCuisionsNearMe,
+  selectNearByRestaurants,
 } from "../../features/home/homeSlice";
 
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
@@ -28,11 +32,14 @@ export default function Home() {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const onlineDeliveryRestaurant = useSelector(selectOnlineDeliveryRestaurants);
+  const bestPlacesToEaNearMe = useSelector(selectBestPlacesToEat);
+  const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
+  const nearByRestaurants = useSelector(selectNearByRestaurants);
   const isLoadingMain = useSelector(selectIsLoading);
   const dispatch = useDispatch();
   const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
-  const [firstRender, setFirstRender] = useState(true);
+  // const [firstRender, setFirstRender] = useState(true);
 
   const fetchDefaultHomeAPIData = async () => {
     try {
@@ -106,7 +113,7 @@ export default function Home() {
   return isLoadingMain || isLoading ? (
     <Loader size={"large"} />
   ) : (
-    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1 pt-20">
+    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1 pt-24">
       {foodieThoughtsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto ">
@@ -131,8 +138,30 @@ export default function Home() {
           <hr className="mt-10 mb-8 text-gray-300" />
         </>
       )}
-      <section>{/* <BestPlacesToEat /> */}</section>
-      <section>{/* <NearByRestaurants /> */}</section>
+      {bestPlacesToEaNearMe.length !== 0 && (
+        <>
+          <section className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+           flex-col">
+            <BestPlacesToEat isLoading={isLoading} />
+          </section>
+          <hr className="mt-10 mb-8 text-gray-300" />
+        </>
+      )}
+      {bestCuisionsNearMe.length !== 0 && (
+        <>
+          <section className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+           flex-col">
+            <CuisionsNearMe isLoading={isLoading} />
+          </section>
+          <hr className="mt-10 mb-8 text-gray-300" />
+        </>
+      )}
+      {nearByRestaurants.length !== 0 && (
+        <section className="w-full max-w-[1000px] mx-auto flex justify-start gap-4 
+         flex-col">
+          <NearByRestaurants />
+        </section>
+      )}
     </main>
   );
 }

@@ -1,10 +1,10 @@
-import { selectTopRestaurantsData } from "../../../features/home/homeSlice";
+import { selectTopRestaurantsData } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
-import Cards from '../Cards'
-import Button from "../Button";
-import Scrollbar from "../ScroolBar";
-import { selectTopRestaurantsTitle } from "../../../features/home/homeSlice";
+import Cards from "./Cards";
+import Button from "./Button";
+import Scrollbar from "./ScroolBar";
+import { selectTopRestaurantsTitle } from "../../features/home/homeSlice";
 
 
 const TopRestaurantChains = ({ isLoading }) => {

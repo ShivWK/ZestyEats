@@ -37,7 +37,7 @@ export default function Layout() {
       <Outlet />
       <LoginModal />
       <LocationModal />
-      {/* <PageFooter /> */}
+      <PageFooter />
     </>
   );
 }

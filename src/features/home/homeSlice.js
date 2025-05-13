@@ -4,6 +4,10 @@ const initialState = {
     apiData : null,
     foodieThoughtsData : [],
     topRestaurantsData : [],
+    recentLocations: [],
+    bestNearCuisions: [],
+    bestPlacesToEat: [],
+    nearByRestaurants: [],
     restaurantsWithOnlineDelivery: [],
     yourCurrentCity: "",
     searchedCity:"",
@@ -11,7 +15,6 @@ const initialState = {
     topRestaurantsTitle: "Top restaurant chains in Bangalore",
     onlineDeliveryTitle: "Restaurants with online food delivery in Bangalore",
     isLoading: true,
-    recentLocations: [],
 }
 
 const homeSlice = createSlice({
@@ -48,6 +51,33 @@ const homeSlice = createSlice({
              ?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
 
             state.restaurantsWithOnlineDelivery = result;
+        },
+
+        addBestNearCuisions: (state, action) => {
+            const result = action.payload?.data?.cards?.find(
+                item => item?.card?.card?.title === "Best Cuisines Near Me"
+             )
+             ?.card?.card?.brands || [];
+
+            state.bestNearCuisions = result;
+        },
+
+        addBestPlacesToEat: (state, action) => {
+            const result = action.payload?.data?.cards?.find(
+                item => item?.card?.card?.title === "Best Places to Eat Across Cities"
+             )
+             ?.card?.card?.brands || [];
+
+            state.bestPlacesToEat = result;
+        },
+
+        addNearByRestaurants: (state, action) => {
+            const result = action.payload?.data?.cards?.find(
+                item => item?.card?.card?.title === "Explore Every Restaurants Near Me"
+             )
+             ?.card?.card?.brands || [];
+
+            state.nearByRestaurants = result;
         },
 
         addSearchedCity: (state, action) => {
@@ -131,6 +161,9 @@ export const selectIsLoading = state => state.home.isLoading;
 export const selectRecentLocations = state => state.home.recentLocations;
 export const selectOnlineDeliveryRestaurants = state => state.home.restaurantsWithOnlineDelivery;
 export const selectOnlineDeliveryTitle = state => state.home.onlineDeliveryTitle;
+export const selectBestCuisionsNearMe = state => state.home.bestNearCuisions;
+export const selectBestPlacesToEat = state => state.home.bestPlacesToEat;
+export const selectNearByRestaurants = state => state.home.nearByRestaurants;
 
 export const { 
     addApiData, 
@@ -146,6 +179,9 @@ export const {
     removeARecentLocation,
     addRestaurantsWithOnineDelivery,
     addOnlineDeliveryTitle,
+    addBestNearCuisions,
+    addBestPlacesToEat,
+    addNearByRestaurants
 } = homeSlice.actions;
 
 

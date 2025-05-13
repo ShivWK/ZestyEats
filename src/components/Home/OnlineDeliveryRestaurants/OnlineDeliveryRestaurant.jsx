@@ -8,7 +8,6 @@ import { selectOnlineDeliveryRestaurants,
 export default function OnlineDeliveryRestaurant({ isLoading }) {
     const data = useSelector(selectOnlineDeliveryRestaurants);
     const title = useSelector(selectOnlineDeliveryTitle);
-    console.log(data);
 
     return <>
         <div>
