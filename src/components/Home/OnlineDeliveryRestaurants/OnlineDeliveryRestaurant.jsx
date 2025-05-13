@@ -13,7 +13,7 @@ export default function OnlineDeliveryRestaurant({ isLoading }) {
         <div>
             <h3>{title}</h3>
             <div className="flex gap-2.5 mt-4 w-full">
-                <Filter fixed={true} icon="ri-equalizer-fill" count={120} text="Filter"/>
+                <Filter fixed={true} icon="ri-equalizer-fill" count={1} text="Filter"/>
                 <Filter fixed={true} icon="fa-solid fa-caret-down" text="Sort By"/>
                 <Filter applied={true} text="Pure Veg"/>
                 <Filter applied={false} text="Ratings 4.0+"/>
