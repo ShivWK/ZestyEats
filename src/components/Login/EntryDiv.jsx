@@ -21,12 +21,12 @@ const EntryDiv = ({
   const inputRef = useRef(null);
   let isLoggedIn = useSelector(selectIsLoggedIn);
 
-  useEffect(() => {
-    if (focus) {
-      inputRef.current.focus();
-      setIsEntryMade(true);
-    }
-  }, [focus]);
+  // useEffect(() => {
+  //   if (focus) {
+  //     inputRef.current.focus();
+  //     setIsEntryMade(true);
+  //   }
+  // }, [focus]);
 
   useEffect(() => {
     if (isLoggedIn === true) {

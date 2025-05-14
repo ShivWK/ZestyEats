@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { auth, firestoreDB} from "../../firebaseConfig";
+import { toast } from "react-toastify";
+import { auth, firestoreDB } from "../../firebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import Form from "./Form";
@@ -27,7 +28,15 @@ const Login = () => {
   const formRef = useRef(null);
 
   const handleGuestLogin = () => {
-    console.log("Guest Login");
+    toast.info("You are logged in Anonymously!", {
+      autoClose: 6000,
+      style: {
+        backgroundColor: "#ff5200",
+        color: "white",
+        fontWeight: "bold",
+      },
+      progressClassName: "progress-style",
+    });
   };
 
   function resetRecaptcha() {
@@ -49,14 +58,13 @@ const Login = () => {
   }
 
   const handleSubmit = async (e) => {
-    console.log("Clicked")
     e.preventDefault();
     e.stopPropagation();
     dispatch(setLoading(true));
 
     const data = new FormData(formRef.current);
     const collectionRef = collection(firestoreDB, "users");
-    const q = query(collectionRef, where("phone","==", data.get("phone")))
+    const q = query(collectionRef, where("phone", "==", data.get("phone")));
     const snapshot = await getDocs(q);
 
     if (data.get("phone").length === 0) {
@@ -67,6 +75,7 @@ const Login = () => {
       setChangePhoneHasValue(true);
       dispatch(setLoading(false));
     } else if (snapshot.empty) {
+      // use toast
       alert("User does not exist");
       dispatch(setLoading(false));
     } else {
@@ -85,7 +94,15 @@ const Login = () => {
         .catch((err) => {
           dispatch(setLoading(false));
           console.log("Recaptcha verification failed", err);
-          alert("Recaptcha verification failed, please try again.");
+          toast.info("Recaptcha verification failed, please try again.", {
+            autoClose: 4000,
+            style: {
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: "bold",
+            },
+            progressClassName: "progress-style",
+          });
         });
     }
   };
@@ -103,6 +120,15 @@ const Login = () => {
       })
       .catch((err) => {
         console.log("Error in Sending OTP", err);
+         toast.info("Error in Sending OTP", {
+            autoClose: 4000,
+            style: {
+              backgroundColor: "red",
+              color: "white",
+              fontWeight: "bold",
+            },
+            progressClassName: "progress-style",
+          });
         resetRecaptcha();
       });
   }
@@ -131,11 +157,19 @@ const Login = () => {
           dispatch(setIsLoggedIn(true));
         })
         .catch((err) => {
+          setChangeOtpHasValue(true);
           dispatch(setLoading(false));
           resetRecaptcha();
+          toast.info("Invalid OTP", {
+            autoClose: 4000,
+            style: {
+              backgroundColor: "rgb(0,0,0,0.8)",
+              color: "white",
+              fontWeight: "bold",
+            },
+            progressClassName: "progress-style",
+          });
           window.recaptchaVerifier = null;
-          alert("OTP not verified");
-          console.log(err);
         });
       // Reset the Profile for logged in user
     }

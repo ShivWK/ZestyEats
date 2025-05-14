@@ -15,6 +15,7 @@ const initialState = {
     topRestaurantsTitle: "Top restaurant chains in Bangalore",
     onlineDeliveryTitle: "Restaurants with online food delivery in Bangalore",
     isLoading: true,
+    isOnline: true,
 }
 
 const homeSlice = createSlice({
@@ -145,6 +146,10 @@ const homeSlice = createSlice({
 
         setLoading: (state, action) => {
             state.isLoading = action.payload;
+        },
+
+        setOnline : (state, action) => {
+            state.isOnline = action.payload;
         }
     }
 });
@@ -164,6 +169,7 @@ export const selectOnlineDeliveryTitle = state => state.home.onlineDeliveryTitle
 export const selectBestCuisionsNearMe = state => state.home.bestNearCuisions;
 export const selectBestPlacesToEat = state => state.home.bestPlacesToEat;
 export const selectNearByRestaurants = state => state.home.nearByRestaurants;
+export const selectOnlineStatus = state => state.home.isOnline;
 
 export const { 
     addApiData, 
@@ -181,7 +187,8 @@ export const {
     addOnlineDeliveryTitle,
     addBestNearCuisions,
     addBestPlacesToEat,
-    addNearByRestaurants
+    addNearByRestaurants,
+    setOnline
 } = homeSlice.actions;
 
 

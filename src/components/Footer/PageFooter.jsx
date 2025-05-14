@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectIsLoading } from "../../features/home/homeSlice";
+import SubFooter from "./SubFooter";
 
 export default function PageFooter() {
   const isLoading = useSelector(selectIsLoading);
@@ -7,10 +8,11 @@ export default function PageFooter() {
   return (
     !isLoading && (
       <footer className="h-20 w-full flex justify-center items-start bg-[#ff5200]">
-        <div className=" flex max-w-[1210px] items-center text-white font-bold h-16 w-full mt-3">
-          
-        </div>
+        <SubFooter />
       </footer>
     )
   );
 }
+
+
+// https://media-assets.swiggy.com/portal/testing/seo-home/Group.svg

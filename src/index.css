@@ -60,3 +60,7 @@
 body {
     scrollbar-gutter: stable;
 }
+
+.progress-style {
+    background-color: black;
+}
