@@ -6,7 +6,8 @@ const initialState = {
     isLoginOtpSend: false,
     isSignUpOtpSend: false,
     isLoggedIn: false,
-    isLoading: false
+    isLoading: false,
+    isMember: true,
 }
 const loginSlice = createSlice({
     name: "login",
@@ -51,17 +52,22 @@ const loginSlice = createSlice({
 
         setLoading: (state, action) => {
             state.isLoading = action.payload;
+        },
+
+        setMember: (state, action) => {
+            state.isMember = action.payload;
         }
     }
 });
 
+export const loginReducer = loginSlice.reducer;
 export const selectlogInModal = (state) => state.login.isLoginModalOpen;
 export const selectLoginOtp = (state) => state.login.isLoginOtpSend;
 export const selectSignUpOtp = (state) => state.login.isSignUpOtpSend;
 export const selectLocationModal = (state) => state.login.isLocationModalOpen;
 export const selectIsLoggedIn = (state) => state.login.isLoggedIn;
 export const selectIsLoading = (state) => state.login.isLoading;
-export const loginReducer = loginSlice.reducer;
+export const selectIsMember = (state) => state.login.isMember;
 
 export const { 
     openLogInModal, 
@@ -74,5 +80,6 @@ export const {
     closeLocationInModal,
     setIsLoggedIn,
     setLoading,
+    setMember,
 } = loginSlice.actions;
 

@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { auth } from "../../firebaseConfig";
-import { RecaptchaVerifier, signInWithPhoneNumber, signOut } from "firebase/auth";
+import { auth, firestoreDB} from "../../firebaseConfig";
+import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
@@ -29,15 +30,6 @@ const Login = () => {
     console.log("Guest Login");
   };
 
-  const doSignOut = () => {
-    signOut(auth).then(() => {
-      console.log("out");
-      dispatch(setIsLoggedIn(false));
-    }).catch((err) => {
-      console.log(err)
-    })
-  }
-
   function resetRecaptcha() {
     if (window.recaptchaVerifier) {
       try {
@@ -45,7 +37,7 @@ const Login = () => {
 
         const recaptchaWidgetId = window.recaptchaVerifier.widgetId;
         console.log(recaptchaWidgetId);
-        if (resetRecaptcha && typeof grecaptcha !== undefined) {
+        if (recaptchaWidgetId && typeof grecaptcha !== "undefined") {
           grecaptcha.reset(recaptchaWidgetId);
         }
       } catch (err) {
@@ -56,13 +48,16 @@ const Login = () => {
     }
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     console.log("Clicked")
     e.preventDefault();
     e.stopPropagation();
     dispatch(setLoading(true));
 
     const data = new FormData(formRef.current);
+    const collectionRef = collection(firestoreDB, "users");
+    const q = query(collectionRef, where("phone","==", data.get("phone")))
+    const snapshot = await getDocs(q);
 
     if (data.get("phone").length === 0) {
       setChangePhoneHasValue(true);
@@ -70,6 +65,9 @@ const Login = () => {
     } else if (data.get("phone").length < 10) {
       setChangePhoneIsEntryMade(true);
       setChangePhoneHasValue(true);
+      dispatch(setLoading(false));
+    } else if (snapshot.empty) {
+      alert("User does not exist");
       dispatch(setLoading(false));
     } else {
       resetRecaptcha();
@@ -82,7 +80,6 @@ const Login = () => {
       window.recaptchaVerifier
         .verify()
         .then(() => {
-          dispatch(setLoading(true));
           sendOTP();
         })
         .catch((err) => {
@@ -155,7 +152,6 @@ const Login = () => {
       signingStatement={"By clicking on Login"}
       isOtpSend={isOtpSend}
       isLoading={isLoading}
-      signout={doSignOut}
     >
       <EntryDiv
         type="tel"

@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { selectlogInModal } from "../../features/Login/loginSlice";
+import {
+  selectlogInModal,
+  selectIsMember,
+} from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
 import Loader from "../Loader";
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
 
 const Form = ({
   btnId,
@@ -16,9 +19,9 @@ const Form = ({
   signingStatement,
   isOtpSend = false,
   isLoading,
-  signout = null,
 }) => {
   const isLogInModelOpen = useSelector(selectlogInModal);
+  const member = useSelector(selectIsMember);
 
   return (
     <form
@@ -49,20 +52,18 @@ const Form = ({
           onClick={handleSubmit}
           className="flex justify-center items-center
            bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-"
-          style={{ cursor: isLoading ? "auto" : "pointer"}}
+          style={{ cursor: isLoading ? "auto" : "pointer" }}
           whileTap={{ scale: isLoading ? 0 : 0.95 }}
         >
           {isLoading ? (
             <Loader size="small" />
-          ) : isLogInModelOpen ? (
+          ) : member ? (
             "LOGIN"
           ) : (
             "CONTINUE"
           )}
         </motion.button>
       )}
-      {/* <button onClick={handleSubmit}>click</button> <br></br>
-      <button onClick={signout}>" "signout</button> */}
       {guestLogin && !isOtpSend && (
         <motion.button
           type="button"

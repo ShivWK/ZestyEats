@@ -4,6 +4,7 @@ import { selectIsLoggedIn } from "../../features/Login/loginSlice";
 
 const EntryDiv = ({
   type,
+  value,
   inputMode,
   purpose,
   focus = false,
@@ -12,6 +13,7 @@ const EntryDiv = ({
   isReadOnly = false,
   changeIsEntryMade,
   changeHasValue,
+  onChangeHandler = () => {},
 }) => {
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
@@ -138,7 +140,6 @@ const EntryDiv = ({
 
   return (
     <div
-      // onBlur={()=> {console.log("Blured Div")}}
       onClick={handleDivClick}
       className="relative p-2.5 border-2 border-gray-300 h-[70px] cursor-text"
     >
@@ -164,6 +165,7 @@ const EntryDiv = ({
         onChange={(event) => {
           handleInput(event);
           handleChange(event);
+          onChangeHandler(event)
         }}
         className="relative top-5 font-bold text-lg outline-none "
       />

@@ -1,21 +1,23 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalSubContainer from "./ModalSubContainer";
 import {
   selectlogInModal,
   selectLoginOtp,
+  selectIsMember,
+  setMember
 } from "../../features/Login/loginSlice";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Modal from "../Modal/Modal";
 
 const ModalContainer = () => {
-  const [member, setMember] = useState(true);
   const isOpen = useSelector(selectlogInModal);
   const isLoginOtpSend = useSelector(selectLoginOtp);
+  const member = useSelector(selectIsMember);
+  const dispatch = useDispatch();
 
   const handleSwitch = () => {
-    setMember(!member);
+    dispatch(setMember(!member));
   };
 
   return (
