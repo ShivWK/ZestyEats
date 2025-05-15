@@ -50,7 +50,16 @@ const Login = () => {
           grecaptcha.reset(recaptchaWidgetId);
         }
       } catch (err) {
-        console.error("Error in resetting recaptcha ", err);
+        toast("Error in resetting recaptcha", {
+          autoClose: 2000,
+          style: {
+            backgroundColor: "rgba(0,0,0,0.9)",
+            fontWeight: "bold",
+            color: "white",
+          },
+        });
+
+        console.log("Error in Recaptcha", err);
       } finally {
         window.recaptchaVerifier = null;
       }
@@ -75,8 +84,14 @@ const Login = () => {
       setChangePhoneHasValue(true);
       dispatch(setLoading(false));
     } else if (snapshot.empty) {
-      // use toast
-      alert("User does not exist");
+      toast("User does not exist", {
+        autoClose: 3000,
+        style: {
+          backgroundColor: "rgba(0,0,0,0.9)",
+          fontWeight: "bold",
+          color: "white",
+        },
+      });
       dispatch(setLoading(false));
     } else {
       resetRecaptcha();
@@ -120,15 +135,15 @@ const Login = () => {
       })
       .catch((err) => {
         console.log("Error in Sending OTP", err);
-         toast.info("Error in Sending OTP", {
-            autoClose: 4000,
-            style: {
-              backgroundColor: "red",
-              color: "white",
-              fontWeight: "bold",
-            },
-            progressClassName: "progress-style",
-          });
+        toast.info("Error in Sending OTP", {
+          autoClose: 4000,
+          style: {
+            backgroundColor: "red",
+            color: "white",
+            fontWeight: "bold",
+          },
+          progressClassName: "progress-style",
+        });
         resetRecaptcha();
       });
   }

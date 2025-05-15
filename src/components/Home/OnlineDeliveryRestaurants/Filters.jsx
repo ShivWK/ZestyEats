@@ -3,7 +3,7 @@ const Filter = ({ fixed = false, applied = false, icon, text, count = 0 }) => {
     <div
       className={`flex justify-between gap-2 px-3 h-10 items-center text-sm font-medium text-gray-900 rounded-3xl w-fit border-2 ${
         applied ? "bg-gray-200" : "bg-white"
-      } border-gray-400 cursor-pointer`}
+      } border-gray-400 cursor-pointer hover:bg-gray-200`}
     >
       {count !== 0 && (
         <div className="flex shrink-0 w-5 h-5 p-2 justify-center items-center rounded-[50%] bg-primary text-white font-medium">

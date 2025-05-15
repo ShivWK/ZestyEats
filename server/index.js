@@ -9,7 +9,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.send(`
+  res.status(500).send(`
     Swiggy Proxy API is running. Available endpoints:
     <ul>
       <li>/api/swiggy-restaurants?lat=YOUR_LAT&lng=YOUR_LNG</li>
@@ -40,7 +40,7 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
         'Cookie': req.headers.cookie || '',
       },
     });
-    res.json(response.data);
+    res.status(200).json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
     res.status(500).json({ error: "Failed to fetch restaurants data" });
@@ -67,7 +67,7 @@ app.get("/api/place-autocomplete", async (req, res) => {
       },
     });
 
-    res.json(response.data);
+    res.status(500).json(response.data);
   } catch (error) {
     console.error("Place Autocomplete Error:", error.message);
     res.status(500).json({ error: "Failed to fetch place suggestions" });
@@ -94,7 +94,7 @@ app.get("/api/address-recommend", async (req, res) => {
       },
     });
 
-    res.json(response.data);
+    res.status(500).json(response.data);
   } catch (error) {
     console.error("Address Recommend Error:", error.message);
     res.status(500).json({ error: "Failed to fetch address recommendation" });
@@ -123,7 +123,7 @@ app.get("/api/address-from-coordinates", async (req, res) => {
       },
     });
 
-    res.json(response.data);
+    res.status(500).json(response.data);
   } catch (error) {
     console.error("Address from Coordinates Error:", error.message);
     res.status(500).json({ 

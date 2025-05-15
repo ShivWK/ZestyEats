@@ -6,7 +6,6 @@ import Button from "./Button";
 import Scrollbar from "./ScroolBar";
 import { selectTopRestaurantsTitle } from "../../features/home/homeSlice";
 
-
 const TopRestaurantChains = ({ isLoading }) => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -25,13 +24,11 @@ const TopRestaurantChains = ({ isLoading }) => {
     const container = containerRef.current;
     container.scrollTo({
       left: 0,
-      behavior: "smooth"
-    })
+      behavior: "smooth",
+    });
   }, [topRestaurantsChainsData]);
 
-  useEffect(() => {
-
-  }, [topRestaurantsChainsData])
+  useEffect(() => {}, [topRestaurantsChainsData]);
 
   // Store the debounced function in a ref so that:
   // 1. It is created only once on initial render.
@@ -41,7 +38,9 @@ const TopRestaurantChains = ({ isLoading }) => {
   // Use function declaration for debounceCreate, and passed functions to avoid hoisting issues.
   // and to ensure it is defined before being used in the useRef hook
 
-  const debouncedHandleRightClick = useRef(createDebounce(handleRightClick, 100));
+  const debouncedHandleRightClick = useRef(
+    createDebounce(handleRightClick, 100)
+  );
   const debouncedHandleLeftClick = useRef(createDebounce(handleLeftClick, 100));
 
   function handleScroll() {
@@ -63,7 +62,6 @@ const TopRestaurantChains = ({ isLoading }) => {
 
     const scrolledPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
     setScrollPercentage(scrolledPercentage);
-
   }
 
   function handleRightClick(e) {
@@ -76,8 +74,6 @@ const TopRestaurantChains = ({ isLoading }) => {
       left: 600,
       behavior: "smooth",
     });
-
-
   }
 
   function handleLeftClick(e) {
@@ -96,8 +92,8 @@ const TopRestaurantChains = ({ isLoading }) => {
     let timer;
     return () => {
       clearTimeout(timer);
-      timer = setTimeout(toCall, delay)
-    }
+      timer = setTimeout(toCall, delay);
+    };
   }
 
   return (
@@ -105,11 +101,19 @@ const TopRestaurantChains = ({ isLoading }) => {
       <div className="flex justify-between flex-wrap items-center">
         <h2>{title}</h2>
         <div className="flex justify-between gap-1">
-          <Button ref={leftBtnRef} clickHandler={debouncedHandleLeftClick.current} iconClass="left" />
-          <Button ref={rightBtnRef} clickHandler={debouncedHandleRightClick.current} iconClass="right" />
+          <Button
+            ref={leftBtnRef}
+            clickHandler={debouncedHandleLeftClick.current}
+            iconClass="left"
+          />
+          <Button
+            ref={rightBtnRef}
+            clickHandler={debouncedHandleRightClick.current}
+            iconClass="right"
+          />
         </div>
       </div>
-      <div className="relative">
+      <div className="relative mt-2">
         <div
           onScroll={handleScroll}
           ref={containerRef}
@@ -118,7 +122,9 @@ const TopRestaurantChains = ({ isLoading }) => {
           {isLoading ? (
             <p>Loading...</p>
           ) : topRestaurantsChainsData.length ? (
-            topRestaurantsChainsData.map((item) => <Cards key={item.info.id} data={item.info} />)
+            topRestaurantsChainsData.map((item) => (
+              <Cards key={item.info.id} data={item.info} />
+            ))
           ) : (
             <p>No data found</p>
           )}
@@ -126,7 +132,7 @@ const TopRestaurantChains = ({ isLoading }) => {
         <Scrollbar scrolledPercentage={scrollPercentage} marginTop={10} />
       </div>
     </>
-  )
-}
+  );
+};
 
 export default TopRestaurantChains;
