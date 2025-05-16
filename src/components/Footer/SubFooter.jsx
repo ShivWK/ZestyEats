@@ -1,11 +1,11 @@
 import LogoAndAttribution from "./LogoAndAttribution";
 import CompanyLinks from "./CompanyLinks";
 
-const SubFooter = () => {
+const SubFooter = ({ openCities }) => {
   return (
-    <div className="border-2 flex max-w-[1210px] items-center text-white font-bold h-16 w-full mt-3">
+    <div className="flex max-w-[1210px] justify-between items-center text-white font-bold p-2 w-full mt-3">
       <LogoAndAttribution />
-      <CompanyLinks />
+      <CompanyLinks openCities={openCities} />
     </div>
   );
 };
