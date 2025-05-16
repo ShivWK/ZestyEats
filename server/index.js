@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
       <li>/api/swiggy-restaurants?lat=YOUR_LAT&lng=YOUR_LNG</li>
       <li>/api/place-autocomplete?input=SEARCH_TERM</li>
       <li>/api/address-recommend?place_id=PLACE_ID</li>
-      <li>/api/address-from-coordinates??latlng=latitude%2Clongitude</li>
+      <li>/api/address-from-coordinates?latlng=latitude%2Clongitude</li>
     </ul>
   `);
 });
