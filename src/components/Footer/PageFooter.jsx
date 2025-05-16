@@ -10,8 +10,8 @@ export default function PageFooter() {
 
   return (
     !isLoading && (
-      <footer className="py-2.5 w-full flex justify-center items-start bg-gray-300">
-        <SubFooter openCities={setIsOpen}/>
+      <footer className="py-2.5 pb-8 w-full flex flex-col justify-start items-center bg-gray-300">
+        <SubFooter isOpen={isOpen} openCities={setIsOpen}/>
         {isOpen && <AllCities />}
       </footer>
     )

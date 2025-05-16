@@ -8,7 +8,8 @@ import {
     addOnlineDeliveryTitle,
     addBestPlacesToEat,
     addBestNearCuisions,
-    addNearByRestaurants
+    addNearByRestaurants,
+    addAvailableCities,
 } from '../features/home/homeSlice';
 
 export const updateHomeRestaurantData = async (res, dispatch) => {
@@ -26,6 +27,7 @@ export const updateHomeRestaurantData = async (res, dispatch) => {
         dispatch(addBestPlacesToEat(res));
         dispatch(addBestNearCuisions(res));
         dispatch(addNearByRestaurants(res));
+        dispatch(addAvailableCities(res));
         dispatch(setLoading(false));
     }
 };

@@ -16,6 +16,7 @@ const initialState = {
     onlineDeliveryTitle: "Restaurants with online food delivery in Bangalore",
     isLoading: true,
     isOnline: true,
+    availableInCityies: [],
 }
 
 const homeSlice = createSlice({
@@ -81,6 +82,24 @@ const homeSlice = createSlice({
             state.nearByRestaurants = result;
         },
 
+        addAvailableCities: (state, action) => {
+            const result = action.payload?.data?.cards?.find(
+                item => item?.card?.card?.["@type"] === "type.googleapis.com/swiggy.seo.widgets.v1.FooterContent"
+             )
+             ?.card?.card?.cities || [];
+
+            state.availableInCityies = result;
+        },
+
+        addTopRestaurantsTitle : (state, action) => {
+            const title = action.payload?.data?.cards?.find(
+                item => item?.card?.card?.id === "top_brands_for_you"
+             )
+             ?.card?.card?.header?.title;
+             
+             state.topRestaurantsTitle = title; 
+        },
+
         addSearchedCity: (state, action) => {
             if( typeof action.payload !== "object" || action.payload === null) {
                 // we are checking for null because type of null is alos object
@@ -94,15 +113,6 @@ const homeSlice = createSlice({
                  state.searchedCity = city; 
             }
 
-        },
-
-        addTopRestaurantsTitle : (state, action) => {
-            const title = action.payload?.data?.cards?.find(
-                item => item?.card?.card?.id === "top_brands_for_you"
-             )
-             ?.card?.card?.header?.title;
-             
-             state.topRestaurantsTitle = title; 
         },
 
         addOnlineDeliveryTitle: (state, action) => {
@@ -170,6 +180,7 @@ export const selectBestCuisionsNearMe = state => state.home.bestNearCuisions;
 export const selectBestPlacesToEat = state => state.home.bestPlacesToEat;
 export const selectNearByRestaurants = state => state.home.nearByRestaurants;
 export const selectOnlineStatus = state => state.home.isOnline;
+export const selectAvailableCities = state => state.home.availableInCityies;
 
 export const { 
     addApiData, 
@@ -188,7 +199,8 @@ export const {
     addBestNearCuisions,
     addBestPlacesToEat,
     addNearByRestaurants,
-    setOnline
+    setOnline,
+    addAvailableCities,
 } = homeSlice.actions;
 
 
