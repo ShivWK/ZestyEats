@@ -26,12 +26,31 @@ const LogoAndAttribution = () => {
         </div>
         <div className="flex flex-col gap-2 w-full mt-7">
           <p>Social Links</p>
-          <div className="flex gap-2">
-            <a href="">LN</a>
-            <a href="">TW</a>
-            <a href="">GT</a>
-            <a href="">IG</a>
-            <a href="">M</a>
+          <div className="flex gap-3">
+            <a href="https://www.linkedin.com/in/shivendra-dwivedi" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
+              <i
+                className="fa-brands fa-linkedin text-xl"
+                style={{ color: "#0077b5" }}
+              ></i>
+            </a>
+            <a href="https://x.com/Shivendrawk" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
+              <i className="fa-brands fa-square-x-twitter text-xl"></i>
+            </a>
+            <a href="https://github.com/ShivWK" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
+              <i className="fa-brands fa-square-github text-xl"></i>
+            </a>
+            <a href="https://instagram.com/shivendrawk" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
+              <i
+                className="fa-brands fa-instagram text-xl"
+                style={{ color: "#e1306c" }}
+              ></i>
+            </a>
+            <a href="mailto:shivendrawk@gmail.com" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in">
+              <i
+                className="fa-solid fa-envelope text-xl"
+                style={{ color: "#d93025" }}
+              ></i>
+            </a>
           </div>
         </div>
       </div>
