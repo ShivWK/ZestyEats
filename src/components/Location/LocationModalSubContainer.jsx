@@ -30,7 +30,8 @@ const ModalSubContainer = () => {
           if (data) setSearchedLocation(data?.data);
         }
       } catch (err) {
-        alert(err.error);
+        // add toast
+        console.log(err);
       }
     }, 200)
   );

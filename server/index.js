@@ -67,7 +67,7 @@ app.get("/api/place-autocomplete", async (req, res) => {
       },
     });
 
-    res.status(500).json(response.data);
+    res.status(200).json(response.data);
   } catch (error) {
     console.error("Place Autocomplete Error:", error.message);
     res.status(500).json({ error: "Failed to fetch place suggestions" });
@@ -94,7 +94,7 @@ app.get("/api/address-recommend", async (req, res) => {
       },
     });
 
-    res.status(500).json(response.data);
+    res.status(200).json(response.data);
   } catch (error) {
     console.error("Address Recommend Error:", error.message);
     res.status(500).json({ error: "Failed to fetch address recommendation" });
@@ -123,7 +123,7 @@ app.get("/api/address-from-coordinates", async (req, res) => {
       },
     });
 
-    res.status(500).json(response.data);
+    res.status(200).json(response.data);
   } catch (error) {
     console.error("Address from Coordinates Error:", error.message);
     res.status(500).json({ 

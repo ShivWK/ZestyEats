@@ -33,7 +33,7 @@ const Login = () => {
       style: {
         backgroundColor: "#ff5200",
         color: "white",
-        fontWeight: "bold",
+        fontWeight: "medium",
       },
       progressClassName: "progress-style",
     });
@@ -54,7 +54,7 @@ const Login = () => {
           autoClose: 2000,
           style: {
             backgroundColor: "rgba(0,0,0,0.9)",
-            fontWeight: "bold",
+            fontWeight: "medium",
             color: "white",
           },
         });
@@ -88,7 +88,7 @@ const Login = () => {
         autoClose: 3000,
         style: {
           backgroundColor: "rgba(0,0,0,0.9)",
-          fontWeight: "bold",
+          fontWeight: "medium",
           color: "white",
         },
       });
@@ -114,7 +114,7 @@ const Login = () => {
             style: {
               backgroundColor: "red",
               color: "white",
-              fontWeight: "bold",
+              ffontWeight: "medium",
             },
             progressClassName: "progress-style",
           });
@@ -140,7 +140,7 @@ const Login = () => {
           style: {
             backgroundColor: "red",
             color: "white",
-            fontWeight: "bold",
+            fontWeight: "medium",
           },
           progressClassName: "progress-style",
         });

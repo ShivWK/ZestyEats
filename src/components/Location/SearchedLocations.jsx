@@ -65,7 +65,7 @@ const SearchedLocation = ({
         }
       }
     } catch (err) {
-      alert(err.message);
+      console.log(err);
       dispatch(setLoading(false));
     }
   };
