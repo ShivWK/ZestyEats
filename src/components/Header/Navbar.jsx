@@ -1,9 +1,10 @@
 import NavItem from './NavItem';
 import { openLogInModal } from '../../features/Login/loginSlice';
 import { useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
 
 function handleClick() {
-    alert("Cliked!");
+    toast("Click hu ji");
 }
 
 export default function Navbar() {
@@ -18,7 +19,7 @@ export default function Navbar() {
                 <NavItem onClick={handleClick} icon={"fa-solid fa-utensils text-lg"} text='About' superScript={null} />
                 <NavItem onClick={handleClick} icon={"fa-magnifying-glass text-lg"} text='Search' superScript={null} />
                 <NavItem onClick={handleClick} icon={"ri-discount-percent-line text-xl"} text='Offers' superScript={"NEW"}/>
-                <NavItem onClick={handleClick} icon={"fa-life-ring text-lg"} text='Help' superScript={null} />
+                <NavItem to="help" onClick={handleClick} icon={"fa-life-ring text-lg"} text='Help' superScript={null} />
                 <NavItem onClick={handleSignIn} icon={"fa-user text-lg"} text='Sign In' superScript={null} />
                 <NavItem onClick={handleClick} icon={"fa-cart-shopping text-lg"} text='Cart' superScript={null} />
             </ul>

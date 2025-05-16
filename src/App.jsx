@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
+import HelpMain from "./components/Help/HelpMain";
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
 
@@ -14,6 +15,7 @@ export default function App() {
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
+        <Route path="help" element={<HelpMain />} />
       </Route>
     )
   );

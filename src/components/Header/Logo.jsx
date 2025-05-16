@@ -6,6 +6,7 @@ import {
   selectSearchedCityAddress,
   selectYourCurrentCity,
 } from "../../features/home/homeSlice";
+import { NavLink } from "react-router-dom";
 
 export default function Logo() {
   const dispatch = useDispatch();
@@ -19,9 +20,9 @@ export default function Logo() {
 
   return (
     <div className="flex gap-11">
-      <a href="#">
+      <NavLink to="/">
         <motion.svg
-          className="VXJlj hover:scale-125 active:scale-95 hover:cursor-pointer transition-transform duration-300"
+          className="VXJlj hover:scale-110 active:scale-95 hover:cursor-pointer transition-transform duration-300"
           viewBox="0 0 61 61"
           height="49"
           width="49"
@@ -46,7 +47,8 @@ export default function Logo() {
             </clipPath>
           </defs>
         </motion.svg>
-      </a>
+      </NavLink>
+
       <button
         onClick={handleClick}
         className="group flex items-center gap-2 cursor-pointer"
@@ -60,7 +62,6 @@ export default function Logo() {
             ? `${searchedCityAddress}`
             : `${searchedCity}${searchedCityAddress}`}
         </span>
-
         <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5"></i>
       </button>
     </div>
