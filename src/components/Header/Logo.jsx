@@ -19,7 +19,7 @@ export default function Logo({ searchPlaceholder }) {
   };
 
   return (
-    <div className="flex gap-11">
+    <div className="flex gap-9">
       <NavLink to="/">
         <motion.svg
           className="VXJlj hover:scale-110 active:scale-95 hover:cursor-pointer transition-transform duration-300"

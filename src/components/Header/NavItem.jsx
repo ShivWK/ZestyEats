@@ -12,6 +12,7 @@ export default function NavItem({
       <NavLink
         to={to}
         className="group flex items-center justify-between gap-3 hover:cursor-pointer :hover:font-[#ff5200]"
+        style={({ isActive }) => {if (isActive) return {color: "#ff5200"}}}
         onClick={onClick}
       >
         <i className={`fa-solid ${icon} group-hover:text-[#ff5200]`}></i>

@@ -47,7 +47,7 @@ const CompanyLinks = ({ isOpen, openCities }) => {
         <p className="font-medium text-lg text-black mb-3">Contact us</p>
         <ul className="list-none text-gray-900 font-normal">
           <li className="mb-3">
-            <NavLink>Help & Support</NavLink>
+            <NavLink to="/help">Help & Support</NavLink>
           </li>
         </ul>
       </div>
