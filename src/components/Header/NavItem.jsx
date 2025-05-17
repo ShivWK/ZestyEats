@@ -4,7 +4,7 @@ export default function NavItem({
   icon,
   text,
   onClick,
-  superScript,
+  superScript = null,
   to = null,
 }) {
   return (
