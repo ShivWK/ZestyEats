@@ -1,5 +1,10 @@
+import MainHeader from "./MainHeader";
+import HeaderWrapper from "./HeaderWrapper";
+
 const HomeHeader = () => {
-    return <h1>HomeHeader</h1>
+    return <HeaderWrapper>
+        <MainHeader />
+    </HeaderWrapper>
 }
 
 export default HomeHeader;

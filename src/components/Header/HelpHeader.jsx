@@ -1,5 +1,11 @@
+import MainHeader from "./MainHeader";
+import HeaderWrapper from "./HeaderWrapper";
+
 const HelpHeader = () => {
-    return <h1>Help Header</h1>;
+    return <HeaderWrapper>
+        <MainHeader searchPlaceholder="HELP" />
+    </HeaderWrapper>
 }
 
 export default HelpHeader;
+

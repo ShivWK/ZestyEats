@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { motion } from 'motion/react';
+import { motion } from "motion/react";
 import { openLocationModal } from "../../features/Login/loginSlice";
 import {
   selectSearchedCity,
@@ -8,7 +8,7 @@ import {
 } from "../../features/home/homeSlice";
 import { NavLink } from "react-router-dom";
 
-export default function Logo() {
+export default function Logo({ searchPlaceholder }) {
   const dispatch = useDispatch();
   const yourcurrentCity = useSelector(selectYourCurrentCity);
   const searchedCity = useSelector(selectSearchedCity);
@@ -26,8 +26,8 @@ export default function Logo() {
           viewBox="0 0 61 61"
           height="49"
           width="49"
-          initial={{ scale: 0}}
-          animate={{ scale: 1}}
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
         >
           <g clipPath="url(#a)">
             <path
@@ -49,21 +49,25 @@ export default function Logo() {
         </motion.svg>
       </NavLink>
 
-      <button
-        onClick={handleClick}
-        className="group flex items-center gap-2 cursor-pointer"
-      >
-        <span className="font-[750] underline underline-offset-8 decoration-2 text-sm group-hover:text-[#ff5200]">
-          {yourcurrentCity ? yourcurrentCity : "Other"}
-        </span>
+      {searchPlaceholder ? (
+        <p className="flex items-center font-bold">{searchPlaceholder}</p>
+      ) : (
+        <button
+          onClick={handleClick}
+          className="group flex items-center gap-2 cursor-pointer"
+        >
+          <span className="font-[750] underline underline-offset-8 decoration-2 text-sm group-hover:text-[#ff5200]">
+            {yourcurrentCity ? yourcurrentCity : "Other"}
+          </span>
 
-        <span className="max-w-52 truncate text-start text-sm font-medium text-gray-600">
-          {yourcurrentCity
-            ? `${searchedCityAddress}`
-            : `${searchedCity}${searchedCityAddress}`}
-        </span>
-        <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5"></i>
-      </button>
+          <span className="max-w-52 truncate text-start text-sm font-medium text-gray-600">
+            {yourcurrentCity
+              ? `${searchedCityAddress}`
+              : `${searchedCity}${searchedCityAddress}`}
+          </span>
+          <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5"></i>
+        </button>
+      )}
     </div>
   );
 }

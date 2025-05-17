@@ -1,5 +1,10 @@
+import MainHeader from "./MainHeader";
+import HeaderWrapper from "./HeaderWrapper";
+
 const ProfileHeader = () => {
-    return <h1>ProfileHeader</h1>
+    return <HeaderWrapper>
+        <MainHeader searchPlaceholder="MY ACCOUNT"/>
+    </HeaderWrapper>
 }
 
 export default ProfileHeader;
