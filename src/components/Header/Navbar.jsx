@@ -24,7 +24,6 @@ export default function Navbar({
         {showAbout && (
           <NavItem
             to="about"
-            onClick={handleClick}
             icon={"fa-solid fa-utensils text-lg"}
             text="About"
           />
@@ -32,7 +31,6 @@ export default function Navbar({
         {showSearch && (
           <NavItem
             to="search"
-            onClick={handleClick}
             icon={"fa-magnifying-glass text-lg"}
             text="Search"
           />
@@ -40,7 +38,6 @@ export default function Navbar({
         {showOffers && (
           <NavItem
             to="offers-dinouts"
-            onClick={handleClick}
             icon={"ri-discount-percent-line text-xl"}
             text="Offers"
             superScript={"NEW"}
@@ -48,19 +45,18 @@ export default function Navbar({
         )}
         <NavItem
           to="help"
-          onClick={handleClick}
           icon={"fa-life-ring text-lg"}
           text="Help"
         />
         <NavItem
-          onClick={handleSignIn}
+          to={"/profile"}
+          // onClick={handleSignIn}
           icon={"fa-user text-lg"}
           text="Sign In"
         />
         {showCart && (
           <NavItem
             to="cart"
-            onClick={handleClick}
             icon={"fa-cart-shopping text-lg"}
             text="Cart"
           />
