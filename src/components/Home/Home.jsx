@@ -8,6 +8,7 @@ import Loader from "../Loader";
 
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
+import { useGetSpecificRestaurantDataQuery } from "../../features/home/restaurantsApiSlice";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,6 +41,12 @@ export default function Home() {
   const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
   // const [firstRender, setFirstRender] = useState(true);
+
+  useEffect(() => {
+    useGetSpecificRestaurantDataQuery({
+      url: "https://www.swiggy.com/city/delhi/pizza-hut-sector-3-rohini-rest16866",
+    });
+  }, []);
 
   const fetchDefaultHomeAPIData = async () => {
     try {
@@ -140,8 +147,10 @@ export default function Home() {
       )}
       {bestPlacesToEaNearMe.length !== 0 && (
         <>
-          <section className="w-full max-w-[1000px] mx-auto flex items-center gap-4
-           flex-col">
+          <section
+            className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+           flex-col"
+          >
             <BestPlacesToEat isLoading={isLoading} />
           </section>
           <hr className="mt-10 mb-8 text-gray-300" />
@@ -149,16 +158,20 @@ export default function Home() {
       )}
       {bestCuisionsNearMe.length !== 0 && (
         <>
-          <section className="w-full max-w-[1000px] mx-auto flex items-center gap-4
-           flex-col">
+          <section
+            className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+           flex-col"
+          >
             <CuisionsNearMe isLoading={isLoading} />
           </section>
           <hr className="mt-10 mb-8 text-gray-300" />
         </>
       )}
       {nearByRestaurants.length !== 0 && (
-        <section className="w-full max-w-[1000px] mx-auto flex justify-start gap-4 
-         flex-col">
+        <section
+          className="w-full max-w-[1000px] mx-auto flex justify-start gap-4 
+         flex-col"
+        >
           <NearByRestaurants />
         </section>
       )}

@@ -25,19 +25,21 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
     const { lat, lng } = req.query;
 
     if (!lat || !lng) {
-      return res.status(400).json({ error: "Both lat and lng query parameters are required" });
+      return res
+        .status(400)
+        .json({ error: "Both lat and lng query parameters are required" });
     }
 
     const swiggyURL = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
 
     const response = await axios.get(swiggyURL, {
       headers: {
-        'User-Agent': 'Mozilla/5.0',
-        'Accept': 'application/json',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://www.swiggy.com/',
-        'Origin': 'https://www.swiggy.com',
-        'Cookie': req.headers.cookie || '',
+        "User-Agent": "Mozilla/5.0",
+        Accept: "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        Referer: "https://www.swiggy.com/",
+        Origin: "https://www.swiggy.com",
+        Cookie: req.headers.cookie || "",
       },
     });
     res.status(200).json(response.data);
@@ -52,18 +54,20 @@ app.get("/api/place-autocomplete", async (req, res) => {
     const { input } = req.query;
 
     if (!input) {
-      return res.status(400).json({ error: "Input query parameter is required" });
+      return res
+        .status(400)
+        .json({ error: "Input query parameter is required" });
     }
 
     const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
 
     const response = await axios.get(swiggyURL, {
       headers: {
-        'User-Agent': 'Mozilla/5.0',
-        'Accept': 'application/json',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://www.swiggy.com/',
-        'Origin': 'https://www.swiggy.com',
+        "User-Agent": "Mozilla/5.0",
+        Accept: "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        Referer: "https://www.swiggy.com/",
+        Origin: "https://www.swiggy.com",
       },
     });
 
@@ -77,20 +81,22 @@ app.get("/api/place-autocomplete", async (req, res) => {
 app.get("/api/address-recommend", async (req, res) => {
   try {
     const { place_id } = req.query;
-    
+
     if (!place_id) {
-      return res.status(400).json({ error: "place_id query parameter is required" });
+      return res
+        .status(400)
+        .json({ error: "place_id query parameter is required" });
     }
 
     const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
 
     const response = await axios.get(swiggyURL, {
       headers: {
-        'User-Agent': 'Mozilla/5.0',
-        'Accept': 'application/json',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://www.swiggy.com/',
-        'Origin': 'https://www.swiggy.com',
+        "User-Agent": "Mozilla/5.0",
+        Accept: "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        Referer: "https://www.swiggy.com/",
+        Origin: "https://www.swiggy.com",
       },
     });
 
@@ -104,10 +110,10 @@ app.get("/api/address-recommend", async (req, res) => {
 app.get("/api/address-from-coordinates", async (req, res) => {
   try {
     const { lat1, lng1 } = req.query;
-    
+
     if (!lat1 || !lng1) {
-      return res.status(400).json({ 
-        error: "Both lat and lng query parameters are required" 
+      return res.status(400).json({
+        error: "Both lat and lng query parameters are required",
       });
     }
 
@@ -115,25 +121,56 @@ app.get("/api/address-from-coordinates", async (req, res) => {
 
     const response = await axios.get(swiggyURL, {
       headers: {
-        'User-Agent': 'Mozilla/5.0',
-        'Accept': 'application/json',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Referer': 'https://www.swiggy.com/',
-        'Origin': 'https://www.swiggy.com',
+        "User-Agent": "Mozilla/5.0",
+        Accept: "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        Referer: "https://www.swiggy.com/",
+        Origin: "https://www.swiggy.com",
       },
     });
 
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Address from Coordinates Error:", error.message);
-    res.status(500).json({ 
+    res.status(500).json({
       error: "Failed to fetch address from coordinates",
-      details: error.message 
+      details: error.message,
     });
   }
 });
 
-// Handle 404
+app.get("/api/specific-restaurants", async (req, res) => {
+  const { url } = req.query;
+
+  if (!url) {
+    return res.status(400).json({
+      error: "url is required",
+    });
+  }
+
+  const mainUrl = url;
+
+  try {
+    const response = await axios.get(mainUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        Accept: "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        Referer: "https://www.swiggy.com/",
+        Origin: "https://www.swiggy.com",
+      },
+    });
+
+    res.status(200).json(response.data);
+  } catch (err) {
+    console.error("Restaurant data can't be fetched: ", err.message);
+    res.status(500).json({
+      error: "Restaurant data can't be fetched",
+      details: err.message
+    })
+  }
+});
+
 app.use((req, res) => {
   res.status(404).send("Not Found");
 });

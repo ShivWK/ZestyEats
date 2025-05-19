@@ -5,16 +5,18 @@ import HomeReducer from "../features/home/homeSlice";
 import { loginReducer } from "../features/Login/loginSlice";
 import searchApiSlice from "../features/home/searchApiSlice";
 import HeaderReducer from "../features/header/headerSlice";
+import restaurantsApi from "../features/home/restaurantsApiSlice";
 
 const store = configureStore({
     reducer: {
         [homeApiSlice.reducerPath]: homeApiSlice.reducer,
         [searchApiSlice.reducerPath]: searchApiSlice.reducer,
+        [restaurantsApi.reducerPath]: restaurantsApi.reducer,
         home: HomeReducer,
         login: loginReducer,
         header: HeaderReducer,
     },
-    middleware: (defaultMiddlewares) => [...defaultMiddlewares(), homeApiSlice.middleware, searchApiSlice.middleware],
+    middleware: (defaultMiddlewares) => [...defaultMiddlewares(), homeApiSlice.middleware, searchApiSlice.middleware, restaurantsApi.middleware],
 })
 
 setupListeners(store.dispatch);
