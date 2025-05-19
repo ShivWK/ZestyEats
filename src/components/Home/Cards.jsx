@@ -5,7 +5,7 @@ const Cards = ({ data, imageWidth = 275, imageHeight = 44, from }) => {
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
 
   return (
-    <NavLink style={{width: from === "online" ? 240 : 275}} className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-200 ease-in-out`}>
+    <NavLink style={{width: from === "online" ? 240 : 275}} className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}>
       <div
         className={`w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}
         style={{

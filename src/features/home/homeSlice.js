@@ -2,6 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     apiData : null,
+    lat: 12.9715987,
+    lng: 77.5945627,
     foodieThoughtsData : [],
     topRestaurantsData : [],
     recentLocations: [],
@@ -10,8 +12,8 @@ const initialState = {
     nearByRestaurants: [],
     restaurantsWithOnlineDelivery: [],
     yourCurrentCity: "",
-    searchedCity:"",
-    searchedCityAddress: "",
+    searchedCity:"Bangalore",
+    searchedCityAddress: ", Karnataka, India",
     topRestaurantsTitle: "Top restaurant chains in Bangalore",
     onlineDeliveryTitle: "Restaurants with online food delivery in Bangalore",
     isLoading: true,
@@ -25,6 +27,11 @@ const homeSlice = createSlice({
     reducers : {
         addApiData: (state, action) => {
             state.apiData = action.payload;
+        },
+
+        addLatAndLng: (state, action) => {
+            state.lat = action.payload.lat;
+            state.lng = action.payload.lng;
         },
 
         addFoodieThoughtsData: (state, action) => {
@@ -181,6 +188,10 @@ export const selectBestPlacesToEat = state => state.home.bestPlacesToEat;
 export const selectNearByRestaurants = state => state.home.nearByRestaurants;
 export const selectOnlineStatus = state => state.home.isOnline;
 export const selectAvailableCities = state => state.home.availableInCityies;
+export const selectLatAndLng = state => ({
+    lat: state.home.lat,
+    lng: state.home.lng,
+}) 
 
 export const { 
     addApiData, 
@@ -201,6 +212,7 @@ export const {
     addNearByRestaurants,
     setOnline,
     addAvailableCities,
+    addLatAndLng,
 } = homeSlice.actions;
 
 

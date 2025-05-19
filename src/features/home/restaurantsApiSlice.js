@@ -8,7 +8,7 @@ const restaurantsApi = createApi({
 
   endpoints: (builder) => ({
     getSpecificRestaurantData: builder.query({
-      query: (lat, lng, id) => ({
+      query: ({lat, lng, id}) => ({
         url: "/specific-restaurants",
         params: { lat, lng, id },
       }),

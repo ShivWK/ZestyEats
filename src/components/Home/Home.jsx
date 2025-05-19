@@ -44,18 +44,20 @@ export default function Home() {
   // const [firstRender, setFirstRender] = useState(true);
 
   useEffect(() => {
-    async function call() {
-      try {
-        let response = await trigger({ lat: 26.912433, lng: 75.787270, id: 90186}).unwrap();
+    // async function call() {
+    //   try {
+    //     let response = await trigger({ lat: 26.9124336, lng: 75.7872709, id: 47595}).unwrap();
 
-        console.log(response);
-      } catch(err) {
-        console.error(err);
-      }
-    }
+    //     console.log(response);
+    //   } catch(err) {
+    //     console.error(err);
+    //   }
+    // }
 
-    call();
+    // call();
   }, []);
+
+  // 26.9124336 75.7872709
 
   // https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.9124336&lng=75.7872709&restaurantId=47595&catalog_qa=undefined&submitAction=ENTER
 
@@ -68,7 +70,7 @@ export default function Home() {
         lng: 77.5945627,
       }).unwrap();
       if (!apiResponse) return;
-      updateHomeRestaurantData(apiResponse, dispatch);
+      updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
     } catch (err) {
       dispatch(setLoading(false));
       alert(err.message);
@@ -77,8 +79,11 @@ export default function Home() {
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
-    if (HomeData) {
-      updateHomeRestaurantData(HomeData, dispatch);
+    const lat = JSON.parse(localStorage.getItem("lat"));
+    const lng = JSON.parse(localStorage.getItem("lng"));
+
+    if (HomeData && lat && lng) {
+      updateHomeRestaurantData(HomeData, dispatch, lat, lng);
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
       const searchedCityAddress = JSON.parse(
         localStorage.getItem("searchedCityAddress")
@@ -114,8 +119,8 @@ export default function Home() {
 
           try {
             const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
-            console.log(res2);
-            updateHomeRestaurantData(res2, dispatch);
+            // console.log(res2);
+            updateHomeRestaurantData(res2, dispatch, lat, lng);
           } catch (err) {
             alert(err.message);
             fetchDefaultHomeAPIData();

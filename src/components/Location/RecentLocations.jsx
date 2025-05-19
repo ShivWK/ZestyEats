@@ -20,14 +20,13 @@ const RecentLocations = () => {
   const recentLocations = useSelector(selectRecentLocations);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({container: containerRef});
-  // console.log(scrollYProgress)
   const dispatch = useDispatch();
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
 
   useEffect(() => {
     const recentLocations = JSON.parse(localStorage.getItem("recentLocations"));
-    // console.log(recentLocations, "from localStorage");
+
     if (recentLocations !== null) {
       dispatch(addRecentLocations(recentLocations));
     }
@@ -45,7 +44,7 @@ const RecentLocations = () => {
       const { lat, lng } = res1;
 
       const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
-      updateHomeRestaurantData(res2, dispatch);
+      updateHomeRestaurantData(res2, dispatch, lat, lng);
     } catch (err) {
       alert(err.message);
       dispatch(setLoading(false));

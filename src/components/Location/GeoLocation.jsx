@@ -41,8 +41,7 @@ const GeoLocation = ({ setSearchValue }) => {
 
           try {
             const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
-            // console.log(res2);
-            updateHomeRestaurantData(res2, dispatch);
+            updateHomeRestaurantData(res2, dispatch, lat, lng);
           } catch (err) {
             alert(err.error);
             dispatch(setLoading(false));

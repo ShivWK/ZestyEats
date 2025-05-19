@@ -33,9 +33,8 @@ const SearchedLocation = ({
     try {
       const res1 = await triggerLocationCall(location.place_id).unwrap();
       const { lat, lng } = res1;
-
       const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
-      updateHomeRestaurantData(res2, dispatch);
+      updateHomeRestaurantData(res2, dispatch, lat, lng);
 
       if (
         !(res2?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present")
