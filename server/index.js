@@ -140,15 +140,15 @@ app.get("/api/address-from-coordinates", async (req, res) => {
 });
 
 app.get("/api/specific-restaurants", async (req, res) => {
-  const { url } = req.query;
+  const { lat, lng, id } = req.query;
 
-  if (!url) {
+  if (!lat || !lng || !id) {
     return res.status(400).json({
-      error: "url is required",
+      error: "lat, lng and id are required",
     });
   }
 
-  const mainUrl = url;
+  const mainUrl = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`;
 
   try {
     const response = await axios.get(mainUrl, {

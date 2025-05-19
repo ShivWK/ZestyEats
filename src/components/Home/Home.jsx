@@ -8,7 +8,7 @@ import Loader from "../Loader";
 
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
-import { useGetSpecificRestaurantDataQuery } from "../../features/home/restaurantsApiSlice";
+import { useGetSpecificRestaurantDataQuery, useLazyGetSpecificRestaurantDataQuery } from "../../features/home/restaurantsApiSlice";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,13 +40,26 @@ export default function Home() {
   const dispatch = useDispatch();
   const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
+  const [trigger] = useLazyGetSpecificRestaurantDataQuery();
   // const [firstRender, setFirstRender] = useState(true);
 
   useEffect(() => {
-    useGetSpecificRestaurantDataQuery({
-      url: "https://www.swiggy.com/city/delhi/pizza-hut-sector-3-rohini-rest16866",
-    });
+    async function call() {
+      try {
+        let response = await trigger({ lat: 26.912433, lng: 75.787270, id: 90186}).unwrap();
+
+        console.log(response);
+      } catch(err) {
+        console.error(err);
+      }
+    }
+
+    call();
   }, []);
+
+  // https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.9124336&lng=75.7872709&restaurantId=47595&catalog_qa=undefined&submitAction=ENTER
+
+  //  https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.9124336&lng=75.7872709&restaurantId=90186&catalog_qa=undefined&submitAction=ENTER
 
   const fetchDefaultHomeAPIData = async () => {
     try {
