@@ -39,7 +39,6 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
         "Accept-Language": "en-US,en;q=0.9",
         Referer: "https://www.swiggy.com/",
         Origin: "https://www.swiggy.com",
-        Cookie: req.headers.cookie || "",
       },
     });
     res.status(200).json(response.data);
@@ -171,7 +170,10 @@ app.get("/api/specific-restaurants", async (req, res) => {
   }
 });
 
-app.use((req, res) => {
+
+// Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
+
+app.use((req, res, next) => {
   res.status(404).send("Not Found");
 });
 
