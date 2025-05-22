@@ -14,18 +14,20 @@ import Profile from "./components/Profile/Profile";
 import Offers_Dinouts from "./components/Offers_Dinouts/Offers_Dinouts";
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
+import RestaurantSpecific, { loader } from "./components/RestaurantSpecific/RestaurantSpecific";
 
 export default function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Layout />} >
+      <Route path="/" element={<Layout />}>
         <Route index element={<Home />} />
-        <Route path="help" element={<HelpMain />} />
         <Route path="about" element={<About />} />
         <Route path="search" element={<Search />} />
-        <Route path="cart" element={<Cart />} />
-        <Route path="profile" element={<Profile />} />
         <Route path="offers-dinouts" element={<Offers_Dinouts />} />
+        <Route path="help" element={<HelpMain />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="cart" element={<Cart />} />
+        <Route path="restaurantSpecific/:lat/:lng/:id" element={<RestaurantSpecific />} loader={loader} />
       </Route>
     )
   );
@@ -46,7 +48,9 @@ export default function App() {
         transition={Bounce}
         icon={false}
         closeButton={CloseToastBtn}
-        toastClassName={() => "flex items-center gap-4 rounded-lg shadow-xl px-4 py-3 mt-2"}
+        toastClassName={() =>
+          "flex items-center gap-4 rounded-lg shadow-xl px-4 py-3 mt-2"
+        }
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     apiData : null,
@@ -188,10 +188,9 @@ export const selectBestPlacesToEat = state => state.home.bestPlacesToEat;
 export const selectNearByRestaurants = state => state.home.nearByRestaurants;
 export const selectOnlineStatus = state => state.home.isOnline;
 export const selectAvailableCities = state => state.home.availableInCityies;
-export const selectLatAndLng = state => ({
-    lat: state.home.lat,
-    lng: state.home.lng,
-}) 
+export const selectLatAndLng = createSelector([state => state.home.lat, state => state.home.lng], (lat, lng) => ({lat, lng}))
+
+// if i dont use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
 
 export const { 
     addApiData, 

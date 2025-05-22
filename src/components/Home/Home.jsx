@@ -8,7 +8,6 @@ import Loader from "../Loader";
 
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
-import { useGetSpecificRestaurantDataQuery, useLazyGetSpecificRestaurantDataQuery } from "../../features/home/restaurantsApiSlice";
 
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -40,28 +39,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
-  const [trigger] = useLazyGetSpecificRestaurantDataQuery();
   // const [firstRender, setFirstRender] = useState(true);
-
-  useEffect(() => {
-    // async function call() {
-    //   try {
-    //     let response = await trigger({ lat: 26.9124336, lng: 75.7872709, id: 47595}).unwrap();
-
-    //     console.log(response);
-    //   } catch(err) {
-    //     console.error(err);
-    //   }
-    // }
-
-    // call();
-  }, []);
-
-  // 26.9124336 75.7872709
-
-  // https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.9124336&lng=75.7872709&restaurantId=47595&catalog_qa=undefined&submitAction=ENTER
-
-  //  https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=26.9124336&lng=75.7872709&restaurantId=90186&catalog_qa=undefined&submitAction=ENTER
 
   const fetchDefaultHomeAPIData = async () => {
     try {
@@ -144,7 +122,7 @@ export default function Home() {
           <section className="w-full max-w-[1040px] mx-auto ">
             <FoodieThoughts isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-8 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
       {topRestaurantsChainsData.length !== 0 && (
@@ -152,7 +130,7 @@ export default function Home() {
           <section className="w-full max-w-[1040px] mx-auto">
             <TopRestaurantChains isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-8 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
       {onlineDeliveryRestaurant.length !== 0 && (
@@ -160,7 +138,7 @@ export default function Home() {
           <section className="w-full">
             <OnlineDeliveryRestaurant isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-8 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
       {bestPlacesToEaNearMe.length !== 0 && (
@@ -171,7 +149,7 @@ export default function Home() {
           >
             <BestPlacesToEat isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-8 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
       {bestCuisionsNearMe.length !== 0 && (
@@ -182,7 +160,7 @@ export default function Home() {
           >
             <CuisionsNearMe isLoading={isLoading} />
           </section>
-          <hr className="mt-10 mb-8 text-gray-300" />
+          <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
       {nearByRestaurants.length !== 0 && (

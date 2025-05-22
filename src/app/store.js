@@ -6,6 +6,7 @@ import { loginReducer } from "../features/Login/loginSlice";
 import searchApiSlice from "../features/home/searchApiSlice";
 import HeaderReducer from "../features/header/headerSlice";
 import restaurantsApi from "../features/home/restaurantsApiSlice";
+import restaurantReducer from "../features/home/restaurantsSlice";
 
 const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
         home: HomeReducer,
         login: loginReducer,
         header: HeaderReducer,
+        restaurant: restaurantReducer,
     },
     middleware: (defaultMiddlewares) => [...defaultMiddlewares(), homeApiSlice.middleware, searchApiSlice.middleware, restaurantsApi.middleware],
 })

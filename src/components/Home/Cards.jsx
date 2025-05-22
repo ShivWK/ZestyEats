@@ -1,11 +1,21 @@
 import { NavLink } from "react-router-dom";
+import { selectLatAndLng } from "../../features/home/homeSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 
-const Cards = ({ data, imageWidth = 275, imageHeight = 44, from }) => {
+const Cards = ({ data, from }) => {
+    const { lat, lng } = useSelector(selectLatAndLng);
+    const dispatch = useDispatch();
+
     const imageId = data?.cloudinaryImageId?.trim();
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
 
+    const handleClick = () => {
+      dispatch(addCurrentRestaurant(data?.name))
+    }
+
   return (
-    <NavLink style={{width: from === "online" ? 240 : 275}} className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}>
+    <NavLink to={`restaurantSpecific/${lat}/${lng}/${data?.id}`} onClick={handleClick} style={{width: from === "online" ? 240 : 275}} className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}>
       <div
         className={`w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}
         style={{
