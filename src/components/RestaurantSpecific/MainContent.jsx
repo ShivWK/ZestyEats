@@ -1,21 +1,21 @@
 import Banner from "./Banner";
+import TopPicksCards from "./TopPicksCard";
 
-const MainContent = ({ data, routes = false, routeParams }) => {
+const MainContent = ({ data, routes = true, routeParams }) => {
   const cards = data?.data?.cards;
 
   const title = cards?.[0].card?.card?.text;
 
   const navigation = cards?.[1];
-  console.log(navigation);
 
   const banner = cards?.[2];
-  console.log(banner);
 
   const offers = cards?.[3];
-  console.log(offers);
 
   const menu = cards?.at(-1);
-  console.log(menu);
+
+  const topPicks = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[1];
+  const recommendations = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[2];
 
   return (
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">
@@ -30,6 +30,11 @@ const MainContent = ({ data, routes = false, routeParams }) => {
       {<Banner data={banner} />}
 
       <p>{`lat = ${routeParams.lat} and lng = ${routeParams.lng} and id = ${routeParams.id}`}</p>
+
+      <hr />
+      <TopPicksCards data={topPicks}/>
+
+{/* menu button */}
 
       <button className="fixed bottom-3.5 right-72 h-[12vh] w-[12vh] rounded-[50%] bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer">
         MENU

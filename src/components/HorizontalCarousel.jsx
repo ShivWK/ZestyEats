@@ -1,18 +1,44 @@
 import Scrollbar from "./Home/ScroolBar";
 import Button from "./Home/Button";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import createDebounce from "../utils/debounceCreater";
 
 const HorizontalCarousel = ({
   heading,
-  leftBtnRef,
-  rightBtnRef,
-  containerRef,
+  margin_bottom = 0,
   showScrollBar = true,
-  debounceLeft,
-  debounceRight,
-  Cards,
+  dataToMap,
+  Card,
 }) => {
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const rightBtnRef = useRef(null);
+  const leftBtnRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // Store the debounced function in a ref so that:
+  // 1. It is created only once on initial render.
+  // 2. It preserves the internal timer between re-renders.
+  // This avoids creating a new debounced function on every input change,
+  // which would break debounce behavior by resetting the timer each time.
+  // Use function declaration for debounceCreate, and passed functions to avoid hoisting issues.
+  // and to ensure it is defined before being used in the useRef hook
+
+  const debouncedHandleRightClick = useRef(createDebounce(handleRightClick, 100));
+  const debouncedHandleLeftClick = useRef(createDebounce(handleLeftClick, 100));
+
+  useEffect(() => {
+    if (dataToMap.length) {
+      setTimeout(() => {
+        handleScroll();
+      }, 0);
+    }
+
+    const container = containerRef.current;
+    container.scrollTo({
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [dataToMap])
 
   function handleScroll() {
     const container = containerRef.current;
@@ -35,9 +61,34 @@ const HorizontalCarousel = ({
     setScrollPercentage(scrolledPercentage);
   }
 
+  function handleRightClick() {
+    leftBtnRef.current.disabled = false;
+
+    const container = containerRef.current;
+    if (!container) return; // important because there can be a case when carousel container not loaded and user clicks the button then we will get error.
+
+    container.scrollBy({
+      left: 600,
+      behavior: "smooth",
+    });
+  }
+
+  function handleLeftClick(e) {
+    rightBtnRef.current.disabled = false;
+
+    const container = containerRef.current;
+    if (!container) return;
+
+    container.scrollBy({
+      left: -600,
+      behavior: "smooth",
+    });
+  }
+
+  
   return (
     <>
-      <div className="flex justify-between flex-wrap items-center">
+      <div className="flex justify-between flex-wrap items-center" style={{marginBottom: margin_bottom}}>
         <h2>
           {heading}
           {/* {user ? `${user}, what's on your mind?` : "What's on your mind?"} */}
@@ -45,12 +96,12 @@ const HorizontalCarousel = ({
         <div className="flex justify-between gap-1">
           <Button
             ref={leftBtnRef}
-            clickHandler={debounceLeft}
+            clickHandler={debouncedHandleLeftClick.current}
             iconClass="left"
           />
           <Button
             ref={rightBtnRef}
-            clickHandler={debounceRight}
+            clickHandler={debouncedHandleRightClick.current}
             iconClass="right"
           />
         </div>
@@ -61,8 +112,8 @@ const HorizontalCarousel = ({
           ref={containerRef}
           className="flex justify-between gap-4 overflow-x-auto hide-scrollbar"
         >
-          {foodieThoughtsData.map((item) => (
-            <Cards key={item.id} data={item} />
+          {dataToMap.map((item) => (
+            <Card key={item?.id} data={item} />
           ))}
         </div>
         {showScrollBar && (
