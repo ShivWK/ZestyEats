@@ -78,6 +78,12 @@
 }
 
 @layer base {
+
+    h1 {
+        font-weight: 750;
+        font-size: 27px;
+    }
+
     h3 {
         font-weight: 750;
         font-size: 25px;

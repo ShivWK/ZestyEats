@@ -1,7 +1,6 @@
 const ShimmerContainer = () => {
   return (
-    <div>
-      <div className="w-full max-w-[800px] mx-auto overflow-hidden">
+      <div className="w-full max-w-[800px] mx-auto overflow-hidden pt-4">
         {/* <div className="-z-10 shimmer-shine"></div> */}
         <div className="z-10 bg-transparent flex gap-5 flex-col pt-24 pb-12 w-full">
           <div className="w-52 h-8 rounded-xl shimmerBg"></div>
@@ -21,7 +20,6 @@ const ShimmerContainer = () => {
           <div className="w-full h-56 rounded-xl shimmerBg"></div>
         </div>
       </div>
-    </div>
   );
 };
 

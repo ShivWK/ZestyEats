@@ -4,6 +4,7 @@ import store from "../../app/store";
 import restaurantsApi from "../../features/home/restaurantsApiSlice";
 import ShimmerContainer from "./ShimmerContainer";
 import useScrollToTop from "../../utils/useScrollToTop";
+import MainContent from "./MainContent";
 
 export const loader = async ({ params }) => {
   const { lat, lng, id } = params;
@@ -28,20 +29,7 @@ const RestaurantSpecific = () => {
     <Suspense fallback={<ShimmerContainer />}>
       <Await resolve={result.data}>
         {(data) => (
-          <div className="pt-24 mx-auto w-full max-w-[800px]">
-            <p>Hi I'm restaurant</p>
-            <div className="bg-linear-[to_left,rgba(255,81,0,0.15),#ffffff]">
-              <img
-                src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_86,h_30/v1634558776/swiggy_one/OneLogo_3x.png"
-                alt=""
-              />
-            </div>
-            <p>{`lat = ${routeParams.lat} and lng = ${routeParams.lng} and id = ${routeParams.id}`}</p>
-            <button className="fixed bottom-3.5 right-72 h-[12vh] w-[12vh] rounded-[50%] bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer">
-              MENU
-            </button>
-            
-          </div>
+          <MainContent routeParams={routeParams} data={data}/>
         )}
       </Await>
     </Suspense>
