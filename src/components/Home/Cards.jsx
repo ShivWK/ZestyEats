@@ -4,18 +4,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 
 const Cards = ({ data, from }) => {
-    const { lat, lng } = useSelector(selectLatAndLng);
-    const dispatch = useDispatch();
+  const { lat, lng } = useSelector(selectLatAndLng);
+  const dispatch = useDispatch();
 
-    const imageId = data?.cloudinaryImageId?.trim();
-    const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
+  const imageId = data?.cloudinaryImageId?.trim();
+  const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
 
-    const handleClick = () => {
-      dispatch(addCurrentRestaurant(data?.name))
-    }
+  const handleClick = () => {
+    dispatch(addCurrentRestaurant(data?.name));
+  };
 
   return (
-    <NavLink to={`restaurantSpecific/${lat}/${lng}/${data?.id}`} onClick={handleClick} style={{width: from === "online" ? 240 : 275}} className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}>
+    <NavLink
+      to={`restaurantSpecific/${lat}/${lng}/${data?.id}`}
+      onClick={handleClick}
+      style={{ width: from === "online" ? 240 : 275 }}
+      className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}
+    >
       <div
         className={`w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}
         style={{
@@ -24,7 +29,9 @@ const Cards = ({ data, from }) => {
         }}
       >
         <p className="font-bold text-white text-xl">
-          {(data.aggregatedDiscountInfoV3?.header || "") + " " + (data.aggregatedDiscountInfoV3?.subHeader || "")}
+          {(data.aggregatedDiscountInfoV3?.header || "") +
+            " " +
+            (data.aggregatedDiscountInfoV3?.subHeader || "")}
         </p>
       </div>
       <div className="mt-2 w-[95%]">
@@ -35,7 +42,9 @@ const Cards = ({ data, from }) => {
           <p className="">•</p>
           <p className="font-bold">{data?.sla?.slaString || ""}</p>
         </div>
-        <p className="mt-0.5 truncate font-semibold text-gray-700">{data?.cuisines.join(", ") || "" }</p>
+        <p className="mt-0.5 truncate font-semibold text-gray-700">
+          {data?.cuisines.join(", ") || ""}
+        </p>
         <p className="font-semibold text-gray-700">{data.areaName || ""}</p>
       </div>
     </NavLink>

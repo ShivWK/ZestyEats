@@ -31,8 +31,7 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
             {item?.terms?.[0]?.value}
           </p>
           <p className="text-sm font-semibold text-gray-400">
-            {item?.terms?.[1]?.value}
-            {item?.terms?.[2]?.value}
+            {item?.terms?.[1]?.value}{", "}{item?.terms?.[2]?.value}
           </p>
         </div>
         {index !== null && (

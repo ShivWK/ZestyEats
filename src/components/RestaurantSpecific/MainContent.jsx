@@ -14,8 +14,13 @@ const MainContent = ({ data, routes = true, routeParams }) => {
 
   const menu = cards?.at(-1);
 
-  const topPicks = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[1];
-  const recommendations = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards?.[2];
+  const topPicks = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards.find(item => {
+    return item?.card?.card?.title === "Top Picks";
+  });
+
+  const recommendations = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards.find(item => {
+    return item?.card?.card?.title === "Recommended";
+  });
 
   return (
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">
@@ -32,7 +37,7 @@ const MainContent = ({ data, routes = true, routeParams }) => {
       <p>{`lat = ${routeParams.lat} and lng = ${routeParams.lng} and id = ${routeParams.id}`}</p>
 
       <hr />
-      <TopPicksCards data={topPicks}/>
+      {topPicks && <TopPicksCards data={topPicks}/>}
 
 {/* menu button */}
 

@@ -25,7 +25,7 @@ const Banner = ({ data }) => {
             id="cuisions"
             className="text-primary font-bold underline text-sm flex gap-1"
           >
-            {mainData.cuisines.map((item, index, array)=> {
+            {mainData?.cuisines.length !== 0 && mainData?.cuisines?.map((item, index, array)=> {
                 if (index == array.length -1) return <NavLink key={item}>{item}</NavLink>
                 else return <NavLink key={item}>{`${item} ,`}</NavLink>
             })}

@@ -38,6 +38,7 @@ const ModalSubContainer = () => {
 
   const handleClose = () => {
     dispatch(closeLocationInModal());
+    setSearchValue("");
   };
 
   function debounceCreater(func, delay) {

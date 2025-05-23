@@ -45,7 +45,20 @@
 
     .shimmerBg {
         position: relative;
-        background-color: #d1d5dc73;
+        animation: bgChange 1.2s ease-in infinite;
+    }
+
+    @keyframes bgChange {
+        0% {
+            background-color: #bdbebe;
+        }
+        50% {
+            background-color: #a1a2a3;
+        }
+        100% {
+            background-color: #bdbebe;
+
+        }
     }
 
     .shimmer-shine {
