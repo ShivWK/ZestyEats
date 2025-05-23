@@ -39,8 +39,41 @@
         }
     }
 
-    .notFirst-notLast > div:not(:first-child):not(:last-child) {
-        border-top:none;
+    .notFirst-notLast>div:not(:first-child):not(:last-child) {
+        border-top: none;
+    }
+
+    .shimmerBg {
+        position: relative;
+        background-color: #d1d5dc73;
+    }
+
+    .shimmer-shine {
+        position: absolute;
+        height: 100%;
+        border: 2px solid black;
+        width: 30px;
+        box-shadow: 0 0 10px white;
+        background: linear-gradient(120deg,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 100%);
+        filter: blur(2px);
+        transform: skew(20deg);
+        opacity: 0.6;
+        animation: shimmer 1.5s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+        0% {
+            
+            left: -30px;
+        }
+
+        100% {
+            left: 120%;
+           
+        }
     }
 }
 

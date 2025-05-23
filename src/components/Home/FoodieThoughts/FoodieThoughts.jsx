@@ -3,7 +3,8 @@ import Cards from "./Cards";
 import Button from "../Button";
 import { useSelector } from "react-redux";
 import { selectFoodieThoughtsData } from "../../../features/home/homeSlice";
-import ScrollBar from "../ScroolBar";
+import Scrollbar from "../ScroolBar";
+import createDebounce from "../../../utils/debounceCreater";
 
 const FoodieThoughts = ({ isLoading }) => {
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
@@ -83,14 +84,6 @@ const FoodieThoughts = ({ isLoading }) => {
     });
   }
 
-  function createDebounce(toCall, delay) {
-    let timer;
-    return () => {
-      clearTimeout(timer);
-      timer = setTimeout(toCall, delay);
-    };
-  }
-
   return (
     <>
       <div className="flex justify-between flex-wrap items-center">
@@ -124,7 +117,7 @@ const FoodieThoughts = ({ isLoading }) => {
             <p>No data found</p>
           )}
         </div>
-        <ScrollBar
+        <Scrollbar
           scrolledPercentage={scrollPercentage}
           marginTop={10}
         />

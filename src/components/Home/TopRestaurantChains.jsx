@@ -5,6 +5,7 @@ import Cards from "./Cards";
 import Button from "./Button";
 import Scrollbar from "./ScroolBar";
 import { selectTopRestaurantsTitle } from "../../features/home/homeSlice";
+import createDebounce from "../../utils/debounceCreater";
 
 const TopRestaurantChains = ({ isLoading }) => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
@@ -86,14 +87,6 @@ const TopRestaurantChains = ({ isLoading }) => {
       left: -600,
       behavior: "smooth",
     });
-  }
-
-  function createDebounce(toCall, delay) {
-    let timer;
-    return () => {
-      clearTimeout(timer);
-      timer = setTimeout(toCall, delay);
-    };
   }
 
   return (
