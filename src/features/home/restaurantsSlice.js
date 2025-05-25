@@ -4,13 +4,13 @@ const restaurantSlice = createSlice({
     name: "restaurant",
     
     initialState: {
-        currentSpecificRestaurant: ""
+        currentSpecificRestaurant: "",
     },
 
     reducers: {
         addCurrentRestaurant: (state, action) => {
             state.currentSpecificRestaurant = action.payload;
-        }
+        },
     }
 })
 

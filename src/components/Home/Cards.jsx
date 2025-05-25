@@ -7,8 +7,10 @@ const Cards = ({ data, from }) => {
   const { lat, lng } = useSelector(selectLatAndLng);
   const dispatch = useDispatch();
 
-  const imageId = data?.cloudinaryImageId?.trim();
+  const imageId = encodeURIComponent(data?.cloudinaryImageId?.trim());
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
+
+  // console.log(imageUrl)
 
   const handleClick = () => {
     dispatch(addCurrentRestaurant(data?.name));

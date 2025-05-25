@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { motion } from "motion/react";
 import { openLocationModal } from "../../features/Login/loginSlice";
+
 import {
   selectSearchedCity,
   selectSearchedCityAddress,
@@ -51,7 +52,7 @@ export default function Logo({ searchPlaceholder }) {
 
       {searchPlaceholder ? (
         <p className="flex items-center font-bold">{searchPlaceholder}</p>
-      ) : (
+      ) : ( 
         <button
           onClick={handleClick}
           className="group flex items-center gap-2 cursor-pointer"

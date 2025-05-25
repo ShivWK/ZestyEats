@@ -1,26 +1,53 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
 import TopPicksCards from "./TopPicksCard";
 
 const MainContent = ({ data, routes = true, routeParams }) => {
-  const cards = data?.data?.cards;
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(addCurrentRestaurant(title));
+  }, []);
+
+  const cards = data?.data?.cards;
   const title = cards?.[0].card?.card?.text;
 
   const navigation = cards?.[1];
-
   const banner = cards?.[2];
-
   const offers = cards?.[3];
+  const menu = cards?.at(-1)?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1);
 
-  const menu = cards?.at(-1);
-
-  const topPicks = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards.find(item => {
+  const topPicks = menu.find(item => {
     return item?.card?.card?.title === "Top Picks";
   });
 
-  const recommendations = menu?.groupedCard?.cardGroupMap?.REGULAR?.cards.find(item => {
-    return item?.card?.card?.title === "Recommended";
+  // console.log("Top Picks", topPicks);
+
+  const recommendations = menu.find(item => {
+    return item?.card?.card?.title === "Recommended"
   });
+
+  // console.log("Recommendations", recommendations);
+
+  const RestaurantLicenseInfo = menu.find(item => {
+    return item?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo";
+  });
+
+  // console.log("Restaurant License Info", RestaurantLicenseInfo);
+
+  const RestaurantAddress = menu.find(item => {
+    return item?.card?.card?.["@type"] === "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress";
+  });
+
+  // console.log("Restaurant Address", RestaurantAddress);
+
+  const restMenuData = menu.filter(item => {
+    return item?.card?.card?.title !== "Top Picks" && item?.card?.card?.title !== "Recommended" && item?.card?.card?.["@type"] !== "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" && item?.card?.card?.["@type"] !== "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress";
+  })
+
+  // console.log("Rest Data", restMenuData);
 
   return (
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">

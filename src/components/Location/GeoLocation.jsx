@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setLoading } from "../../features/home/homeSlice";
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
@@ -6,12 +7,18 @@ import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
 
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
+import useRouteRedirect from "../../utils/useRouteRedirect";
 
 const GeoLocation = ({ setSearchValue }) => {
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
-
   const dispatch = useDispatch();
+
+  const checkAndRedirect = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+  };
 
   const handleLocation = () => {
     // 1: Get live lat and lng by GeoLoaction API.
@@ -20,6 +27,7 @@ const GeoLocation = ({ setSearchValue }) => {
     // 4: Now give this new lat and lng to the home API to ftech Restaurant's data.
 
     if (navigator.geolocation) {
+      checkAndRedirect();
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
         const lng1 = position.coords.longitude;

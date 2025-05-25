@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion, useScroll } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import {
   addRecentLocations,
   selectRecentLocations,
@@ -15,6 +16,7 @@ import {
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
+import useRouteRedirect from "../../utils/useRouteRedirect";
 
 const RecentLocations = () => {
   const recentLocations = useSelector(selectRecentLocations);
@@ -23,6 +25,14 @@ const RecentLocations = () => {
   const dispatch = useDispatch();
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const checkAndRedirect = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+  };
 
   useEffect(() => {
     const recentLocations = JSON.parse(localStorage.getItem("recentLocations"));
@@ -33,6 +43,7 @@ const RecentLocations = () => {
   }, []);
 
   const handleRecentLocationClick = async (location) => {
+    checkAndRedirect();
     dispatch(setLoading(true));
     updateSearchedCity(location, dispatch);
 

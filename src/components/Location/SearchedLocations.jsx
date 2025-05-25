@@ -1,5 +1,6 @@
 import Location from "./Loacations";
 import { useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import {
   removeYourCurrentCity,
@@ -19,9 +20,19 @@ const SearchedLocation = ({
 }) => {
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
 
+  const checkAndRedirect = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+    }
+  };
+
   const handleSearchedLocationClick = async (location) => {
+    checkAndRedirect();
+
     dispatch(setLoading(true));
     updateSearchedCity(location, dispatch);
 
