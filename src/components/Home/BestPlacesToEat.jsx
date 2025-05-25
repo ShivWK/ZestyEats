@@ -1,10 +1,10 @@
 import PlaceCards from "./PlaceCards";
 import ShowMoreBtn from "./ShowMoreBtn";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectBestPlacesToEat } from "../../features/home/homeSlice";
 
-export default function BestPlacesToEat() {
+const BestPlacesToEat = memo(() => {
   const places = useSelector(selectBestPlacesToEat);
   const [shownPlaces, setShownPlaces] = useState([]);
 
@@ -31,4 +31,6 @@ export default function BestPlacesToEat() {
       </div>
     </>
   );
-}
+});
+
+export default BestPlacesToEat;

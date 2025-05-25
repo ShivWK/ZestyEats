@@ -12,8 +12,9 @@ import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 
 import { useLazySearchedLocationQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
+import { memo } from "react";
 
-const SearchedLocation = ({
+const SearchedLocation = memo(({
   locationsfetched,
   setSearchedLocation,
   setSearchValue,
@@ -92,6 +93,6 @@ const SearchedLocation = ({
       ))}
     </div>
   );
-};
+});
 
 export default SearchedLocation;

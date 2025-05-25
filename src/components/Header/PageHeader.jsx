@@ -5,9 +5,8 @@ import CartHeader from "./CartHeader";
 import RestaurantsHeader from "./RestaurantsHeader";
 import { useLocation } from "react-router-dom";
 
-export default function PageHeader() {
+const PageHeader = memo(() => {
   const { pathname } = useLocation();
-  // console.log(pathname);
 
   if (
     pathname === "/about" ||
@@ -23,8 +22,10 @@ export default function PageHeader() {
   } else if (pathname === "/cart") {
     return <CartHeader />;
   } else if (pathname.includes("restaurantSpecific")) {
-    return <RestaurantsHeader />
+    return <RestaurantsHeader />;
   }
 
   return null;
-}
+});
+
+export default PageHeader;

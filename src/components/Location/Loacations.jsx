@@ -1,10 +1,11 @@
 import { useDispatch } from "react-redux";
 import { removeARecentLocation } from "../../features/home/homeSlice";
+import { useCallback } from "react";
 
 const Location = ({ index = null, icon, item, handleClick }) => {;
   const dispatch = useDispatch();
 
-  const handleCrossClick = (e) => {
+  const handleCrossClick = useCallback((e) => {
     e.stopPropagation();
     dispatch(removeARecentLocation(index));
 
@@ -15,7 +16,7 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
     }
 
     localStorage.setItem("recentLocations", JSON.stringify(recentLocation))
-  };
+  });
 
   return (
     <div

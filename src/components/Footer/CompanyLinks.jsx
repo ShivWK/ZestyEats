@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
-import { useSelector } from "react-redux";
+import { useSelector, memo } from "react-redux";
 
-const CompanyLinks = ({ isOpen, openCities }) => {
+const CompanyLinks = memo(({ isOpen, openCities }) => {
   const cities = useSelector(selectAvailableCities);
   const first6Cities = cities.slice(0, 6);
   const remainingCities = cities.length - 6;
@@ -18,14 +18,21 @@ const CompanyLinks = ({ isOpen, openCities }) => {
             </li>
           ))}
         </ul>
-        <div onClick={() => openCities(!isOpen)} id="moreCities" className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center "
-            style={{ borderColor: isOpen ? "#101828" : "#6a7282"}}>
+        <div
+          onClick={() => openCities(!isOpen)}
+          id="moreCities"
+          className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center "
+          style={{ borderColor: isOpen ? "#101828" : "#6a7282" }}
+        >
           <p className="font-normal text-sm text-gray-900">
             {remainingCities} cities
           </p>
-          <i className="fa-solid fa-caret-down text-gray-900 transition-all duration-300 ease-in" style={{
-            transform: isOpen ? "rotate(-180deg)" : ""
-          }}></i>
+          <i
+            className="fa-solid fa-caret-down text-gray-900 transition-all duration-300 ease-in"
+            style={{
+              transform: isOpen ? "rotate(-180deg)" : "",
+            }}
+          ></i>
         </div>
       </div>
 
@@ -53,6 +60,6 @@ const CompanyLinks = ({ isOpen, openCities }) => {
       </div>
     </div>
   );
-};
+});
 
 export default CompanyLinks;

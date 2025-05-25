@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectIsLoading } from "../../features/home/homeSlice";
 import { useLocation } from "react-router-dom";
 import SubFooter from "./SubFooter";
 import AllCities from "./AllCities";
 
-export default function PageFooter() {
+const PageFooter = memo(() => {
   const isLoading = useSelector(selectIsLoading);
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
@@ -22,4 +22,6 @@ export default function PageFooter() {
   }
 
   return null;
-}
+});
+
+export default PageFooter;

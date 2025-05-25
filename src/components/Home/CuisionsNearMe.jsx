@@ -1,10 +1,10 @@
 import PlaceCards from "./PlaceCards";
 import ShowMoreBtn from "./ShowMoreBtn";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectBestCuisionsNearMe } from "../../features/home/homeSlice";
 
-export default function CuisionsNearMe() {
+const CuisionsNearMe = memo(() => {
   const places = useSelector(selectBestCuisionsNearMe);
   const [shownPlaces, setShownPlaces] = useState([]);
 
@@ -31,4 +31,6 @@ export default function CuisionsNearMe() {
       </div>
     </>
   );
-}
+});
+
+export default CuisionsNearMe;

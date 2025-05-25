@@ -2,8 +2,9 @@ import { NavLink } from "react-router-dom";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
+import { memo } from "react";
 
-const Cards = ({ data, from }) => {
+const Cards = memo(({ data, from }) => {
   const { lat, lng } = useSelector(selectLatAndLng);
   const dispatch = useDispatch();
 
@@ -52,8 +53,6 @@ const Cards = ({ data, from }) => {
       </div>
     </NavLink>
   );
-};
-
-// 275px 240px
+});
 
 export default Cards;

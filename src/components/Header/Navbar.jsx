@@ -2,21 +2,19 @@ import NavItem from "./NavItem";
 import { openLogInModal } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { memo, useCallback } from "react";
 
-function handleClick() {
-  toast("Click hu ji");
-}
-
-export default function Navbar({
+const Navbar = memo(({
   showAbout,
   showSearch,
   showOffers,
   showCart,
-}) {
+}) => {
   const dispatch = useDispatch();
-  const handleSignIn = () => {
+
+  const handleSignIn = useCallback(() => {
     dispatch(openLogInModal());
-  };
+  });
 
   return (
     <nav>
@@ -64,4 +62,6 @@ export default function Navbar({
       </ul>
     </nav>
   );
-}
+})
+
+export default Navbar;

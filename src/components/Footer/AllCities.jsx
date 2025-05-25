@@ -1,8 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
+import { memo } from "react";
 
-const AllCities = () => {
+const AllCities = memo(() => {
   const cities = useSelector(selectAvailableCities);
   const citiesToPrint = cities.slice(6);
 
@@ -20,6 +21,6 @@ const AllCities = () => {
       </div>
     </div>
   );
-};
+});
 
 export default AllCities;

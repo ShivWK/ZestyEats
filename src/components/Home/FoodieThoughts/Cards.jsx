@@ -1,6 +1,7 @@
+import { memo } from "react"
 import { NavLink } from "react-router-dom"
 
-export default function Cards({ data }) {
+const Cards = memo(({ data }) => {
     return <NavLink className="shrink-0 w-36">
         <img 
             className="w-full h-44 rounded object-cover"
@@ -8,4 +9,6 @@ export default function Cards({ data }) {
             alt={data?.accessibility?.altText} 
         />
     </NavLink>
-}
+});
+
+export default Cards;

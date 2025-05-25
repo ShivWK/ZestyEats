@@ -1,8 +1,9 @@
 import PlaceCards from "./PlaceCards";
 import { useSelector } from "react-redux";
 import { selectNearByRestaurants } from "../../features/home/homeSlice";
+import { memo } from "react";
 
-export default function NearByRestaurants() {
+const NearByRestaurants = memo(() => {
   const places = useSelector(selectNearByRestaurants);
 
   return (
@@ -15,4 +16,6 @@ export default function NearByRestaurants() {
       </div>
     </>
   );
-}
+});
+
+export default NearByRestaurants;

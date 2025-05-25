@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, memo } from "react";
 import { useDispatch } from "react-redux";
 import { useLazyGetAutoCompleteSearchQuery } from "../../features/home/searchApiSlice";
 import { closeLocationInModal } from "../../features/Login/loginSlice";
@@ -6,7 +6,7 @@ import RecentLocations from "./RecentLocations";
 import GeoLocationFinder from "./GeoLocation";
 import SearchedLocation from "./SearchedLocations";
 
-const ModalSubContainer = () => {
+const ModalSubContainer = memo(() => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const [searchedLocation, setSearchedLocation] = useState([]);
@@ -76,7 +76,10 @@ const ModalSubContainer = () => {
       onClick={handleContainerClick}
       className="flex flex-col mt-7 w-[75%] h-[90%]"
     >
-      <button onClick={handleClose} className="group cursor-pointer  self-start">
+      <button
+        onClick={handleClose}
+        className="group cursor-pointer  self-start"
+      >
         <i className="ri-close-large-fill text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
       </button>
       {/* Search locations */}
@@ -122,6 +125,6 @@ const ModalSubContainer = () => {
       )}
     </div>
   );
-};
+});
 
 export default ModalSubContainer;

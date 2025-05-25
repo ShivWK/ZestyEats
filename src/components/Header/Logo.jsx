@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector, memo } from "react-redux";
 import { motion } from "motion/react";
 import { openLocationModal } from "../../features/Login/loginSlice";
 
@@ -9,7 +9,7 @@ import {
 } from "../../features/home/homeSlice";
 import { NavLink } from "react-router-dom";
 
-export default function Logo({ searchPlaceholder }) {
+const Logo = memo(({ searchPlaceholder }) => {
   const dispatch = useDispatch();
   const yourcurrentCity = useSelector(selectYourCurrentCity);
   const searchedCity = useSelector(selectSearchedCity);
@@ -52,7 +52,7 @@ export default function Logo({ searchPlaceholder }) {
 
       {searchPlaceholder ? (
         <p className="flex items-center font-bold">{searchPlaceholder}</p>
-      ) : ( 
+      ) : (
         <button
           onClick={handleClick}
           className="group flex items-center gap-2 cursor-pointer"
@@ -71,4 +71,6 @@ export default function Logo({ searchPlaceholder }) {
       )}
     </div>
   );
-}
+});
+
+export default Logo;

@@ -9,7 +9,7 @@ import Loader from "../Loader";
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 
-import { useEffect, useState } from "react";
+import { memo, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   selectFoodieThoughtsData,
@@ -28,7 +28,7 @@ import {
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 
-export default function Home() {
+const Home = memo(() => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const onlineDeliveryRestaurant = useSelector(selectOnlineDeliveryRestaurants);
@@ -39,7 +39,6 @@ export default function Home() {
   const dispatch = useDispatch();
   const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
-  // const [firstRender, setFirstRender] = useState(true);
 
   const fetchDefaultHomeAPIData = async () => {
     try {
@@ -120,7 +119,7 @@ export default function Home() {
       {foodieThoughtsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto ">
-            <FoodieThoughts isLoading={isLoading} />
+            <FoodieThoughts />
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -128,7 +127,7 @@ export default function Home() {
       {topRestaurantsChainsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">
-            <TopRestaurantChains isLoading={isLoading} />
+            <TopRestaurantChains />
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -136,7 +135,7 @@ export default function Home() {
       {onlineDeliveryRestaurant.length !== 0 && (
         <>
           <section className="w-full">
-            <OnlineDeliveryRestaurant isLoading={isLoading} />
+            <OnlineDeliveryRestaurant />
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -147,7 +146,7 @@ export default function Home() {
             className="w-full max-w-[1000px] mx-auto flex items-center gap-4
            flex-col"
           >
-            <BestPlacesToEat isLoading={isLoading} />
+            <BestPlacesToEat />
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -158,7 +157,7 @@ export default function Home() {
             className="w-full max-w-[1000px] mx-auto flex items-center gap-4
            flex-col"
           >
-            <CuisionsNearMe isLoading={isLoading} />
+            <CuisionsNearMe />
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -173,6 +172,8 @@ export default function Home() {
       )}
     </main>
   );
-}
+});
+
+export default Home;
 
 // If we have given clear heading in our sections then we dont need to aria-label to the sections because screen readers will use headings.

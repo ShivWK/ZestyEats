@@ -1,4 +1,6 @@
-const Filter = ({ fixed = false, applied = false, icon, text, count = 0 }) => {
+import { memo } from "react";
+
+const Filter = memo(({ fixed = false, applied = false, icon, text, count = 0 }) => {
   return (
     <div
       className={`flex justify-between gap-2 px-3 h-10 items-center text-sm font-medium text-gray-900 rounded-3xl w-fit border-2 ${
@@ -24,6 +26,6 @@ const Filter = ({ fixed = false, applied = false, icon, text, count = 0 }) => {
       )}
     </div>
   );
-};
+});
 
 export default Filter;

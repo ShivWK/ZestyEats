@@ -7,8 +7,9 @@ import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
 
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
+import { memo } from "react";
 
-const GeoLocation = ({ setSearchValue }) => {
+const GeoLocation = memo(({ setSearchValue }) => {
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
   const dispatch = useDispatch();
@@ -82,6 +83,6 @@ const GeoLocation = ({ setSearchValue }) => {
       </div>
     </div>
   );
-};
+});
 
 export default GeoLocation;

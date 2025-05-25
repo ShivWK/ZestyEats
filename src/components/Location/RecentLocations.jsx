@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { memo, useEffect, useRef } from "react";
 import { motion, useScroll } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -17,7 +17,7 @@ import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 
-const RecentLocations = () => {
+const RecentLocations = memo(() => {
   const recentLocations = useSelector(selectRecentLocations);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({container: containerRef});
@@ -82,6 +82,6 @@ const RecentLocations = () => {
       )}
     </div>
   );
-};
+});
 
 export default RecentLocations;
