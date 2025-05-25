@@ -1,7 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    apiData : null,
     lat: 12.9715987,
     lng: 77.5945627,
     foodieThoughtsData : [],
@@ -25,10 +24,6 @@ const homeSlice = createSlice({
     name: "home",
     initialState: initialState,
     reducers : {
-        addApiData: (state, action) => {
-            state.apiData = action.payload;
-        },
-
         addLatAndLng: (state, action) => {
             state.lat = action.payload.lat;
             state.lng = action.payload.lng;
@@ -172,7 +167,6 @@ const homeSlice = createSlice({
 });
 
 export default homeSlice.reducer;
-export const selectApiData = state => state.home.apiData;
 export const selectFoodieThoughtsData = state => state.home.foodieThoughtsData;
 export const selectTopRestaurantsTitle = state => state.home.topRestaurantsTitle; 
 export const selectTopRestaurantsData = state => state.home.topRestaurantsData; 
@@ -193,7 +187,6 @@ export const selectLatAndLng = createSelector([state => state.home.lat, state =>
 // if i dont use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
 
 export const { 
-    addApiData, 
     addFoodieThoughtsData, 
     addTopRestaurantsData,
     addSearchedCity,

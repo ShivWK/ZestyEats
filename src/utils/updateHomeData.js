@@ -1,5 +1,4 @@
 import {
-    addApiData,
     addFoodieThoughtsData,
     addTopRestaurantsData,
     addTopRestaurantsTitle,
@@ -21,7 +20,6 @@ export const updateHomeRestaurantData = async (res, dispatch, lat, lng) => {
         localStorage.setItem("lat", JSON.stringify(lat));
         localStorage.setItem("lng", JSON.stringify(lng));
 
-        dispatch(addApiData(res));
         dispatch(addLatAndLng({lat, lng}));
         dispatch(addFoodieThoughtsData(res));
         dispatch(addTopRestaurantsData(res));
