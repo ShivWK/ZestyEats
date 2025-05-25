@@ -10,7 +10,8 @@ const Cards = ({ data, from }) => {
   const imageId = encodeURIComponent(data?.cloudinaryImageId?.trim());
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
 
-  // console.log(imageUrl)
+  // To get image from public folder give the path of the image after "/" , here "/" means public folder
+  // const imageUrl = `/images/image.png`;
 
   const handleClick = () => {
     dispatch(addCurrentRestaurant(data?.name));
@@ -27,7 +28,7 @@ const Cards = ({ data, from }) => {
         className={`w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}
         style={{
           height: from === "online" ? 160 : 176,
-          backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl})`,
+          backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl}), url("/images/fallback.png")`,
         }}
       >
         <p className="font-bold text-white text-xl">

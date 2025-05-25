@@ -29,7 +29,7 @@ const RestaurantSpecific = () => {
     <Suspense fallback={<ShimmerContainer />}>
       <Await resolve={result.data}>
         {(data) => (
-          <MainContent routeParams={routeParams} data={data}/>
+          <MainContent data={data}/>
         )}
       </Await>
     </Suspense>

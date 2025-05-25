@@ -7,7 +7,6 @@ import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
 
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
-import useRouteRedirect from "../../utils/useRouteRedirect";
 
 const GeoLocation = ({ setSearchValue }) => {
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();

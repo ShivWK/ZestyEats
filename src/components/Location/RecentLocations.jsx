@@ -16,7 +16,6 @@ import {
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
-import useRouteRedirect from "../../utils/useRouteRedirect";
 
 const RecentLocations = () => {
   const recentLocations = useSelector(selectRecentLocations);
