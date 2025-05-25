@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
-import { useSelector, memo } from "react-redux";
+import { useSelector } from "react-redux";
+import { memo } from "react";
 
 const CompanyLinks = memo(({ isOpen, openCities }) => {
   const cities = useSelector(selectAvailableCities);

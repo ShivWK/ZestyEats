@@ -1,4 +1,5 @@
-import { useDispatch, useSelector, memo } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { memo } from "react";
 import { motion } from "motion/react";
 import { openLocationModal } from "../../features/Login/loginSlice";
 

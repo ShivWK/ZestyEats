@@ -4,6 +4,7 @@ import ProfileHeader from "./ProfileHeader";
 import CartHeader from "./CartHeader";
 import RestaurantsHeader from "./RestaurantsHeader";
 import { useLocation } from "react-router-dom";
+import { memo } from "react";
 
 const PageHeader = memo(() => {
   const { pathname } = useLocation();
