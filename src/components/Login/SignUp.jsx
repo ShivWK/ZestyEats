@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, memo, useCallback } from "react";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,7 +22,7 @@ import {
   selectIsLoading,
 } from "../../features/Login/loginSlice";
 
-const SignUp = () => {
+const SignUp = memo(() => {
   const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] =
     useState(undefined);
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
@@ -44,12 +44,12 @@ const SignUp = () => {
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
 
-  const handleSignUpChange = (e) => {
-    setSignUpFormData({
-      ...signUpFormData,
+  const handleSignUpChange = useCallback( (e) => {
+    setSignUpFormData(prev => ({
+      ...prev,
       [e.target.name]: e.target.value,
-    });
-  };
+    }));
+  }, [setSignUpFormData]);
 
   const resetRecaptchaVerifier = () => {
     if (window.recaptchaVerifier) {
@@ -81,7 +81,7 @@ const SignUp = () => {
     }
   };
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch(setLoading(true));
@@ -131,7 +131,7 @@ const SignUp = () => {
           alert("Recaptcha verification failed, please try again.");
         });
     }
-  };
+  }, [setSignUpFormData, signUpFormData, firestoreDB, auth, setDataToFirestore, resetRecaptchaVerifier, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade]);
 
   function sendOtp() {
     const data = new FormData(formRef.current);
@@ -150,7 +150,7 @@ const SignUp = () => {
       });
   }
 
-  function handleOtpVerification() {
+  const handleOtpVerification = useCallback(() => {
     const data = new FormData(formRef.current);
     dispatch(setLoading(true));
 
@@ -177,7 +177,7 @@ const SignUp = () => {
           setChangeOtpHasValue(true);
         });
     }
-  }
+  }, [setDataToFirestore, setSignUpFormData, signUpFormData, resetRecaptchaVerifier, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal]);
 
   return (
     <Form
@@ -244,6 +244,6 @@ const SignUp = () => {
       )}
     </Form>
   );
-};
+});
 
 export default SignUp;

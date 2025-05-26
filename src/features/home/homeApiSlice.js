@@ -14,7 +14,7 @@ const homeApiSlice = createApi({
             }),
         }),
     })
-})
+});
 
 export const { useGetHomePageDataQuery, useLazyGetHomePageDataQuery } = homeApiSlice;
 export default homeApiSlice;

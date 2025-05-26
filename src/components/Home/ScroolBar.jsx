@@ -1,6 +1,6 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, memo } from "react";
 
-const Scrollbar = ({
+const Scrollbar = memo(({
   scrolledPercentage,
   marginTop,
 }) => {
@@ -38,6 +38,6 @@ const Scrollbar = ({
       </div>
     </div>
   );
-};
+});
 
 export default Scrollbar;

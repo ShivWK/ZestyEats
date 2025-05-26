@@ -1,8 +1,8 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../features/Login/loginSlice";
 
-const EntryDiv = ({
+const EntryDiv = memo(({
   type,
   value,
   inputMode,
@@ -171,6 +171,6 @@ const EntryDiv = ({
       />
     </div>
   );
-};
+});
 
 export default EntryDiv;

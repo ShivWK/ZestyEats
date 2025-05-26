@@ -12,7 +12,7 @@ import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 
 import { useLazySearchedLocationQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
-import { memo } from "react";
+import { memo, useCallback } from "react";
 
 const SearchedLocation = memo(({
   locationsfetched,
@@ -31,7 +31,7 @@ const SearchedLocation = memo(({
     }
   };
 
-  const handleSearchedLocationClick = async (location) => {
+  const handleSearchedLocationClick = useCallback(async (location) => {
     checkAndRedirect();
 
     dispatch(setLoading(true));
@@ -79,7 +79,7 @@ const SearchedLocation = memo(({
       console.log(err);
       dispatch(setLoading(false));
     }
-  };
+  }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, closeLocationInModal, addRecentLocations]); 
 
   return (
     <div className="mt-6 overflow-auto last:border-none">

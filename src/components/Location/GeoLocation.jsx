@@ -13,6 +13,8 @@ const GeoLocation = memo(({ setSearchValue }) => {
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const checkAndRedirect = () => {
     if (location.pathname !== "/") {

@@ -9,6 +9,7 @@ import {
 import Login from "./Login";
 import SignUp from "./SignUp";
 import Modal from "../Modal/Modal";
+import { useCallback } from "react";
 
 const ModalContainer = () => {
   const isOpen = useSelector(selectlogInModal);
@@ -16,9 +17,9 @@ const ModalContainer = () => {
   const member = useSelector(selectIsMember);
   const dispatch = useDispatch();
 
-  const handleSwitch = () => {
+  const handleSwitch = useCallback(() => {
     dispatch(setMember(!member));
-  };
+  }, [dispatch, member, setMember]);
 
   return (
     <Modal modal={"right"} isOpen={isOpen}>

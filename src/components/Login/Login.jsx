@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback, use } from "react";
 import { toast } from "react-toastify";
 import { auth, firestoreDB } from "../../firebaseConfig";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
@@ -27,7 +27,7 @@ const Login = () => {
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
 
-  const handleGuestLogin = () => {
+  const handleGuestLogin = useCallback(() => {
     toast.info("You are logged in Anonymously!", {
       autoClose: 6000,
       style: {
@@ -37,7 +37,7 @@ const Login = () => {
       },
       progressClassName: "progress-style",
     });
-  };
+  }, []);
 
   function resetRecaptcha() {
     if (window.recaptchaVerifier) {
@@ -66,7 +66,7 @@ const Login = () => {
     }
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch(setLoading(true));
@@ -120,7 +120,10 @@ const Login = () => {
           });
         });
     }
-  };
+  }, [dispatch, firestoreDB, auth, formRef, resetRecaptcha, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
+
+  // Firebase SDK functions like: collection(), query(), where(), getDocs(), RecaptchaVerifier
+  // are pure functions from Firebase. They do not change between renders and don’t need to be tracked in the dependency array.
 
   function sendOTP() {
     const data = new FormData(formRef.current);

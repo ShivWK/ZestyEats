@@ -7,8 +7,9 @@ import {
   selectSignUpOtp,
   setLoading
 } from "../../features/Login/loginSlice";
+import { memo } from "react";
 
-const ModalSubContainer = ({ children, member, handleSwitch }) => {
+const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
   const dispatch = useDispatch();
   const isLoginOtpSend = useSelector(selectLoginOtp);
   const isSigUpOtpSend = useSelector(selectSignUpOtp);
@@ -101,6 +102,6 @@ const ModalSubContainer = ({ children, member, handleSwitch }) => {
       </p>
     </div>
   );
-};
+});
 
 export default ModalSubContainer;

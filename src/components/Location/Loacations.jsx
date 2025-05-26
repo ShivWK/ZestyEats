@@ -16,7 +16,7 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
     }
 
     localStorage.setItem("recentLocations", JSON.stringify(recentLocation))
-  });
+  }, [index, dispatch, removeARecentLocation]);
 
   return (
     <div

@@ -14,7 +14,7 @@ const Navbar = memo(({
 
   const handleSignIn = useCallback(() => {
     dispatch(openLogInModal());
-  });
+  }, [dispatch, openLogInModal]);
 
   return (
     <nav>

@@ -1,6 +1,6 @@
 import PlaceCards from "./PlaceCards";
 import ShowMoreBtn from "./ShowMoreBtn";
-import { memo, useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectBestPlacesToEat } from "../../features/home/homeSlice";
 
@@ -12,11 +12,11 @@ const BestPlacesToEat = memo(() => {
     setShownPlaces(places.slice(0, 15));
   }, []);
 
-  const handleShowMore = () => {
+  const handleShowMore = useCallback(() => {
     setShownPlaces((prv) => {
      return [...prv, ...places.slice(15)];
     });
-  };
+  }, [places, setShownPlaces]);
 
   return (
     <>

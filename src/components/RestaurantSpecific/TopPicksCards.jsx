@@ -1,10 +1,10 @@
 import TopPicksCard from './TopPicksCard';
 import HorizontalCarousel from '../HorizontalCarousel';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 const TopPicksCards = memo(({ data }) => {
     const mainData = data?.card?.card?.carousel;
-    const cardsData = mainData?.map(item => item?.dish?.info)
+    const cardsData = useMemo(() => mainData?.map(item => item?.dish?.info), [mainData]);
 
     return <HorizontalCarousel heading="Top Picks" margin_bottom="mb-2" dataToMap={cardsData} Card={TopPicksCard} showScrollBar={false} />
 } )

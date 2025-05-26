@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
@@ -14,52 +14,70 @@ const MainContent = ({ data, routes = true }) => {
   const cards = data?.data?.cards;
   const title = cards?.[0].card?.card?.text;
 
-  const navigation = cards?.[1];
-  const banner = cards?.[2];
-  const offers = cards?.[3];
+  const navigation = useMemo(() => cards?.[1], [cards])
+  const banner = useMemo(() => cards?.[2], [cards]);
+  const offers = useMemo(() => cards?.[3], [cards]);
   const menu = cards
     ?.at(-1)
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1);
 
-  const topPicks = menu.find((item) => {
-    return item?.card?.card?.title === "Top Picks";
-  });
+  const topPicks = useMemo(
+    () =>
+      menu.find((item) => {
+        return item?.card?.card?.title === "Top Picks";
+      }),
+    [menu]
+  );
 
   // console.log("Top Picks", topPicks);
 
-  const recommendations = menu.find((item) => {
-    return item?.card?.card?.title === "Recommended";
-  });
+  const recommendations = useMemo(
+    () =>
+      menu.find((item) => {
+        return item?.card?.card?.title === "Recommended";
+      }),
+    [menu]
+  );
 
   // console.log("Recommendations", recommendations);
 
-  const RestaurantLicenseInfo = menu.find((item) => {
-    return (
-      item?.card?.card?.["@type"] ===
-      "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo"
-    );
-  });
+  const RestaurantLicenseInfo = useMemo(
+    () =>
+      menu.find((item) => {
+        return (
+          item?.card?.card?.["@type"] ===
+          "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo"
+        );
+      }),
+    [menu]
+  );
 
   // console.log("Restaurant License Info", RestaurantLicenseInfo);
 
-  const RestaurantAddress = menu.find((item) => {
-    return (
-      item?.card?.card?.["@type"] ===
-      "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress"
-    );
-  });
+  const RestaurantAddress = useMemo(
+    () =>
+      menu.find((item) => {
+        return (
+          item?.card?.card?.["@type"] ===
+          "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress"
+        );
+      }),
+    [menu]
+  );
 
   // console.log("Restaurant Address", RestaurantAddress);
 
-  const restMenuData = menu.filter((item) => {
-    return (
-      item?.card?.card?.title !== "Top Picks" &&
-      item?.card?.card?.title !== "Recommended" &&
-      item?.card?.card?.["@type"] !==
-        "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" &&
-      item?.card?.card?.["@type"] !==
-        "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress"
-    );
+  const restMenuData = useMemo(() => {
+    return menu.filter((item) => {
+      return (
+        item?.card?.card?.title !== "Top Picks" &&
+        item?.card?.card?.title !== "Recommended" &&
+        item?.card?.card?.["@type"] !==
+          "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" &&
+        item?.card?.card?.["@type"] !==
+          "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress"
+      );
+    });
   });
 
   // console.log("Rest Data", restMenuData);

@@ -1,4 +1,4 @@
-import { memo, useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import { motion, useScroll } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,7 +20,7 @@ import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 const RecentLocations = memo(() => {
   const recentLocations = useSelector(selectRecentLocations);
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({container: containerRef});
+  const { scrollYProgress } = useScroll({ container: containerRef });
   const dispatch = useDispatch();
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
@@ -41,31 +41,48 @@ const RecentLocations = memo(() => {
     }
   }, []);
 
-  const handleRecentLocationClick = async (location) => {
-    checkAndRedirect();
-    dispatch(setLoading(true));
-    updateSearchedCity(location, dispatch);
+  const handleRecentLocationClick = useCallback(
+    async (location) => {
+      checkAndRedirect();
+      dispatch(setLoading(true));
+      updateSearchedCity(location, dispatch);
 
-    dispatch(removeYourCurrentCity());
-    dispatch(closeLocationInModal());
+      dispatch(removeYourCurrentCity());
+      dispatch(closeLocationInModal());
 
-    try {
-      const res1 = await triggerLocationCall(location.place_id).unwrap();
-      const { lat, lng } = res1;
+      try {
+        const res1 = await triggerLocationCall(location.place_id).unwrap();
+        const { lat, lng } = res1;
 
-      const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
-      updateHomeRestaurantData(res2, dispatch, lat, lng);
-    } catch (err) {
-      alert(err.message);
-      dispatch(setLoading(false));
-    }
-  };
+        const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
+        updateHomeRestaurantData(res2, dispatch, lat, lng);
+      } catch (err) {
+        alert(err.message);
+        dispatch(setLoading(false));
+      }
+    },
+    [
+      checkAndRedirect,
+      dispatch,
+      triggerLocationCall,
+      triggerRestaurentDataCall,
+      updateHomeRestaurantData,
+      setLoading,
+      removeYourCurrentCity,
+      closeLocationInModal,
+      updateSearchedCity,
+    ]
+  );
 
   return (
-    <div ref={containerRef} className="relative border-[1px] border-gray-400 mt-6 p-6 overflow-auto">
-      <motion.div className="fixed top-0 h-2bg-primary left-0 origin-left"
-        style={{ scaleX: scrollYProgress}}
-       />
+    <div
+      ref={containerRef}
+      className="relative border-[1px] border-gray-400 mt-6 p-6 overflow-auto"
+    >
+      <motion.div
+        className="fixed top-0 h-2bg-primary left-0 origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
       <p className="text-sm font-semibold text-gray-400">RECENT SEARCHES</p>
       {recentLocations.length !== 0 ? (
         recentLocations.map((location, index) => (

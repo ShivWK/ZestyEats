@@ -128,3 +128,8 @@ const ModalSubContainer = memo(() => {
 });
 
 export default ModalSubContainer;
+
+
+// No, you don’t need to wrap a useState setter (like setLoading) in useCallback when passing it to a child.
+// The useState setter functions (like setLoading) are already stable and do not change between renders, so they do not need to be wrapped in useCallback.
+// Wrapping them in useCallback would not provide any performance benefit and could actually lead to unnecessary complexity.
