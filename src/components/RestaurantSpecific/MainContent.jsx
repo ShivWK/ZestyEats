@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
 import TopPicksCards from "./TopPicksCards";
+import Footer from "./Footer";
+import ItemsMainHeading from "./ItemsMainHeading";
 
 const MainContent = ({ data, routes = true }) => {
   const dispatch = useDispatch();
@@ -14,7 +16,7 @@ const MainContent = ({ data, routes = true }) => {
   const cards = data?.data?.cards;
   const title = cards?.[0].card?.card?.text;
 
-  const navigation = useMemo(() => cards?.[1], [cards])
+  const navigation = useMemo(() => cards?.[1], [cards]);
   const banner = useMemo(() => cards?.[2], [cards]);
   const offers = useMemo(() => cards?.[3], [cards]);
   const menu = cards
@@ -71,7 +73,6 @@ const MainContent = ({ data, routes = true }) => {
     return menu.filter((item) => {
       return (
         item?.card?.card?.title !== "Top Picks" &&
-        item?.card?.card?.title !== "Recommended" &&
         item?.card?.card?.["@type"] !==
           "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" &&
         item?.card?.card?.["@type"] !==
@@ -80,7 +81,7 @@ const MainContent = ({ data, routes = true }) => {
     });
   });
 
-  // console.log("Rest Data", restMenuData);
+  console.log("Rest Data", restMenuData);
 
   return (
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">
@@ -89,12 +90,38 @@ const MainContent = ({ data, routes = true }) => {
           <p>Routes</p>
         </div>
       )}
+
+      {/* Title */}
       <div className="w-full max-w-[775px] mt-2">
         <h1>{title}</h1>
       </div>
+
+      {/* Banner */}
       {<Banner data={banner} />}
       <hr />
-      {topPicks && <TopPicksCards data={topPicks} />}
+
+      {/* Top Picks */}
+      <section className="w-full max-w-[775px] mt-2">
+        {topPicks && <TopPicksCards data={topPicks} />}
+      </section>
+
+      <section className="w-full max-w-[775px] mt-2 first:border-t-gray-200 first:border-t-[16px]">
+        {restMenuData.length > 0 &&
+          restMenuData.map((item, index) => {
+            return (
+              <ItemsMainHeading
+                key={item?.card?.card?.title}
+                heading={item?.card?.card?.title}
+                items={item?.card?.card?.itemCards}
+                topBorder={index === 0}
+              />
+            );
+          })}
+      </section>
+
+      <footer>
+        <Footer />
+      </footer>
 
       {/* menu button */}
       <button className="fixed bottom-3.5 right-72 h-[12vh] w-[12vh] rounded-[50%] bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer">

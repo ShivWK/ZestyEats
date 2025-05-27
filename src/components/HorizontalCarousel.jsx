@@ -57,6 +57,11 @@ const HorizontalCarousel = memo(({
       leftBtnRef.current.disabled = true;
     }
 
+    if (scrollLeft == 0 && clientWidth === scrollWidth) {
+      rightBtnRef.current.hidden = true;
+      leftBtnRef.current.hidden = true;
+    }
+
     const scrolledPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
     setScrollPercentage(scrolledPercentage);
   }
@@ -91,7 +96,6 @@ const HorizontalCarousel = memo(({
       <div className="flex justify-between flex-wrap items-center" style={{marginBottom: margin_bottom}}>
         <h2>
           {heading}
-          {/* {user ? `${user}, what's on your mind?` : "What's on your mind?"} */}
         </h2>
         <div className="flex justify-between gap-1">
           <Button
@@ -110,7 +114,7 @@ const HorizontalCarousel = memo(({
         <div
           onScroll={handleScroll}
           ref={containerRef}
-          className="flex justify-between gap-4 overflow-x-auto hide-scrollbar"
+          className="flex justify-start gap-4 overflow-x-auto hide-scrollbar"
         >
           {dataToMap.map((item) => (
             <Card key={item?.id} data={item} />

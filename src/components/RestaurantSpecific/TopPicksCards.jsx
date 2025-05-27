@@ -6,7 +6,7 @@ const TopPicksCards = memo(({ data }) => {
     const mainData = data?.card?.card?.carousel;
     const cardsData = useMemo(() => mainData?.map(item => item?.dish?.info), [mainData]);
 
-    return <HorizontalCarousel heading="Top Picks" margin_bottom="mb-2" dataToMap={cardsData} Card={TopPicksCard} showScrollBar={false} />
+    return <HorizontalCarousel heading="Top Picks"  dataToMap={cardsData} Card={TopPicksCard} showScrollBar={false} />
 } )
 
 export default TopPicksCards;
