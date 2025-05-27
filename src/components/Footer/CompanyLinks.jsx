@@ -22,14 +22,14 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
         <div
           onClick={() => openCities(!isOpen)}
           id="moreCities"
-          className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center "
-          style={{ borderColor: isOpen ? "#ffffff" : "#6a7282" }}
+          className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100"
+          style={{ borderColor: isOpen ? "black" : "#6a7282" }}
         >
           <p className="font-normal text-sm text-gray-900">
             {remainingCities} cities
           </p>
           <i
-            className="fa-solid fa-caret-down text-gray-900 transition-all duration-300 ease-in"
+            className="fa-solid fa-caret-down text-gray-900 transition-all duration-300 linear"
             style={{
               transform: isOpen ? "rotate(-180deg)" : "",
             }}
