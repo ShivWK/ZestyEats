@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 
-const ItemsSubHeading = () => {
+const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const handleClick = () => {
+  const handleClick = (e) => {
+    e.stopPropagation();
     setIsOpen(!isOpen);
   };
 
@@ -14,11 +15,11 @@ const ItemsSubHeading = () => {
       <div
         className="flex justify-between items-center bg-white p-2"
         style={{
-          borderBottom: isOpen ? "none" : "2px solid #e5e7eb",
+          borderBottom: borderBottom ? (isOpen ? "none" : "2px solid #e5e7eb") : "none",
           transition: "border-bottom 0.3s linear",
         }}
       >
-        <h1 className="text-sm font-bold tracking-tight">{`${"Heading"} (${5})`}</h1>
+        <h1 className="text-[16px] font-bold tracking-tight">{`${title} (${itemCards.length})`}</h1>
         <i
           className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5 inline-block"
           style={{
@@ -44,6 +45,6 @@ const ItemsSubHeading = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ItemsSubHeading;

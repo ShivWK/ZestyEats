@@ -6,7 +6,7 @@ import TopPicksCards from "./TopPicksCards";
 import Footer from "./Footer";
 import ItemsMainHeading from "./ItemsMainHeading";
 
-const MainContent = ({ data, routes = true }) => {
+const MainContent = ({ data, routes = false }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -32,16 +32,6 @@ const MainContent = ({ data, routes = true }) => {
   );
 
   // console.log("Top Picks", topPicks);
-
-  const recommendations = useMemo(
-    () =>
-      menu.find((item) => {
-        return item?.card?.card?.title === "Recommended";
-      }),
-    [menu]
-  );
-
-  // console.log("Recommendations", recommendations);
 
   const RestaurantLicenseInfo = useMemo(
     () =>
@@ -81,7 +71,7 @@ const MainContent = ({ data, routes = true }) => {
     });
   });
 
-  console.log("Rest Data", restMenuData);
+  // console.log("Rest Data", restMenuData);
 
   return (
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">
@@ -108,19 +98,32 @@ const MainContent = ({ data, routes = true }) => {
       <section className="w-full max-w-[775px] mt-2 first:border-t-gray-200 first:border-t-[16px]">
         {restMenuData.length > 0 &&
           restMenuData.map((item, index) => {
+            if (item?.card?.card?.categories) {
+              return (
+                <ItemsMainHeading
+                  key={item?.card?.card?.categoryId}
+                  heading={item?.card?.card?.title}
+                  categories={item?.card?.card?.categories}
+                  topBorder={index === 0}
+                  borderBottom={index === restMenuData.length - 1}
+                />
+              );
+            }
+            
             return (
               <ItemsMainHeading
-                key={item?.card?.card?.title}
+                key={item?.card?.card?.categoryId}
                 heading={item?.card?.card?.title}
                 items={item?.card?.card?.itemCards}
                 topBorder={index === 0}
+                borderBottom={index === restMenuData.length - 1}
               />
             );
           })}
       </section>
 
-      <footer>
-        <Footer />
+      <footer className="w-full max-w-[775px]">
+        <Footer license={RestaurantLicenseInfo} address={RestaurantAddress} />
       </footer>
 
       {/* menu button */}

@@ -5,7 +5,12 @@ import { memo, useMemo } from "react";
 const TopPicksCards = memo(({ data }) => {
   const mainData = data?.card?.card?.carousel;
   const cardsData = useMemo(
-    () => mainData?.map((item) => item?.dish?.info),
+    () => mainData?.map((item , index) => {
+      return {
+        ...item?.dish?.info,
+        creativeId: mainData[index]?.creativeId
+      }
+    } ),
     [mainData]
   );
 
