@@ -15,17 +15,18 @@ const ItemsMainHeading = memo(
           className="w-full"
           style={{
             borderTop: topBorder ? "16px solid #e5e7eb" : "none",
+            borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
           }}
         >
           <div>
-            <div className="flex justify-start items-center bg-white py-3 px-2">
+            <div className="flex justify-start items-center bg-primary text-white py-3 px-2">
               <h1 className="text-lg font-bold tracking-tight">{`${heading} (${categories.length})`}</h1>
             </div>
             <div
-              className="overflow-hidden transition-all duration-300 linear"
+              className="overflow-hidden transition-all duration-300 ease-linear"
               style={{
                 display: isOpen ? "block" : "none",
-                borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
+                // borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
               }}
             >
               {categories.map((category, index) => (
@@ -47,19 +48,20 @@ const ItemsMainHeading = memo(
         className="w-full cursor-pointer"
         style={{
           borderTop: topBorder ? "16px solid #e5e7eb" : "none",
+          borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
         }}
       >
         <div>
           <div
             onClick={handleClick}
-            className="flex justify-between items-center bg-white p-2 "
+            className="flex justify-between items-center bg-primary p-2 text-white"
           >
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${items.length})`}</h1>
             <i
-              className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] inline-block"
+              className="ri-arrow-drop-down-line text-4xl font-[200] inline-block"
               style={{
                 transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                transition: "transform 0.3s ease-in-out",
+                transition: "transform 0.2s ease-in-out",
               }}
             ></i>
           </div>
@@ -67,7 +69,7 @@ const ItemsMainHeading = memo(
             className="overflow-hidden transition-all duration-300 linear p-0.5"
             style={{
               display: isOpen ? "block" : "none",
-              borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
+              // borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
             }}
           >
             {items.map((item) => (

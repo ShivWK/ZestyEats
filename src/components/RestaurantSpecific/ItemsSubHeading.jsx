@@ -38,7 +38,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
           className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5 inline-block"
           style={{
             transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
-            transition: "transform 0.3s linear",
+            transition: "transform 0.2s linear",
           }}
         ></i>
       </div>
@@ -48,6 +48,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
         style={{
           // maxHeight: height
             display: isOpen ? "block" : "none",
+            borderBottom: "2px solid #e5e7eb",
         }}
       >
         {itemCards.map((item) => (
