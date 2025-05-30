@@ -2,7 +2,7 @@ import { memo } from "react";
 
 const ItemsCard = memo(({ item }) => {
   const Veg = item?.itemAttribute?.vegClassifier === "VEG";
-  const defaultPrice = item?.defaultPrice / 100;
+  const defaultPrice = item?.price / 100;
   const finalPrice = item?.finalPrice / 100;
   const price = finalPrice ? (
     <p className="text-sm tracking-tight font-bold">

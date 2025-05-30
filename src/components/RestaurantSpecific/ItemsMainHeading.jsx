@@ -24,7 +24,7 @@ const ItemsMainHeading = memo(
             <div
               className="overflow-hidden transition-all duration-300 linear"
               style={{
-                maxHeight: isOpen ? "1000px" : "0",
+                display: isOpen ? "block" : "none",
                 borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
               }}
             >
@@ -33,7 +33,7 @@ const ItemsMainHeading = memo(
                   key={category?.categoryId}
                   title={category?.title}
                   itemCards={category?.itemCards}
-                  borderBottom = {index !== categories.length - 1}
+                  borderBottom={index !== categories.length - 1}
                 />
               ))}
             </div>
@@ -44,14 +44,16 @@ const ItemsMainHeading = memo(
 
     return (
       <div
-       
         className="w-full cursor-pointer"
         style={{
           borderTop: topBorder ? "16px solid #e5e7eb" : "none",
         }}
       >
         <div>
-          <div  onClick={handleClick} className="flex justify-between items-center bg-white p-2 ">
+          <div
+            onClick={handleClick}
+            className="flex justify-between items-center bg-white p-2 "
+          >
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${items.length})`}</h1>
             <i
               className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] inline-block"
@@ -62,13 +64,15 @@ const ItemsMainHeading = memo(
             ></i>
           </div>
           <div
-            className="overflow-hidden transition-all duration-300 linear"
+            className="overflow-hidden transition-all duration-300 linear p-0.5"
             style={{
-              maxHeight: isOpen ? "1000px" : "0",
+              display: isOpen ? "block" : "none",
               borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
             }}
           >
-            {items.map(item => <ItemsCard key={item?.card?.info?.id} item={item?.card?.info} />)}
+            {items.map((item) => (
+              <ItemsCard key={item?.card?.info?.id} item={item?.card?.info} />
+            ))}
           </div>
         </div>
       </div>
