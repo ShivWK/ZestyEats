@@ -6,6 +6,7 @@ import TopPicksCards from "./TopPicksCards";
 import Footer from "./Footer";
 import ItemsMainHeading from "./ItemsMainHeading";
 import SortingButtons from "./SortingButtons";
+import Offers from "./Offers";
 
 const MainContent = ({ data, routes = false }) => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const MainContent = ({ data, routes = false }) => {
   const navigation = useMemo(() => cards?.[1], [cards]);
   const banner = useMemo(() => cards?.[2], [cards]);
   const offers = useMemo(() => cards?.[3], [cards]);
+
   const menu = cards
     ?.at(-1)
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1);
@@ -89,7 +91,11 @@ const MainContent = ({ data, routes = false }) => {
 
       {/* Banner */}
       {<Banner data={banner} />}
-      <hr />
+
+      {/* Offers */}
+      <section className="w-full max-w-[775px] mt-2">
+        {offers && <Offers data={offers} />}
+      </section>
 
       {/* Top Picks */}
       <section className="w-full max-w-[775px] mt-2">

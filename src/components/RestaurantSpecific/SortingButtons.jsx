@@ -17,7 +17,7 @@ const SortingButtons = () => {
   return (
     <div className="w-full max-w-[775px] mt-2 flex gap-3 items-center">
       <button
-        className="border font-medium border-gray-300 rounded-md px-3 py-1 cursor-pointer active:scale-95"
+        className="flex gap-1.5 items-center border font-medium border-gray-400 rounded-md px-3 py-1 cursor-pointer active:scale-95"
         style={{
             backgroundColor: veg ? "#05df72" : "#ffffff",
             color: veg ? "#ffffff" : "#000000",
@@ -29,10 +29,11 @@ const SortingButtons = () => {
           setNonVeg(false);
         }}
       >
-        Veg
+        <span>Veg</span>
+        {veg && (<i className="ri-close-large-fill font-semibold"></i>)}
       </button>
       <button
-        className="border font-medium border-gray-300 rounded-md px-3 py-1 cursor-pointer active:scale-95"
+        className="flex gap-1.5 items-center border font-medium border-gray-400 rounded-md px-3 py-1 cursor-pointer active:scale-95"
         style={{
           backgroundColor: nonVeg ? "#fb2c36" : "#ffffff",
           color: nonVeg ? "#ffffff" : "#000000",
@@ -44,7 +45,8 @@ const SortingButtons = () => {
           setVeg(false);
         }}
       >
-        Non Veg
+        <span>Non Veg</span>
+        {nonVeg && (<i className="ri-close-large-fill font-semibold"></i>)}
       </button>
     </div>
   );

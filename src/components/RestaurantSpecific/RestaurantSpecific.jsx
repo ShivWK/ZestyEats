@@ -1,4 +1,4 @@
-import { useParams, useLoaderData, Await } from "react-router-dom";
+import { useLoaderData, Await } from "react-router-dom";
 import { Suspense } from "react";
 import store from "../../app/store";
 import restaurantsApi from "../../features/home/restaurantsApiSlice";
@@ -21,7 +21,6 @@ export const loader = async ({ params }) => {
 };
 
 const RestaurantSpecific = () => {
-  const routeParams = useParams();
   const result = useLoaderData();
   useScrollToTop();
 

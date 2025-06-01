@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom";
 
 const Banner = ({ data }) => {
-    const mainData = data?.card?.card?.info;
+  const mainData = data?.card?.card?.info;
 
   return (
     <div
@@ -25,28 +25,23 @@ const Banner = ({ data }) => {
             id="cuisions"
             className="text-primary font-bold underline text-sm flex gap-1"
           >
-            {mainData?.cuisines.length !== 0 && mainData?.cuisines?.map((item, index, array)=> {
-                if (index == array.length -1) return <NavLink key={item}>{item}</NavLink>
-                else return <NavLink key={item}>{`${item} ,`}</NavLink>
-            })}
+            {mainData?.cuisines.length !== 0 &&
+              mainData?.cuisines?.map((item, index, array) => {
+                if (index == array.length - 1)
+                  return <NavLink key={item}>{item}</NavLink>;
+                else return <NavLink key={item}>{`${item} ,`}</NavLink>;
+              })}
           </div>
           <div id="delivery" className="flex gap-2">
             <div className="flex flex-col justify-center items-center p-0">
-              <div className="rounded-[50%] p-1 bg-[#adabab9d]"></div>
-              <div className="w-0.5 bg-[#adabab9d] h-6"></div>
-              <div className="rounded-[50%] p-1 bg-[#adabab9d]"></div>
+              <div className="rounded-[50%] p-1 bg-[#a7a5a5]"></div>
+              <div className="w-0.5 bg-[#a7a5a5] h-6"></div>
+              <div className="rounded-[50%] p-1 bg-[#a7a5a5]"></div>
             </div>
             <div className="flex flex-col gap-2.5 text-black font-bold text-sm">
               <div className="flex gap-2 p-0">
                 <p>Outlet</p>
-                {true ? (
-                  <button className="flex items-center gap-1.5 p-0 cursor-pointer">
-                    <p>Click</p>
-                    <i className="fa-solid fa-caret-down text-sm text-primary"></i>
-                  </button>
-                ) : (
-                  <p>Only here</p>
-                )}
+                <p className="text-gray-600 font-semibold">{mainData?.areaName}</p>
               </div>
               <p>{mainData?.sla?.slaString}</p>
             </div>
