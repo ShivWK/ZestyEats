@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
 import TopPicksCards from "./TopPicksCards";
@@ -7,8 +7,12 @@ import Footer from "./Footer";
 import ItemsMainHeading from "./ItemsMainHeading";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
+import SearchBar from "./SearchBar";
+import { useParams } from "react-router-dom";
 
 const MainContent = ({ data, routes = false }) => {
+  const {lat, lng, id} = useParams();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -93,16 +97,26 @@ const MainContent = ({ data, routes = false }) => {
       {<Banner data={banner} />}
 
       {/* Offers */}
-      <section className="w-full max-w-[775px] mt-2">
+      <section className="w-full max-w-[775px] my-2">
         {offers && <Offers data={offers} />}
+      </section>
+
+      {/* Search */}
+      <section className="w-full max-w-[775px] my-6">
+        <SearchBar lat={lat} lng={lng} restro_Id={id} />
       </section>
 
       {/* Top Picks */}
       <section className="w-full max-w-[775px] mt-2">
         {topPicks && <TopPicksCards data={topPicks} />}
       </section>
+
+      <hr className="mb-4 w-full text-gray-500"/>
+
+      {/* Sorting */}
       <SortingButtons />
-      <section className="w-full max-w-[775px] mt-2 first:border-t-gray-200 first:border-t-[16px]">
+
+      <section className="w-full max-w-[775px] mt-4 first:border-t-gray-200 first:border-t-[16px]">
         {restMenuData.length > 0 &&
           restMenuData.map((item, index) => {
             if (item?.card?.card?.categories) {

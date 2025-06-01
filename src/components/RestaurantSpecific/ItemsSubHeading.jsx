@@ -46,7 +46,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
               : "2px solid #e5e7eb"
             : "none",
           backgroundColor: isOpen ? "rgba(255,81,0,0.15" : "#ffffff",
-          transition: "border-bottom 0.3s linear",
+          transition: "all 0.3s linear",
         }}
       >
         <h1 className="text-[16px] font-bold tracking-tight">{`${title} (${count})`}</h1>

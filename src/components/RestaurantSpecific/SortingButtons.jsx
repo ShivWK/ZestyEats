@@ -17,7 +17,7 @@ const SortingButtons = () => {
   return (
     <div className="w-full max-w-[775px] mt-2 flex gap-3 items-center">
       <button
-        className="flex gap-1.5 items-center border font-medium border-gray-400 rounded-md px-3 py-1 cursor-pointer active:scale-95"
+        className="flex gap-2 items-center border font-medium border-gray-400 rounded-full px-4 py-2 cursor-pointer active:scale-95"
         style={{
             backgroundColor: veg ? "#05df72" : "#ffffff",
             color: veg ? "#ffffff" : "#000000",
@@ -29,11 +29,28 @@ const SortingButtons = () => {
           setNonVeg(false);
         }}
       >
+        <svg
+            width="16"
+            height="16"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="5"
+              y="5"
+              width="90"
+              height="90"
+              fill="none"
+              stroke={!veg ? "green" : "white"}
+              strokeWidth="8"
+            />
+            <circle cx="50" cy="50" r="30" fill={!veg ? "green" : "white"} />
+          </svg>
         <span>Veg</span>
         {veg && (<i className="ri-close-large-fill font-semibold"></i>)}
       </button>
       <button
-        className="flex gap-1.5 items-center border font-medium border-gray-400 rounded-md px-3 py-1 cursor-pointer active:scale-95"
+        className="flex gap-2 items-center border font-medium border-gray-400 rounded-full px-4 py-2 cursor-pointer active:scale-95"
         style={{
           backgroundColor: nonVeg ? "#fb2c36" : "#ffffff",
           color: nonVeg ? "#ffffff" : "#000000",
@@ -45,6 +62,23 @@ const SortingButtons = () => {
           setVeg(false);
         }}
       >
+        <svg
+          width="16"
+          height="16"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <rect
+            x="5"
+            y="5"
+            width="90"
+            height="90"
+            fill="none"
+            stroke={!nonVeg ? "red" : "white"}
+            strokeWidth="8"
+          />
+          <polygon points="50,20 78.86,70 21.14,70" fill={!nonVeg ? "red" : "white"} />
+        </svg>
         <span>Non Veg</span>
         {nonVeg && (<i className="ri-close-large-fill font-semibold"></i>)}
       </button>

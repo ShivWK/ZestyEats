@@ -22,7 +22,7 @@ const Navbar = memo(({
         {showAbout && (
           <NavItem
             to="about"
-            icon={"fa-solid fa-utensils text-lg"}
+            icon={"fa-utensils text-lg"}
             text="About"
           />
         )}
