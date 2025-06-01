@@ -1,85 +1,109 @@
-import { useState, memo } from "react";
+import { useState, memo, useRef, useEffect } from "react";
 import ItemsSubHeading from "./ItemsSubHeading";
 import ItemsCard from "./ItemsCard";
+import { useSelector } from "react-redux";
+import {
+  selectVegOption,
+  selectNonVegOption,
+} from "../../features/home/restaurantsSlice";
 
-const ItemsMainHeading = memo(
-  ({ heading, items = null, topBorder, borderBottom, categories = null }) => {
-    const [isOpen, setIsOpen] = useState(true);
-    const handleClick = () => {
-      setIsOpen(!isOpen);
-    };
+const ItemsMainHeading = ({
+  heading,
+  items = null,
+  topBorder,
+  borderBottom,
+  categories = null,
+}) => {
+  const [isOpen, setIsOpen] = useState(true);
+  const [count, setCount] = useState(0);
+  const [shouldRender, setShouldRender] = useState(true);
+  const containerRef = useRef(null);
+  const vegOption = useSelector(selectVegOption);
+  const nonVegOption = useSelector(selectNonVegOption);
+  const handleClick = () => {
+    setIsOpen(!isOpen);
+  };
 
-    if (categories) {
-      return (
+  useEffect(() => {
+    const initialCount = items
+      ? items.length
+      : categories
+      ? categories.length
+      : 0;
+    setCount(initialCount);
+  }, []);
+
+  useEffect(() => {
+    if (containerRef.current) {
+      setCount(containerRef.current.children.length);
+      setShouldRender(containerRef.current.children.length > 0);
+    }
+  }, [vegOption, nonVegOption]);
+
+    return (
         <div
           className="w-full"
           style={{
             borderTop: topBorder ? "16px solid #e5e7eb" : "none",
             borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
+            display: shouldRender ? "block" : "none",
           }}
         >
-          <div>
-            <div className="flex justify-start items-center bg-primary text-white py-3 px-2">
-              <h1 className="text-lg font-bold tracking-tight">{`${heading} (${categories.length})`}</h1>
+          {categories ? (
+            <>
+              <div className="flex justify-start items-center bg-primary text-white py-3 px-2">
+                <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
+              </div>
+              <div
+                ref={containerRef}
+                className="overflow-hidden transition-all duration-300 ease-linear"
+                style={{
+                  display: isOpen ? "block" : "none",
+                }}
+              >
+                {categories.map((category, index) => (
+                  <ItemsSubHeading
+                    key={category?.categoryId}
+                    title={category?.title}
+                    itemCards={category?.itemCards}
+                    borderBottom={index !== categories.length - 1}
+                  />
+                ))}
+              </div>
+            </>
+          ) : (
+            <div>
+              <div
+                onClick={handleClick}
+                className="flex justify-between items-center bg-primary p-2 text-white cursor-pointer"
+              >
+                <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
+                <i
+                  className="ri-arrow-drop-down-line text-4xl font-[200] inline-block"
+                  style={{
+                    transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
+                    transition: "transform 0.2s ease-in-out",
+                  }}
+                ></i>
+              </div>
+              <div
+                ref={containerRef}
+                className="overflow-hidden transition-all duration-300 linear p-0.5"
+                style={{
+                  display: isOpen ? "block" : "none",
+                }}
+              >
+                {items.map((item) => (
+                  <ItemsCard
+                    key={item?.card?.info?.id}
+                    item={item?.card?.info}
+                  />
+                ))}
+              </div>
             </div>
-            <div
-              className="overflow-hidden transition-all duration-300 ease-linear"
-              style={{
-                display: isOpen ? "block" : "none",
-                // borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
-              }}
-            >
-              {categories.map((category, index) => (
-                <ItemsSubHeading
-                  key={category?.categoryId}
-                  title={category?.title}
-                  itemCards={category?.itemCards}
-                  borderBottom={index !== categories.length - 1}
-                />
-              ))}
-            </div>
-          </div>
+          )}
         </div>
       );
-    }
-
-    return (
-      <div
-        className="w-full cursor-pointer"
-        style={{
-          borderTop: topBorder ? "16px solid #e5e7eb" : "none",
-          borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
-        }}
-      >
-        <div>
-          <div
-            onClick={handleClick}
-            className="flex justify-between items-center bg-primary p-2 text-white"
-          >
-            <h1 className="text-lg font-bold tracking-tight">{`${heading} (${items.length})`}</h1>
-            <i
-              className="ri-arrow-drop-down-line text-4xl font-[200] inline-block"
-              style={{
-                transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                transition: "transform 0.2s ease-in-out",
-              }}
-            ></i>
-          </div>
-          <div
-            className="overflow-hidden transition-all duration-300 linear p-0.5"
-            style={{
-              display: isOpen ? "block" : "none",
-              // borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
-            }}
-          >
-            {items.map((item) => (
-              <ItemsCard key={item?.card?.info?.id} item={item?.card?.info} />
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  }
-);
+};
 
 export default ItemsMainHeading;

@@ -4,18 +4,40 @@ const restaurantSlice = createSlice({
     name: "restaurant",
     
     initialState: {
-        currentSpecificRestaurant: "",
+        veg: true,
+        non_veg: true,
+        currentSpecificRestaurant: null,
     },
 
     reducers: {
         addCurrentRestaurant: (state, action) => {
             state.currentSpecificRestaurant = action.payload;
         },
+
+        setVegOption: (state, action) => {
+            if (action.payload) {
+                state.veg = true
+                state.non_veg = false;
+            } else {
+                state.non_veg = true;
+            }
+        },
+
+        setNonVegOption: (state, action) => {
+            if (action.payload) {
+                state.non_veg = true;
+                state.veg = false;
+            } else {
+                state.veg = true;
+            }
+        }
     }
 })
 
 export default restaurantSlice.reducer;
 
 export const selectCurrentRestaurant = state => state.restaurant.currentSpecificRestaurant;
+export const selectVegOption = state => state.restaurant.veg;
+export const selectNonVegOption = state => state.restaurant.non_veg;
 
-export const { addCurrentRestaurant } = restaurantSlice.actions;
+export const { addCurrentRestaurant, setVegOption, setNonVegOption } = restaurantSlice.actions;

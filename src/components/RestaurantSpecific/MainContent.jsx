@@ -1,10 +1,11 @@
 import { useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
 import TopPicksCards from "./TopPicksCards";
 import Footer from "./Footer";
 import ItemsMainHeading from "./ItemsMainHeading";
+import SortingButtons from "./SortingButtons";
 
 const MainContent = ({ data, routes = false }) => {
   const dispatch = useDispatch();
@@ -94,7 +95,7 @@ const MainContent = ({ data, routes = false }) => {
       <section className="w-full max-w-[775px] mt-2">
         {topPicks && <TopPicksCards data={topPicks} />}
       </section>
-
+      <SortingButtons />
       <section className="w-full max-w-[775px] mt-2 first:border-t-gray-200 first:border-t-[16px]">
         {restMenuData.length > 0 &&
           restMenuData.map((item, index) => {
@@ -109,7 +110,7 @@ const MainContent = ({ data, routes = false }) => {
                 />
               );
             }
-            
+
             return (
               <ItemsMainHeading
                 key={item?.card?.card?.categoryId}

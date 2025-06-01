@@ -1,10 +1,17 @@
 import { memo, useState, useEffect, useRef } from "react";
 import ItemsCard from "./ItemsCard";
+import { useSelector } from "react-redux";
+import { selectVegOption, selectNonVegOption } from "../../features/home/restaurantsSlice";
+
 
 const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [height, setHeight] = useState(0);
+  const [count, setCount] = useState(0);
+  const initialRender = itemCards ? itemCards.length > 0 : false;
+  const [shouldRender, setShouldRender] = useState(initialRender);
   const contentRef = useRef(null);
+  const vegOption = useSelector(selectVegOption);
+  const nonVegOption = useSelector(selectNonVegOption);
 
   const handleClick = (e) => {
     e.stopPropagation();
@@ -12,15 +19,24 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
   };
 
   useEffect(() => {
-    if (isOpen && contentRef.current) {
-      setHeight(contentRef.current.scrollHeight);
-    } else {
-      setHeight(0);
-    }
-  }, [isOpen]);
+    const initialCount = itemCards ? itemCards.length : 0;
+    setCount(initialCount);
+  }, []);
+
+   useEffect(() => {
+      if (contentRef.current) {
+        const present = contentRef.current.children.length;
+        setShouldRender(present > 0);
+        setCount(contentRef.current.children.length);
+      }
+    }, [vegOption, nonVegOption]);
 
   return (
-    <div onClick={handleClick} className="w-full cursor-pointer">
+    <div onClick={handleClick} className="w-full cursor-pointer"
+      style={{
+        display: shouldRender ? "block" : "none",
+      }}
+    >
       <div
         className="flex justify-between items-center bg-white p-2"
         style={{
@@ -33,7 +49,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
           transition: "border-bottom 0.3s linear",
         }}
       >
-        <h1 className="text-[16px] font-bold tracking-tight">{`${title} (${itemCards.length})`}</h1>
+        <h1 className="text-[16px] font-bold tracking-tight">{`${title} (${count})`}</h1>
         <i
           className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5 inline-block"
           style={{
@@ -46,7 +62,6 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
         ref={contentRef}
         className="overflow-hidden transition-all duration-300 linear"
         style={{
-          // maxHeight: height
             display: isOpen ? "block" : "none",
             borderBottom: "2px solid #e5e7eb",
         }}

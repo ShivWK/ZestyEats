@@ -3,7 +3,7 @@ import { useState, memo } from "react";
 const TopPicksCard = memo(({ data }) => {
   const [isError, setIsError] = useState(false);
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${data?.creativeId}`;
-  const price = data?.price ? (data?.price / 100).toFixed(2) : "0.00";
+  const price = data?.price ? (data?.price / 100) : "0.00";
 
   return (
     <div
