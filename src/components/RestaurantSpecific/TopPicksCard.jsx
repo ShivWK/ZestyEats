@@ -14,7 +14,6 @@ const TopPicksCard = memo(({ data }) => {
         alt={data?.name}
         className="absolute top-0 left-0 w-full h-full object-cover rounded-2xl -z-10"
         onError={() => setIsError(true)}
-        // onLoad={() => setIsError(false)}
       />
 
       {isError && (
@@ -25,16 +24,16 @@ const TopPicksCard = memo(({ data }) => {
           </p>
         </div>
       )}
-      <div id="button" className="flex items-center justify-between mt-auto">
+      <div id="button" className="flex items-center justify-between mt-auto pl-0.5">
         <p
-          className=" font-semibold"
+          className="text-lg font-semibold"
           style={{
             color: !isError ? "white" : "black",
           }}
         >
           ₹{price}
         </p>
-        <button className="py-2 px-7 bg-green-500 text-white rounded-md cursor-pointer active:scale-95 transition-all duration-150 ease-in-out">
+        <button className="py-2 px-7 bg-green-500 text-white rounded-md cursor-pointer active:scale-95 transition-all duration-150 ease-in-out font-semibold">
           Add
         </button>
       </div>

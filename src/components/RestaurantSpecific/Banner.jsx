@@ -10,7 +10,7 @@ const Banner = ({ data }) => {
     >
       <div
         id="inner-container"
-        className="flex flex-col gap-4 rounded-3xl w-full overflow-hidden border-[1px] border-[#adabab9d] bg-white"
+        className="flex flex-col gap-2.5 rounded-3xl w-full overflow-hidden border-[1px] border-[#adabab9d] bg-white"
       >
         <div className="self-center w-full p-3.5 flex flex-col gap-1.5 mb-2">
           <div id="rating" className="flex gap-2.5 items-center">
@@ -32,13 +32,13 @@ const Banner = ({ data }) => {
                 else return <NavLink key={item}>{`${item} ,`}</NavLink>;
               })}
           </div>
-          <div id="delivery" className="flex gap-2">
+          <div id="delivery" className="flex gap-2 mt-2">
             <div className="flex flex-col justify-center items-center p-0">
               <div className="rounded-[50%] p-1 bg-[#a7a5a5]"></div>
-              <div className="w-0.5 bg-[#a7a5a5] h-6"></div>
+              <div className="w-0.5 bg-[#a7a5a5] h-7"></div>
               <div className="rounded-[50%] p-1 bg-[#a7a5a5]"></div>
             </div>
-            <div className="flex flex-col gap-2.5 text-black font-bold text-sm">
+            <div className="flex flex-col gap-4 text-black font-bold text-sm">
               <div className="flex gap-2 p-0">
                 <p>Outlet</p>
                 <p className="text-gray-600 font-semibold">{mainData?.areaName}</p>
@@ -55,7 +55,7 @@ const Banner = ({ data }) => {
               alt=""
             />
             <p className="text-primary font-bold text-sm">
-              Lorem ipsum dolor sit amet.
+              Free delivery on orders above ₹199
             </p>
           </div>
         </div>
