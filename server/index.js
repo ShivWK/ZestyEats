@@ -171,7 +171,7 @@ app.get("/api/specific-restaurants", async (req, res) => {
 });
 
 app.get("/api/dish-search", async (req, res) => {
-  const {lat, lng, restro_Id, searchTerm} = req.params;
+  const {lat, lng, restro_Id, searchTerm} = req.query;
 
   console.log("Dish Search Params", lat, lng, restro_Id, searchTerm);
 
