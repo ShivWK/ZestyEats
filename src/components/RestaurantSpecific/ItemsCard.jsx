@@ -41,7 +41,7 @@ const ItemsCard = memo(({ item }) => {
               stroke="green"
               strokeWidth="8"
             />
-            <circle cx="50" cy="50" r="30" fill="green" />
+            <circle cx="50" cy="50" r="25" fill="green" />
           </svg>
           <p className="text-gray-800 font-bold text-lg">{item?.name}</p>
           <div>{price}</div>

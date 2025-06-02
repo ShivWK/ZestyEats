@@ -44,7 +44,7 @@ const SortingButtons = () => {
               stroke={!veg ? "green" : "white"}
               strokeWidth="8"
             />
-            <circle cx="50" cy="50" r="30" fill={!veg ? "green" : "white"} />
+            <circle cx="50" cy="50" r="25" fill={!veg ? "green" : "white"} />
           </svg>
         <span>Veg</span>
         {veg && (<i className="ri-close-large-fill font-semibold"></i>)}
