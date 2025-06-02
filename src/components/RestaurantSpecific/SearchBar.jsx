@@ -19,4 +19,4 @@ const SearchBar = ({ lat, lng, restro_Id, name }) => {
 
 export default SearchBar;
 
-// URL to search in the particular restaurant's dishes: https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER
+// URL to search in the particular restaurant's dishes: https://www.swiggy.com/dapi/menu/pl/search?lat=28.7040592&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER

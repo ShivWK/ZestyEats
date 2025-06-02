@@ -15,10 +15,12 @@ const restaurantsApi = createApi({
     }),
 
     getSearchedDish: builder.query({
-      query: ({ lat, lng, restro_Id, searchTerm }) => ({
-        url: "/api/dish-search",
-        params: { lat, lng, restro_Id, searchTerm },
-      }),
+      query: ({ lat, lng, restro_Id, searchTerm }) => {
+        return {
+          url: "/dish-search",
+          params: { lat, lng, restro_Id, searchTerm },
+        };
+      },
     }),
   }),
 });
