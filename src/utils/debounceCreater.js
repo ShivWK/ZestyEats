@@ -1,8 +1,8 @@
 function createDebounce(toCall, delay) {
   let timer;
-  return () => {
+  return (...args) => {
     clearTimeout(timer);
-    timer = setTimeout(toCall, delay);
+    timer = setTimeout(() => toCall(...args), delay);
   };
 }
 

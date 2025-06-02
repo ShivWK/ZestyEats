@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import {
   addRecentLocations,
   selectRecentLocations,
+  selectLatAndLng,
 } from "../../features/home/homeSlice";
 import Location from "./Loacations";
 import { useLazySearchedLocationQuery } from "../../features/home/searchApiSlice";
@@ -19,6 +20,7 @@ import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 
 const RecentLocations = memo(() => {
   const recentLocations = useSelector(selectRecentLocations);
+  const { lat: latitude, lng: longitude } = useSelector(selectLatAndLng);
   const containerRef = useRef(null);
   const { scrollYProgress } = useScroll({ container: containerRef });
   const dispatch = useDispatch();
@@ -53,6 +55,11 @@ const RecentLocations = memo(() => {
       try {
         const res1 = await triggerLocationCall(location.place_id).unwrap();
         const { lat, lng } = res1;
+
+        if (lat === latitude && lng === longitude) {
+          dispatch(setLoading(false));
+          return;
+        }
 
         const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
         updateHomeRestaurantData(res2, dispatch, lat, lng);

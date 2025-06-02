@@ -103,7 +103,7 @@ const MainContent = ({ data, routes = false }) => {
 
       {/* Search */}
       <section className="w-full max-w-[775px] my-6">
-        <SearchBar lat={lat} lng={lng} restro_Id={id} />
+        <SearchBar lat={lat} lng={lng} restro_Id={id} name={title} />
       </section>
 
       {/* Top Picks */}

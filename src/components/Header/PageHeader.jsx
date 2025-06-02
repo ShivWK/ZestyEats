@@ -22,7 +22,7 @@ const PageHeader = memo(() => {
     return <ProfileHeader />;
   } else if (pathname === "/cart") {
     return <CartHeader />;
-  } else if (pathname.includes("restaurantSpecific")) {
+  } else if (pathname.includes("restaurantSpecific") || pathname.includes("dishSearch")) {
     return <RestaurantsHeader />;
   }
 

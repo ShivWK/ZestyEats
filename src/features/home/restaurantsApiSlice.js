@@ -8,9 +8,16 @@ const restaurantsApi = createApi({
 
   endpoints: (builder) => ({
     getSpecificRestaurantData: builder.query({
-      query: ({lat, lng, id}) => ({
+      query: ({ lat, lng, id }) => ({
         url: "/specific-restaurants",
         params: { lat, lng, id },
+      }),
+    }),
+
+    getSearchedDish: builder.query({
+      query: ({ lat, lng, restro_Id, searchTerm }) => ({
+        url: "/api/dish-search",
+        params: { lat, lng, restro_Id, searchTerm },
       }),
     }),
   }),
@@ -18,7 +25,4 @@ const restaurantsApi = createApi({
 
 export default restaurantsApi;
 
-export const {
-    useGetSpecificRestaurantDataQuery,
-    useLazyGetSpecificRestaurantDataQuery
-} = restaurantsApi
+export const { useLazyGetSearchedDishQuery } = restaurantsApi;

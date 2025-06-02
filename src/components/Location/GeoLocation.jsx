@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { setLoading } from "../../features/home/homeSlice";
+import { setLoading, selectLatAndLng } from "../../features/home/homeSlice";
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
@@ -15,6 +15,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+  const { lat: latitude, lng: longitude } = useSelector(selectLatAndLng);
 
   const checkAndRedirect = () => {
     if (location.pathname !== "/") {
@@ -48,6 +49,11 @@ const GeoLocation = memo(({ setSearchValue }) => {
 
           const lat = data?.data?.[0]?.geometry?.location?.lat;
           const lng = data?.data?.[0]?.geometry?.location?.lng;
+
+          if (lat === latitude && lng === longitude) {
+            dispatch(setLoading(false));
+            return;
+          }
 
           try {
             const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();

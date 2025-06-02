@@ -14,7 +14,10 @@ import Profile from "./components/Profile/Profile";
 import Offers_Dinouts from "./components/Offers_Dinouts/Offers_Dinouts";
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
-import RestaurantSpecific, { loader } from "./components/RestaurantSpecific/RestaurantSpecific";
+import RestaurantSearch from "./components/RestaurantSpecific/RestraurantSearch";
+import RestaurantSpecific, {
+  loader,
+} from "./components/RestaurantSpecific/RestaurantSpecific";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -27,7 +30,12 @@ export default function App() {
         <Route path="help" element={<HelpMain />} />
         <Route path="profile" element={<Profile />} />
         <Route path="cart" element={<Cart />} />
-        <Route path="restaurantSpecific/:lat/:lng/:id" element={<RestaurantSpecific />} loader={loader} />
+        <Route
+          path="restaurantSpecific/:lat/:lng/:id"
+          element={<RestaurantSpecific />}
+          loader={loader}
+        />
+        <Route path="dishSearch" element={<RestaurantSearch />} />
       </Route>
     )
   );

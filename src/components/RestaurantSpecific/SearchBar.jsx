@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const SearchBar = ({ lat, lng, restro_Id }) => {
+const SearchBar = ({ lat, lng, restro_Id, name }) => {
   return (
     <div className="flex flex-col gap-6 w-full mt-2 items-center">
       <div className="flex items-center gap-1.5 w-fit">
@@ -9,7 +9,7 @@ const SearchBar = ({ lat, lng, restro_Id }) => {
         <i className="fa-solid fa-utensils text-sm"></i>
       </div>
 
-      <NavLink className="flex relative py-3 items-center justify-center w-full bg-gray-200 rounded-md cursor-pointer">
+      <NavLink to={`/dishSearch?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&title=${name}`} className="flex relative py-3 items-center justify-center w-full bg-gray-200 rounded-md cursor-pointer">
         <p className="font-semibold text-gray-700">Search for dishes...</p>
         <i className="absolute right-3 fa-solid fa-magnifying-glass text-xl text-gray-500"></i>
       </NavLink>

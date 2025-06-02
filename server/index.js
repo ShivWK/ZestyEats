@@ -170,6 +170,37 @@ app.get("/api/specific-restaurants", async (req, res) => {
   }
 });
 
+app.get("/api/dish-search", async (req, res) => {
+  const {lat, lng, restro_id, searchTerm} = req.params;
+
+  if (!lat || !lng || !restro_id || !searchTerm) {
+    return res.status(400).json({
+      error: "lat, lng, restro_id and searchTerm are required",
+    })
+  }
+
+  const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
+
+  try {
+    const response = axios.get(searchUrl, {
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        Accept: "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        Referer: "https://www.swiggy.com/",
+        Origin: "https://www.swiggy.com",
+      }
+    })
+
+    res.status(200).json(response.data);
+  }catch (err) {
+    console.log("Dish search data can't be fetched; ", err.message);
+    res.status(404).json({
+      error: "Dish search data can't be fetched",
+      details: err.message,
+    })
+  }
+})
 
 // Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
 

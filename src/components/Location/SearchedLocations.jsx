@@ -1,11 +1,12 @@
 import Location from "./Loacations";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { closeLocationInModal } from "../../features/Login/loginSlice";
 import {
   removeYourCurrentCity,
   setLoading,
   addRecentLocations,
+  selectLatAndLng
 } from "../../features/home/homeSlice";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
@@ -21,6 +22,7 @@ const SearchedLocation = memo(({
 }) => {
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const { lat: latitude, lng: longitude } = useSelector(selectLatAndLng);
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -45,6 +47,12 @@ const SearchedLocation = memo(({
     try {
       const res1 = await triggerLocationCall(location.place_id).unwrap();
       const { lat, lng } = res1;
+
+      if (lat === latitude && lng === longitude) {
+        dispatch(setLoading(false));
+        return;
+      }
+      
       const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
       updateHomeRestaurantData(res2, dispatch, lat, lng);
 
@@ -76,7 +84,7 @@ const SearchedLocation = memo(({
         }
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.error);
       dispatch(setLoading(false));
     }
   }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, closeLocationInModal, addRecentLocations]); 

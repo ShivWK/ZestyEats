@@ -33,7 +33,7 @@ const ModalSubContainer = memo(() => {
         // add toast
         console.log(err);
       }
-    }, 200)
+    }, 300)
   );
 
   const handleClose = () => {
@@ -54,7 +54,7 @@ const ModalSubContainer = memo(() => {
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
-    debouncedHandleInputChange.current(e.target.value);
+    debouncedHandleInputChange.current(e.target.value.trim());
   };
 
   const handleDivClick = (e) => {
