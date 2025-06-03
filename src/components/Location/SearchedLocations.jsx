@@ -84,7 +84,7 @@ const SearchedLocation = memo(({
         }
       }
     } catch (err) {
-      console.log(err.error);
+      console.log(err);
       dispatch(setLoading(false));
     }
   }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, closeLocationInModal, addRecentLocations]); 

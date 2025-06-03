@@ -42,6 +42,7 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
       },
     });
     console.log(response.headers);
+    res.setHeader("Access-Control-Allow-Origin", "*")
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
@@ -70,7 +71,7 @@ app.get("/api/place-autocomplete", async (req, res) => {
         Origin: "https://www.swiggy.com",
       },
     });
-
+    res.setHeader("Access-Control-Allow-Origin", "*")
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Place Autocomplete Error:", error.message);
@@ -100,6 +101,7 @@ app.get("/api/address-recommend", async (req, res) => {
       },
     });
 
+    res.setHeader("Access-Control-Allow-Origin", "*")
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Address Recommend Error:", error.message);
@@ -129,6 +131,7 @@ app.get("/api/address-from-coordinates", async (req, res) => {
       },
     });
 
+    res.setHeader("Access-Control-Allow-Origin", "*")
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Address from Coordinates Error:", error.message);
@@ -161,6 +164,7 @@ app.get("/api/specific-restaurants", async (req, res) => {
       },
     });
 
+    res.setHeader("Access-Control-Allow-Origin", "*")
     res.status(200).json(response.data);
   } catch (err) {
     console.error("Restaurant data can't be fetched: ", err.message);
@@ -192,7 +196,8 @@ app.get("/api/dish-search", async (req, res) => {
         Origin: "https://www.swiggy.com",
       }
     })
-    console.log(response);
+    // console.log(response);
+    res.setHeader("Access-Control-Allow-Origin", "*")
     res.status(200).json(response.data);
   }catch (err) {
     console.log("Dish search data can't be fetched; ", err);
@@ -210,5 +215,5 @@ app.use((req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Proxy server running on http://localhost:${PORT}`);
+  // console.log(`Proxy server running on http://localhost:${PORT}`);
 });
