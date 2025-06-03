@@ -4,8 +4,17 @@ const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const allowedOrigins = ["http://localhost:5173", "https://swiggy-clone-beige-gamma.vercel.app"]
 
-app.use(cors());
+app.use(cors({
+  origin: function(origin, callback) {
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true); // null => no error, true => this origin is allowed
+    } else {
+      return callback(new Error("Not allowed by CORS"))
+    }
+  }
+}));
 app.use(express.json());
 
 app.get("/", (req, res) => {
