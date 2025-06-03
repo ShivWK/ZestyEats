@@ -66,13 +66,13 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
       // withCredentials: true,
     });
     // console.log(response.headers);
-
+    const origin = req.headers.origin;
     const cookies = response.headers["set-cookie"];
     if (cookies) {
       res.setHeader("set-cookie", cookies);
     }
     res.set({
-      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "GET"
     });
     res.status(200).json(response.data);
