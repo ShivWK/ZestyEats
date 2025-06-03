@@ -185,6 +185,8 @@ app.get("/api/dish-search", async (req, res) => {
 
   const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=${submitAction}`;
 
+  console.log(searchUrl);
+
   try {
     const response = axios.get(searchUrl, {
       headers: {
@@ -195,7 +197,7 @@ app.get("/api/dish-search", async (req, res) => {
         Origin: "https://www.swiggy.com",
       }
     })
-
+    console.log(response);
     res.status(200).json(response.data);
   }catch (err) {
     console.log("Dish search data can't be fetched; ", err);
