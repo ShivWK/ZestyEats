@@ -197,7 +197,7 @@ app.get("/api/dish-search", async (req, res) => {
 
     res.status(200).json(response.data);
   }catch (err) {
-    console.log("Dish search data can't be fetched; ", err.message);
+    console.log("Dish search data can't be fetched; ", err);
     res.status(404).json({
       error: "Dish search data can't be fetched",
       details: err.message,
