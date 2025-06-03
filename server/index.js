@@ -177,7 +177,6 @@ app.get("/api/dish-search", async (req, res) => {
   console.log("Dish Search Params", lat, lng, restro_Id, searchTerm);
 
   if (!lat || !lng || !restro_Id || !searchTerm) {
-    // console.log("problem", lat, lng, restro_Id, searchTerm);
     return res.status(400).json({
       error: "lat, lng, restro_id and searchTerm are required",
     })
@@ -188,7 +187,7 @@ app.get("/api/dish-search", async (req, res) => {
   console.log(searchUrl);
 
   try {
-    const response = axios.get(searchUrl, {
+    const response = await axios.get(searchUrl, {
       headers: {
         "User-Agent": "Mozilla/5.0",
         Accept: "application/json",
