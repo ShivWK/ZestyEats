@@ -4,17 +4,24 @@ const cors = require("cors");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-const allowedOrigins = ["http://localhost:5173", "https://swiggy-clone-beige-gamma.vercel.app"]
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://swiggy-clone-beige-gamma.vercel.app",
+];
 
-app.use(cors({
-  origin: function(origin, callback) {
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true); // null => no error, true => this origin is allowed
-    } else {
-      return callback(new Error("Not allowed by CORS"))
-    }
-  }
-}));
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true); // null => no error, true => this origin is allowed
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 app.get("/", (req, res) => {
@@ -30,6 +37,9 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/swiggy-restaurants", async (req, res) => {
+
+  console.log(req.headers);
+
   try {
     const { lat, lng } = req.query;
 
@@ -48,10 +58,18 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
         "Accept-Language": "en-US,en;q=0.9",
         Referer: "https://www.swiggy.com/",
         Origin: "https://www.swiggy.com",
+        
       },
+
+      // withCredentials: true,
     });
     console.log(response.headers);
-    res.setHeader("Access-Control-Allow-Origin", "*")
+
+    const cookies = response.headers["set-cookie"];
+    if (cookies) {
+      res.setHeader("set-cookie", cookies);
+    }
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
@@ -80,7 +98,7 @@ app.get("/api/place-autocomplete", async (req, res) => {
         Origin: "https://www.swiggy.com",
       },
     });
-    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Place Autocomplete Error:", error.message);
@@ -110,7 +128,7 @@ app.get("/api/address-recommend", async (req, res) => {
       },
     });
 
-    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Address Recommend Error:", error.message);
@@ -140,7 +158,7 @@ app.get("/api/address-from-coordinates", async (req, res) => {
       },
     });
 
-    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Address from Coordinates Error:", error.message);
@@ -173,24 +191,24 @@ app.get("/api/specific-restaurants", async (req, res) => {
       },
     });
 
-    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(200).json(response.data);
   } catch (err) {
     console.error("Restaurant data can't be fetched: ", err.message);
     res.status(500).json({
       error: "Restaurant data can't be fetched",
-      details: err.message
-    })
+      details: err.message,
+    });
   }
 });
 
 app.get("/api/dish-search", async (req, res) => {
-  const {lat, lng, restro_Id, searchTerm} = req.query;
+  const { lat, lng, restro_Id, searchTerm } = req.query;
 
   if (!lat || !lng || !restro_Id || !searchTerm) {
     return res.status(400).json({
       error: "lat, lng, restro_id and searchTerm are required",
-    })
+    });
   }
 
   const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
@@ -203,19 +221,19 @@ app.get("/api/dish-search", async (req, res) => {
         "Accept-Language": "en-US,en;q=0.9",
         Referer: "https://www.swiggy.com/",
         Origin: "https://www.swiggy.com",
-      }
-    })
+      },
+    });
     // console.log(response);
-    res.setHeader("Access-Control-Allow-Origin", "*")
+    res.setHeader("Access-Control-Allow-Origin", "*");
     res.status(200).json(response.data);
-  }catch (err) {
+  } catch (err) {
     console.log("Dish search data can't be fetched; ", err);
     res.status(404).json({
       error: "Dish search data can't be fetched",
       details: err.message,
-    })
+    });
   }
-})
+});
 
 // Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
 
