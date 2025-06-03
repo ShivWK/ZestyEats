@@ -69,7 +69,10 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
     if (cookies) {
       res.setHeader("set-cookie", cookies);
     }
-    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.set({
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET"
+    });
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
