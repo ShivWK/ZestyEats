@@ -1,16 +1,23 @@
+import { memo, useEffect, lazy, Suspense } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import FoodieThoughts from "./FoodieThoughts/FoodieThoughts";
-import TopRestaurantChains from "./TopRestaurantChains";
-import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant";
-import BestPlacesToEat from "./BestPlacesToEat";
-import CuisionsNearMe from "./CuisionsNearMe";
-import NearByRestaurants from "./NearByRestaurants";
+// import TopRestaurantChains from "./TopRestaurantChains";
+// import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant";
+// import BestPlacesToEat from "./BestPlacesToEat";
+// import CuisionsNearMe from "./CuisionsNearMe";
+// import NearByRestaurants from "./NearByRestaurants";
 import Loader from "../Loader";
+const OnlineDeliveryRestaurant = lazy(() =>
+  import("./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant")
+);
+const TopRestaurantChains = lazy(() => import("./TopRestaurantChains"));
+const BestPlacesToEat = lazy(() => import("./BestPlacesToEat"));
+const CuisionsNearMe = lazy(() => import("./CuisionsNearMe"));
+const NearByRestaurants = lazy(() => import("./NearByRestaurants"));
 
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
-
-import { memo, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import {
   selectFoodieThoughtsData,
   selectTopRestaurantsData,
@@ -24,7 +31,6 @@ import {
   selectBestCuisionsNearMe,
   selectNearByRestaurants,
 } from "../../features/home/homeSlice";
-
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 
@@ -96,7 +102,6 @@ const Home = memo(() => {
 
           try {
             const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
-            // console.log(res2);
             updateHomeRestaurantData(res2, dispatch, lat, lng);
           } catch (err) {
             alert(err.message);
@@ -115,7 +120,7 @@ const Home = memo(() => {
   return isLoadingMain || isLoading ? (
     <Loader size={"large"} />
   ) : (
-    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1 pt-24">
+    <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1 pt-24 overflow-x-hidden">
       {foodieThoughtsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto ">
@@ -127,7 +132,26 @@ const Home = memo(() => {
       {topRestaurantsChainsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">
-            <TopRestaurantChains />
+            <Suspense
+              fallback={
+                <div className="flex justify-between">
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                </div>
+              }
+            >
+              <TopRestaurantChains />
+            </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -135,7 +159,26 @@ const Home = memo(() => {
       {onlineDeliveryRestaurant.length !== 0 && (
         <>
           <section className="w-full">
-            <OnlineDeliveryRestaurant />
+            <Suspense
+              fallback={
+                <div className="flex justify-between">
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                </div>
+              }
+            >
+              <OnlineDeliveryRestaurant />
+            </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -146,7 +189,26 @@ const Home = memo(() => {
             className="w-full max-w-[1000px] mx-auto flex items-center gap-4
            flex-col"
           >
-            <BestPlacesToEat />
+            <Suspense
+              fallback={
+                <div className="flex justify-between gap-4">
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                </div>
+              }
+            >
+              <BestPlacesToEat />
+            </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -157,7 +219,26 @@ const Home = memo(() => {
             className="w-full max-w-[1000px] mx-auto flex items-center gap-4
            flex-col"
           >
-            <CuisionsNearMe />
+            <Suspense
+              fallback={
+                <div className="flex justify-between gap-4">
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                </div>
+              }
+            >
+              <CuisionsNearMe />
+            </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -167,7 +248,26 @@ const Home = memo(() => {
           className="w-full max-w-[1000px] mx-auto flex justify-start gap-4 
          flex-col"
         >
-          <NearByRestaurants />
+          <Suspense
+            fallback={
+              <div className="flex justify-between">
+                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                  Loading...
+                </div>
+                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                  Loading...
+                </div>
+                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                  Loading...
+                </div>
+                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                  Loading...
+                </div>
+              </div>
+            }
+          >
+            <NearByRestaurants />
+          </Suspense>
         </section>
       )}
     </main>

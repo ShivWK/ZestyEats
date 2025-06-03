@@ -1,6 +1,6 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import createDebounce from "../../utils/debounceCreater";
 import {
   useLazyGetSearchedDishQuery,
@@ -20,14 +20,14 @@ const RestaurantSearch = () => {
   const restro_Id = searchParams.get("restaurantId");
   const title = searchParams.get("title");
 
-  const { data } = useGetSearchedDishQuery({
-    lat,
-    lng,
-    restro_Id,
-    searchTerm: "burger",
-  });
+  // const { data } = useGetSearchedDishQuery({
+  //   lat,
+  //   lng,
+  //   restro_Id,
+  //   searchTerm: "burger",
+  // });
 
-  console.log(data)
+  // console.log(data)
   //   console.log("Search Params", lat, lng, restro_Id);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ const RestaurantSearch = () => {
     }
   }, 300));
 
-  console.log("Search Data", searchData);
+  // console.log("Search Data", searchData);
 
   const handleSearch = (e) => {
     const searchTerm = e.target.value;

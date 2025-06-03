@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { NavLink } from "react-router-dom";
 
-const SearchBar = ({ lat, lng, restro_Id, name }) => {
+const SearchBar = memo(({ lat, lng, restro_Id, name }) => {
   return (
     <div className="flex flex-col gap-6 w-full mt-2 items-center">
       <div className="flex items-center gap-1.5 w-fit">
@@ -15,7 +16,7 @@ const SearchBar = ({ lat, lng, restro_Id, name }) => {
       </NavLink>
     </div>
   );
-};
+});
 
 export default SearchBar;
 

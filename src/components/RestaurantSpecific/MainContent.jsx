@@ -1,34 +1,31 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, lazy, Suspense } from "react";
 import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
-import TopPicksCards from "./TopPicksCards";
 import Footer from "./Footer";
-import ItemsMainHeading from "./ItemsMainHeading";
+// import ItemsMainHeading from "./ItemsMainHeading";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
 import SearchBar from "./SearchBar";
 import { useParams } from "react-router-dom";
+const TopPicksCards = lazy(() => import("./TopPicksCards"));
+const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
 
 const MainContent = ({ data, routes = false }) => {
-  const {lat, lng, id} = useParams();
-
+  const { lat, lng, id } = useParams();
   const dispatch = useDispatch();
+  const cards = data?.data?.cards;
+  const title = cards?.[0].card?.card?.text;
+  const navigation = useMemo(() => cards?.[1], [cards]);
+  const banner = useMemo(() => cards?.[2], [cards]);
+  const offers = useMemo(() => cards?.[3], [cards]);
+  const menu = cards
+    ?.at(-1)
+    ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1);
 
   useEffect(() => {
     dispatch(addCurrentRestaurant(title));
   }, []);
-
-  const cards = data?.data?.cards;
-  const title = cards?.[0].card?.card?.text;
-
-  const navigation = useMemo(() => cards?.[1], [cards]);
-  const banner = useMemo(() => cards?.[2], [cards]);
-  const offers = useMemo(() => cards?.[3], [cards]);
-
-  const menu = cards
-    ?.at(-1)
-    ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1);
 
   const topPicks = useMemo(
     () =>
@@ -94,7 +91,7 @@ const MainContent = ({ data, routes = false }) => {
       </div>
 
       {/* Banner */}
-      {<Banner data={banner} />}
+      {banner && <Banner data={banner} />}
 
       {/* Offers */}
       <section className="w-full max-w-[775px] my-2">
@@ -108,10 +105,28 @@ const MainContent = ({ data, routes = false }) => {
 
       {/* Top Picks */}
       <section className="w-full max-w-[775px] mt-2">
-        {topPicks && <TopPicksCards data={topPicks} />}
+        {topPicks && (
+          <Suspense
+            fallback={
+              <div className="flex justify-between">
+                <div className="flex items-center justify-center w-64 h-60 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                  Loading...
+                </div>
+                <div className="flex items-center justify-center w-64 h-60 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                  Loading...
+                </div>
+                <div className="flex items-center justify-center w-64 h-60 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
+                  Loading...
+                </div>
+              </div>
+            }
+          >
+            <TopPicksCards data={topPicks} />
+          </Suspense>
+        )}
       </section>
 
-      <hr className="mb-4 w-full text-gray-500"/>
+      <hr className="mb-4 w-full text-gray-500" />
 
       {/* Sorting */}
       <SortingButtons />
@@ -121,24 +136,40 @@ const MainContent = ({ data, routes = false }) => {
           restMenuData.map((item, index) => {
             if (item?.card?.card?.categories) {
               return (
-                <ItemsMainHeading
-                  key={item?.card?.card?.categoryId}
-                  heading={item?.card?.card?.title}
-                  categories={item?.card?.card?.categories}
-                  topBorder={index === 0}
-                  borderBottom={index === restMenuData.length - 1}
-                />
+                <Suspense
+                  fallback={
+                    <div className="flex items-center justify-center w-full h-36 rounded-xl shimmerBg mt-2.5 text-sm text-gray-900 font-semibold">
+                      Loading...
+                    </div>
+                  }
+                >
+                  <ItemsMainHeading
+                    key={item?.card?.card?.categoryId}
+                    heading={item?.card?.card?.title}
+                    categories={item?.card?.card?.categories}
+                    topBorder={index === 0}
+                    borderBottom={index === restMenuData.length - 1}
+                  />
+                </Suspense>
               );
             }
 
             return (
-              <ItemsMainHeading
-                key={item?.card?.card?.categoryId}
-                heading={item?.card?.card?.title}
-                items={item?.card?.card?.itemCards}
-                topBorder={index === 0}
-                borderBottom={index === restMenuData.length - 1}
-              />
+              <Suspense
+                fallback={
+                  <div className="flex items-center justify-center w-full h-36 rounded-xl shimmerBg mt-2.5 text-sm text-gray-900 font-semibold">
+                    Loading...
+                  </div>
+                }
+              >
+                <ItemsMainHeading
+                  key={item?.card?.card?.categoryId}
+                  heading={item?.card?.card?.title}
+                  items={item?.card?.card?.itemCards}
+                  topBorder={index === 0}
+                  borderBottom={index === restMenuData.length - 1}
+                />
+              </Suspense>
             );
           })}
       </section>
