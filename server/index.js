@@ -41,6 +41,7 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
         Origin: "https://www.swiggy.com",
       },
     });
+    console.log(response.headers);
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
