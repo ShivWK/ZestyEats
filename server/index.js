@@ -12,15 +12,17 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true); // null => no error, true => this origin is allowed
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
       } else {
-        return callback(new Error("Not allowed by CORS"));
+        callback(new Error("Not allowed by CORS"));
       }
     },
-    credentials: true,
+    credentials: true, 
   })
 );
+
 
 app.use(express.json());
 
