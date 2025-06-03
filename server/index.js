@@ -38,7 +38,7 @@ app.get("/", (req, res) => {
 
 app.get("/api/swiggy-restaurants", async (req, res) => {
 
-  console.log(req.headers);
+  console.log("by Browser", req.headers);
 
   try {
     const { lat, lng } = req.query;
@@ -58,12 +58,12 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
         "Accept-Language": "en-US,en;q=0.9",
         Referer: "https://www.swiggy.com/",
         Origin: "https://www.swiggy.com",
-        
+
       },
 
       // withCredentials: true,
     });
-    console.log(response.headers);
+    // console.log(response.headers);
 
     const cookies = response.headers["set-cookie"];
     if (cookies) {
