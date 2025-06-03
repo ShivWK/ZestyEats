@@ -27,4 +27,4 @@ const restaurantsApi = createApi({
 
 export default restaurantsApi;
 
-export const { useLazyGetSearchedDishQuery } = restaurantsApi;
+export const { useLazyGetSearchedDishQuery, useGetSearchedDishQuery } = restaurantsApi;

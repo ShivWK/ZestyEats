@@ -2,11 +2,15 @@ import { useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import createDebounce from "../../utils/debounceCreater";
-import { useLazyGetSearchedDishQuery } from "../../features/home/restaurantsApiSlice";
+import {
+  useLazyGetSearchedDishQuery,
+  useGetSearchedDishQuery,
+} from "../../features/home/restaurantsApiSlice";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import useScrollToTop from "../../utils/useScrollToTop";
 
 const RestaurantSearch = () => {
+
   useScrollToTop();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -16,6 +20,14 @@ const RestaurantSearch = () => {
   const restro_Id = searchParams.get("restaurantId");
   const title = searchParams.get("title");
 
+  const { data } = useGetSearchedDishQuery({
+    lat,
+    lng,
+    restro_Id,
+    searchTerm: "burger",
+  });
+
+  console.log(data)
   //   console.log("Search Params", lat, lng, restro_Id);
 
   useEffect(() => {
@@ -25,8 +37,8 @@ const RestaurantSearch = () => {
   const [triggerSearch] = useLazyGetSearchedDishQuery();
   const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState([]);
- 
-    // console.log("Search Term", searchTerm);
+
+  // console.log("Search Term", searchTerm);
 
   const doSearch = createDebounce(async (searchTerm) => {
     if (searchTerm) {
@@ -83,9 +95,7 @@ const RestaurantSearch = () => {
           <i className="ri-search-2-line text-xl cursor-pointer"></i>
         )}
       </div>
-      <div className="p-2">
-        
-      </div>
+      <div className="p-2"></div>
     </div>
   );
 };

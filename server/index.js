@@ -172,17 +172,18 @@ app.get("/api/specific-restaurants", async (req, res) => {
 
 app.get("/api/dish-search", async (req, res) => {
   const {lat, lng, restro_Id, searchTerm} = req.query;
+  const submitAction = "ENTER";
 
   console.log("Dish Search Params", lat, lng, restro_Id, searchTerm);
 
   if (!lat || !lng || !restro_Id || !searchTerm) {
-    console.log("problem", lat, lng, restro_Id, searchTerm);
+    // console.log("problem", lat, lng, restro_Id, searchTerm);
     return res.status(400).json({
       error: "lat, lng, restro_id and searchTerm are required",
     })
   }
 
-  const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
+  const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=${submitAction}`;
 
   try {
     const response = axios.get(searchUrl, {
