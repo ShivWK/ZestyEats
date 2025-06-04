@@ -1,5 +1,5 @@
 import { memo, useState, useEffect, useRef } from "react";
-import ItemsCard from "./ItemsCard";
+import ItemsCard from "./ItemsCardContainer";
 import { useSelector } from "react-redux";
 import { selectVegOption, selectNonVegOption } from "../../features/home/restaurantsSlice";
 

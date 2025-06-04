@@ -13,7 +13,7 @@ const TopPicksCard = memo(({ data }) => {
 
   return (
     <div
-      className={`relative flex flex-col shrink-0 justify-between w-72 h-72 my-2 bg-cover bg-center p-4 mb-8`}
+      className={`relative flex flex-col shrink-0 justify-between w-72 h-72 my-2 p-4 mb-8`}
     >
       <img
         src={isError ? "/images/fallback.png" : imageUrl}

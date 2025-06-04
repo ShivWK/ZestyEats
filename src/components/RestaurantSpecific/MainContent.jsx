@@ -1,5 +1,5 @@
 import { useEffect, useMemo, lazy, Suspense } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
 import Footer from "./Footer";
@@ -7,13 +7,19 @@ import Footer from "./Footer";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
 import SearchBar from "./SearchBar";
-import { useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 const TopPicksCards = lazy(() => import("./TopPicksCards"));
 const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
+import {
+  selectSearchedCity,
+  selectYourCurrentCity,
+} from "../../features/home/homeSlice";
 
-const MainContent = ({ data, routes = false }) => {
+const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
   const dispatch = useDispatch();
+  const currentCity = useSelector(selectYourCurrentCity);
+  const searchedCity = useSelector(selectSearchedCity);
   const cards = data?.data?.cards;
   const title = cards?.[0].card?.card?.text;
   const navigation = useMemo(() => cards?.[1], [cards]);
@@ -75,13 +81,22 @@ const MainContent = ({ data, routes = false }) => {
     });
   });
 
+  // const Route = `${currentCity || searchedCity} | Navigate / ${title}`
+  const route = (
+    <div className="flex gap-1 items-center text-gray-600 text-xs">
+      <p>{`${currentCity || searchedCity} |`}</p>
+      <NavLink>Navigate</NavLink>
+      <p className="text-gray-900">{`/ ${title}`}</p>
+    </div>
+  );
+
   // console.log("Rest Data", restMenuData);
 
   return (
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">
       {routes && (
         <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
-          <p>Routes</p>
+          {route}
         </div>
       )}
 
@@ -144,7 +159,7 @@ const MainContent = ({ data, routes = false }) => {
                   }
                 >
                   <ItemsMainHeading
-                    key={item?.card?.card?.categoryId}
+                    key={item?.card?.card?.categoryId || Math.random()}
                     heading={item?.card?.card?.title}
                     categories={item?.card?.card?.categories}
                     topBorder={index === 0}
@@ -163,7 +178,7 @@ const MainContent = ({ data, routes = false }) => {
                 }
               >
                 <ItemsMainHeading
-                  key={item?.card?.card?.categoryId}
+                  key={item?.card?.card?.categoryId || Math.random()}
                   heading={item?.card?.card?.title}
                   items={item?.card?.card?.itemCards}
                   topBorder={index === 0}

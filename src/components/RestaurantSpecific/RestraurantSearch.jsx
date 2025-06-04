@@ -78,7 +78,7 @@ const RestaurantSearch = () => {
         ></i>
         <div>
           <input
-            className="text-gray-900 p-2 outline-none bg-transparent text-lg font-semibold"
+            className="text-gray-900 py-1.5 px-2 outline-none bg-transparent text-lg font-semibold"
             type="text"
             size={73}
             value={searchTerm}

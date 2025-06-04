@@ -1,6 +1,6 @@
 import { useState, memo, useRef, useEffect } from "react";
 import ItemsSubHeading from "./ItemsSubHeading";
-import ItemsCard from "./ItemsCard";
+import ItemsCard from "./ItemsCardContainer";
 import { useSelector } from "react-redux";
 import {
   selectVegOption,

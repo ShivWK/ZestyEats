@@ -4,7 +4,6 @@ const homeApiSlice = createApi({
   reducerPath: "homeFirestoreApi",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://swiggy-clone-klzu.onrender.com/api",
-    credentials: "include",
   }),
   keepUnusedDataFor: 60,
   refetchOnReconnect: true,
