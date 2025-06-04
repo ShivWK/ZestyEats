@@ -1,11 +1,11 @@
 import { useState, memo, useRef, useEffect } from "react";
-import ItemsSubHeading from "./ItemsSubHeading";
-import ItemsCard from "./ItemsCardContainer";
+import ItemsCardContainer from "./ItemsCardContainer";
 import { useSelector } from "react-redux";
 import {
   selectVegOption,
   selectNonVegOption,
 } from "../../features/home/restaurantsSlice";
+import ItemsCardContainer from "./ItemsCardContainer";
 
 const ItemsMainHeading = ({
   heading,
@@ -124,7 +124,7 @@ const ItemsMainHeading = ({
             }}
           >
             {items.map((item) => (
-              <ItemsCard key={item?.card?.info?.id} item={item?.card?.info} />
+              <ItemsCardContainer key={item?.card?.info?.id} item={item?.card?.info} />
             ))}
           </div>
         </div>
