@@ -2,10 +2,10 @@ const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 const tough = require("tough-cookie");
-const axiosCookieJarSupport = require("axios-cookiejar-support").default;
+const { wrapper } = require("axios-cookiejar-support");
 
 const jar = new tough.CookieJar();
-const client = axiosCookieJarSupport.wrapper(
+const client = wrapper(
   axios.create({
     jar,
     headers: {
@@ -67,7 +67,7 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
     const swiggyURL = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
 
     const response = await client.get(swiggyURL);
-    // console.log(response.headers);
+    console.log(response.headers);
     const origin = req.headers.origin;
     res.set({
       "Access-Control-Allow-Origin": origin,
