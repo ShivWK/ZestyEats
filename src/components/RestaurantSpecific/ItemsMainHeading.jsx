@@ -1,10 +1,12 @@
 import { useState, memo, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
+import ItemsSubHeading from "./ItemsSubHeading";
 import {
   selectVegOption,
   selectNonVegOption,
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
+
 
 const ItemsMainHeading = ({
   heading,

@@ -7,7 +7,7 @@ import Footer from "./Footer";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
 import SearchBar from "./SearchBar";
-import { NavLink, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 const TopPicksCards = lazy(() => import("./TopPicksCards"));
 const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
 import {
@@ -17,6 +17,7 @@ import {
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const currentCity = useSelector(selectYourCurrentCity);
   const searchedCity = useSelector(selectSearchedCity);
@@ -85,7 +86,7 @@ const MainContent = ({ data, routes = true }) => {
   const route = (
     <div className="flex gap-1 items-center text-gray-600 text-xs">
       <p>{`${currentCity || searchedCity} |`}</p>
-      <NavLink>Navigate</NavLink>
+      <p className="cursor-pointer" onClick={() => navigate(-1)}>Navigate</p>
       <p className="text-gray-900">{`/ ${title}`}</p>
     </div>
   );

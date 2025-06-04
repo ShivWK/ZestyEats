@@ -1,12 +1,8 @@
 import { memo, useEffect, lazy, Suspense } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 import FoodieThoughts from "./FoodieThoughts/FoodieThoughts";
-// import TopRestaurantChains from "./TopRestaurantChains";
-// import OnlineDeliveryRestaurant from "./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant";
-// import BestPlacesToEat from "./BestPlacesToEat";
-// import CuisionsNearMe from "./CuisionsNearMe";
-// import NearByRestaurants from "./NearByRestaurants";
 import Loader from "../Loader";
 const OnlineDeliveryRestaurant = lazy(() =>
   import("./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant")

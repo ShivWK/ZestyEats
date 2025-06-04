@@ -1,7 +1,17 @@
-import { useState, memo } from "react";
+import { useState, useRef, memo, useEffect } from "react";
 
 const ItemCard = memo(({ item }) => {
   const [isError, setIsError] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [overFlow, setOverFlow] = useState(false);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const ele = containerRef.current;
+    if (ele) {
+      setOverFlow(ele.scrollHeight > ele.clientHeight);
+    }
+  });
 
   const veg = item?.itemAttribute?.vegClassifier === "VEG";
   const defaultPrice = item?.price / 100 || item?.defaultPrice / 100 || 0;
@@ -19,7 +29,7 @@ const ItemCard = memo(({ item }) => {
 
   return (
     <div className="flex justify-between bg-white p-4 w-full">
-      <div className="flex flex-col itrms-start gap-1.5 p-2">
+      <div className="flex flex-col itrms-start gap-1.5 p-2 max-w-[525px]">
         {veg ? (
           <svg
             width="15"
@@ -72,9 +82,26 @@ const ItemCard = memo(({ item }) => {
             </p>
           </div>
         )}
-        <div className="relative">description</div>
+        <div
+          ref={containerRef}
+          className="relative overflow-clip"
+          style={{
+            maxHeight: isOpen ? "200px" : "42px",
+          }}
+        >
+          <p className="text-black text-sm text-wrap">{item?.description}</p>
+        </div>
+        {overFlow && (
+          <span
+            className="inline-flex w-fit gap-2 items-center font-bold text-gray-600 cursor-pointer -mt-3"
+            onClick={() => setIsOpen(!isOpen)}
+          >
+            ...more
+            <i className="inline ri-arrow-down-s-fill text-[#ff5200] text-2xl font-[200] -ml-2.5"></i>
+          </span>
+        )}
       </div>
-      <div className="relative h-48 w-48 rounded-xl overflow-hidden">
+      <div className="relative h-48 w-48 rounded-xl overflow-hidden shrink-0">
         <img
           src={isError ? "/images/fallback.png" : imageUrl}
           className="absolute top-0 left-0 h-full w-full object-center object-cover"
