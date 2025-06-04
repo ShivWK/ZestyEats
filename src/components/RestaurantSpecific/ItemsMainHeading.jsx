@@ -1,5 +1,4 @@
 import { useState, memo, useRef, useEffect } from "react";
-import ItemsCardContainer from "./ItemsCardContainer";
 import { useSelector } from "react-redux";
 import {
   selectVegOption,
