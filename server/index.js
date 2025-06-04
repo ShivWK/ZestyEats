@@ -19,6 +19,11 @@ const client = wrapper(
   })
 );
 
+client.interceptors.request.use((config) => {
+  console.log("Headers send: ", config.headers);
+  return config;
+})
+
 const app = express();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
@@ -53,8 +58,6 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/swiggy-restaurants", async (req, res) => {
-  console.log("by Browser", req.headers);
-
   try {
     const { lat, lng } = req.query;
 
