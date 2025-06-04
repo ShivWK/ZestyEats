@@ -1,5 +1,5 @@
 import { useState, memo } from "react";
-import ItemCard from "./ItemCard.jsx";
+import ItemCard from "./ItemCard";
 import {
   selectVegOption,
   selectNonVegOption,

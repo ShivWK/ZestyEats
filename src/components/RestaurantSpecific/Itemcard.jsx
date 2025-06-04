@@ -1,6 +1,6 @@
 import { useState, memo } from "react";
 
-const ItemsCard = memo(({ item }) => {
+const ItemCard = memo(({ item }) => {
   const [isError, setIsError] = useState(false);
 
   const veg = item?.itemAttribute?.vegClassifier === "VEG";
@@ -89,4 +89,4 @@ const ItemsCard = memo(({ item }) => {
   );
 });
 
-export default ItemsCard;
+export default ItemCard;
