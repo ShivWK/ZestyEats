@@ -22,7 +22,7 @@ const client = wrapper(
 client.interceptors.request.use((config) => {
   console.log("Headers send: ", config.headers);
   return config;
-})
+});
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -70,12 +70,20 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
     const swiggyURL = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
 
     const response = await client.get(swiggyURL);
-    console.log(response.headers);
+    console.log("Header by swiggy", response.headers);
+
     const origin = req.headers.origin;
     res.set({
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "GET",
     });
+
+    const cookies = await jar.getCookies("https://www.swiggy.com");
+    console.log(
+      "Stored cookies:",
+      cookies.map((c) => c.cookieString())
+    );
+
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
