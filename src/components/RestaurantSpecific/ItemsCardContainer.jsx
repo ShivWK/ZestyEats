@@ -1,5 +1,5 @@
 import { useState, memo } from "react";
-import ItemsCard from "./Itemcard";
+import ItemCard from "./ItemCard.jsx";
 import {
   selectVegOption,
   selectNonVegOption,
@@ -14,10 +14,10 @@ const ItemsCardContainer = memo(({ item }) => {
 
   return veg ? (
     vegOption ? (
-      <ItemsCard item={item} />
+      <ItemCard item={item} />
     ) : null
   ) : nonVegOption ? (
-    <ItemsCard item={item} />
+    <ItemCard item={item} />
   ) : null;
 });
 
