@@ -12,9 +12,9 @@ const ShimmerContainer = () => {
       </div>
       <div className="restro-count rounded-md w-3xs h-7 shimmerBg"></div>
       <div className="flex w-full gap-6 p-1 flex-wrap">
-        {arr.map((item) => {
+        {arr.map((item, index) => {
           return (
-            <div className="w-[270px] h-52 rounded-xl shimmerBg shrink-0"></div>
+            <div key={index} className="w-[270px] h-52 rounded-xl shimmerBg shrink-0"></div>
           );
         })}
       </div>

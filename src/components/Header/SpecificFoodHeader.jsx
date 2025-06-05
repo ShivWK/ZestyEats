@@ -5,7 +5,6 @@ import { useSelector } from "react-redux";
 
 const SpecificFoodHeader = () => {
     const category = useSelector(selectFoodCategory);
-    console.log(category);
 
     return (<HeaderWrapper>
         <MainHeader searchPlaceholder={category} />
