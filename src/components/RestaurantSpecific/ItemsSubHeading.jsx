@@ -68,7 +68,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
         }}
       >
         {itemCards.map((item) => (
-          <ItemsCardContainer key={item?.card?.info?.id} item={item?.card?.info} />
+          <ItemsCardContainer key={item?.card?.info?.id} item={item?.card?.info} isParentOpen={isOpen} />
         ))}
       </div>
     </div>

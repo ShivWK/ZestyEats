@@ -1,17 +1,21 @@
 import { useState, useRef, memo, useEffect } from "react";
 
-const ItemCard2 = memo(({ item }) => {
+const ItemCard2 = memo(({ item, isParentOpen }) => {
   const [isError, setIsError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [overFlow, setOverFlow] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
-    const ele = containerRef.current;
-    if (ele) {
-      setOverFlow(ele.scrollHeight > ele.clientHeight);
-    }
-  });
+    // setTimeout(() => {
+      const ele = containerRef.current;
+      if (ele) {
+        setOverFlow(ele.scrollHeight > ele.clientHeight);
+      }
+    // }, 50)
+  }, [isParentOpen, isOpen]);
+
+  // when parent compo has display none that time the card's scrollHeight and clientHeight bot are 0 they don't render so we need to check it when parent is opened
 
   const veg = item?.itemAttribute?.vegClassifier === "VEG";
   const defaultPrice = item?.price / 100 || item?.defaultPrice / 100 || 0;
