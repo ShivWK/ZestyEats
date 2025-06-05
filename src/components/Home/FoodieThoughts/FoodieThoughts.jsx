@@ -6,7 +6,7 @@ import HorizontalCarousel from "../../HorizontalCarousel";
 
 const FoodieThoughts = () => {
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
-  console.log(foodieThoughtsData);
+  // console.log(foodieThoughtsData);
   
   const [user, setUser] = useState("Shivendra");
   const title = user ? `${user}, what's on your mind?` : "What's on your mind?";

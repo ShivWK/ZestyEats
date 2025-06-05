@@ -5,6 +5,7 @@ const restaurantsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://swiggy-clone-klzu.onrender.com/api",
   }),
+  keepUnusedDataFor: 120,
 
   endpoints: (builder) => ({
     getSpecificRestaurantData: builder.query({

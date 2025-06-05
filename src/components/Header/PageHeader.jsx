@@ -3,6 +3,7 @@ import HomeHeader from "./HomeHeader";
 import ProfileHeader from "./ProfileHeader";
 import CartHeader from "./CartHeader";
 import RestaurantsHeader from "./RestaurantsHeader";
+import SpecificFoodHeader from "./SpecificFoodHeader";
 import { useLocation } from "react-router-dom";
 import { memo } from "react";
 
@@ -24,6 +25,8 @@ const PageHeader = memo(() => {
     return <CartHeader />;
   } else if (pathname.includes("restaurantSpecific") || pathname.includes("dishSearch")) {
     return <RestaurantsHeader />;
+  } else if (pathname.includes("specificFood")) {
+    return <SpecificFoodHeader />
   }
 
   return null;

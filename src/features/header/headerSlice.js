@@ -5,6 +5,7 @@ const initialState = {
     profileSelfHeader: false,
     offerDinoutsSelfHeader: false,
     homeSelfHeader: false,
+    currentFoodCategory: "",
 }
 
 const headerSlice = createSlice({
@@ -26,6 +27,9 @@ const headerSlice = createSlice({
         setOfferDinoutsSelfHeader: (state, action) => {
             state.offerDinoutsSelfHeader = action.payload;
         },
+        setCurrentFoodCategory: (state, action) => {
+                state.currentFoodCategory = action.payload
+            }
     }
 })
 
@@ -35,10 +39,12 @@ export const selectHomeSelfHeader = state => state.homeSelfHeader;
 export const selectHelpSelfHeader = state => state.helpSelfHeader;
 export const selectProfileSelfHeader = state => state.profileSelfHeader;
 export const selectOfferDinoutsSelfHeader = state => state.offerDinoutsSelfHeader;
+export const selectFoodCategory = state => state.header.currentFoodCategory;
 
 export const {
     setHomeSelfHeader,
     setHelpSelfHeader,
     setProfileSelfHeader,
     setOfferDinoutsSelfHeader,
+    setCurrentFoodCategory,
 } = headerSlice.actions;

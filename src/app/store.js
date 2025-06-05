@@ -1,25 +1,33 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/query";
 import homeApiSlice from "../features/home/homeApiSlice";
-import HomeReducer from "../features/home/homeSlice";
-import { loginReducer } from "../features/Login/loginSlice";
+import homeReducer from "../features/home/homeSlice";
+import loginReducer from "../features/Login/loginSlice";
 import searchApiSlice from "../features/home/searchApiSlice";
-import HeaderReducer from "../features/header/headerSlice";
+import headerReducer from "../features/header/headerSlice";
 import restaurantsApi from "../features/home/restaurantsApiSlice";
 import restaurantReducer from "../features/home/restaurantsSlice";
+import foodSpecificApiSlice from "../features/home/foodSpecificApiSlice";
 
 const store = configureStore({
-    reducer: {
-        [homeApiSlice.reducerPath]: homeApiSlice.reducer,
-        [searchApiSlice.reducerPath]: searchApiSlice.reducer,
-        [restaurantsApi.reducerPath]: restaurantsApi.reducer,
-        home: HomeReducer,
-        login: loginReducer,
-        header: HeaderReducer,
-        restaurant: restaurantReducer,
-    },
-    middleware: (defaultMiddlewares) => [...defaultMiddlewares(), homeApiSlice.middleware, searchApiSlice.middleware, restaurantsApi.middleware],
-})
+  reducer: {
+    [homeApiSlice.reducerPath]: homeApiSlice.reducer,
+    [searchApiSlice.reducerPath]: searchApiSlice.reducer,
+    [restaurantsApi.reducerPath]: restaurantsApi.reducer,
+    [foodSpecificApiSlice.reducerPath]: foodSpecificApiSlice.reducer,
+    home: homeReducer,
+    login: loginReducer,
+    header: headerReducer,
+    restaurant: restaurantReducer,
+  },
+  middleware: (defaultMiddlewares) => [
+    ...defaultMiddlewares(),
+    homeApiSlice.middleware,
+    searchApiSlice.middleware,
+    restaurantsApi.middleware,
+    foodSpecificApiSlice.middleware,
+  ],
+});
 
 setupListeners(store.dispatch);
 

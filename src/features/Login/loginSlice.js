@@ -60,7 +60,7 @@ const loginSlice = createSlice({
     }
 });
 
-export const loginReducer = loginSlice.reducer;
+export default loginSlice.reducer;
 export const selectlogInModal = (state) => state.login.isLoginModalOpen;
 export const selectLoginOtp = (state) => state.login.isLoginOtpSend;
 export const selectSignUpOtp = (state) => state.login.isSignUpOtpSend;

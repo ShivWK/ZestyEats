@@ -15,9 +15,9 @@ import Offers_Dinouts from "./components/Offers_Dinouts/Offers_Dinouts";
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
 import RestaurantSearch from "./components/RestaurantSpecific/RestraurantSearch";
-import RestaurantSpecific, {
-  loader,
-} from "./components/RestaurantSpecific/RestaurantSpecific";
+import RestaurantSpecific from "./components/RestaurantSpecific/RestaurantSpecific";
+import FoodSpecific from "./components/FoodSpecific/FoodSpecific";
+import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
 
 export default function App() {
   const router = createBrowserRouter(
@@ -33,9 +33,10 @@ export default function App() {
         <Route
           path="restaurantSpecific/:lat/:lng/:id"
           element={<RestaurantSpecific />}
-          loader={loader}
+          loader={specificRestroLoader}
         />
         <Route path="dishSearch" element={<RestaurantSearch />} />
+        <Route path="specificFood" element={<FoodSpecific />} loader={specificFoodLoader}/>
       </Route>
     )
   );
