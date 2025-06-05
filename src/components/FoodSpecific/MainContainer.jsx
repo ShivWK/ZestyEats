@@ -1,3 +1,9 @@
+import Cards from "./../Home/Cards";
 
+const MainContainer = ({ data }) => {
+    const cards = data?.cards;
+    console.log(cards)
+    return <h1>Hi</h1> 
+}
 
-// URL: https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tgs}&sortBy=&filters=&type=rcv2&offset=0&page_type=null
+export default MainContainer;
