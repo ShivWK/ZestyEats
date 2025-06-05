@@ -20,15 +20,15 @@ const Cards = memo(({ data, from }) => {
 
   return (
     <NavLink
-      to={`restaurantSpecific/${lat}/${lng}/${data?.id}`}
+      to={`/restaurantSpecific/${lat}/${lng}/${data?.id}`}
       onClick={handleClick}
-      style={{ width: from === "online" ? 240 : (from === "specificFood") ? 384 : 275 }}
+      style={{ width: from === "online" ? 240 : (from === "specificFood") ? 360 : 275 }}
       className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}
     >
       <div
         className={`w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}
         style={{
-          height: from === "online" ? 160 : (from === "specifFood") ? 360 : 176,
+          height: from === "online" ? 160 : (from === "specificFood") ? 240 : 176,
           backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl}), url("/images/fallback.png")`,
         }}
       >

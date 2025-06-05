@@ -2,7 +2,7 @@ const ShimmerContainer = () => {
   const arr = Array.from({ length: 8 }, (_, i) => i);
 
   return (
-    <div className="flex flex-col gap-5 w-full max-w-[1210px] pt-24 p-3 mx-auto">
+    <div className="flex flex-col gap-5 w-full max-w-[1210px] pt-32 p-3 mx-auto">
       <div className="heading rounded-md w-xl h-9 shimmerBg"></div>
       <div className="description rounded-md w-3xl h-7 shimmerBg"></div>
       <div className="shorter rounded-md flex gap-3">
