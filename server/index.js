@@ -78,16 +78,19 @@ app.get("/api/swiggy-restaurants", async (req, res) => {
       "Access-Control-Allow-Methods": "GET",
     });
 
-    const cookies = await jar.getCookies("https://www.swiggy.com");
-    console.log(
-      "Stored cookies:",
-      cookies.map((c) => c.cookieString())
-    );
+    // const cookies = await jar.getCookies("https://www.swiggy.com");
+    // console.log(
+    //   "Stored cookies:",
+    //   cookies.map((c) => c.cookieString())
+    // );
 
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Swiggy Proxy Error:", error.message);
-    res.status(500).json({ error: "Failed to fetch restaurants data" });
+    res.status(404).json({
+      status: "failed",
+      error: error.message,
+    });
   }
 });
 
@@ -103,17 +106,9 @@ app.get("/api/place-autocomplete", async (req, res) => {
 
     const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
 
-    const response = await client.get(swiggyURL, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        Accept: "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        Referer: "https://www.swiggy.com/",
-        Origin: "https://www.swiggy.com",
-      },
-    });
-
+    const response = await client.get(swiggyURL);
     const origin = req.headers.origin;
+
     res.set({
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "GET",
@@ -121,7 +116,10 @@ app.get("/api/place-autocomplete", async (req, res) => {
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Place Autocomplete Error:", error.message);
-    res.status(500).json({ error: "Failed to fetch place suggestions" });
+    res.status(404).json({
+      status: "failed",
+      error: error.message,
+    });
   }
 });
 
@@ -137,17 +135,9 @@ app.get("/api/address-recommend", async (req, res) => {
 
     const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
 
-    const response = await client.get(swiggyURL, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        Accept: "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        Referer: "https://www.swiggy.com/",
-        Origin: "https://www.swiggy.com",
-      },
-    });
-
+    const response = await client.get(swiggyURL);
     const origin = req.headers.origin;
+
     res.set({
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "GET",
@@ -155,7 +145,10 @@ app.get("/api/address-recommend", async (req, res) => {
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Address Recommend Error:", error.message);
-    res.status(500).json({ error: "Failed to fetch address recommendation" });
+    res.status(404).json({
+      status: "failed",
+      error: error.message,
+    });
   }
 });
 
@@ -171,17 +164,9 @@ app.get("/api/address-from-coordinates", async (req, res) => {
 
     const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
 
-    const response = await client.get(swiggyURL, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        Accept: "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        Referer: "https://www.swiggy.com/",
-        Origin: "https://www.swiggy.com",
-      },
-    });
-
+    const response = await client.get(swiggyURL);
     const origin = req.headers.origin;
+
     res.set({
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "GET",
@@ -189,9 +174,9 @@ app.get("/api/address-from-coordinates", async (req, res) => {
     res.status(200).json(response.data);
   } catch (error) {
     console.error("Address from Coordinates Error:", error.message);
-    res.status(500).json({
-      error: "Failed to fetch address from coordinates",
-      details: error.message,
+    res.status(404).json({
+      status: "failed",
+      error: error.message,
     });
   }
 });
@@ -208,17 +193,9 @@ app.get("/api/specific-restaurants", async (req, res) => {
   const mainUrl = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`;
 
   try {
-    const response = await client.get(mainUrl, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        Accept: "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        Referer: "https://www.swiggy.com/",
-        Origin: "https://www.swiggy.com",
-      },
-    });
-
+    const response = await client.get(mainUrl);
     const origin = req.headers.origin;
+
     res.set({
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "GET",
@@ -226,9 +203,9 @@ app.get("/api/specific-restaurants", async (req, res) => {
     res.status(200).json(response.data);
   } catch (err) {
     console.error("Restaurant data can't be fetched: ", err.message);
-    res.status(500).json({
-      error: "Restaurant data can't be fetched",
-      details: err.message,
+    res.status(404).json({
+      status: "failed",
+      error: err.message,
     });
   }
 });
@@ -245,17 +222,10 @@ app.get("/api/dish-search", async (req, res) => {
   const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
 
   try {
-    const response = await client.get(searchUrl, {
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        Accept: "application/json",
-        "Accept-Language": "en-US,en;q=0.9",
-        Referer: "https://www.swiggy.com/",
-        Origin: "https://www.swiggy.com",
-      },
-    });
+    const response = await client.get(searchUrl);
     // console.log(response);
     const origin = req.headers.origin;
+
     res.set({
       "Access-Control-Allow-Origin": origin,
       "Access-Control-Allow-Methods": "GET",
@@ -264,8 +234,37 @@ app.get("/api/dish-search", async (req, res) => {
   } catch (err) {
     console.log("Dish search data can't be fetched; ", err);
     res.status(404).json({
-      error: "Dish search data can't be fetched",
-      details: err.message,
+      status: "failed",
+      error: err.message,
+    });
+  }
+});
+
+app.get("/api/food-category", async (req, res) => {
+  const { lat, lng, collection_id, tags } = req.query;
+
+  if (!lat || !lng || !collection_id || !tags) {
+    return res.status(400).json({
+      error: "lat, lng, collection_id, and tags are required",
+    });
+  }
+
+  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
+
+  try {
+    const response = await client.get(swiggyUrl);
+    const origin = req.headers.origin;
+
+    res.set({
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET",
+    });
+    res.status(200).json(response?.data);
+  } catch (err) {
+    console.log("Error occured:", err);
+    res.status(404).json({
+      status: "failed",
+      error: err.message,
     });
   }
 });
