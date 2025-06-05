@@ -23,22 +23,23 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
     setCount(initialCount);
   }, []);
 
-   useEffect(() => {
-      if (contentRef.current) {
-        const present = contentRef.current.children.length;
-        setShouldRender(present > 0);
-        setCount(contentRef.current.children.length);
-      }
-    }, [vegOption, nonVegOption]);
+  useEffect(() => {
+    if (contentRef.current) {
+      const present = contentRef.current.children.length;
+      setShouldRender(present > 0);
+      setCount(contentRef.current.children.length);
+    }
+  }, [vegOption, nonVegOption]);
 
   return (
-    <div onClick={handleClick} className="w-full cursor-pointer"
+    <div className="w-full"
       style={{
         display: shouldRender ? "block" : "none",
       }}
     >
       <div
-        className="flex justify-between items-center bg-white p-2"
+        onClick={handleClick}
+        className="flex justify-between items-center bg-white p-2 cursor-pointer"
         style={{
           borderBottom: borderBottom
             ? isOpen
@@ -62,8 +63,8 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
         ref={contentRef}
         className="overflow-hidden transition-all duration-300 linear"
         style={{
-            display: isOpen ? "block" : "none",
-            borderBottom: "2px solid #e5e7eb",
+          display: isOpen ? "block" : "none",
+          borderBottom: "2px solid #e5e7eb",
         }}
       >
         {itemCards.map((item) => (

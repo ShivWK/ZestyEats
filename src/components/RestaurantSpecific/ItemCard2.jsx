@@ -28,7 +28,7 @@ const ItemCard2 = memo(({ item }) => {
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item?.imageId}`;
 
   return (
-    <div className="flex justify-between bg-white p-4 w-full">
+    <div className="flex justify-between bg-white p-4 w-full border-b-[1px] border-gray-300">
       <div className="flex flex-col itrms-start gap-1.5 p-2 max-w-[525px]">
         {veg ? (
           <svg
