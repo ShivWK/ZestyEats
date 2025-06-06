@@ -125,14 +125,11 @@ const MainContent = ({ data, routes = true }) => {
           <Suspense
             fallback={
               <div className="flex justify-between">
-                <div className="flex items-center justify-center w-64 h-60 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                  Loading...
+                <div className="w-64 h-60 rounded-xl shimmerBg">
                 </div>
-                <div className="flex items-center justify-center w-64 h-60 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                  Loading...
+                <div className="w-64 h-60 rounded-xl shimmerBg">
                 </div>
-                <div className="flex items-center justify-center w-64 h-60 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                  Loading...
+                <div className="w-64 h-60 rounded-xl shimmerBg">
                 </div>
               </div>
             }
@@ -154,8 +151,8 @@ const MainContent = ({ data, routes = true }) => {
               return (
                 <Suspense
                   fallback={
-                    <div className="flex items-center justify-center w-full h-36 rounded-xl shimmerBg mt-2.5 text-sm text-gray-900 font-semibold">
-                      Loading...
+                    <div className="w-full h-36 rounded-xl shimmerBg mt-2.5">
+  
                     </div>
                   }
                 >
@@ -173,8 +170,8 @@ const MainContent = ({ data, routes = true }) => {
             return (
               <Suspense
                 fallback={
-                  <div className="flex items-center justify-center w-full h-36 rounded-xl shimmerBg mt-2.5 text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-full h-36 rounded-xl shimmerBg mt-2.5">
+
                   </div>
                 }
               >

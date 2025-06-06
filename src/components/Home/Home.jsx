@@ -131,17 +131,13 @@ const Home = memo(() => {
             <Suspense
               fallback={
                 <div className="flex justify-between">
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
                 </div>
               }
@@ -158,17 +154,13 @@ const Home = memo(() => {
             <Suspense
               fallback={
                 <div className="flex justify-between">
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-44 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className=" w-60 h-44 rounded-xl shimmerBg">
                   </div>
                 </div>
               }
@@ -188,17 +180,12 @@ const Home = memo(() => {
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-60 h-20 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-60 h-20 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
-                  </div>
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-60 h-20 rounded-xl shimmerBg"></div>
+                  <div className="w-60 h-20 rounded-xl shimmerBg">
                   </div>
                 </div>
               }
@@ -218,17 +205,13 @@ const Home = memo(() => {
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-60 h-20 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-60 h-20 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-60 h-20 rounded-xl shimmerBg">
                   </div>
-                  <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                    Loading...
+                  <div className="w-60 h-20 rounded-xl shimmerBg">
                   </div>
                 </div>
               }
@@ -247,17 +230,13 @@ const Home = memo(() => {
           <Suspense
             fallback={
               <div className="flex justify-between">
-                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                  Loading...
+                <div className="w-60 h-20 rounded-xl shimmerBg">
                 </div>
-                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                  Loading...
+                <div className="w-60 h-20 rounded-xl shimmerBg">
                 </div>
-                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                  Loading...
+                <div className="w-60 h-20 rounded-xl shimmerBg">
                 </div>
-                <div className="flex items-center justify-center w-60 h-20 rounded-xl shimmerBg text-sm text-gray-900 font-semibold">
-                  Loading...
+                <div className="w-60 h-20 rounded-xl shimmerBg">
                 </div>
               </div>
             }
