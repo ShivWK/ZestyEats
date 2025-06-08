@@ -23,7 +23,6 @@ exports.homePageData =  async (req, res) => {
     const swiggyURL = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
 
     const response = await client.get(swiggyURL);
-    console.log("Header by swiggy", response.headers);
 
     const origin = req.headers.origin;
     res.set({
