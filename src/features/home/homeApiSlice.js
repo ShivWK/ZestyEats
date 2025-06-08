@@ -11,7 +11,7 @@ const homeApiSlice = createApi({
   endpoints: (builder) => ({
     getHomePageData: builder.query({
       query: ({ lat, lng }) => ({
-        url: "/swiggy-restaurants",
+        url: "/homePageData",
         params: { lat, lng },
       }),
     }),

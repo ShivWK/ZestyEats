@@ -1,6 +1,4 @@
-const express = require("express");
 const axios = require("axios");
-const cors = require("cors");
 
 const client = axios.create({
   headers: {
@@ -12,40 +10,7 @@ const client = axios.create({
   },
 })
 
-const app = express();
-const PORT = process.env.PORT || 5000;
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://swiggy-clone-beige-gamma.vercel.app",
-];
-
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl)
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-  })
-);
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.status(500).send(`
-    Swiggy Proxy API is running. Available endpoints:
-    <ul>
-      <li>/api/swiggy-restaurants?lat=YOUR_LAT&lng=YOUR_LNG</li>
-      <li>/api/place-autocomplete?input=SEARCH_TERM</li>
-      <li>/api/address-recommend?place_id=PLACE_ID</li>
-      <li>/api/address-from-coordinates?latlng=latitude%2Clongitude</li>
-    </ul>
-  `);
-});
-
-app.get("/api/homePageData", async (req, res) => {
+exports.homePageData =  async (req, res) => {
   try {
     const { lat, lng } = req.query;
 
@@ -74,38 +39,9 @@ app.get("/api/homePageData", async (req, res) => {
       error: error.message,
     });
   }
-});
+}
 
-app.get("/api/place-autocomplete", async (req, res) => {
-  try {
-    const { input } = req.query;
-
-    if (!input) {
-      return res
-        .status(400)
-        .json({ error: "Input query parameter is required" });
-    }
-
-    const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
-
-    const response = await client.get(swiggyURL);
-    const origin = req.headers.origin;
-
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Place Autocomplete Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
-    });
-  }
-});
-
-app.get("/api/address-recommend", async (req, res) => {
+exports.addressRecommend = async (req, res) => {
   try {
     const { place_id } = req.query;
 
@@ -132,9 +68,38 @@ app.get("/api/address-recommend", async (req, res) => {
       error: error.message,
     });
   }
-});
+}
 
-app.get("/api/address-from-coordinates", async (req, res) => {
+exports.addressAutoComplete = async (req, res) => {
+  try {
+    const { input } = req.query;
+
+    if (!input) {
+      return res
+        .status(400)
+        .json({ error: "Input query parameter is required" });
+    }
+
+    const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
+
+    const response = await client.get(swiggyURL);
+    const origin = req.headers.origin;
+
+    res.set({
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET",
+    });
+    res.status(200).json(response.data);
+  } catch (error) {
+    console.error("Place Autocomplete Error:", error.message);
+    res.status(404).json({
+      status: "failed",
+      error: error.message,
+    });
+  }
+}
+
+exports.addressFromCoordinates = async (req, res) => {
   try {
     const { lat1, lng1 } = req.query;
 
@@ -161,9 +126,9 @@ app.get("/api/address-from-coordinates", async (req, res) => {
       error: error.message,
     });
   }
-});
+}
 
-app.get("/api/specific-restaurants", async (req, res) => {
+exports.specificRestaurantData = async (req, res) => {
   const { lat, lng, id } = req.query;
 
   if (!lat || !lng || !id) {
@@ -190,9 +155,9 @@ app.get("/api/specific-restaurants", async (req, res) => {
       error: err.message,
     });
   }
-});
+}
 
-app.get("/api/dish-search", async (req, res) => {
+exports.dishSearchData = async (req, res) => {
   const { lat, lng, restro_Id, searchTerm } = req.query;
 
   if (!lat || !lng || !restro_Id || !searchTerm) {
@@ -220,9 +185,9 @@ app.get("/api/dish-search", async (req, res) => {
       error: err.message,
     });
   }
-});
+}
 
-app.get("/api/food-category", async (req, res) => {
+exports.specificFoodCategoryData = async (req, res) => {
   const { lat, lng, collection_id, tags } = req.query;
 
   if (!lat || !lng || !collection_id || !tags) {
@@ -249,14 +214,8 @@ app.get("/api/food-category", async (req, res) => {
       error: err.message,
     });
   }
-});
+}
 
-// Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
 
-app.use((req, res) => {
-  res.status(404).send("Not Found");
-});
 
-app.listen(PORT, () => {
-  // console.log(`Proxy server running on http://localhost:${PORT}`);
-});
+
