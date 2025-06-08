@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const homeApiSlice = createApi({
   reducerPath: "homeFirestoreApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://swiggy-clone-klzu.onrender.com/api",
+    baseUrl: "https://swiggy-clone-klzu.onrender.com/api/swiggy",
   }),
   keepUnusedDataFor: 60,
   refetchOnReconnect: true,

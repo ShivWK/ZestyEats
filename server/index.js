@@ -1,6 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
+const swiggyRouter = require("./routes/swiggyRouter")
 
 const client = axios.create({
   headers: {
@@ -45,213 +46,216 @@ app.get("/", (req, res) => {
   `);
 });
 
-app.get("/api/homePageData", async (req, res) => {
-  try {
-    const { lat, lng } = req.query;
+// app.get("/api/homePageData", async (req, res) => {
+//   try {
+//     const { lat, lng } = req.query;
 
-    if (!lat || !lng) {
-      return res
-        .status(400)
-        .json({ error: "Both lat and lng query parameters are required" });
-    }
+//     if (!lat || !lng) {
+//       return res
+//         .status(400)
+//         .json({ error: "Both lat and lng query parameters are required" });
+//     }
 
-    const swiggyURL = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
+//     const swiggyURL = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
 
-    const response = await client.get(swiggyURL);
-    console.log("Header by swiggy", response.headers);
+//     const response = await client.get(swiggyURL);
+//     console.log("Header by swiggy", response.headers);
 
-    const origin = req.headers.origin;
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
+//     const origin = req.headers.origin;
+//     res.set({
+//       "Access-Control-Allow-Origin": origin,
+//       "Access-Control-Allow-Methods": "GET",
+//     });
 
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Swiggy Proxy Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
-    });
-  }
-});
+//     res.status(200).json(response.data);
+//   } catch (error) {
+//     console.error("Swiggy Proxy Error:", error.message);
+//     res.status(404).json({
+//       status: "failed",
+//       error: error.message,
+//     });
+//   }
+// });
 
-app.get("/api/place-autocomplete", async (req, res) => {
-  try {
-    const { input } = req.query;
+// app.get("/api/place-autocomplete", async (req, res) => {
+//   try {
+//     const { input } = req.query;
 
-    if (!input) {
-      return res
-        .status(400)
-        .json({ error: "Input query parameter is required" });
-    }
+//     if (!input) {
+//       return res
+//         .status(400)
+//         .json({ error: "Input query parameter is required" });
+//     }
 
-    const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
+//     const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
 
-    const response = await client.get(swiggyURL);
-    const origin = req.headers.origin;
+//     const response = await client.get(swiggyURL);
+//     const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Place Autocomplete Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
-    });
-  }
-});
+//     res.set({
+//       "Access-Control-Allow-Origin": origin,
+//       "Access-Control-Allow-Methods": "GET",
+//     });
+//     res.status(200).json(response.data);
+//   } catch (error) {
+//     console.error("Place Autocomplete Error:", error.message);
+//     res.status(404).json({
+//       status: "failed",
+//       error: error.message,
+//     });
+//   }
+// });
 
-app.get("/api/address-recommend", async (req, res) => {
-  try {
-    const { place_id } = req.query;
+// app.get("/api/address-recommend", async (req, res) => {
+//   try {
+//     const { place_id } = req.query;
 
-    if (!place_id) {
-      return res
-        .status(400)
-        .json({ error: "place_id query parameter is required" });
-    }
+//     if (!place_id) {
+//       return res
+//         .status(400)
+//         .json({ error: "place_id query parameter is required" });
+//     }
 
-    const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
+//     const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
 
-    const response = await client.get(swiggyURL);
-    const origin = req.headers.origin;
+//     const response = await client.get(swiggyURL);
+//     const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Address Recommend Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
-    });
-  }
-});
+//     res.set({
+//       "Access-Control-Allow-Origin": origin,
+//       "Access-Control-Allow-Methods": "GET",
+//     });
+//     res.status(200).json(response.data);
+//   } catch (error) {
+//     console.error("Address Recommend Error:", error.message);
+//     res.status(404).json({
+//       status: "failed",
+//       error: error.message,
+//     });
+//   }
+// });
 
-app.get("/api/address-from-coordinates", async (req, res) => {
-  try {
-    const { lat1, lng1 } = req.query;
+// app.get("/api/address-from-coordinates", async (req, res) => {
+//   try {
+//     const { lat1, lng1 } = req.query;
 
-    if (!lat1 || !lng1) {
-      return res.status(400).json({
-        error: "Both lat and lng query parameters are required",
-      });
-    }
+//     if (!lat1 || !lng1) {
+//       return res.status(400).json({
+//         error: "Both lat and lng query parameters are required",
+//       });
+//     }
 
-    const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
+//     const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
 
-    const response = await client.get(swiggyURL);
-    const origin = req.headers.origin;
+//     const response = await client.get(swiggyURL);
+//     const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Address from Coordinates Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
-    });
-  }
-});
+//     res.set({
+//       "Access-Control-Allow-Origin": origin,
+//       "Access-Control-Allow-Methods": "GET",
+//     });
+//     res.status(200).json(response.data);
+//   } catch (error) {
+//     console.error("Address from Coordinates Error:", error.message);
+//     res.status(404).json({
+//       status: "failed",
+//       error: error.message,
+//     });
+//   }
+// });
 
-app.get("/api/specific-restaurants", async (req, res) => {
-  const { lat, lng, id } = req.query;
+// app.get("/api/specific-restaurants", async (req, res) => {
+//   const { lat, lng, id } = req.query;
 
-  if (!lat || !lng || !id) {
-    return res.status(400).json({
-      error: "lat, lng and id are required",
-    });
-  }
+//   if (!lat || !lng || !id) {
+//     return res.status(400).json({
+//       error: "lat, lng and id are required",
+//     });
+//   }
 
-  const mainUrl = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`;
+//   const mainUrl = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`;
 
-  try {
-    const response = await client.get(mainUrl);
-    const origin = req.headers.origin;
+//   try {
+//     const response = await client.get(mainUrl);
+//     const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (err) {
-    console.error("Restaurant data can't be fetched: ", err.message);
-    res.status(404).json({
-      status: "failed",
-      error: err.message,
-    });
-  }
-});
+//     res.set({
+//       "Access-Control-Allow-Origin": origin,
+//       "Access-Control-Allow-Methods": "GET",
+//     });
+//     res.status(200).json(response.data);
+//   } catch (err) {
+//     console.error("Restaurant data can't be fetched: ", err.message);
+//     res.status(404).json({
+//       status: "failed",
+//       error: err.message,
+//     });
+//   }
+// });
 
-app.get("/api/dish-search", async (req, res) => {
-  const { lat, lng, restro_Id, searchTerm } = req.query;
+// app.get("/api/dish-search", async (req, res) => {
+//   const { lat, lng, restro_Id, searchTerm } = req.query;
 
-  if (!lat || !lng || !restro_Id || !searchTerm) {
-    return res.status(400).json({
-      error: "lat, lng, restro_id and searchTerm are required",
-    });
-  }
+//   if (!lat || !lng || !restro_Id || !searchTerm) {
+//     return res.status(400).json({
+//       error: "lat, lng, restro_id and searchTerm are required",
+//     });
+//   }
 
-  const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
+//   const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
 
-  try {
-    const response = await client.get(searchUrl);
-    // console.log(response);
-    const origin = req.headers.origin;
+//   try {
+//     const response = await client.get(searchUrl);
+//     // console.log(response);
+//     const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (err) {
-    console.log("Dish search data can't be fetched; ", err);
-    res.status(404).json({
-      status: "failed",
-      error: err.message,
-    });
-  }
-});
+//     res.set({
+//       "Access-Control-Allow-Origin": origin,
+//       "Access-Control-Allow-Methods": "GET",
+//     });
+//     res.status(200).json(response.data);
+//   } catch (err) {
+//     console.log("Dish search data can't be fetched; ", err);
+//     res.status(404).json({
+//       status: "failed",
+//       error: err.message,
+//     });
+//   }
+// });
 
-app.get("/api/food-category", async (req, res) => {
-  const { lat, lng, collection_id, tags } = req.query;
+// app.get("/api/food-category", async (req, res) => {
+//   const { lat, lng, collection_id, tags } = req.query;
 
-  if (!lat || !lng || !collection_id || !tags) {
-    return res.status(400).json({
-      error: "lat, lng, collection_id, and tags are required",
-    });
-  }
+//   if (!lat || !lng || !collection_id || !tags) {
+//     return res.status(400).json({
+//       error: "lat, lng, collection_id, and tags are required",
+//     });
+//   }
 
-  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
+//   const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
 
-  try {
-    const response = await client.get(swiggyUrl);
-    const origin = req.headers.origin;
+//   try {
+//     const response = await client.get(swiggyUrl);
+//     const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response?.data);
-  } catch (err) {
-    console.log("Error occured:", err);
-    res.status(404).json({
-      status: "failed",
-      error: err.message,
-    });
-  }
-});
+//     res.set({
+//       "Access-Control-Allow-Origin": origin,
+//       "Access-Control-Allow-Methods": "GET",
+//     });
+//     res.status(200).json(response?.data);
+//   } catch (err) {
+//     console.log("Error occured:", err);
+//     res.status(404).json({
+//       status: "failed",
+//       error: err.message,
+//     });
+//   }
+// });
 
 // Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
+
+app.use("/api/swiggy", swiggyRouter);
+
 
 app.use((req, res) => {
   res.status(404).send("Not Found");

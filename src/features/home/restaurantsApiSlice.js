@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const restaurantsApi = createApi({
   reducerPath: "restuarants",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://swiggy-clone-klzu.onrender.com/api",
+    baseUrl: "https://swiggy-clone-klzu.onrender.com/api/swiggy",
   }),
   keepUnusedDataFor: 120,
 
