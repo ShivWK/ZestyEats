@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleContact } from "../../features/home/helpPageSlice";
 
-const MenuBar = () => {
+const MenuBar = memo(() => {
     const menu = ["Contact Us", "FAQs", "Legal"];
     const [activeIndex, setActiveIndex] = useState(0);
     const dispatch = useDispatch();
@@ -21,6 +21,7 @@ const MenuBar = () => {
             {menu.map((item, index) => {
                 return (
                     <div
+                    key={index}
                         onClick={() => handleClick(index)}
                         className="group flex items-center justify-center py-6"
                         style={{
@@ -36,6 +37,6 @@ const MenuBar = () => {
             })}
         </div>
     );
-};
+});
 
 export default MenuBar;

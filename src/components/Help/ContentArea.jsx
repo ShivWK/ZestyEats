@@ -2,8 +2,9 @@ import { useSelector } from "react-redux";
 import { selectContact } from "../../features/home/helpPageSlice";
 import Contact from "./Contact";
 import LegalAndFaqs from "./LegalAndFaqs";
+import { memo } from "react";
 
-const ContentArea = () => {
+const ContentArea = memo(() => {
     const contact = useSelector(selectContact);
 
     return (
@@ -11,6 +12,6 @@ const ContentArea = () => {
             (<Contact />)
             : (<LegalAndFaqs />)
     );
-};
+});
 
 export default ContentArea;

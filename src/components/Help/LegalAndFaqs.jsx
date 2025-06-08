@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 
-const LegalAndFaqs = () => {
+const LegalAndFaqs = memo(() => {
     const [activeIndex, setActiveIndex] = useState(0);
 
     const handleClick = (index) => {
@@ -38,7 +38,7 @@ const LegalAndFaqs = () => {
         <p className="text-[25px] font-bold text-black tracking-tight mb-4 ">Heading</p>
         {data.map((obj, index) => {
             return (
-                <div className="border-b-2 border-gray-300">
+                <div key={index} className="border-b-2 border-gray-300">
                     <div onClick={() => handleClick(index)} className="group flex justify-between items-center py-3 px-2 cursor-pointer" style={{
                         backgroundColor: activeIndex === index ? "rgba(255,81,0,0.15)" : "white"
                     }}>
@@ -63,6 +63,6 @@ const LegalAndFaqs = () => {
             );
         })}
     </div>)
-}
+});
 
 export default LegalAndFaqs;
