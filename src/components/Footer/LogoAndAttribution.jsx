@@ -2,13 +2,16 @@ const LogoAndAttribution = () => {
   return (
     <div className="flex flex-col gap-8">
       <div className="logo flex flex-col gap-2.5">
-        <img
-          className="h-14 w-52"
-          src="/images/FooterLogo.png"
+        <div className="flex gap-2 items-center">
+          <img src="/images/square.png" height={60} width={60} alt="Bottom Logo" />
+          <img
+          className="h-12 w-52 mt-2"
+          src="/images/bottomLogo.png"
           alt="Company footer logo"
         />
+        </div>
         <p className="text-gray-800 text-sm">
-          © 2025 Shivendra | Swiggy clone for educational use only.
+         © 2025 Shivendra | Food delivery app built for learning and demonstration.
         </p>
       </div>
       <div className="attibution  text-gray-800 w-fit">
@@ -33,11 +36,11 @@ const LogoAndAttribution = () => {
                 style={{ color: "#0077b5" }}
               ></i>
             </a>
-            <a href="https://x.com/Shivendrawk" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
-              <i className="fa-brands fa-square-x-twitter text-xl"></i>
-            </a>
             <a href="https://github.com/ShivWK" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
               <i className="fa-brands fa-square-github text-xl"></i>
+            </a>
+            <a href="https://x.com/Shivendrawk" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
+              <i className="fa-brands fa-square-x-twitter text-xl"></i>
             </a>
             <a href="https://instagram.com/shivendrawk" className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in" target="__block">
               <i

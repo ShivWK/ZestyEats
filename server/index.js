@@ -271,7 +271,7 @@ app.get("/api/food-category", async (req, res) => {
 
 // Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
 
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).send("Not Found");
 });
 

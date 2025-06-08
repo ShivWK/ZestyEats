@@ -25,7 +25,7 @@ const Form = ({
   return (
     <form
       ref={refference}
-      className="mt-10 notFirst-notLast"
+      className="mt-7 notFirst-notLast"
       // onSubmit={handleSubmit}
       autoComplete="off"
     >
@@ -68,8 +68,8 @@ const Form = ({
           type="button"
           onClick={handleGuestLogin}
           className="font-bold text-[#6e6e6e] w-full h-11 mt-2 rounded-lg cursor-pointer hover:text-primary"
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.95 }}
+          whileHover={{ scale: 1.07 }}
+          whileTap={{ scale: 1 }}
         >
           Login as Guest
         </motion.button>

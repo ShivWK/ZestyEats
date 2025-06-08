@@ -94,12 +94,11 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
         />
       </div>
       {children}
-      <p
-        className="absolute top-[93%] left-[50%] transform -translate-1/2 text-center text-lg font-semibold text-primary"
-        style={{ fontStyle: "italic" }}
+      <button
+        className="absolute mt-8 left-[50%] transform -translate-1/2 text-center text-lg font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-2 py-1 active:scale-95 transition-all duration-150 ease-in-out"
       >
-        Developed By Shivendra
-      </p>
+        Login/SignUp with Google
+      </button>
     </div>
   );
 });

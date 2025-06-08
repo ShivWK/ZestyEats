@@ -10,6 +10,7 @@ const Navbar = memo(({
   showOffers,
   showCart,
 }) => {
+  const loggedIn = false;
   const dispatch = useDispatch();
 
   const handleSignIn = useCallback(() => {
@@ -46,12 +47,18 @@ const Navbar = memo(({
           icon={"fa-life-ring text-lg"}
           text="Help"
         />
-        <NavItem
+        {loggedIn ? (<NavItem
           to={"/profile"}
-          // onClick={handleSignIn}
           icon={"fa-user text-lg"}
-          text="Sign In"
-        />
+          text={`User`}
+        />) : (
+          <button onClick={handleSignIn} className="group flex items-center justify-between gap-3 hover:cursor-pointer :hover:font-[#ff5200]" >
+            <i className="fas fa-sign-in text-lg group-hover:text-[#ff5200]"></i>
+            <span className="relative group-hover:text-[#ff5200]">Sign In</span>
+          </button>
+        )
+
+        }
         {showCart && (
           <NavItem
             to="cart"
