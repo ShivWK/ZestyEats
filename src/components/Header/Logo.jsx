@@ -22,7 +22,7 @@ const Logo = memo(({ searchPlaceholder }) => {
   return (
     <div className="flex gap-6">
       <NavLink to="/">
-        <img src="/images/square.png" alt="Sie logo" height={54} width={54} className="hover:scale-[1.2] transition-all duration-300 ease-in-out rounded-md" />
+        <img src="/images/square.png" alt="Sie logo" height={54} width={54} className="hover:scale-[1.15] transition-all duration-300 ease-in-out rounded-md" />
       </NavLink>
 
       {searchPlaceholder ? (
@@ -33,11 +33,11 @@ const Logo = memo(({ searchPlaceholder }) => {
           onClick={handleClick}
           className="group flex items-center gap-2 cursor-pointer"
         >
-          <span className="font-[750] underline underline-offset-8 decoration-2 text-sm group-hover:text-[#ff5200]">
+          <span className="font-[750] underline underline-offset-8 decoration-2 group-hover:text-[#ff5200]">
             {yourCurrentCity ? yourCurrentCity : "Other"}
           </span>
 
-          <span className="max-w-52 truncate text-start text-sm font-medium text-gray-600">
+          <span className="max-w-52 truncate text-start font-medium text-gray-600">
             {yourCurrentCity
               ? `${searchedCityAddress}`
               : `${searchedCity}${searchedCityAddress}`}

@@ -20,6 +20,13 @@ const Navbar = memo(({
   return (
     <nav>
       <ul className="flex gap-12 font-[620] items-center justify-evenly text-md">
+        <button className="cursor-pointer text-xl active:scale-95">
+          <i class="fa-solid fa-sun"></i>
+          {/* <i class="ri-moon-clear-fill"></i> */}
+          {/* <i class="ri-moon-fill"></i> */}
+          {/* <i class="ri-computer-fill"></i> */}
+          {/* <i class="ri-smartphone-line text-2xl"></i> */}
+        </button>
         {showAbout && (
           <NavItem
             to="about"
