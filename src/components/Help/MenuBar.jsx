@@ -4,7 +4,7 @@ import { toggleContact } from "../../features/home/helpPageSlice";
 
 const MenuBar = () => {
     const menu = ["Contact Us", "FAQs", "Legal"];
-    const [activeIndex, setActiveIndex] = useState(null);
+    const [activeIndex, setActiveIndex] = useState(0);
     const dispatch = useDispatch();
 
     const handleClick = (index) => {

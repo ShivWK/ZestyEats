@@ -20,7 +20,7 @@ const Logo = memo(({ searchPlaceholder }) => {
   };
 
   return (
-    <div className="flex gap-9">
+    <div className="flex gap-6">
       <NavLink to="/">
         <img src="/images/square.png" alt="Sie logo" height={54} width={54} className="hover:scale-[1.2] transition-all duration-300 ease-in-out rounded-md"/>
       </NavLink>

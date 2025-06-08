@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const helpPageSlice = createSlice({
     name: "help",
     initialState: {
-        contact: false,
+        contact: true,
         accordionData: [],
     },
 
