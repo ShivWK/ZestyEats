@@ -22,11 +22,12 @@ const Logo = memo(({ searchPlaceholder }) => {
   return (
     <div className="flex gap-6">
       <NavLink to="/">
-        <img src="/images/square.png" alt="Sie logo" height={54} width={54} className="hover:scale-[1.2] transition-all duration-300 ease-in-out rounded-md"/>
+        <img src="/images/square.png" alt="Sie logo" height={54} width={54} className="hover:scale-[1.2] transition-all duration-300 ease-in-out rounded-md" />
       </NavLink>
 
       {searchPlaceholder ? (
-        <p className="flex items-center font-bold text-xl">{searchPlaceholder}</p>
+        <p className="flex items-center font-bold text-xl w-80"><span className="truncate">
+          {searchPlaceholder}</span></p>
       ) : (
         <button
           onClick={handleClick}
