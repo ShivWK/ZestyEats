@@ -5,7 +5,7 @@ const LogoAndAttribution = () => {
         <div className="flex gap-2 items-center">
           <img src="/images/square.png" height={60} width={60} alt="Bottom Logo" />
           <img
-          className="h-12 w-52 mt-2"
+          className="h-11 w-52 mt-2"
           src="/images/bottomLogo.png"
           alt="Company footer logo"
         />
