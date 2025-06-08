@@ -1,0 +1,41 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toggleContact } from "../../features/home/helpPageSlice";
+
+const MenuBar = () => {
+    const menu = ["Contact Us", "FAQs", "Legal"];
+    const [activeIndex, setActiveIndex] = useState(null);
+    const dispatch = useDispatch();
+
+    const handleClick = (index) => {
+        setActiveIndex(index);
+        if (index === 0) {
+            dispatch(toggleContact(true));
+        } else {
+            dispatch(toggleContact(false));
+        }
+    };
+
+    return (
+        <div className="basis-[25%] bg-gray-200 py-6 pl-6">
+            {menu.map((item, index) => {
+                return (
+                    <div
+                        onClick={() => handleClick(index)}
+                        className="group flex items-center justify-center py-6"
+                        style={{
+                            backgroundColor: activeIndex === index ? "white" : "transparent",
+                            color: activeIndex === index ? "black" : "#4a5565"
+                        }}
+                    >
+                        <p className="font-bold group-hover:text-black select-none">
+                            {item}
+                        </p>
+                    </div>
+                );
+            })}
+        </div>
+    );
+};
+
+export default MenuBar;

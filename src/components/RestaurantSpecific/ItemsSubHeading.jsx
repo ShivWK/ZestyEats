@@ -46,7 +46,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
               ? "none"
               : "2px solid #e5e7eb"
             : "none",
-          backgroundColor: isOpen ? "rgba(255,81,0,0.15" : "#ffffff",
+          backgroundColor: isOpen ? "rgba(255,81,0,0.15)" : "#ffffff",
           transition: "all 0.3s linear",
         }}
       >

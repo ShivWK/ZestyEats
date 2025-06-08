@@ -11,7 +11,7 @@ import { NavLink } from "react-router-dom";
 
 const Logo = memo(({ searchPlaceholder }) => {
   const dispatch = useDispatch();
-  const yourcurrentCity = useSelector(selectYourCurrentCity);
+  const yourCurrentCity = useSelector(selectYourCurrentCity);
   const searchedCity = useSelector(selectSearchedCity);
   const searchedCityAddress = useSelector(selectSearchedCityAddress);
 
@@ -33,11 +33,11 @@ const Logo = memo(({ searchPlaceholder }) => {
           className="group flex items-center gap-2 cursor-pointer"
         >
           <span className="font-[750] underline underline-offset-8 decoration-2 text-sm group-hover:text-[#ff5200]">
-            {yourcurrentCity ? yourcurrentCity : "Other"}
+            {yourCurrentCity ? yourCurrentCity : "Other"}
           </span>
 
           <span className="max-w-52 truncate text-start text-sm font-medium text-gray-600">
-            {yourcurrentCity
+            {yourCurrentCity
               ? `${searchedCityAddress}`
               : `${searchedCity}${searchedCityAddress}`}
           </span>
