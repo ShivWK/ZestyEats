@@ -51,9 +51,10 @@ const Navbar = memo(({
         )}
         <NavItem
           to="help"
-          icon={"fa-life-ring text-lg"}
+          icon={"fa-solid fa-handshake-angle"}
           text="Help"
         />
+        {/* <i class="fa-solid fa-handshake-angle"></i> */}
         {loggedIn ? (<NavItem
           to={"/profile"}
           icon={"fa-user text-lg"}
