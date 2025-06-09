@@ -17,7 +17,7 @@ const Contact = memo(() => {
         </a>
       </div>
 
-      <button className="mt-6 py-2 px-6 bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform duration-150 cursor-pointer">
+      <button className="mt-6 py-2 px-6 bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-100 cursor-pointer">
         <a href="mailto:zestyeatswk@gmail.com">Send Email</a>
       </button>
     </div>

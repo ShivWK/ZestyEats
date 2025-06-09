@@ -1,6 +1,6 @@
 import { memo, useState } from "react";
 import { useDispatch } from "react-redux";
-import { toggleContact } from "../../features/home/helpPageSlice";
+import { setContact, setFaqs } from "../../features/home/helpPageSlice";
 
 const MenuBar = memo(() => {
     const menu = ["Contact Us", "FAQs", "Legal"];
@@ -10,9 +10,14 @@ const MenuBar = memo(() => {
     const handleClick = (index) => {
         setActiveIndex(index);
         if (index === 0) {
-            dispatch(toggleContact(true));
+            dispatch(setContact(true));
+            dispatch(setFaqs(false));
+        } else if (index === 1) {
+            dispatch(setFaqs(true));
+            dispatch(setContact(false));
         } else {
-            dispatch(toggleContact(false));
+            dispatch(setFaqs(false));
+            dispatch(setContact(false));
         }
     };
 
@@ -21,9 +26,9 @@ const MenuBar = memo(() => {
             {menu.map((item, index) => {
                 return (
                     <div
-                    key={index}
+                        key={index}
                         onClick={() => handleClick(index)}
-                        className="group flex items-center justify-center py-6"
+                        className="group flex items-center justify-center py-6 cursor-pointer"
                         style={{
                             backgroundColor: activeIndex === index ? "white" : "transparent",
                             color: activeIndex === index ? "black" : "#4a5565"

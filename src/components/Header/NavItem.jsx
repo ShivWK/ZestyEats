@@ -7,7 +7,7 @@ const NavItem = memo(
       <li>
         <NavLink
           to={to}
-          className="group flex items-center justify-between gap-3 hover:cursor-pointer :hover:font-[#ff5200]"
+          className="group flex items-center justify-between gap-3 hover:cursor-pointer"
           style={({ isActive }) => {
             if (isActive) return { color: "#ff5200" };
           }}

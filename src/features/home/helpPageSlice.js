@@ -4,16 +4,16 @@ const helpPageSlice = createSlice({
     name: "help",
     initialState: {
         contact: true,
-        accordionData: [],
+        faqs: false,
     },
 
     reducers: {
-        toggleContact: (state, action) => {
+        setContact: (state, action) => {
             state.contact = action.payload;
         },
 
-        setAccordionData: (state, action) => {
-            state.accordionData = action.payload;
+        setFaqs: (state, action) => {
+            state.faqs = action.payload;
         }
     }
 })
@@ -21,9 +21,9 @@ const helpPageSlice = createSlice({
 export default helpPageSlice.reducer;
 
 export const {
-    toggleContact,
-    setAccordionData,
+    setContact,
+    setFaqs,
 } = helpPageSlice.actions;
 
 export const selectContact = state => state.help.contact;
-export const selectAccordionData = state => state.help.accordionData;
+export const selectFaqs = state => state.help.faqs;

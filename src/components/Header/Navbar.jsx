@@ -20,8 +20,8 @@ const Navbar = memo(({
   return (
     <nav>
       <ul className="flex gap-12 font-[620] items-center justify-evenly text-md">
-        <button className="cursor-pointer text-xl active:scale-95">
-          <i className="fa-solid fa-sun"></i>
+        <button className="group cursor-pointer text-xl active:scale-95">
+          <i className="fa-solid fa-sun group-hover:text-[#ff5200]"></i>
           {/* <i class="ri-moon-clear-fill"></i> */}
           {/* <i class="ri-moon-fill"></i> */}
           {/* <i class="ri-computer-fill"></i> */}
