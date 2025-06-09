@@ -23,7 +23,6 @@ const ItemsMainHeading = ({
   let toDecreaseForNonVeg = 0;
   let toDecreaseForVeg = 0;
 
-
   const vegOption = useSelector(selectVegOption);
   const nonVegOption = useSelector(selectNonVegOption);
   const handleClick = () => {
@@ -42,7 +41,6 @@ const ItemsMainHeading = ({
   useEffect(() => {
     if (containerRef.current) {
       setCount(containerRef.current.children.length);
-      setShouldRender(containerRef.current.children.length > 0);
     }
 
     if (vegOption && !nonVegOption) {
@@ -52,6 +50,14 @@ const ItemsMainHeading = ({
     } 
 
   }, [vegOption, nonVegOption]);
+
+  useEffect(() => {
+    if (count === 0) {
+      setShouldRender(false);
+    } else {
+      setShouldRender(true);
+    }
+  }, [count])
 
   return (
     <div

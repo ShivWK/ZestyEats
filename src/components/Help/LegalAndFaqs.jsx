@@ -5,9 +5,11 @@ const LegalAndFaqs = memo(() => {
 
     const handleClick = (index) => {
         if (activeIndex === null) {
-            setActiveIndex(index)
+            setActiveIndex(index);
+        } else if(activeIndex === index) {
+            setActiveIndex(null);
         } else {
-            setActiveIndex(null)
+            setActiveIndex(index);
         }
     }
 
@@ -42,7 +44,7 @@ const LegalAndFaqs = memo(() => {
                     <div onClick={() => handleClick(index)} className="group flex justify-between items-center py-3 px-2 cursor-pointer" style={{
                         backgroundColor: activeIndex === index ? "rgba(255,81,0,0.15)" : "white"
                     }}>
-                        <p className="group-hover:text-primary text-xl font-semibold transition-all duration-150 ease-in select-none">{obj.title}</p>
+                        <p className="group-hover:text-primary text-[18px] font-semibold transition-all duration-150 ease-in select-none">{obj.title}</p>
                         <i
                             className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5 inline-block"
                             style={{
