@@ -39,7 +39,7 @@
         }
     }
 
-    .notFirst-notLast>div:not(:first-child):not(:last-child) {
+    .notFirst-notLast > div:not(:first-child):not(:last-child) {
         border-top: none;
     }
 
@@ -105,11 +105,6 @@
         font-weight: 750;
         font-size: 21px;
     }
-
-}
-
-body {
-    scrollbar-gutter: stable;
 }
 
 .progress-style {

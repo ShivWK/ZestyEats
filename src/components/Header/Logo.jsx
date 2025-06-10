@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { memo } from "react";
-import { openLocationModal } from "../../features/Login/loginSlice";
+import { openLocationModal, setLocationHovered } from "../../features/Login/loginSlice";
 
 import {
   selectSearchedCity,
@@ -19,10 +19,14 @@ const Logo = memo(({ searchPlaceholder }) => {
     dispatch(openLocationModal());
   };
 
+  const hoverHandler = () => {
+    dispatch(setLocationHovered());
+  }
+
   return (
     <div className="flex gap-6">
       <NavLink to="/" className="active:scale-95">
-        <img src="/images/square.png" alt="Sie logo" height={54} width={54} className="hover:scale-[1.15] transition-all duration-300 ease-in-out rounded-md" />
+        <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.15] transition-all duration-300 ease-in-out rounded-md" />
       </NavLink>
 
       {searchPlaceholder ? (
@@ -30,6 +34,7 @@ const Logo = memo(({ searchPlaceholder }) => {
           {searchPlaceholder}</span></p>
       ) : (
         <button
+          onMouseEnter={hoverHandler}
           onClick={handleClick}
           className="group flex items-center gap-2 cursor-pointer"
         >

@@ -1,8 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const initialState = {
     isLoginModalOpen: false,
+    isLoginHovered: false,
     isLocationModalOpen: false,
+    isLocationHovered: false,
     isLoginOtpSend: false,
     isSignUpOtpSend: false,
     isLoggedIn: false,
@@ -24,6 +26,14 @@ const loginSlice = createSlice({
 
         openLocationModal: (state) => {
             state.isLocationModalOpen = true;
+        },
+
+        setLoginHovered: (state) => {
+            state.isLoginHovered = true;
+        },
+
+        setLocationHovered: state => {
+            state.isLocationHovered = true;
         },
 
         closeLocationInModal: (state) => {
@@ -68,6 +78,10 @@ export const selectLocationModal = (state) => state.login.isLocationModalOpen;
 export const selectIsLoggedIn = (state) => state.login.isLoggedIn;
 export const selectIsLoading = (state) => state.login.isLoading;
 export const selectIsMember = (state) => state.login.isMember;
+export const selectHoverState = createSelector([state => state.login.isLoginHovered, state => state.login.isLocationHovered],  (login, location) => ({
+    loginHovered: login,
+    locationHovered: location,
+}));
 
 export const { 
     openLogInModal, 
@@ -81,5 +95,7 @@ export const {
     setIsLoggedIn,
     setLoading,
     setMember,
+    setLocationHovered,
+    setLoginHovered
 } = loginSlice.actions;
 

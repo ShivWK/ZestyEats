@@ -9,8 +9,9 @@
     height: 100vh;
     z-index: 50;
     background-color: #fff;
-    transform: translate(-100%, 0);
-    transition: transform 0.2s ease-in;
+    /* transform: translate(-100%, 0); */
+    /* transition: transform 0.2s ease-in; */
+    animation: leftSlide 0.3s ease;
 }
 
 .modal-right {
@@ -24,10 +25,31 @@
     height: 100vh;
     z-index: 50;
     background-color: #fff;
-    transform: translate(100%, 0);
-    transition: transform 0.2s ease-in;
+    /* transform: translate(100%, 0);
+    transition: transform 0.2s ease-in; */
+    animation: rightSlide 0.3s ease;
 }
 
 .show-modal {
     transform: translate(0, 0);
+}
+
+@keyframes leftSlide {
+    from  {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes rightSlide {
+    from  {
+        transform: translateX(100%);
+    }
+
+    to {
+        transform: translateX(0);
+    }
 }
