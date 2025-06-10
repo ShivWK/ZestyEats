@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import ModalSubContainer from "./ModalSubContainer";
 import {
-  selectlogInModal,
+  selectLogInModal,
   selectLoginOtp,
   selectIsMember,
   setMember
@@ -12,7 +12,7 @@ import Modal from "../Modal/Modal";
 import { useCallback } from "react";
 
 const ModalContainer = () => {
-  const isOpen = useSelector(selectlogInModal);
+  const isOpen = useSelector(selectLogInModal);
   const isLoginOtpSend = useSelector(selectLoginOtp);
   const member = useSelector(selectIsMember);
   const dispatch = useDispatch();

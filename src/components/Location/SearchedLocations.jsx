@@ -1,7 +1,7 @@
 import Location from "./Loacations";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { closeLocationInModal } from "../../features/Login/loginSlice";
+import { setHideLocation } from "../../features/Login/loginSlice";
 import {
   removeYourCurrentCity,
   setLoading,
@@ -42,7 +42,8 @@ const SearchedLocation = memo(({
     setSearchedLocation([]);
     setSearchValue("");
     dispatch(removeYourCurrentCity());
-    dispatch(closeLocationInModal());
+    dispatch(setHideLocation(true))
+    // dispatch(closeLocationInModal());
 
     try {
       const res1 = await triggerLocationCall(location.place_id).unwrap();
@@ -87,7 +88,7 @@ const SearchedLocation = memo(({
       console.log(err);
       dispatch(setLoading(false));
     }
-  }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, closeLocationInModal, addRecentLocations]); 
+  }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, addRecentLocations]); 
 
   return (
     <div className="mt-6 overflow-auto last:border-none">

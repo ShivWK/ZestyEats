@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import {
-  closeLogInModal,
+  setHideLogin,
   loginOtpNotSend,
   signUpOtpNotSend,
   selectLoginOtp,
@@ -18,7 +18,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
     if (isLoginOtpSend) dispatch(loginOtpNotSend());
     else dispatch(signUpOtpNotSend());
 
-    dispatch(closeLogInModal());
+    dispatch(setHideLogin(true));
   };
 
   const handleBack = () => {

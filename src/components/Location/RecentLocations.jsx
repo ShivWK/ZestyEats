@@ -14,7 +14,7 @@ import {
   setLoading,
   removeYourCurrentCity,
 } from "../../features/home/homeSlice";
-import { closeLocationInModal } from "../../features/Login/loginSlice";
+import { setHideLocation } from "../../features/Login/loginSlice";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 
@@ -50,7 +50,8 @@ const RecentLocations = memo(() => {
       updateSearchedCity(location, dispatch);
 
       dispatch(removeYourCurrentCity());
-      dispatch(closeLocationInModal());
+      dispatch(setHideLocation(true))
+      // dispatch(closeLocationInModal());
 
       try {
         const res1 = await triggerLocationCall(location.place_id).unwrap();
@@ -76,7 +77,6 @@ const RecentLocations = memo(() => {
       updateHomeRestaurantData,
       setLoading,
       removeYourCurrentCity,
-      closeLocationInModal,
       updateSearchedCity,
     ]
   );

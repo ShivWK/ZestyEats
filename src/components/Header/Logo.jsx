@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { memo } from "react";
-import { openLocationModal, setLocationHovered } from "../../features/Login/loginSlice";
+import { setLocationModal, setLocationHovered, setHideLocation, setHideLogin } from "../../features/Login/loginSlice";
 
 import {
   selectSearchedCity,
@@ -16,7 +16,9 @@ const Logo = memo(({ searchPlaceholder }) => {
   const searchedCityAddress = useSelector(selectSearchedCityAddress);
 
   const handleClick = () => {
-    dispatch(openLocationModal());
+    dispatch(setHideLocation(false));
+    dispatch(setHideLogin(false))
+    dispatch(setLocationModal(true));
   };
 
   const hoverHandler = () => {

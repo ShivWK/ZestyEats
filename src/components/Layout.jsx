@@ -2,13 +2,11 @@ import { Suspense, lazy } from "react";
 import { Outlet } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
-// import LoginModal from "./Login/LoginModal";
 const LoginModal = lazy(() => import("./Login/LoginModal"));
 const LocationModal = lazy(() => import("./Location/LocationModal"));
-// import LocationModal from "./Location/LocationModal";
 import { toast } from "react-toastify";
 import {
-  selectlogInModal,
+  selectLogInModal,
   selectLocationModal,
   selectHoverState,
 } from "../features/Login/loginSlice";
@@ -17,15 +15,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 
 export default function Layout() {
-  const isLoginOpen = useSelector(selectlogInModal);
+  const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
   const dispatch = useDispatch();
 
-  console.log("location:", locationHovered, "Login:", loginHovered)
-
   useEffect(() => {
-    console.log("Called")
     if (locationHovered) {
       import("./Location/LocationModal")
     } else if (loginHovered) {
@@ -36,17 +31,23 @@ export default function Layout() {
   useEffect(() => {
     const scrollbarWidth = "15px";
 
+    const body = document.body;
+
+    if (body.clientHeight >= body.scrollHeight) {
+      body.style.paddingRight = "15px";
+    }
+
     if (isLoginOpen || isLocationOpen) {
-      document.body.classList.add("overflow-hidden");
-      document.body.style.paddingRight = scrollbarWidth;
+      body.classList.add("overflow-hidden");
+      body.style.paddingRight = scrollbarWidth;
     } else {
-      document.body.classList.remove("overflow-hidden");
-      document.body.style.paddingRight = "0px";
+      body.classList.remove("overflow-hidden");
+      body.style.paddingRight = "0px";
     }
     // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
     return () => {
-      document.body.classList.remove("overflow-hidden");
-      document.body.style.paddingRight = "0px";
+      body.classList.remove("overflow-hidden");
+      body.style.paddingRight = "0px";
     };
   }, [isLoginOpen, isLocationOpen]);
 

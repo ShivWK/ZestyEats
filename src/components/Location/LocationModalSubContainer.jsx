@@ -1,7 +1,7 @@
 import { useState, useRef, memo } from "react";
 import { useDispatch } from "react-redux";
 import { useLazyGetAutoCompleteSearchQuery } from "../../features/home/searchApiSlice";
-import { closeLocationInModal } from "../../features/Login/loginSlice";
+import { setHideLocation } from "../../features/Login/loginSlice";
 import RecentLocations from "./RecentLocations";
 import GeoLocationFinder from "./GeoLocation";
 import SearchedLocation from "./SearchedLocations";
@@ -37,7 +37,7 @@ const ModalSubContainer = memo(() => {
   );
 
   const handleClose = () => {
-    dispatch(closeLocationInModal());
+    dispatch(setHideLocation(true));
     setSearchValue("");
   };
 

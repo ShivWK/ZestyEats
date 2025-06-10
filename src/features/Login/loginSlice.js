@@ -2,6 +2,8 @@ import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const initialState = {
     isLoginModalOpen: false,
+    isHideLogin: false,
+    isHideLocation: false,
     isLoginHovered: false,
     isLocationModalOpen: false,
     isLocationHovered: false,
@@ -16,16 +18,20 @@ const loginSlice = createSlice({
     initialState: initialState,
 
     reducers: {
-        openLogInModal: (state) => {
-            state.isLoginModalOpen = true;
+        setLogInModal: (state, action) => {
+            state.isLoginModalOpen = action.payload;
         },
 
-        closeLogInModal: (state) => {
-            state.isLoginModalOpen = false;
+        setHideLogin: (state, action) => {
+            state.isHideLogin = action.payload;
         },
 
-        openLocationModal: (state) => {
-            state.isLocationModalOpen = true;
+        setLocationModal: (state, action) => {
+            state.isLocationModalOpen = action.payload;
+        },
+
+        setHideLocation: (state, action) => {
+            state.isHideLocation = action.payload;
         },
 
         setLoginHovered: (state) => {
@@ -34,10 +40,6 @@ const loginSlice = createSlice({
 
         setLocationHovered: state => {
             state.isLocationHovered = true;
-        },
-
-        closeLocationInModal: (state) => {
-            state.isLocationModalOpen = false;
         },
 
         loginOtpSend: (state) => {
@@ -71,7 +73,7 @@ const loginSlice = createSlice({
 });
 
 export default loginSlice.reducer;
-export const selectlogInModal = (state) => state.login.isLoginModalOpen;
+export const selectLogInModal = (state) => state.login.isLoginModalOpen;
 export const selectLoginOtp = (state) => state.login.isLoginOtpSend;
 export const selectSignUpOtp = (state) => state.login.isSignUpOtpSend;
 export const selectLocationModal = (state) => state.login.isLocationModalOpen;
@@ -82,20 +84,28 @@ export const selectHoverState = createSelector([state => state.login.isLoginHove
     loginHovered: login,
     locationHovered: location,
 }));
+export const selectHideModel = createSelector([state => state.login.isHideLogin, state => state.login.isHideLocation ], (loginHide, locationHide) => {
+    return {
+        loginHide,
+        locationHide
+    }
+})
 
 export const { 
-    openLogInModal, 
+    setLogInModal, 
     closeLogInModal, 
     loginOtpSend, 
     loginOtpNotSend,
     signUpOtpSend,
     signUpOtpNotSend,
-    openLocationModal,
+    setLocationModal,
     closeLocationInModal,
     setIsLoggedIn,
     setLoading,
     setMember,
     setLocationHovered,
-    setLoginHovered
+    setLoginHovered,
+    setHideLocation,
+    setHideLogin,
 } = loginSlice.actions;
 

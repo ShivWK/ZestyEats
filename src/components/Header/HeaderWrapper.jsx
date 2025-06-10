@@ -1,11 +1,11 @@
 import {
   selectLocationModal,
-  selectlogInModal,
+  selectLogInModal,
 } from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
 
 const HeaderWrapper = ({ children }) => {
-  const isLoginOpen = useSelector(selectlogInModal);
+  const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
 
   return (

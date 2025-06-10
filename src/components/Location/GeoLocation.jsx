@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setLoading, selectLatAndLng } from "../../features/home/homeSlice";
-import { closeLocationInModal } from "../../features/Login/loginSlice";
+import { setHideLocation } from "../../features/Login/loginSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
 
@@ -38,7 +38,8 @@ const GeoLocation = memo(({ setSearchValue }) => {
         try {
           setSearchValue("Fetching your location...");
           dispatch(setLoading(true));
-          dispatch(closeLocationInModal());
+          // dispatch(closeLocationInModal());
+          dispatch(setHideLocation(true))
           const data = await triggerLoactionByCoordinates({
             lat1,
             lng1,
@@ -64,7 +65,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
           }
         } catch (err) {
           setSearchValue("");
-          dispatch(closeLocationInModal());
+          dispatch(setHideLocation(true));
           dispatch(setLoading(false));
           alert("Error fetching location data. Please try again later.");
           console.log(err.error);

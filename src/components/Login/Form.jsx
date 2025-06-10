@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import {
-  selectlogInModal,
+  selectLogInModal,
   selectIsMember,
 } from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const Form = ({
   isOtpSend = false,
   isLoading,
 }) => {
-  const isLogInModelOpen = useSelector(selectlogInModal);
+  const isLogInModelOpen = useSelector(selectLogInModal);
   const member = useSelector(selectIsMember);
 
   return (

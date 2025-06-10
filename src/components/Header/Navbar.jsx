@@ -1,5 +1,5 @@
 import NavItem from "./NavItem";
-import { openLogInModal, setLoginHovered } from "../../features/Login/loginSlice";
+import { setHideLocation, setHideLogin, setLogInModal, setLoginHovered } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { memo, useCallback } from "react";
@@ -9,11 +9,12 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   const dispatch = useDispatch();
 
   const handleSignIn = useCallback(() => {
-    dispatch(openLogInModal());
-  }, [dispatch, openLogInModal]);
+    dispatch(setHideLogin(false));
+    dispatch(setHideLocation(false))
+    dispatch(setLogInModal(true));
+  }, [setLogInModal]);
 
   const hoverHandler = () => {
-    console.log("Hovered")
     dispatch(setLoginHovered());
   }
 
