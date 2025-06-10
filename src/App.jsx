@@ -36,7 +36,7 @@ export default function App() {
         <Route
           path="about"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <About />
             </Suspense>
           }
@@ -44,7 +44,7 @@ export default function App() {
         <Route
           path="search"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <Search />
             </Suspense>
           }
@@ -52,7 +52,7 @@ export default function App() {
         <Route
           path="offers-dinouts"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <Offers_Dinouts />
             </Suspense>
           }
@@ -60,7 +60,7 @@ export default function App() {
         <Route
           path="help"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <HelpMain />
             </Suspense>
           }
@@ -68,7 +68,7 @@ export default function App() {
         <Route
           path="profile"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <Profile />
             </Suspense>
           }
@@ -76,7 +76,7 @@ export default function App() {
         <Route
           path="cart"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <Cart />
             </Suspense>
           }
@@ -84,7 +84,7 @@ export default function App() {
         <Route
           path="restaurantSpecific/:lat/:lng/:id"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <RestaurantSpecific />
             </Suspense>
           }
@@ -93,7 +93,7 @@ export default function App() {
         <Route
           path="dishSearch"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <RestaurantSearch />
             </Suspense>
           }
@@ -101,7 +101,7 @@ export default function App() {
         <Route
           path="specificFood"
           element={
-            <Suspense fallback={<h1>Loading...</h1>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <FoodSpecific />
             </Suspense>
           }

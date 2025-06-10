@@ -6,7 +6,6 @@ import {
   setLoginHovered,
 } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
-import { toast } from "react-toastify";
 import { memo, useCallback, useState } from "react";
 
 const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
