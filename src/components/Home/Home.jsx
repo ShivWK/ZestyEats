@@ -52,7 +52,7 @@ const Home = memo(() => {
       updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
     } catch (err) {
       dispatch(setLoading(false));
-      alert(err.message);
+      alert(err.error);
     }
   };
 
@@ -63,11 +63,11 @@ const Home = memo(() => {
 
     if (HomeData && lat && lng) {
       updateHomeRestaurantData(HomeData, dispatch, lat, lng);
-      const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
+      const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
       const searchedCityAddress = JSON.parse(
         localStorage.getItem("searchedCityAddress")
-      );
-      const currentCity = JSON.parse(localStorage.getItem("currentCity"));
+      ) || "";
+      const currentCity = JSON.parse(localStorage.getItem("currentCity")) || "";
 
       dispatch(
         addSearchedCity(searchedCity === "undefined" ? "" : searchedCity)
