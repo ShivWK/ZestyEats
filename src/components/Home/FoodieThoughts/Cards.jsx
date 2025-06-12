@@ -12,7 +12,7 @@ const Cards = memo(({ data }) => {
   const urlObj = new URL(link).searchParams;
   const collection_id = +urlObj.get("collection_id");
   const tags = urlObj.get("tags");
-  const path = `specificFood?lat=${lat}&lng=${lng}&collection_id=${collection_id}&tags=${tags}`;
+  const path = `specificFood/${category}?lat=${lat}&lng=${lng}&collection_id=${collection_id}&tags=${tags}`;
 
   const handleClick = () => {
     dispatch(setCurrentFoodCategory(category));

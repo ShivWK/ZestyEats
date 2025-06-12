@@ -10,15 +10,42 @@ import {
   selectLocationModal,
   selectHoverState,
 } from "../features/Login/loginSlice";
-import { setOnline } from "../features/home/homeSlice";
+import { setOnline, selectPathHistory, setUserFriendlyPathHistory } from "../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import useTrackNavigation from "../utils/useTrackNavigation";
 
 export default function Layout() {
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
   const dispatch = useDispatch();
+  useTrackNavigation();
+
+  const pathHistory = useSelector(selectPathHistory);
+
+  (function() {
+    const history = pathHistory.map(item => {
+      if (item === "/") return "Home";
+      else if (item === "/offers-dinouts") return "Offers";
+      else if (item === "/about") return "About";
+      else if (item === "/search") return "Search";
+      else if (item === "/help") return "Help";
+      else if (item === "/cart") return "Cart";
+      else if (item === "/dishSearch") return "DishSearch";
+      else if (item.includes("specificFood")) {
+        return decodeURIComponent(item).split("/")[2];
+      }
+      else if (item.includes("restaurantSpecific")) {
+        // console.log(decodeURIComponent(item).split("/")[5])
+        return decodeURIComponent(item).split("/")[5];
+      }
+      return item;
+    })
+
+    dispatch(setUserFriendlyPathHistory(history));
+    console.log(history);''
+  })()
 
   useEffect(() => {
     if (locationHovered) {

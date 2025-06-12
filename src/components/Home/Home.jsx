@@ -26,6 +26,7 @@ import {
   selectBestPlacesToEat,
   selectBestCuisionsNearMe,
   selectNearByRestaurants,
+  selectUserFriendlyPathHistory,
 } from "../../features/home/homeSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
@@ -60,9 +61,10 @@ const Home = memo(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
     const lat = JSON.parse(localStorage.getItem("lat"));
     const lng = JSON.parse(localStorage.getItem("lng"));
+    const userPathHistory = JSON.parse(localStorage.getItem("userFriendlyPathHistory") || "")
 
-    if (HomeData && lat && lng) {
-      updateHomeRestaurantData(HomeData, dispatch, lat, lng);
+    if (HomeData && lat && lng && userPathHistory) {
+      updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory);
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
       const searchedCityAddress = JSON.parse(
         localStorage.getItem("searchedCityAddress")
@@ -112,6 +114,8 @@ const Home = memo(() => {
       fetchDefaultHomeAPIData();
     }
   }, []);
+  const userPath = useSelector(selectUserFriendlyPathHistory);
+  console.log(userPath)
 
   return isLoadingMain || isLoading ? (
     <Loader size={"large"} />

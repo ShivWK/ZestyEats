@@ -29,6 +29,9 @@ const FoodSpecific = lazy(() =>
 import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
 
 export default function App() {
+
+  // console.log("rendered");
+
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<Layout />}>
@@ -82,7 +85,7 @@ export default function App() {
           }
         />
         <Route
-          path="restaurantSpecific/:lat/:lng/:id"
+          path="restaurantSpecific/:lat/:lng/:id/:name"
           element={
             <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <RestaurantSpecific />
@@ -99,7 +102,7 @@ export default function App() {
           }
         />
         <Route
-          path="specificFood"
+          path="specificFood/:food"
           element={
             <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <FoodSpecific />

@@ -100,7 +100,6 @@ export const about = [
       mainList: [
         "<p><span style='font-weight: bold'>Frontend:</span> React, Redux Toolkit, React Router DOM, Tailwind CSS, RTK Query</p>",
         "<p><span style='font-weight: bold'>Backend:</span> Node.js, Express.js</p>",
-        "<p><span style='font-weight: bold'>Backend:</span> Node.js, Express.js</p>",
         "<p><span style='font-weight: bold'>Database:</span> MongoDB (Mongoose)</p>",
         "<p><span style='font-weight: bold'>APIs:</span> RESTful APIs + proxy to Swiggy APIs.</p>",
         "<p><span style='font-weight: bold'>Auth:</span> JWT, OAuth 2.0, CSRF tokens, OTP system, cookies.</p>",

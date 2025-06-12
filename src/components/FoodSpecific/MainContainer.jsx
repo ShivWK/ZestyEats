@@ -21,8 +21,6 @@ const MainContainer = ({ data }) => {
 
     const dataToSend = mainData.map((card) => card?.card?.card?.info);
 
-    console.log(dataToSend);
-
     useEffect(() => {
         dispatch(setCurrentFoodCategory(title));
     }, []);

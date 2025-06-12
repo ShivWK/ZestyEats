@@ -18,6 +18,8 @@ const initialState = {
     isLoading: true,
     isOnline: true,
     availableInCityies: [],
+    pathHistory: [],
+    userFriendlyPathHistory: [],
 }
 
 const homeSlice = createSlice({
@@ -27,6 +29,22 @@ const homeSlice = createSlice({
         addLatAndLng: (state, action) => {
             state.lat = action.payload.lat;
             state.lng = action.payload.lng;
+        },
+
+        setPathHistory: (state, action) => {
+            const newPath = action.payload;
+            const existingIndex = state.pathHistory.indexOf(newPath);
+
+            if (existingIndex !== -1) {
+                state.pathHistory = state.pathHistory.slice(0, existingIndex + 1)
+            } else {
+                state.pathHistory.push(newPath);
+            }
+        },
+
+        setUserFriendlyPathHistory: (state, action) => {
+            localStorage.setItem("userFriendlyPathHistory" , JSON.stringify(action.payload));
+            state.userFriendlyPathHistory = action.payload;
         },
 
         addFoodieThoughtsData: (state, action) => {
@@ -111,10 +129,8 @@ const homeSlice = createSlice({
                     item => item?.card?.card?.id === "top_brands_for_you"
                 )
                     ?.card?.card?.header?.title || "your location";
-
                 state.searchedCity = city;
             }
-
         },
 
         addOnlineDeliveryTitle: (state, action) => {
@@ -122,7 +138,6 @@ const homeSlice = createSlice({
                 return item?.card?.card?.id === "popular_restaurants_title";
             })
                 ?.card?.card?.title;
-
             state.onlineDeliveryTitle = title;
         },
 
@@ -145,7 +160,6 @@ const homeSlice = createSlice({
                 if (!acc.some(element => element.place_id === item.place_id)) {
                     acc.push(item);
                 }
-
                 return acc
             }, [])
 
@@ -162,7 +176,7 @@ const homeSlice = createSlice({
 
         setOnline: (state, action) => {
             state.isOnline = action.payload;
-        }
+        },
     }
 });
 
@@ -182,6 +196,8 @@ export const selectBestPlacesToEat = state => state.home.bestPlacesToEat;
 export const selectNearByRestaurants = state => state.home.nearByRestaurants;
 export const selectOnlineStatus = state => state.home.isOnline;
 export const selectAvailableCities = state => state.home.availableInCityies;
+export const selectPathHistory = state => state.home.pathHistory;
+export const selectUserFriendlyPathHistory = state => state.home.userFriendlyPathHistory;
 export const selectLatAndLng = createSelector([state => state.home.lat, state => state.home.lng], (lat, lng) => ({ lat, lng }))
 
 // if i dont use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
@@ -205,6 +221,8 @@ export const {
     setOnline,
     addAvailableCities,
     addLatAndLng,
+    setPathHistory,
+    setUserFriendlyPathHistory,
 } = homeSlice.actions;
 
 
