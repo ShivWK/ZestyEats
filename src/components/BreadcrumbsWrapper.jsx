@@ -8,7 +8,7 @@ const BreadcrumbsWrapper = ({ normalTextColor, mainTextColor, delimiterColor}) =
 
     return (
         <div className={`flex gap-1 items-center ${delimiterColor} text-xs font-semibold`}>
-            <p className="select-none">{`${currentCity || searchedCity}`}</p>
+            <p className="select-none font-bold">{`${currentCity || searchedCity}`}</p>
             <span>┃</span>
             <Breadcrumbs textColor={normalTextColor} mainTextColor={mainTextColor}/>
         </div>
