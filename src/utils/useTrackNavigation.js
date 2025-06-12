@@ -13,8 +13,6 @@ const useTrackNavigation = () => {
         // to avoid duplicate entry
       dispatch(setPathHistory(location.pathname));
     }
-
-    // console.log(pathHistory);
   }, [location.pathname]);
 };
 

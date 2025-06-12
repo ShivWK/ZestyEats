@@ -7,6 +7,8 @@ import {
 import { Suspense, lazy } from "react";
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
+import { useSelector } from "react-redux";
+import { selectPathHistory } from "./features/home/homeSlice";
 const HelpMain = lazy(() => import("./components/Help/HelpMain"));
 const About = lazy(() => import("./components/About/About"));
 const Search = lazy(() => import("./components/Search/Search"));
@@ -29,8 +31,6 @@ const FoodSpecific = lazy(() =>
 import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
 
 export default function App() {
-
-  // console.log("rendered");
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -113,6 +113,10 @@ export default function App() {
       </Route>
     )
   );
+
+  // const userPath = useSelector(selectPathHistory);
+  // console.log(userPath);
+
   return (
     <>
       <RouterProvider router={router} />

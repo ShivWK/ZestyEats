@@ -10,7 +10,11 @@ import {
   selectLocationModal,
   selectHoverState,
 } from "../features/Login/loginSlice";
-import { setOnline, selectPathHistory, setUserFriendlyPathHistory } from "../features/home/homeSlice";
+import {
+  setOnline,
+  selectPathHistory,
+  setUserFriendlyPathHistory,
+} from "../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -24,8 +28,10 @@ export default function Layout() {
 
   const pathHistory = useSelector(selectPathHistory);
 
-  (function() {
-    const history = pathHistory.map(item => {
+  // (function () {})();
+
+  useEffect(() => {
+    const history = pathHistory.map((item) => {
       if (item === "/") return "Home";
       else if (item === "/offers-dinouts") return "Offers";
       else if (item === "/about") return "About";
@@ -35,25 +41,24 @@ export default function Layout() {
       else if (item === "/dishSearch") return "DishSearch";
       else if (item.includes("specificFood")) {
         return decodeURIComponent(item).split("/")[2];
-      }
-      else if (item.includes("restaurantSpecific")) {
+      } else if (item.includes("restaurantSpecific")) {
         // console.log(decodeURIComponent(item).split("/")[5])
         return decodeURIComponent(item).split("/")[5];
       }
       return item;
-    })
+    });
 
     dispatch(setUserFriendlyPathHistory(history));
-    console.log(history);''
-  })()
+    console.log(history);
+  }, [pathHistory]);
 
   useEffect(() => {
     if (locationHovered) {
-      import("./Location/LocationModal")
+      import("./Location/LocationModal");
     } else if (loginHovered) {
       import("./Login/LoginModal");
     }
-  }, [loginHovered, locationHovered])
+  }, [loginHovered, locationHovered]);
 
   useEffect(() => {
     const scrollbarWidth = "15px";
@@ -82,7 +87,7 @@ export default function Layout() {
     const onlineHandler = () => {
       dispatch(setOnline(true));
       toast("Back Online", {
-        autoClose: 2000, 
+        autoClose: 2000,
         style: {
           backgroundColor: "rgba(0, 0, 0, 0.9)",
           fontWeight: "bold",

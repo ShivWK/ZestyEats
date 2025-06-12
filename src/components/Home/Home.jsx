@@ -26,7 +26,6 @@ import {
   selectBestPlacesToEat,
   selectBestCuisionsNearMe,
   selectNearByRestaurants,
-  selectUserFriendlyPathHistory,
 } from "../../features/home/homeSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
@@ -114,8 +113,6 @@ const Home = memo(() => {
       fetchDefaultHomeAPIData();
     }
   }, []);
-  const userPath = useSelector(selectUserFriendlyPathHistory);
-  console.log(userPath)
 
   return isLoadingMain || isLoading ? (
     <Loader size={"large"} />

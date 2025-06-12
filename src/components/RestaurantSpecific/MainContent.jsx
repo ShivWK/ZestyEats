@@ -14,6 +14,7 @@ import {
   selectSearchedCity,
   selectYourCurrentCity,
 } from "../../features/home/homeSlice";
+import Breadcrumbs from "../Breadcrumbs";
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
@@ -85,9 +86,8 @@ const MainContent = ({ data, routes = true }) => {
   // const Route = `${currentCity || searchedCity} | Navigate / ${title}`
   const route = (
     <div className="flex gap-1 items-center text-gray-600 text-xs">
-      <p>{`${currentCity || searchedCity} |`}</p>
-      <p className="cursor-pointer" onClick={() => navigate(-1)}>Navigate</p>
-      <p className="text-gray-900">{`/ ${title}`}</p>
+      <p>{`${currentCity || searchedCity} ||`}</p>
+      <Breadcrumbs />
     </div>
   );
 

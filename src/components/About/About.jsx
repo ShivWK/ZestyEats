@@ -10,7 +10,6 @@ const About = () => {
   const [dataToSend, setDataToSend] = useState(About)
 
   const handleClick = (index) => {
-    console.log(index)
     setActiveIndex(index);
 
     if (index === 0 ) {
