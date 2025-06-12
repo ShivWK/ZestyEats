@@ -28,8 +28,6 @@ export default function Layout() {
 
   const pathHistory = useSelector(selectPathHistory);
 
-  // (function () {})();
-
   useEffect(() => {
     const history = pathHistory.map((item) => {
       if (item === "/") return "Home";

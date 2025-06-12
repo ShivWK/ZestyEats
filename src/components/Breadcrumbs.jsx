@@ -2,25 +2,39 @@ import { selectUserFriendlyPathHistory } from "../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-const Breadcrumbs = () => {
-    const pathHistory = useSelector(selectUserFriendlyPathHistory);
-    const navigate = useNavigate();
+const Breadcrumbs = ({ textColor, mainTextColor }) => {
+  const pathHistory = useSelector(selectUserFriendlyPathHistory);
+  const navigate = useNavigate();
 
-    return <div className="inline-flex gap-0.5">
-        {
-            pathHistory.map((path, index, arr)=> {
-                const lastIndex = arr.length - 1;
-                const backstage = (index + 1) - arr.length;
-                const delemeter = (index < lastIndex && index > 0) ? "/" : "";
+  const clickHandler = (backstage, index, lastIndex) => {
+    if (index !== lastIndex) {
+        navigate(backstage);
+    }
+  }
 
-                return (
-                    <button onClick={() => navigate(backstage)} style={{color: index === lastIndex? "#101828" : "#4a5565"}}>
-                        {`${delemeter} ${path}`}
-                    </button>
-                )
-            })
-        }
+  return (
+    <div className="inline-flex gap-2 items-center">
+      {pathHistory.map((path, index, arr) => {
+        const lastIndex = arr.length - 1;
+        const backstage = index + 1 - arr.length;
+//"#101828", "#4a5565"
+        return (
+          <span className="flex gap-2 items-center">
+            <button
+            onClick={() => clickHandler(backstage, index, lastIndex)}
+            style={{ color: index === lastIndex ? mainTextColor : textColor }}
+            className={`${index !== lastIndex && "cursor-pointer"}`}
+          >
+            {path}
+          </button>
+          {index !== lastIndex && (
+            <span className="font-bold">/</span>
+          ) }
+          </span>
+        );
+      })}
     </div>
-}
+  );
+};
 
 export default Breadcrumbs;

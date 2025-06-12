@@ -8,6 +8,7 @@ import {
 } from "../../features/home/restaurantsApiSlice";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import useScrollToTop from "../../utils/useScrollToTop";
+import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 
 const RestaurantSearch = () => {
 
@@ -71,7 +72,14 @@ const RestaurantSearch = () => {
 
   return (
     <div className="pt-24 w-full max-w-[800px] mx-auto min-h-[105vh] ">
-      <div className="flex w-full items-center gap-1.5 p-2.5 border-b-2 rounded-md bg-gray-200 ">
+      <div className="mt-4 mb-5">
+        <BreadcrumbsWrapper
+          normalTextColor={"#4a5565"}
+          mainTextColor={"#101828"}
+          delimiterColor={"text-gray-600"}
+        />
+      </div>
+      <div className="flex w-full items-center gap-1.5 p-2.5 py-1.5 border-b-2 rounded-md bg-gray-200 ">
         <i
           onClick={() => navigate(-1)}
           className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"
