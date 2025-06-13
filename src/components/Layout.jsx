@@ -81,7 +81,35 @@ export default function Layout() {
       dispatch(
         addYourCurrentCity(currentCity === "undefined" ? "" : currentCity)
       );
-    }  else {
+    } else if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat1 = position.coords.latitude;
+        const lng1 = position.coords.longitude;
+
+        try {
+          const data = await triggerLocationByCoordinates({
+            lat1,
+            lng1,
+          }).unwrap();
+
+          updateCurrentCity(data, dispatch);
+
+          const lat = data?.data?.[0]?.geometry?.location?.lat;
+          const lng = data?.data?.[0]?.geometry?.location?.lng;
+
+          try {
+            const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
+            updateHomeRestaurantData(res2, dispatch, lat, lng);
+          } catch (err) {
+            alert(err.message);
+            fetchDefaultHomeAPIData();
+          }
+        } catch (err) {
+          console.log("Error fetching current location data.");
+          fetchDefaultHomeAPIData();
+        }
+      });
+    } else {
       fetchDefaultHomeAPIData();
     }
   }, []);
