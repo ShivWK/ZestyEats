@@ -5,15 +5,18 @@ const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, "Please enter your name."],
+    trim: true,
   },
   number: {
     type: Number,
     required: [true, "Please provide a valid phone number."],
+    unique: true
   },
   email: {
     type: String,
     require: [true, "Please enter an email."],
     unique: true,
+    trim: true,
     lowercase: true, // this make the value into lowercase before saving it into the db
     validate: [validator.isEmail, "Please enter a valid email."],
   },
@@ -53,10 +56,10 @@ const userSchema = new mongoose.Schema({
         },
       },
     ],
+    unique: true,
     // required: [true, "Please provide payments details."]
   },
 });
 
-const userModel = mongoose.Model("User", userSchema);
-
-module.exports = userModel;
+const User = mongoose.model("User", userSchema);
+module.exports = User;
