@@ -114,8 +114,8 @@ export default function App() {
     )
   );
 
-  // const userPath = useSelector(selectPathHistory);
-  // console.log(userPath);
+  const userPath = useSelector(selectPathHistory);
+  console.log(userPath);
 
   return (
     <>

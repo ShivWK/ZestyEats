@@ -9,8 +9,7 @@ const useTrackNavigation = () => {
   const pathHistory = useSelector(selectPathHistory);
 
   useEffect(() => {
-    if (location.pathname !== pathHistory[pathHistory.length - 1]) {
-        // to avoid duplicate entry
+    if (location.pathname !== pathHistory[pathHistory.length - 1] && location.pathname) {
       dispatch(setPathHistory(location.pathname));
     }
   }, [location.pathname]);

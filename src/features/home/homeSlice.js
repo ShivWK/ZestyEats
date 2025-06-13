@@ -37,13 +37,23 @@ const homeSlice = createSlice({
 
             if (existingIndex !== -1) {
                 state.pathHistory = state.pathHistory.slice(0, existingIndex + 1)
+            } else if (Array.isArray(action.payload)) {
+                state.pathHistory = action.payload;
+            } else if (!newPath) {
+                return;
             } else {
                 state.pathHistory.push(newPath);
+            }
+
+            const storedPath = JSON.parse(localStorage.getItem("pathHistory")) || [];
+            if (action.payload !== storedPath.at(-1) && action.payload) {
+                localStorage.setItem("pathHistory", JSON.stringify(state.pathHistory));
             }
         },
 
         setUserFriendlyPathHistory: (state, action) => {
-            localStorage.setItem("userFriendlyPathHistory" , JSON.stringify(action.payload));
+
+            localStorage.setItem("userFriendlyPathHistory", JSON.stringify(action.payload));
             state.userFriendlyPathHistory = action.payload;
         },
 

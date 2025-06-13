@@ -19,7 +19,7 @@ const Breadcrumbs = ({ textColor, mainTextColor }) => {
         const backstage = index + 1 - arr.length;
 //"#101828", "#4a5565"
         return (
-          <span className="flex gap-2 items-center">
+          <span key={index} className="flex gap-2 items-center">
             <button
             onClick={() => clickHandler(backstage, index, lastIndex)}
             style={{ color: index === lastIndex ? mainTextColor : textColor }}

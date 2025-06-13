@@ -11,9 +11,10 @@ import {
     addAvailableCities,
     addLatAndLng,
     setUserFriendlyPathHistory,
+    setPathHistory,
 } from '../features/home/homeSlice';
 
-export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPathHistory) => {
+export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPathHistory, pathHistory) => {
     if (res?.data?.data?.cards?.[0]?.card?.card?.id === "swiggy_not_present") {
         alert("We don't server in this location");
     } else {
@@ -21,6 +22,7 @@ export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPath
         localStorage.setItem("lat", JSON.stringify(lat));
         localStorage.setItem("lng", JSON.stringify(lng));
 
+        dispatch(setPathHistory(pathHistory))
         dispatch(setUserFriendlyPathHistory(userPathHistory));
         dispatch(addLatAndLng({lat, lng}));
         dispatch(addFoodieThoughtsData(res));

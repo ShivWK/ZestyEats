@@ -16,3 +16,4 @@ const BreadcrumbsWrapper = ({ normalTextColor, mainTextColor, delimiterColor}) =
 }
 
 export default BreadcrumbsWrapper;
+
