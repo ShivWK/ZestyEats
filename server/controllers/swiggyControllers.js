@@ -217,8 +217,7 @@ exports.specificFoodCategoryData = async (req, res) => {
 
 exports.searchHomeData = async (req, res, next) => {
   const { lat, lng } = req.query;
-  console.log("Called", lat, lng)
-
+  console.log("Called hit", lat, lng)
 
   if (!lat || !lng) {
     return res.status(400).json({
