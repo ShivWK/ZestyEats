@@ -6,7 +6,7 @@ const searchApiSlice = createApi({
      endpoints: builder => ({
         getSearchHomeData: builder.query({
             query: ({lat, lng}) => ({
-                url: "/search-Home-Data",
+                url: "/search-home-data",
                 params: {lat, lng}
             })
         })
