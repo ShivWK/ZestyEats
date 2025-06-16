@@ -17,7 +17,7 @@ const NavItem = memo(
           <span className="relative group-hover:text-[#ff5200]">
             {text}
             {superScript ? (
-              <sup className="text-[#ff8e32] text-[10px] ml-0.5 absolute top-1 font-extrabold">
+              <sup className="text-primary text-[10px] ml-0.5 absolute top-1 font-extrabold">
                 {superScript}
               </sup>
             ) : null}
