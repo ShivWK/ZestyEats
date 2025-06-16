@@ -189,6 +189,8 @@ exports.dishSearchData = async (req, res) => {
 exports.specificFoodCategoryData = async (req, res) => {
   const { lat, lng, collection_id, tags } = req.query;
 
+  console.log("Called", tags)
+
   if (!lat || !lng || !collection_id || !tags) {
     return res.status(400).json({
       error: "lat, lng, collection_id, and tags are required",
