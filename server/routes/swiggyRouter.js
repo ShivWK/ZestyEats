@@ -10,7 +10,8 @@ const {
   specificRestaurantData,
   dishSearchData,
   searchHomeData,
-  specificFoodSearchSuggestions
+  specificFoodSearchSuggestions,
+  suggestdDataHandler
 } = require("./../controllers/swiggyControllers");
 
 swiggyRouter.get("/homepageData", homePageData);
@@ -22,6 +23,7 @@ swiggyRouter.get("/food-category", specificFoodCategoryData);
 swiggyRouter.get("/dish-search", dishSearchData);
 swiggyRouter.get("/search-home-data", searchHomeData);
 swiggyRouter.get("/search-food-suggestions", specificFoodSearchSuggestions);
+swiggyRouter.get("/suggested-data", suggestdDataHandler);
 
 
 module.exports = swiggyRouter;
