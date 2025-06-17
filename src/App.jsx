@@ -124,9 +124,6 @@ export default function App() {
     )
   );
 
-  const userPath = useSelector(selectPathHistory);
-  console.log(userPath);
-
   return (
     <>
       <RouterProvider router={router} />

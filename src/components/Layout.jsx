@@ -62,7 +62,6 @@ export default function Layout() {
     const pathHistory = JSON.parse(localStorage.getItem("pathHistory"));
 
     if (HomeData && lat && lng && userPathHistory && pathHistory) {
-      console.log("from local", pathHistory)
       updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory, pathHistory);
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
       const searchedCityAddress = JSON.parse(
@@ -135,7 +134,7 @@ export default function Layout() {
     });
 
     dispatch(setUserFriendlyPathHistory(history));
-    console.log(history);
+    // console.log(history);
   }, [pathHistory]);
 
   useEffect(() => {

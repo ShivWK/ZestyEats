@@ -238,6 +238,12 @@ exports.searchHomeData = async (req, res, next) => {
       }
     });
 
+    const origin = req.headers.origin;
+
+    res.set({
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET",
+    });
     res.status(200).json(result?.data);
   } catch (err) {
     console.log("Error occured",err);
