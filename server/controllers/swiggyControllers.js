@@ -199,7 +199,7 @@ exports.dishSearchData = async (req, res) => {
   }
 }
 
-exports.specificFoodCategoryData = async (req, res) => {
+exports.specificFoodCategoryData = asyncErrorHandler(async (req, res) => {
   const { lat, lng, collection_id, tags } = req.query;
 
   if (!lat || !lng || !collection_id || !tags) {
@@ -210,23 +210,16 @@ exports.specificFoodCategoryData = async (req, res) => {
 
   const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
 
-  try {
-    const response = await client.get(swiggyUrl);
-    const origin = req.headers.origin;
+  const response = await client.get(swiggyUrl);
+  const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response?.data);
-  } catch (err) {
-    console.log("Error occured:", err);
-    res.status(404).json({
-      status: "failed",
-      error: err.message,
-    });
-  }
-}
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
+
+  return res.status(200).json(response?.data);
+})
 
 exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng } = req.query;
@@ -245,6 +238,13 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
       lat,
       lng
     }
+  });
+
+  const origin = req.headers.origin;
+
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
   });
 
   return res.status(200).json(result?.data);
