@@ -21,7 +21,7 @@ swiggyRouter.get("/food-category", specificFoodCategoryData);
 swiggyRouter.get("/dish-search", dishSearchData);
 swiggyRouter.get("/search-home-data", () => {
   console.log("Hit")
-  searchHomeData
+  searchHomeData();
 });
 
 module.exports = swiggyRouter;
