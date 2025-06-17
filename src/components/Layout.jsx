@@ -12,23 +12,108 @@ import {
 } from "../features/Login/loginSlice";
 import {
   setOnline,
+  setLoading,
   selectPathHistory,
   setUserFriendlyPathHistory,
+  addYourCurrentCity,
+  addSearchedCity,
+  addSearchedCityAddress,
 } from "../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
+import { updateHomeRestaurantData } from "../utils/updateHomeData";
+import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
+import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
+import { updateCurrentCity } from "../utils/addCurrentCity";
 
 export default function Layout() {
+  const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
+  const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
   const dispatch = useDispatch();
   useTrackNavigation();
 
-  const pathHistory = useSelector(selectPathHistory);
+  const fetchDefaultHomeAPIData = async () => {
+    try {
+      let apiResponse = await triggerHomeAPI({
+        lat: 12.9715987,
+        lng: 77.5945627,
+      }).unwrap();
+      if (!apiResponse) return;
+      updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
+    } catch (err) {
+      dispatch(setLoading(false));
+      alert(err.error);
+    }
+  };
 
-  // (function () {})();
+  useEffect(() => {
+    const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
+    const lat = JSON.parse(localStorage.getItem("lat"));
+    const lng = JSON.parse(localStorage.getItem("lng"));
+    const rawUserPathHistory = localStorage.getItem("userFriendlyPathHistory");
+    let userPathHistory = '';
+    if (rawUserPathHistory !== "undefined") {
+      userPathHistory = JSON.parse(rawUserPathHistory);
+    }
+    const pathHistory = JSON.parse(localStorage.getItem("pathHistory"));
+
+    if (HomeData && lat && lng && userPathHistory && pathHistory) {
+      updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory, pathHistory);
+      const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
+      const searchedCityAddress = JSON.parse(
+        localStorage.getItem("searchedCityAddress")
+      ) || "";
+      const currentCity = JSON.parse(localStorage.getItem("currentCity")) || "";
+
+      dispatch(
+        addSearchedCity(searchedCity === "undefined" ? "" : searchedCity)
+      );
+      dispatch(
+        addSearchedCityAddress(
+          searchedCityAddress === "undefined" ? "" : searchedCityAddress
+        )
+      );
+      dispatch(
+        addYourCurrentCity(currentCity === "undefined" ? "" : currentCity)
+      );
+    } else if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const lat1 = position.coords.latitude;
+        const lng1 = position.coords.longitude;
+
+        try {
+          const data = await triggerLocationByCoordinates({
+            lat1,
+            lng1,
+          }).unwrap();
+
+          updateCurrentCity(data, dispatch);
+
+          const lat = data?.data?.[0]?.geometry?.location?.lat;
+          const lng = data?.data?.[0]?.geometry?.location?.lng;
+
+          try {
+            const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
+            updateHomeRestaurantData(res2, dispatch, lat, lng);
+          } catch (err) {
+            alert(err.message);
+            fetchDefaultHomeAPIData();
+          }
+        } catch (err) {
+          console.log("Error fetching current location data.");
+          fetchDefaultHomeAPIData();
+        }
+      });
+    } else {
+      fetchDefaultHomeAPIData();
+    }
+  }, []);
+
+  const pathHistory = useSelector(selectPathHistory);
 
   useEffect(() => {
     const history = pathHistory.map((item) => {
@@ -41,7 +126,7 @@ export default function Layout() {
       else if (item === "/dishSearch") return "DishSearch";
       else if (item.includes("specificFood")) {
         return decodeURIComponent(item).split("/")[2];
-      } else if (item.includes("restaurantSpecific")) {
+      } else if (item?.includes("restaurantSpecific")) {
         // console.log(decodeURIComponent(item).split("/")[5])
         return decodeURIComponent(item).split("/")[5];
       }
@@ -49,7 +134,7 @@ export default function Layout() {
     });
 
     dispatch(setUserFriendlyPathHistory(history));
-    console.log(history);
+    // console.log(history);
   }, [pathHistory]);
 
   useEffect(() => {

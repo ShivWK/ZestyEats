@@ -8,9 +8,9 @@ import {
 } from "../../features/home/restaurantsApiSlice";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import useScrollToTop from "../../utils/useScrollToTop";
+import SearchContainer from "../SearchContainer";
 
 const RestaurantSearch = () => {
-
   useScrollToTop();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -40,22 +40,24 @@ const RestaurantSearch = () => {
 
   // console.log("Search Term", searchTerm);
 
-  const doSearch = useRef(createDebounce(async (searchTerm) => {
-    if (searchTerm) {
-      try {
-        const response = await triggerSearch({
-          lat,
-          lng,
-          restro_Id,
-          searchTerm: searchTerm.trim(),
-        }).unwrap();
-        setSearchData(response?.data);
-      } catch (err) {
-        console.error("Error fetching search data:", err);
-        setSearchData([]);
+  const doSearch = useRef(
+    createDebounce(async (searchTerm) => {
+      if (searchTerm) {
+        try {
+          const response = await triggerSearch({
+            lat,
+            lng,
+            restro_Id,
+            searchTerm: searchTerm.trim(),
+          }).unwrap();
+          setSearchData(response?.data);
+        } catch (err) {
+          console.error("Error fetching search data:", err);
+          setSearchData([]);
+        }
       }
-    }
-  }, 300));
+    }, 300)
+  );
 
   // console.log("Search Data", searchData);
 
@@ -70,33 +72,13 @@ const RestaurantSearch = () => {
   };
 
   return (
-    <div className="pt-24 w-full max-w-[800px] mx-auto min-h-[105vh] ">
-      <div className="flex w-full items-center gap-1.5 p-2.5 border-b-2 rounded-md bg-gray-200 ">
-        <i
-          onClick={() => navigate(-1)}
-          className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"
-        ></i>
-        <div>
-          <input
-            className="text-gray-900 py-1.5 px-2 outline-none bg-transparent text-lg font-semibold"
-            type="text"
-            size={73}
-            value={searchTerm}
-            onChange={handleSearch}
-            placeholder={`Search in ${title}...`}
-          />
-        </div>
-        {searchTerm !== "" ? (
-          <i
-            onClick={handleCross}
-            className="ri-close-large-fill text-xl cursor-pointer"
-          ></i>
-        ) : (
-          <i className="ri-search-2-line text-xl cursor-pointer"></i>
-        )}
-      </div>
-      <div className="p-2"></div>
-    </div>
+    <SearchContainer
+      backClickHandler={() => navigate(-1)}
+      placeholder={`Search in ${title}...`}
+      searchTerm={searchTerm}
+      handleSearch={handleSearch}
+      crossHandler={handleCross}
+    />
   );
 };
 

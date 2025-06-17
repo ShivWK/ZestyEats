@@ -14,7 +14,7 @@ import {
   selectSearchedCity,
   selectYourCurrentCity,
 } from "../../features/home/homeSlice";
-import Breadcrumbs from "../Breadcrumbs";
+import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
@@ -83,21 +83,11 @@ const MainContent = ({ data, routes = true }) => {
     });
   });
 
-  // const Route = `${currentCity || searchedCity} | Navigate / ${title}`
-  const route = (
-    <div className="flex gap-1 items-center text-gray-600 text-xs">
-      <p>{`${currentCity || searchedCity} ||`}</p>
-      <Breadcrumbs />
-    </div>
-  );
-
-  // console.log("Rest Data", restMenuData);
-
   return (
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">
       {routes && (
         <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
-          {route}
+          <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"}/>
         </div>
       )}
 

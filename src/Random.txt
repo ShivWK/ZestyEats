@@ -14,3 +14,5 @@ API to get Restaurant's data of searched city
 
 Api to get live location area name after getting lat and lng
 // https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat}%2C${long}
+
+// dotenv, package is required when we have our environment variables in local system, so to inject hem we need dotenv package, but if u have added environment vars on server dashboard like on Render then render will automatically add them to the process object.

@@ -1,21 +1,12 @@
 const express = require("express");
-const axios = require("axios");
 const cors = require("cors");
+const app = express();
+const mongoose = require("mongoose");
+
 const swiggyRouter = require("./routes/swiggyRouter");
 const userRouter = require("./routes/userRouter");
-// const userActivityRouter = require("./routes/")
+// const userActivityRouter = require("./routes/"))
 
-const client = axios.create({
-  headers: {
-    "User-Agent": "Mozilla/5.0",
-    Accept: "application/json",
-    "Accept-Language": "en-US,en;q=0.9",
-    Referer: "https://www.swiggy.com/",
-    Origin: "https://www.swiggy.com",
-  },
-})
-
-const app = express();
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:5173",
@@ -35,6 +26,16 @@ app.use(
   })
 );
 app.use(express.json());
+
+mongoose.connect(process.env.MONGOOSE_URI)
+.then(() => {
+  console.log("Connected to MongoDB Atlas");
+})
+.catch((err) => {
+  console.log(`MongoDB connection error: ${err}`);
+  process.exit(1);
+})
+
 
 app.get("/", (req, res) => {
   res.status(500).send(`Swiggy Proxy API is running.`);

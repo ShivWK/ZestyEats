@@ -26,7 +26,9 @@ import {
   selectBestPlacesToEat,
   selectBestCuisionsNearMe,
   selectNearByRestaurants,
+  selectLatAndLng
 } from "../../features/home/homeSlice";
+import { useGetSearchHomeDataQuery } from "../../features/search/searchApiSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 
@@ -38,83 +40,88 @@ const Home = memo(() => {
   const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
   const nearByRestaurants = useSelector(selectNearByRestaurants);
   const isLoadingMain = useSelector(selectIsLoading);
+  const {lat , lng} = useSelector(selectLatAndLng)
   const dispatch = useDispatch();
-  const [triggerHomeAPI, { isLoading }] = useLazyGetHomePageDataQuery();
+  const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
+  // const data = useGetSearchHomeDataQuery({lat:12.9628669, lng:77.57750899999999})
+  // console.log(data)
 
-  const fetchDefaultHomeAPIData = async () => {
-    try {
-      let apiResponse = await triggerHomeAPI({
-        lat: 12.9715987,
-        lng: 77.5945627,
-      }).unwrap();
-      if (!apiResponse) return;
-      updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
-    } catch (err) {
-      dispatch(setLoading(false));
-      alert(err.error);
-    }
-  };
+  // const fetchDefaultHomeAPIData = async () => {
+  //   try {
+  //     let apiResponse = await triggerHomeAPI({
+  //       lat: 12.9715987,
+  //       lng: 77.5945627,
+  //     }).unwrap();
+  //     if (!apiResponse) return;
+  //     updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
+  //   } catch (err) {
+  //     dispatch(setLoading(false));
+  //     alert(err.error);
+  //   }
+  // };
 
-  useEffect(() => {
-    const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
-    const lat = JSON.parse(localStorage.getItem("lat"));
-    const lng = JSON.parse(localStorage.getItem("lng"));
-    const userPathHistory = JSON.parse(localStorage.getItem("userFriendlyPathHistory") || "")
+  // useEffect(() => {
+  //   const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
+  //   const lat = JSON.parse(localStorage.getItem("lat"));
+  //   const lng = JSON.parse(localStorage.getItem("lng"));
+  //   const userPathHistory = JSON.parse(localStorage.getItem("userFriendlyPathHistory"));
+  //   const pathHistory = JSON.parse(localStorage.getItem("pathHistory"));
 
-    if (HomeData && lat && lng && userPathHistory) {
-      updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory);
-      const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
-      const searchedCityAddress = JSON.parse(
-        localStorage.getItem("searchedCityAddress")
-      ) || "";
-      const currentCity = JSON.parse(localStorage.getItem("currentCity")) || "";
+  //   if (HomeData && lat && lng && userPathHistory && pathHistory) {
+  //     console.log("from local", pathHistory)
+  //     updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory, pathHistory);
+  //     const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
+  //     const searchedCityAddress = JSON.parse(
+  //       localStorage.getItem("searchedCityAddress")
+  //     ) || "";
+  //     const currentCity = JSON.parse(localStorage.getItem("currentCity")) || "";
 
-      dispatch(
-        addSearchedCity(searchedCity === "undefined" ? "" : searchedCity)
-      );
-      dispatch(
-        addSearchedCityAddress(
-          searchedCityAddress === "undefined" ? "" : searchedCityAddress
-        )
-      );
-      dispatch(
-        addYourCurrentCity(currentCity === "undefined" ? "" : currentCity)
-      );
-    } else if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
-        const lat1 = position.coords.latitude;
-        const lng1 = position.coords.longitude;
+  //     dispatch(
+  //       addSearchedCity(searchedCity === "undefined" ? "" : searchedCity)
+  //     );
+  //     dispatch(
+  //       addSearchedCityAddress(
+  //         searchedCityAddress === "undefined" ? "" : searchedCityAddress
+  //       )
+  //     );
+  //     dispatch(
+  //       addYourCurrentCity(currentCity === "undefined" ? "" : currentCity)
+  //     );
+  //   } else if (navigator.geolocation) {
+  //     navigator.geolocation.getCurrentPosition(async (position) => {
+  //       const lat1 = position.coords.latitude;
+  //       const lng1 = position.coords.longitude;
 
-        try {
-          const data = await triggerLoactionByCoordinates({
-            lat1,
-            lng1,
-          }).unwrap();
+  //       try {
+  //         const data = await triggerLoactionByCoordinates({
+  //           lat1,
+  //           lng1,
+  //         }).unwrap();
 
-          updateCurrentCity(data, dispatch);
+  //         updateCurrentCity(data, dispatch);
 
-          const lat = data?.data?.[0]?.geometry?.location?.lat;
-          const lng = data?.data?.[0]?.geometry?.location?.lng;
+  //         const lat = data?.data?.[0]?.geometry?.location?.lat;
+  //         const lng = data?.data?.[0]?.geometry?.location?.lng;
 
-          try {
-            const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
-            updateHomeRestaurantData(res2, dispatch, lat, lng);
-          } catch (err) {
-            alert(err.message);
-            fetchDefaultHomeAPIData();
-          }
-        } catch (err) {
-          console.log("Error fetching current location data.");
-          fetchDefaultHomeAPIData();
-        }
-      });
-    } else {
-      fetchDefaultHomeAPIData();
-    }
-  }, []);
+  //         try {
+  //           const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
+  //           updateHomeRestaurantData(res2, dispatch, lat, lng);
+  //         } catch (err) {
+  //           alert(err.message);
+  //           fetchDefaultHomeAPIData();
+  //         }
+  //       } catch (err) {
+  //         console.log("Error fetching current location data.");
+  //         fetchDefaultHomeAPIData();
+  //       }
+  //     });
+  //   } else {
+  //     fetchDefaultHomeAPIData();
+  //   }
+  // }, []);
 
-  return isLoadingMain || isLoading ? (
+  return isLoadingMain ? (
     <Loader size={"large"} />
   ) : (
     <main className="w-full max-w-[1070px] mx-auto pb-14 pr-1 pt-24 overflow-x-hidden">

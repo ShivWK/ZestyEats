@@ -28,6 +28,12 @@ const RestaurantSpecific = lazy(() =>
 const FoodSpecific = lazy(() =>
   import("./components/FoodSpecific/FoodSpecific")
 );
+
+import SearchResult from "./components/Search/SearchResult";
+import SearchSuggestions from "./components/Search/SearchSuggestion";
+import SearchHome from "./components/Search/SearchHome";
+
+
 import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
 
 export default function App() {
@@ -51,7 +57,11 @@ export default function App() {
               <Search />
             </Suspense>
           }
-        />
+        >
+          <Route index element={<SearchHome />} />
+          <Route path="suggestions" element={<SearchSuggestions />} />
+          <Route path="searchResult" element={<SearchResult />} />
+        </Route>
         <Route
           path="offers-dinouts"
           element={
@@ -113,9 +123,6 @@ export default function App() {
       </Route>
     )
   );
-
-  // const userPath = useSelector(selectPathHistory);
-  // console.log(userPath);
 
   return (
     <>

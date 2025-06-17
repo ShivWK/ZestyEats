@@ -10,7 +10,7 @@ const client = axios.create({
   },
 })
 
-exports.homePageData =  async (req, res) => {
+exports.homePageData = async (req, res) => {
   try {
     const { lat, lng } = req.query;
 
@@ -215,6 +215,35 @@ exports.specificFoodCategoryData = async (req, res) => {
   }
 }
 
+exports.searchHomeData = async (req, res, next) => {
+  const { lat, lng } = req.query;
+
+  if (!lat || !lng) {
+    return res.status(400).json({
+      status: "fail",
+      error: "Provide lat and lng"
+    })
+  }
+
+  const swiggyUrl = "https://www.swiggy.com/dapi/landing/PRE_SEARCH";
+
+  try {
+    const result = await client.get(swiggyUrl, {
+      params: {
+        lat,
+        lng
+      }
+    });
+
+    res.status(200).json(result?.data);
+  } catch (err) {
+    console.log("Error occured",err);
+    res.status(404).json({
+      status: "failed",
+      error: err?.message || "something went wrong"
+    });
+  }
+}
 
 
 
