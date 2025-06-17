@@ -17,4 +17,4 @@ const searchApiSlice = createApi({
 });
 
 export default searchApiSlice;
-export const { useLazyGetSearchHomeDataQuery } = searchApiSlice;
+export const { useLazyGetSearchHomeDataQuery, useGetSearchHomeDataQuery } = searchApiSlice;

@@ -26,7 +26,9 @@ import {
   selectBestPlacesToEat,
   selectBestCuisionsNearMe,
   selectNearByRestaurants,
+  selectLatAndLng
 } from "../../features/home/homeSlice";
+import { useGetSearchHomeDataQuery } from "../../features/search/searchApiSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 
@@ -38,9 +40,11 @@ const Home = memo(() => {
   const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
   const nearByRestaurants = useSelector(selectNearByRestaurants);
   const isLoadingMain = useSelector(selectIsLoading);
+  const {lat , lng} = useSelector(selectLatAndLng)
   const dispatch = useDispatch();
   const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
+  const data = useGetSearchHomeDataQuery({lat , lng})
 
   // const fetchDefaultHomeAPIData = async () => {
   //   try {

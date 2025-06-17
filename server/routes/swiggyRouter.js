@@ -19,9 +19,6 @@ swiggyRouter.get("/address-from-coordinates", addressFromCoordinates);
 swiggyRouter.get("/specific-restaurants", specificRestaurantData);
 swiggyRouter.get("/food-category", specificFoodCategoryData);
 swiggyRouter.get("/dish-search", dishSearchData);
-swiggyRouter.get("/search-home-data", () => {
-  console.log("Hit")
-  searchHomeData();
-});
+swiggyRouter.get("/search-home-data", searchHomeData);
 
 module.exports = swiggyRouter;
