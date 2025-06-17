@@ -188,8 +188,8 @@ exports.dishSearchData = async (req, res) => {
 
 exports.specificFoodCategoryData = async (req, res) => {
   const { lat, lng, collection_id, tags } = req.query;
-
-  console.log("Called", tags)
+  
+  console.log("Called", tags);
 
   if (!lat || !lng || !collection_id || !tags) {
     return res.status(400).json({
@@ -197,15 +197,10 @@ exports.specificFoodCategoryData = async (req, res) => {
     });
   }
 
-  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
+  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
 
   try {
-    const response = await client.get(swiggyUrl, {
-      params: {
-        lat,
-        lng
-      }
-    });
+    const response = await client.get(swiggyUrl);
     const origin = req.headers.origin;
 
     res.set({
@@ -224,6 +219,7 @@ exports.specificFoodCategoryData = async (req, res) => {
 
 exports.searchHomeData = async (req, res, next) => {
   const { lat, lng } = req.query;
+  console.log("Called hit", lat, lng)
 
   if (!lat || !lng) {
     return res.status(400).json({
@@ -242,12 +238,6 @@ exports.searchHomeData = async (req, res, next) => {
       }
     });
 
-    const origin = req.headers.origin;
-
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
     res.status(200).json(result?.data);
   } catch (err) {
     console.log("Error occured",err);
