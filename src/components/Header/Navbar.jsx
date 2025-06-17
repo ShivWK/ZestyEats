@@ -5,10 +5,12 @@ import {
   setLogInModal,
   setLoginHovered,
 } from "../../features/Login/loginSlice";
-import { useDispatch } from "react-redux";
+import { selectLatAndLng } from "../../features/home/homeSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { memo, useCallback, useState } from "react";
 
 const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
+  const {lat, lng} = useSelector(selectLatAndLng);
   const loggedIn = false;
   const dispatch = useDispatch();
   const [showDrop, setShowDrop] = useState(false);
@@ -97,7 +99,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
         )}
         {showSearch && (
           <NavItem
-            to="search"
+            to={`search?lat=${lat}&lng=${lng}`}
             icon={"fa-magnifying-glass text-lg"}
             text="Search"
           />

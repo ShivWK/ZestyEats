@@ -1,12 +1,14 @@
 const Ui1Shimmer = () => {
-    const arr = Array.from({length : 12}, (_, i) => i)
+    const arr = Array.from({ length: 12 }, (_, i) => i)
 
-    return <div className="flex pt-24 w-full mx-auto">
-        {arr.map(item => {
-            return <div className="shimmer-bg h-24 w-16 rounded-xl">
-
-            </div>
-        })}
+    return <div className="flex flex-col w-fit mx-auto gap-5 mt-4">
+        <div className="w-64 h-8 rounded shimmerBg"></div>
+        <div className="flex flex-wrap gap-x-5 gap-y-3">
+            {arr.map(item => {
+                return <div key={item} className="shimmerBg h-36 w-28 rounded-xl shrink-0">
+                </div>
+            })}
+        </div>
     </div>
 }
 

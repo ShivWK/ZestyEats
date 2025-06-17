@@ -129,7 +129,8 @@ export default function Layout() {
       } else if (item?.includes("restaurantSpecific")) {
         // console.log(decodeURIComponent(item).split("/")[5])
         return decodeURIComponent(item).split("/")[5];
-      }
+      } else if (item === "/search/suggestions") return "Suggestions";
+      else if (item === "/search/searchResult") return "Search Result";
       return item;
     });
 

@@ -2,7 +2,7 @@ import store from "../app/store";
 import restaurantsApi from "../features/home/restaurantsApiSlice";
 import foodSpecificApiSlice from "../features/home/foodSpecificApiSlice";
 
-export const specificRestroLoader = async ({ params }) => {
+export const specificRestroLoader = ({ params }) => {
   const { lat, lng, id } = params;
 
   try {
