@@ -76,9 +76,9 @@ const MainContent = ({ data, routes = true }) => {
       return (
         item?.card?.card?.title !== "Top Picks" &&
         item?.card?.card?.["@type"] !==
-          "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" &&
+        "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo" &&
         item?.card?.card?.["@type"] !==
-          "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress"
+        "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress"
       );
     });
   });
@@ -87,7 +87,7 @@ const MainContent = ({ data, routes = true }) => {
     <div className="flex items-center flex-col pt-24 mx-auto w-full max-w-[800px]">
       {routes && (
         <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
-          <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"}/>
+          <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"} />
         </div>
       )}
 
@@ -140,9 +140,10 @@ const MainContent = ({ data, routes = true }) => {
             if (item?.card?.card?.categories) {
               return (
                 <Suspense
+                  key={item?.card?.card?.categoryId || Math.random()}
                   fallback={
                     <div className="w-full h-36 rounded-xl shimmerBg mt-2.5">
-  
+
                     </div>
                   }
                 >
