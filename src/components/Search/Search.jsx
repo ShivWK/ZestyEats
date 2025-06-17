@@ -31,9 +31,9 @@ export default Search;
 
 // 1: Main page API call to get images URL: https://www.swiggy.com/dapi/landing/PRE_SEARCH?lat=12.9628669&lng=77.57750899999999         // Will give you images
 
-// Image Url `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/rng/md/carousel/production/b4ff78ecc5b8b66f732dd06228916d65`
+// 2: Image Url `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/rng/md/carousel/production/b4ff78ecc5b8b66f732dd06228916d65`
 
-// Image Click Url : https://www.swiggy.com/dapi/restaurants/search/v3?lat=12.9628669&lng=77.57750899999999&str=Rolls&trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=DEFAULT_SUGGESTION&queryUniqueId=1deefe6b-f96a-5070-65a2-c46143e5dbc6                // Will give you result of the image click
+// 3: Image Click Url : https://www.swiggy.com/dapi/restaurants/search/v3?lat=12.9628669&lng=77.57750899999999&str=Rolls&trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=DEFAULT_SUGGESTION&queryUniqueId=1deefe6b-f96a-5070-65a2-c46143e5dbc6                // Will give you result of the image click
 
 // Search
 

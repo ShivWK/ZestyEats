@@ -10,10 +10,18 @@ const homeSearchApiSlice = createApi({
                     url: "/search-home-data",
                     params: { lat, lng }
                 })
+            }),
+
+            getSearchedFoodSuggestions: builder.query({
+                query: ({lat, lng, food}) => ({
+                    url: "/search-food-suggestions",
+                    params: {lat, lng, food},
+                })
             })
         }
-    }
+    },
+    
 });
 
 export default homeSearchApiSlice;
-export const { useLazyGetSearchHomeDataQuery } = homeSearchApiSlice;
+export const { useLazyGetSearchHomeDataQuery, useLazyGetSearchedFoodSuggestionsQuery } = homeSearchApiSlice;

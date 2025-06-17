@@ -23,6 +23,13 @@ const asyncErrorHandler = func => {
   }
 }
 
+const missingParamsError = (msg, res) => {
+  return res.status(400).json({
+    status: "failed",
+    message: msg,
+  })
+}
+
 exports.homePageData = async (req, res) => {
   try {
     const { lat, lng } = req.query;
@@ -140,7 +147,7 @@ exports.addressFromCoordinates = async (req, res) => {
   }
 }
 
-exports.specificRestaurantData = asyncErrorHandler(async (req, res) => {
+exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, id } = req.query;
 
   if (!lat || !lng || !id) {
@@ -158,7 +165,7 @@ exports.specificRestaurantData = asyncErrorHandler(async (req, res) => {
     "Access-Control-Allow-Origin": origin,
     "Access-Control-Allow-Methods": "GET",
   });
-  
+
   return res.status(200).json(response.data);
 })
 
@@ -243,6 +250,32 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   return res.status(200).json(result?.data);
 })
 
+exports.specificFoodSearchSuggestions = asyncErrorHandler(async (req, res, next) => {
+  const { lat, lng, food } = req.query;
+
+  if (!lat || !lng || !food) {
+    return missingParamsError("Please provide lat , lng, and food", res);
+  }
+
+  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=DEFAULT_SUGGESTION&queryUniqueId=1deefe6b-f96a-5070-65a2-c46143e5dbc6";
+
+  let response = await client.get(swiggyUrl, {
+    params: {
+      lat,
+      lng,
+      str: food
+    }
+  });
+
+  const origin = req.headers.origin;
+
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
+
+  res.status(200).json(response.data);
+})
 
 
 
