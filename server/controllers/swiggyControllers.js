@@ -188,8 +188,6 @@ exports.dishSearchData = async (req, res) => {
 
 exports.specificFoodCategoryData = async (req, res) => {
   const { lat, lng, collection_id, tags } = req.query;
-  
-  console.log("Called", tags);
 
   if (!lat || !lng || !collection_id || !tags) {
     return res.status(400).json({
@@ -219,7 +217,6 @@ exports.specificFoodCategoryData = async (req, res) => {
 
 exports.searchHomeData = async (req, res, next) => {
   const { lat, lng } = req.query;
-  console.log("Called hit", lat, lng)
 
   if (!lat || !lng) {
     return res.status(400).json({
