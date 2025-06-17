@@ -1,4 +1,5 @@
 const axios = require("axios");
+const asyncErrorHandler = require("./../utils/asyncErrorHandler");
 
 const client = axios.create({
   headers: {
@@ -215,7 +216,7 @@ exports.specificFoodCategoryData = async (req, res) => {
   }
 }
 
-exports.searchHomeData = async (req, res, next) => {
+exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng } = req.query;
 
   if (!lat || !lng) {
@@ -227,7 +228,6 @@ exports.searchHomeData = async (req, res, next) => {
 
   const swiggyUrl = "https://www.swiggy.com/dapi/landing/PRE_SEARCH";
 
-  try {
     const result = await client.get(swiggyUrl, {
       params: {
         lat,
@@ -236,14 +236,8 @@ exports.searchHomeData = async (req, res, next) => {
     });
 
     res.status(200).json(result?.data);
-  } catch (err) {
-    console.log("Error occured",err);
-    res.status(404).json({
-      status: "failed",
-      error: err?.message || "something went wrong"
-    });
-  }
-}
+})
+
 
 
 
