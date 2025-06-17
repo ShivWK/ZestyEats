@@ -165,19 +165,11 @@ exports.dishSearchData = async (req, res) => {
     });
   }
 
-  const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search`;
+  const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
 
   try {
-    const response = await client.get(searchUrl, {
-      params: {
-        lat,
-        lng,
-        restaurantId: restro_Id,
-        isMenuUx4: true,
-        query: searchTerm,
-        submitAction: "ENTER"
-      }
-    });
+    const response = await client.get(searchUrl);
+    // console.log(response);
     const origin = req.headers.origin;
 
     res.set({
@@ -197,24 +189,21 @@ exports.dishSearchData = async (req, res) => {
 exports.specificFoodCategoryData = async (req, res) => {
   const { lat, lng, collection_id, tags } = req.query;
 
+  console.log("Called", tags)
+
   if (!lat || !lng || !collection_id || !tags) {
     return res.status(400).json({
       error: "lat, lng, collection_id, and tags are required",
     });
   }
 
-  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5`;
+  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
 
   try {
     const response = await client.get(swiggyUrl, {
       params: {
         lat,
-        lng,
-        collection: collection_id,
-        tags,
-        type:"rcv",
-        offset:0,
-        page_type:null
+        lng
       }
     });
     const origin = req.headers.origin;
