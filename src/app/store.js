@@ -9,6 +9,7 @@ import restaurantsApi from "../features/home/restaurantsApiSlice";
 import restaurantReducer from "../features/home/restaurantsSlice";
 import foodSpecificApiSlice from "../features/home/foodSpecificApiSlice";
 import helpReducer from "./../features/home/helpPageSlice";
+import homeSearchApiSlice from "../features/search/searchApiSlice";
 
 const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ const store = configureStore({
     [searchApiSlice.reducerPath]: searchApiSlice.reducer,
     [restaurantsApi.reducerPath]: restaurantsApi.reducer,
     [foodSpecificApiSlice.reducerPath]: foodSpecificApiSlice.reducer,
+    [searchApiSlice.reducerPath]: homeSearchApiSlice.reducer,
     home: homeReducer,
     login: loginReducer,
     header: headerReducer,
@@ -28,6 +30,7 @@ const store = configureStore({
     searchApiSlice.middleware,
     restaurantsApi.middleware,
     foodSpecificApiSlice.middleware,
+    homeSearchApiSlice.middleware,
   ],
 });
 

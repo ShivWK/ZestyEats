@@ -44,7 +44,8 @@ const Home = memo(() => {
   const dispatch = useDispatch();
   const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
   const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
-  const data = useGetSearchHomeDataQuery({lat , lng})
+  // const data = useGetSearchHomeDataQuery({lat:12.9628669, lng:77.57750899999999})
+  // console.log(data)
 
   // const fetchDefaultHomeAPIData = async () => {
   //   try {

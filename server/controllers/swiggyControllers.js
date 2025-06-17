@@ -197,10 +197,15 @@ exports.specificFoodCategoryData = async (req, res) => {
     });
   }
 
-  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
+  const swiggyUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
 
   try {
-    const response = await client.get(swiggyUrl);
+    const response = await client.get(swiggyUrl, {
+      params: {
+        lat,
+        lng
+      }
+    });
     const origin = req.headers.origin;
 
     res.set({
