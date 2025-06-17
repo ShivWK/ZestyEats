@@ -140,6 +140,7 @@ const MainContent = ({ data, routes = true }) => {
             if (item?.card?.card?.categories) {
               return (
                 <Suspense
+                  key={item?.card?.card?.categoryId}
                   fallback={
                     <div className="w-full h-36 rounded-xl shimmerBg mt-2.5">
   
@@ -147,7 +148,6 @@ const MainContent = ({ data, routes = true }) => {
                   }
                 >
                   <ItemsMainHeading
-                    key={item?.card?.card?.categoryId || Math.random()}
                     heading={item?.card?.card?.title}
                     categories={item?.card?.card?.categories}
                     topBorder={index === 0}
