@@ -1,5 +1,5 @@
 const axios = require("axios");
-const asyncErrorHandler = require("./../utils/asyncErrorHandler");
+// const asyncErrorHandler = require("./../utils/asyncErrorHandler");
 
 const client = axios.create({
   headers: {
@@ -10,6 +10,18 @@ const client = axios.create({
     Origin: "https://www.swiggy.com",
   },
 })
+
+const asyncErrorHandler = func => {
+  return (req, res, next) => {
+    func(req, res, next).catch(err => {
+      console.log("Failed to fetch", err);
+      res.status(500).json({
+        status: "failed",
+        error: err.message || "Something went wrong",
+      })
+    })
+  }
+}
 
 exports.homePageData = async (req, res) => {
   try {
@@ -228,14 +240,14 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
 
   const swiggyUrl = "https://www.swiggy.com/dapi/landing/PRE_SEARCH";
 
-    const result = await client.get(swiggyUrl, {
-      params: {
-        lat,
-        lng
-      }
-    });
+  const result = await client.get(swiggyUrl, {
+    params: {
+      lat,
+      lng
+    }
+  });
 
-    res.status(200).json(result?.data);
+  return res.status(200).json(result?.data);
 })
 
 
