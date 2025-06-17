@@ -23,8 +23,7 @@ const asyncErrorHandler = func => {
   }
 }
 
-exports.homePageData = async (req, res) => {
-  try {
+exports.homePageData = asyncErrorHandler(async (req, res) => {
     const { lat, lng } = req.query;
 
     if (!lat || !lng) {
@@ -43,104 +42,76 @@ exports.homePageData = async (req, res) => {
       "Access-Control-Allow-Methods": "GET",
     });
 
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Swiggy Proxy Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
+    return res.status(200).json(response.data);
+})
+
+exports.addressRecommend = asyncErrorHandler(async (req, res) => {
+  const { place_id } = req.query;
+
+  if (!place_id) {
+    return res.status(400).json({ 
+      error: "place_id query parameter is required" 
     });
   }
-}
 
-exports.addressRecommend = async (req, res) => {
-  try {
-    const { place_id } = req.query;
+  const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
 
-    if (!place_id) {
-      return res
-        .status(400)
-        .json({ error: "place_id query parameter is required" });
-    }
+  const response = await client.get(swiggyURL);
+  const origin = req.headers.origin;
 
-    const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
 
-    const response = await client.get(swiggyURL);
-    const origin = req.headers.origin;
+  return res.status(200).json(response.data);
+})
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Address Recommend Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
+exports.addressAutoComplete = asyncErrorHandler(async (req, res) => {
+  const { input } = req.query;
+
+  if (!input) {
+    return res
+      .status(400)
+      .json({ error: "Input query parameter is required" });
+  }
+
+  const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
+
+  const response = await client.get(swiggyURL);
+  const origin = req.headers.origin;
+
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
+
+  return res.status(200).json(response.data);
+})
+
+exports.addressFromCoordinates = asyncErrorHandler(async (req, res, next) => {
+  const { lat1, lng1 } = req.query;
+
+  if (!lat1 || !lng1) {
+    return res.status(400).json({
+      error: "Both lat and lng query parameters are required",
     });
   }
-}
 
-exports.addressAutoComplete = async (req, res) => {
-  try {
-    const { input } = req.query;
+  const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
 
-    if (!input) {
-      return res
-        .status(400)
-        .json({ error: "Input query parameter is required" });
-    }
+  const response = await client.get(swiggyURL);
+  const origin = req.headers.origin;
 
-    const swiggyURL = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
 
-    const response = await client.get(swiggyURL);
-    const origin = req.headers.origin;
+  return res.status(200).json(response.data);
+})
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Place Autocomplete Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
-    });
-  }
-}
-
-exports.addressFromCoordinates = async (req, res) => {
-  try {
-    const { lat1, lng1 } = req.query;
-
-    if (!lat1 || !lng1) {
-      return res.status(400).json({
-        error: "Both lat and lng query parameters are required",
-      });
-    }
-
-    const swiggyURL = `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
-
-    const response = await client.get(swiggyURL);
-    const origin = req.headers.origin;
-
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (error) {
-    console.error("Address from Coordinates Error:", error.message);
-    res.status(404).json({
-      status: "failed",
-      error: error.message,
-    });
-  }
-}
-
-exports.specificRestaurantData = async (req, res) => {
+exports.specificRestaurantData = asyncErrorHandler(async (req, res) => {
   const { lat, lng, id } = req.query;
 
   if (!lat || !lng || !id) {
@@ -151,23 +122,16 @@ exports.specificRestaurantData = async (req, res) => {
 
   const mainUrl = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`;
 
-  try {
-    const response = await client.get(mainUrl);
-    const origin = req.headers.origin;
+  const response = await client.get(mainUrl);
+  const origin = req.headers.origin;
 
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-    res.status(200).json(response.data);
-  } catch (err) {
-    console.error("Restaurant data can't be fetched: ", err.message);
-    res.status(404).json({
-      status: "failed",
-      error: err.message,
-    });
-  }
-}
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
+
+  return res.status(200).json(response.data);
+})
 
 exports.dishSearchData = async (req, res) => {
   const { lat, lng, restro_Id, searchTerm } = req.query;
