@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { useEffect, useState } from "react";
-import { useLazyGetSearchHomeDataQuery, useGetSearchHomeDataQuery } from "../../features/search/searchApiSlice";
+import { useLazyGetSearchHomeDataQuery } from "../../features/search/homeSearchApiSlice";
 
 const SearchHome = () => {
     const [trigger] = useLazyGetSearchHomeDataQuery();

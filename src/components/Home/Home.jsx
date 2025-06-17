@@ -28,7 +28,6 @@ import {
   selectNearByRestaurants,
   selectLatAndLng
 } from "../../features/home/homeSlice";
-import { useGetSearchHomeDataQuery } from "../../features/search/searchApiSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 
