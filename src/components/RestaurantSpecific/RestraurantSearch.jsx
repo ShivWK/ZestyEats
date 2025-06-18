@@ -10,6 +10,12 @@ import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import useScrollToTop from "../../utils/useScrollToTop";
 import SearchContainer from "../SearchContainer";
 
+const renderedComponent = () => {
+  return <div>
+    <p>Hi</p>
+  </div>
+}
+
 const RestaurantSearch = () => {
   useScrollToTop();
   const navigate = useNavigate();
@@ -73,11 +79,11 @@ const RestaurantSearch = () => {
 
   return (
     <SearchContainer
-      backClickHandler={() => navigate(-1)}
       placeholder={`Search in ${title}...`}
       searchTerm={searchTerm}
       handleSearch={handleSearch}
       crossHandler={handleCross}
+      Child={renderedComponent}
     />
   );
 };

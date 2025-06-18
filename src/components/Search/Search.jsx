@@ -16,7 +16,6 @@ const Search = () => {
 
   return (
     <SearchContainer
-      backClickHandler={() => navigate(-1)}
       placeholder={"Search for restaurants and food"}
       searchTerm={searchTerm}
       handleSearch={handleSearch}

@@ -1,13 +1,15 @@
 import BreadcrumbsWrapper from "./BreadcrumbsWrapper";
+import { useNavigate } from "react-router-dom";
 
 const SearchContainer = ({
-  backClickHandler,
   placeholder,
   Child = null,
   searchTerm,
   handleSearch,
   crossHandler,
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="pt-24 w-full max-w-[800px] mx-auto min-h-[105vh]">
       <div className="mt-4 mb-5">
@@ -19,7 +21,7 @@ const SearchContainer = ({
       </div>
       <div className="flex w-full items-center gap-1.5 p-2.5 py-1.5 border-b-2 rounded-md bg-gray-200 ">
         <i
-          onClick={backClickHandler}
+          onClick={() => navigate(-1)}
           className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"
         ></i>
         <div>

@@ -180,8 +180,12 @@ exports.dishSearchData = async (req, res) => {
       error: "lat, lng, restro_id and searchTerm are required",
     });
   }
+  
+  "https://www.swiggy.com/dapi/menu/pl/search?lat=17.406498&lng=78.47724389999999&restaurantId=17104&isMenuUx4=true&query=bur&submitAction=ENTER"
 
   const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
+
+  console.log(searchUrl)
 
   try {
     const response = await client.get(searchUrl);
