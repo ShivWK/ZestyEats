@@ -9,7 +9,7 @@ const useTrackNavigation = () => {
   const pathHistory = useSelector(selectPathHistory);
 
   useEffect(() => {
-    if (location.pathname !== pathHistory[pathHistory.length - 1] && location.pathname !== "undefined") {
+    if (location.pathname !== pathHistory[pathHistory.length - 1] && location.pathname !== undefined) {
       dispatch(setPathHistory(location.pathname));
     }
   }, [location.pathname]);

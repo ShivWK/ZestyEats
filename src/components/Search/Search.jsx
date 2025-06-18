@@ -1,9 +1,10 @@
 import SearchContainer from "../SearchContainer";
 import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate();
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -15,7 +16,7 @@ const Search = () => {
 
   return (
     <SearchContainer
-      backClickHandler={() => {}}
+      backClickHandler={() => navigate(-1)}
       placeholder={"Search for restaurants and food"}
       searchTerm={searchTerm}
       handleSearch={handleSearch}

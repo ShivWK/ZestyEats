@@ -3,6 +3,7 @@ import { Suspense, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Loader from "../Loader";
 import { useLazyGetExtraFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
+import Ui2Shimmer from "./Ui2Shimmer";
 
 const MainContent = ({ data }) => {
     const query = data?.data?.data?.query;
@@ -35,7 +36,7 @@ const MainContent = ({ data }) => {
                     const str = urlObj.get("query");
                     const metadata = urlObj.get("metadata");
 
-                    const path = `/search/searchResult?lat=${lat}&lng${lng}&str=${str}&metadata=${metadata}`;
+                    const path = `/search/searchResult?lat=${lat}&lng=${lng}&str=${str}&metadata=${metadata}`;
                     return (
                         <NavLink to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 hover:bg-gray-200 rounded cursor-pointer">
                             <img
@@ -78,7 +79,7 @@ const SearchSuggestions = () => {
     const { data } = useLoaderData();
 
     return (
-        <Suspense fallback={<h1>Loading...</h1>}>
+        <Suspense fallback={<Ui2Shimmer />}>
             <Await resolve={data}>{(data) => <MainContent data={data} />}</Await>
         </Suspense>
     );
