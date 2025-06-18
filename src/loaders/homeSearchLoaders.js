@@ -40,8 +40,6 @@ export const resultDataLoader = ({ request }) => {
     const str = searchObj.get("str");
     const metadata = searchObj.get("metadata");
 
-    console.log(lat, lng, str, metadata)
-
     const result = store.dispatch(
         homeSearchApiSlice.endpoints.getSuggestedData.initiate({
             lat,
