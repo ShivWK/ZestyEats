@@ -307,6 +307,8 @@ exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
 exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, str, metadata } = req.query;
 
+  console.log(lat, lng, str, metadata)
+
   if (!lat || !lng || !str || !metadata) {
     return missingParamsError("Please provide lat , lng, and food", res);
   }
