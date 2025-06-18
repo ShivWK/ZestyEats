@@ -6,21 +6,39 @@ export const searchHomeLoader = ({ request }) => {
     const lat = searchObj.get("lat");
     const lng = searchObj.get("lng");
 
-    try {
-        const result = store.dispatch(
-            homeSearchApiSlice.endpoints.getSearchHomeData.initiate({
-                lat,
-                lng
-            })
-        )
-
-        return { data: result};
-    } catch(err) {
-        console.log("Failed to fetch data", err);
-
-        throw new Response("Failed to fetch data", {
-            status: err.status,
-            error: err?.data?.error
+    const result = store.dispatch(
+        homeSearchApiSlice.endpoints.getSearchHomeData.initiate({
+            lat,
+            lng
         })
-    }
+    )
+
+    return { data: result };
 }
+
+export const searchSuggestionsLoader = ({ request }) => {
+    const searchObj = new URL(request.url).searchParams;
+    const lat = searchObj.get("lat");
+    const lng = searchObj.get("lng");
+    const food = searchObj.get("food");
+
+    const result = store.dispatch(
+        homeSearchApiSlice.endpoints.getSearchedFoodSuggestions.initiate({
+            lat,
+            lng,
+            food
+        })
+    )
+
+    return { data: result };
+}
+
+export const resultDataLoader = () => {
+    
+}
+
+
+// throw new Response("Failed to fetch data", {
+//             status: err.status,
+//             error: err?.data?.error
+//         })

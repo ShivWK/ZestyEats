@@ -35,7 +35,7 @@ import SearchHome from "./components/Search/SearchHome";
 
 
 import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
-import { searchHomeLoader } from "./loaders/homeSearchLoaders";
+import { searchHomeLoader, searchSuggestionsLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
 
 export default function App() {
 
@@ -60,8 +60,8 @@ export default function App() {
           }
         >
           <Route index loader={searchHomeLoader} element={<SearchHome />} />
-          <Route path="suggestions" element={<SearchSuggestions />} />
-          <Route path="searchResult" element={<SearchResult />} />
+          <Route path="suggestions" loader={searchSuggestionsLoader} element={<SearchSuggestions />} />
+          <Route path="searchResult" loader={resultDataLoader} element={<SearchResult />} />
         </Route>
         <Route
           path="offers-dinouts"

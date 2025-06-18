@@ -278,6 +278,33 @@ exports.specificFoodSearchSuggestions = asyncErrorHandler(async (req, res, next)
   // https://www.swiggy.com/dapi/restaurants/search/suggest?lat=12.9628669&lng=77.57750899999999&str=bur&trackingId=null&includeIMItem=true
 })
 
+exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
+   const { lat, lng, food } = req.query;
+
+  if (!lat || !lng || !food) {
+    return missingParamsError("Please provide lat , lng, and food", res);
+  }
+
+  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=null&submitAction=DEFAULT_SUGGESTION&queryUniqueId=14731ed6-27b3-ab73-ccc8-2c29158c3c5d";
+
+  let response = await client.get(swiggyUrl, {
+    params: {
+      lat,
+      lng,
+      str: food
+    }
+  });
+
+  const origin = req.headers.origin;
+
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
+
+  res.status(200).json(response.data);
+})
+
 exports.suggestdDataHandler = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, food } = req.query;
 
@@ -304,5 +331,7 @@ exports.suggestdDataHandler = asyncErrorHandler(async (req, res, next) => {
 
   res.status(200).json(response.data);
 });
+
+
 
 
