@@ -172,6 +172,9 @@ exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
 exports.dishSearchData = async (req, res) => {
   const { lat, lng, restro_Id, searchTerm } = req.query;
 
+  console.log(lat, lng, restro_Id, searchTerm)
+
+
   if (!lat || !lng || !restro_Id || !searchTerm) {
     return res.status(400).json({
       error: "lat, lng, restro_id and searchTerm are required",

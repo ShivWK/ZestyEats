@@ -61,7 +61,7 @@ export default function Layout() {
     }
     const pathHistory = JSON.parse(localStorage.getItem("pathHistory"));
 
-    if (HomeData && lat && lng && userPathHistory && pathHistory) {
+    if (HomeData && lat && lng) {
       updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory, pathHistory);
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
       const searchedCityAddress = JSON.parse(
