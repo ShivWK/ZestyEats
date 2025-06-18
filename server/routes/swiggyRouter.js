@@ -11,7 +11,7 @@ const {
   dishSearchData,
   searchHomeData,
   specificFoodSearchSuggestions,
-  suggestdDataHandler,
+  suggestedDataHandler,
   extraSuggestionsData
 } = require("./../controllers/swiggyControllers");
 
@@ -25,7 +25,7 @@ swiggyRouter.get("/dish-search", dishSearchData);
 swiggyRouter.get("/search-home-data", searchHomeData);
 swiggyRouter.get("/search-food-suggestions", specificFoodSearchSuggestions);
 swiggyRouter.get("/extra-suggestions", extraSuggestionsData);
-swiggyRouter.get("/suggested-data", suggestdDataHandler);
+swiggyRouter.get("/suggested-data", suggestedDataHandler);
 
 
 module.exports = swiggyRouter;

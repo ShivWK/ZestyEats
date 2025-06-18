@@ -34,7 +34,22 @@ export const searchSuggestionsLoader = ({ request }) => {
 }
 
 export const resultDataLoader = () => {
-    
+    const searchObj = new URL(request.url).searchParams;
+    const lat = searchObj.get("lat");
+    const lng = searchObj.get("lng");
+    const str = searchObj.get("str");
+    const metadata = searchObj.get("metadata");
+
+    const result = store.dispatch(
+        homeSearchApiSlice.endpoints.getSearchedFoodSuggestions.initiate({
+            lat,
+            lng,
+            str,
+            metadata
+        })
+    )
+
+    return { data: result };
 }
 
 

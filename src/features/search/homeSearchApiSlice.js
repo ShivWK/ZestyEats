@@ -27,6 +27,13 @@ const homeSearchApiSlice = createApi({
                     params: { lat, lng, food },
                 }),
             }),
+
+            getSuggestedData: builder.query({
+                query: ({lat, lng, str, metadata }) => ({
+                    url: "",
+                    params: {lat, lng, str, metadata}
+                })
+            })
         };
     },
 });
@@ -36,4 +43,5 @@ export const {
     useLazyGetSearchHomeDataQuery,
     useLazyGetSearchedFoodSuggestionsQuery,
     useLazyGetExtraFoodSuggestionsQuery,
+    useLazyGetSuggestedDataQuery,
 } = homeSearchApiSlice;
