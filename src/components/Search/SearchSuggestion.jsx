@@ -35,7 +35,7 @@ const MainContent = ({ data }) => {
                     const str = urlObj.get("query");
                     const metadata = urlObj.get("metadata");
 
-                    const path = `searchResult?lat=${lat}&lng${lng}&str=${str}&metadata=${metadata}`;
+                    const path = `/search/searchResult?lat=${lat}&lng${lng}&str=${str}&metadata=${metadata}`;
                     return (
                         <NavLink to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 hover:bg-gray-200 rounded cursor-pointer">
                             <img

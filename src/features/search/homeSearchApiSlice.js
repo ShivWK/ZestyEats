@@ -30,7 +30,7 @@ const homeSearchApiSlice = createApi({
 
             getSuggestedData: builder.query({
                 query: ({lat, lng, str, metadata }) => ({
-                    url: "",
+                    url: "/suggested-data",
                     params: {lat, lng, str, metadata}
                 })
             })

@@ -33,7 +33,7 @@ export const searchSuggestionsLoader = ({ request }) => {
     return { data: result };
 }
 
-export const resultDataLoader = () => {
+export const resultDataLoader = ({ request }) => {
     const searchObj = new URL(request.url).searchParams;
     const lat = searchObj.get("lat");
     const lng = searchObj.get("lng");
@@ -41,7 +41,7 @@ export const resultDataLoader = () => {
     const metadata = searchObj.get("metadata");
 
     const result = store.dispatch(
-        homeSearchApiSlice.endpoints.getSearchedFoodSuggestions.initiate({
+        homeSearchApiSlice.endpoints.getSuggestedData.initiate({
             lat,
             lng,
             str,

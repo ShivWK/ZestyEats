@@ -318,7 +318,7 @@ exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
       lat,
       lng,
       str,
-      metadata
+      // metadata
     }
   });
 
