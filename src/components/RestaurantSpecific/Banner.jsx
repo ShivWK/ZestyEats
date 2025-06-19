@@ -14,7 +14,7 @@ const Banner = ({ data }) => {
       >
         <div className="self-center w-full p-3.5 flex flex-col gap-1.5 mb-2">
           <div id="rating" className="flex gap-2.5 items-center">
-            <div className="flex gap-0.5 items-center">
+            <div className="flex gap-2.5 items-center">
               <i className="ri-user-star-fill text-green-600 text-xl"></i>
               <p className="font-bold">{`${mainData?.avgRatingString}(${mainData?.totalRatingsString})`}</p>
             </div>
