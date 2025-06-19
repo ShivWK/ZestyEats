@@ -4,6 +4,7 @@ import { useSearchParams } from "react-router-dom";
 import Loader from "../Loader";
 import { useLazyGetExtraFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
 import Ui2Shimmer from "./Ui2Shimmer";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 const MainContent = ({ data }) => {
     const query = data?.data?.data?.query;
@@ -77,6 +78,7 @@ const MainContent = ({ data }) => {
 
 const SearchSuggestions = () => {
     const { data } = useLoaderData();
+    useScrollToTop()
 
     return (
         <Suspense fallback={<Ui2Shimmer />}>
