@@ -3,9 +3,9 @@ const Ui1Shimmer = () => {
 
     return <div className="flex flex-col w-fit mx-auto gap-5 mt-4">
         <div className="w-64 h-8 rounded shimmerBg"></div>
-        <div className="flex flex-wrap gap-x-5 gap-y-5">
+        <div className="flex flex-wrap gap-3">
             {arr.map(item => {
-                return <div key={item} className="shimmerBg h-36 w-28 rounded-xl shrink-0">
+                return <div key={item} className="shimmerBg h-40 w-32 rounded-xl shrink-0">
                 </div>
             })}
         </div>

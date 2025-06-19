@@ -21,7 +21,7 @@ const MainContent = ({ data }) => {
       {itemCards.length > 0 && (
         <>
           <h1>Popular Cuisines</h1>
-          <div className="flex w-fit flex-wrap gap-x-3 gap-y-3">
+          <div className="flex w-fit flex-wrap gap-3">
             {itemCards.map((item) => {
               const queryObj = new URL(item?.action?.link).searchParams;
               const path = `suggestions?lat=${lat}&lng=${lng}&food=${queryObj.get(
