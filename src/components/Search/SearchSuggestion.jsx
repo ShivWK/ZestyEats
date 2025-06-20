@@ -9,8 +9,7 @@ import useScrollToTop from "../../utils/useScrollToTop";
 const MainContent = ({ data }) => {
     const query = data?.data?.data?.query;
     const suggestionsData = data?.data?.data?.suggestions;
-    const [suggestions, setSuggestions] = useState(suggestionsData);
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [ searchParams ] = useSearchParams();
     const [trigger, { isLoading }] = useLazyGetExtraFoodSuggestionsQuery();
 
     const lat = searchParams.get("lat");
@@ -30,14 +29,21 @@ const MainContent = ({ data }) => {
     return (
         <>
             <div className="p-2">
-                {suggestions.map((item) => {
+                {suggestionsData.map((item) => {
                     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/${item?.cloudinaryId}`;
 
                     const urlObj = new URL(item?.cta?.link).searchParams;
-                    const str = urlObj.get("query");
+                    const str = encodeURIComponent(item?.text);
+                    console.log(str)
+
                     const metadata = urlObj.get("metadata");
 
-                    const path = `/search/searchResult?lat=${lat}&lng=${lng}&str=${str}&metadata=${metadata}&type=${item?.tagToDisplay}`;
+                    const urlRestro = `/search/searchResult/restaurantPage?lat=${lat}&lng=${lng}&str=${str}&metadata=${metadata}&type=${item?.tagToDisplay}&name=${item?.text}&mode=parent`;
+                    
+                    const urlDish = `/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${str}&metadata=${metadata}&type=${item?.tagToDisplay}&name=${item?.text}&mode=parent`;
+
+                    const path = item?.tagToDisplay === "Restaurant" || item?.tagToDisplay === "Cuisine"  ? urlRestro : urlDish;
+                    
                     return (
                         <NavLink to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 hover:bg-gray-200 rounded cursor-pointer">
                             <img
@@ -55,8 +61,8 @@ const MainContent = ({ data }) => {
                     );
                 })}
             </div>
-            <div
-                onClick={clickHandler}
+            <NavLink
+                to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query}`}
                 className={`flex gap-3 my-2 p-2 hover:bg-gray-200 rounded border-2 border-gray-300 ${isLoading ? "cursor-none" : "cursor-pointer"}`}
             >
                 <div className="rounded h-14 w-14 flex items-center justify-center border-2 border-gray-200">
@@ -71,7 +77,7 @@ const MainContent = ({ data }) => {
                         </p>
                     )}
                 </div>
-            </div>
+            </NavLink>
         </>
     );
 };

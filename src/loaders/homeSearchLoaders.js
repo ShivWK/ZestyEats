@@ -39,26 +39,9 @@ export const resultDataLoader = ({ request }) => {
   const lng = searchObj.get("lng");
   const str = searchObj.get("str");
   const metadata = searchObj.get("metadata");
-
-  const result = store.dispatch(
-    homeSearchApiSlice.endpoints.getSuggestedData.initiate({
-      lat,
-      lng,
-      str,
-      metadata,
-    })
-  );
-
-  return { data: result };
-};
-
-export const restaurantResultLoader = ({ request }) => {
-  const searchObj = new URL(request.url).searchParams;
-  const lat = searchObj.get("lat");
-  const lng = searchObj.get("lng");
-  const str = searchObj.get("str");
-  const metadata = searchObj.get("metadata");
   const mode = searchObj.get("mode");
+  const submitAction = searchObj.get("submitAction");
+  const selectedPLTab = searchObj.get("selectedPLTab")
 
   const result =
     mode === "parent"
@@ -70,7 +53,15 @@ export const restaurantResultLoader = ({ request }) => {
             metadata,
           })
         )
-      : null;
+      : store.dispatch(
+          homeSearchApiSlice.endpoints.getTabClickData.initiate({
+            lat,
+            lng,
+            str,
+            submitAction,
+            selectedPLTab,
+          })
+        );
 
   return { data: result };
 };

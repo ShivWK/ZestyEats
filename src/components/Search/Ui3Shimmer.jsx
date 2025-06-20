@@ -3,7 +3,7 @@ const Ui3Shimmer = () => {
 
     return (
         <>
-            <div className="flex gap-3 mt-5">
+            <div className="flex gap-3 pt-5">
                 <div className="h-8 w-20 rounded-3xl shimmerBg"></div>
                 <div className="h-8 w-20 rounded-3xl shimmerBg"></div>
             </div>

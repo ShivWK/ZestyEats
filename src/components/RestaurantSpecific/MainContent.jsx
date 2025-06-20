@@ -29,7 +29,7 @@ const MainContent = ({ data, routes = true }) => {
   const offers = useMemo(() => cards?.[3], [cards]);
   const menu = cards
     ?.at(-1)
-    ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1);
+    ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1) || [];
 
   useEffect(() => {
     dispatch(addCurrentRestaurant(title));
@@ -60,7 +60,7 @@ const MainContent = ({ data, routes = true }) => {
 
   const RestaurantAddress = useMemo(
     () =>
-      menu.find((item) => {
+      menu?.find((item) => {
         return (
           item?.card?.card?.["@type"] ===
           "type.googleapis.com/swiggy.presentation.food.v2.RestaurantAddress"

@@ -2,6 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const Banner = ({ data }) => {
   const mainData = data?.card?.card?.info;
+  console.log(mainData)
 
   return (
     <div

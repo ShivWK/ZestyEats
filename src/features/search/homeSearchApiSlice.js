@@ -5,6 +5,7 @@ const homeSearchApiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: "https://swiggy-clone-klzu.onrender.com/api/swiggy",
     }),
+    keepUnusedDataFor: 120,
     endpoints: (builder) => {
         return {
             getSearchHomeData: builder.query({
@@ -32,6 +33,13 @@ const homeSearchApiSlice = createApi({
                 query: ({lat, lng, str, metadata }) => ({
                     url: "/suggested-data",
                     params: {lat, lng, str, metadata}
+                })
+            }),
+
+            getTabClickData: builder.query({
+                query: ({lat, lng, str, submitAction, selectedPLTab}) => ({
+                    url: "/search-tab-data",
+                    params: { lat, lng, str, submitAction, selectedPLTab}
                 })
             })
         };

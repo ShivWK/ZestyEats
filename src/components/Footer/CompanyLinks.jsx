@@ -11,7 +11,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
   return (
     <div className="flex gap-20">
       <div id="Available_in">
-        <p className="font-medium text-lg text-black mb-3">Available in:</p>
+        <p className="font-medium text-lg text-black mb-3">Currently Serving In:</p>
         <ul className="list-none text-gray-900 font-normal">
           {first6Cities.map((city) => (
             <li key={city.link} className="mb-3">
@@ -19,7 +19,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
             </li>
           ))}
         </ul>
-        <div
+        {/* <div
           onClick={() => openCities(!isOpen)}
           id="moreCities"
           className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100"
@@ -34,7 +34,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
               transform: isOpen ? "rotate(-180deg)" : "",
             }}
           ></i>
-        </div>
+        </div> */}
       </div>
 
       <div id="legal">

@@ -12,7 +12,7 @@ const PageHeader = memo(() => {
     return <GeneralHeader />;
   } else if (pathname === "/about") {
     return <GeneralHeader placeholder={"About"} />
-  } else if (pathname === "/search" || pathname === "/search/suggestions" || pathname === "/search/searchResult") {
+  } else if (pathname === "/search" || pathname === "/search/suggestions" || pathname === "/search/searchResult/dishPage" || pathname === "/search/searchResult/restaurantPage") {
     return <GeneralHeader placeholder={"Search"} />
   } else if (pathname === "/offers-dinouts") {
     return <GeneralHeader placeholder={"Offers"} />
