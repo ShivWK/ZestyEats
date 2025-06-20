@@ -317,7 +317,7 @@ exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
     return missingParamsError("Please provide lat , lng, str and metadata", res);
   }
 
-  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=1deefe6b-f96a-5070-65a2-c46143e5dbc6";
+  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=";
 
   let response = await client.get(swiggyUrl, {
     params: {

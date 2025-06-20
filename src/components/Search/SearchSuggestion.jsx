@@ -34,9 +34,8 @@ const MainContent = ({ data }) => {
 
                     const urlObj = new URL(item?.cta?.link).searchParams;
                     const str = encodeURIComponent(item?.text);
-                    console.log(str)
 
-                    const metadata = urlObj.get("metadata");
+                    const metadata = encodeURIComponent(urlObj.get("metadata"));
 
                     const urlRestro = `/search/searchResult/restaurantPage?lat=${lat}&lng=${lng}&str=${str}&metadata=${metadata}&type=${item?.tagToDisplay}&name=${item?.text}&mode=parent`;
                     
