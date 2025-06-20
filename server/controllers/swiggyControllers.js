@@ -311,6 +311,7 @@ exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
 
 exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, str, metadata } = req.query;
+  console.log("Suggested Data called")
 
   if (!lat || !lng || !str || !metadata) {
     return missingParamsError("Please provide lat , lng, str and metadata", res);
@@ -341,9 +342,11 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, str, submitAction, selectedPLTab } = req.query;
 
   console.log(lat, lng, str, metadata)
+  console.log("tab Data called");
+
 
   if (!lat || !lng || !str || !submitAction || !selectedPLTab) {
-    return missingParamsError("Please provide lat , lng, and food", res);
+    return missingParamsError("Please provide lat , lng, and ", res);
   }
 
   const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=";
