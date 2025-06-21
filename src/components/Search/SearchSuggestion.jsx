@@ -1,5 +1,5 @@
 import { useLoaderData, Await, NavLink } from "react-router-dom";
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import Loader from "../Loader";
 import { useLazyGetExtraFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
@@ -94,11 +94,3 @@ const SearchSuggestions = () => {
 
 export default SearchSuggestions;
 
-// metaData=%7B%22type%22%3A%22DISH%22%2C%22data%22%3A%7B%22vegIdentifier%22%3A%22VEG%22%2C%22cloudinaryId%22%3A%22Autosuggest%2FTop%2520200%2520queries%2FBurger.png%22%2C%22dishFamilyId%22%3A%22846649%22%2C%22dishFamilyIds%22%3A%5B%22846649%22%5D%7D%2C%22businessCategory%22%3A%22SWIGGY_FOOD%22%2C%22displayLabel%22%3A%22Dish%22%7D {{Dish}}
-
-// https://www.swiggy.com/dapi/restaurants/search/v3?lat=12.9628669&lng=77.57750899999999&str=Wendy%27s%20Burgers&trackingId=undefined&submitAction=SUGGESTION&queryUniqueId=88356873-6d9c-87dc-62e3-284b01dc5ba9&metaData=%7B%22type%22%3A%22RESTAURANT%22%2C%22data%22%3A%7B%22parentId%22%3A972%2C%22primaryRestaurantId%22%3A382636%2C%22cloudinaryId%22%3A%22RX_THUMBNAIL%2FIMAGES%2FVENDOR%2F2025%2F1%2F11%2F097020c5-09e8-4430-96fb-77ef985c2935_382636.JPG%22%2C%22brandId%22%3A972%2C%22dishFamilyId%22%3A%22846649%22%2C%22enabled_flag%22%3A1%7D%2C%22businessCategory%22%3A%22SWIGGY_FOOD%22%2C%22displayLabel%22%3A%22Restaurant%22%7D {{Restro}}
-
-
-"swiggy://explore?query=Wendy%27s%20Burgers&metadata=%7B%22type%22%3A%22RESTAURANT%22%2C%22data%22%3A%7B%22parentId%22%3A972%2C%22primaryRestaurantId%22%3A382636%2C%22cloudinaryId%22%3A%22RX_THUMBNAIL%2FIMAGES%2FVENDOR%2F2025%2F1%2F11%2F097020c5-09e8-4430-96fb-77ef985c2935_382636.JPG%22%2C%22brandId%22%3A972%2C%22dishFamilyId%22%3A%22846649%22%2C%22enabled_flag%22%3A1%7D%2C%22businessCategory%22%3A%22SWIGGY_FOOD%22%2C%22displayLabel%22%3A%22Restaurant%22%7D&marketplace=%7B%22marketplaceId%22%3A%22SWIGGY%22%2C%22businessLineId%22%3A%22FOOD%22%7D"
-
-// https://www.swiggy.com/dapi/restaurants/search/v3?lat=12.9628669&lng=77.57750899999999&str=Veg%20Burger&trackingId=undefined&submitAction=SUGGESTION&queryUniqueId=0c382364-7f59-4ee1-e959-7fca875f8996&metaData=%7B%22type%22%3A%22DISH%22%2C%22data%22%3A%7B%22vegIdentifier%22%3A%22VEG%22%2C%22cloudinaryId%22%3A%22n9bkfix37ohwikvjlzyg%22%2C%22dishFamilyId%22%3A%22846649%22%2C%22dishTypeId%22%3A%22847558%22%2C%22dishFamilyIds%22%3A%5B%22846649%22%5D%2C%22dishTypeIds%22%3A%5B%22847558%22%5D%7D%2C%22businessCategory%22%3A%22SWIGGY_FOOD%22%2C%22displayLabel%22%3A%22Dish%22%7D {{DIsh}}

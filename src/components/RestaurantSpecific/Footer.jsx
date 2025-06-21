@@ -16,7 +16,7 @@ const Footer = ({ license, address }) => {
                 <p className="font-bold text-gray-500">{address?.card?.card?.name}</p>
                 <p className="text-sm -mt-1 text-gray-700">{`(Outlet: ${address?.card?.card?.area})`}</p>
                 <div className="flex gap-2 mt-2 items-center">
-                    <i className="ri-map-pin-line text-gray-500"></i>
+                    <i className="ri-map-pin-line text-xl text-gray-500"></i>
                     <p className="text-sm text-gray-500 font-semibold">
                         {address?.card?.card?.completeAddress}
                     </p>
@@ -24,7 +24,7 @@ const Footer = ({ license, address }) => {
             </div>
             <hr className="text-gray-500 my-4" />
             <div className="flex gap-2 items-center">
-                <p className="text-gray-800 font-bold">{`Thanks for choosing us`}</p>
+                <p className="text-gray-700 font-bold">{`Thanks for choosing us`}</p>
                 <i className="ri-poker-hearts-fill text-xl text-red-600 cursor-pointer"></i>
             </div>
         </div>
