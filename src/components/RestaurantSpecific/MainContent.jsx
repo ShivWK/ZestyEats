@@ -120,7 +120,7 @@ const MainContent = ({ data, routes = true }) => {
       {/* Sorting */}
       <SortingButtons />
 
-      <section className="w-full max-w-[775px] mt-4 first:border-t-gray-200 first:border-t-[16px]">
+      <section className="w-full md:max-w-[775px] mt-4 first:border-t-gray-200 first:border-t-[16px]">
         {restMenuData.length > 0 &&
           restMenuData.map((item, index) => {
             if (item?.card?.card?.categories) {
@@ -128,9 +128,7 @@ const MainContent = ({ data, routes = true }) => {
                 <Suspense
                   key={item?.card?.card?.categoryId || Math.random()}
                   fallback={
-                    <div className="w-full h-36 rounded-xl shimmerBg mt-2.5">
-
-                    </div>
+                    <div className="w-full h-36 rounded-xl shimmerBg mt-2.5" />
                   }
                 >
                   <ItemsMainHeading

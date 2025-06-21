@@ -33,8 +33,8 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item?.imageId}`;
 
   return (
-    <div className="flex flex-col md:flex-row justify-between bg-white p-4 w-full border-b-[1px] border-gray-300">
-      <div className="flex mt-3 flex-col order-2 md:order-1 itrms-start gap-1.5 p-2 max-w-[525px]">
+    <div className="flex flex-col md:flex-row justify-between bg-white p-1 pt-2 md:pt-0 md:p-4 w-full border-b-[1px] border-gray-300">
+      <div className="flex mt-3 flex-col order-2 md:order-1 items-start gap-1.5 p-2 max-w-[525px]">
         {veg ? (
           <svg
             width="15"
@@ -106,7 +106,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
           </span>
         )}
       </div>
-      <div className="relative order-1 md:order-2 h-40 w-full md:h-48 md:w-48 rounded-xl overflow-hidden shrink-0">
+      <div className="relative order-1 mt-4 md:order-2 h-40 w-full md:h-48 md:w-48 rounded-xl overflow-hidden shrink-0">
         <img
           src={isError ? "/images/fallback.png" : imageUrl}
           className="absolute top-0 left-0 h-full w-full object-center object-cover"
