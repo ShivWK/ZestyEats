@@ -1,19 +1,22 @@
-import { useEffect, useMemo, lazy, Suspense } from "react";
-import { useDispatch } from "react-redux";
-import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
+import { useEffect, useMemo, lazy, Suspense, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addCurrentRestaurant, selectMenuItems, toggleMenuModel, selectMenuModel} from "../../features/home/restaurantsSlice";
+import { useParams } from "react-router-dom";
+
 import Banner from "./Banner";
 import Footer from "./Footer";
-// import ItemsMainHeading from "./ItemsMainHeading";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
 import SearchBar from "./SearchBar";
-import { useParams } from "react-router-dom";
+
 const TopPicksCards = lazy(() => import("./TopPicksCards"));
 const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
+import Menu from "./Menu";
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
+  const [ showMenu, setShowMenu ] = useState(false);
   const dispatch = useDispatch();
   const cards = data?.data?.cards;
   const title = cards?.[0].card?.card?.text;
@@ -22,6 +25,8 @@ const MainContent = ({ data, routes = true }) => {
   const menu = cards
     ?.at(-1)
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1) || [];
+  
+  const menuModel = useSelector(selectMenuModel);
 
   useEffect(() => {
     dispatch(addCurrentRestaurant(title));
@@ -70,7 +75,7 @@ const MainContent = ({ data, routes = true }) => {
   });
 
   return (
-    <div className="flex items-center flex-col pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px]">
+    <div className="flex items-center flex-col pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px] scroll-smooth" style={{overflow: showMenu ? "hidden" : "auto"}}>
       {routes && (
         <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
           <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"} />
@@ -120,9 +125,12 @@ const MainContent = ({ data, routes = true }) => {
       {/* Sorting */}
       <SortingButtons />
 
+      {/* Menu */}
+      {menuModel && <Menu clickHandler={setShowMenu}/>}
+
       <section className="w-full md:max-w-[775px] mt-4 first:border-t-gray-200 first:border-t-[16px]">
-        {restMenuData.length > 0 &&
-          restMenuData.map((item, index) => {
+        {restMenuData?.length > 0 &&
+          restMenuData?.map((item, index) => {
             if (item?.card?.card?.categories) {
               return (
                 <Suspense
@@ -145,9 +153,7 @@ const MainContent = ({ data, routes = true }) => {
             return (
               <Suspense
                 fallback={
-                  <div className="w-full h-36 rounded-xl shimmerBg mt-2.5">
-
-                  </div>
+                  <div className="w-full h-36 rounded-xl shimmerBg mt-2.5" />
                 }
               >
                 <ItemsMainHeading
@@ -167,7 +173,8 @@ const MainContent = ({ data, routes = true }) => {
       </footer>
 
       {/* menu button */}
-      <button className="fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] p-3 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out">
+      <button onClick={() => dispatch(toggleMenuModel())} className="fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] p-3 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out z-40"
+        style={{right: menuModel ? "327px" : "312px"}}>
         MENU
       </button>
     </div>

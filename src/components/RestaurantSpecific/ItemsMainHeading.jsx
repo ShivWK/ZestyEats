@@ -1,12 +1,12 @@
 import { useState, memo, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import ItemsSubHeading from "./ItemsSubHeading";
 import {
   selectVegOption,
   selectNonVegOption,
+  setMenuItems
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
-
 
 const ItemsMainHeading = ({
   heading,
@@ -19,6 +19,7 @@ const ItemsMainHeading = ({
   const [count, setCount] = useState(0);
   const [shouldRender, setShouldRender] = useState(true);
   const containerRef = useRef(null);
+  const dispatch = useDispatch();
 
   let toDecreaseForNonVeg = 0;
   let toDecreaseForVeg = 0;
@@ -36,6 +37,8 @@ const ItemsMainHeading = ({
       ? categories.length
       : 0;
     setCount(initialCount);
+
+    dispatch(setMenuItems(heading));
   }, []);
 
   useEffect(() => {
@@ -59,6 +62,8 @@ const ItemsMainHeading = ({
     }
   }, [count])
 
+  const path = heading.replace(/\s/g, "-");
+
   return (
     <div
       className="w-full"
@@ -70,7 +75,7 @@ const ItemsMainHeading = ({
     >
       {categories ? (
         <>
-          <div className="flex justify-start items-center bg-primary text-white py-3 px-2">
+          <div id={path} className="flex justify-start items-center bg-primary text-white py-3 px-2 scroll-mt-28">
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
           </div>
           <div
@@ -111,8 +116,9 @@ const ItemsMainHeading = ({
       ) : (
         <div>
           <div
+            id={path}
             onClick={handleClick}
-            className="flex justify-between items-center bg-primary p-2 text-white cursor-pointer"
+            className="flex justify-between items-center bg-primary p-2 text-white cursor-pointer scroll-mt-24"
           >
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
             <i

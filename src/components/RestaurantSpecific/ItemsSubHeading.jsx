@@ -1,8 +1,10 @@
 import { memo, useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
-import { selectVegOption, selectNonVegOption } from "../../features/home/restaurantsSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectVegOption,
+  selectNonVegOption,
+} from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
-
 
 const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -32,7 +34,8 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
   }, [vegOption, nonVegOption]);
 
   return (
-    <div className="w-full"
+    <div
+      className="w-full"
       style={{
         display: shouldRender ? "block" : "none",
       }}
@@ -68,7 +71,11 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
         }}
       >
         {itemCards.map((item) => (
-          <ItemsCardContainer key={item?.card?.info?.id} item={item?.card?.info} isParentOpen={isOpen} />
+          <ItemsCardContainer
+            key={item?.card?.info?.id}
+            item={item?.card?.info}
+            isParentOpen={isOpen}
+          />
         ))}
       </div>
     </div>
