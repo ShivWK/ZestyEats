@@ -33,8 +33,8 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item?.imageId}`;
 
   return (
-    <div className="flex justify-between bg-white p-4 w-full border-b-[1px] border-gray-300">
-      <div className="flex flex-col itrms-start gap-1.5 p-2 max-w-[525px]">
+    <div className="flex flex-col md:flex-row justify-between bg-white p-4 w-full border-b-[1px] border-gray-300">
+      <div className="flex mt-3 flex-col order-2 md:order-1 itrms-start gap-1.5 p-2 max-w-[525px]">
         {veg ? (
           <svg
             width="15"
@@ -106,14 +106,14 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
           </span>
         )}
       </div>
-      <div className="relative h-48 w-48 rounded-xl overflow-hidden shrink-0">
+      <div className="relative order-1 md:order-2 h-40 w-full md:h-48 md:w-48 rounded-xl overflow-hidden shrink-0">
         <img
           src={isError ? "/images/fallback.png" : imageUrl}
           className="absolute top-0 left-0 h-full w-full object-center object-cover"
           alt={item?.name}
           onError={() => setIsError(true)}
         />
-        <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[80%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out">
+        <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2 cursor-pointer active:scale-95 transition-all duration-100 ease-in-out">
           Add
         </button>
         <i className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-2xl text-gray-600 cursor-pointer" style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }} onClick={() => setWishlistAdded(!wishlistAdded)}></i>

@@ -7,13 +7,13 @@ const Banner = ({ data }) => {
   return (
     <div
       id="banner"
-      className="w-full p-5 bg-linear-[to_top,#adabab9d,#ffffff] my-3 rounded-4xl"
+      className="w-full p-3 md:p-5 bg-linear-[to_top,#adabab9d,#ffffff] my-3 rounded-4xl"
     >
       <div
         id="inner-container"
         className="flex flex-col gap-2.5 rounded-3xl w-full overflow-hidden border-[1px] border-[#adabab9d] bg-white"
       >
-        <div className="self-center w-full p-3.5 flex flex-col gap-1.5 mb-2">
+        <div className="self-center w-full p-3.5 flex flex-col gap-1.5 mb-1 md:mb-2">
           <div id="rating" className="flex gap-2.5 items-center">
             <div className="flex gap-1 items-center">
               <i className="ri-user-star-fill text-green-600 text-xl"></i>

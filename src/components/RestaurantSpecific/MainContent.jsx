@@ -70,7 +70,7 @@ const MainContent = ({ data, routes = true }) => {
   });
 
   return (
-    <div className="flex items-center flex-col pt-24 mx-auto w-full md:max-w-[800px]">
+    <div className="flex items-center flex-col pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px]">
       {routes && (
         <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
           <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"} />
@@ -91,7 +91,7 @@ const MainContent = ({ data, routes = true }) => {
       </section>
 
       {/* Search */}
-      <section className="w-full max-w-[775px] my-6">
+      <section className="w-full max-w-[775px] my-3 md:my-6">
         <SearchBar lat={lat} lng={lng} restro_Id={id} name={title} />
       </section>
 
@@ -169,7 +169,7 @@ const MainContent = ({ data, routes = true }) => {
       </footer>
 
       {/* menu button */}
-      <button className="fixed bottom-4 md:bottom-3.5 right-4 md:right-72 h-[6vh] md:h-[12vh] md:w-[12vh] w-[6vh] rounded-[50%] bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out">
+      <button className="fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] p-3 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out">
         MENU
       </button>
     </div>
