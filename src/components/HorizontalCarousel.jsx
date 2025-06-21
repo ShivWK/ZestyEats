@@ -132,7 +132,7 @@ const HorizontalCarousel = memo(({
         <h2>
           {heading}
         </h2>
-        <div className="flex justify-between gap-1">
+        <div className="hidden  md:flex justify-between gap-1">
           <Button
             ref={leftBtnRef}
             clickHandler={debouncedHandleLeftClick.current}

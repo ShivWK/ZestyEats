@@ -27,7 +27,7 @@ const MainContainer = ({ data }) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-5 w-full max-w-[1210px] pt-32 p-3 mx-auto pb-16">
+    <div className="flex flex-col gap-5 w-full md:max-w-[1210px] pt-32 p-3 mx-auto pb-16">
       <div>
         <BreadcrumbsWrapper
           normalTextColor={"#4a5565"}

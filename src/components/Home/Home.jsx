@@ -42,7 +42,7 @@ const Home = memo(() => {
     </>
 
   ) : (
-    <main className="w-full max-w-[1070px] mx-auto pb-14 pt-24 overflow-x-hidden">
+    <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-24 overflow-x-hidden">
       {foodieThoughtsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto ">

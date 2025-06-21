@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { setLogInModal, setLocationModal } from "../../features/Login/loginSlice";
 import { useDispatch } from "react-redux";
 
-const Modal = ({ children, modal, isOpen }) => {
+const Modal = ({ children, modal }) => {
   const { loginHide, locationHide } = useSelector(selectHideModel);
   const dispatch = useDispatch();
 
