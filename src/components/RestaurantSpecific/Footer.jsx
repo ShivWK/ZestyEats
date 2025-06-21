@@ -23,7 +23,7 @@ const Footer = ({ license, address }) => {
                 </div>
             </div>
             <hr className="text-gray-500 my-4" />
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-1.5 items-center">
                 <p className="text-gray-700 font-bold">{`Thanks for choosing us`}</p>
                 <i className="ri-poker-hearts-fill text-xl text-red-600 cursor-pointer"></i>
             </div>

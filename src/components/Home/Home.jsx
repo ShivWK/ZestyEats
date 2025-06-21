@@ -83,7 +83,7 @@ const Home = memo(() => {
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
-      {bestPlacesToEaNearMe.length !== 0 && (
+      {/* {bestPlacesToEaNearMe.length !== 0 && (
         <>
           <section
             className="w-full max-w-[1000px] mx-auto flex items-center gap-4
@@ -101,7 +101,7 @@ const Home = memo(() => {
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
-      )}
+      )} */}
       {bestCuisionsNearMe.length !== 0 && (
         <>
           <section
