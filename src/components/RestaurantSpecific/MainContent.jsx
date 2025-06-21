@@ -169,7 +169,7 @@ const MainContent = ({ data, routes = true }) => {
       </footer>
 
       {/* menu button */}
-      <button className="fixed bottom-4 md:bottom-3.5 right-4 md:right-72 h-[6vh] md:h-[12vh] md:w-[12vh] w-[6vh] rounded-[50%] bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer">
+      <button className="fixed bottom-4 md:bottom-3.5 right-4 md:right-72 h-[6vh] md:h-[12vh] md:w-[12vh] w-[6vh] rounded-[50%] bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out">
         MENU
       </button>
     </div>
