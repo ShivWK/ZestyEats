@@ -23,7 +23,7 @@ const Cards = memo(({ data, from }) => {
       to={`/restaurantSpecific/${lat}/${lng}/${data?.id}/${data?.name}`}
       onClick={handleClick}
       style={{ width: from === "online" ? 240 : (from === "specificFood") ? 360 : 275 }}
-      className={`flex flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}
+      className={`flex flex-row md:flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out`}
     >
       <div
         className={`w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}

@@ -9,7 +9,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
   const remainingCities = cities.length - 6;
 
   return (
-    <div className="flex gap-20">
+    <div className="flex gap-20 mt-3 md:mt-0">
       <div id="Available_in">
         <p className="font-medium text-lg text-black mb-3">Currently Serving In:</p>
         <ul className="list-none text-gray-900 font-normal">
