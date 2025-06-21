@@ -11,7 +11,7 @@ const SearchContainer = ({
   const navigate = useNavigate();
 
   return (
-    <div className="pt-20 w-full max-w-[850px] mx-auto min-h-[105vh] bg-white">
+    <div className="pt-20 w-full md:max-w-[850px] mx-auto min-h-[105vh] bg-white">
       <div className="fixed bg-white py-3 z-20">
         <div className="mt-4 mb-5">
           <BreadcrumbsWrapper
