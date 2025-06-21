@@ -2,6 +2,7 @@ import { useState, memo } from "react";
 
 const TopPicksCard = memo(({ data }) => {
   const [isError, setIsError] = useState(false);
+  const [wishlistAdded, setWishlistAdded] = useState(false)
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${data?.creativeId}`;
 
   const defaultPrice = data?.price / 100 || data?.defaultPrice / 100 || 0;
@@ -39,12 +40,13 @@ const TopPicksCard = memo(({ data }) => {
         className="flex items-center justify-between mt-auto pl-0.5"
       >
         <div
-          className="text-lg font-semibold"
+          className="flex items-center gap-2 text-lg font-semibold"
           style={{
             color: !isError ? "white" : "black",
           }}
         >
           {price}
+           <i className="ri-poker-hearts-fill text-2xl text-gray-600 cursor-pointer" style={{ color: wishlistAdded ? "red" : "rgba(255, 255, 255, 0.6)" }} onClick={() => setWishlistAdded(!wishlistAdded)}></i>
         </div>
         <button className="py-2 px-7 bg-green-500 text-white rounded-md cursor-pointer active:scale-95 transition-all duration-150 ease-in-out font-semibold">
           Add

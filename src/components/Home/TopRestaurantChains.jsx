@@ -15,6 +15,7 @@ const TopRestaurantChains = () => {
       margin_bottom={20 + "px"}
       dataToMap={mainData}
       Card={Cards}
+      scrollMargin="15"
     />
   );
 };

@@ -7,6 +7,7 @@ import Ui3Shimmer from "./Ui3Shimmer";
 const Card = ({ data , lat, lng}) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const [isError, setIsError] = useState(false);
+    const [wishlistAdded, setWishlistAdded] = useState(false);
     const dispatch = useDispatch();
 
     const mainData = data?.card?.card;
@@ -127,6 +128,7 @@ const Card = ({ data , lat, lng}) => {
                     <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out ">
                         Add
                     </button>
+                     <i className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-2xl text-gray-600 cursor-pointer" style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }} onClick={() => setWishlistAdded(!wishlistAdded)}></i>
                 </div>
             </div>
             {isDescriptionOpen && (

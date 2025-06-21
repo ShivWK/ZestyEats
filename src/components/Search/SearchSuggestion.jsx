@@ -44,7 +44,7 @@ const MainContent = ({ data }) => {
                     const path = item?.tagToDisplay === "Restaurant" || item?.tagToDisplay === "Cuisine"  ? urlRestro : urlDish;
                     
                     return (
-                        <NavLink to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 hover:bg-gray-200 rounded cursor-pointer">
+                        <NavLink to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 hover:bg-gray-200 rounded cursor-pointer border-[1px] border-gray-300">
                             <img
                                 className="rounded"
                                 src={imageUrl}

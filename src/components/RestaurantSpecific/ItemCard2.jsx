@@ -4,14 +4,15 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
   const [isError, setIsError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [overFlow, setOverFlow] = useState(false);
+  const [wishlistAdded, setWishlistAdded] = useState(false);
   const containerRef = useRef(null);
 
   useEffect(() => {
     // setTimeout(() => {
-      const ele = containerRef.current;
-      if (ele) {
-        setOverFlow(ele.scrollHeight > ele.clientHeight);
-      }
+    const ele = containerRef.current;
+    if (ele) {
+      setOverFlow(ele.scrollHeight > ele.clientHeight);
+    }
     // }, 50)
   }, [isParentOpen, isOpen]);
 
@@ -115,6 +116,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
         <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[80%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out">
           Add
         </button>
+        <i className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-2xl text-gray-600 cursor-pointer" style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }} onClick={() => setWishlistAdded(!wishlistAdded)}></i>
       </div>
     </div>
   );

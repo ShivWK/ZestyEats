@@ -17,6 +17,7 @@ const FoodieThoughts = () => {
       dataToMap={foodieThoughtsData}
       Card={Cards}
       autoScrollWidth="200"
+      scrollMargin="10"
     />
   );
 };

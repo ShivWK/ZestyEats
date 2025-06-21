@@ -64,7 +64,7 @@ const HorizontalCarousel = memo(({
       if (container.scrollLeft > 0) {
         leftBtnRef.current.disabled = false;
       }
-    }, 1200)
+    }, 1500)
 
     container.scrollTo({
       left: 0,
