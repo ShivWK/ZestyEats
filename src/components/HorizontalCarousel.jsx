@@ -6,11 +6,16 @@ import createDebounce from "../utils/debounceCreater";
 const HorizontalCarousel = memo(({
   heading,
   margin_bottom = 0,
+  scrollMargin = 0,
   showScrollBar = true,
   dataToMap,
   Card,
+  autoScrollWidth = 300
 }) => {
+
   const [scrollPercentage, setScrollPercentage] = useState(0);
+  const clicked = useRef(false);
+  const direction = useRef(1);
   const rightBtnRef = useRef(null);
   const leftBtnRef = useRef(null);
   const containerRef = useRef(null);
@@ -27,17 +32,46 @@ const HorizontalCarousel = memo(({
   const debouncedHandleLeftClick = useRef(createDebounce(handleLeftClick, 100));
 
   useEffect(() => {
+    const container = containerRef.current;
     if (dataToMap.length) {
       setTimeout(() => {
         handleScroll();
       }, 0);
     }
 
-    const container = containerRef.current;
+    const scrollInterval = setInterval(() => {
+      if (!clicked.current) {
+        if (container.scrollWidth > container.clientWidth) {
+          container.scrollBy({
+            left: autoScrollWidth * direction.current,
+            behavior: "smooth",
+          })
+        }
+
+        if (container.scrollLeft + container.clientWidth >= container.scrollWidth) {
+          direction.current = -1;
+        }
+
+        if (container.scrollLeft <= 0) {
+          direction.current = 1;
+        }
+      }
+
+      if (container.scrollLeft + container.clientWidth < container.scrollWidth) {
+        rightBtnRef.current.disabled = false;
+      }
+
+      if (container.scrollLeft > 0) {
+        leftBtnRef.current.disabled = false;
+      }
+    }, 1200)
+
     container.scrollTo({
       left: 0,
       behavior: "smooth",
     });
+
+    return () => clearInterval(scrollInterval);
   }, [dataToMap])
 
   function handleScroll() {
@@ -67,7 +101,7 @@ const HorizontalCarousel = memo(({
   }
 
   function handleRightClick() {
-    leftBtnRef.current.disabled = false;
+    clicked.current = true;
 
     const container = containerRef.current;
     if (!container) return; // important because there can be a case when carousel container not loaded and user clicks the button then we will get error.
@@ -80,6 +114,7 @@ const HorizontalCarousel = memo(({
 
   function handleLeftClick(e) {
     rightBtnRef.current.disabled = false;
+    clicked.current = true;
 
     const container = containerRef.current;
     if (!container) return;
@@ -90,10 +125,10 @@ const HorizontalCarousel = memo(({
     });
   }
 
-  
+
   return (
     <>
-      <div className="flex justify-between flex-wrap items-center" style={{marginBottom: margin_bottom}}>
+      <div className="flex justify-between flex-wrap items-center" style={{ marginBottom: margin_bottom }}>
         <h2>
           {heading}
         </h2>
@@ -121,7 +156,7 @@ const HorizontalCarousel = memo(({
           ))}
         </div>
         {showScrollBar && (
-          <Scrollbar scrolledPercentage={scrollPercentage} marginTop={10} />
+          <Scrollbar scrolledPercentage={scrollPercentage} marginTop={scrollMargin} />
         )}
       </div>
     </>

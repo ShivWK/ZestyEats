@@ -19,7 +19,7 @@ const TopPicksCards = memo(({ data }) => {
       heading="Top Picks"
       dataToMap={cardsData}
       Card={TopPicksCard}
-      showScrollBar={false}
+      scrollMargin="-5"
     />
   );
 });

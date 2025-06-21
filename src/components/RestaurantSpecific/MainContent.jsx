@@ -1,5 +1,5 @@
 import { useEffect, useMemo, lazy, Suspense } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import Banner from "./Banner";
 import Footer from "./Footer";
@@ -7,24 +7,16 @@ import Footer from "./Footer";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
 import SearchBar from "./SearchBar";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 const TopPicksCards = lazy(() => import("./TopPicksCards"));
 const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
-import {
-  selectSearchedCity,
-  selectYourCurrentCity,
-} from "../../features/home/homeSlice";
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const currentCity = useSelector(selectYourCurrentCity);
-  const searchedCity = useSelector(selectSearchedCity);
   const cards = data?.data?.cards;
   const title = cards?.[0].card?.card?.text;
-  const navigation = useMemo(() => cards?.[1], [cards]);
   const banner = useMemo(() => cards?.[2], [cards]);
   const offers = useMemo(() => cards?.[3], [cards]);
   const menu = cards
@@ -43,8 +35,6 @@ const MainContent = ({ data, routes = true }) => {
     [menu]
   );
 
-  // console.log("Top Picks", topPicks);
-
   const RestaurantLicenseInfo = useMemo(
     () =>
       menu.find((item) => {
@@ -56,8 +46,6 @@ const MainContent = ({ data, routes = true }) => {
     [menu]
   );
 
-  // console.log("Restaurant License Info", RestaurantLicenseInfo);
-
   const RestaurantAddress = useMemo(
     () =>
       menu?.find((item) => {
@@ -68,8 +56,6 @@ const MainContent = ({ data, routes = true }) => {
       }),
     [menu]
   );
-
-  // console.log("Restaurant Address", RestaurantAddress);
 
   const restMenuData = useMemo(() => {
     return menu.filter((item) => {
@@ -129,7 +115,7 @@ const MainContent = ({ data, routes = true }) => {
         )}
       </section>
 
-      <hr className="mb-4 w-full text-gray-500" />
+      <hr className="mb-4 mt-6 w-full text-gray-500" />
 
       {/* Sorting */}
       <SortingButtons />
