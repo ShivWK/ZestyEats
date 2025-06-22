@@ -386,7 +386,11 @@ exports.swiggySsrRestaurantPageHandler = asyncErrorHandler(
 
     const swiggyUrl = `https://www.swiggy.com/${place}-cuisine-order-online-near-me`;
 
-    const html = await client.get(swiggyUrl);
+    const html = await client.get(swiggyUrl, {
+      headers: {
+         "X-Swiggy-Location": "26.9124,75.7873",
+      }
+    });
     const dom = new JSDOM(html.data);
     const scriptContent =
       dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
