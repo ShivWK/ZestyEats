@@ -448,3 +448,6 @@ exports.servingCityDataHandler = asyncErrorHandler(async (req, res, next) => {
 
 // https://www.swiggy.com/andhra-cuisine-order-online-near-me
 // https://www.swiggy.com/north-indian-cuisine-order-online-near-me
+
+
+// https://www.swiggy.com/city/jaipur/north-indian-cuisine-order-online-near-me

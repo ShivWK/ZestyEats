@@ -11,7 +11,7 @@ const AllCities = memo(() => {
     <div className="w-full max-w-[1210px]">
       <hr className="mt-13 mb-10 text-gray-800" />
       <div className="w-full flex justify-center mb-10">
-        <ul className="columns-5 gap-7 w-fit">
+        <ul className="columns-2 md:columns-5 gap-7 w-fit">
           {citiesToPrint.map((city) => (
             <li key={city.link} className="mb-2">
               <NavLink>{city.text}</NavLink>

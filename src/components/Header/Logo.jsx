@@ -41,7 +41,7 @@ const Logo = memo(({ searchPlaceholder }) => {
           className="group flex items-center gap-2 cursor-pointer"
         >
           <span className="font-[750] underline underline-offset-8 decoration-2 group-hover:text-[#ff5200]">
-            {yourCurrentCity ? yourCurrentCity : "Other"}
+            {yourCurrentCity ? yourCurrentCity : "Location"}
           </span>
 
           <span className="max-w-52 truncate text-start font-medium text-gray-600">
