@@ -378,7 +378,7 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
 exports.swiggySsrRestaurantPageHandler = asyncErrorHandler(
   async (req, res, next) => {
     const { place } = req.query;
-    console.log("hit", place)
+    console.log("hit", place);
 
     if (!place) {
       return missingParamsError("Please provide place", res);
@@ -388,7 +388,8 @@ exports.swiggySsrRestaurantPageHandler = asyncErrorHandler(
 
     const html = await client.get(swiggyUrl);
     const dom = new JSDOM(html.data);
-    const scriptContent = dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
+    const scriptContent =
+      dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
 
     if (!scriptContent) {
       throw new Error("Script tag with restaurants data not found.");
@@ -407,25 +408,26 @@ exports.swiggySsrRestaurantPageHandler = asyncErrorHandler(
   }
 );
 
-exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
-  const { lat, lng, str, submitAction, selectedPLTab } = req.query;
+exports.servingCityDataHandler = asyncErrorHandler(async (req, res, next) => {
+  const { place } = req.query;
+  console.log("hit", place);
 
-  if (!lat || !lng || !str || !submitAction || !selectedPLTab) {
-    return missingParamsError("Please provide lat , lng, and ", res);
+  if (!place) {
+    return missingParamsError("Please provide place", res);
   }
 
-  const swiggyUrl =
-    "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=";
+  const swiggyUrl = `https://www.swiggy.com/city/${place}`;
 
-  let response = await client.get(swiggyUrl, {
-    params: {
-      lat,
-      lng,
-      str,
-      submitAction,
-      selectedPLTab,
-    },
-  });
+  const html = await client.get(swiggyUrl);
+  const dom = new JSDOM(html.data);
+  const scriptContent =
+    dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
+
+  if (!scriptContent) {
+    throw new Error("Script tag with restaurants data not found.");
+  }
+
+  const restaurantData = JSON.parse(scriptContent);
 
   const origin = req.headers.origin;
 
@@ -434,42 +436,8 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
     "Access-Control-Allow-Methods": "GET",
   });
 
-  res.status(200).json(response.data);
+  res.status(200).json(restaurantData);
 });
-
-exports.servingCityDataHandler = asyncErrorHandler(
-  async (req, res, next) => {
-    const { place } = req.query;
-    console.log("hit", place)
-
-    if (!place) {
-      return missingParamsError("Please provide place", res);
-    }
-
-    const swiggyUrl = `https://www.swiggy.com/city/${place}`;
-
-    const html = await client.get(swiggyUrl);
-    const dom = new JSDOM(html.data);
-    const scriptContent = dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
-
-    if (!scriptContent) {
-      throw new Error("Script tag with restaurants data not found.");
-    }
-
-    const restaurantData = JSON.parse(scriptContent);
-
-    const origin = req.headers.origin;
-
-    res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
-    });
-
-    res.status(200).json(restaurantData);
-  }
-);
-
-
 
 // https://www.swiggy.com/chinese-restaurants-near-me
 // https://www.swiggy.com/chinese-cuisine-order-online-near-me
