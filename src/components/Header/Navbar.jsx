@@ -35,7 +35,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
           className="group relative cursor-pointer text-xl"
         >
           {theme === "Light" ? (
-            <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 "></i>
+            <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
           ) : theme === "Dark" ? (
             <i class="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
           ) : (
@@ -104,14 +104,14 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             text="Search"
           />
         )}
-        {showOffers && (
+        {/* {showOffers && (
           <NavItem
             to="offers-dinouts"
             icon={"ri-discount-percent-line text-xl"}
             text="Offers"
             superScript={"NEW"}
           />
-        )}
+        )} */}
         <NavItem to="help" icon={"fa-solid fa-handshake-angle"} text="Help" />
         {loggedIn ? (
           <NavItem to={"/profile"} icon={"fa-user text-lg"} text={`User`} />

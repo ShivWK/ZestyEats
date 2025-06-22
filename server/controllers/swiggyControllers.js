@@ -375,22 +375,17 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   res.status(200).json(response.data);
 });
 
-exports.swiggySsrRestaurantPageHandler = asyncErrorHandler(
+exports.nearByCuisineHandler = asyncErrorHandler(
   async (req, res, next) => {
-    const { place } = req.query;
-    console.log("hit", place);
+    const { place, cuisineType } = req.query;
 
-    if (!place) {
-      return missingParamsError("Please provide place", res);
+    if (!place || !cuisineType) {
+      return missingParamsError("Please provide place and cuisine type", res);
     }
 
-    const swiggyUrl = `https://www.swiggy.com/${place}-cuisine-order-online-near-me`;
+    const swiggyUrl = `https://www.swiggy.com/city/${place}/${cuisineType}-cuisine-order-online`;
 
-    const html = await client.get(swiggyUrl, {
-      headers: {
-         "X-Swiggy-Location": "26.9124,75.7873",
-      }
-    });
+    const html = await client.get(swiggyUrl);
     const dom = new JSDOM(html.data);
     const scriptContent =
       dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
@@ -413,14 +408,12 @@ exports.swiggySsrRestaurantPageHandler = asyncErrorHandler(
 );
 
 exports.servingCityDataHandler = asyncErrorHandler(async (req, res, next) => {
-  const { place } = req.query;
+  const { city } = req.query;
   console.log("hit", place);
 
-  if (!place) {
-    return missingParamsError("Please provide place", res);
-  }
-
-  const swiggyUrl = `https://www.swiggy.com/city/${place}/order-online`;
+  if (!city) return missingParamsError("Please provide city", res);
+  
+  const swiggyUrl = `https://www.swiggy.com/city/${city}/order-online`;
 
   const html = await client.get(swiggyUrl);
   const dom = new JSDOM(html.data);
@@ -443,11 +436,4 @@ exports.servingCityDataHandler = asyncErrorHandler(async (req, res, next) => {
   res.status(200).json(restaurantData);
 });
 
-// https://www.swiggy.com/chinese-restaurants-near-me
-// https://www.swiggy.com/chinese-cuisine-order-online-near-me
-
-// https://www.swiggy.com/andhra-cuisine-order-online-near-me
-// https://www.swiggy.com/north-indian-cuisine-order-online-near-me
-
-
-// https://www.swiggy.com/city/jaipur/north-indian-cuisine-order-online-near-me
+// Near me URL: https://www.swiggy.com/city/delhi/american-cuisine-order-online

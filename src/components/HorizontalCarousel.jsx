@@ -64,7 +64,7 @@ const HorizontalCarousel = memo(({
       if (container.scrollLeft > 0) {
         leftBtnRef.current.disabled = false;
       }
-    }, 1500)
+    }, 2000)
 
     container.scrollTo({
       left: 0,
@@ -164,3 +164,6 @@ const HorizontalCarousel = memo(({
 });
 
 export default HorizontalCarousel;
+
+
+//  <img src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/TopPicks2024/87601891B.png" alt="Kurkure Chinese  Platter [3 Box] [28 Pcs]" aria-hidden="true">

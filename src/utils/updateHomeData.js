@@ -5,9 +5,7 @@ import {
     addRestaurantsWithOnineDelivery,
     setLoading,
     addOnlineDeliveryTitle,
-    addBestPlacesToEat,
     addBestNearCuisions,
-    addNearByRestaurants,
     addAvailableCities,
     addLatAndLng,
     setUserFriendlyPathHistory,
@@ -30,9 +28,7 @@ export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPath
         dispatch(addRestaurantsWithOnineDelivery(res));
         dispatch(addTopRestaurantsTitle(res));
         dispatch(addOnlineDeliveryTitle(res));
-        dispatch(addBestPlacesToEat(res));
         dispatch(addBestNearCuisions(res));
-        dispatch(addNearByRestaurants(res));
         dispatch(addAvailableCities(res));
         dispatch(setLoading(false));
     }

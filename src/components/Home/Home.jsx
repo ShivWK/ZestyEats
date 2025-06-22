@@ -8,18 +8,14 @@ const OnlineDeliveryRestaurant = lazy(() =>
   import("./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant")
 );
 const TopRestaurantChains = lazy(() => import("./TopRestaurantChains"));
-const BestPlacesToEat = lazy(() => import("./BestPlacesToEat"));
 const CuisionsNearMe = lazy(() => import("./CuisionsNearMe"));
-const NearByRestaurants = lazy(() => import("./NearByRestaurants"));
 
 import {
   selectFoodieThoughtsData,
   selectTopRestaurantsData,
   selectOnlineDeliveryRestaurants,
   selectIsLoading,
-  selectBestPlacesToEat,
   selectBestCuisionsNearMe,
-  selectNearByRestaurants,
 } from "../../features/home/homeSlice";
 
 import HomeShimmer from "./HomeShimmer";
@@ -29,9 +25,7 @@ const Home = memo(() => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const onlineDeliveryRestaurant = useSelector(selectOnlineDeliveryRestaurants);
-  const bestPlacesToEaNearMe = useSelector(selectBestPlacesToEat);
   const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
-  const nearByRestaurants = useSelector(selectNearByRestaurants);
   const isLoadingMain = useSelector(selectIsLoading);
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
 
@@ -45,6 +39,9 @@ const Home = memo(() => {
 
   ) : (
     <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-24 overflow-x-hidden">
+
+{/* Foodie thoughts */}
+
       {foodieThoughtsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto ">
@@ -53,6 +50,9 @@ const Home = memo(() => {
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
+
+{/* Top restaurants chain */}
+
       {topRestaurantsChainsData.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">
@@ -69,6 +69,9 @@ const Home = memo(() => {
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
+
+{/* Restaurants with online delivery */}
+
       {onlineDeliveryRestaurant.length !== 0 && (
         <>
           <section className="w-full">
@@ -85,25 +88,9 @@ const Home = memo(() => {
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
-      {/* {bestPlacesToEaNearMe.length !== 0 && (
-        <>
-          <section
-            className="w-full max-w-[1000px] mx-auto flex items-center gap-4
-           flex-col"
-          >
-            <Suspense
-              fallback={
-                <div className="flex justify-between gap-4">
-                  {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
-                </div>
-              }
-            >
-              <BestPlacesToEat />
-            </Suspense>
-          </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
-        </>
-      )} */}
+      
+{/* Best cuisines near me */}
+
       {bestCuisionsNearMe.length !== 0 && (
         <>
           <section
@@ -123,7 +110,10 @@ const Home = memo(() => {
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
-      {nearByRestaurants.length !== 0 && (
+
+{/* All available cities in which we server */}
+
+      {/* {nearByRestaurants.length !== 0 && (
         <section
           className="w-full max-w-[1000px] mx-auto flex justify-start gap-4 
          flex-col"
@@ -138,7 +128,8 @@ const Home = memo(() => {
             <NearByRestaurants />
           </Suspense>
         </section>
-      )}
+      )} */}
+
     </main>
   );
 });

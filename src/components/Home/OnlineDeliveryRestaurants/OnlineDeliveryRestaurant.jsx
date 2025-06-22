@@ -16,15 +16,8 @@ const OnlineDeliveryRestaurant = memo(() => {
       <div>
         <h3>{title}</h3>
         <div className="flex gap-2.5 mt-4 w-full">
-          {/* <Filter
-            fixed={true}
-            icon="ri-equalizer-fill"
-            count={1}
-            text="Filter"
-          /> */}
-          {/* <Filter fixed={true} icon="fa-solid fa-caret-down" text="Veg" /> */}
           <Filter applied={true} text="Pure Veg" />
-          <Filter applied={false} text="Non Veg" />
+          <Filter applied={true} text="Veg & Non-Veg" />
         </div>
       </div>
       <div className="flex flex-wrap gap-y-7 gap-x-8 justify-start w-full mt-8 mx-auto">
