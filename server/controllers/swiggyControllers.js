@@ -416,7 +416,7 @@ exports.servingCityDataHandler = asyncErrorHandler(async (req, res, next) => {
     return missingParamsError("Please provide place", res);
   }
 
-  const swiggyUrl = `https://www.swiggy.com/city/${place}`;
+  const swiggyUrl = `https://www.swiggy.com/city/${place}/order-online`;
 
   const html = await client.get(swiggyUrl);
   const dom = new JSDOM(html.data);
