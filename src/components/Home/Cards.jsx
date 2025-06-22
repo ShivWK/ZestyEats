@@ -53,7 +53,7 @@ const Cards = memo(({ data, from }) => {
         </p>
         <i
           className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-[180%] text-gray-600"
-          style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }}
+          style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.6)" }} 
           onClick={wishlistClickHandler}
         ></i>
       </div>
