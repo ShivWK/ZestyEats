@@ -1,10 +1,18 @@
 import { useState, Suspense } from "react";
-import { NavLink, useLoaderData, useSearchParams, Await } from "react-router-dom";
+import {
+    NavLink,
+    useLoaderData,
+    useSearchParams,
+    Await,
+} from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
+import {
+    addCurrentRestaurant,
+    setMenuItems,
+} from "../../features/home/restaurantsSlice";
 import Ui3Shimmer from "./Ui3Shimmer";
 
-const Card = ({ data , lat, lng}) => {
+const Card = ({ data, lat, lng }) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const [isError, setIsError] = useState(false);
     const [wishlistAdded, setWishlistAdded] = useState(false);
@@ -16,8 +24,7 @@ const Card = ({ data , lat, lng}) => {
     const path = `/restaurantSpecific/${lat}/${lng}/${restroData?.id}/${restroData?.name}`;
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${disData?.imageId}`;
 
-    const defaultPrice =
-        disData?.price / 100 || disData?.defaultPrice / 100 || 0;
+    const defaultPrice = disData?.price / 100 || disData?.defaultPrice / 100 || 0;
     const finalPrice = disData?.finalPrice / 100;
     const price = finalPrice ? (
         <p className="text-sm tracking-tight font-bold">
@@ -30,6 +37,7 @@ const Card = ({ data , lat, lng}) => {
 
     const handleClick = (name) => {
         dispatch(addCurrentRestaurant(name));
+        dispatch(setMenuItems({ mode: "empty" }));
     };
 
     return (
@@ -128,7 +136,11 @@ const Card = ({ data , lat, lng}) => {
                     <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out ">
                         Add
                     </button>
-                     <i className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-2xl text-gray-600 cursor-pointer" style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }} onClick={() => setWishlistAdded(!wishlistAdded)}></i>
+                    <i
+                        className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-2xl text-gray-600 cursor-pointer"
+                        style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }}
+                        onClick={() => setWishlistAdded(!wishlistAdded)}
+                    ></i>
                 </div>
             </div>
             {isDescriptionOpen && (
@@ -142,15 +154,26 @@ const Card = ({ data , lat, lng}) => {
 };
 
 const MainContent = ({ data, lat, lng, mode }) => {
-    console.log(data)
-    const cards = mode === "parent" ? data?.data?.data?.cards?.[1].groupedCard?.cardGroupMap?.DISH?.cards.slice(1) : data?.data?.data?.cards?.[0].groupedCard?.cardGroupMap?.DISH?.cards.slice(1)
-
+    console.log(data);
+    const cards =
+        mode === "parent"
+            ? data?.data?.data?.cards?.[1].groupedCard?.cardGroupMap?.DISH?.cards.slice(
+                1
+            )
+            : data?.data?.data?.cards?.[0].groupedCard?.cardGroupMap?.DISH?.cards.slice(
+                1
+            );
 
     return (
         <div className="flex items-start flex-wrap gap-2.5 gap-y-4 w-full justify-between pt-20 bg-gray-200 p-1.5 rounded-md">
             {cards ? (
                 cards.map((item) => (
-                    <Card key={item?.card?.card?.info?.id} data={item} lat={lat} lng={lng} />
+                    <Card
+                        key={item?.card?.card?.info?.id}
+                        data={item}
+                        lat={lat}
+                        lng={lng}
+                    />
                 ))
             ) : (
                 <p className="self-center font-semibold text-center pb-4 pt-2">
@@ -163,16 +186,18 @@ const MainContent = ({ data, lat, lng, mode }) => {
 
 const DishResultPage = () => {
     const { data } = useLoaderData();
-    const [ searchParams ] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const lat = searchParams.get("lat");
     const lng = searchParams.get("lng");
     const mode = searchParams.get("mode");
 
-    return <Suspense fallback={<Ui3Shimmer />}>
-        <Await resolve={data}>
-            {data => <MainContent data={data} lat={lat} lng={lng} mode={mode} />}
-        </Await>
-    </Suspense>
-}
+    return (
+        <Suspense fallback={<Ui3Shimmer />}>
+            <Await resolve={data}>
+                {(data) => <MainContent data={data} lat={lat} lng={lng} mode={mode} />}
+            </Await>
+        </Suspense>
+    );
+};
 
 export default DishResultPage;

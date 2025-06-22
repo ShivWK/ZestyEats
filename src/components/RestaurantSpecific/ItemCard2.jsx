@@ -116,7 +116,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
         <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2 cursor-pointer active:scale-95 transition-all duration-100 ease-in-out">
           Add
         </button>
-        <i className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-2xl text-gray-600 cursor-pointer" style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }} onClick={() => setWishlistAdded(!wishlistAdded)}></i>
+        <i className="absolute top-2.5 right-2.5 ri-poker-hearts-fill drop-shadow-2xl text-2xl cursor-pointer" style={{ color: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.5)"}} onClick={() => setWishlistAdded(!wishlistAdded)}></i>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const HeaderWrapper = ({ children }) => {
   return (
     <div
       className="w-full shadow-[0_0_20px_1px_rgb(0,0,0,0.3)] h-20 fixed z-30 bg-white"
-      style={{ paddingRight: isLocationOpen || isLoginOpen || menuModel ? 15 : 0 }}
+      style={{ paddingRight: isLocationOpen || isLoginOpen ? 15 : 0 }}
     >
       {children}
     </div>

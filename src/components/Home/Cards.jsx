@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
+import {
+  addCurrentRestaurant,
+  setMenuItems,
+} from "../../features/home/restaurantsSlice";
 import { memo, useState } from "react";
 
 const Cards = memo(({ data, from }) => {
@@ -17,26 +20,29 @@ const Cards = memo(({ data, from }) => {
 
   const handleClick = () => {
     dispatch(addCurrentRestaurant(data?.name));
+    dispatch(setMenuItems({ mode: "empty" }));
   };
 
   const wishlistClickHandler = (e) => {
     e.stopPropagation();
     e.preventDefault();
     setWishlistAdded(!wishlistAdded);
-  }
+  };
 
   return (
     <NavLink
       to={`/restaurantSpecific/${lat}/${lng}/${data?.id}/${data?.name}`}
       onClick={handleClick}
-      style={{ width: from === "online" ? 240 : (from === "specificFood") ? 360 : 275 }}
+      style={{
+        width: from === "online" ? 240 : from === "specificFood" ? 360 : 275,
+      }}
       className={`flex flex-row md:flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out `}
     >
       {/* border-[1px] border-gray-400 */}
       <div
         className={`relative w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}
         style={{
-          height: from === "online" ? 160 : (from === "specificFood") ? 240 : 176,
+          height: from === "online" ? 160 : from === "specificFood" ? 240 : 176,
           backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl}), url("/images/fallback.png")`,
         }}
       >
@@ -45,7 +51,11 @@ const Cards = memo(({ data, from }) => {
             " " +
             (data.aggregatedDiscountInfoV3?.subHeader || "")}
         </p>
-        <i className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-[180%] text-gray-600" style={{color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }} onClick={wishlistClickHandler}></i>
+        <i
+          className="absolute top-2.5 right-2.5 ri-poker-hearts-fill text-[180%] text-gray-600"
+          style={{ color: wishlistAdded ? "red" : "rgba(0,0,0,0.5)" }}
+          onClick={wishlistClickHandler}
+        ></i>
       </div>
       <div className="mt-2 w-[95%]">
         <p className="font-bold text-[17px]">{data?.name || ""}</p>

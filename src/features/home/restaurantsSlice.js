@@ -35,7 +35,10 @@ const restaurantSlice = createSlice({
     },
 
     setMenuItems: (state, action) => {
-      state.menuItems.push(action.payload);
+      if (action.payload.mode === "empty") {
+        return state.menuItems = [];
+      }
+      state.menuItems.push(action.payload.title);
     },
 
     toggleMenuModel: (state) => {

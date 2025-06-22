@@ -158,7 +158,7 @@ export default function Layout() {
       body.style.paddingRight = "15px";
     }
 
-    if (isLoginOpen || isLocationOpen || menuModel) {
+    if (isLoginOpen || isLocationOpen) {
       body.classList.add("overflow-hidden");
       body.style.paddingRight = scrollbarWidth;
     } else {
@@ -170,7 +170,7 @@ export default function Layout() {
       body.classList.remove("overflow-hidden");
       body.style.paddingRight = "0px";
     };
-  }, [isLoginOpen, isLocationOpen, menuModel]);
+  }, [isLoginOpen, isLocationOpen]);
 
   useEffect(() => {
     const onlineHandler = () => {

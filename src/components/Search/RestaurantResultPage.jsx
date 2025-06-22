@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
+import { addCurrentRestaurant, setMenuItems } from "../../features/home/restaurantsSlice";
 import {
   NavLink,
   Await,
@@ -16,6 +16,7 @@ const Card = ({ data, lat, lng }) => {
 
   const handleClick = (name) => {
     dispatch(addCurrentRestaurant(name));
+    dispatch(setMenuItems({ mode: "empty" }));
   };
 
   return (

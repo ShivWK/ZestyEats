@@ -38,7 +38,7 @@ const ItemsMainHeading = ({
       : 0;
     setCount(initialCount);
 
-    dispatch(setMenuItems(heading));
+    dispatch(setMenuItems({title: heading}));
   }, []);
 
   useEffect(() => {

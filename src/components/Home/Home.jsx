@@ -21,7 +21,9 @@ import {
   selectBestCuisionsNearMe,
   selectNearByRestaurants,
 } from "../../features/home/homeSlice";
+
 import HomeShimmer from "./HomeShimmer";
+
 
 const Home = memo(() => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
