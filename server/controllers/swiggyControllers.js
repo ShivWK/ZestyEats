@@ -1,4 +1,5 @@
 const axios = require("axios");
+const { JSDOM } = require("jsdom");
 // const asyncErrorHandler = require("./../utils/asyncErrorHandler");
 
 const client = axios.create({
@@ -9,26 +10,26 @@ const client = axios.create({
     Referer: "https://www.swiggy.com/",
     Origin: "https://www.swiggy.com",
   },
-})
+});
 
-const asyncErrorHandler = func => {
+const asyncErrorHandler = (func) => {
   return (req, res, next) => {
-    func(req, res, next).catch(err => {
+    func(req, res, next).catch((err) => {
       console.log("Failed to fetch", err);
       res.status(500).json({
         status: "failed",
         error: err.message || "Something went wrong",
-      })
-    })
-  }
-}
+      });
+    });
+  };
+};
 
 const missingParamsError = (msg, res) => {
   return res.status(400).json({
     status: "failed",
     message: msg,
-  })
-}
+  });
+};
 
 exports.homePageData = async (req, res) => {
   try {
@@ -58,7 +59,7 @@ exports.homePageData = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 exports.addressRecommend = async (req, res) => {
   try {
@@ -87,7 +88,7 @@ exports.addressRecommend = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 exports.addressAutoComplete = async (req, res) => {
   try {
@@ -116,7 +117,7 @@ exports.addressAutoComplete = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 exports.addressFromCoordinates = async (req, res) => {
   try {
@@ -145,7 +146,7 @@ exports.addressFromCoordinates = async (req, res) => {
       error: error.message,
     });
   }
-}
+};
 
 exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, id } = req.query;
@@ -167,13 +168,12 @@ exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
   });
 
   return res.status(200).json(response.data);
-})
+});
 
 exports.dishSearchData = async (req, res) => {
   const { lat, lng, restro_Id, searchTerm } = req.query;
 
-  console.log(lat, lng, restro_Id, searchTerm)
-
+  console.log(lat, lng, restro_Id, searchTerm);
 
   if (!lat || !lng || !restro_Id || !searchTerm) {
     return res.status(400).json({
@@ -183,7 +183,7 @@ exports.dishSearchData = async (req, res) => {
 
   const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
 
-  console.log(searchUrl)
+  console.log(searchUrl);
 
   try {
     const response = await client.get(searchUrl);
@@ -202,7 +202,7 @@ exports.dishSearchData = async (req, res) => {
       error: err.message,
     });
   }
-}
+};
 
 exports.specificFoodCategoryData = asyncErrorHandler(async (req, res) => {
   const { lat, lng, collection_id, tags } = req.query;
@@ -224,7 +224,7 @@ exports.specificFoodCategoryData = asyncErrorHandler(async (req, res) => {
   });
 
   return res.status(200).json(response?.data);
-})
+});
 
 exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng } = req.query;
@@ -232,8 +232,8 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   if (!lat || !lng) {
     return res.status(400).json({
       status: "fail",
-      error: "Provide lat and lng"
-    })
+      error: "Provide lat and lng",
+    });
   }
 
   const swiggyUrl = "https://www.swiggy.com/dapi/landing/PRE_SEARCH";
@@ -241,8 +241,8 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   const result = await client.get(swiggyUrl, {
     params: {
       lat,
-      lng
-    }
+      lng,
+    },
   });
 
   const origin = req.headers.origin;
@@ -253,50 +253,54 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   });
 
   return res.status(200).json(result?.data);
-})
+});
 
-exports.specificFoodSearchSuggestions = asyncErrorHandler(async (req, res, next) => {
-   const { lat, lng, food } = req.query;
+exports.specificFoodSearchSuggestions = asyncErrorHandler(
+  async (req, res, next) => {
+    const { lat, lng, food } = req.query;
 
-  if (!lat || !lng || !food) {
-    return missingParamsError("Please provide lat , lng, and food", res);
-  }
-
-  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/suggest?trackingId=null&includeIMItem=true";
-
-  let response = await client.get(swiggyUrl, {
-    params: {
-      lat,
-      lng,
-      str: food
+    if (!lat || !lng || !food) {
+      return missingParamsError("Please provide lat , lng, and food", res);
     }
-  });
 
-  const origin = req.headers.origin;
+    const swiggyUrl =
+      "https://www.swiggy.com/dapi/restaurants/search/suggest?trackingId=null&includeIMItem=true";
 
-  res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
-  });
+    let response = await client.get(swiggyUrl, {
+      params: {
+        lat,
+        lng,
+        str: food,
+      },
+    });
 
-  res.status(200).json(response.data);
-})
+    const origin = req.headers.origin;
+
+    res.set({
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET",
+    });
+
+    res.status(200).json(response.data);
+  }
+);
 
 exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
-   const { lat, lng, food } = req.query;
+  const { lat, lng, food } = req.query;
 
   if (!lat || !lng || !food) {
     return missingParamsError("Please provide lat , lng, and food", res);
   }
 
-  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=null&submitAction=DEFAULT_SUGGESTION&queryUniqueId=14731ed6-27b3-ab73-ccc8-2c29158c3c5d";
+  const swiggyUrl =
+    "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=null&submitAction=DEFAULT_SUGGESTION&queryUniqueId=14731ed6-27b3-ab73-ccc8-2c29158c3c5d";
 
   let response = await client.get(swiggyUrl, {
     params: {
       lat,
       lng,
-      str: food
-    }
+      str: food,
+    },
   });
 
   const origin = req.headers.origin;
@@ -307,25 +311,28 @@ exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
   });
 
   res.status(200).json(response.data);
-})
+});
 
 exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, str, metadata } = req.query;
-  console.log("Suggested Data called")
 
   if (!lat || !lng || !str || !metadata) {
-    return missingParamsError("Please provide lat , lng, str and metadata", res);
+    return missingParamsError(
+      "Please provide lat , lng, str and metadata",
+      res
+    );
   }
 
-  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=";
+  const swiggyUrl =
+    "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=";
 
   let response = await client.get(swiggyUrl, {
     params: {
       lat,
       lng,
       str,
-      metadata
-    }
+      metadata,
+    },
   });
 
   const origin = req.headers.origin;
@@ -341,14 +348,12 @@ exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
 exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, str, submitAction, selectedPLTab } = req.query;
 
-  console.log("tab Data called");
-
-
   if (!lat || !lng || !str || !submitAction || !selectedPLTab) {
     return missingParamsError("Please provide lat , lng, and ", res);
   }
 
-  const swiggyUrl = "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=";
+  const swiggyUrl =
+    "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=";
 
   let response = await client.get(swiggyUrl, {
     params: {
@@ -357,7 +362,7 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
       str,
       submitAction,
       selectedPLTab,
-    }
+    },
   });
 
   const origin = req.headers.origin;
@@ -368,9 +373,42 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   });
 
   res.status(200).json(response.data);
-})
+});
 
+exports.swiggySsrRestaurantPageHandler = asyncErrorHandler(
+  async (req, res, next) => {
+    const { place } = req.query;
+    console.log("hit", place)
 
+    if (!place) {
+      return missingParamsError("Please provide place", res);
+    }
 
+    const swiggyUrl = `https://www.swiggy.com/${place}-cuisine-order-online-near-me`;
 
+    const html = await client.get(swiggyUrl);
+    const dom = new JSDOM(html.data);
+    const scriptContent = dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
 
+    if (!scriptContent) {
+      throw new Error("Script tag with restaurants data not found.");
+    }
+
+    const restaurantData = JSON.parse(scriptContent);
+
+    const origin = req.headers.origin;
+
+    res.set({
+      "Access-Control-Allow-Origin": origin,
+      "Access-Control-Allow-Methods": "GET",
+    });
+
+    res.status(200).json(restaurantData);
+  }
+);
+
+// https://www.swiggy.com/chinese-restaurants-near-me
+// https://www.swiggy.com/chinese-cuisine-order-online-near-me
+
+// https://www.swiggy.com/andhra-cuisine-order-online-near-me
+// https://www.swiggy.com/north-indian-cuisine-order-online-near-me
