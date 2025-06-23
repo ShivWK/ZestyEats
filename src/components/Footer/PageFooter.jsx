@@ -13,7 +13,7 @@ const PageFooter = memo(() => {
   if (pathname === "/" || pathname === "/offers-dinouts") {
     return (
       !isLoading && (
-        <footer className="py-2.5 pb-8 w-full flex flex-col justify-start items-center bg-gray-200">
+        <footer className="pt-1.5 md:pt-2.5 pb-8 w-full flex flex-col justify-start items-center bg-gray-200">
           <SubFooter isOpen={isOpen} openCities={setIsOpen} />
           {isOpen && <AllCities />}
         </footer>

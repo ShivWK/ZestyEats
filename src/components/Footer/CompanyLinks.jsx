@@ -9,7 +9,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
   const remainingCities = cities.length - 6;
 
   return (
-    <div className="flex gap-20 mt-3 md:mt-0">
+    <div className="flex gap-8 md:gap-20 max-md:mt-3 max-md:px-1">
       <div id="Available_in">
         <p className="font-medium text-lg text-black mb-3">Currently Serving In:</p>
         <ul className="list-none text-gray-900 font-normal">
@@ -25,7 +25,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
           className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100 w-fit"
           style={{ borderColor: isOpen ? "black" : "#6a7282" }}
         >
-          <p className="font-normal text-sm text-gray-900">
+          <p className="font-normal text-sm text-gray-900 whitespace-nowrap">
             {remainingCities} cities
           </p>
           <i
