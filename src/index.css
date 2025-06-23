@@ -53,27 +53,11 @@
             background-color: #cfd1d1;
         }
         50% {
-            background-color: #c1c1c4;
+            background-color: #b2b2b4;
         }
         100% {
             background-color: #cfd1d1;
         }
-    }
-
-    .shimmer-shine {
-        position: absolute;
-        height: 100%;
-        border: 2px solid black;
-        width: 30px;
-        box-shadow: 0 0 10px white;
-        background: linear-gradient(120deg,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.8) 50%,
-                rgba(255, 255, 255, 0) 100%);
-        filter: blur(2px);
-        transform: skew(20deg);
-        opacity: 0.6;
-        animation: shimmer 1.5s ease-in-out infinite;
     }
 
     @keyframes shimmer {

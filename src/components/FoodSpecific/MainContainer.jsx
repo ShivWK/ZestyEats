@@ -27,7 +27,7 @@ const MainContainer = ({ data }) => {
   }, []);
 
   return (
-    <div className="flex flex-col gap-5 w-full md:max-w-[1210px] pt-32 p-3 mx-auto pb-16">
+    <div className="flex flex-col gap-5 w-full md:max-w-[1210px] md:pt-32 pt-28 p-3 mx-auto pb-16">
       <div>
         <BreadcrumbsWrapper
           normalTextColor={"#4a5565"}
@@ -35,7 +35,7 @@ const MainContainer = ({ data }) => {
           delimiterColor={"text-gray-600"}
         />
       </div>
-      <h1 className="heading text-black text-5xl font-bold tracking-tight mx-0">
+      <h1 className="heading text-black md:text-5xl text-4xl font-bold tracking-tight mx-0">
         {title}
       </h1>
       <p className="description text-lg font-semibold text-gray-800 -mt-2">

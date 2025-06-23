@@ -33,16 +33,11 @@ const Cards = memo(({ data, from }) => {
     <NavLink
       to={`/restaurantSpecific/${lat}/${lng}/${data?.id}/${data?.name}`}
       onClick={handleClick}
-      style={{
-        width: from === "online" ? 240 : from === "specificFood" ? 360 : 275,
-      }}
-      className={`flex flex-row md:flex-col items-center rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out `}
+      className={`flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${from === "online" ? "md:w-[240px]" : from === "specificFood" ? "md:w-[360px]" : "md:w-[275px]"}`}
     >
-      {/* border-[1px] border-gray-400 */}
       <div
-        className={`relative w-full h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2`}
+        className={`relative w-full max-md:basis-1/2 h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2 shrink-0 max-md:max-h-full max-md:min-h-56 ${from === "online" ? "md:h-[160px]" : from === "specificFood" ? "md:h-[240px]" : "md:h-[176]"}`}
         style={{
-          height: from === "online" ? 160 : from === "specificFood" ? 240 : 176,
           backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl}), url("/images/fallback.png")`,
         }}
       >
@@ -68,7 +63,7 @@ const Cards = memo(({ data, from }) => {
           </svg>
         </div>
       </div>
-      <div className="mt-2 w-[95%]">
+      <div className="mt-2 w-[95%] max-md:basis-1/2 max-md:py-2">
         <p className="font-bold text-[17px]">{data?.name || ""}</p>
         <div className="flex gap-1 items-center -mt-0.5">
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
@@ -181,10 +176,10 @@ const Cards = memo(({ data, from }) => {
             Veg & Non-Veg
           </span>
         )}
-        <p className="mt-0.5 truncate font-semibold text-gray-700">
+        <p className={`mt-0.5 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[90%]" ${from === "online" ? "max-md:w-[90%]" : "max-md:w-[90%]"}`}>
           {data?.cuisines.join(", ") || ""}
         </p>
-        <p className="font-semibold text-gray-700">{data.areaName || ""}</p>
+        <p className="font-semibold text-gray-900 mt-0.5">{data.areaName || ""}</p>
       </div>
     </NavLink>
   );
