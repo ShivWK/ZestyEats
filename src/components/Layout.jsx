@@ -27,7 +27,7 @@ import { updateHomeRestaurantData } from "../utils/updateHomeData";
 import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
 import { updateCurrentCity } from "../utils/addCurrentCity";
-import { useGetDataForCityLocalityCuisineQuery } from "../features/cityHome/cityHomeApiSlice";
+// import { useGetDishInCityDataQuery } from "../features/cityHome/cityHomeApiSlice";
 
 export default function Layout() {
   const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
@@ -39,9 +39,9 @@ export default function Layout() {
   const dispatch = useDispatch();
   useTrackNavigation();
 
-  const { data, error } = useGetDataForCityLocalityCuisineQuery({ city: "mumbai"}) ;
-  console.log(data);
-  if (error) console.log(error);
+  // const { data, error } = useGetDishInCityDataQuery({ city: "mumbai", dish:"chicken-lollipop"}) ;
+  // console.log(data);
+  // if (error) console.log(error);
 
   const fetchDefaultHomeAPIData = async () => {
     try {

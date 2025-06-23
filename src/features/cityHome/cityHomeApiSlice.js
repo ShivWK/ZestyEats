@@ -33,6 +33,7 @@ const cityHomeApiSlice = createApi({
 
 export default cityHomeApiSlice;
 export const {
+  useLazyGetDataForCityLocalityCuisineQuery,
   useGetDataForCityLocalityCuisineQuery,
   useGetRestaurantChainInCityDataQuery,
   useGetDishInCityDataQuery,
