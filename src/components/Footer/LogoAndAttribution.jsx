@@ -24,7 +24,7 @@ const LogoAndAttribution = () => {
         <p className="mb-2">Developed By</p>
         <div className="flex gap-2.5 w-fit">
           <img
-            className="h-[12vh] w-[12vh] rounded-[50%] object-cover border-2 border-primary p-1"
+            className="h-[13vh] w-[13vh] rounded-[50%] object-cover border-2 border-primary p-1"
             src="/images/MY-min.png"
             alt="Developer image"
           />
