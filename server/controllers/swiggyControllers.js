@@ -379,11 +379,15 @@ exports.cityLocalityCuisineCardHandler = asyncErrorHandler(
   async (req, res, next) => {
     const { city, type } = req.query;
 
+    console.log("Hit", city, type, "citylocality")
+
     if (!city) {
       return missingParamsError("Please provide city or locality or cuisine type", res);
     }
 
     const swiggyUrl = `https://www.swiggy.com/city/${city}/${type ? type : ""}order-online`;
+
+    console.log(swiggyUrl)
 
     const html = await client.get(swiggyUrl);
     const dom = new JSDOM(html.data);
