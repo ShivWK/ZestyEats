@@ -21,7 +21,7 @@ const CuisionsNearMe = memo(() => {
   return (
     <>
       <h3 className="self-start">Best Cuisines Near Me</h3>
-      <div className="flex flex-wrap justify-start gap-y-5 md:gap-x-8 gap-x-2">
+      <div className="flex flex-wrap justify-start gap-y-5 md:gap-x-8 gap-x-2.5">
         {shownPlaces.map((item) => (
           <PlaceCards key={item.link} data={item} />
         ))}
