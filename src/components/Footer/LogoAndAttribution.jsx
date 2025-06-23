@@ -24,7 +24,7 @@ const LogoAndAttribution = () => {
         <p className="mb-2">Developed By</p>
         <div className="flex gap-2.5 w-fit">
           <img
-            className="h-[13vh] w-[13vh] rounded-[50%] object-cover border-2 border-primary p-1"
+            className="h-[14vh] w-[14vh] rounded-[50%] object-cover border-2 border-primary p-1"
             src="/images/MY-min.png"
             alt="Developer image"
           />
@@ -38,7 +38,7 @@ const LogoAndAttribution = () => {
                 target="__block"
               >
                 <i
-                  className="fa-brands fa-linkedin text-xl"
+                  className="fa-brands fa-linkedin text-2xl"
                   style={{ color: "#0077b5" }}
                 ></i>
               </a>
@@ -47,14 +47,14 @@ const LogoAndAttribution = () => {
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
                 target="__block"
               >
-                <i className="fa-brands fa-square-github text-xl"></i>
+                <i className="fa-brands fa-square-github text-2xl"></i>
               </a>
               <a
                 href="https://x.com/Shivendrawk"
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
                 target="__block"
               >
-                <i className="fa-brands fa-square-x-twitter text-xl"></i>
+                <i className="fa-brands fa-square-x-twitter text-2xl"></i>
               </a>
               <a
                 href="https://instagram.com/shivendrawk"
@@ -62,7 +62,7 @@ const LogoAndAttribution = () => {
                 target="__block"
               >
                 <i
-                  className="fa-brands fa-instagram text-xl"
+                  className="fa-brands fa-instagram text-2xl"
                   style={{ color: "#e1306c" }}
                 ></i>
               </a>
@@ -71,7 +71,7 @@ const LogoAndAttribution = () => {
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
               >
                 <i
-                  className="fa-solid fa-envelope text-xl"
+                  className="fa-solid fa-envelope text-2xl"
                   style={{ color: "#d93025" }}
                 ></i>
               </a>
