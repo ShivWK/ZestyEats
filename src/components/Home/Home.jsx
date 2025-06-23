@@ -8,7 +8,7 @@ const OnlineDeliveryRestaurant = lazy(() =>
   import("./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant")
 );
 const TopRestaurantChains = lazy(() => import("./TopRestaurantChains"));
-const CuisionsNearMe = lazy(() => import("./CuisionsNearMe"));
+const PlaceCardsContainer = lazy(() => import("./PlaceCardsContainer"));
 
 import {
   selectFoodieThoughtsData,
@@ -24,7 +24,7 @@ import HomeShimmer from "./HomeShimmer";
 const Home = memo(() => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
-  const onlineDeliveryRestaurant = useSelector(selectOnlineDeliveryRestaurants);
+  const onlineDeliveryRestaurantData = useSelector(selectOnlineDeliveryRestaurants);
   const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
   const isLoadingMain = useSelector(selectIsLoading);
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
@@ -42,10 +42,10 @@ const Home = memo(() => {
 
 {/* Foodie thoughts */}
 
-      {foodieThoughtsData.length !== 0 && (
+      {foodieThoughtsData?.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto ">
-            <FoodieThoughts />
+            <FoodieThoughts data={foodieThoughtsData} />
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
@@ -53,7 +53,7 @@ const Home = memo(() => {
 
 {/* Top restaurants chain */}
 
-      {topRestaurantsChainsData.length !== 0 && (
+      {topRestaurantsChainsData?.length !== 0 && (
         <>
           <section className="w-full max-w-[1040px] mx-auto">
             <Suspense
@@ -63,7 +63,7 @@ const Home = memo(() => {
                 </div>
               }
             >
-              <TopRestaurantChains />
+              <TopRestaurantChains data={topRestaurantsChainsData} />
             </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
@@ -72,7 +72,7 @@ const Home = memo(() => {
 
 {/* Restaurants with online delivery */}
 
-      {onlineDeliveryRestaurant.length !== 0 && (
+      {onlineDeliveryRestaurantData?.length !== 0 && (
         <>
           <section className="w-full">
             <Suspense
@@ -82,7 +82,7 @@ const Home = memo(() => {
                 </div>
               }
             >
-              <OnlineDeliveryRestaurant />
+              <OnlineDeliveryRestaurant data={onlineDeliveryRestaurantData} />
             </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
@@ -91,7 +91,7 @@ const Home = memo(() => {
       
 {/* Best cuisines near me */}
 
-      {bestCuisionsNearMe.length !== 0 && (
+      {bestCuisionsNearMe?.length !== 0 && (
         <>
           <section
             className="w-full max-w-[1000px] mx-auto flex items-center gap-4
@@ -104,7 +104,7 @@ const Home = memo(() => {
                 </div>
               }
             >
-              <CuisionsNearMe />
+              <PlaceCardsContainer data={bestCuisionsNearMe} />
             </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />

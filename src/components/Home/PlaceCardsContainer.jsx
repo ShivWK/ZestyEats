@@ -4,28 +4,30 @@ import { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectBestCuisionsNearMe } from "../../features/home/homeSlice";
 
-const CuisionsNearMe = memo(() => {
-  const places = useSelector(selectBestCuisionsNearMe);
+const PlaceCardsContainer = memo(({ data, heading = null }) => {
+  // const places = useSelector(selectBestCuisionsNearMe);
   const [shownPlaces, setShownPlaces] = useState([]);
 
   useEffect(() => {
-    setShownPlaces(places.slice(0, 15));
+    setShownPlaces(data.slice(0, 15));
   }, []);
 
   const handleShowMore = useCallback(() => {
     setShownPlaces((prv) => {
-     return [...prv, ...places.slice(15)];
+     return [...prv, ...data.slice(15)];
     });
-  }, [places, setShownPlaces]);
+  }, [data, setShownPlaces]);
+
+  const title = heading || "Best Cuisines Near Me"
 
   return (
     <>
-      <h3 className="self-start">Best Cuisines Near Me</h3>
+      <h3 className="self-start">{title}</h3>
       <div className="flex flex-wrap justify-start gap-y-5 md:gap-x-8 gap-x-2.5">
         {shownPlaces.map((item) => (
           <PlaceCards key={item.link} data={item} />
         ))}
-        {shownPlaces.length !== places.length && (
+        {shownPlaces.length !== data.length && (
           <ShowMoreBtn handleClick={handleShowMore} />
         )}
       </div>
@@ -33,4 +35,4 @@ const CuisionsNearMe = memo(() => {
   );
 });
 
-export default CuisionsNearMe;
+export default PlaceCardsContainer;

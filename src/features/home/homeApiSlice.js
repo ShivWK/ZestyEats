@@ -15,14 +15,6 @@ const homeApiSlice = createApi({
         params: { lat, lng },
       }),
     }),
-
-    getDataFortheAvailableCity: builder.query({
-      query: ({ city }) => ({
-        url: "/data-for-city",
-        params: { city }
-      })
-    }),
-    
   }),
 });
 

@@ -23,15 +23,6 @@ const restaurantsApi = createApi({
         };
       },
     }),
-
-    getNearByRestroData: builder.query({
-      query: ({place, cuisineType}) => ({
-        url: "/cuisine-near-me-data",
-        params: { place, cuisineType }
-      })
-    }),
-
-
   }),
 });
 

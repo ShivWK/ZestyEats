@@ -7,9 +7,8 @@ import {
 } from "../../../features/home/homeSlice";
 import { memo } from "react";
 
-const OnlineDeliveryRestaurant = memo(() => {
-  const data = useSelector(selectOnlineDeliveryRestaurants);
-  const title = useSelector(selectOnlineDeliveryTitle);
+const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
+  const title = heading || useSelector(selectOnlineDeliveryTitle);
 
   return (
     <>

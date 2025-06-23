@@ -4,10 +4,10 @@ import Cards from "./Cards";
 import { selectTopRestaurantsTitle } from "../../features/home/homeSlice";
 import HorizontalCarousel from "../HorizontalCarousel";
 
-const TopRestaurantChains = () => {
+const TopRestaurantChains = ({ data, heading = null }) => {
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
-  const mainData = topRestaurantsChainsData.map((item) => item?.info);
-  const title = useSelector(selectTopRestaurantsTitle);
+  const mainData = data.map((item) => item?.info);
+  const title = heading || useSelector(selectTopRestaurantsTitle);
 
   return (
     <HorizontalCarousel

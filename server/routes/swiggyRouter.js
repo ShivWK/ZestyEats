@@ -14,8 +14,9 @@ const {
   suggestedDataHandler,
   extraSuggestionsData,
   searchOnTabClick,
-  servingCityDataHandler,
-  nearByCuisineHandler
+  cityLocalityCuisineCardHandler,
+  restaurantChainInCityHandler,
+  dishesInCityHandler
 } = require("./../controllers/swiggyControllers");
 
 swiggyRouter.get("/homepageData", homePageData);
@@ -30,9 +31,9 @@ swiggyRouter.get("/search-food-suggestions", specificFoodSearchSuggestions);
 swiggyRouter.get("/extra-suggestions", extraSuggestionsData);
 swiggyRouter.get("/suggested-data", suggestedDataHandler);
 swiggyRouter.get("/search-tab-data", searchOnTabClick);
-swiggyRouter.get("/cuisine-near-me-data", nearByCuisineHandler);
-swiggyRouter.get("/data-for-city", servingCityDataHandler);
-
+swiggyRouter.get("/city-locality-cuisine-data", cityLocalityCuisineCardHandler);
+swiggyRouter.get("/restaurant-chain-in-city", restaurantChainInCityHandler);
+swiggyRouter.get("/popular-dish-in-city", dishesInCityHandler);
 
 
 // https://swiggy-clone-klzu.onrender.com/api/swiggy/restaurants-near-me-data?place=north-indian

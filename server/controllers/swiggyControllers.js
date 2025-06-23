@@ -375,15 +375,15 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   res.status(200).json(response.data);
 });
 
-exports.nearByCuisineHandler = asyncErrorHandler(
+exports.cityLocalityCuisineCardHandler = asyncErrorHandler(
   async (req, res, next) => {
-    const { place, cuisineType } = req.query;
+    const { city, type } = req.query;
 
-    if (!place || !cuisineType) {
-      return missingParamsError("Please provide place and cuisine type", res);
+    if (!city) {
+      return missingParamsError("Please provide city or locality or cuisine type", res);
     }
 
-    const swiggyUrl = `https://www.swiggy.com/city/${place}/${cuisineType}-cuisine-order-online`;
+    const swiggyUrl = `https://www.swiggy.com/city/${city}/${type ? type : ""}order-online`;
 
     const html = await client.get(swiggyUrl);
     const dom = new JSDOM(html.data);
@@ -407,13 +407,42 @@ exports.nearByCuisineHandler = asyncErrorHandler(
   }
 );
 
-exports.servingCityDataHandler = asyncErrorHandler(async (req, res, next) => {
-  const { city } = req.query;
-  console.log("hit", place);
+exports.restaurantChainInCityHandler = asyncErrorHandler(async (req, res, next) => {
+  const { city, restaurant } = req.query;
+  console.log("hit", restaurant, city);
 
-  if (!city) return missingParamsError("Please provide city", res);
+  if (!city || !restaurant) return missingParamsError("Please provide city and restaurant name", res);
   
-  const swiggyUrl = `https://www.swiggy.com/city/${city}/order-online`;
+  const swiggyUrl = `https://www.swiggy.com/city/${city}/${restaurant}`;
+
+  const html = await client.get(swiggyUrl);
+  const dom = new JSDOM(html.data);
+  const scriptContent =
+    dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
+
+  if (!scriptContent) {
+    throw new Error("Script tag with restaurants data not found.");
+  }
+
+  const restaurantData = JSON.parse(scriptContent);
+
+  const origin = req.headers.origin;
+
+  res.set({
+    "Access-Control-Allow-Origin": origin,
+    "Access-Control-Allow-Methods": "GET",
+  });
+
+  res.status(200).json(restaurantData);
+});
+
+exports.dishesInCityHandler = asyncErrorHandler(async (req, res, next) => {
+  const { city, dish } = req.query;
+  console.log("hit", dish, city);
+
+  if (!city || !dish) return missingParamsError("Please provide city and dish", res);
+  
+  const swiggyUrl = `https://www.swiggy.com/city/${city}/${dish}-dish-restaurants`;
 
   const html = await client.get(swiggyUrl);
   const dom = new JSDOM(html.data);
@@ -437,3 +466,4 @@ exports.servingCityDataHandler = asyncErrorHandler(async (req, res, next) => {
 });
 
 // Near me URL: https://www.swiggy.com/city/delhi/american-cuisine-order-online
+// https://www.swiggy.com/city/mumbai/chilli-chicken-dish-restaurants
