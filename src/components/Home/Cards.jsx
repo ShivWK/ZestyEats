@@ -176,7 +176,7 @@ const Cards = memo(({ data, from }) => {
             Veg & Non-Veg
           </span>
         )}
-        <p className={`mt-0.5 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[90%]" ${from === "online" ? "max-md:w-[90%]" : "max-md:w-[90%]"}`}>
+        <p className={`mt-0.5 max-h-14 line-clamp-2 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[90%] leading-0.5" ${from === "online" ? "max-md:w-[90%]" : "max-md:w-[90%]"}`}>
           {data?.cuisines.join(", ") || ""}
         </p>
         <p className="font-semibold text-gray-900 mt-0.5">{data.areaName || ""}</p>
