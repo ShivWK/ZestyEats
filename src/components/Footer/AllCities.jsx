@@ -8,7 +8,7 @@ const AllCities = memo(() => {
   const citiesToPrint = cities.slice(6);
 
   return (
-    <div className="w-full max-w-[1210px]">
+    <div className="w-full md:max-w-[1210px] max-md:px-1.5 ">
       <hr className="mt-13 mb-10 text-gray-800" />
       <div className="w-full flex justify-center mb-10">
         <ul className="columns-2 md:columns-5 gap-7 w-fit">
