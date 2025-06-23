@@ -13,11 +13,13 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
       <div id="Available_in">
         <p className="font-medium text-lg text-black mb-3">Currently Serving In:</p>
         <ul className="list-none text-gray-900 font-normal">
-          {first6Cities.map((city) => (
-            <li key={city.link} className="mb-3">
-              <NavLink>{city.text}</NavLink>
+          {first6Cities.map((city) => {
+            const path = city.text.toLowerCase().replace(/\s/g, "-");
+
+            return <li key={city.link} className="mb-3">
+              <NavLink to={`cityPage?city=${path}`}>{city.text}</NavLink>
             </li>
-          ))}
+          })}
         </ul>
         <div
           onClick={() => openCities(!isOpen)}

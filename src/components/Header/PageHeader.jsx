@@ -3,10 +3,15 @@ import CartHeader from "./CartHeader";
 import RestaurantsHeader from "./RestaurantsHeader";
 import SpecificFoodHeader from "./SpecificFoodHeader";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { memo } from "react";
+
+import { selectCity } from "../../features/cityHome/cityHomeSlice";
 
 const PageHeader = memo(() => {
   const { pathname } = useLocation();
+  const city = useSelector(selectCity).toUpperCase();
+
 
   if (pathname === "/") {
     return <GeneralHeader />;
@@ -26,8 +31,10 @@ const PageHeader = memo(() => {
     return <RestaurantsHeader />;
   } else if (pathname.includes("specificFood")) {
     return <SpecificFoodHeader />
+  } else if (pathname === "/cityPage") {
+    return <GeneralHeader placeholder={city} />
   }
-
+  
   return null;
 });
 

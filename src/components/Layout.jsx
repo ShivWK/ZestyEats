@@ -19,7 +19,7 @@ import {
   addSearchedCity,
   addSearchedCityAddress,
 } from "../features/home/homeSlice";
-import { selectMenuModel } from "../features/home/restaurantsSlice";
+// import { selectMenuModel } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -27,7 +27,7 @@ import { updateHomeRestaurantData } from "../utils/updateHomeData";
 import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
 import { updateCurrentCity } from "../utils/addCurrentCity";
-// import { useGetDishInCityDataQuery } from "../features/cityHome/cityHomeApiSlice";
+// import { useGetDishInCityDataQuery, useGetDataForCityLocalityCuisineQuery } from "../features/cityHome/cityHomeApiSlice";
 
 export default function Layout() {
   const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
@@ -35,13 +35,8 @@ export default function Layout() {
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
-  const menuModel = useSelector(selectMenuModel);
   const dispatch = useDispatch();
   useTrackNavigation();
-
-  // const { data, error } = useGetDishInCityDataQuery({ city: "mumbai", dish:"chicken-lollipop"}) ;
-  // console.log(data);
-  // if (error) console.log(error);
 
   const fetchDefaultHomeAPIData = async () => {
     try {

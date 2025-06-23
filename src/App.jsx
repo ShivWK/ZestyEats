@@ -34,9 +34,10 @@ import SearchSuggestions from "./components/Search/SearchSuggestion";
 import SearchHome from "./components/Search/SearchHome";
 import RestaurantResultPage from "./components/Search/RestaurantResultPage";
 import DishResultPage from "./components/Search/DishResultPage";
+import CityHome from "./components/cityHome/CityHome";
 
 
-import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
+import { specificRestroLoader, specificFoodLoader, specificCityLoader } from "./loaders/loaders";
 import { searchHomeLoader, searchSuggestionsLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
 
 export default function App() {
@@ -125,6 +126,11 @@ export default function App() {
             </Suspense>
           }
           loader={specificFoodLoader}
+        />
+        <Route
+          path="cityPage"
+          loader={specificCityLoader}
+          element={<CityHome />}
         />
       </Route>
     )

@@ -11,6 +11,7 @@ import foodSpecificApiSlice from "../features/home/foodSpecificApiSlice";
 import helpReducer from "./../features/home/helpPageSlice";
 import homeSearchApiSlice from "../features/search/homeSearchApiSlice";
 import cityHomeApiSlice from "../features/cityHome/cityHomeApiSlice";
+import cityHomeReducer from "../features/cityHome/cityHomeSlice";
 
 const store = configureStore({
   reducer: {
@@ -25,6 +26,7 @@ const store = configureStore({
     header: headerReducer,
     restaurant: restaurantReducer,
     help: helpReducer,
+    cityHomeSlice: cityHomeReducer
   },
   middleware: (defaultMiddlewares) => [
     ...defaultMiddlewares(),
