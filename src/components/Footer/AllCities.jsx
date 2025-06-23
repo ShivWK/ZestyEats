@@ -9,8 +9,8 @@ const AllCities = memo(() => {
 
   return (
     <div className="w-full md:max-w-[1210px] max-md:px-1.5 ">
-      <hr className="mt-13 mb-10 text-gray-800" />
-      <div className="w-full flex justify-center mb-10">
+      <hr className="md:mt-13 md:mb-10 my-7 text-gray-800" />
+      <div className="w-full flex justify-center mb-7 md:mb-10 max-md:px-2">
         <ul className="columns-2 md:columns-5 gap-7 w-fit">
           {citiesToPrint.map((city) => (
             <li key={city.link} className="mb-2">
