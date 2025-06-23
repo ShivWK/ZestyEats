@@ -166,7 +166,7 @@ const Banner = ({ data }) => {
             viewBox="0 0 115 36"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="-ml-1.5 mb-1 -mt-1"
+            className="-ml-1.5 mb-1 -mt-2"
           >
             <rect
               x="0.81"
