@@ -7,6 +7,7 @@ import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
 import TopRestaurantChains from "../Home/TopRestaurantChains";
 import OnlineDeliveryRestaurant from "../Home/OnlineDeliveryRestaurants/OnlineDeliveryRestaurant";
 import PlaceCardsContainer from "../Home/PlaceCardsContainer";
+import cityDataFetcher from "../../utils/cityDataFetcher";
 
 const MainContent = ({ data }) => {
     const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
@@ -15,6 +16,8 @@ const MainContent = ({ data }) => {
     const pageOffset = mainData?.pageOffset;
     const nextFetch = mainData?.nextFetch;
     const cards = mainData?.cards;
+
+    // const dataObject = cityDataFetcher(cards)
 
     const banner_text = cards.find(
         (item) => item?.card?.card?.id === "best_restaurants_header"
@@ -36,22 +39,60 @@ const MainContent = ({ data }) => {
         (item) => item?.card?.card?.id === "popular_restaurants_title"
     ).card?.card?.title;
 
-    const LocalitiesData =  cards?.find((item) => item?.card?.card?.id === "area_list")?.areas;
-    const whatEatingCuisineData = cards?.find((item) => item?.card?.card?.id === "cuisines_near_you")?.cuisines;
-    const restaurantChainInCityData = cards?.find((item) => item?.card?.card?.id === "brand_page_links")?.brands;
-    const popularDishesData = cards?.find((item) => item?.card?.card?.id === "dish_page_links")?.brands;
+    const localitiesObject = cards?.find((item) => item?.card?.card?.id === "area_list")
+        ?.card?.card;
+    const localitiesTitle = localitiesObject?.title;
+    const localitiesData = localitiesObject?.areas;
+
+    const whatEatingCuisineObject = cards?.find((item) => item?.card?.card?.id === "cuisines_near_you")
+        ?.card?.card;
+    const whatEatingCuisineTitle = whatEatingCuisineObject?.title;
+    const whatEatingCuisineData = whatEatingCuisineObject?.cuisines;
+
+    const restaurantChainInCityObject = cards?.find((item) => item?.card?.card?.id === "brand_page_links")
+        ?.card?.card;
+    const restaurantChainInCityTitle = restaurantChainInCityObject?.title;
+    const restaurantChainInCityData = restaurantChainInCityObject?.brands;
+
+    const popularDishesObject = cards?.find((item) => item?.card?.card?.id === "dish_page_links")
+        ?.card?.card;
+    const popularDishesTitle = popularDishesObject?.title;
+    const popularDishesData = popularDishesObject?.brands;
+
+    // const banner_text = dataObject.banner_text;
+
+    // const foodieThoughtsData = dataObject.foodieThoughtsData;
+
+    // const topRestaurantChainData = dataObject.topRestaurantChain.data;
+    // const topRestaurantsTitle = dataObject.topRestaurantChain.title;
+
+    // const onlineDeliveryRestaurantData = dataObject.onlineDeliveryRestaurant.data;
+    // const onlineDeliveryRestaurantTitle = dataObject.onlineDeliveryRestaurant.title;
+
+    // const localitiesTitle = dataObject.localities.data;
+    // const localitiesData = dataObject.localities.title;
+
+    // const whatEatingCuisineTitle = dataObject.cuisines.data;
+    // const whatEatingCuisineData = dataObject.cuisines.title;
+
+    // const restaurantChainInCityTitle = dataObject.restaurantChainInCity.data;
+    // const restaurantChainInCityData = dataObject.restaurantChainInCity.title;
+
+    // const popularDishesTitle = dataObject.popularDishes.data;
+    // const popularDishesData = dataObject.popularDishes.title;
 
     return (
-        <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-28 overflow-x-hidden max-md:px-1.5">
+        <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-24 md:pt-28 overflow-x-hidden max-md:px-1.5">
             {/* /Banner Image */}
 
-            <div id="banner" className="relative mt-1 mb-8">
+            <div id="banner" className="relative mt-0.5 md:mt-1 mb-8 overflow-auto">
                 <img
                     src="/images/food-banner.jpg"
                     alt="page banner image"
-                    className="w-full object-cover rounded-3xl h-[50vh]"
+                    className="w-full object-cover rounded-3xl md:h-[50vh] h-[30vh] "
                 />
-                <h1 className="absolute top-[70%] left-[3%] text-white text-4xl ">{banner_text}</h1>
+                <h1 className="absolute top-[65%] md:top-[74%] left-[4%] md:left-[3%] text-white text-2xl md:text-4xl max-md:leading-6">{banner_text}</h1>
+                <h2 className="absolute top-[5%] left-[4%] md:left-[3%] md:text-4xl text-white text-3xl">ZestyEats</h2>
             </div>
 
             {/* Foodie Thoughts */}
@@ -111,25 +152,91 @@ const MainContent = ({ data }) => {
 
             {/* Localities */}
 
-            {/* {bestCuisionsNearMe?.length !== 0 && (
-            <>
-                <section
-                    className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+            {localitiesData?.length !== 0 && (
+                <>
+                    <section
+                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
-                >
-                    <Suspense
-                        fallback={
-                            <div className="flex justify-between gap-4">
-                                {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
-                            </div>
-                        }
                     >
-                        <PlaceCardsContainer data={bestCuisionsNearMe} />
-                    </Suspense>
-                </section>
-                <hr className="mt-10 mb-8 text-gray-400" />
-            </>
-        )} */}
+                        <Suspense
+                            fallback={
+                                <div className="flex justify-between gap-4">
+                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
+                                </div>
+                            }
+                        >
+                            <PlaceCardsContainer data={localitiesData} heading={localitiesTitle} />
+                        </Suspense>
+                    </section>
+                    <hr className="mt-10 mb-8 text-gray-400" />
+                </>
+            )}
+
+            {/* What's city eating */}
+
+            {whatEatingCuisineData?.length !== 0 && (
+                <>
+                    <section
+                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+                   flex-col"
+                    >
+                        <Suspense
+                            fallback={
+                                <div className="flex justify-between gap-4">
+                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
+                                </div>
+                            }
+                        >
+                            <PlaceCardsContainer data={whatEatingCuisineData} heading={whatEatingCuisineTitle} />
+                        </Suspense>
+                    </section>
+                    <hr className="mt-10 mb-8 text-gray-400" />
+                </>
+            )}
+
+            {/*  */}
+
+            {restaurantChainInCityData?.length !== 0 && (
+                <>
+                    <section
+                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+                   flex-col"
+                    >
+                        <Suspense
+                            fallback={
+                                <div className="flex justify-between gap-4">
+                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
+                                </div>
+                            }
+                        >
+                            <PlaceCardsContainer data={restaurantChainInCityData} heading={restaurantChainInCityTitle} />
+                        </Suspense>
+                    </section>
+                    <hr className="mt-10 mb-8 text-gray-400" />
+                </>
+            )}
+
+            {/* Popular dishes */}
+
+            {popularDishesData?.length !== 0 && (
+                <>
+                    <section
+                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+                   flex-col"
+                    >
+                        <Suspense
+                            fallback={
+                                <div className="flex justify-between gap-4">
+                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
+                                </div>
+                            }
+                        >
+                            <PlaceCardsContainer data={popularDishesData} heading={popularDishesTitle} />
+                        </Suspense>
+                    </section>
+                </>
+            )}
+
         </main>
     );
 };
