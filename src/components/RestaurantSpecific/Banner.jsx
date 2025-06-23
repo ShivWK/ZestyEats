@@ -155,7 +155,7 @@ const Banner = ({ data }) => {
                 <p>Outlet</p>
                 <p className="text-gray-600 font-semibold">{mainData?.areaName}</p>
               </div>
-              <p>{mainData?.sla?.slaString}</p>
+              <p>{mainData?.sla?.slaString || "25-30 MINS"}</p>
             </div>
           </div>
         </div>
