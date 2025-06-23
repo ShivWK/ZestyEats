@@ -1,6 +1,6 @@
 const LogoAndAttribution = () => {
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-5 md:gap-8">
       <div className="logo flex flex-col gap-2.5">
         <div className="flex gap-2.5 items-center">
           <img
