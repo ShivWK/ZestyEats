@@ -166,7 +166,7 @@ const Banner = ({ data }) => {
             viewBox="0 0 115 36"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="-ml-1.5 mb-1 -mt-2"
+            className="-ml-1.5 mb-1 -mt-2 max-md:block hidden"
           >
             <rect
               x="0.81"
@@ -240,7 +240,7 @@ const Banner = ({ data }) => {
             </defs>
           </svg>
         ) : (
-          <span className="inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs w-fit font-medium pl-1 my-0.5 ml-2 pr-2 py-1 rounded-full border border-gray-300 mb-2">
+          <span className="hidden max-md:inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs w-fit font-medium pl-1 my-0.5 ml-2 pr-2 py-1 rounded-full border border-gray-300 mb-2">
             {/* Veg Icon - Leaf */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
