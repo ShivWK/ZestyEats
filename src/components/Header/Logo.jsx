@@ -26,11 +26,11 @@ const Logo = memo(({ searchPlaceholder }) => {
   const hoverHandler = () => {
     dispatch(setLocationHovered());
   }
-
+// ${ location === "/" && "max-md:hidden"}
   return (
-    <div className="flex gap-1.5 md:gap-6">
-      <NavLink to="/" className={`active:scale-95 ${ location === "/" && "max-md:hidden"}`}>
-        <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-in-out rounded-md outline-none border-none" />
+    <div className="flex gap-1.5 md:gap-6 items-center">
+      <NavLink to="/" className={`active:scale-95 `}>
+        <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-in-out max-md:h-12 max-md:w-12 rounded-md outline-none border-none" />
       </NavLink>
 
       {searchPlaceholder ? (
