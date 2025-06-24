@@ -13,17 +13,17 @@ const Breadcrumbs = ({ textColor, mainTextColor }) => {
   }
 
   return (
-    <div className="inline-flex gap-2 items-center flex-wrap">
+    <div className="inline-flex gap-2 items-center">
       {pathHistory.map((path, index, arr) => {
         const lastIndex = arr.length - 1;
         const backstage = index + 1 - arr.length;
         //"#101828", "#4a5565"
         return (
-          <span key={index} className="flex flex-wrap gap-2 items-center shrink-0 whitespace-nowrap ">
+          <span key={index} className="flex gap-2 items-center shrink-0 whitespace-nowrap ">
             <button
               onClick={() => clickHandler(backstage, index, lastIndex)}
               style={{ color: index === lastIndex ? mainTextColor : textColor }}
-              className={`${index !== lastIndex && "cursor-pointer"}`}
+              className={`${index !== lastIndex && "cursor-pointer"} truncate`}
             >
               {path}
             </button>

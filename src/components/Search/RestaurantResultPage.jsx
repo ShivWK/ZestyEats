@@ -88,7 +88,7 @@ const MainContent = ({ data, lat, lng, mode }) => {
   console.log(tabRestaurantData)
 
   return (
-    <div className="p-3 pt-8 md:pt-20 w-full bg-gray-100 flex flex-col">
+    <div className="p-3 pt-18 w-full bg-gray-100 flex flex-col">
       {mode === "parent" ? (
         <>
           {clickedRestro && (

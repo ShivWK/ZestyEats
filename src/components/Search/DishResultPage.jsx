@@ -165,7 +165,7 @@ const MainContent = ({ data, lat, lng, mode }) => {
             );
 
     return (
-        <div className="flex items-start flex-wrap gap-2.5 gap-y-4 w-full justify-between pt-20 bg-gray-200 p-1.5 rounded-md">
+        <div className="flex items-start flex-wrap gap-2.5 gap-y-4 w-full justify-between pt-16 bg-gray-200 p-1.5 rounded-md">
             {cards ? (
                 cards.map((item) => (
                     <Card

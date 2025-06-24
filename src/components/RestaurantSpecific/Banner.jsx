@@ -1,8 +1,11 @@
 import { NavLink } from "react-router-dom";
+import { selectSearchedCity } from "../../features/home/homeSlice";
+import { useSelector } from "react-redux";
 
 const Banner = ({ data }) => {
   const mainData = data?.card?.card?.info;
   const veg = mainData?.veg;
+  const searchedCity = useSelector(selectSearchedCity).toLowerCase().replace(/\s/g, "-");
 
   return (
     <div
@@ -138,10 +141,13 @@ const Banner = ({ data }) => {
             className="text-primary font-bold underline text-sm flex gap-1"
           >
             {mainData?.cuisines.length !== 0 &&
-              mainData?.cuisines?.map((item, index, array) => {
-                if (index == array.length - 1)
-                  return <NavLink key={item}>{item}</NavLink>;
-                else return <NavLink key={item}>{`${item} ,`}</NavLink>;
+              mainData?.cuisines?.map((text, index, array) => {
+                if (index == array.length - 1) {
+                  const cuisine = text.toLowerCase().replace(/\s/g, "-")+"-cuisine-";
+                  return <NavLink to={`/cityPage?city=${searchedCity}&type=${cuisine}`} key={text}>{text}</NavLink>;
+                }
+                const cuisine = text.toLowerCase().replace(/\s/g, "-")+"-cuisine-";
+                return <NavLink to={`/cityPage?city=${searchedCity}&type=${cuisine}`} key={text}>{`${text} ,`}</NavLink>;
               })}
           </div>
           <div id="delivery" className="flex gap-2 mt-2">

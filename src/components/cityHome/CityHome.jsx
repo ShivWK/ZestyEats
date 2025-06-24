@@ -10,6 +10,7 @@ import PlaceCardsContainer from "../Home/PlaceCardsContainer";
 import cityDataFetcher from "../../utils/cityDataFetcher";
 
 const MainContent = ({ data }) => {
+    console.log(data)
     const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
 
     const mainData = data?.props?.pageProps?.widgetResponse?.success;
@@ -37,7 +38,7 @@ const MainContent = ({ data }) => {
             ?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
     const onlineDeliveryRestaurantTitle = cards?.find(
         (item) => item?.card?.card?.id === "popular_restaurants_title"
-    ).card?.card?.title;
+    )?.card?.card?.title;
 
     const localitiesObject = cards?.find((item) => item?.card?.card?.id === "area_list")
         ?.card?.card;

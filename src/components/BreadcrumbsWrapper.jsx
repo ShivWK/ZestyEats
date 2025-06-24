@@ -7,7 +7,7 @@ const BreadcrumbsWrapper = ({ normalTextColor, mainTextColor, delimiterColor}) =
     const searchedCity = useSelector(selectSearchedCity);
 
     return (
-        <div className={`flex gap-1 flex-wrap items-center ${delimiterColor} text-xs font-semibold w-full`}>
+        <div className={`flex gap-1 items-center ${delimiterColor} text-xs font-semibold w-full overflow-auto hide-scrollbar`}>
             <p className="select-none font-bold">{`${currentCity || searchedCity}`}</p>
             <span>┃</span>
             <Breadcrumbs textColor={normalTextColor} mainTextColor={mainTextColor}/>
