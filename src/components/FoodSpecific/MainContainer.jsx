@@ -15,7 +15,7 @@ const MainContainer = ({ data }) => {
     "type.googleapis.com/swiggy.gandalf.widgets.v2.InlineViewFilterSortWidget",
     "type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget",
   ];
-  const mainData = cards.filter((obj) => {
+  const mainData = cards?.filter((obj) => {
     const type = obj?.card?.card?.["@type"];
     return type && !unwantedTypes.includes(type);
   });
@@ -26,7 +26,7 @@ const MainContainer = ({ data }) => {
     dispatch(setCurrentFoodCategory(title));
   }, []);
 
-  return (
+  return ( cards ?
     <div className="flex flex-col gap-5 w-full md:max-w-[1210px] md:pt-32 pt-28 p-3 mx-auto pb-16">
       <div>
         <BreadcrumbsWrapper
@@ -56,6 +56,9 @@ const MainContainer = ({ data }) => {
           })}
         </div>
       </div>
+    </div>
+    : <div className="flex items-center justify-center bg-gray-300">
+      <p className="text-gray-800 font-semibold">{`Sorry we do not have any restaurants for ${title} in your location`}</p>
     </div>
   );
 };

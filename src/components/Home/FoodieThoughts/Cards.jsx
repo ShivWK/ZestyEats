@@ -19,9 +19,9 @@ const Cards = memo(({ data }) => {
   };
 
   return (
-    <NavLink to={path} onClick={handleClick} className="shrink-0 w-36">
+    <NavLink to={path} onClick={handleClick} className="shrink-0 w-28 md:w-36">
       <img
-        className="w-full h-44 rounded object-cover"
+        className="w-full h-32 my-3 md:my-2 md:h-44 rounded object-cover"
         src={`https://media-assets.swiggy.com/swiggy/image/upload/${data?.imageId}`}
         alt={data?.accessibility?.altText}
       />
@@ -31,20 +31,3 @@ const Cards = memo(({ data }) => {
 
 export default Cards;
 
-// {
-//     "id": "750591",
-//     "imageId": "MERCHANDISING_BANNERS/IMAGES/MERCH/2024/7/2/6ef07bda-b707-48ea-9b14-2594071593d1_Biryani.png",
-//     "action": {
-//         "link": "https://www.swiggy.com/collections/83639?collection_id=83639&search_context=biryani&tags=layout_CCS_Biryani&type=rcv2",
-//         "text": "Biryani",
-//         "type": "WEBLINK"
-//     },
-//     "entityType": "BANNER",
-//     "accessibility": {
-//         "altText": "restaurants curated for biryani",
-//         "altTextCta": "open"
-//     },
-//     "entityId": "swiggy://collectionV2?collection_id=83639&tags=layout_CCS_Biryani&search_context=biryani",
-//     "frequencyCapping": {},
-//     "externalMarketing": {}
-//}

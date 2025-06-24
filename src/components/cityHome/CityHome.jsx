@@ -85,14 +85,9 @@ const MainContent = ({ data }) => {
         <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-24 md:pt-28 overflow-x-hidden max-md:px-1.5">
             {/* /Banner Image */}
 
-            <div id="banner" className="relative mt-0.5 md:mt-1 mb-8 overflow-auto">
-                <img
-                    src="/images/food-banner.jpg"
-                    alt="page banner image"
-                    className="w-full object-cover rounded-3xl md:h-[50vh] h-[30vh] "
-                />
-                <h1 className="absolute top-[65%] md:top-[74%] left-[4%] md:left-[3%] text-white text-2xl md:text-4xl max-md:leading-6">{banner_text}</h1>
-                <h2 className="absolute top-[5%] left-[4%] md:left-[3%] md:text-4xl text-white text-3xl">ZestyEats</h2>
+            <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:bg-right">
+                <h1 className="mt-auto text-white text-2xl md:text-4xl max-md:leading-6 order-2">{banner_text}</h1>
+                <h2 className="md:text-4xl text-white text-3xl order-1 max-md:-mt-2">ZestyEats</h2>
             </div>
 
             {/* Foodie Thoughts */}

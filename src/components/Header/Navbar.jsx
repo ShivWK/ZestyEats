@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { memo, useCallback, useState } from "react";
 
 const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
-  const {lat, lng} = useSelector(selectLatAndLng);
+  const { lat, lng } = useSelector(selectLatAndLng);
   const loggedIn = false;
   const dispatch = useDispatch();
   const [showDrop, setShowDrop] = useState(false);
@@ -27,73 +27,72 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   };
 
   return (
-    <nav>
-      <ul className="flex gap-12 font-[620] items-center justify-evenly text-md">
-        <button
-          onBlur={() => setShowDrop(false)}
-          onClick={() => setShowDrop(!showDrop)}
-          className="group relative cursor-pointer text-xl"
-        >
-          {theme === "Light" ? (
-            <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
-          ) : theme === "Dark" ? (
-            <i class="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
-          ) : (
-            <i class="ri-computer-fill group-hover:text-[#ff5200] active:scale-95"></i>
-          )}
-          {/* <i class="ri-smartphone-line text-2xl"></i> */}
-          <div
-            className="absolute rounded top-[120%] left-1/2 transform -translate-x-1/2 p-1 bg-white shadow-[0_0_5px_1px_#6a7282] text-sm"
-            style={{
-              display: showDrop ? "block" : "none",
-            }}
+    <nav className="max-md:pr-4">
+      <ul className="flex gap-2 md:gap-12 font-[620] items-center justify-evenly text-md">
+        <li>
+          <button
+            onBlur={() => setShowDrop(false)}
+            onClick={() => setShowDrop(!showDrop)}
+            className="group relative cursor-pointer text-xl"
           >
-            <ul className="list-none">
-              <li
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTheme("Light");
-                }}
-                className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
-                style={{
-                  backgroundColor: theme === "Light" ? "#e5e7eb" : "",
-                  color: theme === "Light" ? "black": ""
-                }}
-              >
-                <i className="fa-solid fa-sun "></i>
-                <span>Light</span>
-              </li>
-              <li
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTheme("Dark");
-                }}
-                className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
-                style={{
-                  backgroundColor: theme === "Dark" ? "#e5e7eb" : "",
-                  color: theme === "Dark" ? "black": ""
-                }}
-              >
-                <i className="ri-moon-fill"></i>
-                <span>Dark</span>
-              </li>
-              <li
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTheme("System");
-                }}
-                className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
-                style={{
-                  backgroundColor: theme === "System" ? "#e5e7eb" : "",
-                  color: theme === "System" ? "black": ""
-                }}
-              >
-                <i className="ri-computer-fill"></i>
-                <span>System</span>
-              </li>
-            </ul>
-          </div>
-        </button>
+            {theme === "Light" ? (
+              <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
+            ) : theme === "Dark" ? (
+              <i class="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
+            ) : (
+              <i class="ri-computer-fill group-hover:text-[#ff5200] active:scale-95"></i>
+            )}
+            {/* <i class="ri-smartphone-line text-2xl"></i> */}
+            <div
+              className="absolute rounded top-[120%] left-1/2 transform -translate-x-1/2 p-1 bg-white shadow-[0_0_5px_1px_#6a7282] text-sm"
+              style={{
+                display: showDrop ? "block" : "none",
+              }}
+            >
+              <ul className="list-none">
+                <li
+                  onClick={(e) => {
+                    setTheme("Light");
+                  }}
+                  className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                  style={{
+                    backgroundColor: theme === "Light" ? "#e5e7eb" : "",
+                    color: theme === "Light" ? "black" : ""
+                  }}
+                >
+                  <i className="fa-solid fa-sun "></i>
+                  <span>Light</span>
+                </li>
+                <li
+                  onClick={(e) => {
+                    setTheme("Dark");
+                  }}
+                  className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                  style={{
+                    backgroundColor: theme === "Dark" ? "#e5e7eb" : "",
+                    color: theme === "Dark" ? "black" : ""
+                  }}
+                >
+                  <i className="ri-moon-fill"></i>
+                  <span>Dark</span>
+                </li>
+                <li
+                  onClick={(e) => {
+                    setTheme("System");
+                  }}
+                  className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                  style={{
+                    backgroundColor: theme === "System" ? "#e5e7eb" : "",
+                    color: theme === "System" ? "black" : ""
+                  }}
+                >
+                  <i className="ri-computer-fill"></i>
+                  <span>System</span>
+                </li>
+              </ul>
+            </div>
+          </button>
+        </li>
         {showAbout && (
           <NavItem to="about" icon={"fa-utensils text-lg"} text="About" />
         )}
@@ -122,7 +121,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             className="group flex items-center justify-between gap-3 hover:cursor-pointer :hover:font-[#ff5200]"
           >
             <i className="fas fa-sign-in text-lg group-hover:text-[#ff5200]"></i>
-            <span className="relative group-hover:text-[#ff5200]">Sign In</span>
+            <span className="relative group-hover:text-[#ff5200] hidden md:block">Sign In</span>
           </button>
         )}
         {showCart && (

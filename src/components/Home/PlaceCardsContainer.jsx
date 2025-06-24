@@ -9,12 +9,12 @@ const PlaceCardsContainer = memo(({ data, heading = null }) => {
   const [shownPlaces, setShownPlaces] = useState([]);
 
   useEffect(() => {
-    setShownPlaces(data.slice(0, 15));
+    setShownPlaces(data.slice(0, 11));
   }, []);
 
   const handleShowMore = useCallback(() => {
     setShownPlaces((prv) => {
-     return [...prv, ...data.slice(15)];
+     return [...prv, ...data.slice(11)];
     });
   }, [data, setShownPlaces]);
 

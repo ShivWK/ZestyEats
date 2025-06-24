@@ -7,14 +7,14 @@ const NavItem = memo(
       <li>
         <NavLink
           to={to}
-          className="group flex items-center justify-between gap-3 hover:cursor-pointer active:scale-95"
+          className={`group flex items-center justify-between gap-3 hover:cursor-pointer active:scale-95 ${(text === "Help" || text === "About" || text === "Cart") && "max-md:hidden"}`}
           style={({ isActive }) => {
             if (isActive) return { color: "#ff5200" };
           }}
           onClick={onClick}
         >
           <i className={`fa-solid ${icon} group-hover:text-[#ff5200]`}></i>
-          <span className="relative group-hover:text-[#ff5200]">
+          <span className="relative group-hover:text-[#ff5200] hidden md:block">
             {text}
             {superScript ? (
               <sup className="text-primary text-[10px] ml-0.5 absolute top-1 font-extrabold">

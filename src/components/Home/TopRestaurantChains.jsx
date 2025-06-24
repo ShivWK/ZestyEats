@@ -16,6 +16,7 @@ const TopRestaurantChains = ({ data, heading = null }) => {
       dataToMap={mainData}
       Card={Cards}
       scrollMargin="20"
+      autoScrollWidth="260"
     />
   );
 };

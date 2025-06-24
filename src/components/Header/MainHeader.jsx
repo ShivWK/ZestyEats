@@ -10,7 +10,7 @@ export default function MainHeader({
 }) {
   return (
     <header>
-      <div className="mx-auto h-20 w-full max-w-[1210px] flex justify-between items-center">
+      <div className="md:mx-auto h-16 md:h-20 w-full md:max-w-[1210px] flex justify-between items-center">
         <Logo searchPlaceholder={searchPlaceholder}/>
         <Navbar showAbout={showAbout} showSearch={showSearch} showOffers={showOffers} showCart={showCart} />
       </div>
