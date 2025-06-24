@@ -28,19 +28,19 @@ const Logo = memo(({ searchPlaceholder }) => {
   }
 // 
   return (
-    <div className="flex gap-1.5 md:gap-6 items-center">
+    <div className="flex gap-1.5 md:gap-6 items-center max-md:pt-2">
       <NavLink to="/" className={`active:scale-95 ${ location === "/" && "max-md:hidden"}`}>
         <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-in-out max-md:h-12 max-md:w-12 rounded-md outline-none border-none shrink-0" />
       </NavLink>
 
       {searchPlaceholder ? (
-        <p className="flex items-center font-bold text-xl max-w-78 truncate"><span className="truncate">
+        <p className="flex items-center font-bold text-xl max-w-72 md:max-w-80 truncate"><span className="truncate">
           {searchPlaceholder}</span></p>
       ) : (
         <button
           onMouseEnter={hoverHandler}
           onClick={handleClick}
-          className="group flex max-md:flex-col items-center gap-0 md:gap-2 cursor-pointer max-md:pt-2"
+          className="group flex max-md:flex-col items-center gap-0 md:gap-2 cursor-pointer "
         >
           <span className="font-[750] max-md:self-start max-md:text-sm underline underline-offset-8 max-md:underline-offset-4 decoration-2 group-hover:text-[#ff5200]">
             {yourCurrentCity ? yourCurrentCity : "Location"}
