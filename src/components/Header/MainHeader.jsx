@@ -9,8 +9,8 @@ export default function MainHeader({
   showCart = true,
 }) {
   return (
-    <header>
-      <div className="md:mx-auto h-16 md:h-20 w-full md:max-w-[1210px] flex justify-between items-center">
+    <header> className="w-full md:max-w-[1210px] px-4 md:px-0 mx-auto flex justify-between items-center h-16 md:h-20 border-2"
+      <div className="mx-auto h-16 md:h-20 w-full md:max-w-[1210px] flex justify-between items-center border-2 ">
         <Logo searchPlaceholder={searchPlaceholder}/>
         <Navbar showAbout={showAbout} showSearch={showSearch} showOffers={showOffers} showCart={showCart} />
       </div>

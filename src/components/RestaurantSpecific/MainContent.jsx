@@ -75,7 +75,7 @@ const MainContent = ({ data, routes = true }) => {
   });
 
   return (
-    <div className="flex items-center flex-col pt-16 md:pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px] scroll-smooth" style={{overflow: showMenu ? "hidden" : "auto"}}>
+    <div className="flex items-center flex-col pt-18 md:pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px] scroll-smooth" style={{overflow: showMenu ? "hidden" : "auto"}}>
       {routes && (
         <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
           <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"} />
