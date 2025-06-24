@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useLocation } from "react-router-dom";
 import { memo } from "react";
 import { setLocationModal, setLocationHovered, setHideLocation, setHideLogin } from "../../features/Login/loginSlice";
 
@@ -14,6 +15,7 @@ const Logo = memo(({ searchPlaceholder }) => {
   const yourCurrentCity = useSelector(selectYourCurrentCity);
   const searchedCity = useSelector(selectSearchedCity);
   const searchedCityAddress = useSelector(selectSearchedCityAddress);
+  const location = useLocation().pathname;
 
   const handleClick = () => {
     dispatch(setHideLocation(false));
@@ -27,7 +29,7 @@ const Logo = memo(({ searchPlaceholder }) => {
 
   return (
     <div className="flex gap-1.5 md:gap-6 max-md:pt-1">
-      <NavLink to="/" className="active:scale-95 max-md:hidden">
+      <NavLink to="/" className={`active:scale-95 ${ location === "/" && "max-md:hidden"}`}>
         <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-in-out rounded-md outline-none border-none" />
       </NavLink>
 

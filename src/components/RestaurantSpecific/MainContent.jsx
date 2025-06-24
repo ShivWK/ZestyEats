@@ -27,11 +27,9 @@ const MainContent = ({ data, routes = true }) => {
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1) || [];
   
   const menuModel = useSelector(selectMenuModel);
-  const menuItems = useSelector(selectMenuItems)
 
   useEffect(() => {
     dispatch(addCurrentRestaurant(title));
-    console.log(menuItems)
   }, []);
 
   const topPicks = useMemo(

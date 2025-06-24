@@ -19,7 +19,7 @@ const Cards = memo(({ data, from }) => {
   // const imageUrl = `/images/image.png`;
 
   const handleClick = () => {
-    dispatch(addCurrentRestaurant(data?.name));
+    dispatch(addCurrentRestaurant("Restaurant"));
     dispatch(setMenuItems({ mode: "empty" }));
   };
 
