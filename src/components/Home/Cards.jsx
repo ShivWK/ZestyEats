@@ -64,7 +64,7 @@ const Cards = memo(({ data, from }) => {
         </div>
       </div>
       <div className="mt-2 w-[95%] max-md:basis-1/2 max-md:py-2">
-        <p className="font-bold text-[17px]">{data?.name || ""}</p>
+        <p className="font-bold text-[17px] line-clamp-3">{data?.name || ""}</p>
         <div className="flex gap-1 items-center -mt-0.5">
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
           <p className="font-semibold">{data?.avgRatingString || ""}</p>
