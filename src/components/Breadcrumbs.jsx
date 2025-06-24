@@ -8,28 +8,28 @@ const Breadcrumbs = ({ textColor, mainTextColor }) => {
 
   const clickHandler = (backstage, index, lastIndex) => {
     if (index !== lastIndex) {
-        navigate(backstage);
+      navigate(backstage);
     }
   }
 
   return (
-    <div className="inline-flex gap-2 items-center">
+    <div className="inline-flex gap-2 items-center flex-wrap">
       {pathHistory.map((path, index, arr) => {
         const lastIndex = arr.length - 1;
         const backstage = index + 1 - arr.length;
-//"#101828", "#4a5565"
+        //"#101828", "#4a5565"
         return (
-          <span key={index} className="flex gap-2 items-center">
+          <span key={index} className="flex flex-wrap gap-2 items-center shrink-0 whitespace-nowrap ">
             <button
-            onClick={() => clickHandler(backstage, index, lastIndex)}
-            style={{ color: index === lastIndex ? mainTextColor : textColor }}
-            className={`${index !== lastIndex && "cursor-pointer"}`}
-          >
-            {path}
-          </button>
-          {index !== lastIndex && (
-            <span className="font-bold">/</span>
-          ) }
+              onClick={() => clickHandler(backstage, index, lastIndex)}
+              style={{ color: index === lastIndex ? mainTextColor : textColor }}
+              className={`${index !== lastIndex && "cursor-pointer"}`}
+            >
+              {path}
+            </button>
+            {index !== lastIndex && (
+              <span className="font-bold">/</span>
+            )}
           </span>
         );
       })}

@@ -28,7 +28,7 @@ const Logo = memo(({ searchPlaceholder }) => {
   }
 
   return (
-    <div className="flex gap-1.5 md:gap-6 max-md:pt-1">
+    <div className="flex gap-1.5 md:gap-6">
       <NavLink to="/" className={`active:scale-95 ${ location === "/" && "max-md:hidden"}`}>
         <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-in-out rounded-md outline-none border-none" />
       </NavLink>

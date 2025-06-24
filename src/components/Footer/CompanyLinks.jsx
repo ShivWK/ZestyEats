@@ -27,7 +27,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
           className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100 w-fit"
           style={{ borderColor: isOpen ? "black" : "#6a7282" }}
         >
-          <p className="font-normal text-sm text-gray-900 whitespace-nowrap">
+          <p className="font-normal text-lg md:text-sm text-gray-900 whitespace-nowrap">
             {remainingCities} cities
           </p>
           <i

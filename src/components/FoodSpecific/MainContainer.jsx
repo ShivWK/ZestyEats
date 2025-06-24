@@ -27,7 +27,7 @@ const MainContainer = ({ data }) => {
   }, []);
 
   return ( cards ?
-    <div className="flex flex-col gap-5 w-full md:max-w-[1210px] md:pt-32 pt-20 p-3 mx-auto pb-16">
+    <div className="flex flex-col gap-5 w-full md:max-w-[1210px] md:pt-32 pt-24 p-3 mx-auto pb-16">
       <div>
         <BreadcrumbsWrapper
           normalTextColor={"#4a5565"}

@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import BreadcrumbsWrapper from "./BreadcrumbsWrapper";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const SearchContainer = ({
   placeholder,
@@ -10,9 +12,14 @@ const SearchContainer = ({
 }) => {
   const navigate = useNavigate();
 
+  const [searchParams] = useSearchParams();
+  const nameRef = useRef(searchParams.get("name"));
+
+  console.log(nameRef.current)
+
   return (
-    <div className="pt-20 w-full md:max-w-[850px] mx-auto min-h-[105vh] bg-white">
-      <div className="fixed bg-white py-3 z-20">
+    <div className="pt-2 w-full max-md:px-2 md:max-w-[850px] mx-auto min-h-[105vh] bg-white">
+      <div className="sticky top-16 bg-white pt-2 z-20">
         <div className="mt-4 mb-5">
           <BreadcrumbsWrapper
             normalTextColor={"#4a5565"}
@@ -20,32 +27,29 @@ const SearchContainer = ({
             delimiterColor={"text-gray-600"}
           />
         </div>
-        <div className="flex w-full items-center gap-1.5 p-2.5 py-1.5 border-b-2 rounded-md bg-gray-200 ">
+        <div id="searchBAr" className="flex w-full items-center gap-1.5 p-2.5 py-1.5 border-b-2 rounded-md bg-gray-200 ">
           <i
             onClick={() => navigate(-1)}
             className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"
           ></i>
-          <div>
             <input
-              className="text-gray-900 py-1.5 px-2 outline-none bg-transparent text-lg font-semibold"
+              className="text-gray-900 py-1.5 px-2 outline-none bg-transparent text-lg font-semibold basis-[95%]"
               type="text"
-              size={79}
               value={searchTerm}
               onChange={handleSearch}
               placeholder={placeholder}
             />
-          </div>
           {searchTerm !== "" ? (
             <i
               onClick={crossHandler}
-              className="ri-close-large-fill text-xl cursor-pointer"
+              className="ri-close-large-fill text-2xl cursor-pointer"
             ></i>
           ) : (
-            <i className="ri-search-2-line text-xl cursor-pointer"></i>
+            <i className="ri-search-2-line text-2xl cursor-pointer"></i>
           )}
         </div>
       </div>
-      <div className="p-2 mt-28">{<Child />}</div>
+      <div className="">{<Child />}</div>
     </div>
   );
 };

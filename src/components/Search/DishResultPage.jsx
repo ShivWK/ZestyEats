@@ -41,14 +41,14 @@ const Card = ({ data, lat, lng }) => {
     };
 
     return (
-        <div className="basis-[49%] pb-1 border-2 border-gray-300 rounded-md bg-white">
+        <div className="max-md:basis-full md:basis-[49%] pb-1 border-2 border-gray-300 rounded-md bg-white">
             <NavLink
                 to={path}
                 onClick={() => handleClick(restroData?.name)}
                 className="flex group justify-between  p-3 w-full cursor-pointer"
             >
                 <div>
-                    <p className="font-bold text-gray-800 w-64 overflow-hidden">
+                    <p className="font-bold text-gray-800 md:w-64 overflow-hidden">
                         {restroData?.name}
                     </p>
                     <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
@@ -102,8 +102,8 @@ const Card = ({ data, lat, lng }) => {
                             <polygon points="50,20 78.86,70 21.14,70" fill="red" />
                         </svg>
                     )}
-                    <div className="w-48">
-                        <p className="leading-5 tracking-tight font-bold">
+                    <div className="w-[100%]">
+                        <p className="leading-5 line-clamp-2 tracking-tight font-bold">
                             {disData?.name}
                         </p>
                     </div>

@@ -34,7 +34,7 @@ const SearchResult = () => {
 
   return (
     <div>
-      <div className="flex gap-3 py-3 w-full fixed z-20 bg-white">
+      <div className="sticky top-[178px] flex gap-3 py-3 w-full z-20 bg-white">
         <NavLink
           to={restroPath}
           onClick={(e) => clickHandler(e, "Restaurant")}

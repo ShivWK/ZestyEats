@@ -17,11 +17,11 @@ const MainContent = ({ data }) => {
   const itemCards = cards?.[1]?.card?.card?.imageGridCards?.info;
 
   return (
-    <div className="flex flex-col mx-auto gap-5 mt-4">
+    <div className="flex flex-col mx-auto gap-5 mt-16">
       {itemCards.length > 0 && (
         <>
           <h1>Popular Cuisines</h1>
-          <div className="flex w-fit flex-wrap gap-3">
+          <div className="flex w-fit flex-wrap justify-evenly">
             {itemCards.map((item) => {
               const queryObj = new URL(item?.action?.link).searchParams;
               const path = `suggestions?lat=${lat}&lng=${lng}&food=${queryObj.get(
@@ -31,7 +31,7 @@ const MainContent = ({ data }) => {
                 <NavLink
                   key={item.id}
                   to={path}
-                  className="shimmerBg h-40 w-32 rounded-xl shrink-0"
+                  className="shimmerBg md:h-[160px] w-[130px] rounded-xl shrink-0"
                 >
                   <img
                     src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/${item?.imageId}`}

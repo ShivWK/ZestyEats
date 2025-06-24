@@ -4,7 +4,7 @@ const Ui4Shimmer = () => {
     return <div className="flex gap-2 flex-wrap pt-18">
         {arr.map(i => {
         return <div key={i}
-            className="flex basis-[49%] w-1/2 pt-3 px-2 gap-3 cursor-pointer bg-white pb-8 border-[1px] border-gray-300 shrink-0"
+            className="flex basis-full md:basis-[49%] w-1/2 pt-3 px-2 gap-3 cursor-pointer bg-white pb-8 border-[1px] border-gray-300 shrink-0"
         >
             <div className="object-cover h-28 w-[100px] rounded-md shimmerBg" />
             <div className="flex gap-1 justify-center flex-col">

@@ -2,7 +2,7 @@ const Ui2Shimmer = () => {
     const arr = Array.from({ length: 10 }, (_, i) => i);
 
     return <>
-        <div className="p-2">
+        <div className="p-2 mt-14">
             {arr.map((item) => {
                 return (
                     <div key={item} className="flex gap-4 my-2 p-2 border-2 border-gray-300 rounded">
