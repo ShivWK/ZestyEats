@@ -34,7 +34,7 @@ const Logo = memo(({ searchPlaceholder }) => {
       </NavLink>
 
       {searchPlaceholder ? (
-        <p className="flex items-center font-bold text-xl w-80"><span className="truncate">
+        <p className="flex items-center font-bold text-xl border-2 max-w-80"><span className="truncate">
           {searchPlaceholder}</span></p>
       ) : (
         <button
