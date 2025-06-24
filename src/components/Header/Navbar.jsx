@@ -27,8 +27,8 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   };
 
   return (
-    <nav className="max-md:pr-2">
-      <ul className="flex gap-2 md:gap-12 font-[620] items-center justify-evenly text-md">
+    <nav className="max-md:pr-1.5">
+      <ul className="flex gap-1.5 md:gap-12 font-[620] items-center justify-evenly text-md">
         <li>
           <button
             onBlur={() => setShowDrop(false)}

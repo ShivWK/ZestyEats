@@ -29,7 +29,7 @@ const Logo = memo(({ searchPlaceholder }) => {
 // 
   return (
     <div className="flex gap-1.5 md:gap-6 items-center">
-      <NavLink to="/" className={`active:scale-95 shrink-0 ${ location === "/" && "max-md:hidden"}`}>
+      <NavLink to="/" className={`active:scale-95 shrink-0`}>
         <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-in-out max-md:h-12 max-md:w-12 rounded-md outline-none border-none " />
       </NavLink>
 
@@ -40,19 +40,19 @@ const Logo = memo(({ searchPlaceholder }) => {
         <button
           onMouseEnter={hoverHandler}
           onClick={handleClick}
-          className="group flex max-md:flex-col items-center gap-0 md:gap-2 cursor-pointer "
+          className="group flex max-md:flex-col max-md:justify-center items-center gap-0 md:gap-2 cursor-pointer max-md:mt-2"
         >
           <span className="font-[750] max-md:self-start max-md:text-sm underline underline-offset-8 max-md:underline-offset-4 decoration-2 group-hover:text-[#ff5200]">
             {yourCurrentCity ? yourCurrentCity : "Location"}
           </span>
 
-          <div className="flex gap-2 items-center justify-center max-md:-mt-1">
-            <span className="max-w-48 md:max-w-52 truncate text-start font-medium text-gray-600 max-md:text-sm ">
+          <div className="flex gap-0 md:gap-2 items-center justify-center max-md:-mt-1">
+            <span className="max-w-48 md:max-w-52 truncate text-start font-medium text-gray-600 max-md:text-sm">
             {yourCurrentCity
               ? `${searchedCityAddress}`
               : `${searchedCity}${searchedCityAddress}`}
           </span>
-          <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5"></i>
+          <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-3 md:-ml-2.5 "></i>
           </div>
         </button>
       )}
