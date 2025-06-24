@@ -27,7 +27,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   };
 
   return (
-    <nav className="max-md:pr-4">
+    <nav className="max-md:pr-3">
       <ul className="flex gap-2 md:gap-12 font-[620] items-center justify-evenly text-md">
         <li>
           <button
