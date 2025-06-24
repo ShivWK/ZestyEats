@@ -9,11 +9,12 @@ const HeaderWrapper = ({ children }) => {
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel);
+  const isLargeScreen = window.innerWidth >= 768;
 
   return (
     <div
       className="w-full shadow-[0_0_20px_1px_rgb(0,0,0,0.3)] max-md:px-1.5 h-16 md:h-20 fixed z-30 bg-white"
-      style={{ paddingRight: isLocationOpen || isLoginOpen ? 15 : 0 }}
+      style={{ paddingRight: (isLocationOpen || isLoginOpen) ? (isLargeScreen ? 15 : 0) : 0 }}
     >
       {children}
     </div>

@@ -151,25 +151,28 @@ export default function Layout() {
 
   useEffect(() => {
     const scrollbarWidth = "15px";
-
     const body = document.body;
 
-    if (body.clientHeight >= body.scrollHeight) {
-      body.style.paddingRight = "15px";
-    }
+    const isLargeScreen = window.innerWidth >= 768;
 
-    if (isLoginOpen || isLocationOpen) {
-      body.classList.add("overflow-hidden");
-      body.style.paddingRight = scrollbarWidth;
-    } else {
-      body.classList.remove("overflow-hidden");
-      body.style.paddingRight = "0px";
+    if (isLargeScreen) {
+      if (body.clientHeight >= body.scrollHeight) {
+        body.style.paddingRight = "15px";
+      }
+
+      if (isLoginOpen || isLocationOpen) {
+        body.classList.add("overflow-hidden");
+        body.style.paddingRight = scrollbarWidth;
+      } else {
+        body.classList.remove("overflow-hidden");
+        body.style.paddingRight = "0px";
+      }
+      // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
+      return () => {
+        body.classList.remove("overflow-hidden");
+        body.style.paddingRight = "0px";
+      };
     }
-    // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
-    return () => {
-      body.classList.remove("overflow-hidden");
-      body.style.paddingRight = "0px";
-    };
   }, [isLoginOpen, isLocationOpen]);
 
   useEffect(() => {

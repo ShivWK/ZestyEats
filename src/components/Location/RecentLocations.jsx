@@ -84,7 +84,7 @@ const RecentLocations = memo(() => {
   return (
     <div
       ref={containerRef}
-      className="relative border-[1px] border-gray-400 mt-6 p-6 overflow-auto"
+      className="relative border-[1px] border-gray-400 p-3.5 mt-6 md:p-6 overflow-auto"
     >
       <motion.div
         className="fixed top-0 h-2bg-primary left-0 origin-left"

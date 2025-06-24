@@ -79,7 +79,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
   return (
     <div
       onClick={handleLocation}
-      className="group cursor-pointer border-[1px] border-gray-400 py-4 px-7 mt-8"
+      className="group cursor-pointer border-[1px] border-gray-400 py-2 px-3 md:py-4 md:px-7 mt-8"
     >
       <div className="flex gap-2.5">
         <i className="ri-crosshair-2-line text-xl text-gray-500"></i>

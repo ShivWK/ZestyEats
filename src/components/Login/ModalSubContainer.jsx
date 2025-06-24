@@ -32,7 +32,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
   };
 
   return (
-    <div className="w-[80%] h-auto mt-7">
+    <div className="w-[85%] md:w-[80%] h-auto mt-7">
       <button
         className="group cursor-pointer mb-4"
         onClick={isLoginOtpSend || isSigUpOtpSend ? handleBack : handleClose}
@@ -95,9 +95,9 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
       </div>
       {children}
       <button
-        className="absolute mt-8 left-[50%] transform -translate-1/2 text-center text-lg font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-2 py-1 active:scale-95 transition-all duration-150 ease-in-out"
+        className="absolute mt-16 left-[50%] transform -translate-1/2 text-center text-lg font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1.5 active:scale-95 transition-all duration-150 ease-in-out"
       >
-        Login/SignUp with Google
+        <p className="whitespace-nowrap">Login/SignUp with Google</p>
       </button>
     </div>
   );

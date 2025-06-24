@@ -74,7 +74,7 @@ const ModalSubContainer = memo(() => {
   return (
     <div
       onClick={handleContainerClick}
-      className="flex flex-col mt-7 w-[75%] h-[90%]"
+      className="flex flex-col mt-7 w-[85%] md:w-[75%] h-[90%]"
     >
       <button
         onClick={handleClose}
@@ -85,7 +85,7 @@ const ModalSubContainer = memo(() => {
       {/* Search locations */}
       <div
         onClick={handleDivClick}
-        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-3 cursor-text ${
+        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-1.5 md:p-3 cursor-text ${
           Focused && "shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]"
         }`}
       >
@@ -94,9 +94,8 @@ const ModalSubContainer = memo(() => {
           ref={inputRef}
           value={searchValue}
           onChange={handleInputChange}
-          className="p-0.5 outline-none font-semibold"
+          className="p-0.5 outline-none font-semibold w-[80%] md:w-[82%]"
           placeholder="Search for area, streat name..."
-          size={30}
         />
         {searchValue.length !== 0 && (
           <button
