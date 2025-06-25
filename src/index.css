@@ -95,6 +95,9 @@
     background-color: black;
 }
 
-/* html {
-    overflow-y: scroll;
-} */
+@media screen and (max-width: 768px) {
+    .main-large {
+        height: 8vh;
+        width: 8vh
+    }
+}
