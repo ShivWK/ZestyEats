@@ -28,8 +28,9 @@ const Home = memo(() => {
   const onlineDeliveryRestaurantData = useSelector(selectOnlineDeliveryRestaurants);
   const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
   const isLoadingMain = useSelector(selectIsLoading);
-  const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const city = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
+
+  const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
 
   const getPlaceCardsPath = data => {
     const pathname = new URL(data.link).pathname;
@@ -48,7 +49,7 @@ const Home = memo(() => {
     </>
 
   ) : (
-    <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-24 md:pt-26 overflow-x-hidden max-md:px-1.5">
+    <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-[88px] md:pt-26 overflow-x-hidden max-md:px-1.5">
 
 {/* Foodie thoughts */}
 
@@ -68,8 +69,8 @@ const Home = memo(() => {
           <section className="w-full max-w-[1040px] mx-auto">
             <Suspense
               fallback={
-                <div className="flex justify-between">
-                  {shimmerArray.map(i => <div key={i} className="w-60 h-44 rounded-xl shimmerBg" />)}
+                <div className="flex justify-between max-md:gap-3 overflow-hidden max-md:px-1.5">
+                  {shimmerArray.map(i => <div key={i} className="w-48 md:w-60 h-36 rounded-xl shimmerBg shrink-0" />)}
                 </div>
               }
             >
@@ -87,8 +88,8 @@ const Home = memo(() => {
           <section className="w-full">
             <Suspense
               fallback={
-                <div className="flex justify-between">
-                  {shimmerArray.map(i => <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />)}
+                <div className="flex justify-between md:flex-row flex-col max-md:gap-2 max-md:px-1.5">
+                  {shimmerArray.map(i => <div key={i} className="w-full md:w-60 h-40 md:h-44 rounded-xl shimmerBg shrink-0" />)}
                 </div>
               }
             >
@@ -110,7 +111,7 @@ const Home = memo(() => {
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">
-                  {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
+                  {shimmerArray.map(i => <div key={i} className="w-[98px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg" />)}
                 </div>
               }
             >

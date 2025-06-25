@@ -45,7 +45,7 @@ const HomeShimmer = () => {
             <hr className="text-gray-300 my-2" />
             <div className="flex justify-around gap-x-4 gap-y-4 md:gap-y-5 flex-wrap max-md:px-3">
                 {bestPlaces.map((i) => (
-                    <div key={i} className="w-24 h-10 md:w-60 md:h-20 rounded-xl shimmerBg shrink-0"></div>
+                    <div key={i} className="w-[98px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg shrink-0"></div>
                 ))}
             </div>
             <hr className="text-gray-300 my-3" />
