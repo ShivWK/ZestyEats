@@ -42,7 +42,7 @@ const Home = memo(() => {
   return isLoadingMain ? (
     <>
       <Loader size={"large"} />
-      <div className="w-full max-w-[1070px] mx-auto">
+      <div className="w-full md:max-w-[1070px] mx-auto">
         <HomeShimmer />
       </div>
     </>
