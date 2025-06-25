@@ -6,10 +6,11 @@ import {
   useLoaderData,
   useSearchParams,
 } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import Ui4Shimmer from "./Ui4Shimmer";
 
 const Card = ({ data, lat, lng }) => {
+  const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/${data?.cloudinaryImageId}`;
   const path = `/restaurantSpecific/${lat}/${lng}/${data?.id}/${data?.name}`;
@@ -27,11 +28,12 @@ const Card = ({ data, lat, lng }) => {
     >
       <div className="relative shrink-0">
         <img
-          src={imageUrl}
+          src={ isError ? "/images/fallback.png" : imageUrl}
           alt="dish image"
           className="object-cover h-28 rounded-md"
           height={90}
           width={100}
+          onError={() => setIsError(true)}
         />
         {data?.aggregatedDiscountInfoV3 && (
           <div className="absolute top-[80%] left-1/2 transform -translate-x-1/2 gap-0 bg-white flex flex-col justify-center items-center px-1.5 py-0.5 text-sm rounded-md max-w-[100%] shadow-[0_0_10px_1px_#1e2939] max-md:text-sm">
@@ -50,7 +52,7 @@ const Card = ({ data, lat, lng }) => {
         </p>
         <div className="flex max-md:items-start flex-col md:flex-row gap-1 items-center text-gray-500 font-semibold text-sm">
           <div className="flex flex-row gap-1 items-center">
-            <i className="ri-star-fill" />
+            <i className="ri-star-fill text-green-700 mb-0.5" />
             <p>{data?.avgRating}</p>
             <p>•</p>
             <p>{data?.sla?.slaString}</p>

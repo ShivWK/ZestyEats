@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const restaurantSlice = createSlice({
   name: "restaurant",
@@ -36,9 +36,14 @@ const restaurantSlice = createSlice({
 
     setMenuItems: (state, action) => {
       if (action.payload.mode === "empty") {
-        return state.menuItems = [];
+        // never use return state in immer js, don’t return a value unless you are replacing the entire state slice
+        state.menuItems = [];
+      } else {
+        const object = state.menuItems.find(obj => obj.title === action.payload.title)
+        if (!object) {
+          state.menuItems.push(action.payload);
+        }
       }
-      state.menuItems.push(action.payload.title);
     },
 
     toggleMenuModel: (state) => {
@@ -50,10 +55,9 @@ const restaurantSlice = createSlice({
 export default restaurantSlice.reducer;
 
 export const selectCurrentRestaurant = (state) => state.restaurant.currentSpecificRestaurant;
-export const selectVegOption = (state) => state.restaurant.veg;
-export const selectNonVegOption = (state) => state.restaurant.non_veg;
 export const selectMenuItems = (state) => state.restaurant.menuItems;
 export const selectMenuModel = (state) => state.restaurant.menuModel;
+export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({vegOption: veg, nonVegOption: non_veg}))
 
 
 export const {

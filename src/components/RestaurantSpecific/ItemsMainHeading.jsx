@@ -2,9 +2,8 @@ import { useState, memo, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ItemsSubHeading from "./ItemsSubHeading";
 import {
-  selectVegOption,
-  selectNonVegOption,
-  setMenuItems
+  setMenuItems,
+  selectVegVariant
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
 
@@ -24,8 +23,8 @@ const ItemsMainHeading = ({
   let toDecreaseForNonVeg = 0;
   let toDecreaseForVeg = 0;
 
-  const vegOption = useSelector(selectVegOption);
-  const nonVegOption = useSelector(selectNonVegOption);
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant)
+
   const handleClick = () => {
     setIsOpen(!isOpen);
   };
@@ -34,11 +33,20 @@ const ItemsMainHeading = ({
     const initialCount = items
       ? items.length
       : categories
-      ? categories.length
-      : 0;
+        ? categories.length
+        : 0;
     setCount(initialCount);
 
-    dispatch(setMenuItems({title: heading}));
+    let nonVeg = false;
+    let veg = false;
+
+    if (categories) {
+      const categoryLength = categories?.length;
+      if (toDecreaseForNonVeg === categoryLength) nonVeg = true;
+      if (toDecreaseForVeg === categoryLength) veg = true;
+    }
+
+    dispatch(setMenuItems({ title: heading, veg, nonVeg }));
   }, []);
 
   useEffect(() => {
@@ -50,7 +58,7 @@ const ItemsMainHeading = ({
       setCount(prev => prev - toDecreaseForNonVeg);
     } else if (nonVegOption && !vegOption) {
       setCount(prev => prev - toDecreaseForVeg);
-    } 
+    }
 
   }, [vegOption, nonVegOption]);
 
@@ -86,9 +94,9 @@ const ItemsMainHeading = ({
             }}
           >
             {categories.map((category, index) => {
-                const countLength = category?.itemCards.length;
-                let vegCount = 0;
-                let nonVegCount = 0;
+              const countLength = category?.itemCards.length;
+              let vegCount = 0;
+              let nonVegCount = 0;
 
               category?.itemCards.forEach(element => {
                 if (element?.card?.info?.itemAttribute?.vegClassifier === "VEG") {
@@ -99,9 +107,9 @@ const ItemsMainHeading = ({
               });
 
               if (countLength === vegCount) {
-                toDecreaseForVeg = toDecreaseForVeg + 1;
+                toDecreaseForVeg += 1;
               } else if (countLength === nonVegCount) {
-                toDecreaseForNonVeg = toDecreaseForNonVeg + 1;
+                toDecreaseForNonVeg += 1;
               }
 
               return <ItemsSubHeading
@@ -137,7 +145,7 @@ const ItemsMainHeading = ({
             }}
           >
             {items.map((item) => (
-              <ItemsCardContainer key={item?.card?.info?.id} item={item?.card?.info} isParentOpen={isOpen}/>
+              <ItemsCardContainer key={item?.card?.info?.id} item={item?.card?.info} isParentOpen={isOpen} />
             ))}
           </div>
         </div>

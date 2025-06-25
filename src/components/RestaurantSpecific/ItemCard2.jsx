@@ -4,16 +4,23 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
   const [isError, setIsError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [overFlow, setOverFlow] = useState(false);
+  const [paraSize, setParaSize] = useState(0);
   const [wishlistAdded, setWishlistAdded] = useState(false);
   const containerRef = useRef(null);
+  const paraRef = useRef(null);
 
   useEffect(() => {
-    // setTimeout(() => {
-    const ele = containerRef.current;
-    if (ele) {
-      setOverFlow(ele.scrollHeight > ele.clientHeight);
-    }
-    // }, 50)
+    setTimeout(() => {
+      const ele = containerRef.current;
+      if (ele) {
+        setOverFlow(ele.scrollHeight > ele.clientHeight);
+      }
+
+      if (paraRef.current) {
+        const size = paraRef.current.scrollHeight;
+        setParaSize(size);
+      }
+    }, 100)
   }, [isParentOpen, isOpen]);
 
   // when parent compo has display none that time the card's scrollHeight and clientHeight bot are 0 they don't render so we need to check it when parent is opened
@@ -89,20 +96,20 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
         )}
         <div
           ref={containerRef}
-          className="relative overflow-clip"
+          className="relative transition-all duration-100 ease-linear overflow-hidden"
           style={{
-            maxHeight: isOpen ? "200px" : "42px",
+            height: isOpen ?  `${paraSize}px` ?? "200px" : "42px",
           }}
         >
-          <p className="text-black text-sm text-wrap">{item?.description}</p>
+          <p ref={paraRef} className="text-black text-sm text-wrap">{item?.description}</p>
         </div>
-        {overFlow && (
+        {(overFlow && !isOpen) && (
           <span
             className="inline-flex w-fit gap-2 items-center font-bold text-gray-600 cursor-pointer -mt-3"
             onClick={() => setIsOpen(!isOpen)}
           >
             ...more
-            <i className="inline ri-arrow-down-s-fill text-[#ff5200] text-2xl font-[200] -ml-2.5"></i>
+            <i className={`inline ri-arrow-down-s-fill text-[#ff5200] text-2xl font-[200] transform transition-transform duration-100 ease-in -ml-2.5 mt-1`}></i>
           </span>
         )}
       </div>

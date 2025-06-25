@@ -3,16 +3,14 @@ import { useDispatch , useSelector } from "react-redux";
 import {
   setVegOption,
   setNonVegOption,
-    selectVegOption,
-    selectNonVegOption,
+  selectVegVariant
 } from "../../features/home/restaurantsSlice";
 
 const SortingButtons = () => {
     const [veg, setVeg] = useState(false);
     const [nonVeg, setNonVeg] = useState(false);
   const dispatch = useDispatch();
-  const vegOption = useSelector(selectVegOption);
-  const nonVegOption = useSelector(selectNonVegOption);
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
 
   return (
     <div className="w-full max-w-[775px] mt-2 flex gap-3 items-center">

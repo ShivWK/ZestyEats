@@ -1,8 +1,7 @@
 import { memo, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectVegOption,
-  selectNonVegOption,
+  selectVegVariant
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
 
@@ -12,8 +11,10 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
   const initialRender = itemCards ? itemCards.length > 0 : false;
   const [shouldRender, setShouldRender] = useState(initialRender);
   const contentRef = useRef(null);
-  const vegOption = useSelector(selectVegOption);
-  const nonVegOption = useSelector(selectNonVegOption);
+  // const vegOption = useSelector(selectVegOption);
+  // const nonVegOption = useSelector(selectNonVegOption);
+
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant)
 
   const handleClick = (e) => {
     e.stopPropagation();

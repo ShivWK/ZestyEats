@@ -132,8 +132,8 @@ export default function Layout() {
         // console.log(decodeURIComponent(item).split("/")[5])
         return decodeURIComponent(item).split("/")[5];
       } else if (item === "/search/suggestions") return "Suggestions";
-      else if (item === "/search/searchResult/dishPage") return "Dish Page";
-      else if (item === "/search/searchResult/restaurantPage") return "Restaurant Page";
+      else if (item === "/search/searchResult/dishPage") return "Dishes";
+      else if (item === "/search/searchResult/restaurantPage") return "Restaurants";
       return item;
     });
 
