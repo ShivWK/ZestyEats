@@ -17,7 +17,7 @@ const restaurantSlice = createSlice({
     },
 
     setVegOption: (state, action) => {
-      // console.log("reducer veg", action.payload);
+      console.log("reducer veg", action.payload);
 
       if (action.payload) {
         state.veg = true;
@@ -28,7 +28,7 @@ const restaurantSlice = createSlice({
     },
 
     setNonVegOption: (state, action) => {
-      // console.log("reducer non", action.payload);
+      console.log("reducer non", action.payload);
 
       if (action.payload) {
         state.non_veg = true;

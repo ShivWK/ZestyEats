@@ -19,7 +19,7 @@ const SearchContainer = ({
 
   return (
     <div className="pt-2 w-full max-md:px-2 md:max-w-[850px] mx-auto min-h-[105vh] bg-white">
-      <div className="sticky top-16 bg-white pt-2 z-20">
+      <div className="sticky top-16 bg-white pt-2 md:pt-8 z-20">
         <div className="mt-4 mb-5">
           <BreadcrumbsWrapper
             normalTextColor={"#4a5565"}

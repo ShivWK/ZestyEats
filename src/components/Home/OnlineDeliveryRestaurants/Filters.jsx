@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectVegVariant, setVegOption, setNonVegOption } from "../../../features/home/restaurantsSlice";
 import VegSvg from "../../../utils/VegSvg";
@@ -9,8 +9,7 @@ const FilterButton = ({ applied, Icon, text, handler }) => {
   return (
     <div
       onClick={handler}
-      className={`flex justify-between gap-2 px-3 h-10 items-center text-sm font-medium text-gray-900 rounded-3xl w-fit border-2 ${!applied ? "bg-gray-200" : "bg-white"
-        } border-gray-300 cursor-pointer hover:bg-gray-200`}
+      className={`flex justify-between gap-2 px-3 h-10 items-center text-sm font-medium text-gray-900 rounded-3xl w-fit border-2 ${applied ?  "bg-white" : "bg-gray-200"} border-gray-300 cursor-pointer `}
     >
       <Icon />
       <p>{text}</p>
@@ -19,7 +18,7 @@ const FilterButton = ({ applied, Icon, text, handler }) => {
   );
 };
 
-const Filter = () => {
+const Filter = memo(({ text1, text2 }) => {
   const { vegOption, nonVegOption } = useSelector(selectVegVariant);
   const [ veg, setVeg ] = useState(vegOption);
   const [ nonVeg, setNonVeg] = useState(nonVegOption);
@@ -27,23 +26,21 @@ const Filter = () => {
   const dispatch = useDispatch()
 
   const vegHandler = () => {
-    const newValue = !veg;
-    setVeg(newValue);
-    dispatch(setVegOption(newValue));
+    setVeg(prv => !prv);
+    dispatch(setVegOption(veg));
   }
 
   const nonVegHandler = () => {
-    const newValue = !nonVeg;
-    setNonVeg(newValue);
-    dispatch(setNonVegOption(newValue));
+    setNonVeg(prv => !prv);
+    dispatch(setNonVegOption(nonVeg));
   }
 
   return (
     <div className="flex gap-2.5 mt-4 w-full">
-      <FilterButton applied={veg} handler={vegHandler} Icon={VegSvg} text="Pure Veg" />
-      <FilterButton applied={nonVeg} handler={nonVegHandler} Icon={NonVegSvg} text="Veg & Non-Veg" />
+      <FilterButton applied={veg} handler={vegHandler} Icon={VegSvg} text={text1} />
+      <FilterButton applied={nonVeg} handler={nonVegHandler} Icon={NonVegSvg} text={text2} />
     </div>)
-}
+})
 
 
 export default Filter;

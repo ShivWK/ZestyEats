@@ -47,7 +47,7 @@ const Logo = memo(({ searchPlaceholder }) => {
           </span>
 
           <div className="flex gap-0 md:gap-2 items-center justify-center max-md:-mt-1">
-            <span className="max-w-44 md:max-w-52 truncate text-start font-medium text-gray-600 max-md:text-sm">
+            <span className="max-w-44 md:max-w-48 truncate text-start font-medium text-gray-600 max-md:text-sm">
             {yourCurrentCity
               ? `${searchedCityAddress}`
               : `${searchedCity}${searchedCityAddress}`}
