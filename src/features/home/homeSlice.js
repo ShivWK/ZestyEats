@@ -3,6 +3,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   lat: 12.9715987,
   lng: 77.5945627,
+  city:"",
   foodieThoughtsData: [],
   topRestaurantsData: [],
   recentLocations: [],
@@ -28,6 +29,10 @@ const homeSlice = createSlice({
       state.lat = action.payload.lat;
       state.lng = action.payload.lng;
     },
+
+    // setCity: (state, action) => {
+    //   state.city = action.payload;
+    // },
 
     setPathHistory: (state, action) => {
       const newPath = action.payload;
@@ -110,6 +115,7 @@ const homeSlice = createSlice({
       )?.card?.card?.header?.title;
 
       state.topRestaurantsTitle = title;
+      state.city = title.split(" ").at(-1);
     },
 
     addSearchedCity: (state, action) => {
@@ -130,6 +136,8 @@ const homeSlice = createSlice({
         return item?.card?.card?.id === "popular_restaurants_title";
       })?.card?.card?.title;
       state.onlineDeliveryTitle = title;
+
+      state.city = title.split(" ").at(-1);
     },
 
     addSearchedCityAddress: (state, action) => {
@@ -203,6 +211,7 @@ export const selectLatAndLng = createSelector(
   [(state) => state.home.lat, (state) => state.home.lng],
   (lat, lng) => ({ lat, lng })
 );
+export const selectCity = state => state.home.city
 
 // if i dont use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
 
@@ -227,4 +236,5 @@ export const {
   addLatAndLng,
   setPathHistory,
   setUserFriendlyPathHistory,
+  // setCity
 } = homeSlice.actions;

@@ -161,7 +161,7 @@ const MainContent = ({ data }) => {
                                 </div>
                             }
                         >
-                            <PlaceCardsContainer data={localitiesData} heading={localitiesTitle} />
+                            <PlaceCardsContainer data={localitiesData} heading={localitiesTitle} pathLogic={() => { }} />
                         </Suspense>
                     </section>
                     <hr className="mt-10 mb-8 text-gray-400" />
@@ -183,7 +183,7 @@ const MainContent = ({ data }) => {
                                 </div>
                             }
                         >
-                            <PlaceCardsContainer data={whatEatingCuisineData} heading={whatEatingCuisineTitle} />
+                            <PlaceCardsContainer data={whatEatingCuisineData} heading={whatEatingCuisineTitle} pathLogic={() => { }} />
                         </Suspense>
                     </section>
                     <hr className="mt-10 mb-8 text-gray-400" />
@@ -205,7 +205,7 @@ const MainContent = ({ data }) => {
                                 </div>
                             }
                         >
-                            <PlaceCardsContainer data={restaurantChainInCityData} heading={restaurantChainInCityTitle} />
+                            <PlaceCardsContainer data={restaurantChainInCityData} heading={restaurantChainInCityTitle} pathLogic={() => { }} />
                         </Suspense>
                     </section>
                     <hr className="mt-10 mb-8 text-gray-400" />
@@ -227,7 +227,7 @@ const MainContent = ({ data }) => {
                                 </div>
                             }
                         >
-                            <PlaceCardsContainer data={popularDishesData} heading={popularDishesTitle} />
+                            <PlaceCardsContainer data={popularDishesData} heading={popularDishesTitle} pathLogic={() => { }} />
                         </Suspense>
                     </section>
                 </>

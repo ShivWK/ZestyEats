@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { selectSearchedCity } from "../../features/home/homeSlice";
+import { selectCity } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import { Suspense, lazy } from "react";
 const PureVegSvg = lazy(() => import("../../utils/PureVegSvg"));
@@ -8,7 +8,7 @@ const VegAndNonVegSvg = lazy(() => import("../../utils/VegAndNonVegSvg"));
 const Banner = ({ data }) => {
   const mainData = data?.card?.card?.info;
   const veg = mainData?.veg;
-  const searchedCity = useSelector(selectSearchedCity).toLowerCase().replace(/\s/g, "-");
+  const searchedCity = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
 
   return (
     <div
@@ -46,10 +46,10 @@ const Banner = ({ data }) => {
               mainData?.cuisines?.map((text, index, array) => {
                 if (index == array.length - 1) {
                   const cuisine = text.toLowerCase().replace(/\s/g, "-") + "-cuisine-";
-                  return <NavLink to={`/cityPage?city=${searchedCity || "allahabad"}&type=${cuisine}`} key={text}>{text}</NavLink>;
+                  return <NavLink to={`/cityPage?city=${searchedCity}&type=${cuisine}`} key={text}>{text}</NavLink>;
                 }
                 const cuisine = text.toLowerCase().replace(/\s/g, "-") + "-cuisine-";
-                return <NavLink to={`/cityPage?city=${searchedCity || "allahabad"}&type=${cuisine}`} key={text}>{`${text} ,`}</NavLink>;
+                return <NavLink to={`/cityPage?city=${searchedCity}&type=${cuisine}`} key={text}>{`${text} ,`}</NavLink>;
               })}
           </div>
           <div id="delivery" className="flex gap-2 mt-2">

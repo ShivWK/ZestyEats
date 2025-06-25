@@ -28,7 +28,7 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
       <div className="flex gap-2.5 relative">
         <i className={`${icon} text-xl text-gray-500`}></i>
         <div>
-          <p className="font-medium group-hover:text-primary text-lg">
+          <p className="font-medium group-hover:text-primary group-active:text-primary text-lg">
             {item?.terms?.[0]?.value}
           </p>
           <p className="text-sm font-semibold text-gray-400">

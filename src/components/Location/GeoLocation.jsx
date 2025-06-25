@@ -10,8 +10,8 @@ import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { memo } from "react";
 
 const GeoLocation = memo(({ setSearchValue }) => {
-  const [triggerLoactionByCoordinates] = useLazyLocationByCoordinatesQuery();
-  const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
+  const [triggerRestaurantDataCall] = useLazyGetHomePageDataQuery();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,13 +38,14 @@ const GeoLocation = memo(({ setSearchValue }) => {
         try {
           setSearchValue("Fetching your location...");
           dispatch(setLoading(true));
-          // dispatch(closeLocationInModal());
           dispatch(setHideLocation(true))
-          const data = await triggerLoactionByCoordinates({
+          const data = await triggerLocationByCoordinates({
             lat1,
             lng1,
           }).unwrap();
           setSearchValue("");
+
+          console.log("City", data)
 
           updateCurrentCity(data, dispatch);
 
@@ -57,7 +58,8 @@ const GeoLocation = memo(({ setSearchValue }) => {
           }
 
           try {
-            const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
+            const res2 = await triggerRestaurantDataCall({ lat, lng }).unwrap();
+            console.log("restro dtaa",res2)
             updateHomeRestaurantData(res2, dispatch, lat, lng);
           } catch (err) {
             alert(err.error);
@@ -84,7 +86,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
       <div className="flex gap-2.5">
         <i className="ri-crosshair-2-line text-xl text-gray-500"></i>
         <div>
-          <p className="font-medium group-hover:text-primary text-lg">
+          <p className="font-medium group-hover:text-primary group-active:text-primary text-lg">
             Get current location
           </p>
           <p className="text-sm font-semibold text-gray-400">Using GPS</p>

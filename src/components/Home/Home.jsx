@@ -1,4 +1,4 @@
-import { memo, lazy, Suspense } from "react";
+import { memo, lazy, Suspense, useEffect } from "react";
 import { useSelector } from "react-redux";
 import useScrollToTop from "../../utils/useScrollToTop";
 
@@ -16,6 +16,7 @@ import {
   selectOnlineDeliveryRestaurants,
   selectIsLoading,
   selectBestCuisionsNearMe,
+  selectCity
 } from "../../features/home/homeSlice";
 
 import HomeShimmer from "./HomeShimmer";
@@ -28,6 +29,15 @@ const Home = memo(() => {
   const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
   const isLoadingMain = useSelector(selectIsLoading);
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
+  const city = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
+
+  const getPlaceCardsPath = data => {
+    const pathname = new URL(data.link).pathname;
+    const cuisine = pathname.match(/\/(.*?)\-restaurants/)[1]
+    const path = `/cityPage?city=${city}&type=${cuisine}-cuisine-`;
+
+    return path;
+  }
 
   return isLoadingMain ? (
     <>
@@ -104,7 +114,7 @@ const Home = memo(() => {
                 </div>
               }
             >
-              <PlaceCardsContainer data={bestCuisionsNearMe} />
+              <PlaceCardsContainer data={bestCuisionsNearMe} pathLogic={getPlaceCardsPath} />
             </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />
