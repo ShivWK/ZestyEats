@@ -65,15 +65,15 @@ export default function Layout() {
 
     if (HomeData && lat && lng) {
       updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory, pathHistory);
-      const searchedCity = JSON.parse(localStorage.getItem("searchedCity")) || "";
-      const searchedCityAddress = JSON.parse(
-        localStorage.getItem("searchedCityAddress")
-      ) || "";
-      const currentCity = JSON.parse(localStorage.getItem("currentCity")) || "";
+      const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
+      const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
+      const currentCity = JSON.parse(localStorage.getItem("currentCity"));
 
-      if (searchedCity !== undefined) dispatch(addSearchedCity(searchedCity));
-      if (searchedCityAddress !== undefined) dispatch(addSearchedCityAddress(searchedCityAddress));
-      if (currentCity !== undefined) dispatch(addYourCurrentCity(currentCity));
+      // when asked data is not present in the local storage the it will null instead of undefined
+
+      if (searchedCity !== undefined && searchedCity !== null) dispatch(addSearchedCity(searchedCity));
+      if (searchedCityAddress !== undefined && searchedCityAddress !== null) dispatch(addSearchedCityAddress(searchedCityAddress));
+      if (currentCity !== undefined && currentCity !== null) dispatch(addYourCurrentCity(currentCity));
 
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -103,16 +103,16 @@ export default function Layout() {
           fetchDefaultHomeAPIData();
         }
       },
-      err => {
-        console.log("Some error occured", err.message);
-        fetchDefaultHomeAPIData();
-      },
-      {
-        timeout: 5000, //didn't worked
-        enableHighAccuracy: false,
-        maximumAge: 20000
-      }
-    );
+        err => {
+          console.log("Some error occured", err.message);
+          fetchDefaultHomeAPIData();
+        },
+        {
+          timeout: 5000, //didn't worked
+          enableHighAccuracy: false,
+          maximumAge: 20000
+        }
+      );
     } else {
       fetchDefaultHomeAPIData();
     }

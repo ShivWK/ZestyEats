@@ -30,10 +30,6 @@ const homeSlice = createSlice({
       state.lng = action.payload.lng;
     },
 
-    // setCity: (state, action) => {
-    //   state.city = action.payload;
-    // },
-
     setPathHistory: (state, action) => {
       const newPath = action.payload;
       const existingIndex = state.pathHistory.indexOf(newPath);
@@ -119,16 +115,7 @@ const homeSlice = createSlice({
     },
 
     addSearchedCity: (state, action) => {
-      if (typeof action.payload !== "object" || action.payload === null) {
-        // we are checking for null because type of null is alos object
-        state.searchedCity = action.payload;
-      } else {
-        const city =
-          action.payload?.data?.cards?.find(
-            (item) => item?.card?.card?.id === "top_brands_for_you"
-          )?.card?.card?.header?.title || "your location";
-        state.searchedCity = city;
-      }
+      state.searchedCity = action.payload;
     },
 
     addOnlineDeliveryTitle: (state, action) => {
