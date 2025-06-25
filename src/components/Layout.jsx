@@ -71,17 +71,10 @@ export default function Layout() {
       ) || "";
       const currentCity = JSON.parse(localStorage.getItem("currentCity")) || "";
 
-      dispatch(
-        addSearchedCity(searchedCity === "undefined" ? "" : searchedCity)
-      );
-      dispatch(
-        addSearchedCityAddress(
-          searchedCityAddress === "undefined" ? "" : searchedCityAddress
-        )
-      );
-      dispatch(
-        addYourCurrentCity(currentCity === "undefined" ? "" : currentCity)
-      );
+      if (searchedCity !== undefined) dispatch(addSearchedCity(searchedCity));
+      if (searchedCityAddress !== undefined) dispatch(addSearchedCityAddress(searchedCityAddress));
+      if (currentCity !== undefined) dispatch(addYourCurrentCity(currentCity));
+
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
@@ -111,11 +104,11 @@ export default function Layout() {
         }
       },
       err => {
-        console.log("Some error occured", err);
+        console.log("Some error occured", err.message);
         fetchDefaultHomeAPIData();
       },
       {
-        timeout: 5000,
+        timeout: 5000, //didn't worked
         enableHighAccuracy: false,
         maximumAge: 20000
       }
