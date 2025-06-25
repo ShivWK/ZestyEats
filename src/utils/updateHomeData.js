@@ -30,7 +30,7 @@ export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPath
         dispatch(addOnlineDeliveryTitle(res));
         dispatch(addBestNearCuisions(res));
         dispatch(addAvailableCities(res));
-        // dispatch(setLoading(false));
+        dispatch(setLoading(false));
     }
 };
 
