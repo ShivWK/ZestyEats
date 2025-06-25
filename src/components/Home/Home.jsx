@@ -70,7 +70,7 @@ const Home = memo(() => {
             <Suspense
               fallback={
                 <div className="flex justify-between max-md:gap-3 overflow-hidden max-md:px-1.5">
-                  {shimmerArray.map(i => <div key={i} className="w-48 md:w-60 h-36 rounded-xl shimmerBg shrink-0" />)}
+                  {shimmerArray.map(i => <div key={i} className="w-56 md:w-60 h-40 rounded-xl shimmerBg shrink-0" />)}
                 </div>
               }
             >
@@ -88,7 +88,7 @@ const Home = memo(() => {
           <section className="w-full">
             <Suspense
               fallback={
-                <div className="flex justify-between md:flex-row flex-col max-md:gap-2 max-md:px-1.5">
+                <div className="flex justify-between md:flex-row flex-col max-md:gap-3 max-md:px-1.5">
                   {shimmerArray.map(i => <div key={i} className="w-full md:w-60 h-40 md:h-44 rounded-xl shimmerBg shrink-0" />)}
                 </div>
               }
