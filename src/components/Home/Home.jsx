@@ -69,7 +69,7 @@ const Home = memo(() => {
             <Suspense
               fallback={
                 <div className="flex justify-between">
-                  {shimmerArray.map(i => <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />)}
+                  {shimmerArray.map(i => <div key={i} className="w-60 h-44 rounded-xl shimmerBg" />)}
                 </div>
               }
             >

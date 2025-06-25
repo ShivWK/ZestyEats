@@ -150,6 +150,7 @@ const HorizontalCarousel = memo(({
           onScroll={handleScroll}
           ref={containerRef}
           className="flex justify-start gap-4 overflow-x-auto hide-scrollbar"
+          onTouchEnd={() => clicked.current = true}
         >
           {dataToMap.map((item) => (
             <Card key={item?.id || Math.random()} data={item} />
