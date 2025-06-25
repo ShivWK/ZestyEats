@@ -34,7 +34,7 @@ const Logo = memo(({ searchPlaceholder }) => {
       </NavLink>
 
       {searchPlaceholder ? (
-        <p className="flex items-center font-bold text-xl max-w-56 md:max-w-80 truncate"><span className="truncate">
+        <p className="flex items-center font-bold text-xl max-w-48 md:max-w-80 truncate"><span className="truncate">
           {searchPlaceholder}</span></p>
       ) : (
         <button
@@ -47,7 +47,7 @@ const Logo = memo(({ searchPlaceholder }) => {
           </span>
 
           <div className="flex gap-0 md:gap-2 items-center justify-center max-md:-mt-1">
-            <span className="max-w-48 md:max-w-52 truncate text-start font-medium text-gray-600 max-md:text-sm">
+            <span className="max-w-44 md:max-w-52 truncate text-start font-medium text-gray-600 max-md:text-sm">
             {yourCurrentCity
               ? `${searchedCityAddress}`
               : `${searchedCity}${searchedCityAddress}`}
