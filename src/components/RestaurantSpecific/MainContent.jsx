@@ -173,7 +173,7 @@ const MainContent = ({ data, routes = true }) => {
       </footer>
 
       {/* menu button */}
-      <button onClick={() => dispatch(toggleMenuModel())} className="fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] p-3 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out"
+      <button onClick={() => dispatch(toggleMenuModel())} className="fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] py-4 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out"
         >
         MENU
       </button>

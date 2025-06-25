@@ -1,31 +1,49 @@
-import { memo } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { selectVegVariant, setVegOption, setNonVegOption } from "../../../features/home/restaurantsSlice";
+import VegSvg from "../../../utils/VegSvg";
+import NonVegSvg from "../../../utils/NonVegSvg";
 
-const Filter = memo(({ fixed = false, applied = false, icon, text, count = 0 }) => {
+
+const FilterButton = ({ applied, Icon, text, handler }) => {
   return (
     <div
-      className={`flex justify-between gap-2 px-3 h-10 items-center text-sm font-medium text-gray-900 rounded-3xl w-fit border-2 ${
-        applied ? "bg-gray-200" : "bg-white"
-      } border-gray-400 cursor-pointer hover:bg-gray-200`}
+      onClick={handler}
+      className={`flex justify-between gap-2 px-3 h-10 items-center text-sm font-medium text-gray-900 rounded-3xl w-fit border-2 ${!applied ? "bg-gray-200" : "bg-white"
+        } border-gray-300 cursor-pointer hover:bg-gray-200`}
     >
-      {count !== 0 && (
-        <div className="flex shrink-0 w-5 h-5 p-2 justify-center items-center rounded-[50%] bg-primary text-white font-medium">
-          {count}
-        </div>
-      )}
+      <Icon />
       <p>{text}</p>
-      {fixed ? (
-        <button className="cursor-pointer">
-          <i className={icon}></i>
-        </button>
-      ) : (
-        applied && (
-          <button className="group cursor-pointer">
-            <i className="ri-close-large-fill group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.2)] rounded-[50%] transition-all duration-150 ease-in-out p-[1px]"></i>
-          </button>
-        )
-      )}
+      {!applied && <i className="ri-close-large-fill rounded-[50%]"></i>}
     </div>
   );
-});
+};
+
+const Filter = () => {
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
+  const [ veg, setVeg ] = useState(vegOption);
+  const [ nonVeg, setNonVeg] = useState(nonVegOption);
+
+  const dispatch = useDispatch()
+
+  const vegHandler = () => {
+    const newValue = !veg;
+    setVeg(newValue);
+    dispatch(setVegOption(newValue));
+  }
+
+  const nonVegHandler = () => {
+    const newValue = !nonVeg;
+    setNonVeg(newValue);
+    dispatch(setNonVegOption(newValue));
+  }
+
+  return (
+    <div className="flex gap-2.5 mt-4 w-full">
+      <FilterButton applied={veg} handler={vegHandler} Icon={VegSvg} text="Pure Veg" />
+      <FilterButton applied={nonVeg} handler={nonVegHandler} Icon={NonVegSvg} text="Veg & Non-Veg" />
+    </div>)
+}
+
 
 export default Filter;

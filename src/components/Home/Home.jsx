@@ -110,7 +110,7 @@ const Home = memo(() => {
           >
             <Suspense
               fallback={
-                <div className="flex justify-between gap-4">
+                <div className="flex justify-between gap-4 flex-wrap">
                   {shimmerArray.map(i => <div key={i} className="w-[98px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg" />)}
                 </div>
               }

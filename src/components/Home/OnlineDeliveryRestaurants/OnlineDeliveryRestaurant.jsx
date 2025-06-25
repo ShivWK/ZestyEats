@@ -14,10 +14,7 @@ const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
     <>
       <div>
         <h3>{title}</h3>
-        <div className="flex gap-2.5 mt-4 w-full">
-          <Filter applied={true} text="Pure Veg" />
-          <Filter applied={true} text="Veg & Non-Veg" />
-        </div>
+          <Filter />
       </div>
       <div className="flex flex-wrap gap-y-7 gap-x-8 justify-start w-full mt-8 mx-auto">
         {data.map((item) => (

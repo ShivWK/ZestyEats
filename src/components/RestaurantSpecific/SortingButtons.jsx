@@ -5,6 +5,8 @@ import {
   setNonVegOption,
   selectVegVariant
 } from "../../features/home/restaurantsSlice";
+import VegSvg from "../../utils/VegSvg";
+import NonVegSvg from "../../utils/NonVegSvg";
 
 const SortingButtons = () => {
     const [veg, setVeg] = useState(false);
@@ -27,23 +29,7 @@ const SortingButtons = () => {
           setNonVeg(false);
         }}
       >
-        <svg
-            width="16"
-            height="16"
-            viewBox="0 0 100 100"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect
-              x="5"
-              y="5"
-              width="90"
-              height="90"
-              fill="none"
-              stroke={!veg ? "green" : "white"}
-              strokeWidth="8"
-            />
-            <circle cx="50" cy="50" r="25" fill={!veg ? "green" : "white"} />
-          </svg>
+        <VegSvg veg={veg} />
         <span>Veg</span>
         {veg && (<i className="ri-close-large-fill font-semibold"></i>)}
       </button>
@@ -60,23 +46,7 @@ const SortingButtons = () => {
           setVeg(false);
         }}
       >
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 100 100"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <rect
-            x="5"
-            y="5"
-            width="90"
-            height="90"
-            fill="none"
-            stroke={!nonVeg ? "red" : "white"}
-            strokeWidth="8"
-          />
-          <polygon points="50,20 78.86,70 21.14,70" fill={!nonVeg ? "red" : "white"} />
-        </svg>
+        <NonVegSvg nonVeg={nonVeg} />
         <span>Non Veg</span>
         {nonVeg && (<i className="ri-close-large-fill font-semibold"></i>)}
       </button>
