@@ -109,7 +109,17 @@ export default function Layout() {
           console.log("Error fetching current location data.");
           fetchDefaultHomeAPIData();
         }
-      });
+      },
+      err => {
+        console.log("Some error occured", err);
+        fetchDefaultHomeAPIData();
+      },
+      {
+        timeout: 5000,
+        enableHighAccuracy: false,
+        maximumAge: 20000
+      }
+    );
     } else {
       fetchDefaultHomeAPIData();
     }
