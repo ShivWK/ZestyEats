@@ -39,7 +39,7 @@
         }
     }
 
-    .notFirst-notLast > div:not(:first-child):not(:last-child) {
+    .notFirst-notLast>div:not(:first-child):not(:last-child) {
         border-top: none;
     }
 
@@ -52,9 +52,11 @@
         0% {
             background-color: #cfd1d1;
         }
+
         50% {
             background-color: #b2b2b4;
         }
+
         100% {
             background-color: #cfd1d1;
         }
@@ -62,7 +64,7 @@
 
     @keyframes shimmer {
         0% {
-            
+
             left: -30px;
         }
 
@@ -94,10 +96,28 @@
     background-color: black;
 }
 
+.pretty-scrollbar::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.pretty-scrollbar::-webkit-scrollbar {
+    width: 0.8vw;
+}
+
+.pretty-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #ff5200;
+    border-radius: 10px;
+}
+
 @media screen and (max-width: 768px) {
     .main-large {
         height: 9vh;
         width: 9vh;
         border-width: 0.3em;
+    }
+
+    .pretty-scrollbar::-webkit-scrollbar {
+        width: 0.5vw;
     }
 }

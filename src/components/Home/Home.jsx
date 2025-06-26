@@ -51,7 +51,13 @@ const Home = memo(() => {
   ) : (
     <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-[88px] md:pt-26 overflow-x-hidden max-md:px-1.5">
 
-{/* Foodie thoughts */}
+      {/* dev msg */}
+
+      <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1.5 mb-3">
+        <p className="text-justify">This site is under active development. Features are being added and improved continuously, so some parts may not work as expected right now.</p>
+      </div>
+
+      {/* Foodie thoughts */}
 
       {foodieThoughtsData?.length !== 0 && (
         <>
@@ -62,7 +68,7 @@ const Home = memo(() => {
         </>
       )}
 
-{/* Top restaurants chain */}
+      {/* Top restaurants chain */}
 
       {topRestaurantsChainsData?.length !== 0 && (
         <>
@@ -81,7 +87,7 @@ const Home = memo(() => {
         </>
       )}
 
-{/* Restaurants with online delivery */}
+      {/* Restaurants with online delivery */}
 
       {onlineDeliveryRestaurantData?.length !== 0 && (
         <>
@@ -99,8 +105,8 @@ const Home = memo(() => {
           <hr className="mt-10 mb-8 text-gray-400" />
         </>
       )}
-      
-{/* Best cuisines near me */}
+
+      {/* Best cuisines near me */}
 
       {bestCuisionsNearMe?.length !== 0 && (
         <>
@@ -122,7 +128,7 @@ const Home = memo(() => {
         </>
       )}
 
-{/* All available cities in which we server */}
+      {/* All available cities in which we server */}
 
       {/* {nearByRestaurants.length !== 0 && (
         <section
