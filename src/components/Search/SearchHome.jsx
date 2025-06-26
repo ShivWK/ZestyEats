@@ -18,7 +18,7 @@ const MainContent = ({ data }) => {
 
   return (
     <div className="flex flex-col mx-auto gap-5 mt-16">
-      {itemCards.length > 0 && (
+      {itemCards?.length > 0 && (
         <>
           <h1>Popular Cuisines</h1>
           <div className="flex w-fit flex-wrap justify-evenly">
