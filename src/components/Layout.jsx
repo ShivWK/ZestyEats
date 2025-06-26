@@ -19,7 +19,7 @@ import {
   addSearchedCity,
   addSearchedCityAddress,
 } from "../features/home/homeSlice";
-// import { selectMenuModel } from "../features/home/restaurantsSlice";
+import { selectMenuModel } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -35,6 +35,7 @@ export default function Layout() {
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
+  const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
   useTrackNavigation();
 
@@ -157,13 +158,14 @@ export default function Layout() {
     const body = document.body;
 
     const isLargeScreen = window.innerWidth >= 768;
+    console.log(menuModel)
 
     if (isLargeScreen) {
       if (body.clientHeight >= body.scrollHeight) {
         body.style.paddingRight = "15px";
       }
 
-      if (isLoginOpen || isLocationOpen) {
+      if (isLoginOpen || isLocationOpen || menuModel) {
         body.classList.add("overflow-hidden");
         body.style.paddingRight = scrollbarWidth;
       } else {
@@ -176,7 +178,7 @@ export default function Layout() {
         body.style.paddingRight = "0px";
       };
     }
-  }, [isLoginOpen, isLocationOpen]);
+  }, [isLoginOpen, isLocationOpen, menuModel]);
 
   useEffect(() => {
     const onlineHandler = () => {
