@@ -102,7 +102,7 @@
 }
 
 .pretty-scrollbar::-webkit-scrollbar {
-    width: 0.8vw;
+    width: 0.5vw;
 }
 
 .pretty-scrollbar::-webkit-scrollbar-thumb {
@@ -118,6 +118,6 @@
     }
 
     .pretty-scrollbar::-webkit-scrollbar {
-        width: 0.5vw;
+        width: 0.8vw;
     }
 }
