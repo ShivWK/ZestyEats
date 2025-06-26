@@ -5,7 +5,7 @@ import ShimmerContainer from "./ShimmerContainer";
 import { setCity } from "../../features/cityHome/cityHomeSlice";
 import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
 import TopRestaurantChains from "../Home/TopRestaurantChains";
-import OnlineDeliveryRestaurant from "../Home/OnlineDeliveryRestaurants/OnlineDeliveryRestaurant";
+import OnlineDeliveryRestaurant from "../Home/OnlineDeliveryRestaurant";
 import PlaceCardsContainer from "../Home/PlaceCardsContainer";
 import cityDataFetcher from "../../utils/cityDataFetcher";
 

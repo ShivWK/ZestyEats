@@ -1,8 +1,8 @@
 import { useSelector } from "react-redux";
-import Cards from "../Cards";
+import Cards from "./Cards";
 import Filter from "./Filters";
-import { selectOnlineDeliveryTitle } from "../../../features/home/homeSlice";
-import { selectVegVariant } from "../../../features/home/restaurantsSlice";
+import { selectOnlineDeliveryTitle } from "../../features/home/homeSlice";
+import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import { memo } from "react";
 
 const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
@@ -40,15 +40,6 @@ const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
             />
             }
           }
-          // return (
-          //   <Cards
-          //     key={item.info.id}
-          //     data={item.info}
-          //     imageWidth={240}
-          //     imageHeight={40}
-          //     from={"online"}
-          //   />
-          // )
         }
         )}
       </div>

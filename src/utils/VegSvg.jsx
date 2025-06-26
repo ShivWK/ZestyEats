@@ -11,7 +11,7 @@ const VegSvg = ({veg = false}) => {
               width="90"
               height="90"
               fill="none"
-              stroke={!veg ? "green" : "white"}
+              stroke={veg ? "white" : "green"}
               strokeWidth="8"
             />
             <circle cx="50" cy="50" r="25" fill={!veg ? "green" : "white"} />

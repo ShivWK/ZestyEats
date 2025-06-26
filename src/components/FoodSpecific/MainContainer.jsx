@@ -4,7 +4,7 @@ import { setCurrentFoodCategory } from "./../../features/header/headerSlice";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import { useEffect } from "react";
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
-import Filter from "../Home/OnlineDeliveryRestaurants/Filters";
+import Filter from "../Home/Filters";
 
 const MainContainer = ({ data }) => {
   const dispatch = useDispatch();

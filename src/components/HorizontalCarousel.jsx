@@ -73,7 +73,9 @@ const HorizontalCarousel = memo(({
     });
 
     return () => clearInterval(scrollInterval);
-  }, [dataToMap])
+  }, [dataToMap, clicked.current])
+
+  
 
   function handleScroll() {
     const container = containerRef.current;

@@ -5,7 +5,7 @@ import useScrollToTop from "../../utils/useScrollToTop";
 import FoodieThoughts from "./FoodieThoughts/FoodieThoughts";
 import Loader from "../Loader";
 const OnlineDeliveryRestaurant = lazy(() =>
-  import("./OnlineDeliveryRestaurants/OnlineDeliveryRestaurant")
+  import("./OnlineDeliveryRestaurant")
 );
 const TopRestaurantChains = lazy(() => import("./TopRestaurantChains"));
 const PlaceCardsContainer = lazy(() => import("./PlaceCardsContainer"));

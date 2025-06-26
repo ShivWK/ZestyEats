@@ -11,7 +11,7 @@ const NonVegSvg = ({nonVeg = false }) => {
             width="90"
             height="90"
             fill="none"
-            stroke={!nonVeg ? "red" : "white"}
+            stroke={nonVeg ? "white" :  "red"}
             strokeWidth="8"
           />
           <polygon points="50,20 78.86,70 21.14,70" fill={!nonVeg ? "red" : "white"} />

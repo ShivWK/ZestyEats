@@ -12,7 +12,7 @@ import {
 } from "../../features/home/restaurantsSlice";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import Ui3Shimmer from "./Ui3Shimmer";
-import Filter from "../Home/OnlineDeliveryRestaurants/Filters";
+import Filter from "../Home/Filters";
 import useScrollToTop from "../../utils/useScrollToTop";
 
 const Card = ({ data, lat, lng }) => {
