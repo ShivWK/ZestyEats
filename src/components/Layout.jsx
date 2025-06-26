@@ -176,7 +176,7 @@ export default function Layout() {
       body.style.paddingRight = "0px";
     };
 
-  }, [isLoginOpen, isLocationOpen, menuModel]);
+  }, [isLoginOpen, isLocationOpen ]);
 
   useEffect(() => {
     const onlineHandler = () => {
