@@ -5,12 +5,14 @@ import {
     useSearchParams,
     Await,
 } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
     addCurrentRestaurant,
     setMenuItems,
 } from "../../features/home/restaurantsSlice";
+import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import Ui3Shimmer from "./Ui3Shimmer";
+import Filter from "../Home/OnlineDeliveryRestaurants/Filters";
 
 const Card = ({ data, lat, lng }) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
@@ -20,8 +22,8 @@ const Card = ({ data, lat, lng }) => {
 
     const mainData = data?.card?.card;
     const disData = mainData?.info;
-    const restroData = mainData?.restaurant?.info;
-    const path = `/restaurantSpecific/${lat}/${lng}/${restroData?.id}/${restroData?.name}`;
+    const restaurantData = mainData?.restaurant?.info;
+    const path = `/restaurantSpecific/${lat}/${lng}/${restaurantData?.id}/${restaurantData?.name}`;
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${disData?.imageId}`;
 
     const defaultPrice = disData?.price / 100 || disData?.defaultPrice / 100 || 0;
@@ -44,20 +46,20 @@ const Card = ({ data, lat, lng }) => {
         <div className="max-md:basis-full md:basis-[49%] pb-1 border-2 border-gray-300 rounded-md bg-white">
             <NavLink
                 to={path}
-                onClick={() => handleClick(restroData?.name)}
+                onClick={() => handleClick(restaurantData?.name)}
                 className="flex group justify-between  p-3 w-full cursor-pointer"
             >
                 <div>
                     <p className="font-bold text-gray-800 md:w-64 overflow-hidden">
-                        {restroData?.name}
+                        {restaurantData?.name}
                     </p>
                     <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
                         <i className="ri-star-fill text-green-700 mb-0.5" />
-                        <p>{restroData?.avgRating}</p>
+                        <p>{restaurantData?.avgRating}</p>
                         <p>•</p>
-                        <p>{restroData?.sla?.slaString}</p>
+                        <p>{restaurantData?.sla?.slaString}</p>
                         <p>•</p>
-                        <p>{restroData?.costForTwoMessage}</p>
+                        <p>{restaurantData?.costForTwoMessage}</p>
                     </div>
                 </div>
                 <i className="ri-arrow-right-long-fill text-2xl text-gray-600 ursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
@@ -159,7 +161,9 @@ const Card = ({ data, lat, lng }) => {
 };
 
 const MainContent = ({ data, lat, lng, mode }) => {
-    console.log(data);
+    const { vegOption, nonVegOption } = useSelector(selectVegVariant);
+
+    // console.log(data);
     const cards =
         mode === "parent"
             ? data?.data?.data?.cards?.[1].groupedCard?.cardGroupMap?.DISH?.cards.slice(
@@ -170,21 +174,32 @@ const MainContent = ({ data, lat, lng, mode }) => {
             );
 
     return (
-        <div className="flex items-start flex-wrap gap-2.5 gap-y-4 w-full justify-between pt-16 bg-gray-200 p-1.5 rounded-md">
-            {cards ? (
-                cards.map((item) => (
-                    <Card
+        <div className="bg-gray-200 p-1.5 rounded-md mt-14">
+            <div className="w-full mb-2.5 -mt-1.5">
+                <Filter text1="Veg" text2="Non Veg" />
+            </div>
+            <div className="flex items-start flex-wrap gap-2.5 gap-y-4 w-full justify-between">
+                {cards ? (
+                cards.map((item) => {
+                    const data = item?.card?.card?.info;
+                    console.log(data?.isVeg);
+
+                    if (!vegOption && data?.isVeg) return;
+                    if (!nonVegOption && !data?.isVeg) return;
+
+                    return <Card
                         key={item?.card?.card?.info?.id}
                         data={item}
                         lat={lat}
                         lng={lng}
                     />
-                ))
+                })
             ) : (
                 <p className="self-center font-semibold text-center pb-4 pt-2">
                     Sorry no data for this restaurant
                 </p>
             )}
+            </div>
         </div>
     );
 };

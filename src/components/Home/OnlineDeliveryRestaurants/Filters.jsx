@@ -5,20 +5,20 @@ import VegSvg from "../../../utils/VegSvg";
 import NonVegSvg from "../../../utils/NonVegSvg";
 
 
-const FilterButton = ({ applied, Icon, text, handler }) => {
+const FilterButton = ({ applied, Icon, text, handler, bgColor }) => {
   return (
     <div
       onClick={handler}
-      className={`flex justify-between gap-2 px-3 h-10 items-center text-sm font-medium text-gray-900 rounded-3xl w-fit border-2 ${applied ?  "bg-white" : "bg-gray-200"} border-gray-300 cursor-pointer `}
+      className={`flex justify-between gap-2 px-3 py-2 items-center text-sm font-medium text-gray-900 text-green rounded-3xl w-fit border-2 ${applied ?  "bg-white text-gray-800" : bgColor === "green" ? "bg-green-400 text-white" : "bg-red-400 text-white" } border-gray-300 transform cursor-pointer transition-["width", "transform"] duration-150 ease-linear active:scale-95`}
     >
-      <Icon />
-      <p>{text}</p>
+      <Icon veg={!applied} nonVeg={!applied} />
+      <p className="select-none">{text}</p>
       {!applied && <i className="ri-close-large-fill rounded-[50%]"></i>}
     </div>
   );
 };
 
-const Filter = memo(({ text1, text2 }) => {
+const Filter = memo(({ text1 = "Pure Veg", text2 = "Veg & Non-Veg"}) => {
   const { vegOption, nonVegOption } = useSelector(selectVegVariant);
   const [ veg, setVeg ] = useState(vegOption);
   const [ nonVeg, setNonVeg] = useState(nonVegOption);
@@ -37,8 +37,8 @@ const Filter = memo(({ text1, text2 }) => {
 
   return (
     <div className="flex gap-2.5 mt-4 w-full">
-      <FilterButton applied={veg} handler={vegHandler} Icon={VegSvg} text={text1} />
-      <FilterButton applied={nonVeg} handler={nonVegHandler} Icon={NonVegSvg} text={text2} />
+      <FilterButton applied={veg} handler={vegHandler} Icon={VegSvg} text={text1} bgColor="green" />
+      <FilterButton applied={nonVeg} handler={nonVegHandler} Icon={NonVegSvg} text={text2} bgColor="red" />
     </div>)
 })
 

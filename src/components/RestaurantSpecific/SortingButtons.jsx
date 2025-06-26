@@ -36,9 +36,9 @@ const SortingButtons = () => {
       <button
         className="flex gap-2 items-center border font-medium border-gray-400 rounded-full px-3 py-1 md:px-4 md:py-1.5 cursor-pointer active:scale-95"
         style={{
-          backgroundColor: nonVeg ? "#fb2c36" : "#ffffff",
+          backgroundColor: nonVeg ? "oklch(0.704 0.191 22.216" : "#ffffff",
           color: nonVeg ? "#ffffff" : "#000000",
-          transition: "background-color 0.3s, color 0.3s",
+          transition: "all 0.3s, color 0.3s",
         }}
         onClick={() => {
           dispatch(setNonVegOption(!nonVeg));

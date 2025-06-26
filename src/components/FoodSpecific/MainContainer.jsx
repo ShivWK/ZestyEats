@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentFoodCategory } from "./../../features/header/headerSlice";
 import { useEffect } from "react";
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
+import Filter from "../Home/OnlineDeliveryRestaurants/Filters";
 
 const MainContainer = ({ data }) => {
   const dispatch = useDispatch();
@@ -27,7 +28,7 @@ const MainContainer = ({ data }) => {
   }, []);
 
   return ( cards ?
-    <div className="flex flex-col gap-5 w-full md:max-w-[1210px] md:pt-32 pt-24 p-3 mx-auto pb-16">
+    <div className="flex flex-col gap-3 md:gap-5 w-full md:max-w-[1210px] md:pt-32 pt-20 p-3 mx-auto pb-16">
       <div>
         <BreadcrumbsWrapper
           normalTextColor={"#4a5565"}
@@ -38,14 +39,12 @@ const MainContainer = ({ data }) => {
       <h1 className="heading text-black md:text-5xl text-4xl font-bold tracking-tight mx-0">
         {title}
       </h1>
-      <p className="description text-lg font-semibold text-gray-800 -mt-2">
+      <p className="description text-lg font-semibold text-gray-800 -mt-2 max-md:leading-6">
         {description}
       </p>
-      {/* <div className="shorter rounded-md flex gap-3">
-            <div className="h-9 w-20 rounded-3xl shimmerBg"></div>
-            <div className="h-9 w-20 rounded-3xl shimmerBg"></div>
-            <div className="h-9 w-20 rounded-3xl shimmerBg"></div>
-        </div> */}
+      <div className="md:-mt-5 -mt-4 -mb-1 md:-mb-2">
+            <Filter />
+        </div>
       <div className="restro-count text-2xl font-bold tracking-tight">
         Explore Restaurants
       </div>
