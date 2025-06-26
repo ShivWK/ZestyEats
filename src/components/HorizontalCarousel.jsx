@@ -30,6 +30,7 @@ const HorizontalCarousel = memo(({
 
   const debouncedHandleRightClick = useRef(createDebounce(handleRightClick, 100));
   const debouncedHandleLeftClick = useRef(createDebounce(handleLeftClick, 100));
+  const [hideScrollBar, setHideScrollBar] = useState(false);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -94,6 +95,7 @@ const HorizontalCarousel = memo(({
     if (scrollLeft == 0 && clientWidth === scrollWidth) {
       rightBtnRef.current.hidden = true;
       leftBtnRef.current.hidden = true;
+      setHideScrollBar(true)
     }
 
     const scrolledPercentage = (scrollLeft / (scrollWidth - clientWidth)) * 100;
@@ -132,7 +134,7 @@ const HorizontalCarousel = memo(({
         <h2>
           {heading}
         </h2>
-        <div className="hidden  md:flex justify-between gap-1">
+        <div className="hidden md:flex justify-between gap-1">
           <Button
             ref={leftBtnRef}
             clickHandler={debouncedHandleLeftClick.current}
@@ -156,7 +158,7 @@ const HorizontalCarousel = memo(({
             <Card key={item?.id || Math.random()} data={item} />
           ))}
         </div>
-        {showScrollBar && (
+        {(showScrollBar && !hideScrollBar) && (
           <Scrollbar scrolledPercentage={scrollPercentage} marginTop={scrollMargin} />
         )}
       </div>

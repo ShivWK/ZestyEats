@@ -23,8 +23,9 @@ const Menu = () => {
         <div className="pretty-scrollbar text-gray-300 max-h-80 overflow-auto px-3">
           {menuItems.length > 0 ? (
             menuItems.map((item) => {
-              if (vegOption && item.nonVeg) return;
-              if (nonVegOption && item.veg) return;
+              console.log(item)
+              if (!vegOption && item.veg) return;
+              if (!nonVegOption && item.nonVeg) return;
 
               const path = item.title?.replace(/\s/g, "-");
               const key = path + Math.random();

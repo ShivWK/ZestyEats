@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ItemsSubHeading from "./ItemsSubHeading";
 import {
   setMenuItems,
-  selectVegVariant
+  selectVegVariant,
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
 
@@ -22,8 +22,10 @@ const ItemsMainHeading = ({
 
   let toDecreaseForNonVeg = 0;
   let toDecreaseForVeg = 0;
+  let itemsVegCount = 0;
+  let itemsNonVegCount = 0;
 
-  const { vegOption, nonVegOption } = useSelector(selectVegVariant)
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
 
   const handleClick = () => {
     setIsOpen(!isOpen);
@@ -33,17 +35,21 @@ const ItemsMainHeading = ({
     const initialCount = items
       ? items.length
       : categories
-        ? categories.length
-        : 0;
+      ? categories.length
+      : 0;
     setCount(initialCount);
 
     let nonVeg = false;
     let veg = false;
 
     if (categories) {
-      const categoryLength = categories?.length;
-      if (toDecreaseForNonVeg === categoryLength) nonVeg = true;
-      if (toDecreaseForVeg === categoryLength) veg = true;
+      if (toDecreaseForNonVeg === initialCount) nonVeg = true;
+      if (toDecreaseForVeg === initialCount) veg = true;
+    }
+
+    if (items) {
+      if (itemsNonVegCount === initialCount) nonVeg = true;
+      if (itemsVegCount === initialCount) veg = true
     }
 
     dispatch(setMenuItems({ title: heading, veg, nonVeg }));
@@ -55,11 +61,10 @@ const ItemsMainHeading = ({
     }
 
     if (vegOption && !nonVegOption) {
-      setCount(prev => prev - toDecreaseForNonVeg);
+      setCount((prev) => prev - toDecreaseForNonVeg);
     } else if (nonVegOption && !vegOption) {
-      setCount(prev => prev - toDecreaseForVeg);
+      setCount((prev) => prev - toDecreaseForVeg);
     }
-
   }, [vegOption, nonVegOption]);
 
   useEffect(() => {
@@ -68,7 +73,7 @@ const ItemsMainHeading = ({
     } else {
       setShouldRender(true);
     }
-  }, [count])
+  }, [count]);
 
   const path = heading.replace(/\s/g, "-");
 
@@ -83,7 +88,10 @@ const ItemsMainHeading = ({
     >
       {categories ? (
         <>
-          <div id={path} className="flex justify-start items-center bg-primary text-white py-3 px-2 scroll-mt-28">
+          <div
+            id={path}
+            className="flex justify-start items-center bg-primary text-white py-3 px-2 scroll-mt-28"
+          >
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
           </div>
           <div
@@ -98,10 +106,14 @@ const ItemsMainHeading = ({
               let vegCount = 0;
               let nonVegCount = 0;
 
-              category?.itemCards.forEach(element => {
-                if (element?.card?.info?.itemAttribute?.vegClassifier === "VEG") {
+              category?.itemCards.forEach((element) => {
+                if (
+                  element?.card?.info?.itemAttribute?.vegClassifier === "VEG"
+                ) {
                   vegCount++;
-                } else if (element?.card?.info?.itemAttribute?.vegClassifier === "NONVEG") {
+                } else if (
+                  element?.card?.info?.itemAttribute?.vegClassifier === "NONVEG"
+                ) {
                   nonVegCount++;
                 }
               });
@@ -112,12 +124,14 @@ const ItemsMainHeading = ({
                 toDecreaseForNonVeg += 1;
               }
 
-              return <ItemsSubHeading
-                key={category?.categoryId}
-                title={category?.title}
-                itemCards={category?.itemCards}
-                borderBottom={index !== categories.length - 1}
-              />;
+              return (
+                <ItemsSubHeading
+                  key={category?.categoryId}
+                  title={category?.title}
+                  itemCards={category?.itemCards}
+                  borderBottom={index !== categories.length - 1}
+                />
+              );
             })}
           </div>
         </>
@@ -126,7 +140,7 @@ const ItemsMainHeading = ({
           <div
             id={path}
             onClick={handleClick}
-            className="flex justify-between items-center bg-primary p-2 text-white cursor-pointer scroll-mt-24"
+            className="flex justify-between items-center bg-primary p-2 text-white cursor-pointer scroll-mt-28"
           >
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
             <i
@@ -144,9 +158,20 @@ const ItemsMainHeading = ({
               display: isOpen ? "block" : "none",
             }}
           >
-            {items.map((item) => (
-              <ItemsCardContainer key={item?.card?.info?.id} item={item?.card?.info} isParentOpen={isOpen} />
-            ))}
+            {items.map((item) => {
+              const itemData = item?.card?.info;
+
+              // console.log(itemData?.itemAttribute?.vegClassifier)
+
+              if (itemData?.itemAttribute?.vegClassifier === "VEG") itemsVegCount++;
+              if (itemData?.itemAttribute?.vegClassifier === "NONVEG") itemsNonVegCount++;
+              
+              return <ItemsCardContainer
+                key={itemData?.id}
+                item={itemData}
+                isParentOpen={isOpen}
+              />;
+            })}
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, lazy, Suspense, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCurrentRestaurant, selectMenuItems, toggleMenuModel, selectMenuModel} from "../../features/home/restaurantsSlice";
+import { addCurrentRestaurant, selectMenuItems, toggleMenuModel, selectMenuModel } from "../../features/home/restaurantsSlice";
 import { useParams } from "react-router-dom";
 
 import Banner from "./Banner";
@@ -16,7 +16,7 @@ import Menu from "./Menu";
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
-  const [ showMenu, setShowMenu ] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const cards = data?.data?.cards;
   const title = cards?.[0].card?.card?.text;
@@ -25,7 +25,7 @@ const MainContent = ({ data, routes = true }) => {
   const menu = cards
     ?.at(-1)
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1) || [];
-  
+
   const menuModel = useSelector(selectMenuModel);
 
   useEffect(() => {
@@ -75,7 +75,7 @@ const MainContent = ({ data, routes = true }) => {
   });
 
   return (
-    <div className="flex items-center flex-col pt-18 md:pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px] scroll-smooth" style={{overflow: showMenu ? "hidden" : "auto"}}>
+    <div className="flex items-center flex-col pt-18 md:pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px] scroll-smooth">
       {routes && (
         <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
           <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"} />
@@ -120,13 +120,14 @@ const MainContent = ({ data, routes = true }) => {
         )}
       </section>
 
-      <hr className="mb-4 mt-6 w-full text-gray-500" />
+        <hr className="mb-4 mt-6 w-full text-gray-500" />
+
 
       {/* Sorting */}
       <SortingButtons />
 
       {/* Menu */}
-      {menuModel && <Menu clickHandler={setShowMenu}/>}
+      {menuModel && <Menu clickHandler={setShowMenu} />}
 
       <section className="w-full md:max-w-[775px] mt-4 first:border-t-gray-200 first:border-t-[16px]">
         {restMenuData?.length > 0 &&
@@ -173,8 +174,9 @@ const MainContent = ({ data, routes = true }) => {
       </footer>
 
       {/* menu button */}
-      <button onClick={() => dispatch(toggleMenuModel())} className="fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] py-4 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out"
-        >
+      <button onClick={() => dispatch(toggleMenuModel())} className="fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] py-4 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out" 
+      style={{marginRight: menuModel ? "15px" : "0"}}
+      >
         MENU
       </button>
     </div>

@@ -23,7 +23,7 @@ const Scrollbar = memo(({
 
   return (
     <div
-      className="w-full flex justify-center"
+      className={`w-full flex justify-center`}
       style={{ marginTop: `${marginTop}px` }}
     >
       <div
