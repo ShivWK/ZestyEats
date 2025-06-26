@@ -105,7 +105,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
         </div>
         {(overFlow && !isOpen) && (
           <span
-            className="inline-flex w-fit gap-2 items-center font-bold text-gray-600 cursor-pointer -mt-3"
+            className="inline-flex w-fit gap-2 items-center font-bold text-gray-600 cursor-pointer -mt-4"
             onClick={() => setIsOpen(!isOpen)}
           >
             ...more

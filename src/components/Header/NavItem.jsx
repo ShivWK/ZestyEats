@@ -13,7 +13,7 @@ const NavItem = memo(
           }}
           onClick={onClick}
         >
-          <i className={`fa-solid ${icon} group-hover:text-[#ff5200] ${(text !== "Help" || text !== "About" || text !== "Cart") && "max-md:text-xl"}`}></i>
+          <i className={`fa-solid ${icon} group-hover:text-[#ff5200] transform group-hover:translate-x-1 transition-transform duration-150 ease-linear ${(text !== "Help" || text !== "About" || text !== "Cart") && "max-md:text-xl"}`}></i>
           <span className="relative group-hover:text-[#ff5200] hidden md:block">
             {text}
             {superScript ? (
