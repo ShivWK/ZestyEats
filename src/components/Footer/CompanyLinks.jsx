@@ -11,7 +11,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
   return (
     <div className="flex gap-8 md:gap-20 max-md:mt-3 max-md:px-1">
       <div id="Available_in">
-        <p className="font-medium text-lg text-black mb-3">Currently Serving In:</p>
+        <p className="font-medium text-lg text-black mb-3">Available In:</p>
         <ul className="list-none text-gray-900 font-normal">
           {first6Cities.map((city) => {
             const path = city.text.toLowerCase().replace(/\s/g, "-");

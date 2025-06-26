@@ -219,12 +219,12 @@ export default function Layout() {
       <PageHeader />
       <Outlet />
       {isLoginOpen && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense >
           <LoginModal />
         </Suspense>
       )}
       {isLocationOpen && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense >
           <LocationModal />
         </Suspense>
       )}
