@@ -160,7 +160,7 @@ export default function Layout() {
     const isLargeScreen = window.innerWidth >= 768;
     console.log(menuModel)
 
-    if (isLargeScreen) {
+    if (isLargeScreen || true) {
       if (body.clientHeight >= body.scrollHeight) {
         body.style.paddingRight = "15px";
       }
