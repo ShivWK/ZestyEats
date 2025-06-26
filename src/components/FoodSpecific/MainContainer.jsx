@@ -1,12 +1,15 @@
 import Cards from "./../Home/Cards";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentFoodCategory } from "./../../features/header/headerSlice";
+import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import { useEffect } from "react";
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 import Filter from "../Home/OnlineDeliveryRestaurants/Filters";
 
 const MainContainer = ({ data }) => {
   const dispatch = useDispatch();
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
+
   const cards = data?.data?.cards;
   const banner = cards?.[0]?.card?.card;
   const title = banner?.title;
@@ -16,6 +19,7 @@ const MainContainer = ({ data }) => {
     "type.googleapis.com/swiggy.gandalf.widgets.v2.InlineViewFilterSortWidget",
     "type.googleapis.com/swiggy.gandalf.widgets.v2.GridWidget",
   ];
+
   const mainData = cards?.filter((obj) => {
     const type = obj?.card?.card?.["@type"];
     return type && !unwantedTypes.includes(type);
@@ -51,6 +55,10 @@ const MainContainer = ({ data }) => {
       <div className="flex justify-center">
         <div className="flex w-full gap-9 p-1 flex-wrap">
           {dataToSend.map((item, index) => {
+           
+            if (!vegOption && item.veg) return;
+            if (!nonVegOption && !item.veg) return;
+
             return <Cards key={index} data={item} from="specificFood" />;
           })}
         </div>

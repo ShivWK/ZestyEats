@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { memo } from "react";
 import ItemCard2 from "./ItemCard2";
 import {
   selectVegVariant
@@ -6,17 +6,13 @@ import {
 import { useSelector } from "react-redux";
 
 const ItemsCardContainer = memo(({ item, isParentOpen }) => {
-  const [isError, setIsError] = useState(false);
   const { vegOption, nonVegOption } = useSelector(selectVegVariant)
   const veg = item?.itemAttribute?.vegClassifier === "VEG";
 
-  return veg ? (
-    vegOption ? (
-      <ItemCard2 item={item} isParentOpen={isParentOpen} />
-    ) : null
-  ) : nonVegOption ? (
-    <ItemCard2 item={item} isParentOpen={isParentOpen}/>
-  ) : null;
+  if (!vegOption && veg) return;
+  if (!nonVegOption && !veg) return;
+
+  return <ItemCard2 item={item} isParentOpen={isParentOpen} />;
 });
 
 export default ItemsCardContainer;

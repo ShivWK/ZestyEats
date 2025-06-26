@@ -13,6 +13,7 @@ import {
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import Ui3Shimmer from "./Ui3Shimmer";
 import Filter from "../Home/OnlineDeliveryRestaurants/Filters";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 const Card = ({ data, lat, lng }) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
@@ -161,6 +162,7 @@ const Card = ({ data, lat, lng }) => {
 };
 
 const MainContent = ({ data, lat, lng, mode }) => {
+    useScrollToTop();
     const { vegOption, nonVegOption } = useSelector(selectVegVariant);
 
     // console.log(data);

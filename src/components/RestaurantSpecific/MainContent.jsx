@@ -96,7 +96,7 @@ const MainContent = ({ data, routes = true }) => {
       </section>
 
       {/* Search */}
-      <section className="w-full max-w-[775px] my-3 md:my-6">
+      <section className="w-full max-w-[775px] my-3 md:my-4">
         <SearchBar lat={lat} lng={lng} restro_Id={id} name={title} />
       </section>
 
@@ -120,8 +120,7 @@ const MainContent = ({ data, routes = true }) => {
         )}
       </section>
 
-        <hr className="mb-4 mt-6 w-full text-gray-500" />
-
+      <hr className="mb-4 mt-6 w-full text-gray-500" />
 
       {/* Sorting */}
       <SortingButtons />

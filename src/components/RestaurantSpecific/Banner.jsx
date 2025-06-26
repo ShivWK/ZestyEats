@@ -29,11 +29,11 @@ const Banner = ({ data }) => {
             <p className="font-bold">{mainData?.costForTwoMessage}</p>
             <p className="text-gray-500 hidden md:block">•</p>
             {veg ? (
-              <Suspense fallback={<p className="flex items-center"><span>•••</span></p>}>
+              <Suspense fallback={<p className="hidden md:flex items-center"><span>•••</span></p>}>
                 <PureVegSvg classes="-ml-3.5 hidden md:block" />
               </Suspense>
             ) : (
-              <Suspense fallback={<p className="flex items-center"><span>•••</span></p>}>
+              <Suspense fallback={<p className="hidden md:flex items-center"><span>•••</span></p>}>
                 <VegAndNonVegSvg classes="hidden md:inline-flex pl-1 my-1 py-0.5 pr-2" />
               </Suspense>
             )}
@@ -68,12 +68,12 @@ const Banner = ({ data }) => {
           </div>
         </div>
         {veg ? (
-          <Suspense fallback={<p className="flex items-center"><span>•••</span></p>}>
+          <Suspense fallback={<p className="flex md:hidden items-center"><span>•••</span></p>}>
             <PureVegSvg classes="-ml-1.5 mb-1 -mt-2 max-md:block hidden" />
           </Suspense>
 
         ) : (
-          <Suspense fallback={<p className="flex items-center"><span>•••</span></p>}>
+          <Suspense fallback={<p className="flex md:hidden items-center"><span>•••</span></p>}>
             <VegAndNonVegSvg classes="hidden max-md:inline-flex pl-1 my-1 ml-3 pr-2 py-1 mb-2" />
           </Suspense>
         )}

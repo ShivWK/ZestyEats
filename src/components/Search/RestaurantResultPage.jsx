@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import { Suspense, useState } from "react";
 import Ui4Shimmer from "./Ui4Shimmer";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 const Card = ({ data, lat, lng }) => {
   const [isError, setIsError] = useState(false);
@@ -71,6 +72,7 @@ const Card = ({ data, lat, lng }) => {
 };
 
 const MainContent = ({ data, lat, lng, mode }) => {
+  useScrollToTop();
   const cards =
     mode === "parent"
       ? data?.data?.data?.cards?.[1]?.groupedCard?.cardGroupMap?.RESTAURANT
