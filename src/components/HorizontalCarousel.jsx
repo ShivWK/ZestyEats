@@ -73,7 +73,7 @@ const HorizontalCarousel = memo(({
     });
 
     return () => clearInterval(scrollInterval);
-  }, [dataToMap, clicked.current])
+  }, [dataToMap])
 
   
 
