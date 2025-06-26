@@ -13,6 +13,7 @@ const TopPicksCards = lazy(() => import("./TopPicksCards"));
 const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 import Menu from "./Menu";
+import Filter from "../Home/Filters";
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
@@ -123,7 +124,8 @@ const MainContent = ({ data, routes = true }) => {
       <hr className="mb-4 mt-6 w-full text-gray-500" />
 
       {/* Sorting */}
-      <SortingButtons />
+      {/* <SortingButtons /> */}
+      <Filter text1="Veg" text2="Non Veg" />
 
       {/* Menu */}
       {menuModel && <Menu clickHandler={setShowMenu} />}
