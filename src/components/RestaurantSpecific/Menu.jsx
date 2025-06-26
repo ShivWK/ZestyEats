@@ -51,3 +51,6 @@ const Menu = () => {
 };
 
 export default Menu;
+
+
+// in mobile screen make sure when menu model is open the it can be closed by back button click , current when back button is clicked the complete page get backed.

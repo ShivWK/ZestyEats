@@ -92,6 +92,10 @@
     }
 }
 
+body {
+    scrollbar-gutter: stable both-edges;
+}
+
 .progress-style {
     background-color: black;
 }
