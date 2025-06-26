@@ -54,7 +54,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                   onClick={(e) => {
                     setTheme("Light");
                   }}
-                  className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                  className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
                   style={{
                     backgroundColor: theme === "Light" ? "#e5e7eb" : "",
                     color: theme === "Light" ? "black" : ""
@@ -67,7 +67,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                   onClick={(e) => {
                     setTheme("Dark");
                   }}
-                  className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                  className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
                   style={{
                     backgroundColor: theme === "Dark" ? "#e5e7eb" : "",
                     color: theme === "Dark" ? "black" : ""
@@ -80,7 +80,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                   onClick={(e) => {
                     setTheme("System");
                   }}
-                  className="flex gap-2 items-center py-1 px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                  className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
                   style={{
                     backgroundColor: theme === "System" ? "#e5e7eb" : "",
                     color: theme === "System" ? "black" : ""
