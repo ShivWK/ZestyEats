@@ -120,7 +120,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             onClick={handleSignIn}
             className="group flex items-center justify-between gap-3 hover:cursor-pointer :hover:font-[#ff5200]"
           >
-            <i className="fas fa-sign-in text-lg group-hover:text-[#ff5200]"></i>
+            <i className="fas fa-sign-in text-lg group-hover:text-[#ff5200] transform group-hover:translate-x-1 transition-transform duration-150 ease-linear"></i>
             <span className="relative group-hover:text-[#ff5200] hidden md:block">Sign In</span>
           </button>
         )}
