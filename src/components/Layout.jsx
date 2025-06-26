@@ -158,7 +158,6 @@ export default function Layout() {
     const body = document.body;
 
     const isLargeScreen = window.innerWidth >= 768;
-    console.log(menuModel)
 
     if (isLargeScreen || true) {
       if (body.clientHeight >= body.scrollHeight) {
@@ -167,7 +166,7 @@ export default function Layout() {
 
       if (isLoginOpen || isLocationOpen || menuModel) {
         body.classList.add("overflow-hidden");
-        body.style.paddingRight = scrollbarWidth;
+        body.style.paddingRight = isLargeScreen ? scrollbarWidth : 0;
       } else {
         body.classList.remove("overflow-hidden");
         body.style.paddingRight = "0px";
