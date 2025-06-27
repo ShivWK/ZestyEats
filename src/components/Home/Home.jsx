@@ -61,7 +61,7 @@ const Home = memo(() => {
     </>
 
   ) : (
-    <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-[88px] md:pt-26 overflow-x-hidden max-md:px-1.5">
+    <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-14 pt-[88px] md:pt-26 overflow-x-hidden max-md:px-1.5">
 
       {/* dev msg */}
 
