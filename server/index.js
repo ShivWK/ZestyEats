@@ -36,10 +36,17 @@ mongoose.connect(process.env.MONGOOSE_URI)
   process.exit(1);
 })
 
-
 app.get("/", (req, res) => {
   res.status(500).send(`Swiggy Proxy API is running.`);
 });
+
+app.get("/wake-up", (req, res) => {
+  console.log("Wake up call");
+  res.status(200).json({
+    status: "success",
+    message: "I'm awake"
+  })
+})
 
 app.use("/api/swiggy", swiggyRouter);
 app.use("/api/user", userRouter);
