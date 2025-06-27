@@ -8,7 +8,7 @@ const FilterButton = ({ applied, Icon, text, handler, bgColor }) => {
   return (
     <div
       onClick={handler}
-      className={`flex justify-between gap-2 px-3 py-1.5 items-center text-sm font-medium text-gray-900 text-green rounded-3xl w-fit border-2 ${!applied ? "bg-white text-gray-800" : bgColor === "green" ? "bg-green-400 text-white" : "bg-red-400 text-white"} border-gray-300 transform cursor-pointer transition-["width", "transform"] duration-150 ease-linear active:scale-95`}
+      className={`flex justify-between gap-2 px-3 py-1.5 items-center text-sm font-medium text-gray-900 text-green rounded-3xl w-fit border-2 ${!applied ? "bg-white text-gray-800" : bgColor === "green" ? "bg-green-500 text-white" : "bg-red-400 text-white"} border-gray-300 transform cursor-pointer transition-["width", "transform"] duration-150 ease-linear active:scale-95`}
     >
       <Icon veg={applied} nonVeg={applied} />
       <p className="select-none">{text}</p>

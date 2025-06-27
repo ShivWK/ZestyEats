@@ -40,9 +40,6 @@ export default function Layout() {
   const dispatch = useDispatch();
   useTrackNavigation();
 
-  const text = "Swiggy was swiggy and will be swiggy"
-  console.log(textToZestyEats(text));
-
   const fetchDefaultHomeAPIData = async () => {
     try {
       let apiResponse = await triggerHomeAPI({

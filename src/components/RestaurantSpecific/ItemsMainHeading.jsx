@@ -161,8 +161,6 @@ const ItemsMainHeading = ({
             {items.map((item) => {
               const itemData = item?.card?.info;
 
-              // console.log(itemData?.itemAttribute?.vegClassifier)
-
               if (itemData?.itemAttribute?.vegClassifier === "VEG") itemsVegCount++;
               if (itemData?.itemAttribute?.vegClassifier === "NONVEG") itemsNonVegCount++;
               

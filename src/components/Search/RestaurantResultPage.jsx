@@ -80,8 +80,12 @@ const MainContent = ({ data, lat, lng, mode }) => {
       : data?.data?.data?.cards?.[0]?.groupedCard?.cardGroupMap?.RESTAURANT
         ?.cards;
 
+  // console.log("cards", cards)
+
   const clickedRestro = cards?.[0]?.card?.card?.info;
+
   const moreRestrosCardContainer = cards?.[1]?.card?.card;
+
   const moreText = moreRestrosCardContainer?.title;
   const moreRestros = moreRestrosCardContainer?.restaurants?.map(
     (data) => data.info
@@ -89,7 +93,9 @@ const MainContent = ({ data, lat, lng, mode }) => {
 
   const tabRestaurantData = cards?.map((data) => data?.card?.card?.info);
 
-  console.log(tabRestaurantData)
+  // console.log(tabRestaurantData)
+  // console.log("Cicked", clickedRestro)
+  // console.log("more", moreText, moreRestros)
 
   return (
     <div className="p-3 pt-18 w-full bg-gray-100 flex flex-col">

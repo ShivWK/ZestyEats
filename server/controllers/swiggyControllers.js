@@ -334,6 +334,10 @@ exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
     },
   });
 
+  //https://www.swiggy.com/dapi/restaurants/search/v3?lat=28.7040592&lng=77.10249019999999&str=Pizza&trackingId=undefined&submitAction=SUGGESTION&queryUniqueId=56d33ab0-e59a-ddc7-a35a-f27cd23f4091&metaData=%7B%22type%22%3A%22RESTAURANT%22%2C%22data%22%3A%7B%22parentId%22%3A158220%2C%22primaryRestaurantId%22%3A1040462%2C%22cloudinaryId%22%3A%22RX_THUMBNAIL%2FIMAGES%2FVENDOR%2F2025%2F2%2F6%2F7edd818b-f30b-47d5-a2dd-ef74af7474ae_1040462.jpg%22%2C%22brandId%22%3A158220%2C%22dishFamilyId%22%3A%22846647%22%2C%22enabled_flag%22%3A1%7D%2C%22businessCategory%22%3A%22SWIGGY_FOOD%22%2C%22displayLabel%22%3A%22Restaurant%22%7D
+
+  // https://swiggy-clone-klzu.onrender.com/api/zestyeats/suggested-data?lat=28.7040592&lng=77.10249019999999&str=Pizza&metadata=%7B%22type%22%3A%22RESTAURANT%22%2C%22data%22%3A%7B%22parentId%22%3A158220%2C%22primaryRestaurantId%22%3A1040462%2C%22cloudinaryId%22%3A%22RX_THUMBNAIL%2FIMAGES%2FVENDOR%2F2025%2F2%2F6%2F7edd818b-f30b-47d5-a2dd-ef74af7474ae_1040462.jpg%22%2C%22brandId%22%3A158220%2C%22dishFamilyId%22%3A%22846647%22%2C%22enabled_flag%22%3A1%7D%2C%22businessCategory%22%3A%22SWIGGY_FOOD%22%2C%22displayLabel%22%3A%22Restaurant%22%7D
+
   const origin = req.headers.origin;
 
   res.set({

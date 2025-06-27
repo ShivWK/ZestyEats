@@ -4,6 +4,7 @@ import {
   selectVegVariant
 } from "../../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import textToZestyEats from "../../utils/textToZestyEats";
 
 const Menu = () => {
   const menuItems = useSelector(selectMenuItems);
@@ -23,7 +24,7 @@ const Menu = () => {
         <div className="pretty-scrollbar text-gray-300 max-h-80 overflow-auto px-3">
           {menuItems.length > 0 ? (
             menuItems.map((item) => {
-              console.log(item)
+              // console.log(item)
               if (!vegOption && item.veg) return;
               if (!nonVegOption && item.nonVeg) return;
 
@@ -36,7 +37,7 @@ const Menu = () => {
                   onClick={() => clickHandler(path)}
                   className="block py-2 w-full font-bold text-white hover:bg-gray-400 active:bg-gray-400 px-4 rounded-lg"
                 >
-                  <p>{item.title}</p>
+                  <p>{textToZestyEats(item.title)}</p>
                 </button>
               );
             })

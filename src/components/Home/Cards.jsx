@@ -8,6 +8,7 @@ import {
 import { memo, useState } from "react";
 import PureVeg from "../../utils/PureVegSvg";
 import VegAndNonVeg from "../../utils/VegAndNonVegSvg";
+import textToZestyEats from "../../utils/textToZestyEats";
 
 const Cards = memo(({ data, from }) => {
   const { lat, lng } = useSelector(selectLatAndLng);
@@ -38,15 +39,15 @@ const Cards = memo(({ data, from }) => {
       className={`flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${from === "online" ? "md:w-[240px]" : from === "specificFood" ? "md:w-[360px]" : "md:w-[275px]"}`}
     >
       <div
-        className={`relative w-full max-md:basis-1/2 h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2 shrink-0 max-md:max-h-full max-md:min-h-56 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${from === "online" ? "md:h-[160px]" : from === "specificFood" ? "md:h-[240px]" : "md:h-[176]"}`}
+        className={`relative w-full max-md:basis-1/2 h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2 shrink-0 max-md:max-h-full max-md:min-h-56 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${from === "online" ? "md:h-[160px]" : from === "specificFood" ? "md:h-[240px]" : "md:h-[180px]"}`}
         style={{
           backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl}), url("/images/fallback.png")`,
         }}
       >
         <p className="font-bold text-white text-xl">
-          {(data.aggregatedDiscountInfoV3?.header || "") +
+          {(textToZestyEats(data.aggregatedDiscountInfoV3?.header) || "") +
             " " +
-            (data.aggregatedDiscountInfoV3?.subHeader || "")}
+            (textToZestyEats(data.aggregatedDiscountInfoV3?.subHeader) || "")}
         </p>
         <div
           className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-full p-0.5"
@@ -66,7 +67,7 @@ const Cards = memo(({ data, from }) => {
         </div>
       </div>
       <div className="md:mt-2 w-[95%] max-md:basis-1/2 max-md:py-2">
-        <p className="font-bold text-[17px] line-clamp-3">{data?.name || ""}</p>
+        <p className="font-bold text-[17px] line-clamp-3">{textToZestyEats(data?.name) || ""}</p>
         <div className="flex gap-1 items-center -mt-0.5">
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
           <p className="font-semibold">{data?.avgRatingString || ""}</p>

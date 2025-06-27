@@ -39,6 +39,7 @@ import CityHome from "./components/cityHome/CityHome";
 
 import { specificRestroLoader, specificFoodLoader, specificCityLoader } from "./loaders/loaders";
 import { searchHomeLoader, searchSuggestionsLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
+import CuisinesResultPage from "./components/Search/CuisinesResultPage";
 
 export default function App() {
 
@@ -67,6 +68,7 @@ export default function App() {
           <Route path="searchResult" element={<SearchResult />} >
             <Route path="restaurantPage" loader={resultDataLoader} element={<RestaurantResultPage />} />
             <Route path="dishPage" loader={resultDataLoader} element={<DishResultPage />} />
+            <Route path="cuisinesPage" loader={resultDataLoader} element={<CuisinesResultPage />} />
           </Route>
         </Route>
         <Route

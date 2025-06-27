@@ -1,4 +1,5 @@
 import { useState, useRef, memo, useEffect } from "react";
+import textToZestyEats from "../../utils/textToZestyEats";
 
 const ItemCard2 = memo(({ item, isParentOpen }) => {
   const [isError, setIsError] = useState(false);
@@ -79,7 +80,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
             <polygon points="50,20 78.86,70 21.14,70" fill="red" />
           </svg>
         )}
-        <p className="text-gray-800 font-bold text-lg">{item?.name}</p>
+        <p className="text-gray-800 font-bold text-lg">{textToZestyEats(item?.name)}</p>
         <div>{price}</div>
         {ratingObject.rating && (
           <div className="flex items-center gap-1">
@@ -101,7 +102,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
             height: isOpen ?  `${paraSize}px` ?? "200px" : "42px",
           }}
         >
-          <p ref={paraRef} className="text-black text-sm text-wrap">{item?.description}</p>
+          <p ref={paraRef} className="text-black text-sm text-wrap">{textToZestyEats(item?.description)}</p>
         </div>
         {(overFlow && !isOpen) && (
           <span

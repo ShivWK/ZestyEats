@@ -14,13 +14,14 @@ const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 import Menu from "./Menu";
 import Filter from "../Home/Filters";
+import textToZestyEats from "../../utils/textToZestyEats";
 
 const MainContent = ({ data, routes = true }) => {
   const { lat, lng, id } = useParams();
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const cards = data?.data?.cards;
-  const title = cards?.[0].card?.card?.text;
+  const title = textToZestyEats(cards?.[0].card?.card?.text);
   const banner = useMemo(() => cards?.[2], [cards]);
   const offers = useMemo(() => cards?.[3], [cards]);
   const menu = cards
@@ -78,7 +79,7 @@ const MainContent = ({ data, routes = true }) => {
   return (
     <div className="flex items-center flex-col pt-18 md:pt-24 px-2.5 md:px-0 mx-auto w-full md:max-w-[800px] scroll-smooth">
       {routes && (
-        <div className="mt-3.5 mb-3 self-start text-sm font-semibold">
+        <div className="mt-3.5 mb-3 self-start text-sm font-semibold w-full overflow-auto hide-scrollbar">
           <BreadcrumbsWrapper normalTextColor={"#4a5565"} mainTextColor={"#101828"} delimiterColor={"text-gray-600"} />
         </div>
       )}
@@ -143,7 +144,7 @@ const MainContent = ({ data, routes = true }) => {
                 >
                   <ItemsMainHeading
                     key={item?.card?.card?.categoryId || Math.random()}
-                    heading={item?.card?.card?.title}
+                    heading={textToZestyEats(item?.card?.card?.title)}
                     categories={item?.card?.card?.categories}
                     topBorder={index === 0}
                     borderBottom={index === restMenuData.length - 1}
@@ -160,7 +161,7 @@ const MainContent = ({ data, routes = true }) => {
               >
                 <ItemsMainHeading
                   key={item?.card?.card?.categoryId || Math.random()}
-                  heading={item?.card?.card?.title}
+                  heading={textToZestyEats(item?.card?.card?.title)}
                   items={item?.card?.card?.itemCards}
                   topBorder={index === 0}
                   borderBottom={index === restMenuData.length - 1}
