@@ -44,7 +44,7 @@ const Home = memo(() => {
       dataUpdater(data, dispatch);
     } catch (err) {
       console.log("Some error occurred", err);
-      setLoading(false);
+      dispatch(setLoading(false));
       throw new Error("Cant fetch city home data");
     }
   }

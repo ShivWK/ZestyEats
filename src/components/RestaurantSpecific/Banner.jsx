@@ -1,14 +1,34 @@
 import { NavLink } from "react-router-dom";
 import { selectCity } from "../../features/home/homeSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Suspense, lazy } from "react";
 const PureVegSvg = lazy(() => import("../../utils/PureVegSvg"));
 const VegAndNonVegSvg = lazy(() => import("../../utils/VegAndNonVegSvg"));
+import updateCityHomeData from "../../utils/updateCityHomeData";
+import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
 
 const Banner = ({ data }) => {
   const mainData = data?.card?.card?.info;
   const veg = mainData?.veg;
   const searchedCity = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
+
+  const dispatch = useDispatch();
+  const [trigger] = useLazyGetDataForCityLocalityCuisineQuery()
+
+  const clickHandler = async (city, cityPath, cuisine) => {
+    dispatch(setSecondaryCity(city));
+    dispatch(setCityPageLoading(true));
+
+    try {
+      const data = await trigger({ city: cityPath, type: cuisine }).unwrap();
+      updateCityHomeData(data, dispatch);
+    } catch (err) {
+      console.log("Cant fetch cuisine data", err);
+      dispatch(setCityPageLoading(false));
+      throw new Error("Cant fetch cuisine data");
+    }
+  }
 
   return (
     <div
@@ -46,10 +66,13 @@ const Banner = ({ data }) => {
               mainData?.cuisines?.map((text, index, array) => {
                 if (index == array.length - 1) {
                   const cuisine = text.toLowerCase().replace(/\s/g, "-") + "-cuisine-";
-                  return <NavLink to={`/cityPage/${searchedCity}&type=${cuisine}`} key={text}>{text}</NavLink>;
+                  const showCuisine = text.toLowerCase().replace(/\s/g, "-");
+                  return <NavLink to={`/cityPage/${searchedCity}?mode=cuisine?type=${showCuisine}`} key={text} onClick={() => clickHandler(text, searchedCity, cuisine)}>{text}</NavLink>;
                 }
                 const cuisine = text.toLowerCase().replace(/\s/g, "-") + "-cuisine-";
-                return <NavLink to={`/cityPage/${searchedCity}&type=${cuisine}`} key={text}>{`${text} ,`}</NavLink>;
+                  const showCuisine = text.toLowerCase().replace(/\s/g, "-");
+
+                return <NavLink to={`/cityPage/${searchedCity}?mode=cuisine?type=${showCuisine}`} key={text} onClick={() => clickHandler(text, searchedCity, cuisine)}>{`${text} ,`}</NavLink>;
               })}
           </div>
           <div id="delivery" className="flex gap-2 mt-2">

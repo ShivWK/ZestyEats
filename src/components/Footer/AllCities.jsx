@@ -1,13 +1,31 @@
 import { NavLink } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
 import { memo } from "react";
+import updateCityHomeData from "../../utils/updateCityHomeData";
 
 const AllCities = memo(() => {
   const cities = useSelector(selectAvailableCities);
+  const [ trigger ] = useLazyGetDataForCityLocalityCuisineQuery();
   const citiesToPrint = cities.slice(6);
   const dispatch = useDispatch();
+
+  const clickHandler = async (city, cityPath) => {
+    console.log("Hit")
+    dispatch(setSecondaryCity(city));
+    dispatch(setCityPageLoading(true));
+
+    try {
+      const data = await trigger({city: cityPath}).unwrap();
+      updateCityHomeData(data, dispatch);
+    } catch (err) {
+      console.log("Cant fetch city data", err);
+      dispatch(setCityPageLoading(false));
+      throw new Error("Cant fetch city data");
+    }
+  }
 
   return (
     <div className="w-full md:max-w-[1210px] max-md:px-1.5 ">
@@ -18,7 +36,7 @@ const AllCities = memo(() => {
             const path = city.text.toLowerCase().replace(/\s/g, "-");
 
             return <li key={city.link} className="mb-2">
-              <NavLink to={`/cityPage?city=${path}`} onClick={() => {dispatch(setSecondaryCity(city.text))}}>{city.text}</NavLink>
+              <NavLink to={`/cityPage/${city?.text}?mode=city`} onClick={() => clickHandler(city?.text, path)}>{city.text}</NavLink>
             </li>;
           })}
         </ul>
