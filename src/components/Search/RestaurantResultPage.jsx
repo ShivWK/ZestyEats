@@ -98,7 +98,7 @@ const MainContent = ({ data, lat, lng, mode }) => {
   // console.log("more", moreText, moreRestros)
 
   return (
-    <div className="p-3 pt-18 w-full bg-gray-100 flex flex-col">
+    <div className="p-3 pt-18 w-full bg-gray-200 flex flex-col">
       {mode === "parent" ? (
         <>
           {clickedRestro && (

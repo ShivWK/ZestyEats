@@ -34,7 +34,7 @@ const MainContent = () => {
     const popularDishesData = data.popularDishInCityData;
 
     return (
-        <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-24 md:pt-28 overflow-x-hidden max-md:px-1.5">
+        <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
             {/* /Banner Image */}
 
             <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:bg-right">

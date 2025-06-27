@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
 const LoginModal = lazy(() => import("./Login/LoginModal"));
@@ -29,6 +29,7 @@ import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSli
 import { updateCurrentCity } from "../utils/addCurrentCity";
 import textToZestyEats from "../utils/textToZestyEats";
 import updateCityHomeData from "../utils/updateCityHomeData";
+import MobileFooterMenu from "./Footer/MobileFooterMenu";
 // import { useGetDishInCityDataQuery, useGetDataForCityLocalityCuisineQuery } from "../features/cityHome/cityHomeApiSlice";
 
 export default function Layout() {
@@ -39,6 +40,7 @@ export default function Layout() {
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
+  const pathname = useLocation().pathname;
   useTrackNavigation();
 
   const fetchDefaultHomeAPIData = async () => {
@@ -233,6 +235,7 @@ export default function Layout() {
         </Suspense>
       )}
       <PageFooter />
+      {pathname === "/" && <MobileFooterMenu />}
     </>
   );
 }

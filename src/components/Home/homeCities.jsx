@@ -76,7 +76,7 @@ const HomeCities = () => {
                     )}
                 </div>
                 {matchedCities.length !== 0
-                    ? <div className="flex flex-wrap justify-start gap-y-5 md:gap-x-8 gap-x-2.5">
+                    ? <div className="flex flex-wrap justify-around w-full gap-y-5 md:gap-x-8 gap-x-2.5">
                         {matchedCities.map(place => (
                             <PlaceCards key={place?.text + Math.random()} data={place} clickHandler={cityClickHandler} path={"DIY"} />
                         ))
