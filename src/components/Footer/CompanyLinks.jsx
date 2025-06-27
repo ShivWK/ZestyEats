@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { memo } from "react";
@@ -8,6 +8,7 @@ import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHo
 
 const CompanyLinks = memo(({ isOpen, openCities }) => {
   const [ trigger ] = useLazyGetDataForCityLocalityCuisineQuery();
+  const pathname = useLocation().pathname;
   const cities = useSelector(selectAvailableCities);
   const first6Cities = cities.slice(0, 6);
   const remainingCities = cities.length - 6;
@@ -40,7 +41,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
             </li>
           })}
         </ul>
-        <div
+        {pathname !== "/" && <div
           onClick={() => openCities(!isOpen)}
           id="moreCities"
           className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100 w-fit"
@@ -55,7 +56,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
               transform: isOpen ? "rotate(-180deg)" : "",
             }}
           ></i>
-        </div>
+        </div>}
       </div>
 
       <div id="legal">

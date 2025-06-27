@@ -9,6 +9,7 @@ const OnlineDeliveryRestaurant = lazy(() =>
 );
 const TopRestaurantChains = lazy(() => import("./TopRestaurantChains"));
 const PlaceCardsContainer = lazy(() => import("./PlaceCardsContainer"));
+const HomeCities = lazy(() => import("./homeCities"));
 
 import {
   selectFoodieThoughtsData,
@@ -16,6 +17,7 @@ import {
   selectOnlineDeliveryRestaurants,
   selectIsLoading,
   selectBestCuisionsNearMe,
+  selectAvailableCities,
   selectCity
 } from "../../features/home/homeSlice";
 
@@ -28,6 +30,7 @@ const Home = memo(() => {
   const onlineDeliveryRestaurantData = useSelector(selectOnlineDeliveryRestaurants);
   const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
   const isLoadingMain = useSelector(selectIsLoading);
+  const allAvailableCities = useSelector(selectAvailableCities);
   const city = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
@@ -139,11 +142,7 @@ const Home = memo(() => {
 
       {/* All available cities in which we server */}
 
-      {/* {nearByRestaurants.length !== 0 && (
-        <section
-          className="w-full max-w-[1000px] mx-auto flex justify-start gap-4 
-         flex-col"
-        >
+      {allAvailableCities.length !== 0 && (
           <Suspense
             fallback={
               <div className="flex justify-between">
@@ -151,11 +150,9 @@ const Home = memo(() => {
               </div>
             }
           >
-            <NearByRestaurants />
+            <HomeCities />
           </Suspense>
-        </section>
-      )} */}
-
+      )}
     </main>
   );
 });

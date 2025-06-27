@@ -102,7 +102,7 @@ const MainContent = () => {
             {localitiesData?.length !== 0 && (
                 <>
                     <section
-                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
                     >
                         <Suspense
@@ -124,7 +124,7 @@ const MainContent = () => {
             {whatEatingCuisineData?.length !== 0 && (
                 <>
                     <section
-                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
                     >
                         <Suspense
@@ -146,7 +146,7 @@ const MainContent = () => {
             {restaurantChainInCityData?.length !== 0 && (
                 <>
                     <section
-                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
                     >
                         <Suspense
@@ -168,7 +168,7 @@ const MainContent = () => {
             {popularDishesData?.length !== 0 && (
                 <>
                     <section
-                        className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
                     >
                         <Suspense
@@ -191,7 +191,7 @@ const MainContent = () => {
 const CityHome = () => {
     useScrollToTop();
     const dispatch = useDispatch();
-    const { cityName:city } = useParams();
+    const { cityName: city } = useParams();
     const loading = useSelector(selectCityLoading);
 
     useEffect(() => {
@@ -199,7 +199,7 @@ const CityHome = () => {
     }, []);
 
     return loading ? <ShimmerContainer />
-    : <MainContent  />
+        : <MainContent />
 };
 
 export default CityHome;

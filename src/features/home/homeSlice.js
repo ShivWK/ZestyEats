@@ -16,7 +16,7 @@ const initialState = {
   onlineDeliveryTitle: "Restaurants with online food delivery in Bangalore",
   isLoading: true,
   isOnline: true,
-  availableInCityies: [],
+  availableInCities: [],
   pathHistory: [],
   userFriendlyPathHistory: [],
 };
@@ -102,7 +102,7 @@ const homeSlice = createSlice({
             "type.googleapis.com/swiggy.seo.widgets.v1.FooterContent"
         )?.card?.card?.cities || [];
 
-      state.availableInCityies = result;
+      state.availableInCities = result;
     },
 
     addTopRestaurantsTitle: (state, action) => {
@@ -190,7 +190,7 @@ export const selectOnlineDeliveryTitle = (state) =>
   state.home.onlineDeliveryTitle;
 export const selectBestCuisionsNearMe = (state) => state.home.bestNearCuisions;
 export const selectOnlineStatus = (state) => state.home.isOnline;
-export const selectAvailableCities = (state) => state.home.availableInCityies;
+export const selectAvailableCities = (state) => state.home.availableInCities;
 export const selectPathHistory = (state) => state.home.pathHistory;
 export const selectUserFriendlyPathHistory = (state) =>
   state.home.userFriendlyPathHistory;

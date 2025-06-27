@@ -27,13 +27,13 @@ const SearchContainer = ({
             delimiterColor={"text-gray-600"}
           />
         </div>
-        <div id="searchBAr" className="flex w-full items-center gap-1.5 p-2.5 py-1.5 border-b-2 rounded-md bg-gray-200 ">
+        <div id="searchBAr" className="flex w-full items-center gap-1.5 p-2.5 py-1.5 border-b-2 rounded-md bg-gray-100 ">
           <i
             onClick={() => navigate(-1)}
             className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"
           ></i>
             <input
-              className="text-gray-900 py-1.5 px-2 outline-none bg-transparent text-lg font-semibold basis-[95%]"
+              className="text-gray-900 py-1 md:py-1.5 px-2 outline-none bg-transparent text-lg font-semibold basis-[95%]"
               type="text"
               value={searchTerm}
               onChange={handleSearch}
