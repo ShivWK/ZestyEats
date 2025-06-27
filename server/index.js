@@ -49,7 +49,7 @@ app.get("/api/server/wake-up", (req, res) => {
   })
 })
 
-app.use("/api/swiggy", swiggyRouter);
+app.use("/api/zestyeats", swiggyRouter);
 app.use("/api/user", userRouter);
 
 // Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.

@@ -27,6 +27,7 @@ import { updateHomeRestaurantData } from "../utils/updateHomeData";
 import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
 import { updateCurrentCity } from "../utils/addCurrentCity";
+import textToZestyEats from "../utils/textToZestyEats";
 // import { useGetDishInCityDataQuery, useGetDataForCityLocalityCuisineQuery } from "../features/cityHome/cityHomeApiSlice";
 
 export default function Layout() {
@@ -38,6 +39,9 @@ export default function Layout() {
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
   useTrackNavigation();
+
+  const text = "Swiggy was swiggy and will be swiggy"
+  console.log(textToZestyEats(text));
 
   const fetchDefaultHomeAPIData = async () => {
     try {

@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const homeSearchApiSlice = createApi({
     reducerPath: "homeSearch",
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://swiggy-clone-klzu.onrender.com/api/swiggy",
+        baseUrl: "https://swiggy-clone-klzu.onrender.com/api/zestyeats",
     }),
     keepUnusedDataFor: 120,
     endpoints: (builder) => {

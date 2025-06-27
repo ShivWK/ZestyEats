@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const searchApiSlice = createApi({
     reducerPath: "search",
-    baseQuery: fetchBaseQuery({ baseUrl: "https://swiggy-clone-klzu.onrender.com/api/swiggy" }),
+    baseQuery: fetchBaseQuery({ baseUrl: "https://swiggy-clone-klzu.onrender.com/api/zestyeats" }),
 
     endpoints: (builder) => ({
         getAutoCompleteSearch: builder.query({
