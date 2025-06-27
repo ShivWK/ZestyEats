@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Suspense, useEffect, lazy } from "react";
 import ShimmerContainer from "./ShimmerContainer";
 import { setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
 import TopRestaurantChains from "../Home/TopRestaurantChains";
@@ -188,6 +189,7 @@ const MainContent = () => {
 };
 
 const CityHome = () => {
+    useScrollToTop();
     const dispatch = useDispatch();
     const { cityName:city } = useParams();
     const loading = useSelector(selectCityLoading);
