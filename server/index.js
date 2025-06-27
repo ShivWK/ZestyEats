@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
   res.status(500).send(`Swiggy Proxy API is running.`);
 });
 
-app.get("/api/wake-up", (req, res) => {
+app.get("/server/api/wake-up", (req, res) => {
   console.log("Wake up call");
   res.status(200).json({
     status: "success",
@@ -58,5 +58,5 @@ app.use((req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Proxy server running on https://swiggy-clone-klzu.onrender.com:${PORT}`);
+  console.log(`Proxy server running on ${PORT}`);
 });
