@@ -23,7 +23,7 @@ const MobileFooterMenu = () => {
 
     return (
         <div
-            className="flex md:hidden w-full items-center justify-around text-2xl h-14 shadow-[0_0_14px_1px_rgba(0,0,0,0.5)] position fixed bottom-0 transform transition-transform duration-200 ease-linear bg-white"
+            className="flex md:hidden w-full items-center justify-around text-2xl text-black h-14 shadow-[0_0_14px_1px_rgba(0,0,0,0.5)] position fixed bottom-0 transform transition-transform duration-200 ease-linear bg-white"
             style={{ transform: show ? "translateY(0)" : "translateY(100%)" }}
         >
             <button>
@@ -33,7 +33,7 @@ const MobileFooterMenu = () => {
                 <i className="ri-information-line"></i>
             </button>
             <button className="">
-                <i className="ri-heart-2-fill"></i>
+                <i className="ri-heart-2-fill text-red-500"></i>
             </button>
             <button>
                 <i className="ri-handbag-line"></i>
