@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
   res.status(500).send(`Swiggy Proxy API is running.`);
 });
 
-app.get("/wake-up", (req, res) => {
+app.get("/api/wake-up", (req, res) => {
   console.log("Wake up call");
   res.status(200).json({
     status: "success",
