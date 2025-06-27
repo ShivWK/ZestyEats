@@ -40,9 +40,10 @@ export const specificFoodLoader = ({ request }) => {
   return { data: result };
 };
 
-export const specificCityLoader = ({ request }) => {
+export const specificCityLoader = ({ params ,request }) => {
   const searchObj = new URL(request.url).searchParams;
-  const city = searchObj.get("city");
+  const {cityName: city } = params;
+
   const type = searchObj.get("type") || "";
 
   const result = store.dispatch(cityHomeApiSlice.endpoints.getDataForCityLocalityCuisine.initiate({

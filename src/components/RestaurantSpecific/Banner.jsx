@@ -46,10 +46,10 @@ const Banner = ({ data }) => {
               mainData?.cuisines?.map((text, index, array) => {
                 if (index == array.length - 1) {
                   const cuisine = text.toLowerCase().replace(/\s/g, "-") + "-cuisine-";
-                  return <NavLink to={`/cityPage?city=${searchedCity}&type=${cuisine}`} key={text}>{text}</NavLink>;
+                  return <NavLink to={`/cityPage/${searchedCity}&type=${cuisine}`} key={text}>{text}</NavLink>;
                 }
                 const cuisine = text.toLowerCase().replace(/\s/g, "-") + "-cuisine-";
-                return <NavLink to={`/cityPage?city=${searchedCity}&type=${cuisine}`} key={text}>{`${text} ,`}</NavLink>;
+                return <NavLink to={`/cityPage/${searchedCity}&type=${cuisine}`} key={text}>{`${text} ,`}</NavLink>;
               })}
           </div>
           <div id="delivery" className="flex gap-2 mt-2">

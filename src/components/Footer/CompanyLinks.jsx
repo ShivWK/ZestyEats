@@ -17,7 +17,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
             const path = city.text.toLowerCase().replace(/\s/g, "-");
 
             return <li key={city.link} className="mb-3">
-              <NavLink to={`cityPage?city=${path}`}>{city.text}</NavLink>
+              <NavLink to={`cityPage/${path}`}>{city.text}</NavLink>
             </li>
           })}
         </ul>

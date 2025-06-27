@@ -32,12 +32,21 @@ const Home = memo(() => {
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
 
-  const getPlaceCardsPath = data => {
+  const cuisineClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch) => {
     const pathname = new URL(data.link).pathname;
     const cuisine = pathname.match(/\/(.*?)\-restaurants/)[1]
-    const path = `/cityPage?city=${city}&type=${cuisine}-cuisine-`;
+    const type = `${cuisine}-cuisine-`;
+    
+    dispatch(setLoading(true));
 
-    return path;
+    try {
+      const data = await trigger({city, type}).unwrap();
+      dataUpdater(data, dispatch);
+    } catch (err) {
+      console.log("Some error occurred", err);
+      setLoading(false);
+      throw new Error("Cant fetch city home data");
+    }
   }
 
   return isLoadingMain ? (
@@ -121,7 +130,7 @@ const Home = memo(() => {
                 </div>
               }
             >
-              <PlaceCardsContainer data={bestCuisionsNearMe} pathLogic={getPlaceCardsPath} />
+              <PlaceCardsContainer data={bestCuisionsNearMe} clickHandler={cuisineClickHandler} path={`/cityPage/${city}?mode=cuisine`}/>
             </Suspense>
           </section>
           <hr className="mt-10 mb-8 text-gray-400" />

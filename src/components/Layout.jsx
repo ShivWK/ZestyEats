@@ -28,6 +28,7 @@ import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
 import { updateCurrentCity } from "../utils/addCurrentCity";
 import textToZestyEats from "../utils/textToZestyEats";
+import updateCityHomeData from "../utils/updateCityHomeData";
 // import { useGetDishInCityDataQuery, useGetDataForCityLocalityCuisineQuery } from "../features/cityHome/cityHomeApiSlice";
 
 export default function Layout() {
@@ -56,6 +57,7 @@ export default function Layout() {
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
+    const CityHomeData = JSON.parse(localStorage.getItem("CityHomeData"))
     const lat = JSON.parse(localStorage.getItem("lat"));
     const lng = JSON.parse(localStorage.getItem("lng"));
     const rawUserPathHistory = localStorage.getItem("userFriendlyPathHistory");
@@ -67,6 +69,7 @@ export default function Layout() {
 
     if (HomeData && lat && lng) {
       updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory, pathHistory);
+      updateCityHomeData(CityHomeData, dispatch);
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
       const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
       const currentCity = JSON.parse(localStorage.getItem("currentCity"));

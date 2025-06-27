@@ -130,8 +130,7 @@ export default function App() {
           loader={specificFoodLoader}
         />
         <Route
-          path="cityPage"
-          loader={specificCityLoader}
+          path="cityPage/:cityName"
           element={<CityHome />}
         />
       </Route>

@@ -1,86 +1,36 @@
-import { useLoaderData, Await, useSearchParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { Suspense, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Suspense, useEffect, lazy } from "react";
 import ShimmerContainer from "./ShimmerContainer";
-import { setCity } from "../../features/cityHome/cityHomeSlice";
+import { setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+
 import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
 import TopRestaurantChains from "../Home/TopRestaurantChains";
-import OnlineDeliveryRestaurant from "../Home/OnlineDeliveryRestaurant";
-import PlaceCardsContainer from "../Home/PlaceCardsContainer";
-import cityDataFetcher from "../../utils/cityDataFetcher";
 
-const MainContent = ({ data }) => {
-    console.log(data)
+const OnlineDeliveryRestaurant = lazy(() => import("../Home/OnlineDeliveryRestaurant"));
+const PlaceCardsContainer = lazy(() => import("../Home/PlaceCardsContainer"));
+
+import { selectCityLoading, selectPageData } from "../../features/cityHome/cityHomeSlice";
+
+const MainContent = () => {
+    // console.log(data)
     const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
+    const data = useSelector(selectPageData);
 
-    const mainData = data?.props?.pageProps?.widgetResponse?.success;
-    const pageOffset = mainData?.pageOffset;
-    const nextFetch = mainData?.nextFetch;
-    const cards = mainData?.cards;
-
-    // const dataObject = cityDataFetcher(cards)
-
-    const banner_text = cards.find(
-        (item) => item?.card?.card?.id === "best_restaurants_header"
-    )?.card?.card?.title;
-    const foodieThoughtsData =
-        cards?.find((item) => item?.card?.card?.id === "whats_on_your_mind")?.card
-            ?.card?.imageGridCards?.info || [];
-
-    const topRestaurantChainData =
-        cards?.find((item) => item?.card?.card?.id === "top_brands_for_you")
-            ?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
-    const topRestaurantsTitle = cards?.find((item) => item?.card?.card?.id === "top_brands_for_you")
-        ?.card?.card?.header?.title;
-
-    const onlineDeliveryRestaurantData =
-        cards?.find((item) => item?.card?.card?.id === "restaurant_grid_listing_v2")
-            ?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
-    const onlineDeliveryRestaurantTitle = cards?.find(
-        (item) => item?.card?.card?.id === "popular_restaurants_title"
-    )?.card?.card?.title;
-
-    const localitiesObject = cards?.find((item) => item?.card?.card?.id === "area_list")
-        ?.card?.card;
-    const localitiesTitle = localitiesObject?.title;
-    const localitiesData = localitiesObject?.areas;
-
-    const whatEatingCuisineObject = cards?.find((item) => item?.card?.card?.id === "cuisines_near_you")
-        ?.card?.card;
-    const whatEatingCuisineTitle = whatEatingCuisineObject?.title;
-    const whatEatingCuisineData = whatEatingCuisineObject?.cuisines;
-
-    const restaurantChainInCityObject = cards?.find((item) => item?.card?.card?.id === "brand_page_links")
-        ?.card?.card;
-    const restaurantChainInCityTitle = restaurantChainInCityObject?.title;
-    const restaurantChainInCityData = restaurantChainInCityObject?.brands;
-
-    const popularDishesObject = cards?.find((item) => item?.card?.card?.id === "dish_page_links")
-        ?.card?.card;
-    const popularDishesTitle = popularDishesObject?.title;
-    const popularDishesData = popularDishesObject?.brands;
-
-    // const banner_text = dataObject.banner_text;
-
-    // const foodieThoughtsData = dataObject.foodieThoughtsData;
-
-    // const topRestaurantChainData = dataObject.topRestaurantChain.data;
-    // const topRestaurantsTitle = dataObject.topRestaurantChain.title;
-
-    // const onlineDeliveryRestaurantData = dataObject.onlineDeliveryRestaurant.data;
-    // const onlineDeliveryRestaurantTitle = dataObject.onlineDeliveryRestaurant.title;
-
-    // const localitiesTitle = dataObject.localities.data;
-    // const localitiesData = dataObject.localities.title;
-
-    // const whatEatingCuisineTitle = dataObject.cuisines.data;
-    // const whatEatingCuisineData = dataObject.cuisines.title;
-
-    // const restaurantChainInCityTitle = dataObject.restaurantChainInCity.data;
-    // const restaurantChainInCityData = dataObject.restaurantChainInCity.title;
-
-    // const popularDishesTitle = dataObject.popularDishes.data;
-    // const popularDishesData = dataObject.popularDishes.title;
+    const banner_text = data.cityBannerText;
+    const foodieThoughtsData = data.cityFoodieData;
+    const topRestaurantChainData = data.cityRestaurantChainData;
+    const topRestaurantsTitle = data.cityRestaurantChainTitle;
+    const onlineDeliveryRestaurantData = data.cityOnlineDeliveryRestaurantData;
+    const onlineDeliveryRestaurantTitle = data.cityOnlineDeliveryRestaurantTitle;
+    const localitiesTitle = data.cityLocalitiesTitle;
+    const localitiesData = data.cityLocalitiesData;
+    const whatEatingCuisineTitle = data.cityCuisinesTitle
+    const whatEatingCuisineData = data.cityCuisinesData;
+    const restaurantChainInCityTitle = data.restaurantChainInCityTitle;
+    const restaurantChainInCityData = data.restaurantChainInCityData;
+    const popularDishesTitle = data.popularDishInCityTitle;
+    const popularDishesData = data.popularDishInCityData;
 
     return (
         <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-24 md:pt-28 overflow-x-hidden max-md:px-1.5">
@@ -239,19 +189,15 @@ const MainContent = ({ data }) => {
 
 const CityHome = () => {
     const dispatch = useDispatch();
-    const { data } = useLoaderData();
-    const [searchParams] = useSearchParams();
-    const city = searchParams.get("city");
+    const { cityName:city } = useParams();
+    const loading = useSelector(selectCityLoading);
 
     useEffect(() => {
-        dispatch(setCity(city));
+        dispatch(setSecondaryCity(city));
     }, []);
 
-    return (
-        <Suspense fallback={<ShimmerContainer />}>
-            <Await resolve={data}>{(data) => <MainContent data={data} />}</Await>
-        </Suspense>
-    );
+    return loading ? <ShimmerContainer />
+    : <MainContent  />
 };
 
 export default CityHome;

@@ -6,11 +6,11 @@ import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { memo } from "react";
 
-import { selectCity } from "../../features/cityHome/cityHomeSlice";
+import { selectSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 
 const PageHeader = memo(() => {
   const { pathname } = useLocation();
-  const city = useSelector(selectCity).toUpperCase();
+  const city = useSelector(selectSecondaryCity).toUpperCase();
 
 
   if (pathname === "/") {
@@ -31,7 +31,7 @@ const PageHeader = memo(() => {
     return <RestaurantsHeader />;
   } else if (pathname.includes("specificFood")) {
     return <SpecificFoodHeader />
-  } else if (pathname === "/cityPage") {
+  } else if (pathname.includes("/cityPage")) {
     return <GeneralHeader placeholder={city} />
   }
   
