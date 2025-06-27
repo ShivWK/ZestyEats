@@ -9,9 +9,6 @@ const client = axios.create({
     "Accept-Language": "en-US,en;q=0.9",
     Referer: process.env.BASE_URL,
     Origin: process.env.BASE_URL,
-
-    // Referer: "https://www.swiggy.com/",
-    // Origin: "https://www.swiggy.com",
   },
 });
 
@@ -74,7 +71,7 @@ exports.addressRecommend = async (req, res) => {
         .json({ error: "place_id query parameter is required" });
     }
 
-    const mainUrl = `https://www.swiggy.com/dapi/misc/address-recommend?place_id=${place_id}`;
+    const mainUrl = `${process.env.BASE_URL}/dapi/misc/address-recommend?place_id=${place_id}`;
 
     const response = await client.get(mainUrl);
     const origin = req.headers.origin;
@@ -103,7 +100,7 @@ exports.addressAutoComplete = async (req, res) => {
         .json({ error: "Input query parameter is required" });
     }
 
-    const mainUrl = `https://www.swiggy.com/dapi/misc/place-autocomplete?input=${input}&types=`;
+    const mainUrl = `${process.env.BASE_URL}/dapi/misc/place-autocomplete?input=${input}&types=`;
 
     const response = await client.get(mainUrl);
     const origin = req.headers.origin;
@@ -132,7 +129,7 @@ exports.addressFromCoordinates = async (req, res) => {
       });
     }
 
-    const mainUrl = `https://www.swiggy.com/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
+    const mainUrl = `${process.env.BASE_URL}/dapi/misc/address-recommend?latlng=${lat1}%2C${lng1}`;
 
     const response = await client.get(mainUrl);
     const origin = req.headers.origin;
@@ -160,7 +157,7 @@ exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
     });
   }
 
-  const mainUrl = `https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`;
+  const mainUrl = `${process.env.BASE_URL}/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${id}&catalog_qa=undefined&submitAction=ENTER`;
 
   const response = await client.get(mainUrl);
   const origin = req.headers.origin;
@@ -184,7 +181,7 @@ exports.dishSearchData = async (req, res) => {
     });
   }
 
-  const searchUrl = `https://www.swiggy.com/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
+  const searchUrl = `${process.env.BASE_URL}/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
 
   console.log(searchUrl);
 
@@ -216,7 +213,7 @@ exports.specificFoodCategoryData = asyncErrorHandler(async (req, res) => {
     });
   }
 
-  const mainUrl = `https://www.swiggy.com/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
+  const mainUrl = `${process.env.BASE_URL}/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&collection=${collection_id}&tags=${tags}&sortBy=&filters=&type=rcv2&offset=0&page_type=null`;
 
   const response = await client.get(mainUrl);
   const origin = req.headers.origin;
@@ -239,7 +236,7 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
     });
   }
 
-  const mainUrl = "https://www.swiggy.com/dapi/landing/PRE_SEARCH";
+  const mainUrl = `${process.env.BASE_URL}/dapi/landing/PRE_SEARCH`;
 
   const result = await client.get(mainUrl, {
     params: {
@@ -266,7 +263,7 @@ exports.specificFoodSearchSuggestions = asyncErrorHandler(
       return missingParamsError("Please provide lat , lng, and food", res);
     }
 
-    const mainUrl = "https://www.swiggy.com/dapi/restaurants/search/suggest?trackingId=null&includeIMItem=true";
+    const mainUrl = `${process.env.BASE_URL}/dapi/restaurants/search/suggest?trackingId=null&includeIMItem=true`;
 
     let response = await client.get(mainUrl, {
       params: {
@@ -295,7 +292,7 @@ exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
   }
 
   const mainUrl =
-    "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=null&submitAction=DEFAULT_SUGGESTION&queryUniqueId=14731ed6-27b3-ab73-ccc8-2c29158c3c5d";
+    `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=null&submitAction=DEFAULT_SUGGESTION&queryUniqueId=14731ed6-27b3-ab73-ccc8-2c29158c3c5d`;
 
   let response = await client.get(mainUrl, {
     params: {
@@ -326,7 +323,7 @@ exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
   }
 
   const mainUrl =
-    "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=";
+    `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=`;
 
   let response = await client.get(mainUrl, {
     params: {
@@ -355,7 +352,7 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   }
 
   const mainUrl =
-    "https://www.swiggy.com/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=";
+    `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=`;
 
   let response = await client.get(mainUrl, {
     params: {
@@ -387,7 +384,7 @@ exports.cityLocalityCuisineCardHandler = asyncErrorHandler(
       return missingParamsError("Please provide city or locality or cuisine type", res);
     }
 
-    const mainUrl = `https://www.swiggy.com/city/${city}/${type ? type : ""}order-online`;
+    const mainUrl = `${process.env.BASE_URL}/city/${city}/${type ? type : ""}order-online`;
 
     console.log(mainUrl)
 
@@ -419,7 +416,7 @@ exports.restaurantChainInCityHandler = asyncErrorHandler(async (req, res, next) 
 
   if (!city || !restaurant) return missingParamsError("Please provide city and restaurant name", res);
   
-  const mainUrl = `https://www.swiggy.com/city/${city}/${restaurant}`;
+  const mainUrl = `${process.env.BASE_URL}/city/${city}/${restaurant}`;
 
   const html = await client.get(mainUrl);
   const dom = new JSDOM(html.data);
@@ -448,7 +445,7 @@ exports.dishesInCityHandler = asyncErrorHandler(async (req, res, next) => {
 
   if (!city || !dish) return missingParamsError("Please provide city and dish", res);
   
-  const mainUrl = `https://www.swiggy.com/city/${city}/${dish}-dish-restaurants`;
+  const mainUrl = `${process.env.BASE_URL}/city/${city}/${dish}-dish-restaurants`;
 
   const html = await client.get(mainUrl);
   const dom = new JSDOM(html.data);
