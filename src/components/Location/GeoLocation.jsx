@@ -98,6 +98,10 @@ const GeoLocation = memo(({ setSearchValue }) => {
             },
             progressClassName: "progress-style",
           });
+        },
+        {
+          timeout: 4000,
+          maximumAge: 10000,
         }
       );
     } else {
