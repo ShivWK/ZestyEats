@@ -21,7 +21,7 @@ const BackToTopBtn = () => {
             const windowScrollableHeight = HTML.scrollHeight - HTML.clientHeight;
             const windowScrollTop = HTML.scrollTop;
 
-            const hasScrolledALot = windowScrollTop >= (20/100) * windowScrollableHeight;
+            const hasScrolledALot = windowScrollTop >= (25/100) * windowScrollableHeight;
 
             if (hasScrolledALot) setShowBtn(true);
             else setShowBtn(false)
