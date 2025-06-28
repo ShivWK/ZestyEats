@@ -8,12 +8,14 @@ import { setHideLocation, selectLocationModal } from "../../features/Login/login
 
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { toast } from "react-toastify";
+import Loader from "../Loader";
 
 const GeoLocation = memo(({ setSearchValue }) => {
   const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [triggerRestaurantDataCall] = useLazyGetHomePageDataQuery();
+  const [showLoader, setShowLoader] = useState(false)
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
 
     if (navigator.geolocation) {
       checkAndRedirect();
+      setShowLoader(true);
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
         const lng1 = position.coords.longitude;
@@ -62,12 +65,15 @@ const GeoLocation = memo(({ setSearchValue }) => {
           try {
             const res2 = await triggerRestaurantDataCall({ lat, lng }).unwrap();
             updateHomeRestaurantData(res2, dispatch, lat, lng);
+            setShowLoader(false);
           } catch (err) {
             alert(err.error);
+            setShowLoader(false);
             dispatch(setLoading(false));
           }
         } catch (err) {
           setSearchValue("");
+          setShowLoader(false);
           dispatch(setHideLocation(true));
           dispatch(setLoading(false));
           alert("Error fetching location data. Please try again later.");
@@ -75,6 +81,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
         }
       },
         err => {
+          setShowLoader(false);
           console.log("Error in location:", err.message);
           if (isLocationModelOpen) dispatch(setHideLocation(true))
 
@@ -105,6 +112,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
         }
       );
     } else {
+      setShowLoader(false);
       alert("Geolocation is not supported by this browser.");
     }
   };
@@ -112,17 +120,19 @@ const GeoLocation = memo(({ setSearchValue }) => {
   return (
     <div
       onClick={handleLocation}
-      className="group cursor-pointer border-[1px] border-gray-400 active:border-primary py-2 px-3 md:py-4 md:px-7 mt-8"
+      className="group cursor-pointer flex items-center justify-center border-[1px] border-gray-400 active:border-primary py-2 px-3 md:py-4 md:px-7 mt-8"
     >
-      <div className="flex gap-2.5">
-        <i className="ri-crosshair-2-line text-xl text-gray-500"></i>
-        <div>
-          <p className="font-medium group-hover:text-primary group-active:text-primary text-lg">
-            Get current location
-          </p>
-          <p className="text-sm font-semibold text-gray-400">Using GPS</p>
-        </div>
-      </div>
+      {showLoader
+        ? <Loader size={"small"} />
+        : <div className="flex gap-2.5">
+          <i className="ri-crosshair-2-line text-xl text-gray-500"></i>
+          <div>
+            <p className="font-medium group-hover:text-primary group-active:text-primary text-lg">
+              Get current location
+            </p>
+            <p className="text-sm font-semibold text-gray-400">Using GPS</p>
+          </div>
+        </div>}
     </div>
   );
 });
