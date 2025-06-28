@@ -33,13 +33,17 @@ const MobileFooterMenu = () => {
                 <i className="ri-information-line"></i>
             </button>
             <button className="">
-                <i className="ri-heart-2-fill text-red-500"></i>
+                <i className="ri-heart-2-fill text-red-600"></i>
             </button>
             <button>
                 <i className="ri-handbag-line"></i>
             </button>
             <button>
-                <i className="fa-solid fa-cart-shopping"></i>
+                <i className="fa-solid fa-cart-shopping">
+                    <sub className="text-xs -mt-4">
+                        12
+                    </sub>
+                </i>
             </button>
         </div>
     );
