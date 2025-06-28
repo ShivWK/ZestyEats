@@ -31,7 +31,10 @@ const BackToTopBtn = () => {
         return () => window.removeEventListener("scroll", scrollHandler);
     }, [])
 
-    return <button onClick={clickHandler} className={`fixed left-1/2 -translate-x-1/2 bottom-5 bg-[rgba(0,0,0,0.7)] text-white py-1.5 px-2 rounded-md text-sm cursor-pointer transform transition-all duration-100 ease-linear ${(bottomMenuUp && pathname === "/") && "mb-12"} ${showBtn ? "translate-y-o" : "translate-y-[200%]"} `}>Back to top</button>
+    return <button onClick={clickHandler} className={`fixed flex gap-1 left-1/2 -translate-x-1/2 bottom-5 bg-[rgba(0,0,0,0.6)] text-white py-1.5 px-2 rounded-md text-sm cursor-pointer transform transition-all duration-100 ease-linear font-semibold ${(bottomMenuUp && pathname === "/") && "mb-12"} ${showBtn ? "translate-y-o" : "translate-y-[200%]"}`}>
+        <i className="ri-arrow-up-circle-line font-light"></i>
+        <p>Back to top</p>
+        </button>
 }
 
 export default BackToTopBtn
