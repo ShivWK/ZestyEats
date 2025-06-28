@@ -41,7 +41,7 @@ const MobileFooterMenu = () => {
             <button>
                 <i className="fa-solid fa-cart-shopping">
                     <sub className="text-xs -mt-4">
-                        12
+                        
                     </sub>
                 </i>
             </button>
