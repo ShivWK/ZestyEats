@@ -12,6 +12,7 @@ const OnlineDeliveryRestaurant = lazy(() => import("../Home/OnlineDeliveryRestau
 const PlaceCardsContainer = lazy(() => import("../Home/PlaceCardsContainer"));
 
 import { selectCityLoading, selectPageData } from "../../features/cityHome/cityHomeSlice";
+import BackToTopBtn from "../BackToTopBtn";
 
 const MainContent = () => {
     // console.log(data)
@@ -183,7 +184,7 @@ const MainContent = () => {
                     </section>
                 </>
             )}
-
+            <BackToTopBtn percentage={40} />
         </main>
     );
 };

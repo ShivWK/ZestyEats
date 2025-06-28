@@ -6,6 +6,7 @@ import {
 
 import { useRef, useState } from "react";;
 import useScrollToTop from "../../utils/useScrollToTop";
+import BackToTopBtn from "../BackToTopBtn";
 
 const SearchResult = () => {
   useScrollToTop();
@@ -59,6 +60,7 @@ const SearchResult = () => {
         </NavLink>
       </div>
       <Outlet />
+      <BackToTopBtn percentage={30} />
     </div>
   );
 };
