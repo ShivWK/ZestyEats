@@ -44,11 +44,11 @@ const Home = memo(() => {
     const pathname = new URL(data.link).pathname;
     const cuisine = pathname.match(/\/(.*?)\-restaurants/)[1]
     const type = `${cuisine}-cuisine-`;
-    
+
     dispatch(setLoading(true));
 
     try {
-      const data = await trigger({city, type}).unwrap();
+      const data = await trigger({ city, type }).unwrap();
       dataUpdater(data, dispatch);
     } catch (err) {
       console.log("Some error occurred", err);
@@ -66,88 +66,89 @@ const Home = memo(() => {
     </>
 
   ) : (
-    <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-14 pt-[88px] md:pt-26 overflow-x-hidden max-md:px-1.5">
+    <>
+      <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-14 pt-[88px] md:pt-26 overflow-x-hidden max-md:px-1.5">
 
-      {/* dev msg */}
+        {/* dev msg */}
 
-      <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1.5 max-md:-mt-1 mb-3">
-        <p className="text-justify">This site is under active development. Features are being added and improved continuously, so some parts may not work as expected right now.</p>
-      </div>
+        <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1.5 max-md:-mt-1 mb-3">
+          <p className="text-justify">This site is under active development. Features are being added and improved continuously, so some parts may not work as expected right now.</p>
+        </div>
 
-      {/* Foodie thoughts */}
+        {/* Foodie thoughts */}
 
-      {foodieThoughtsData?.length !== 0 && (
-        <>
-          <section className="w-full max-w-[1040px] mx-auto ">
-            <FoodieThoughts data={foodieThoughtsData} />
-          </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
-        </>
-      )}
+        {foodieThoughtsData?.length !== 0 && (
+          <>
+            <section className="w-full max-w-[1040px] mx-auto ">
+              <FoodieThoughts data={foodieThoughtsData} />
+            </section>
+            <hr className="mt-10 mb-8 text-gray-400" />
+          </>
+        )}
 
-      {/* Top restaurants chain */}
+        {/* Top restaurants chain */}
 
-      {topRestaurantsChainsData?.length !== 0 && (
-        <>
-          <section className="w-full max-w-[1040px] mx-auto">
-            <Suspense
-              fallback={
-                <div className="flex justify-between max-md:gap-3 overflow-hidden max-md:px-1.5">
-                  {shimmerArray.map(i => <div key={i} className="w-56 md:w-60 h-40 rounded-xl shimmerBg shrink-0" />)}
-                </div>
-              }
-            >
-              <TopRestaurantChains data={topRestaurantsChainsData} />
-            </Suspense>
-          </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
-        </>
-      )}
+        {topRestaurantsChainsData?.length !== 0 && (
+          <>
+            <section className="w-full max-w-[1040px] mx-auto">
+              <Suspense
+                fallback={
+                  <div className="flex justify-between max-md:gap-3 overflow-hidden max-md:px-1.5">
+                    {shimmerArray.map(i => <div key={i} className="w-56 md:w-60 h-40 rounded-xl shimmerBg shrink-0" />)}
+                  </div>
+                }
+              >
+                <TopRestaurantChains data={topRestaurantsChainsData} />
+              </Suspense>
+            </section>
+            <hr className="mt-10 mb-8 text-gray-400" />
+          </>
+        )}
 
-      {/* Restaurants with online delivery */}
+        {/* Restaurants with online delivery */}
 
-      {onlineDeliveryRestaurantData?.length !== 0 && (
-        <>
-          <section className="w-full">
-            <Suspense
-              fallback={
-                <div className="flex justify-between md:flex-row flex-col max-md:gap-3 max-md:px-1.5">
-                  {shimmerArray.map(i => <div key={i} className="w-full md:w-60 h-40 md:h-44 rounded-xl shimmerBg shrink-0" />)}
-                </div>
-              }
-            >
-              <OnlineDeliveryRestaurant data={onlineDeliveryRestaurantData} />
-            </Suspense>
-          </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
-        </>
-      )}
+        {onlineDeliveryRestaurantData?.length !== 0 && (
+          <>
+            <section className="w-full">
+              <Suspense
+                fallback={
+                  <div className="flex justify-between md:flex-row flex-col max-md:gap-3 max-md:px-1.5">
+                    {shimmerArray.map(i => <div key={i} className="w-full md:w-60 h-40 md:h-44 rounded-xl shimmerBg shrink-0" />)}
+                  </div>
+                }
+              >
+                <OnlineDeliveryRestaurant data={onlineDeliveryRestaurantData} />
+              </Suspense>
+            </section>
+            <hr className="mt-10 mb-8 text-gray-400" />
+          </>
+        )}
 
-      {/* Best cuisines near me */}
+        {/* Best cuisines near me */}
 
-      {bestCuisionsNearMe?.length !== 0 && (
-        <>
-          <section
-            className="w-full max-w-[1000px] mx-auto flex items-center gap-4
+        {bestCuisionsNearMe?.length !== 0 && (
+          <>
+            <section
+              className="w-full max-w-[1000px] mx-auto flex items-center gap-4
            flex-col"
-          >
-            <Suspense
-              fallback={
-                <div className="flex justify-between gap-4 flex-wrap">
-                  {shimmerArray.map(i => <div key={i} className="w-[98px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg" />)}
-                </div>
-              }
             >
-              <PlaceCardsContainer data={bestCuisionsNearMe} clickHandler={cuisineClickHandler} path={`/cityPage/${city}?mode=cuisine`}/>
-            </Suspense>
-          </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
-        </>
-      )}
+              <Suspense
+                fallback={
+                  <div className="flex justify-between gap-4 flex-wrap">
+                    {shimmerArray.map(i => <div key={i} className="w-[98px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg" />)}
+                  </div>
+                }
+              >
+                <PlaceCardsContainer data={bestCuisionsNearMe} clickHandler={cuisineClickHandler} path={`/cityPage/${city}?mode=cuisine`} />
+              </Suspense>
+            </section>
+            <hr className="mt-10 mb-8 text-gray-400" />
+          </>
+        )}
 
-      {/* All available cities in which we server */}
+        {/* All available cities in which we server */}
 
-      {allAvailableCities.length !== 0 && (
+        {allAvailableCities.length !== 0 && (
           <Suspense
             fallback={
               <div className="flex justify-between">
@@ -157,10 +158,11 @@ const Home = memo(() => {
           >
             <HomeCities />
           </Suspense>
-      )}
-      <MobileFooterMenu />
-      <BackToTopBtn extraMargin={bottomMenuUp} percentage={50}/>
-    </main>
+        )}
+        <MobileFooterMenu />
+      </main>
+      <BackToTopBtn extraMargin={bottomMenuUp} percentage={50} />
+    </>
   );
 });
 
