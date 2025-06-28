@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { selectBottomMenu } from "../features/home/homeSlice";
+import { useSelector } from "react-redux";
 
 const BackToTopBtn = () => {
     const [showBtn, setShowBtn] = useState(false);
+    const pathname = useLocation().pathname;
+    const bottomMenuUp = useSelector(selectBottomMenu);
 
     const clickHandler = () => {
         window.scrollTo({
@@ -26,7 +31,7 @@ const BackToTopBtn = () => {
         return () => window.removeEventListener("scroll", scrollHandler);
     }, [])
 
-    return <button onClick={clickHandler} className={`fixed left-1/2 -translate-x-1/2 bottom-5 bg-[rgba(0,0,0,0.7)] text-white py-1.5 px-2 rounded-md text-sm cursor-pointer transform transition-transform duration-100 ease-in ${showBtn ? "translate-y-o" : "translate-y-[200%]"} `}>Back to top</button>
+    return <button onClick={clickHandler} className={`fixed left-1/2 -translate-x-1/2 bottom-5 bg-[rgba(0,0,0,0.7)] text-white py-1.5 px-2 rounded-md text-sm cursor-pointer transform transition-all duration-100 ease-linear ${bottomMenuUp && "mb-12"} ${showBtn ? "translate-y-o" : "translate-y-[200%]"} `}>Back to top</button>
 }
 
 export default BackToTopBtn
