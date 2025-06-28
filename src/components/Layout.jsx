@@ -9,6 +9,7 @@ import {
   selectLogInModal,
   selectLocationModal,
   selectHoverState,
+  setHideLocation
 } from "../features/Login/loginSlice";
 import {
   setOnline,
@@ -31,7 +32,22 @@ import { updateCurrentCity } from "../utils/addCurrentCity";
 import textToZestyEats from "../utils/textToZestyEats";
 import updateCityHomeData from "../utils/updateCityHomeData";
 import MobileFooterMenu from "./Footer/MobileFooterMenu";
-// import { useGetDishInCityDataQuery, useGetDataForCityLocalityCuisineQuery } from "../features/cityHome/cityHomeApiSlice";
+
+export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
+    try {
+      let apiResponse = await triggerHomeAPI({
+        lat: 12.9715987,
+        lng: 77.5945627,
+      }).unwrap();
+      if (!apiResponse) return;
+      if (isLocationModelOpen) dispatch(setHideLocation(true))
+      updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
+    } catch (err) {
+      if (isLocationModelOpen) dispatch(setHideLocation(true))
+      dispatch(setLoading(false));
+      alert(err.error);
+    }
+  };
 
 export default function Layout() {
   const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
@@ -40,24 +56,13 @@ export default function Layout() {
   const isLocationOpen = useSelector(selectLocationModal);
   const dpModel = useSelector(selectDpModel);
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
+  const isLocationModelOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
   const pathname = useLocation().pathname;
   useTrackNavigation();
 
-  const fetchDefaultHomeAPIData = async () => {
-    try {
-      let apiResponse = await triggerHomeAPI({
-        lat: 12.9715987,
-        lng: 77.5945627,
-      }).unwrap();
-      if (!apiResponse) return;
-      updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
-    } catch (err) {
-      dispatch(setLoading(false));
-      alert(err.error);
-    }
-  };
+  
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
@@ -105,16 +110,16 @@ export default function Layout() {
             updateHomeRestaurantData(res2, dispatch, lat, lng);
           } catch (err) {
             alert(err.message);
-            fetchDefaultHomeAPIData();
+            fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
           }
         } catch (err) {
           console.log("Error fetching current location data.");
-          fetchDefaultHomeAPIData();
+          fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
         }
       },
         err => {
           console.log("Some error occured", err.message);
-          fetchDefaultHomeAPIData();
+          fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
         },
         {
           timeout: 5000, //didn't worked
@@ -123,7 +128,7 @@ export default function Layout() {
         }
       );
     } else {
-      fetchDefaultHomeAPIData();
+      fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
     }
   }, []);
 

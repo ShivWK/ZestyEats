@@ -1,21 +1,25 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setLoading, selectLatAndLng } from "../../features/home/homeSlice";
-import { setHideLocation } from "../../features/Login/loginSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
+
+import { setHideLocation, selectLocationModal } from "../../features/Login/loginSlice";
 
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { memo } from "react";
+import { toast } from "react-toastify";
 
 const GeoLocation = memo(({ setSearchValue }) => {
   const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [triggerRestaurantDataCall] = useLazyGetHomePageDataQuery();
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const { lat: latitude, lng: longitude } = useSelector(selectLatAndLng);
+  const isLocationModelOpen = useSelector(selectLocationModal);
 
   const checkAndRedirect = () => {
     if (location.pathname !== "/") {
@@ -45,8 +49,6 @@ const GeoLocation = memo(({ setSearchValue }) => {
           }).unwrap();
           setSearchValue("");
 
-          console.log("City", data)
-
           updateCurrentCity(data, dispatch);
 
           const lat = data?.data?.[0]?.geometry?.location?.lat;
@@ -59,7 +61,6 @@ const GeoLocation = memo(({ setSearchValue }) => {
 
           try {
             const res2 = await triggerRestaurantDataCall({ lat, lng }).unwrap();
-            console.log("restro dtaa",res2)
             updateHomeRestaurantData(res2, dispatch, lat, lng);
           } catch (err) {
             alert(err.error);
@@ -72,7 +73,33 @@ const GeoLocation = memo(({ setSearchValue }) => {
           alert("Error fetching location data. Please try again later.");
           console.log(err.error);
         }
-      });
+      },
+        err => {
+          console.log("Error in location:", err.message);
+          if (isLocationModelOpen) dispatch(setHideLocation(true))
+
+          let msg;
+          if (err.code === err.PERMISSION_DENIED) {
+            msg = "Location permission denied. Please allow.";
+          } else if (err.code === err.POSITION_UNAVAILABLE) {
+            msg = "Location information is unavailable."
+          } else if (err.code === err.TIMEOUT) {
+            msg = "The Request to get your location timed out."
+          } else {
+            msg = "An error occurred while fetching your location."
+          }
+
+          toast.info(msg, {
+            autoClose: 5000,
+            style: {
+              backgroundColor: "#ff5200",
+              color: "white",
+              fontWeight: "medium",
+            },
+            progressClassName: "progress-style",
+          });
+        }
+      );
     } else {
       alert("Geolocation is not supported by this browser.");
     }

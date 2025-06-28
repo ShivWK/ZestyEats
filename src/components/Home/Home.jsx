@@ -25,6 +25,7 @@ import HomeShimmer from "./HomeShimmer";
 
 
 const Home = memo(() => {
+  useScrollToTop();
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const onlineDeliveryRestaurantData = useSelector(selectOnlineDeliveryRestaurants);

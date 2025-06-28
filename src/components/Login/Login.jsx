@@ -29,7 +29,7 @@ const Login = () => {
 
   const handleGuestLogin = useCallback(() => {
     toast.info("You are logged in Anonymously!", {
-      autoClose: 6000,
+      autoClose: 5000,
       style: {
         backgroundColor: "#ff5200",
         color: "white",
