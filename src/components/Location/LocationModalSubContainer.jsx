@@ -74,7 +74,7 @@ const ModalSubContainer = memo(() => {
   return (
     <div
       onClick={handleContainerClick}
-      className="flex flex-col mt-7 w-[85%] md:w-[75%] h-[90%]"
+      className="flex flex-col mt-7 w-[90%] md:w-[75%] h-[90%]"
     >
       <button
         onClick={handleClose}

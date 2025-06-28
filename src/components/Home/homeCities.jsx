@@ -1,11 +1,11 @@
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
-import { Suspense, useState, useRef } from "react";
+import { Suspense, useState, useRef, memo } from "react";
 import PlaceCardsContainer from "./PlaceCardsContainer";
 import PlaceCards from "./PlaceCards";
 import createDebounce from "../../utils/debounceCreater";
 
-const HomeCities = () => {
+const HomeCities = memo(() => {
     const cities = useSelector(selectAvailableCities);
     const [matchedCities, setMatchedCites] = useState([]);
     const [inputValue, setInputValue] = useState('');
@@ -21,6 +21,8 @@ const HomeCities = () => {
 
         setMatchedCites(matched)
     }, 400))
+
+    console.log("Rendered homicities")
 
 
     const cityClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch, setSecondaryCity) => {
@@ -88,6 +90,6 @@ const HomeCities = () => {
             </>
         </Suspense>
     </section>
-}
+});
 
 export default HomeCities;

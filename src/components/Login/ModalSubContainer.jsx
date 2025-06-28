@@ -32,7 +32,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
   };
 
   return (
-    <div className="w-[85%] md:w-[80%] h-auto mt-7">
+    <div className="w-[90%] md:w-[80%] h-auto mt-7">
       <button
         className="group cursor-pointer mb-4"
         onClick={isLoginOtpSend || isSigUpOtpSend ? handleBack : handleClose}
@@ -91,6 +91,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
           height="110px"
           width="110px"
           alt="Profile_dummy_image"
+          className="h-20 w-20 md:h-[110px] md:w-[110px]"
         />
       </div>
       {children}

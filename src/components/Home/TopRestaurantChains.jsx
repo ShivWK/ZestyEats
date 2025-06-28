@@ -1,12 +1,11 @@
-import { selectTopRestaurantsData } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import Cards from "./Cards";
 import { selectTopRestaurantsTitle } from "../../features/home/homeSlice";
 import HorizontalCarousel from "../HorizontalCarousel";
+import { memo, useMemo } from "react";
 
-const TopRestaurantChains = ({ data, heading = null }) => {
-  const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
-  const mainData = data.map((item) => item?.info);
+const TopRestaurantChains = memo(({ data, heading = null }) => {
+  const mainData = useMemo(() => data.map((item) => item?.info), [data]);
   const title = heading || useSelector(selectTopRestaurantsTitle);
 
   return (
@@ -19,6 +18,6 @@ const TopRestaurantChains = ({ data, heading = null }) => {
       autoScrollWidth="260"
     />
   );
-};
+});
 
 export default TopRestaurantChains;

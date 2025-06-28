@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import Cards from "./Cards";
-import { useSelector } from "react-redux";
-import { selectFoodieThoughtsData } from "../../../features/home/homeSlice";
 import HorizontalCarousel from "../../HorizontalCarousel";
 
-const FoodieThoughts = ({ data }) => {
+const FoodieThoughts = memo(({ data }) => {
   const [user, setUser] = useState("Shivendra");
   const title = user ? `${user}, what's on your mind?` : "What's on your mind?";
 
@@ -17,6 +15,6 @@ const FoodieThoughts = ({ data }) => {
       scrollMargin="10"
     />
   );
-};
+});
 
 export default FoodieThoughts;

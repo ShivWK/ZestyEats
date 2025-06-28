@@ -21,12 +21,12 @@ const EntryDiv = memo(({
   const inputRef = useRef(null);
   let isLoggedIn = useSelector(selectIsLoggedIn);
 
-  // useEffect(() => {
-  //   if (focus) {
-  //     inputRef.current.focus();
-  //     setIsEntryMade(true);
-  //   }
-  // }, [focus]);
+  useEffect(() => {
+    if (focus) {
+      inputRef.current.focus();
+      setIsEntryMade(true);
+    }
+  }, [focus]);
 
   useEffect(() => {
     if (isLoggedIn === true) {
@@ -167,7 +167,7 @@ const EntryDiv = memo(({
           handleChange(event);
           onChangeHandler(event)
         }}
-        className="relative top-5 font-bold text-lg outline-none "
+        className="relative top-5 font-bold text-lg outline-none max-w-full"
       />
     </div>
   );

@@ -31,6 +31,8 @@ const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, sh
 
   const title = heading || "Best Cuisines Near Me"
 
+  
+
   return (
     <>
       {showHeading && <h3 className="self-start">{title}</h3>}

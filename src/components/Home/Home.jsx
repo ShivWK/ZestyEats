@@ -1,4 +1,4 @@
-import { memo, lazy, Suspense, useEffect } from "react";
+import { memo, lazy, Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import useScrollToTop from "../../utils/useScrollToTop";
 
@@ -26,19 +26,19 @@ import {
 
 import HomeShimmer from "./HomeShimmer";
 
-
 const Home = memo(() => {
   useScrollToTop();
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const onlineDeliveryRestaurantData = useSelector(selectOnlineDeliveryRestaurants);
-  const bestCuisionsNearMe = useSelector(selectBestCuisionsNearMe);
+  const bestCuisinesNearMe = useSelector(selectBestCuisionsNearMe);
   const isLoadingMain = useSelector(selectIsLoading);
   const allAvailableCities = useSelector(selectAvailableCities);
   const city = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
+  const [showMenu, setShowMenu] = useState(false);
 
   const cuisineClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch) => {
     const pathname = new URL(data.link).pathname;
@@ -56,6 +56,21 @@ const Home = memo(() => {
       throw new Error("Cant fetch city home data");
     }
   }
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setShowMenu(true);
+      } else {
+        setShowMenu(false);
+      }
+    }
+
+    handleResize();
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [])
 
   return isLoadingMain ? (
     <>
@@ -126,7 +141,7 @@ const Home = memo(() => {
 
         {/* Best cuisines near me */}
 
-        {bestCuisionsNearMe?.length !== 0 && (
+        {bestCuisinesNearMe?.length !== 0 && (
           <>
             <section
               className="w-full max-w-[1000px] mx-auto flex items-center gap-4
@@ -139,7 +154,7 @@ const Home = memo(() => {
                   </div>
                 }
               >
-                <PlaceCardsContainer data={bestCuisionsNearMe} clickHandler={cuisineClickHandler} path={`/cityPage/${city}?mode=cuisine`} />
+                <PlaceCardsContainer data={bestCuisinesNearMe} clickHandler={cuisineClickHandler} path={`/cityPage/${city}?mode=cuisine`} />
               </Suspense>
             </section>
             <hr className="mt-10 mb-8 text-gray-400" />
@@ -159,7 +174,7 @@ const Home = memo(() => {
             <HomeCities />
           </Suspense>
         )}
-        <MobileFooterMenu />
+        {showMenu && <MobileFooterMenu />}
       </main>
       <BackToTopBtn extraMargin={bottomMenuUp} percentage={50} />
     </>
