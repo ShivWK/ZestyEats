@@ -75,13 +75,14 @@ const HomeCities = () => {
                         <i className="ri-search-2-line text-2xl cursor-pointer"></i>
                     )}
                 </div>
-                {matchedCities.length !== 0
+                {inputValue ? matchedCities.length !== 0
                     ? <div className="flex flex-wrap justify-around w-full gap-y-5 md:gap-x-8 gap-x-2.5">
                         {matchedCities.map(place => (
                             <PlaceCards key={place?.text + Math.random()} data={place} clickHandler={cityClickHandler} path={"DIY"} />
                         ))
                         }
                     </div>
+                    : <p className="font-semibold text-gray-700">Sorry, we don't serve this location yet.</p>
                     : <PlaceCardsContainer data={shownCities} clickHandler={cityClickHandler} showHeading={false} path="DIY" />
                 }
             </>
