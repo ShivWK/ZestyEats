@@ -244,7 +244,9 @@ export default function Layout() {
       )}
       <PageFooter />
       {pathname === "/" && <MobileFooterMenu />}
-      {pathname !== "/" && <BackToTopBtn />}
+      { <BackToTopBtn />}
     </>
   );
 }
+
+// pathname !== "/" &&
