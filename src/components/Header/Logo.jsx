@@ -52,7 +52,7 @@ const Logo = memo(({ searchPlaceholder }) => {
                 ? `${searchedCityAddress}`
                 : `${searchedCity}${searchedCityAddress}`}
             </span>
-            <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-4 md:-ml-4 "></i>
+            <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-3.5 md:-ml-4 "></i>
           </div>
         </button>
       )}
