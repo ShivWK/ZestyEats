@@ -32,6 +32,7 @@ import { updateCurrentCity } from "../utils/addCurrentCity";
 import textToZestyEats from "../utils/textToZestyEats";
 import updateCityHomeData from "../utils/updateCityHomeData";
 import MobileFooterMenu from "./Footer/MobileFooterMenu";
+import BackToTopBtn from "./BackToTopBtn";
 
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
     try {
@@ -243,6 +244,7 @@ export default function Layout() {
       )}
       <PageFooter />
       {pathname === "/" && <MobileFooterMenu />}
+      {pathname !== "/" && <BackToTopBtn />}
     </>
   );
 }
