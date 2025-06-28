@@ -155,7 +155,7 @@ export default function App() {
         icon={false}
         closeButton={CloseToastBtn}
         toastClassName={() =>
-          "flex items-center gap-4 rounded-lg shadow-xl px-4 py-3 mt-2 max-md:mb-3 max-md:max-w-[70%]"
+          "flex items-center gap-4 rounded-lg shadow-xl px-4 py-3 mt-2 max-md:mb-3 max-md:max-w-[70%] dark:bg-[rgba(0,0,0,0.8)] text-semibold"
         }
       />
     </>
