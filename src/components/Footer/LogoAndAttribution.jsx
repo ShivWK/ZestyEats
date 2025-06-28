@@ -88,8 +88,8 @@ const LogoAndAttribution = () => {
               </a>
             </div>
             {dpModel && <div>
-              <div className="fixed h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)]" onClick={() => dpClickHandler(!dpModel)}>
-                  <img  src="/images/MY-min.png" className={`rounded-full h-[35vh] md:h-[50vh] w-[35vh] md:w-[50vh] p-1 border-2 border-primary transform transition-transform duration-300 ease-linear ${dpModel ? "md:translate-[50%] translate-x-[25%] translate-y-[75%] scale(1)" : "translate-[0] scale(0)" }`} alt="Developer image"/>
+              <div className="fixed flex items-center justify-center h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)]" onClick={() => dpClickHandler(!dpModel)}>
+                  <img  src="/images/MY-min.png" className={`rounded-full h-[35vh] md:h-[50vh] w-[35vh] md:w-[50vh] p-1 border-2 border-primary transform transition-transform duration-300 ease-linear ${dpModel ? "scale(1)" : "scale(0)" }`} alt="Developer image"/>
               </div>
             </div>}
           </div>
