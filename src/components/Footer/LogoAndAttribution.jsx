@@ -1,4 +1,14 @@
+import { selectDpModel, setDpModelOpen } from "../../features/home/homeSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 const LogoAndAttribution = () => {
+  const dpModel = useSelector(selectDpModel);
+  const dispatch = useDispatch();
+
+  const dpClickHandler = (val) => {
+    dispatch(setDpModelOpen(val))
+  }
+
   return (
     <div className="flex flex-col gap-5 md:gap-8">
       <div className="logo flex flex-col gap-2.5">
@@ -24,7 +34,8 @@ const LogoAndAttribution = () => {
         <p className="mb-2 text-lg">Developed By</p>
         <div className="flex gap-2.5 w-fit">
           <img
-            className="h-[14vh] w-[14vh] rounded-[50%] object-cover border-2 border-primary p-1"
+            onClick={() => dpClickHandler(!dpModel)}
+            className="h-[14vh] w-[14vh] rounded-[50%] object-cover border-2 border-primary p-1 cursor-pointer"
             src="/images/MY-min.png"
             alt="Developer image"
           />
@@ -76,6 +87,11 @@ const LogoAndAttribution = () => {
                 ></i>
               </a>
             </div>
+            {dpModel && <div>
+              <div className="fixed h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)]" onClick={() => dpClickHandler(!dpModel)}>
+                  <img  src="/images/MY-min.png" className={`rounded-full h-[35vh] md:h-[50vh] w-[35vh] md:w-[50vh] p-1 border-2 border-primary transform transition-transform duration-300 ease-linear ${dpModel ? "md:translate-[50%] translate-x-[25%] translate-y-[75%] scale(1)" : "translate-[0] scale(0)" }`} alt="Developer image"/>
+              </div>
+            </div>}
           </div>
         </div>
         <div className="hidden md:flex flex-col gap-2 w-full mt-7">

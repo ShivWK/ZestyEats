@@ -18,6 +18,7 @@ import {
   addYourCurrentCity,
   addSearchedCity,
   addSearchedCityAddress,
+  selectDpModel
 } from "../features/home/homeSlice";
 import { selectMenuModel } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -37,6 +38,7 @@ export default function Layout() {
   const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
+  const dpModel = useSelector(selectDpModel);
   const { loginHovered, locationHovered } = useSelector(selectHoverState);
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
@@ -169,7 +171,7 @@ export default function Layout() {
       body.style.paddingRight = "15px";
     }
 
-    if (isLoginOpen || isLocationOpen || menuModel) {
+    if (isLoginOpen || isLocationOpen || menuModel || dpModel) {
       body.classList.add("overflow-hidden");
       body.style.paddingRight = isLargeScreen ? scrollbarWidth : 0;
     } else {
@@ -182,7 +184,7 @@ export default function Layout() {
       body.style.paddingRight = "0px";
     };
 
-  }, [isLoginOpen, isLocationOpen, menuModel]);
+  }, [isLoginOpen, isLocationOpen, menuModel || dpModel]);
 
   useEffect(() => {
     const onlineHandler = () => {

@@ -19,6 +19,7 @@ const initialState = {
   availableInCities: [],
   pathHistory: [],
   userFriendlyPathHistory: [],
+  dbModelOpen: false
 };
 
 const homeSlice = createSlice({
@@ -168,6 +169,10 @@ const homeSlice = createSlice({
     setOnline: (state, action) => {
       state.isOnline = action.payload;
     },
+
+    setDpModelOpen: (state, action) => {
+      state.dbModelOpen = action.payload;
+    }
   },
 });
 
@@ -199,6 +204,7 @@ export const selectLatAndLng = createSelector(
   (lat, lng) => ({ lat, lng })
 );
 export const selectCity = state => state.home.city
+export const selectDpModel = state => state.home.dbModelOpen; 
 
 // if i dont use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
 
@@ -223,5 +229,6 @@ export const {
   addLatAndLng,
   setPathHistory,
   setUserFriendlyPathHistory,
+  setDpModelOpen
   // setCity
 } = homeSlice.actions;
