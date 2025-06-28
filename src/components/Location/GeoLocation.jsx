@@ -120,7 +120,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
   return (
     <div
       onClick={handleLocation}
-      className="group cursor-pointer flex items-center justify-center border-[1px] border-gray-400 active:border-primary py-2 px-3 md:py-4 md:px-7 mt-8"
+      className={`group cursor-pointer ${ showLoader && "flex items-center justify-center" } border-[1px] border-gray-400 active:border-primary py-2 px-3 md:py-4 md:px-7 mt-8`}
     >
       {showLoader
         ? <Loader size={"small"} />
