@@ -10,6 +10,8 @@ const OnlineDeliveryRestaurant = lazy(() =>
 const TopRestaurantChains = lazy(() => import("./TopRestaurantChains"));
 const PlaceCardsContainer = lazy(() => import("./PlaceCardsContainer"));
 const HomeCities = lazy(() => import("./homeCities"));
+import BackToTopBtn from "../BackToTopBtn";
+import MobileFooterMenu from "../Footer/MobileFooterMenu";
 
 import {
   selectFoodieThoughtsData,
@@ -18,7 +20,8 @@ import {
   selectIsLoading,
   selectBestCuisionsNearMe,
   selectAvailableCities,
-  selectCity
+  selectCity,
+  selectBottomMenu
 } from "../../features/home/homeSlice";
 
 import HomeShimmer from "./HomeShimmer";
@@ -35,6 +38,7 @@ const Home = memo(() => {
   const city = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
+  const bottomMenuUp = useSelector(selectBottomMenu);
 
   const cuisineClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch) => {
     const pathname = new URL(data.link).pathname;
@@ -154,6 +158,8 @@ const Home = memo(() => {
             <HomeCities />
           </Suspense>
       )}
+      <MobileFooterMenu />
+      <BackToTopBtn extraMargin={bottomMenuUp} percentage={50}/>
     </main>
   );
 });

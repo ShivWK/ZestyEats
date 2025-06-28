@@ -246,8 +246,6 @@ export default function Layout() {
         </Suspense>
       )}
       <PageFooter />
-      {pathname === "/" && <MobileFooterMenu />}
-      { <BackToTopBtn />}
     </>
   );
 }

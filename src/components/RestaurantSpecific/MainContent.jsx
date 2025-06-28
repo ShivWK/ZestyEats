@@ -8,6 +8,7 @@ import Footer from "./Footer";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
 import SearchBar from "./SearchBar";
+import BackToTopBtn from "../BackToTopBtn";
 
 const TopPicksCards = lazy(() => import("./TopPicksCards"));
 const ItemsMainHeading = lazy(() => import("./ItemsMainHeading"));
@@ -180,6 +181,7 @@ const MainContent = ({ data, routes = true }) => {
       >
         MENU
       </button>
+      <BackToTopBtn percentage={20} />
     </div>
   );
 };
