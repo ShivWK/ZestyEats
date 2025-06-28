@@ -100,7 +100,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
           });
         },
         {
-          timeout: 4000,
+          timeout: 6000,
           maximumAge: 10000,
         }
       );
