@@ -26,7 +26,7 @@ const Logo = memo(({ searchPlaceholder }) => {
   const hoverHandler = () => {
     dispatch(setLocationHovered());
   }
-// 
+  // 
   return (
     <div className="flex gap-1.5 md:gap-6 items-center">
       <NavLink to="/" className={`active:scale-95 shrink-0`}>
@@ -48,11 +48,11 @@ const Logo = memo(({ searchPlaceholder }) => {
 
           <div className="flex gap-0 md:gap-2 items-center justify-center max-md:-mt-1">
             <span className="max-w-44 md:max-w-48 truncate text-start font-medium text-gray-600 max-md:text-sm">
-            {yourCurrentCity
-              ? `${searchedCityAddress}`
-              : `${searchedCity}${searchedCityAddress}`}
-          </span>
-          <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-1 md:-ml-2.5 "></i>
+              {yourCurrentCity
+                ? `${searchedCityAddress}`
+                : `${searchedCity}${searchedCityAddress}`}
+            </span>
+            <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-4 md:-ml-4 "></i>
           </div>
         </button>
       )}

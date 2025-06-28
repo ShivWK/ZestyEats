@@ -102,7 +102,7 @@ body {
 
 .pretty-scrollbar::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
+    border-radius: 10px;
 }
 
 .pretty-scrollbar::-webkit-scrollbar {
