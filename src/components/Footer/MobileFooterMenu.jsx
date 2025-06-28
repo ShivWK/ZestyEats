@@ -1,9 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowBottomMenu, selectBottomMenu } from "../../features/home/homeSlice";
+import { NavLink } from "react-router-dom";
 
-const MobileFooterMenu = () => {
-    // const [show, setShow] = useState(true);
+const MobileFooterMenu = memo(() => {
+    const [showOnMobile, setShowOnMobile] = useState(false);
     const lastScrollTop = useRef(window.scrollY);
     const show = useSelector(selectBottomMenu);
     const dispatch = useDispatch();
@@ -22,35 +23,51 @@ const MobileFooterMenu = () => {
         };
 
         window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+
+        const handleResize = () => {
+            if (window.innerWidth < 768) {
+                setShowOnMobile(true);
+            } else {
+                setShowOnMobile(false);
+            }
+        }
+
+        handleResize();
+
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("scroll", handleScroll);
+            window.removeEventListener("resize", handleResize);
+        };
     }, []);
 
-    return (
+    return ( showOnMobile &&
         <div
             className="flex left-0 right-0 w-full items-center justify-around text-2xl text-black h-14 shadow-[0_0_20px_1px_rgba(0,0,0,0.3)] position fixed bottom-0 transform transition-transform duration-200 ease-linear bg-white z-30"
             style={{ transform: show ? "translateY(0)" : "translateY(100%)" }}
         >
-            <button>
+            <NavLink to={"/help"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
                 <i className="fa-solid fa-handshake-angle"></i>
-            </button>
-            <button>
+            </NavLink>
+            <NavLink to={"/about"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
                 <i className="ri-information-line"></i>
-            </button>
-            <button className="">
+            </NavLink>
+            <NavLink to={"/profile"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
                 <i className="ri-heart-2-fill text-red-600"></i>
-            </button>
-            <button>
+            </NavLink>
+            <NavLink to={"/profile"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
                 <i className="ri-handbag-line"></i>
-            </button>
-            <button>
+            </NavLink>
+            <NavLink to={"/cart"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
                 <i className="fa-solid fa-cart-shopping">
-                    <sub className="text-xs -mt-4">
+                    <sub className="text-xs -mt-4 text-red-500">
                         
                     </sub>
                 </i>
-            </button>
+            </NavLink>
         </div>
     );
-};
+});
 
 export default MobileFooterMenu;

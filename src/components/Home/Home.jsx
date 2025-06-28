@@ -1,4 +1,4 @@
-import { memo, lazy, Suspense, useEffect, useState } from "react";
+import { memo, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import useScrollToTop from "../../utils/useScrollToTop";
 
@@ -38,7 +38,6 @@ const Home = memo(() => {
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
-  const [showMenu, setShowMenu] = useState(false);
 
   const cuisineClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch) => {
     const pathname = new URL(data.link).pathname;
@@ -56,21 +55,6 @@ const Home = memo(() => {
       throw new Error("Cant fetch city home data");
     }
   }
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setShowMenu(true);
-      } else {
-        setShowMenu(false);
-      }
-    }
-
-    handleResize();
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [])
 
   return isLoadingMain ? (
     <>
@@ -174,7 +158,7 @@ const Home = memo(() => {
             <HomeCities />
           </Suspense>
         )}
-        {showMenu && <MobileFooterMenu />}
+        <MobileFooterMenu />
       </main>
       <BackToTopBtn extraMargin={bottomMenuUp} percentage={50} />
     </>

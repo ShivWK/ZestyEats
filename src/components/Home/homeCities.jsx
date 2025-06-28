@@ -22,9 +22,6 @@ const HomeCities = memo(() => {
         setMatchedCites(matched)
     }, 400))
 
-    console.log("Rendered homicities")
-
-
     const cityClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch, setSecondaryCity) => {
         const city = data?.text.toLowerCase().replace(/\s/g, "-");
         dispatch(setSecondaryCity(data?.text));

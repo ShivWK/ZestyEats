@@ -2,7 +2,8 @@ import BodyComponent from "../Help/BodyComponent";
 import LeftMenu from "../Help/LeftMenu";
 import RightContent from "./RightContwnt";
 import { aboutHeadings, about } from "../../utils/aboutPageData";
-import { use, useState } from "react";
+import { useState } from "react";
+import MobileFooterMenu from "../Footer/MobileFooterMenu";
 
 const About = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -32,6 +33,7 @@ const About = () => {
   };
 
   return (
+    <>
     <BodyComponent
       heading={"About"}
       description={
@@ -46,6 +48,8 @@ const About = () => {
       />
       <RightContent data={dataToSend} />
     </BodyComponent>
+    <MobileFooterMenu />
+    </>
   );
 };
 
