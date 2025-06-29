@@ -15,8 +15,6 @@ const SearchContainer = ({
   const [searchParams] = useSearchParams();
   const nameRef = useRef(searchParams.get("name"));
 
-  console.log(nameRef.current)
-
   return (
     <div className="pt-2 w-full max-md:px-2 md:max-w-[850px] mx-auto min-h-[105vh] bg-white">
       <div className="sticky top-16 bg-white pt-2 md:pt-8 z-20">

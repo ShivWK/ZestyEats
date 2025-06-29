@@ -9,7 +9,7 @@ const OptionsPage = () => {
   const mode = searchParams.get("mode");
 
   return (
-    <main className="pt-16 w-ful px-1.5 pb-20 bg-[rgb(55,113,142)]">
+    <main className="pt-16 w-full px-1.5 pb-20 bg-[rgb(55,113,142)]">
       {mode === "about" ? (
         <div className="p-2 mt-4 h-full  text-gray-700 font-medium flex flex-col justify-start gap-2 bg-white rounded-md">
           {about.map((item, index) => (

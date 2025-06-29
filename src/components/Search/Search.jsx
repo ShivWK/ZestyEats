@@ -1,14 +1,44 @@
 import SearchContainer from "../SearchContainer";
-import { useState } from "react";
-import { Outlet } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Outlet, useNavigate, useSearchParams } from "react-router-dom";
+import createDebounce from "../../utils/debounceCreater";
+import { useDispatch } from "react-redux";
+import { setSuggestionsLoading, setSuggestions } from "../../features/search/homeSearchSlice";
+import { useLazyGetSearchedFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
 
 const Search = () => {
+  const [searchParams] = useSearchParams();
+  const lat = searchParams.get("lat");
+  const lng = searchParams.get("lng");
+
   const [searchTerm, setSearchTerm] = useState("");
+  const [trigger] = useLazyGetSearchedFoodSuggestionsQuery();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const searchHandler = useRef(createDebounce(async (text, navigate, trigger, lat, lng) => {
+    dispatch(setSuggestionsLoading(true));
+    navigate(`suggestions?lat=${lat}&lng=${lng}`);
+
+    try {
+      const data = await trigger({ lat, lng, food: encodeURI(text.trim()) }).unwrap();
+      dispatch(setSuggestions(data));
+      dispatch(setSuggestionsLoading(false));
+    } catch (err) {
+      console.log("Can't fetch suggestion data", err);
+      dispatch(setSuggestionsLoading(false));
+      throw new Error("Can't fetch suggestions data");
+    }
+
+  }, 400))
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+    if (e.target.value) {
+      searchHandler.current(e.target.value, navigate, trigger, lat, lng);
+    }
   }
-  
+
   const crossHandler = () => {
     setSearchTerm('');
   }

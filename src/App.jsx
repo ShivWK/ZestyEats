@@ -66,7 +66,7 @@ export default function App() {
           }
         >
           <Route index loader={searchHomeLoader} element={<SearchHome />} />
-          <Route path="suggestions" loader={searchSuggestionsLoader} element={<SearchSuggestions />} />
+          <Route path="suggestions" element={<SearchSuggestions />} />
           <Route path="searchResult" element={<SearchResult />} >
             <Route path="restaurantPage" loader={resultDataLoader} element={<RestaurantResultPage />} />
             <Route path="dishPage" loader={resultDataLoader} element={<DishResultPage />} />
