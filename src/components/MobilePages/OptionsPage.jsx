@@ -19,7 +19,7 @@ const OptionsPage = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex pt-4 flex-col items-center justify-center">
           {mobileHelpLegalFaqs.map((item, index) => {
             return <SectionAndOptions key={index} section={item} />;
           })}
