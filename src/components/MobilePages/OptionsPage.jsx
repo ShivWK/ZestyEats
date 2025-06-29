@@ -14,12 +14,13 @@ const OptionsPage = () => {
         <div className="p-2 pt-5 h-full  text-gray-700 font-medium flex flex-col justify-start gap-2 ">
           {about.map((item, index) => (
             <NavLink
-              className="py-1 px-1.5 border-[1px] border-gray-300 rounded-md"
+              className="py-1 pl-2 border-[1px] border-gray-300 rounded-md flex justify-between items-center"
               key={index}
               to={`/mbStaticData?type=About`}
-              state={{data: item}}
+              state={{ data: item }}
             >
-              {item.title}
+              <p>{item.title}</p>
+              <i class="ri-arrow-drop-right-line text-3xl font-extralight" />
             </NavLink>
           ))}
         </div>

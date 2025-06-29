@@ -10,11 +10,12 @@ const SectionAndOptions = ({ section }) => {
         {section.data.map((item, index) => (
           <NavLink
             key={index}
-            className="border-b-[1px] border-gray-300 last:border-b-0 p-1"
+            className="border-b-[1px] border-gray-300 last:border-b-0 pb-1 flex justify-between items-center"
             to={`/mbStaticData?type=Support${item.question === "Contact Us" ? "&mode=form" : ""}`}
             state={{data : item}}
           >
-            {item.question}
+            <p>{item.question}</p>
+            <i class="ri-arrow-drop-right-line text-3xl font-extralight" />
           </NavLink>
         ))}
       </div>
