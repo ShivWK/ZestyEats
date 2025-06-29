@@ -15,13 +15,11 @@ const PageHeader = memo(() => {
 
   if (pathname === "/") {
     return <GeneralHeader />;
-  } else if (pathname === "/about") {
+  } else if (pathname === "/about" || pathname === "/mbAbout") {
     return <GeneralHeader placeholder={"About"} />
   } else if (pathname === "/search" || pathname === "/search/suggestions" || pathname === "/search/searchResult/dishPage" || pathname === "/search/searchResult/restaurantPage" || pathname === "/search/searchResult/cuisinesPage") {
     return <GeneralHeader placeholder={"Search"} />
-  } else if (pathname === "/offers-dinouts") {
-    return <GeneralHeader placeholder={"Offers"} />
-  } else if (pathname === "/help") {
+  } else if (pathname === "/help" || pathname === "/support") {
     return <GeneralHeader placeholder={"HELP & SUPPORT"} />;
   } else if (pathname === "/profile") {
     return <GeneralHeader placeholder={"MY ACCOUNT"} />;

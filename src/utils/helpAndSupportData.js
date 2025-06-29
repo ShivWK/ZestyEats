@@ -61,10 +61,22 @@ export const faqs = [
     },
 ]
 
-//  {
-//         question: "",
-//         description: "",
-//     },
+export const mobileHelpLegalFaqs = [
+    {
+        heading: "Support",
+        data: [{ question: "Contact Us" }]
+    },
+
+    {
+        heading: "FAQs",
+        data: faqs,
+    },
+
+    {
+        heading: "Legal",
+        data: legal
+    }
+]
 
 
 

@@ -40,6 +40,8 @@ import CityHome from "./components/cityHome/CityHome";
 import { specificRestroLoader, specificFoodLoader, specificCityLoader } from "./loaders/loaders";
 import { searchHomeLoader, searchSuggestionsLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
 import CuisinesResultPage from "./components/Search/CuisinesResultPage";
+import OptionsPage from "./components/MobilePages/OptionsPage";
+import ContentPage from "./components/MobilePages/ContentPage";
 
 export default function App() {
 
@@ -133,6 +135,9 @@ export default function App() {
           path="cityPage/:cityName"
           element={<CityHome />}
         />
+        <Route path="support" element={<OptionsPage /> } />
+        <Route path="mbAbout" element={<OptionsPage />} />
+        <Route path="mbStaticData" element={<ContentPage />} />
       </Route>
     )
   );
