@@ -11,7 +11,8 @@ const SectionAndOptions = ({ section }) => {
           <NavLink
             key={index}
             className="border-b-[1px] border-gray-300 last:border-b-0 p-1"
-            to={`/mbStaticData?content=${item}`}
+            to={`/mbStaticData?type=Support${item.question === "Contact Us" ? "&mode=form" : ""}`}
+            state={{data : item}}
           >
             {item.question}
           </NavLink>

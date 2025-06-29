@@ -9,7 +9,9 @@ import { memo } from "react";
 import { selectSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 
 const PageHeader = memo(() => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  const searchParams = new URLSearchParams(search);
+  const type = searchParams.get("type")
   const city = useSelector(selectSecondaryCity).toUpperCase();
 
 
@@ -31,6 +33,8 @@ const PageHeader = memo(() => {
     return <SpecificFoodHeader />
   } else if (pathname.includes("/cityPage")) {
     return <GeneralHeader placeholder={city} />
+  } else if (pathname === "/mbStaticData") {
+    return <GeneralHeader placeholder={type} />
   }
   
   return null;

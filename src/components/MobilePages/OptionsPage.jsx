@@ -9,11 +9,16 @@ const OptionsPage = () => {
   const mode = searchParams.get("mode");
 
   return (
-    <main className="pt-16 w-ful px-1.5 pb-20 h-full">
+    <main className={`pt-16 w-ful px-1.5 pb-20 `}>
       {mode === "about" ? (
-        <div className="p-2 pt-4 h-full bg-gray-100 text-xl text-gray-700 font-medium flex flex-col justify-center gap-2 ">
+        <div className="p-2 pt-5 h-full  text-gray-700 font-medium flex flex-col justify-start gap-2 ">
           {about.map((item, index) => (
-            <NavLink className="py-1 px-1.5 border-[1px] border-gray-300 rounded-md" key={index} to={`/mbStaticData?content=${item}`}>
+            <NavLink
+              className="py-1 px-1.5 border-[1px] border-gray-300 rounded-md"
+              key={index}
+              to={`/mbStaticData?type=About`}
+              state={{data: item}}
+            >
               {item.title}
             </NavLink>
           ))}
