@@ -9,7 +9,7 @@ const ContentPage = () => {
   const data = state.data;
 
   return (
-    <main className="pt-20 pb-14 px-1.5 flex flex-col gap-1">
+    <main className="pt-18 pb-14 px-1.5 flex flex-col gap-1">
       <button onClick={() => navigate(-1)} className="w-fit flex items-center">
         <i className="ri-arrow-drop-left-line text-4xl -ml-3.5"></i>
         <p className="-ml-1 font-medium">Back</p>
