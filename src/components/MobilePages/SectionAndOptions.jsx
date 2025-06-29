@@ -15,7 +15,7 @@ const SectionAndOptions = ({ section }) => {
             state={{data : item}}
           >
             <p>{item.question}</p>
-            <i class="ri-arrow-drop-right-line text-3xl font-extralight" />
+            <i className="ri-arrow-drop-right-line text-3xl font-extralight" />
           </NavLink>
         ))}
       </div>
