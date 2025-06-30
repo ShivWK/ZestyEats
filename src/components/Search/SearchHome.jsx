@@ -35,16 +35,11 @@ const MainContent = ({ data }) => {
   const itemCards = cards?.[1]?.card?.card?.imageGridCards?.info;
 
   useEffect(() => {
-    if ((storeSuggestionsData && storeSuggestionsData?.length !== 0)) {
+    if ((storeSuggestionsData && storeSuggestionsData?.length !== 0) || searchTerm !== "") {
       dispatch(setTapSuggestionData([]));
       dispatch(setTabQueryData(""))
     }
   }, [storeSuggestionsData])
-
-  //  if ((storeSuggestionsData && storeSuggestionsData?.length !== 0)) {
-  //     dispatch(setTapSuggestionData([]));
-  //     dispatch(setTabQueryData(""))
-  //   }
 
   const clickHandler = async (food) => {
     setLoading(true);
