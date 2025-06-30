@@ -93,10 +93,6 @@ const MainContent = ({ data, lat, lng, mode }) => {
 
   const tabRestaurantData = cards?.map((data) => data?.card?.card?.info);
 
-  // console.log(tabRestaurantData)
-  // console.log("Cicked", clickedRestro)
-  // console.log("more", moreText, moreRestros)
-
   return (
     <div className="p-3 pt-18 w-full bg-gray-200 flex flex-col">
       {mode === "parent" ? (

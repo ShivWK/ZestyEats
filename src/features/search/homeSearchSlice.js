@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit"
 const homeSearchSlice = createSlice({
     name: "homeSearchSlice",
     initialState: {
-        isSuggestionsLoading: true,
+        isSuggestionsLoading: false,
         suggestions: [],
     },
 
@@ -13,7 +13,7 @@ const homeSearchSlice = createSlice({
         },
 
         setSuggestions: (state, action) => {
-            state.suggestions = action.payload
+            state.suggestions = action.payload?.data?.suggestions;
         }
     }
 });
@@ -23,4 +23,4 @@ export default homeSearchSlice.reducer;
 export const selectSuggestionsLoading = state => state.homeSearchSlice.isSuggestionsLoading;
 export const selectSuggestions = state => state.homeSearchSlice.suggestions;
 
-export const {setSuggestions, setSuggestionsLoading} = homeSearchSlice.actions;
+export const {setSuggestions, setSuggestionsLoading } = homeSearchSlice.actions;

@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 
 const MainContent = () => {
     const data = useSelector(selectSuggestions);
-
     console.log(data)
 
     const query = data?.data?.query;
@@ -19,22 +18,10 @@ const MainContent = () => {
     const lat = searchParams.get("lat");
     const lng = searchParams.get("lng");
 
-    // const [trigger, { isLoading }] = useLazyGetExtraFoodSuggestionsQuery()
-    // const clickHandler = async () => {
-    //     if (!isLoading) {
-    //         try {
-    //             const result = await trigger({ lat, lng, food: query }).unwrap();
-    //             console.log(result);
-    //         } catch (err) {
-    //             console.log(err?.error?.data)
-    //         }
-    //     }
-    // };
-
     return (
         <>
             <div className="p-2 mt-14">
-                {suggestionsData?.map((item) => {
+                {(suggestionsData && suggestionsData?.length !== 0) ? suggestionsData?.map((item) => {
                     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/${item?.cloudinaryId}`;
 
                     const urlObj = new URL(item?.cta?.link).searchParams;
@@ -65,27 +52,25 @@ const MainContent = () => {
                             </div>
                         </NavLink>
                     );
-                })}
+                }) : <p className="text-gray-500 text-center py-3">No result for this search.</p>}
             </div>
-            <NavLink
-                to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query}`}
-                className={`flex gap-3 my-2 p-2 hover:bg-gray-200 rounded border-2 border-gray-300`}
-
-                // ${isLoading ? "cursor-none" : "cursor-pointer"}
-            >
-                <div className="rounded h-14 w-14 flex items-center justify-center border-2 border-gray-200">
-                    <i className="ri-search-2-line text-3xl cursor-pointer"></i>
-                </div>
-                <div className="flex items-center">
-                    {/* {isLoading ? (
-                        <Loader size={"small"} />
-                    ) : ( */}
+            {(suggestionsData && suggestionsData?.length !== 0) && (
+                <NavLink
+                    to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query}`}
+                    className={`flex gap-3 my-2 p-2 hover:bg-gray-200 rounded border-2 border-gray-300`}
+                >
+                    <div className="rounded h-14 w-14 flex items-center justify-center border-2 border-gray-200">
+                        <i className="ri-search-2-line text-3xl cursor-pointer"></i>
+                    </div>
+                    <div className="flex items-center">
                         <p>
                             See all dishes and restaurants for <span className="font-bold">{decodeURI(query)}</span>
                         </p>
-                    {/* )} */}
-                </div>
-            </NavLink>
+                    </div>
+                </NavLink>
+            )
+
+            }
         </>
     );
 };

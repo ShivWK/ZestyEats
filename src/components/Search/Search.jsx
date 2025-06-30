@@ -13,12 +13,11 @@ const Search = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [trigger] = useLazyGetSearchedFoodSuggestionsQuery();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const searchHandler = useRef(createDebounce(async (text, navigate, trigger, lat, lng) => {
+  const searchHandler = useRef(createDebounce(async (text, trigger, lat, lng) => {
+    console.log("lat",lat, "lng",lng)
     dispatch(setSuggestionsLoading(true));
-    navigate(`suggestions?lat=${lat}&lng=${lng}`);
 
     try {
       const data = await trigger({ lat, lng, food: encodeURI(text.trim()) }).unwrap();
@@ -29,13 +28,13 @@ const Search = () => {
       dispatch(setSuggestionsLoading(false));
       throw new Error("Can't fetch suggestions data");
     }
-
   }, 400))
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
+
     if (e.target.value) {
-      searchHandler.current(e.target.value, navigate, trigger, lat, lng);
+      searchHandler.current(e.target.value, trigger, lat, lng);
     }
   }
 
