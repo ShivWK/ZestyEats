@@ -9,15 +9,17 @@ import {
 import useScrollToTop from "../../utils/useScrollToTop";
 import Ui1Shimmer from "./Ui1Shimmer";
 import { useLazyGetSearchedFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
-import { selectSuggestionsLoading, selectSuggestions } from "../../features/search/homeSearchSlice";
-import { useSelector } from "react-redux";
+import { selectSuggestionsLoading, selectSuggestions, selectTabSuggestionData, selectTabQueryData, setTabQueryData, setTapSuggestionData } from "../../features/search/homeSearchSlice";
+import { useSelector, useDispatch } from "react-redux";
 import Ui2Shimmer from "./Ui2Shimmer";
 
 const MainContent = ({ data }) => {
   useScrollToTop();
   const [isLoading, setLoading] = useState(false);
-  const [query, setQuery] = useState("");
-  const [suggestionsData, setSuggestionsData] = useState([]);
+  const query = useSelector(selectTabQueryData);
+  const suggestionsData = useSelector(selectTabSuggestionData);
+
+  const dispatch = useDispatch();
 
   const suggestionLoading = useSelector(selectSuggestionsLoading);
   const storeSuggestionsData = useSelector(selectSuggestions);
@@ -33,17 +35,24 @@ const MainContent = ({ data }) => {
   const itemCards = cards?.[1]?.card?.card?.imageGridCards?.info;
 
   useEffect(() => {
-    setSuggestionsData([]);
-    setQuery("");
+    if ((storeSuggestionsData && storeSuggestionsData?.length !== 0)) {
+      dispatch(setTapSuggestionData([]));
+      dispatch(setTabQueryData(""))
+    }
   }, [storeSuggestionsData])
+
+  //  if ((storeSuggestionsData && storeSuggestionsData?.length !== 0)) {
+  //     dispatch(setTapSuggestionData([]));
+  //     dispatch(setTabQueryData(""))
+  //   }
 
   const clickHandler = async (food) => {
     setLoading(true);
-    setQuery(food);
+    dispatch(setTabQueryData(food))
 
     try {
       const data = await trigger({ lat, lng, food }).unwrap();
-      setSuggestionsData(data?.data?.suggestions);
+      dispatch(setTapSuggestionData(data?.data?.suggestions));
       setLoading(false);
     } catch (err) {
       console.log("Can't fetch suggestion data", err);
@@ -56,13 +65,17 @@ const MainContent = ({ data }) => {
 
   const dataToMap = suggestionsData?.length !== 0 ? suggestionsData : storeSuggestionsData;
 
-  console.log(suggestionsData, storeSuggestionsData)
+  console.log("mapping", suggestionsData, "qury", query, storeSuggestionsData)
 
   return ((searchTerm !== "" || query) ? (
     (isLoading || suggestionLoading) ?
       <Ui2Shimmer />
       : (<>
         <div className="p-2 mt-14">
+          {query !== "" && <button onClick={() => dispatch(setTabQueryData(""))} className="w-fit flex items-center cursor-pointer">
+          <i className="ri-arrow-drop-left-line text-4xl -ml-3.5"></i>
+          <p className="-ml-1 font-medium">Back</p>
+        </button>}
           {((suggestionsData && suggestionsData?.length !== 0) || storeSuggestionsData) ? dataToMap?.map((item) => {
             const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/${item?.cloudinaryId}`;
 
@@ -96,7 +109,7 @@ const MainContent = ({ data }) => {
             );
           }) : <p className="text-gray-500 text-center py-3">No result for this search.</p>}
         </div>
-        {((suggestionsData && suggestionsData?.length !== 0) || storeSuggestionsData?.length !== 0) && (
+        {((suggestionsData && suggestionsData?.length !== 0) || (storeSuggestionsData && storeSuggestionsData?.length !== 0)) && (
           <NavLink
             to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query || searchTerm}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query || searchTerm}`}
             className={`flex gap-3 my-2 p-2 hover:bg-gray-200 rounded border-2 border-gray-300`}
@@ -147,8 +160,11 @@ const SearchHome = () => {
   const data = useLoaderData();
   useScrollToTop();
 
+  const storeSuggestionsData = useSelector(selectSuggestions);
+  const tabSuggestionsData = useSelector(selectTabSuggestionData);
+
   return (
-    <Suspense fallback={<Ui1Shimmer />}>
+    <Suspense fallback={(storeSuggestionsData?.length !== 0 || tabSuggestionsData?.length !== 0) ? <Ui2Shimmer /> : <Ui1Shimmer />}>
       <Await resolve={data?.data}>
         {(resolveData) => <MainContent data={resolveData} />}
       </Await>

@@ -5,6 +5,7 @@ import createDebounce from "../../utils/debounceCreater";
 import { useDispatch } from "react-redux";
 import { setSuggestionsLoading, setSuggestions } from "../../features/search/homeSearchSlice";
 import { useLazyGetSearchedFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
+import { distance2D } from "motion";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -16,7 +17,6 @@ const Search = () => {
   const dispatch = useDispatch();
 
   const searchHandler = useRef(createDebounce(async (text, trigger, lat, lng) => {
-    console.log("lat",lat, "lng",lng)
     dispatch(setSuggestionsLoading(true));
 
     try {
@@ -35,11 +35,14 @@ const Search = () => {
 
     if (e.target.value) {
       searchHandler.current(e.target.value, trigger, lat, lng);
+    } else {
+      dispatch(setSuggestions([]))
     }
   }
 
   const crossHandler = () => {
     setSearchTerm('');
+    dispatch(setSuggestions([]))
   }
 
   return (

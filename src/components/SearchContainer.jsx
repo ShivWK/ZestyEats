@@ -27,7 +27,7 @@ const SearchContainer = ({
           />
         </div>
         {!pathname.includes("searchResult") ? (<div id="searchBAr" className="flex w-full items-center justify-evenly p-2.5 py-1.5 border-b-2 rounded-md bg-gray-100 ">
-          {(pathname.includes("searchResult") || pathname.includes("dishSearch")) && (<i
+          {pathname.includes("dishSearch") && (<i
             onClick={() => navigate(-1)}
             className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"
           ></i>)
