@@ -91,12 +91,12 @@ const Banner = ({ data }) => {
           </div>
         </div>
         {veg ? (
-          <Suspense fallback={<p className="flex md:hidden items-center"><span>•••</span></p>}>
+          <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
             <PureVegSvg classes="-ml-1.5 mb-1 -mt-2 max-md:block hidden" />
           </Suspense>
 
         ) : (
-          <Suspense fallback={<p className="flex md:hidden items-center"><span>•••</span></p>}>
+          <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
             <VegAndNonVegSvg classes="hidden max-md:inline-flex pl-1 my-1 ml-3 pr-2 py-1 mb-2" />
           </Suspense>
         )}
