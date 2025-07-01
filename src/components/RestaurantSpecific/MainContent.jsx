@@ -94,7 +94,7 @@ const MainContent = ({ data, routes = true }) => {
       {banner && <Banner data={banner} />}
 
       {/* Offers */}
-      <section className="w-full max-w-[775px] my-2">
+      <section className="w-full  my-2">
         {offers && <Offers data={offers} />}
       </section>
 
@@ -132,7 +132,7 @@ const MainContent = ({ data, routes = true }) => {
       {/* Menu */}
       {menuModel && <Menu clickHandler={setShowMenu} />}
 
-      <section className="w-full md:max-w-[775px] mt-4 first:border-t-gray-200 first:border-t-[16px]">
+      <section className="w-full  mt-4 first:border-t-gray-200 first:border-t-[16px]">
         {restMenuData?.length > 0 &&
           restMenuData?.map((item, index) => {
             if (item?.card?.card?.categories) {
@@ -177,7 +177,7 @@ const MainContent = ({ data, routes = true }) => {
       </footer>
 
       {/* menu button */}
-      <button onClick={() => dispatch(toggleMenuModel())} className={`fixed bottom-4 md:bottom-3.5 right-4 md:right-[312px] py-4 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out ${menuModel ? "md:mr-[15px]" : ""}`}
+      <button onClick={() => dispatch(toggleMenuModel())} className={`fixed bottom-4 md:bottom-3.5 right-4 md:right-[300px] py-4 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-150 ease-in-out ${menuModel ? "md:mr-[15px]" : ""}`}
       >
         MENU
       </button>

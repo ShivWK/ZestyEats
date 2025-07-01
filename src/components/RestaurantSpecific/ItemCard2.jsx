@@ -41,7 +41,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item?.imageId}`;
 
   return (
-    <div className="flex flex-col md:flex-row justify-between bg-white p-1 pt-2 md:pt-0 md:p-4 w-full border-b-[1px] border-gray-300">
+    <div className="flex flex-col md:flex-row justify-between bg-white p-1 pt-2 md:pt-0 md:py-4 md:px-1 w-full border-b-[1px] border-gray-300">
       <div className="flex mt-3 flex-col order-2 md:order-1 items-start gap-1.5 p-2 max-w-[525px]">
         {veg ? (
           <svg
