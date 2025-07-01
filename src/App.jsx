@@ -42,6 +42,7 @@ import { searchHomeLoader, searchSuggestionsLoader, resultDataLoader } from "./l
 import CuisinesResultPage from "./components/Search/CuisinesResultPage";
 import OptionsPage from "./components/MobilePages/OptionsPage";
 import ContentPage from "./components/MobilePages/ContentPage";
+import OrdersAndWishlist from "./components/MobilePages/OrdersAndWishlist";
 
 export default function App() {
 
@@ -138,6 +139,7 @@ export default function App() {
         <Route path="support" element={<OptionsPage /> } />
         <Route path="mbAbout" element={<OptionsPage />} />
         <Route path="mbStaticData" element={<ContentPage />} />
+        <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
       </Route>
     )
   );

@@ -57,7 +57,7 @@ const MobileFooterMenu = memo(() => {
             <NavLink to={"/"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
                 <i className="ri-home-8-fill text-3xl"></i>
             </NavLink>
-            <NavLink to={"/profile"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
+            <NavLink to={"/ordersAndWishlist"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
                 <i className="ri-handbag-line"></i>
             </NavLink>
 

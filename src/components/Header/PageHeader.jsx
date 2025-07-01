@@ -2,6 +2,7 @@ import GeneralHeader from "./GeneralHeader";
 import CartHeader from "./CartHeader";
 import RestaurantsHeader from "./RestaurantsHeader";
 import SpecificFoodHeader from "./SpecificFoodHeader";
+import MobileOrdersHeader from "./MobileOrdersHeader";
 import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { memo } from "react";
@@ -35,6 +36,8 @@ const PageHeader = memo(() => {
     return <GeneralHeader placeholder={city} />
   } else if (pathname === "/mbStaticData") {
     return <GeneralHeader placeholder={type} />
+  } else if (pathname === "/ordersAndWishlist") {
+    return <MobileOrdersHeader />
   }
   
   return null;

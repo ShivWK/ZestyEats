@@ -9,9 +9,9 @@ const OptionsPage = () => {
   const mode = searchParams.get("mode");
 
   return (
-    <main className="pt-16 w-full px-1.5 pb-20 bg-[rgb(55,113,142)]">
+    <main className="pt-16 w-full px-1.5 pb-20 bg-[rgb(55,113,142)] h-full">
       {mode === "about" ? (
-        <div className="p-2 mt-4 h-full  text-gray-700 font-medium flex flex-col justify-start gap-2 bg-white rounded-md">
+        <div className="p-2 mt-4 h-fit  text-gray-700 font-medium flex flex-col justify-start gap-2 bg-white rounded-md">
           {about.map((item, index) => (
             <NavLink
               className="py-1 pl-2 border-[1px] border-gray-300 rounded-md flex justify-between items-center"

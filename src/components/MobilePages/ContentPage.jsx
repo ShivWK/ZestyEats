@@ -16,7 +16,7 @@ const ContentPage = () => {
       </button>
       <div className="flex flex-col gap-0.5">
         <div className="w-full bg-primary text-white font-semibold text-xl px-1.5 py-2">
-          {data.question || data.title}
+          <p>{data.question || data.title}</p>
         </div>
         {type === "Support" ? (
           mode === "form" ? (
