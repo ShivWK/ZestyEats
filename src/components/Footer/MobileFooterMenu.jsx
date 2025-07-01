@@ -42,27 +42,29 @@ const MobileFooterMenu = memo(() => {
         };
     }, []);
 
-    return ( showOnMobile &&
+    return (showOnMobile &&
         <div
             className="flex left-0 right-0 w-full items-center justify-around text-2xl text-black h-14 shadow-[0_0_20px_1px_rgba(0,0,0,0.3)] position fixed bottom-0 transform transition-transform duration-200 ease-linear bg-white z-30"
             style={{ transform: show ? "translateY(0)" : "translateY(100%)" }}
         >
-            <NavLink to={"/support?mode=help"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
+            <NavLink to={"/support?mode=help"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
                 <i className="fa-solid fa-handshake-angle"></i>
             </NavLink>
-            <NavLink to={"/mbAbout?mode=about"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
-                <i className="ri-information-line"></i>
+            <NavLink to={"/mbAbout?mode=about"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
+                <i className="ri-information-line "></i>
             </NavLink>
-            <NavLink to={"/profile"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
-                <i className="ri-heart-2-fill text-red-600"></i>
+
+            <NavLink to={"/"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
+                <i className="ri-home-8-fill text-3xl"></i>
             </NavLink>
-            <NavLink to={"/profile"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
+            <NavLink to={"/profile"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
                 <i className="ri-handbag-line"></i>
             </NavLink>
-            <NavLink to={"/cart"} style={({isActive}) =>{ if (isActive) return { color: "#ff5200"}}}>
+
+            <NavLink to={"/cart"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
                 <i className="fa-solid fa-cart-shopping">
-                    <sub className="text-xs -mt-4 text-red-500">
-                        
+                    <sub className="text-[10px] -mt-5 text-red-500 ">
+                            12
                     </sub>
                 </i>
             </NavLink>
