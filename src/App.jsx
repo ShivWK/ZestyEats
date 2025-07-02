@@ -7,21 +7,18 @@ import {
 import { Suspense, lazy } from "react";
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
-import { useSelector } from "react-redux";
-import { selectPathHistory } from "./features/home/homeSlice";
+
 const HelpMain = lazy(() => import("./components/Help/HelpMain"));
 const About = lazy(() => import("./components/About/About"));
 const Search = lazy(() => import("./components/Search/Search"));
 const Cart = lazy(() => import("./components/Cart/Cart"));
 const Profile = lazy(() => import("./components/Profile/Profile"));
-const Offers_Dinouts = lazy(() =>
-  import("./components/Offers_Dinouts/Offers_Dinouts")
-);
+
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
-const RestaurantSearch = lazy(() =>
-  import("./components/RestaurantSpecific/RestraurantSearch")
-);
+// const RestaurantSearch = lazy(() =>
+//   import("./components/RestaurantSpecific/RestraurantSearch")
+// );
 const RestaurantSpecific = lazy(() =>
   import("./components/RestaurantSpecific/RestaurantSpecific")
 );
@@ -74,14 +71,7 @@ export default function App() {
             <Route path="cuisinesPage" loader={resultDataLoader} element={<CuisinesResultPage />} />
           </Route>
         </Route>
-        <Route
-          path="offers-dinouts"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <Offers_Dinouts />
-            </Suspense>
-          }
-        />
+
         <Route
           path="help"
           element={
@@ -90,6 +80,7 @@ export default function App() {
             </Suspense>
           }
         />
+        
         <Route
           path="profile"
           element={
@@ -115,14 +106,14 @@ export default function App() {
           }
           loader={specificRestroLoader}
         />
-        <Route
+        {/* <Route
           path="dishSearch"
           element={
             <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
               <RestaurantSearch />
             </Suspense>
           }
-        />
+        /> */}
         <Route
           path="specificFood/:food"
           element={

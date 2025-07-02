@@ -74,7 +74,8 @@ const RestaurantSearch = memo(() => {
           : searchData.length !== 0 ?
             searchData.map((item, index) => <ItemsCardContainer key={index} item={item} isParentOpen={true} />)
             : <p className="text-center text-gray-700 font-semibold my-5">{`Sorry, we couldn't find any items matching your search.`}</p>
-        : AllItems.map((item, index) => <ItemsCardContainer key={index} item={item} isParentOpen={true} />)
+            : null
+        // : AllItems.map((item, index) => <ItemsCardContainer key={index} item={item} isParentOpen={true} />)
       }
     </div>
   }

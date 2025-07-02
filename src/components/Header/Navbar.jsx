@@ -11,7 +11,7 @@ import { memo, useCallback, useState } from "react";
 
 const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   const { lat, lng } = useSelector(selectLatAndLng);
-  const loggedIn = false;
+  const loggedIn = true;
   const dispatch = useDispatch();
   const [showDrop, setShowDrop] = useState(false);
   const [theme, setTheme] = useState("Light");

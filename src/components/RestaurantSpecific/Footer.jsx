@@ -1,6 +1,6 @@
 const Footer = ({ license, address }) => {
     return (
-        <div className="w-full max-w-[775px] p-4 pb-16 md:pb-32 bg-gray-100">
+        <div className="w-full p-4 pb-16 md:pb-32 bg-gray-100">
             <div id="lisence" className="flex items-center gap-4">
                 <img
                     className="h-9"
