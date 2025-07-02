@@ -34,7 +34,7 @@ const RestaurantSearch = memo(() => {
   const doSearch = useRef(
     createDebounce((searchTerm) => {
       // if (searchTerm.trim() !== "") {
-      // console.log("Called")
+      console.log("Called")
       const FilteredData = AllItems.filter(obj => {
         return obj?.name.toLowerCase().split(" ").some(word => word.startsWith(searchTerm.trim().toLowerCase()));
       })

@@ -87,7 +87,7 @@ const MainContent = ({ data, routes = true }) => {
       )}
 
       {/* Title */}
-      <div className="w-full max-w-[775px] mt-2">
+      <div className="w-full md:max-w-[775px] mt-2">
         <h1>{title}</h1>
       </div>
 
@@ -100,8 +100,8 @@ const MainContent = ({ data, routes = true }) => {
       </section>
 
       {/* Search */}
-      <section className="w-full max-w-[775px] my-3 md:my-4">
-        <Suspense fallback={<div lassName="flex relative py-3 items-center justify-center w-full bg-gray-200 rounded-md cursor-pointer">
+      <section className="w-full md:max-w-[775px] my-3 md:my-4">
+        <Suspense fallback={<div className="flex relative py-3 items-center justify-center w-full bg-gray-200 rounded-md cursor-pointer">
           <p className="font-semibold text-gray-700">Search for dishes...</p>
           <i className="absolute right-3 fa-solid fa-magnifying-glass text-xl text-gray-500"></i>
         </div>}>
