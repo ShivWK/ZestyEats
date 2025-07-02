@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     addCurrentRestaurant,
     setMenuItems,
+    addToWishlistItem,
+    selectWishlistItems,
+    deleteItemFromWishlist
 } from "../../features/home/restaurantsSlice";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import Ui3Shimmer from "./Ui3Shimmer";
@@ -18,17 +21,28 @@ import useScrollToTop from "../../utils/useScrollToTop";
 const Card = ({ data, lat, lng }) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const [isError, setIsError] = useState(false);
-    const [wishlistAdded, setWishlistAdded] = useState(false);
-    const dispatch = useDispatch();
 
     const mainData = data?.card?.card;
-    const disData = mainData?.info;
+    const dishData = mainData?.info;
     const restaurantData = mainData?.restaurant?.info;
-    const path = `/restaurantSpecific/${lat}/${lng}/${restaurantData?.id}/${restaurantData?.name}`;
-    const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${disData?.imageId}`;
 
-    const defaultPrice = disData?.price / 100 || disData?.defaultPrice / 100 || 0;
-    const finalPrice = disData?.finalPrice / 100;
+    const restaurantDataToWishlist = {
+        metadata: restaurantData,
+        address: restaurantData?.address,
+        offers: null
+    }
+
+    const wishlist = useSelector(selectWishlistItems);
+    const isWishlisted = dishData?.id in wishlist || false;
+
+    const [wishlistAdded, setWishlistAdded] = useState(isWishlisted);
+    const dispatch = useDispatch();
+
+    const path = `/restaurantSpecific/${lat}/${lng}/${restaurantData?.id}/${restaurantData?.name}`;
+    const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${dishData?.imageId}`;
+
+    const defaultPrice = dishData?.price / 100 || dishData?.defaultPrice / 100 || 0;
+    const finalPrice = dishData?.finalPrice / 100;
     const price = finalPrice ? (
         <p className="text-sm tracking-tight font-bold">
             <span className="line-through text-gray-500">₹{defaultPrice} </span>₹
@@ -42,6 +56,16 @@ const Card = ({ data, lat, lng }) => {
         dispatch(addCurrentRestaurant(name));
         dispatch(setMenuItems({ mode: "empty" }));
     };
+
+    const wishlistAddHandler = (wishlistObject, id) => {
+        if (id in wishlist) {
+            setWishlistAdded(false);
+            dispatch(deleteItemFromWishlist(id))
+        } else {
+            setWishlistAdded(true);
+            dispatch(addToWishlistItem(wishlistObject));
+        }
+    }
 
     return (
         <div className="max-md:basis-full md:basis-[49%] pb-1 border-2 border-gray-300 rounded-md bg-white">
@@ -68,7 +92,7 @@ const Card = ({ data, lat, lng }) => {
             <hr className="text-gray-300 my-1.5" />
             <div className="flex justify-between bg-white">
                 <div className="flex flex-col gap-2 p-4">
-                    {disData.isVeg === 1 ? (
+                    {dishData.isVeg === 1 ? (
                         <svg
                             width="15"
                             height="15"
@@ -107,11 +131,11 @@ const Card = ({ data, lat, lng }) => {
                     )}
                     <div className="w-[100%]">
                         <p className="leading-5 line-clamp-2 tracking-tight font-bold">
-                            {disData?.name}
+                            {dishData?.name}
                         </p>
                     </div>
                     <div>{price}</div>
-                    {disData?.description && (
+                    {dishData?.description && (
                         <div
                             onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
                             id="moreCities"
@@ -133,13 +157,13 @@ const Card = ({ data, lat, lng }) => {
                     <img
                         src={isError ? "/images/fallback.png" : imageUrl}
                         className="absolute top-0 left-0 h-full w-full object-center object-cover"
-                        alt={disData?.name}
+                        alt={dishData?.name}
                         onError={() => setIsError(true)}
                     />
                     <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out ">
                         Add
                     </button>
-                    <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => setWishlistAdded(!wishlistAdded)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
+                    <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData: restaurantDataToWishlist, item: dishData }, dishData?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"
@@ -154,7 +178,7 @@ const Card = ({ data, lat, lng }) => {
             {isDescriptionOpen && (
                 <div className="px-2 text-gray-600 font-medium">
                     <hr className="text-gray-300 my-1" />
-                    <p>{disData?.description}</p>
+                    <p>{dishData?.description}</p>
                 </div>
             )}
         </div>
@@ -182,25 +206,25 @@ const MainContent = ({ data, lat, lng, mode }) => {
             </div>
             <div className="flex items-start flex-wrap gap-2.5 gap-y-4 w-full justify-between">
                 {cards ? (
-                cards.map((item) => {
-                    const data = item?.card?.card?.info;
-                    console.log(data?.isVeg);
+                    cards.map((item) => {
+                        const data = item?.card?.card?.info;
+                        console.log(data?.isVeg);
 
-                    if (!vegOption && data?.isVeg) return;
-                    if (!nonVegOption && !data?.isVeg) return;
+                        if (!vegOption && data?.isVeg) return;
+                        if (!nonVegOption && !data?.isVeg) return;
 
-                    return <Card
-                        key={item?.card?.card?.info?.id}
-                        data={item}
-                        lat={lat}
-                        lng={lng}
-                    />
-                })
-            ) : (
-                <p className="self-center font-semibold text-center pb-4 pt-2">
-                    Sorry no data for this restaurant
-                </p>
-            )}
+                        return <Card
+                            key={item?.card?.card?.info?.id}
+                            data={item}
+                            lat={lat}
+                            lng={lng}
+                        />
+                    })
+                ) : (
+                    <p className="self-center font-semibold text-center pb-4 pt-2">
+                        Sorry no data for this restaurant
+                    </p>
+                )}
             </div>
         </div>
     );

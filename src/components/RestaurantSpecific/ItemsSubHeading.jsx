@@ -6,7 +6,7 @@ import {
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
 
-const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
+const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true, restaurantData = null }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [count, setCount] = useState(0);
   const initialRender = itemCards ? itemCards.length > 0 : false;
@@ -78,6 +78,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
             key={item?.card?.info?.id}
             item={item?.card?.info}
             isParentOpen={isOpen}
+            restaurantData={restaurantData}
           />
         })}
       </div>

@@ -2,7 +2,7 @@ import TopPicksCard from "./TopPicksCard";
 import HorizontalCarousel from "../HorizontalCarousel";
 import { memo, useMemo } from "react";
 
-const TopPicksCards = memo(({ data }) => {
+const TopPicksCards = memo(({ data, restaurantData}) => {
   const mainData = data?.card?.card?.carousel;
   const cardsData = useMemo(
     () => mainData?.map((item , index) => {
@@ -20,6 +20,7 @@ const TopPicksCards = memo(({ data }) => {
       dataToMap={cardsData}
       Card={TopPicksCard}
       scrollMargin="-5"
+      restaurantData={restaurantData}
     />
   );
 });

@@ -18,13 +18,21 @@ import Filter from "../Home/Filters";
 import textToZestyEats from "../../utils/textToZestyEats";
 
 const MainContent = ({ data, routes = true }) => {
+  const restaurantData = {};
+
   const { lat, lng, id } = useParams();
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const cards = data?.data?.cards;
+  
   const title = textToZestyEats(cards?.[0].card?.card?.text);
+  
   const banner = useMemo(() => cards?.[2], [cards]);
+  restaurantData.metadata = banner?.card?.card?.info;
+  
   const offers = useMemo(() => cards?.[3], [cards]);
+  restaurantData.offers = offers?.card?.card?.gridElements?.infoWithStyle?.offers;
+  
   const menu = cards
     ?.at(-1)
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1) || [];
@@ -64,6 +72,8 @@ const MainContent = ({ data, routes = true }) => {
       }),
     [menu]
   );
+
+  restaurantData.address = RestaurantAddress?.card?.card;
 
   const restMenuData = useMemo(() => {
     return menu.filter((item) => {
@@ -123,7 +133,7 @@ const MainContent = ({ data, routes = true }) => {
               </div>
             }
           >
-            <TopPicksCards data={topPicks} />
+            <TopPicksCards data={topPicks} restaurantData={restaurantData} />
           </Suspense>
         )}
       </section>
@@ -153,6 +163,7 @@ const MainContent = ({ data, routes = true }) => {
                     categories={item?.card?.card?.categories}
                     topBorder={index === 0}
                     borderBottom={index === restMenuData.length - 1}
+                    restaurantData={restaurantData}
                   />
                 </Suspense>
               );
@@ -170,6 +181,7 @@ const MainContent = ({ data, routes = true }) => {
                   items={item?.card?.card?.itemCards}
                   topBorder={index === 0}
                   borderBottom={index === restMenuData.length - 1}
+                  restaurantData={restaurantData}
                 />
               </Suspense>
             );

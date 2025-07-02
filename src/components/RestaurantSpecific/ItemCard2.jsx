@@ -1,17 +1,20 @@
 import { useState, useRef, memo, useEffect } from "react";
 import textToZestyEats from "../../utils/textToZestyEats";
-import { useDispatch } from "react-redux";
-import { setRestaurantItems } from "../../features/home/restaurantsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addToWishlistItem, selectWishlistItems, deleteItemFromWishlist } from "../../features/home/restaurantsSlice";
 
-const ItemCard2 = memo(({ item, isParentOpen }) => {
+const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null }) => {
   const [isError, setIsError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [overFlow, setOverFlow] = useState(false);
   const [paraSize, setParaSize] = useState(0);
-  const [wishlistAdded, setWishlistAdded] = useState(false);
   const containerRef = useRef(null);
   const paraRef = useRef(null);
   const dispatch = useDispatch();
+  const wishlist = useSelector(selectWishlistItems);
+  const isWishlisted = item?.id in wishlist || false;
+
+  const [wishlistAdded, setWishlistAdded] = useState(isWishlisted);
 
   useEffect(() => {
     setTimeout(() => {
@@ -27,9 +30,15 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
     }, 100)
   }, [isParentOpen, isOpen]);
 
-  // useEffect(() => {
-  //   dispatch(setRestaurantItems(item))
-  // }, [])
+  const wishlistAddHandler = (wishlistObject, id) => {
+    if (id in wishlist) {
+      setWishlistAdded(false);
+      dispatch(deleteItemFromWishlist(id))
+    } else {
+      setWishlistAdded(true);
+      dispatch(addToWishlistItem(wishlistObject));
+    }
+  }
 
   // when parent compo has display none that time the card's scrollHeight and clientHeight bot are 0 they don't render so we need to check it when parent is opened
 
@@ -106,7 +115,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
           ref={containerRef}
           className="relative transition-all duration-100 ease-linear overflow-hidden"
           style={{
-            height: isOpen ?  `${paraSize}px` ?? "200px" : "42px",
+            height: isOpen ? `${paraSize}px` ?? "200px" : "42px",
           }}
         >
           <p ref={paraRef} className="text-black text-sm text-wrap">{textToZestyEats(item?.description)}</p>
@@ -131,7 +140,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
         <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2 cursor-pointer active:scale-95 transition-all duration-100 ease-in-out">
           Add
         </button>
-        <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => setWishlistAdded(!wishlistAdded)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
+        <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData, item }, item?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

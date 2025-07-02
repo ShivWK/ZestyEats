@@ -1,6 +1,7 @@
 import { useState } from "react";
 import MobileFooterMenu from "./../Footer/MobileFooterMenu";
 import Construction from "../../utils/Construction";
+import WishlistedItems from "./Wishlisttems/WishlistedItems";
 
 const OrdersAndWishlist = () => {
     const [currentTab, setCurrentTab] = useState('Orders')
@@ -29,7 +30,7 @@ const OrdersAndWishlist = () => {
                     <div className="w-full bg-primary text-white font-semibold text-xl px-2 py-1.5 rounded ">
                         <p>Wishlist</p>
                     </div>
-                    <Construction />
+                    <WishlistedItems />
                 </section>
             }
         </div>

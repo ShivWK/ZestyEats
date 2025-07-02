@@ -14,6 +14,7 @@ const ItemsMainHeading = ({
   topBorder,
   borderBottom,
   categories = null,
+  restaurantData = null
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [count, setCount] = useState(0);
@@ -131,6 +132,7 @@ const ItemsMainHeading = ({
                   title={category?.title}
                   itemCards={category?.itemCards}
                   borderBottom={index !== categories.length - 1}
+                  restaurantData={restaurantData}
                 />
               );
             })}
@@ -170,6 +172,7 @@ const ItemsMainHeading = ({
                 key={itemData?.id}
                 item={itemData}
                 isParentOpen={isOpen}
+                restaurantData={restaurantData}
               />;
             })}
           </div>

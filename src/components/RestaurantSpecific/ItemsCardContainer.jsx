@@ -5,14 +5,14 @@ import {
 } from "../../features/home/restaurantsSlice";
 import { useSelector } from "react-redux";
 
-const ItemsCardContainer = memo(({ item, isParentOpen }) => {
+const ItemsCardContainer = memo(({ item, isParentOpen, restaurantData = null }) => {
   const { vegOption, nonVegOption } = useSelector(selectVegVariant)
   const veg = item?.itemAttribute?.vegClassifier === "VEG";
 
   if (!vegOption && veg) return;
   if (!nonVegOption && !veg) return;
 
-  return <ItemCard2 item={item} isParentOpen={isParentOpen} />;
+  return <ItemCard2 item={item} isParentOpen={isParentOpen} restaurantData={restaurantData}/>;
 });
 
 export default ItemsCardContainer;

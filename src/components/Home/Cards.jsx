@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -35,7 +35,7 @@ const Cards = memo(({ data, from }) => {
   };
 
   return (
-    <NavLink
+    <Link
       to={`/restaurantSpecific/${lat}/${lng}/${data?.id}/${data?.name}`}
       onClick={handleClick}
       className={`flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${from === "online" ? "md:w-[240px]" : from === "specificFood" ? "md:w-[360px]" : "md:w-[275px]"}`}
@@ -86,7 +86,7 @@ const Cards = memo(({ data, from }) => {
         </p>
         <p className="font-semibold text-gray-900 mt-0.5">{data.areaName || ""}</p>
       </div>
-    </NavLink>
+    </Link>
   );
 });
 

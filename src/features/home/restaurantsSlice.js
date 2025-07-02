@@ -10,7 +10,7 @@ const restaurantSlice = createSlice({
     menuItems: [],
     menuModel: false,
     allProductsOfCurrentRestaurant: [],
-    wishList: {},
+    wishListItems: {},
     cart: {},
   },
 
@@ -65,13 +65,15 @@ const restaurantSlice = createSlice({
       }
     },
 
-    addToWishlist: (state, action) => {
+    addToWishlistItem: (state, action) => {
+      console.log(action.payload)
       const itmObject = action.payload;
-      state.wishList[itmObject.item?.id] = itmObject;
+      state.wishListItems[itmObject.item?.id] = itmObject;
     },
 
     deleteItemFromWishlist : (state, action) => {
-      delete state.wishList[action.payload];
+      console.log(action.payload)
+      delete state.wishListItems[action.payload];
     }
   },
 });
@@ -82,7 +84,7 @@ export const selectCurrentRestaurant = (state) => state.restaurant.currentSpecif
 export const selectMenuItems = (state) => state.restaurant.menuItems;
 export const selectMenuModel = (state) => state.restaurant.menuModel;
 export const selectRestaurantAllItems = (state) => state.restaurant.allProductsOfCurrentRestaurant;
-export const selectWishlist = (state) => state.restaurant.wishList;
+export const selectWishlistItems = (state) => state.restaurant.wishListItems;
 export const selectCart = (state) => state.restaurant.cart;
 export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({ vegOption: veg, nonVegOption: non_veg }))
 
@@ -94,6 +96,6 @@ export const {
   setMenuItems,
   toggleMenuModel,
   setRestaurantItems,
-  addToWishlist,
+  addToWishlistItem,
   deleteItemFromWishlist
 } = restaurantSlice.actions;

@@ -10,7 +10,8 @@ const HorizontalCarousel = memo(({
   showScrollBar = true,
   dataToMap,
   Card,
-  autoScrollWidth = 300
+  autoScrollWidth = 300,
+  restaurantData = null
 }) => {
 
   const [scrollPercentage, setScrollPercentage] = useState(0);
@@ -157,7 +158,7 @@ const HorizontalCarousel = memo(({
           onTouchEnd={() => clicked.current = true}
         >
           {dataToMap.map((item) => (
-            <Card key={item?.id || Math.random()} data={item} />
+            <Card key={item?.id || Math.random()} data={item} restaurantData={restaurantData}/>
           ))}
         </div>
         {(showScrollBar && !hideScrollBar) && (
