@@ -5,12 +5,14 @@ import PageFooter from "./Footer/PageFooter";
 const LoginModal = lazy(() => import("./Login/LoginModal"));
 const LocationModal = lazy(() => import("./Location/LocationModal"));
 import { toast } from "react-toastify";
+
 import {
   selectLogInModal,
   selectLocationModal,
   selectHoverState,
   setHideLocation
 } from "../features/Login/loginSlice";
+
 import {
   setOnline,
   setLoading,
@@ -21,7 +23,8 @@ import {
   addSearchedCityAddress,
   selectDpModel
 } from "../features/home/homeSlice";
-import { selectMenuModel } from "../features/home/restaurantsSlice";
+
+import { selectMenuModel, setRestaurantItems } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -74,7 +77,10 @@ export default function Layout() {
     const lat = JSON.parse(localStorage.getItem("lat"));
     const lng = JSON.parse(localStorage.getItem("lng"));
     const rawUserPathHistory = localStorage.getItem("userFriendlyPathHistory");
+    const restaurantAllItems = JSON.parse(localStorage.getItem("RestaurantAllItems"));
+
     let userPathHistory = '';
+
     if (rawUserPathHistory !== "undefined") {
       userPathHistory = JSON.parse(rawUserPathHistory);
     }
@@ -83,6 +89,7 @@ export default function Layout() {
     if (HomeData && lat && lng) {
       updateHomeRestaurantData(HomeData, dispatch, lat, lng, userPathHistory, pathHistory);
       updateCityHomeData(CityHomeData, dispatch);
+
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
       const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
       const currentCity = JSON.parse(localStorage.getItem("currentCity"));
@@ -92,6 +99,7 @@ export default function Layout() {
       if (searchedCity !== undefined && searchedCity !== null) dispatch(addSearchedCity(searchedCity));
       if (searchedCityAddress !== undefined && searchedCityAddress !== null) dispatch(addSearchedCityAddress(searchedCityAddress));
       if (currentCity !== undefined && currentCity !== null) dispatch(addYourCurrentCity(currentCity));
+      if (restaurantAllItems !== undefined && restaurantAllItems !== null) dispatch(setRestaurantItems(restaurantAllItems))
 
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {

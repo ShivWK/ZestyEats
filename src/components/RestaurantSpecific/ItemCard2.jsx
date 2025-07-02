@@ -1,5 +1,7 @@
 import { useState, useRef, memo, useEffect } from "react";
 import textToZestyEats from "../../utils/textToZestyEats";
+import { useDispatch } from "react-redux";
+import { setRestaurantItems } from "../../features/home/restaurantsSlice";
 
 const ItemCard2 = memo(({ item, isParentOpen }) => {
   const [isError, setIsError] = useState(false);
@@ -9,6 +11,7 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
   const [wishlistAdded, setWishlistAdded] = useState(false);
   const containerRef = useRef(null);
   const paraRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
@@ -23,6 +26,10 @@ const ItemCard2 = memo(({ item, isParentOpen }) => {
       }
     }, 100)
   }, [isParentOpen, isOpen]);
+
+  // useEffect(() => {
+  //   dispatch(setRestaurantItems(item))
+  // }, [])
 
   // when parent compo has display none that time the card's scrollHeight and clientHeight bot are 0 they don't render so we need to check it when parent is opened
 

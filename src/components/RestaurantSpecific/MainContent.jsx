@@ -1,6 +1,6 @@
 import { useEffect, useMemo, lazy, Suspense, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCurrentRestaurant, selectMenuItems, toggleMenuModel, selectMenuModel } from "../../features/home/restaurantsSlice";
+import { addCurrentRestaurant, toggleMenuModel, selectMenuModel } from "../../features/home/restaurantsSlice";
 import { useParams } from "react-router-dom";
 
 import Banner from "./Banner";
@@ -126,7 +126,6 @@ const MainContent = ({ data, routes = true }) => {
       <hr className="mb-4 mt-6 w-full text-gray-500" />
 
       {/* Sorting */}
-      {/* <SortingButtons /> */}
       <Filter text1="Veg" text2="Non Veg" />
 
       {/* Menu */}

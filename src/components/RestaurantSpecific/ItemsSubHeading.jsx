@@ -1,7 +1,8 @@
 import { memo, useState, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  selectVegVariant
+  selectVegVariant,
+  setRestaurantItems
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
 
@@ -11,8 +12,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
   const initialRender = itemCards ? itemCards.length > 0 : false;
   const [shouldRender, setShouldRender] = useState(initialRender);
   const contentRef = useRef(null);
-  // const vegOption = useSelector(selectVegOption);
-  // const nonVegOption = useSelector(selectNonVegOption);
+  const dispatch = useDispatch();
 
   const { vegOption, nonVegOption } = useSelector(selectVegVariant)
 
@@ -71,13 +71,15 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true }) => {
           borderBottom: "2px solid #e5e7eb",
         }}
       >
-        {itemCards.map((item) => (
+        {itemCards.map((item) => {
+          dispatch(setRestaurantItems(item?.card?.info));
+
           <ItemsCardContainer
             key={item?.card?.info?.id}
             item={item?.card?.info}
             isParentOpen={isOpen}
           />
-        ))}
+        })}
       </div>
     </div>
   );

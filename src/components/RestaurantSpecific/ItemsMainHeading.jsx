@@ -4,6 +4,7 @@ import ItemsSubHeading from "./ItemsSubHeading";
 import {
   setMenuItems,
   selectVegVariant,
+  setRestaurantItems
 } from "../../features/home/restaurantsSlice";
 import ItemsCardContainer from "./ItemsCardContainer";
 
@@ -160,6 +161,7 @@ const ItemsMainHeading = ({
           >
             {items.map((item) => {
               const itemData = item?.card?.info;
+              dispatch(setRestaurantItems(itemData));
 
               if (itemData?.itemAttribute?.vegClassifier === "VEG") itemsVegCount++;
               if (itemData?.itemAttribute?.vegClassifier === "NONVEG") itemsNonVegCount++;

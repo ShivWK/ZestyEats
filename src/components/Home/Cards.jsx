@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   addCurrentRestaurant,
   setMenuItems,
+  setRestaurantItems
 } from "../../features/home/restaurantsSlice";
 import { memo, useState } from "react";
 import PureVeg from "../../utils/PureVegSvg";
@@ -24,6 +25,7 @@ const Cards = memo(({ data, from }) => {
   const handleClick = () => {
     dispatch(addCurrentRestaurant("Restaurant"));
     dispatch(setMenuItems({ mode: "empty" }));
+    dispatch(setRestaurantItems([]));
   };
 
   const wishlistClickHandler = (e) => {

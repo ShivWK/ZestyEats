@@ -4,10 +4,11 @@ import { Suspense, useState, useRef, memo } from "react";
 import PlaceCardsContainer from "./PlaceCardsContainer";
 import PlaceCards from "./PlaceCards";
 import createDebounce from "../../utils/debounceCreater";
+import Loader from "../Loader";
 
 const HomeCities = memo(() => {
     const cities = useSelector(selectAvailableCities);
-    const [matchedCities, setMatchedCites] = useState([]);
+    const [matchedCities, setMatchedCites] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const shownCities = cities.slice(6);
     const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
@@ -39,12 +40,15 @@ const HomeCities = memo(() => {
 
     const crossHandler = () => {
         setInputValue("");
-        changeHandler.current("");
+        setMatchedCites(null);
     }
 
     const handleSearch = (e) => {
         setInputValue(e.target.value);
-        changeHandler.current(e.target.value);
+        if (e.target.value.trim() !== "") {
+            changeHandler.current(e.target.value);
+        }
+        if (e.target.value === "") setMatchedCites(null);
     }
 
     return <section className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
@@ -74,14 +78,17 @@ const HomeCities = memo(() => {
                         <i className="ri-search-2-line text-2xl cursor-pointer"></i>
                     )}
                 </div>
-                {inputValue ? matchedCities.length !== 0
-                    ? <div className="flex flex-wrap justify-around w-full gap-y-5 md:gap-x-8 gap-x-2.5">
-                        {matchedCities.map(place => (
-                            <PlaceCards key={place?.text + Math.random()} data={place} clickHandler={cityClickHandler} path={"DIY"} />
-                        ))
-                        }
-                    </div>
-                    : <p className="font-semibold text-gray-700">Sorry, we don't serve this location yet.</p>
+                {inputValue.trim() !== "" ?
+                    (matchedCities === null
+                        ? <Loader size="small" />
+                        : (matchedCities.length !== 0
+                            ? (<div className="flex flex-wrap justify-around w-full gap-y-5 md:gap-x-8 gap-x-2.5">
+                                {matchedCities.map(place => (
+                                    <PlaceCards key={place?.text + Math.random()} data={place} clickHandler={cityClickHandler} path={"DIY"} />
+                                ))
+                                }
+                            </div>)
+                            : <p className="font-semibold text-gray-700">Sorry, we don't serve this location yet.</p>))
                     : <PlaceCardsContainer data={shownCities} clickHandler={cityClickHandler} showHeading={false} path="DIY" />
                 }
             </>
@@ -90,3 +97,4 @@ const HomeCities = memo(() => {
 });
 
 export default HomeCities;
+

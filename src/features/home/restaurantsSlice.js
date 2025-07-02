@@ -9,6 +9,7 @@ const restaurantSlice = createSlice({
     currentSpecificRestaurant: null,
     menuItems: [],
     menuModel: false,
+    allProductsOfCurrentRestaurant: [],
   },
 
   reducers: {
@@ -52,6 +53,14 @@ const restaurantSlice = createSlice({
 
     toggleMenuModel: (state) => {
       state.menuModel = !state.menuModel;
+    },
+
+    setRestaurantItems: (state, action) => {
+      if (Array.isArray(action.payload)) {
+        state.allProductsOfCurrentRestaurant = action.payload;
+      } else {
+        state.allProductsOfCurrentRestaurant.push(action.payload);
+      }
     }
   },
 });
@@ -61,7 +70,8 @@ export default restaurantSlice.reducer;
 export const selectCurrentRestaurant = (state) => state.restaurant.currentSpecificRestaurant;
 export const selectMenuItems = (state) => state.restaurant.menuItems;
 export const selectMenuModel = (state) => state.restaurant.menuModel;
-export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({vegOption: veg, nonVegOption: non_veg}))
+export const selectRestaurantAllItems = (state) => state.restaurant.allProductsOfCurrentRestaurant;
+export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({ vegOption: veg, nonVegOption: non_veg }))
 
 
 export const {
@@ -69,5 +79,6 @@ export const {
   setVegOption,
   setNonVegOption,
   setMenuItems,
-  toggleMenuModel
+  toggleMenuModel,
+  setRestaurantItems
 } = restaurantSlice.actions;
