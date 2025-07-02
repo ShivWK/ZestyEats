@@ -13,7 +13,7 @@ import ItemsCardContainer from "./ItemsCardContainer";
 import Filter from "../Home/Filters";
 import Loader from "../Loader";
 
-const RestaurantSearch = () => {
+const RestaurantSearch = memo(() => {
   useScrollToTop();
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
@@ -23,7 +23,6 @@ const RestaurantSearch = () => {
 
   useEffect(() => {
     dispatch(addCurrentRestaurant(title));
-    // console.log(allData)
     localStorage.setItem("RestaurantAllItems", JSON.stringify(AllItems));
   }, [title]);
 
@@ -35,7 +34,7 @@ const RestaurantSearch = () => {
   const doSearch = useRef(
     createDebounce((searchTerm) => {
       // if (searchTerm.trim() !== "") {
-      console.log("Called")
+      // console.log("Called")
       const FilteredData = AllItems.filter(obj => {
         return obj?.name.toLowerCase().split(" ").some(word => word.startsWith(searchTerm.trim().toLowerCase()));
       })
@@ -45,12 +44,12 @@ const RestaurantSearch = () => {
     }, 300)
   );
 
-  console.log("Search Data", searchData);
+  // console.log("Search Data", searchData);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
     if (e.target.value === "") setSearchData(null)
-    if (searchTerm.trim() !== "") {
+    if (e.target.value.trim() !== "") {
       doSearch.current(e.target.value);
     }
   };
@@ -63,7 +62,7 @@ const RestaurantSearch = () => {
   const renderedComponent = () => {
     // useScrollToTop()
     return <div className="pt-16">
-      {(searchData?.length !== 0 || searchData === null)&& (
+      {(searchData?.length !== 0 || searchData === null) && (
         <div className="px-0.5">
           <Filter text1="Veg" text2="Non Veg" />
         </div>
@@ -89,6 +88,6 @@ const RestaurantSearch = () => {
       Child={renderedComponent}
     />
   );
-};
+});
 
 export default RestaurantSearch;

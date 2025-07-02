@@ -7,7 +7,8 @@ import Banner from "./Banner";
 import Footer from "./Footer";
 import SortingButtons from "./SortingButtons";
 import Offers from "./Offers";
-import SearchBar from "./SearchBar";
+// import SearchBar from "./SearchBar";
+const SearchBar = lazy(() => import("./SearchBar"));
 import BackToTopBtn from "../BackToTopBtn";
 
 const TopPicksCards = lazy(() => import("./TopPicksCards"));
@@ -100,7 +101,12 @@ const MainContent = ({ data, routes = true }) => {
 
       {/* Search */}
       <section className="w-full max-w-[775px] my-3 md:my-4">
-        <SearchBar lat={lat} lng={lng} restro_Id={id} name={title} />
+        <Suspense fallback={<div lassName="flex relative py-3 items-center justify-center w-full bg-gray-200 rounded-md cursor-pointer">
+          <p className="font-semibold text-gray-700">Search for dishes...</p>
+          <i className="absolute right-3 fa-solid fa-magnifying-glass text-xl text-gray-500"></i>
+        </div>}>
+          <SearchBar lat={lat} lng={lng} restaurant_Id={id} name={title} />
+        </Suspense>
       </section>
 
       {/* Top Picks */}
