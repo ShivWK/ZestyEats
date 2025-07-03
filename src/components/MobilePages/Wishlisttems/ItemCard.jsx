@@ -39,7 +39,7 @@ const ItemCard = ({ item, restro_id }) => {
     return <div className="border-[1px] border-gray-300 p-0.5">
         <div className="flex justify-between items-center">
             <input className="h-4 w-4 ml-1 mt-1" type="checkbox" checked={checked} onChange={checkHandler} />
-            <button onClick={deleteHandler} className="text-xl text-gray-600">
+            <button onClick={deleteHandler} className="text-xl text-gray-600 mr-1 mt-0.5">
                 <i className="fa-solid fa-trash-can"></i>
             </button>
         </div>
