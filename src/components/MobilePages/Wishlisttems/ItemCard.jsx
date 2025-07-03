@@ -2,7 +2,7 @@ import { useState } from "react";
 import { selectItemsToBeAddedInCart, toggleItemsToBeAddedInCart } from "../../../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
-const ItemCard = ({ item }) => {
+const ItemCard = ({ item, restro_id }) => {
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const [isError, setIsError] = useState(false);
     const dispatch = useDispatch();
@@ -21,18 +21,18 @@ const ItemCard = ({ item }) => {
         <p className="text-sm tracking-tight font-bold">₹{defaultPrice}</p>
     );
 
-    const checkHandler = (e, id) => {
+    const checkHandler = (e) => {
         if (e.target.checked) {
-            dispatch(toggleItemsToBeAddedInCart({ add: true, id }));
+            dispatch(toggleItemsToBeAddedInCart({ add: true, id: item.id, restro_id }));
         } else {
-            dispatch(toggleItemsToBeAddedInCart({ add: false, id }));
+            dispatch(toggleItemsToBeAddedInCart({ add: false, id: item.id, restro_id }));
         }
     }
 
-    const checked = itemsToAddInCart.includes(item.id)
+    const checked = itemsToAddInCart[restro_id]?.includes(item.id);
 
     return <div className="border-[1px] border-gray-300 p-0.5">
-        <input className="h-4 w-4 ml-1 mt-1" type="checkbox" checked={checked} onChange={(e) => checkHandler(e, item.id)} />
+        <input className="h-4 w-4 ml-1 mt-1" type="checkbox" checked={checked} onChange={checkHandler} />
         <div className="flex justify-between bg-white">
             <div className="flex flex-col gap-2 p-4">
                 {item.isVeg === 1 ? (

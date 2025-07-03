@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import ItemCard from "./ItemCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectItemsToBeAddedInCart } from "../../../features/home/restaurantsSlice";
 
@@ -11,12 +11,16 @@ const RestaurantCard = ({ data }) => {
     const name = metadata.name;
 
     const itemsToAddInCart = useSelector(selectItemsToBeAddedInCart);
+    const restroItemsArray = itemsToAddInCart[restro_id] || [];
+
+    const [itemsCount, setItemsCount] = useState(restroItemsArray.length);
 
     useEffect(() => {
+        setItemsCount(itemsToAddInCart[restro_id]?.length || 0);
         localStorage.setItem("ItemsToBeAddedInCart", JSON.stringify(itemsToAddInCart));
     }, [itemsToAddInCart])
 
-    return <section className="border-[1px] border-gray-300 rounded m-0.5 my-1">
+    return <section className="border-[1px] border-gray-300 rounded m-0.5 my-2">
         <div className="p-2 w-full flex flex-col gap-0.5">
             <div className="flex items-center justify-between">
                 <p className="basis-[89%] truncate font-bold">
@@ -38,11 +42,11 @@ const RestaurantCard = ({ data }) => {
                     </div>
                 </div>
                 <div className="basis-[60%] flex">
-                    <button className="bg-green-400 inline-block text-white ml-auto font-semibold px-2 py-0.5 rounded active:scale-95 transition-all duration-100 ease-linear">{`Move ${itemsToAddInCart.length !== 0 ? `${itemsToAddInCart.length} items` : ""} to cart`}</button>
+                    <button className="bg-green-400 inline-block text-white ml-auto font-semibold px-2 py-0.5 rounded active:scale-95 transition-all duration-100 ease-linear">{`Move ${itemsCount !== 0 ? (itemsCount > 1 ? `${itemsCount} items` : `${itemsCount} item`) : ""} to cart`}</button>
                 </div>
             </div>
         </div>
-        {data?.item.map(item => <ItemCard key={item.key} item={item} />)}
+        {data?.item.map(item => <ItemCard key={item.key} item={item} restro_id={restro_id} />)}
     </section>
 }
 

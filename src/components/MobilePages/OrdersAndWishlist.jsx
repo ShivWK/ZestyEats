@@ -21,7 +21,6 @@ const OrdersAndWishlist = () => {
                     <span>Wishlist</span>
                 </button>
             </section>
-            {/* <hr className="text-gray-400 my-4 mx-1" /> */}
             {currentTab === "Orders"
                 ? <section className="overflow-hidden border-[1px] border-gray-300 mt-1 rounded">
                     <div className="w-full bg-primary text-white font-semibold text-xl px-2 py-1.5 rounded ">
@@ -29,7 +28,7 @@ const OrdersAndWishlist = () => {
                     </div>
                     <Construction />
                 </section>
-                : <section className="overflow-hidden border-[1px] border-gray-300 mt-1 rounded">
+                : <section className="overflow-hidden mt-1">
                     <div className="w-full bg-primary text-white font-semibold text-xl px-2 py-1.5 rounded ">
                         <p>Wishlist</p>
                     </div>

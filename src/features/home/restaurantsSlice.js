@@ -11,7 +11,7 @@ const restaurantSlice = createSlice({
     menuModel: false,
     allProductsOfCurrentRestaurant: [],
     wishListItems: {},
-    itemsToBeAddedInCart: [],
+    itemsToBeAddedInCart: {},
     cart: {},
   },
 
@@ -81,16 +81,33 @@ const restaurantSlice = createSlice({
       if (Array.isArray(action.payload)) {
         state.itemsToBeAddedInCart = action.payload;
       } else {
-        const { add, id } = action.payload;
-        const prv = state.itemsToBeAddedInCart;
+        const { add, id:item_id, restro_id } = action.payload;
+
         if (add) {
-          state.itemsToBeAddedInCart = [...prv, id]
+
+          if (restro_id in state.itemsToBeAddedInCart) {
+            state.itemsToBeAddedInCart[restro_id].push(item_id);
+          } else {
+            state.itemsToBeAddedInCart[restro_id] = [item_id]
+          }
+
         }
         else {
-          const i = state.itemsToBeAddedInCart.findIndex(itemId => itemId === id);
-          if (i !== -1) {
-            state.itemsToBeAddedInCart = [...prv.slice(0, i), ...prv.slice(i + 1)];
+          const prv = state.itemsToBeAddedInCart[restro_id];
+          if(!prv) return;
+
+          const index = prv.findIndex(itemId => itemId === item_id);
+          if (index !== -1) {
+            state.itemsToBeAddedInCart[restro_id] = [
+              ...prv.slice(0, index), 
+              ...prv.slice(index + 1)
+            ];
+
+            if (state.itemsToBeAddedInCart[restro_id].length === 0) {
+              delete state.itemsToBeAddedInCart[restro_id];
+            }
           }
+
         }
       }
     }
