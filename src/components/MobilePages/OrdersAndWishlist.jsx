@@ -2,11 +2,14 @@ import { useState } from "react";
 import MobileFooterMenu from "./../Footer/MobileFooterMenu";
 import Construction from "../../utils/Construction";
 import WishlistedItems from "./Wishlisttems/WishlistedItems";
+import { selectWishlistItems } from "../../features/home/restaurantsSlice";
+import { useSelector } from "react-redux";
 
 const OrdersAndWishlist = () => {
     const [currentTab, setCurrentTab] = useState('Orders')
+    const wishlist = useSelector(selectWishlistItems);
 
-    return <main className="pt-20 bg-[rgb(55,113,142)] h-full px-2 ">
+    return <main className={`pt-20 pb-16 bg-[rgb(55,113,142)] px-2 ${Object.keys(wishlist).length === 0 && "h-full"}`}>
         <div className="bg-white p-0.5 rounded ">
             <section className="w-full p-2 flex justify-between bg-white rounded border-[1px] border-gray-300">
                 <button onClick={() => setCurrentTab("Orders")} className="basis-[49%] h-full flex gap-2.5 items-center justify-center border-[1px] border-gray-300 rounded py-1.5 transition-all duration-150 ease-linear" style={{backgroundColor: currentTab === "Orders" ? "#d1d5dc" : "white"}}>

@@ -9,11 +9,11 @@ const WishlistedItems = () => {
     const [wishlist, setWishlist] = useState(null);
     const wishlistItemsMap = new Map();
 
-    Object.values(wishlistItems).forEach(({restaurantData, item}) => {
+    Object.values(wishlistItems).forEach(({ restaurantData, item }) => {
         const key = restaurantData.metadata.id;
 
-        if(!wishlistItemsMap.has(key)) {
-            wishlistItemsMap.set(key, {restro: restaurantData, item: [item]})
+        if (!wishlistItemsMap.has(key)) {
+            wishlistItemsMap.set(key, { restro: restaurantData, item: [item] })
         } else {
             wishlistItemsMap.get(key).item.push(item);
         }
@@ -24,11 +24,10 @@ const WishlistedItems = () => {
         setWishlist(wishlistArray);
     }, [])
 
-    console.log(wishlist)
 
     return <div>
         {wishlist ? (wishlist.length !== 0
-            ? (wishlist.map(data => <RestaurantCard data={data} />))
+            ? (wishlist.map(data => <RestaurantCard key={data.restro.metadata.id} data={data} />))
             : <p className="text-center text-gray-700 font-semibold my-3">No items in wishlist.</p>)
             : <Loader size="small" />
         }
