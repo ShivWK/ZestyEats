@@ -23,7 +23,7 @@ const RestaurantCard = ({ data }) => {
     return <section className="border-[2px] border-gray-400 rounded m-0.5 my-2">
         <div className="p-1.5 w-full flex flex-col gap-0.5">
             <Link to={`/restaurantSpecific/${lat}/${lng}/${restro_id}/${name}`} className="flex items-center justify-between">
-                <p className="basis-[90%] truncate text-xl font-bold">
+                <p className="basis-[90%] truncate text-xl font-bold select-none">
                     {name}
                 </p>
                 <div className="basis-[8%] active:text-primary">
