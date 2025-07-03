@@ -9,20 +9,20 @@ const OrdersAndWishlist = () => {
     const [currentTab, setCurrentTab] = useState('Wishlist')
     const wishlist = useSelector(selectWishlistItems);
 
-    return <main className={`pt-20 pb-16 bg-[rgb(55,113,142)] px-2 ${Object.keys(wishlist).length === 0 && "h-full"}`}>
+    return <main className={`pt-20 pb-16 px-1.5 ${Object.keys(wishlist).length === 0 && "h-full"} box-border`}>
         <div className="bg-white p-0.5 rounded ">
-            <section className="w-full p-2 flex justify-between bg-white rounded border-[1px] border-gray-300">
-                <button onClick={() => setCurrentTab("Orders")} className="basis-[49%] h-full flex gap-2.5 items-center justify-center border-[1px] border-gray-300 rounded py-1.5 transition-all duration-150 ease-linear" style={{backgroundColor: currentTab === "Orders" ? "#d1d5dc" : "white"}}>
+            <section className="w-full p-1 box-border flex justify-between bg-white rounded border-[1px] border-gray-300">
+                <button onClick={() => setCurrentTab("Orders")} className="basis-[49%] h-full flex gap-2.5 items-center justify-center border-[1px] border-gray-300 rounded py-1 transition-all duration-150 ease-linear" style={{backgroundColor: currentTab === "Orders" ? "#d1d5dc" : "white"}}>
                     <i className="ri-box-3-fill text-2xl text-[#2196F3]"></i>
                     <span>Orders</span>
                 </button>
-                <button onClick={() => setCurrentTab("Wishlist")} className="basis-[49%] h-full flex gap-2.5 items-center justify-center border-[1px] border-gray-300 rounded py-1.5 transition-all duration-150 ease-linear" style={{backgroundColor: currentTab === "Wishlist" ? "#d1d5dc" : "white"}}>
+                <button onClick={() => setCurrentTab("Wishlist")} className="basis-[49%] h-full flex gap-2.5 items-center justify-center border-[1px] border-gray-300 rounded py-1 transition-all duration-150 ease-linear" style={{backgroundColor: currentTab === "Wishlist" ? "#d1d5dc" : "white"}}>
                     <i className="ri-heart-2-fill text-2xl text-[rgb(255,0,0)]"></i>
                     <span>Wishlist</span>
                 </button>
             </section>
             {currentTab === "Orders"
-                ? <section className="overflow-hidden border-[1px] border-gray-300 mt-1 rounded">
+                ? <section className="overflow-hidden mt-1">
                     <div className="w-full bg-primary text-white font-semibold text-xl px-2 py-1.5 rounded ">
                         <p>Orders</p>
                     </div>

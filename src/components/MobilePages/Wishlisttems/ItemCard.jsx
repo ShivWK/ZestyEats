@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { selectItemsToBeAddedInCart, toggleItemsToBeAddedInCart } from "../../../features/home/restaurantsSlice";
+import { selectItemsToBeAddedInCart, toggleItemsToBeAddedInCart, deleteItemFromWishlist } from "../../../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const ItemCard = ({ item, restro_id }) => {
@@ -31,8 +31,18 @@ const ItemCard = ({ item, restro_id }) => {
 
     const checked = itemsToAddInCart[restro_id]?.includes(item.id);
 
+    const deleteHandler = () => {
+        dispatch(deleteItemFromWishlist(item.id));
+        dispatch(toggleItemsToBeAddedInCart({ add: false, id: item.id, restro_id, mode: "dynamic" }));
+    }
+
     return <div className="border-[1px] border-gray-300 p-0.5">
-        <input className="h-4 w-4 ml-1 mt-1" type="checkbox" checked={checked} onChange={checkHandler} />
+        <div className="flex justify-between items-center">
+            <input className="h-4 w-4 ml-1 mt-1" type="checkbox" checked={checked} onChange={checkHandler} />
+            <button onClick={deleteHandler} className="text-xl text-gray-600">
+                <i className="fa-solid fa-trash-can"></i>
+            </button>
+        </div>
         <div className="flex justify-between bg-white">
             <div className="flex flex-col gap-2 p-4">
                 {item.isVeg === 1 ? (
