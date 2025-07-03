@@ -9,9 +9,9 @@ const OrdersAndWishlist = () => {
     const [currentTab, setCurrentTab] = useState('Wishlist')
     const wishlist = useSelector(selectWishlistItems);
 
-    return <main className={`pt-20 pb-16 px-1.5 ${Object.keys(wishlist).length === 0 && "h-full"} box-border`}>
+    return <main className={`pt-20 pb-16 px-1.5`}>
         <div className="bg-white p-0.5 rounded ">
-            <section className="w-full p-1 box-border flex justify-between bg-white rounded border-[1px] border-gray-300">
+            <section className="w-full p-1 flex justify-between bg-white rounded border-[1px] border-gray-300">
                 <button onClick={() => setCurrentTab("Orders")} className="basis-[49%] h-full flex gap-2.5 items-center justify-center border-[1px] border-gray-300 rounded py-1 transition-all duration-150 ease-linear" style={{backgroundColor: currentTab === "Orders" ? "#d1d5dc" : "white"}}>
                     <i className="ri-box-3-fill text-2xl text-[#2196F3]"></i>
                     <span>Orders</span>
