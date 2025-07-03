@@ -42,7 +42,7 @@ const RestaurantCard = ({ data }) => {
                     </div>
                 </div>
                 <div className="basis-[60%] flex">
-                    <button className="bg-green-400 inline-block text-white ml-auto font-semibold px-2 py-0.5 rounded active:scale-95 transition-all duration-100 ease-linear">{`Move ${itemsCount !== 0 ? (itemsCount > 1 ? `${itemsCount} items` : `${itemsCount} item`) : ""} to cart`}</button>
+                    <button className="bg-green-500 inline-block text-white ml-auto font-semibold px-2 py-0.5 rounded active:scale-95 transition-all duration-100 ease-linear">{`Move ${itemsCount !== 0 ? (itemsCount > 1 ? `${itemsCount} items` : `${itemsCount} item`) : ""} to cart`}</button>
                 </div>
             </div>
         </div>
