@@ -20,7 +20,7 @@ const RestaurantCard = ({ data }) => {
         localStorage.setItem("ItemsToBeAddedInCart", JSON.stringify(itemsToAddInCart));
     }, [itemsToAddInCart])
 
-    return <section className="border-[1px] border-gray-300 rounded m-0.5 my-2">
+    return <section className="border-[2px] border-gray-400 rounded m-0.5 my-2">
         <div className="p-2 w-full flex flex-col gap-0.5">
             <div className="flex items-center justify-between">
                 <p className="basis-[89%] truncate font-bold">
