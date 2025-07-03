@@ -6,7 +6,7 @@ import { selectWishlistItems } from "../../features/home/restaurantsSlice";
 import { useSelector } from "react-redux";
 
 const OrdersAndWishlist = () => {
-    const [currentTab, setCurrentTab] = useState('Orders')
+    const [currentTab, setCurrentTab] = useState('Wishlist')
     const wishlist = useSelector(selectWishlistItems);
 
     return <main className={`pt-20 pb-16 bg-[rgb(55,113,142)] px-2 ${Object.keys(wishlist).length === 0 && "h-full"}`}>
