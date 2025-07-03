@@ -68,20 +68,29 @@ const restaurantSlice = createSlice({
 
     addToWishlistItem: (state, action) => {
       console.log(action.payload)
-      const itmObject = action.payload;
-      state.wishListItems[itmObject.item?.id] = itmObject;
+
+      if (action.payload.mode === "initial") {
+        state.wishListItems = action.payload.object;
+      } else {
+        const itmObject = action.payload;
+        state.wishListItems[itmObject.item?.id] = itmObject;
+      }
+
+      localStorage.setItem("wishlist", JSON.stringify(state.wishListItems))
     },
 
     deleteItemFromWishlist: (state, action) => {
       console.log(action.payload)
       delete state.wishListItems[action.payload];
+
+      localStorage.setItem("wishlist", JSON.stringify(state.wishListItems))
     },
 
     toggleItemsToBeAddedInCart: (state, action) => {
-      if (Array.isArray(action.payload)) {
-        state.itemsToBeAddedInCart = action.payload;
+      if (action.payload.mode === "initial") {
+        state.itemsToBeAddedInCart = action.payload.object;
       } else {
-        const { add, id:item_id, restro_id } = action.payload;
+        const { add, id: item_id, restro_id } = action.payload;
 
         if (add) {
 
@@ -94,12 +103,12 @@ const restaurantSlice = createSlice({
         }
         else {
           const prv = state.itemsToBeAddedInCart[restro_id];
-          if(!prv) return;
+          if (!prv) return;
 
           const index = prv.findIndex(itemId => itemId === item_id);
           if (index !== -1) {
             state.itemsToBeAddedInCart[restro_id] = [
-              ...prv.slice(0, index), 
+              ...prv.slice(0, index),
               ...prv.slice(index + 1)
             ];
 

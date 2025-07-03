@@ -23,9 +23,9 @@ const ItemCard = ({ item, restro_id }) => {
 
     const checkHandler = (e) => {
         if (e.target.checked) {
-            dispatch(toggleItemsToBeAddedInCart({ add: true, id: item.id, restro_id }));
+            dispatch(toggleItemsToBeAddedInCart({ add: true, id: item.id, restro_id, mode: "dynamic" }));
         } else {
-            dispatch(toggleItemsToBeAddedInCart({ add: false, id: item.id, restro_id }));
+            dispatch(toggleItemsToBeAddedInCart({ add: false, id: item.id, restro_id, mode: "dynamic" }));
         }
     }
 

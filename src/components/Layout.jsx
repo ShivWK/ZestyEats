@@ -24,7 +24,7 @@ import {
   selectDpModel
 } from "../features/home/homeSlice";
 
-import { selectMenuModel, setRestaurantItems } from "../features/home/restaurantsSlice";
+import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -32,27 +32,24 @@ import { updateHomeRestaurantData } from "../utils/updateHomeData";
 import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
 import { updateCurrentCity } from "../utils/addCurrentCity";
-import textToZestyEats from "../utils/textToZestyEats";
 import updateCityHomeData from "../utils/updateCityHomeData";
-import MobileFooterMenu from "./Footer/MobileFooterMenu";
-import BackToTopBtn from "./BackToTopBtn";
-// import { setShowBottomMenu } from "../features/home/homeSlice";
+
 
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
-    try {
-      let apiResponse = await triggerHomeAPI({
-        lat: 12.9715987,
-        lng: 77.5945627,
-      }).unwrap();
-      if (!apiResponse) return;
-      if (isLocationModelOpen) dispatch(setHideLocation(true))
-      updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
-    } catch (err) {
-      if (isLocationModelOpen) dispatch(setHideLocation(true))
-      dispatch(setLoading(false));
-      alert(err.error);
-    }
-  };
+  try {
+    let apiResponse = await triggerHomeAPI({
+      lat: 12.9715987,
+      lng: 77.5945627,
+    }).unwrap();
+    if (!apiResponse) return;
+    if (isLocationModelOpen) dispatch(setHideLocation(true))
+    updateHomeRestaurantData(apiResponse, dispatch, 12.9715987, 77.5945627);
+  } catch (err) {
+    if (isLocationModelOpen) dispatch(setHideLocation(true))
+    dispatch(setLoading(false));
+    alert(err.error);
+  }
+};
 
 export default function Layout() {
   const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
@@ -78,12 +75,15 @@ export default function Layout() {
     const lng = JSON.parse(localStorage.getItem("lng"));
     const rawUserPathHistory = localStorage.getItem("userFriendlyPathHistory");
     const restaurantAllItems = JSON.parse(localStorage.getItem("RestaurantAllItems"));
+    const wishlist = JSON.parse(localStorage.getItem("wishlist"));
+    const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
 
     let userPathHistory = '';
 
     if (rawUserPathHistory !== "undefined") {
       userPathHistory = JSON.parse(rawUserPathHistory);
     }
+
     const pathHistory = JSON.parse(localStorage.getItem("pathHistory"));
 
     if (HomeData && lat && lng) {
@@ -100,6 +100,9 @@ export default function Layout() {
       if (searchedCityAddress !== undefined && searchedCityAddress !== null) dispatch(addSearchedCityAddress(searchedCityAddress));
       if (currentCity !== undefined && currentCity !== null) dispatch(addYourCurrentCity(currentCity));
       if (restaurantAllItems !== undefined && restaurantAllItems !== null) dispatch(setRestaurantItems(restaurantAllItems))
+      if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
+      if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }))
+
 
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
