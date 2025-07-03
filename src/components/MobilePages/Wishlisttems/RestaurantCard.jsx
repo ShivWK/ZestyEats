@@ -24,7 +24,7 @@ const RestaurantCard = ({ data }) => {
         <div className="p-1.5 w-full flex flex-col gap-0.5">
             <div className="flex items-center justify-between">
                 <p className="basis-[90%] truncate text-xl font-bold">
-                    {name}mmmmmmmmmmmmmmmm
+                    {name}
                 </p>
                 <Link to={`/restaurantSpecific/${lat}/${lng}/${restro_id}/${name}`} className="basis-[8%] active:text-primary">
                     <i className="ri-arrow-right-long-fill text-2xl text-gray-800 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out p-0"></i>
