@@ -13,6 +13,7 @@ const restaurantSlice = createSlice({
     wishListItems: {},
     itemsToBeAddedInCart: {},
     cart: {},
+    favoriteRestro: []
   },
 
   reducers: {
@@ -124,7 +125,25 @@ const restaurantSlice = createSlice({
           state.cart = {};
         }
       }
-    }
+    },
+
+    setFavoriteRestro: (state, action) => {
+      if (action.payload.mode === "initial") {
+        state.favoriteRestro = action.payload.object;
+      } else {
+        if (state.favoriteRestro.find(obj => obj.id === action.payload.id)) {
+          const index = state.favoriteRestro.findIndex(obj => obj.id === action.payload.id);
+
+          const prv = state.favoriteRestro;
+          state.favoriteRestro = [...prv.slice(0, index), ...prv.slice(index + 1)]
+        } else {
+          state.favoriteRestro.push(action.payload);
+        }
+      }
+
+      localStorage.setItem("favRestros", JSON.stringify(state.favoriteRestro));
+    },
+
   },
 });
 
@@ -137,6 +156,7 @@ export const selectRestaurantAllItems = (state) => state.restaurant.allProductsO
 export const selectWishlistItems = (state) => state.restaurant.wishListItems;
 export const selectCart = (state) => state.restaurant.cart;
 export const selectItemsToBeAddedInCart = state => state.restaurant.itemsToBeAddedInCart;
+export const selectFavoriteRestros = state => state.restaurant.favoriteRestro;
 
 export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({ vegOption: veg, nonVegOption: non_veg }))
 
@@ -151,4 +171,5 @@ export const {
   deleteItemFromWishlist,
   toggleItemsToBeAddedInCart,
   setItemToCart,
+  setFavoriteRestro,
 } = restaurantSlice.actions;

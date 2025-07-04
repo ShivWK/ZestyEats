@@ -4,14 +4,20 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   addCurrentRestaurant,
   setMenuItems,
-  setRestaurantItems
+  setRestaurantItems,
+  selectFavoriteRestros,
+  setFavoriteRestro
 } from "../../features/home/restaurantsSlice";
-import { memo, useState } from "react";
+
+import { memo, useEffect, useState } from "react";
 import PureVeg from "../../utils/PureVegSvg";
 import VegAndNonVeg from "../../utils/VegAndNonVegSvg";
 import textToZestyEats from "../../utils/textToZestyEats";
 
 const Cards = memo(({ data, from }) => {
+  // console.log(data)
+
+  const favoriteRestro = useSelector(selectFavoriteRestros);
   const { lat, lng } = useSelector(selectLatAndLng);
   const dispatch = useDispatch();
   const [wishlistAdded, setWishlistAdded] = useState(false);
@@ -22,6 +28,11 @@ const Cards = memo(({ data, from }) => {
   // To get image from public folder give the path of the image after "/" , here "/" means public folder
   // const imageUrl = `/images/image.png`;
 
+  useEffect(() => {
+    const exist = favoriteRestro.find(obj => obj.id === data.id);
+    setWishlistAdded(exist);
+  }, [])
+  
   const handleClick = () => {
     dispatch(addCurrentRestaurant("Restaurant"));
     dispatch(setMenuItems({ mode: "empty" }));
@@ -32,6 +43,7 @@ const Cards = memo(({ data, from }) => {
     e.stopPropagation();
     e.preventDefault();
     setWishlistAdded(!wishlistAdded);
+    dispatch(setFavoriteRestro(data));
   };
 
   return (
@@ -81,10 +93,10 @@ const Cards = memo(({ data, from }) => {
         ) : (
           <VegAndNonVeg classes={"inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs font-medium pl-1 pr-2 my-0.5 py-0.5 rounded-full border border-gray-300"} />
         )}
-        <p className={`mt-0.5 max-h-14 line-clamp-2 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[90%] leading-0.5" ${from === "online" ? "max-md:w-[90%]" : "max-md:w-[90%]"}`}>
+        <p className={`mt-0.5 max-h-14 line-clamp-2 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[85%] leading-0.5" ${from === "online" ? "max-md:w-[85%]" : "max-md:w-[75%]"}`}>
           {data?.cuisines.join(", ") || ""}
         </p>
-        <p className="font-semibold text-gray-900 mt-0.5">{data.areaName || ""}</p>
+        <p className="font-semibold text-gray-900 mt-0.5 truncate max-md:max-w-[80%]">{data?.locality + ", " + (data?.city || data?.areaName)}</p>
       </div>
     </Link>
   );

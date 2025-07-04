@@ -24,7 +24,7 @@ import {
   selectDpModel
 } from "../features/home/homeSlice";
 
-import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart } from "../features/home/restaurantsSlice";
+import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -93,6 +93,7 @@ export default function Layout() {
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
       const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
       const currentCity = JSON.parse(localStorage.getItem("currentCity"));
+      const favRestros = JSON.parse(localStorage.getItem("favRestros"));
 
       // when asked data is not present in the local storage the it will null instead of undefined
 
@@ -101,8 +102,8 @@ export default function Layout() {
       if (currentCity !== undefined && currentCity !== null) dispatch(addYourCurrentCity(currentCity));
       if (restaurantAllItems !== undefined && restaurantAllItems !== null) dispatch(setRestaurantItems(restaurantAllItems))
       if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
-      if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }))
-
+      if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
+      if (favRestros !== undefined && favRestros !== null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
 
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
