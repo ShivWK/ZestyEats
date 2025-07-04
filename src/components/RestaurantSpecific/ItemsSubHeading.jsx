@@ -72,7 +72,7 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true, restauran
         }}
       >
         {itemCards.map((item) => {
-          dispatch(setRestaurantItems(item?.card?.info));
+          // dispatch(setRestaurantItems(item?.card?.info));
 
           return <ItemsCardContainer
             key={item?.card?.info?.id}

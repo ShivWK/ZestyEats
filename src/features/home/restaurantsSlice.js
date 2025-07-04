@@ -21,8 +21,6 @@ const restaurantSlice = createSlice({
     },
 
     setVegOption: (state, action) => {
-      console.log("reducer veg", action.payload);
-
       if (action.payload) {
         state.veg = true;
         state.non_veg = false;
@@ -32,8 +30,6 @@ const restaurantSlice = createSlice({
     },
 
     setNonVegOption: (state, action) => {
-      console.log("reducer non", action.payload);
-
       if (action.payload) {
         state.non_veg = true;
         state.veg = false;
@@ -67,8 +63,6 @@ const restaurantSlice = createSlice({
     },
 
     addToWishlistItem: (state, action) => {
-      console.log(action.payload)
-
       if (action.payload.mode === "initial") {
         state.wishListItems = action.payload.object;
       } else {
@@ -80,7 +74,6 @@ const restaurantSlice = createSlice({
     },
 
     deleteItemFromWishlist: (state, action) => {
-      console.log(action.payload)
       delete state.wishListItems[action.payload];
 
       localStorage.setItem("wishlist", JSON.stringify(state.wishListItems))
@@ -93,11 +86,10 @@ const restaurantSlice = createSlice({
         const { add, id: item_id, restro_id } = action.payload;
 
         if (add) {
-
           if (restro_id in state.itemsToBeAddedInCart) {
             state.itemsToBeAddedInCart[restro_id].push(item_id);
           } else {
-            state.itemsToBeAddedInCart[restro_id] = [item_id]
+            state.itemsToBeAddedInCart[restro_id] = [item_id];
           }
 
         }
@@ -116,11 +108,23 @@ const restaurantSlice = createSlice({
               delete state.itemsToBeAddedInCart[restro_id];
             }
           }
+        }
+      }
+    },
 
+    setItemToCart: (state, action) => {
+      if (action.payload.made === "initial") {
+        state.cart = action.payload.object;
+      } else {
+        const { add, id, data } = action.payload;
+
+        if (add) {
+          state.cart[id] = data;
+        } else {
+          state.cart = {};
         }
       }
     }
-
   },
 });
 
@@ -145,5 +149,6 @@ export const {
   setRestaurantItems,
   addToWishlistItem,
   deleteItemFromWishlist,
-  toggleItemsToBeAddedInCart
+  toggleItemsToBeAddedInCart,
+  setItemToCart,
 } = restaurantSlice.actions;

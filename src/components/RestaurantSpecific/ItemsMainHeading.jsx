@@ -163,7 +163,7 @@ const ItemsMainHeading = ({
           >
             {items.map((item) => {
               const itemData = item?.card?.info;
-              dispatch(setRestaurantItems(itemData));
+              // dispatch(setRestaurantItems(itemData));
 
               if (itemData?.itemAttribute?.vegClassifier === "VEG") itemsVegCount++;
               if (itemData?.itemAttribute?.vegClassifier === "NONVEG") itemsNonVegCount++;
