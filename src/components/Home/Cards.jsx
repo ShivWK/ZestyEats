@@ -41,7 +41,7 @@ const Cards = memo(({ data, from }) => {
   // const imageUrl = `/images/image.png`;
 
   useEffect(() => {
-    const exist = favoriteRestro.find(obj => obj.id === dataToMap.id);
+    const exist = favoriteRestro.find(obj => obj.data.id === dataToMap.id);
     setWishlistAdded(exist);
 
     if (pathname.includes("ordersAndWishlist")) {
