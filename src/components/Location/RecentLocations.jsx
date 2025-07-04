@@ -102,7 +102,7 @@ const RecentLocations = memo(() => {
           />
         ))
       ) : (
-        <p className="">No Recent Locatons</p>
+        <p className="text-sm">No Recent Locatons</p>
       )}
     </div>
   );

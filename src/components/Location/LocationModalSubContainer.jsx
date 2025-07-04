@@ -85,7 +85,7 @@ const ModalSubContainer = memo(() => {
       {/* Search locations */}
       <div
         onClick={handleDivClick}
-        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-1.5 md:p-3 cursor-text ${
+        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-2 md:p-3 cursor-text ${
           Focused && "shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]"
         }`}
       >
@@ -94,13 +94,13 @@ const ModalSubContainer = memo(() => {
           ref={inputRef}
           value={searchValue}
           onChange={handleInputChange}
-          className="p-0.5 outline-none font-semibold w-[80%] md:w-[82%]"
-          placeholder="Search for area, streat name..."
+          className="p-0.5 outline-none text-[18px] font-medium w-[80%] md:w-[82%]"
+          placeholder="Search for area, streat..."
         />
         {searchValue.length !== 0 && (
           <button
             onClick={handeCancelClick}
-            className="font-bold text-primary cursor-pointer"
+            className="font-bold text-[18px] text-primary cursor-pointer"
           >
             Cancel
           </button>
