@@ -131,8 +131,8 @@ const restaurantSlice = createSlice({
       if (action.payload.mode === "initial") {
         state.favoriteRestro = action.payload.object;
       } else {
-        if (state.favoriteRestro.find(obj => obj.id === action.payload.id)) {
-          const index = state.favoriteRestro.findIndex(obj => obj.id === action.payload.id);
+        if (state.favoriteRestro.find(obj => obj.data.id === action.payload.id)) {
+          const index = state.favoriteRestro.findIndex(obj => obj.data.id === action.payload.id);
 
           const prv = state.favoriteRestro;
           state.favoriteRestro = [...prv.slice(0, index), ...prv.slice(index + 1)]

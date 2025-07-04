@@ -7,7 +7,7 @@ const FavoriteRestros = () => {
 
     return <div className="flex justify-between flex-wrap gap-3 p-1 my-2">
         { restaurants.length !== 0 
-        ? restaurants.map(data => <Cards key={data.id} data={data} from="chain" />)
+        ? restaurants.map(data => <Cards key={data.data.id} data={data} from="chain" />)
         : <p className="mx-auto text-gray-700 font-semibold my-3">No favorite restaurants</p>
     }
     </div>
