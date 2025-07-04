@@ -81,7 +81,7 @@ const RestaurantCard = ({ data }) => {
                 </div>
             </Link>
 
-            <p className="text-xs font-bold text-gray-700 truncate">{data.restro.metadata.areaName + ", " + data.restro.metadata.city}</p>
+            <p className="text-xs font-bold text-gray-700 truncate -mt-1">{data.restro.metadata.areaName + ", " + data.restro.metadata.city}</p>
 
             <div className="flex items-center justify-between mt-1.5">
                 <div className="basis-[40%]">
