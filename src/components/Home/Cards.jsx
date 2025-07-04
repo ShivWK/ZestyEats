@@ -70,14 +70,19 @@ const Cards = memo(({ data, from }) => {
     dispatch(setFavoriteRestro({ lat, lng, data: dataToMap}));
   };
 
+  const crossHandler = () => {
+    dispatch(setFavoriteRestro({ lat, lng, data: dataToMap}));
+  }
+
   return (
     <Link
       to={`/restaurantSpecific/${lat}/${lng}/${dataToMap?.id}/${dataToMap?.name}`}
       onClick={handleClick}
       className={`relative flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${from === "online" ? "md:w-[240px]" : from === "specificFood" ? "md:w-[360px]" : "md:w-[275px]"}`}
     >
-      <div className={`absolute z-20 ${(disable) ? "flex" : "hidden"} items-center justify-center h-full w-full bg-[rgba(0,0,0,0.4)]`}>\
+      <div className={`absolute z-20 ${(disable) ? "flex" : "hidden"} flex-col gap-1 items-center justify-center h-full w-full bg-[rgba(0,0,0,0.4)]`}>\
         <p className="text-white font-bold text-3xl">Not Available</p>
+        <i onClick={crossHandler} className="ri-close-large-line text-white text-3xl rounded px-1 bg-black/50"></i>
       </div>
       <div
         className={`relative w-full max-md:basis-1/2 h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-2 shrink-0 max-md:max-h-full max-md:min-h-56 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${from === "online" ? "md:h-[160px]" : from === "specificFood" ? "md:h-[240px]" : "md:h-[180px]"}`}
