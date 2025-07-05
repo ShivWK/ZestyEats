@@ -13,9 +13,13 @@ const AllCities = memo(() => {
   const dispatch = useDispatch();
 
   const clickHandler = async (city, cityPath) => {
-    console.log("Hit")
     dispatch(setSecondaryCity(city));
     dispatch(setCityPageLoading(true));
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
 
     try {
       const data = await trigger({city: cityPath}).unwrap();

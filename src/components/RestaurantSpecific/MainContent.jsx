@@ -24,17 +24,17 @@ const MainContent = ({ data, routes = true }) => {
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const cards = data?.data?.cards;
-  
+
   const title = textToZestyEats(cards?.[0].card?.card?.text);
-  
+
   const banner = useMemo(() => cards?.[2], [cards]);
   const opened = banner?.card?.card?.info?.availability.opened;
 
   restaurantData.metadata = banner?.card?.card?.info;
-  
+
   const offers = useMemo(() => cards?.[3], [cards]);
   restaurantData.offers = offers?.card?.card?.gridElements?.infoWithStyle?.offers;
-  
+
   const menu = cards
     ?.at(-1)
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1) || [];
@@ -156,7 +156,15 @@ const MainContent = ({ data, routes = true }) => {
                 <Suspense
                   key={item?.card?.card?.categoryId || Math.random()}
                   fallback={
-                    <div className="w-full h-36 rounded-xl shimmerBg mt-2.5" />
+                    <div className="w-full p-3 h-56 rounded-xl gap-2 my-2 flex flex-col md:flex-row border-[1px] border-gray-400">
+                      <div className="basis-1/2 md:basis-[35%] h-full shimmerBg rounded-xl md:order-2"></div>
+                      <div className="h-full basis-[48%] md:basis-[65%] flex md:gap-1.5 gap-4 items-start justify-center flex-col md:order-1">
+                        <div className="h-5 w-[80%] rounded shimmerBg"></div>
+                        <div className="h-5 w-[50%] rounded shimmerBg"></div>
+                        <div className="h-5 w-[60%] rounded shimmerBg"></div>
+                        <div className="md:hidden h-5 w-[70%] rounded shimmerBg"></div>
+                      </div>
+                    </div>
                   }
                 >
                   <ItemsMainHeading
@@ -175,7 +183,15 @@ const MainContent = ({ data, routes = true }) => {
             return (
               <Suspense
                 fallback={
-                  <div className="w-full h-36 rounded-xl shimmerBg mt-2.5" />
+                  <div className="w-full p-3 h-56 rounded-xl gap-2 my-2 flex flex-col md:flex-row border-[1px] border-gray-400">
+                    <div className="basis-1/2 md:basis-[35%] h-full shimmerBg rounded-xl md:order-2"></div>
+                    <div className="h-full basis-[48%] md:basis-[65%] flex md:gap-1.5 gap-4 items-start justify-center flex-col md:order-1">
+                      <div className="h-5 w-[80%] rounded shimmerBg"></div>
+                      <div className="h-5 w-[50%] rounded shimmerBg"></div>
+                      <div className="h-5 w-[60%] rounded shimmerBg"></div>
+                      <div className="md:hidden h-5 w-[70%] rounded shimmerBg"></div>
+                    </div>
+                  </div>
                 }
               >
                 <ItemsMainHeading

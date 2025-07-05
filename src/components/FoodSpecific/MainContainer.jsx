@@ -31,8 +31,8 @@ const MainContainer = ({ data }) => {
     dispatch(setCurrentFoodCategory(title));
   }, []);
 
-  return ( cards ?
-    <div className="flex flex-col gap-3 md:gap-5 w-full md:max-w-[1210px] md:pt-32 pt-20 p-3 mx-auto pb-16">
+  return (cards ?
+    <div className="relative flex flex-col gap-3 md:gap-5 w-full overflow-hidden md:max-w-[1210px] md:pt-32 pt-20 p-3 mx-auto pb-4 md:pb-5">
       <div>
         <BreadcrumbsWrapper
           normalTextColor={"#4a5565"}
@@ -47,21 +47,29 @@ const MainContainer = ({ data }) => {
         {description}
       </p>
       <div className="md:-mt-5 -mt-4 -mb-1 md:-mb-2">
-            <Filter />
-        </div>
+        <Filter />
+      </div>
       <div className="restro-count text-2xl font-bold tracking-tight">
-        Explore Restaurants
+        <p>Explore Restaurants</p>
       </div>
       <div className="flex justify-center">
         <div className="flex w-full gap-9 p-1 flex-wrap">
           {dataToSend.map((item, index) => {
-           
+
             if (!vegOption && item.veg) return;
             if (!nonVegOption && !item.veg) return;
 
             return <Cards key={index} data={item} from="specificFood" />;
           })}
         </div>
+      </div>
+      
+      <div className="flex items-center justify-center gap-2 w-fit my-2 animate-dishes">
+        <i className="ri-verified-badge-fill text-xl md:text-2xl text-black"></i>
+        <i className="ri-bowl-fill text-2xl md:text-3xl text-black"></i>
+        {/* <i className="ri-cake-2-fill text-2xl md:text-3xl text-black"></i>
+        <i className="ri-goblet-fill text-2xl md:text-3xl text-black"></i> */}
+        <i className="ri-e-bike-2-fill text-2xl md:text-3xl text-black"></i>
       </div>
     </div>
     : <div className="flex items-center justify-center bg-gray-300">
@@ -72,5 +80,3 @@ const MainContainer = ({ data }) => {
 
 export default MainContainer;
 
-// width = 360px
-// height = 384px

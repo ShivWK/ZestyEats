@@ -7,7 +7,7 @@ import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/ci
 import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
 
 const CompanyLinks = memo(({ isOpen, openCities }) => {
-  const [ trigger ] = useLazyGetDataForCityLocalityCuisineQuery();
+  const [trigger] = useLazyGetDataForCityLocalityCuisineQuery();
   const pathname = useLocation().pathname;
   const cities = useSelector(selectAvailableCities);
   const first6Cities = cities.slice(0, 6);
@@ -17,6 +17,11 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
   const clickHandler = async (city, cityPath) => {
     dispatch(setSecondaryCity(city));
     dispatch(setCityPageLoading(true));
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
 
     try {
       const data = await trigger({ city: cityPath }).unwrap();

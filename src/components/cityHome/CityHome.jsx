@@ -1,209 +1,250 @@
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Suspense, useEffect, lazy } from "react";
-import ShimmerContainer from "./ShimmerContainer";
 import { setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import useScrollToTop from "../../utils/useScrollToTop";
 
 import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
 import TopRestaurantChains from "../Home/TopRestaurantChains";
 
-const OnlineDeliveryRestaurant = lazy(() => import("../Home/OnlineDeliveryRestaurant"));
+const OnlineDeliveryRestaurant = lazy(() =>
+  import("../Home/OnlineDeliveryRestaurant")
+);
 const PlaceCardsContainer = lazy(() => import("../Home/PlaceCardsContainer"));
 
-import { selectCityLoading, selectPageData } from "../../features/cityHome/cityHomeSlice";
+import {
+  selectCityLoading,
+  selectPageData,
+} from "../../features/cityHome/cityHomeSlice";
 import BackToTopBtn from "../BackToTopBtn";
+import HomeShimmer from "../Home/HomeShimmer";
 
 const MainContent = () => {
-    const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
-    const data = useSelector(selectPageData);
+  const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
+  const data = useSelector(selectPageData);
 
-    console.log(data);
+  console.log(data);
 
-    // city data has lat and lng in the last card in the cards array in the main data coming form the server
+  // city data has lat and lng in the last card in the cards array in the main data coming form the server
 
-    const banner_text = data.cityBannerText;
-    const foodieThoughtsData = data.cityFoodieData;
-    const topRestaurantChainData = data.cityRestaurantChainData;
-    const topRestaurantsTitle = data.cityRestaurantChainTitle;
-    const onlineDeliveryRestaurantData = data.cityOnlineDeliveryRestaurantData;
-    const onlineDeliveryRestaurantTitle = data.cityOnlineDeliveryRestaurantTitle;
-    const localitiesTitle = data.cityLocalitiesTitle;
-    const localitiesData = data.cityLocalitiesData;
-    const whatEatingCuisineTitle = data.cityCuisinesTitle
-    const whatEatingCuisineData = data.cityCuisinesData;
-    const restaurantChainInCityTitle = data.restaurantChainInCityTitle;
-    const restaurantChainInCityData = data.restaurantChainInCityData;
-    const popularDishesTitle = data.popularDishInCityTitle;
-    const popularDishesData = data.popularDishInCityData;
+  const banner_text = data.cityBannerText;
+  const foodieThoughtsData = data.cityFoodieData;
+  const topRestaurantChainData = data.cityRestaurantChainData;
+  const topRestaurantsTitle = data.cityRestaurantChainTitle;
+  const onlineDeliveryRestaurantData = data.cityOnlineDeliveryRestaurantData;
+  const onlineDeliveryRestaurantTitle = data.cityOnlineDeliveryRestaurantTitle;
+  const localitiesTitle = data.cityLocalitiesTitle;
+  const localitiesData = data.cityLocalitiesData;
+  const whatEatingCuisineTitle = data.cityCuisinesTitle;
+  const whatEatingCuisineData = data.cityCuisinesData;
+  const restaurantChainInCityTitle = data.restaurantChainInCityTitle;
+  const restaurantChainInCityData = data.restaurantChainInCityData;
+  const popularDishesTitle = data.popularDishInCityTitle;
+  const popularDishesData = data.popularDishInCityData;
 
-    return (
-        <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
-            {/* /Banner Image */}
+  return (
+    <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
+      {/* /Banner Image */}
 
-            <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:pl-2.5 max-md:bg-right">
-                <h1 className="mt-auto text-white text-2xl md:text-4xl max-md:leading-6 order-2">{banner_text}</h1>
-                <h2 className="md:text-4xl text-white text-3xl order-1 max-md:-mt-2">ZestyEats</h2>
-            </div>
+      <div
+        id="banner"
+        className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:pl-2.5 max-md:bg-right"
+      >
+        <h1 className="mt-auto text-white text-2xl md:text-4xl max-md:leading-6 order-2">
+          {banner_text}
+        </h1>
+        <h2 className="md:text-4xl text-white text-3xl order-1 max-md:-mt-2">
+          ZestyEats
+        </h2>
+      </div>
 
-            {/* Foodie Thoughts */}
+      {/* Foodie Thoughts */}
 
-            {foodieThoughtsData?.length !== 0 && (
-                <>
-                    <section className="w-full max-w-[1040px] mx-auto ">
-                        <FoodieThoughts data={foodieThoughtsData} />
-                    </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
-                </>
-            )}
+      {foodieThoughtsData?.length !== 0 && (
+        <>
+          <section className="w-full max-w-[1040px] mx-auto ">
+            <FoodieThoughts data={foodieThoughtsData} />
+          </section>
+          <hr className="mt-10 mb-8 text-gray-400" />
+        </>
+      )}
 
-            {topRestaurantChainData?.length !== 0 && (
-                <>
-                    <section className="w-full max-w-[1040px] mx-auto">
-                        <Suspense
-                            fallback={
-                                <div className="flex justify-between">
-                                    {shimmerArray.map((i) => (
-                                        <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />
-                                    ))}
-                                </div>
-                            }
-                        >
-                            <TopRestaurantChains
-                                data={topRestaurantChainData}
-                                heading={topRestaurantsTitle}
-                            />
-                        </Suspense>
-                    </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
-                </>
-            )}
+      {topRestaurantChainData?.length !== 0 && (
+        <>
+          <section className="w-full max-w-[1040px] mx-auto">
+            <Suspense
+              fallback={
+                <div className="flex justify-between">
+                  {shimmerArray.map((i) => (
+                    <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />
+                  ))}
+                </div>
+              }
+            >
+              <TopRestaurantChains
+                data={topRestaurantChainData}
+                heading={topRestaurantsTitle}
+              />
+            </Suspense>
+          </section>
+          <hr className="mt-10 mb-8 text-gray-400" />
+        </>
+      )}
 
-            {onlineDeliveryRestaurantData?.length !== 0 && (
-                <>
-                    <section className="w-full">
-                        <Suspense
-                            fallback={
-                                <div className="flex justify-between">
-                                    {shimmerArray.map((i) => (
-                                        <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />
-                                    ))}
-                                </div>
-                            }
-                        >
-                            <OnlineDeliveryRestaurant
-                                data={onlineDeliveryRestaurantData}
-                                heading={onlineDeliveryRestaurantTitle}
-                            />
-                        </Suspense>
-                    </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
-                </>
-            )}
+      {onlineDeliveryRestaurantData?.length !== 0 && (
+        <>
+          <section className="w-full">
+            <Suspense
+              fallback={
+                <div className="flex justify-between">
+                  {shimmerArray.map((i) => (
+                    <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />
+                  ))}
+                </div>
+              }
+            >
+              <OnlineDeliveryRestaurant
+                data={onlineDeliveryRestaurantData}
+                heading={onlineDeliveryRestaurantTitle}
+              />
+            </Suspense>
+          </section>
+          <hr className="mt-10 mb-8 text-gray-400" />
+        </>
+      )}
 
-            {/* Localities */}
+      {/* Localities */}
 
-            {localitiesData?.length !== 0 && (
-                <>
-                    <section
-                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
+      {localitiesData?.length !== 0 && (
+        <>
+          <section
+            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
-                    >
-                        <Suspense
-                            fallback={
-                                <div className="flex justify-between gap-4">
-                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
-                                </div>
-                            }
-                        >
-                            <PlaceCardsContainer data={localitiesData} heading={localitiesTitle} pathLogic={() => { }} />
-                        </Suspense>
-                    </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
-                </>
-            )}
+          >
+            <Suspense
+              fallback={
+                <div className="flex justify-between gap-4">
+                  {shimmerArray.map((i) => (
+                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                  ))}
+                </div>
+              }
+            >
+              <PlaceCardsContainer
+                data={localitiesData}
+                heading={localitiesTitle}
+                pathLogic={() => {}}
+              />
+            </Suspense>
+          </section>
+          <hr className="mt-10 mb-8 text-gray-400" />
+        </>
+      )}
 
-            {/* What's city eating */}
+      {/* What's city eating */}
 
-            {whatEatingCuisineData?.length !== 0 && (
-                <>
-                    <section
-                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
+      {whatEatingCuisineData?.length !== 0 && (
+        <>
+          <section
+            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
-                    >
-                        <Suspense
-                            fallback={
-                                <div className="flex justify-between gap-4">
-                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
-                                </div>
-                            }
-                        >
-                            <PlaceCardsContainer data={whatEatingCuisineData} heading={whatEatingCuisineTitle} pathLogic={() => { }} />
-                        </Suspense>
-                    </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
-                </>
-            )}
+          >
+            <Suspense
+              fallback={
+                <div className="flex justify-between gap-4">
+                  {shimmerArray.map((i) => (
+                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                  ))}
+                </div>
+              }
+            >
+              <PlaceCardsContainer
+                data={whatEatingCuisineData}
+                heading={whatEatingCuisineTitle}
+                pathLogic={() => {}}
+              />
+            </Suspense>
+          </section>
+          <hr className="mt-10 mb-8 text-gray-400" />
+        </>
+      )}
 
-            {/*  */}
+      {/*  */}
 
-            {restaurantChainInCityData?.length !== 0 && (
-                <>
-                    <section
-                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
+      {restaurantChainInCityData?.length !== 0 && (
+        <>
+          <section
+            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
-                    >
-                        <Suspense
-                            fallback={
-                                <div className="flex justify-between gap-4">
-                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
-                                </div>
-                            }
-                        >
-                            <PlaceCardsContainer data={restaurantChainInCityData} heading={restaurantChainInCityTitle} pathLogic={() => { }} />
-                        </Suspense>
-                    </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
-                </>
-            )}
+          >
+            <Suspense
+              fallback={
+                <div className="flex justify-between gap-4">
+                  {shimmerArray.map((i) => (
+                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                  ))}
+                </div>
+              }
+            >
+              <PlaceCardsContainer
+                data={restaurantChainInCityData}
+                heading={restaurantChainInCityTitle}
+                pathLogic={() => {}}
+              />
+            </Suspense>
+          </section>
+          <hr className="mt-10 mb-8 text-gray-400" />
+        </>
+      )}
 
-            {/* Popular dishes */}
+      {/* Popular dishes */}
 
-            {popularDishesData?.length !== 0 && (
-                <>
-                    <section
-                        className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
+      {popularDishesData?.length !== 0 && (
+        <>
+          <section
+            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
                    flex-col"
-                    >
-                        <Suspense
-                            fallback={
-                                <div className="flex justify-between gap-4">
-                                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
-                                </div>
-                            }
-                        >
-                            <PlaceCardsContainer data={popularDishesData} heading={popularDishesTitle} pathLogic={() => { }} />
-                        </Suspense>
-                    </section>
-                </>
-            )}
-            <BackToTopBtn percentage={40} />
-        </main>
-    );
+          >
+            <Suspense
+              fallback={
+                <div className="flex justify-between gap-4">
+                  {shimmerArray.map((i) => (
+                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                  ))}
+                </div>
+              }
+            >
+              <PlaceCardsContainer
+                data={popularDishesData}
+                heading={popularDishesTitle}
+                pathLogic={() => {}}
+              />
+            </Suspense>
+          </section>
+        </>
+      )}
+      <BackToTopBtn percentage={40} />
+    </main>
+  );
 };
 
 const CityHome = () => {
-    useScrollToTop();
-    const dispatch = useDispatch();
-    const { cityName: city } = useParams();
-    const loading = useSelector(selectCityLoading);
+  useScrollToTop();
+  const dispatch = useDispatch();
+  const { cityName: city } = useParams();
+  const loading = useSelector(selectCityLoading);
 
-    useEffect(() => {
-        dispatch(setSecondaryCity(city));
-    }, []);
+  useEffect(() => {
+    dispatch(setSecondaryCity(city));
+  }, []);
 
-    return loading ? <ShimmerContainer />
-        : <MainContent />
+  return loading ? (
+    <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
+      <HomeShimmer />
+    </main>
+  ) : (
+    <MainContent />
+  );
 };
 
 export default CityHome;

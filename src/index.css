@@ -45,7 +45,11 @@
 
     .shimmerBg {
         position: relative;
-        animation: bgChange 1.5s ease-in infinite;
+        animation: bgChange 1.5s ease-in infinite forwards;
+    }
+
+    .animate-dishes {
+        animation: dishes 3s ease-in-out infinite
     }
 
     @keyframes bgChange {
@@ -70,6 +74,20 @@
 
         100% {
             left: 120%;
+        }
+    }
+
+    @keyframes dishes {
+        0% {
+            margin-left: -100%;
+        }
+
+        50% {
+            margin-left: 50%;
+        }
+
+        100% {
+            margin-left: 110%
         }
     }
 }
