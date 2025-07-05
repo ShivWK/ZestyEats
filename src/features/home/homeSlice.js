@@ -28,8 +28,10 @@ const homeSlice = createSlice({
   initialState: initialState,
   reducers: {
     addLatAndLng: (state, action) => {
-      state.lat = action.payload.lat;
-      state.lng = action.payload.lng;
+      const {lat, lng} = action.payload?.data?.cards?.at(-1)?.card?.card;
+
+      state.lat = lat;
+      state.lng = lng;
     },
 
     setShowBottomMenu: (state, action) => {
@@ -65,8 +67,7 @@ const homeSlice = createSlice({
     },
 
     addFoodieThoughtsData: (state, action) => {
-      const result =
-        action.payload?.data?.cards?.find(
+      const result = action.payload?.data?.cards?.find(
           (item) => item?.card?.card?.id === "whats_on_your_mind"
         )?.card?.card?.imageGridCards?.info || [];
 

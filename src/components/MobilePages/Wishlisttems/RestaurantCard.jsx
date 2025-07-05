@@ -6,8 +6,6 @@ import { selectItemsToBeAddedInCart, selectWishlistItems, setItemToCart, selectC
 import { toast } from "react-toastify";
 
 const RestaurantCard = ({ data }) => {
-    console.log(data);
-
     const metadata = data.restro.metadata;
     const [lat, lng] = metadata.latLong.split(",");
     const restro_id = metadata.id;

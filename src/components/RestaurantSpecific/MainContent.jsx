@@ -19,8 +19,6 @@ import textToZestyEats from "../../utils/textToZestyEats";
 
 const MainContent = ({ data, routes = true }) => {
   const restaurantData = {};
-
-  const { lat, lng, id } = useParams();
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
   const cards = data?.data?.cards;

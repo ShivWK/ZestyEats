@@ -9,7 +9,8 @@ import {
     setRestaurantChainData,
     setRestaurantChainInCityData,
     setPageOffset,
-    setNextFetch
+    setNextFetch,
+    setCityLatAndLng
 } from "../features/cityHome/cityHomeSlice";
 
 const updateCityHomeData = (data, dispatch) => {
@@ -25,6 +26,7 @@ const updateCityHomeData = (data, dispatch) => {
     dispatch(setPageOffset(pageOffset)),
     dispatch(setNextFetch(nextFetch));
     dispatch(setBannerTitle(cards));
+    dispatch(setCityLatAndLng(cards));
     dispatch(setFoodieThoughtsData(cards));
     dispatch(setRestaurantChainData(cards));
     dispatch(setOnlineDeliveryRestaurantsData(cards));

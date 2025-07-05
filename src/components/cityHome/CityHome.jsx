@@ -23,10 +23,6 @@ const MainContent = () => {
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const data = useSelector(selectPageData);
 
-  console.log(data);
-
-  // city data has lat and lng in the last card in the cards array in the main data coming form the server
-
   const banner_text = data.cityBannerText;
   const foodieThoughtsData = data.cityFoodieData;
   const topRestaurantChainData = data.cityRestaurantChainData;

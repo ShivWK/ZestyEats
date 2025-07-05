@@ -1,5 +1,5 @@
-import { memo, lazy, Suspense } from "react";
-import { useSelector } from "react-redux";
+import { memo, lazy, Suspense, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import useScrollToTop from "../../utils/useScrollToTop";
 
 import FoodieThoughts from "./FoodieThoughts/FoodieThoughts";
@@ -21,7 +21,8 @@ import {
   selectBestCuisionsNearMe,
   selectAvailableCities,
   selectCity,
-  selectBottomMenu
+  selectBottomMenu,
+  addLatAndLng
 } from "../../features/home/homeSlice";
 
 import HomeShimmer from "./HomeShimmer";
@@ -38,6 +39,11 @@ const Home = memo(() => {
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   dispatch(addLatAndLng({}))
+  // }, [])
 
   const cuisineClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch) => {
     const pathname = new URL(data.link).pathname;

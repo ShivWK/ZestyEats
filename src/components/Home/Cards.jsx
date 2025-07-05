@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -9,14 +9,21 @@ import {
   setFavoriteRestro
 } from "../../features/home/restaurantsSlice";
 
+import { selectCityLatAndLng } from "../../features/cityHome/cityHomeSlice";
+
 import { memo, use, useEffect, useState } from "react";
 import PureVeg from "../../utils/PureVegSvg";
 import VegAndNonVeg from "../../utils/VegAndNonVegSvg";
 import textToZestyEats from "../../utils/textToZestyEats";
 
 const Cards = memo(({ data, from }) => {
-  // console.log(data)
+  const [searchParams] = useSearchParams();
+  const modPresent = searchParams.get("mode");
+
   const pathname = useLocation().pathname;
+  const cityPresent = decodeURIComponent(pathname).split("/").at(-2).includes("cityPage");
+
+  const latAndLngSelector = (cityPresent && !modPresent) ? selectCityLatAndLng : selectLatAndLng;
 
   let lat1 = null;
   let lng1 = null;
@@ -29,7 +36,7 @@ const Cards = memo(({ data, from }) => {
   const dataToMap = pathname.includes("ordersAndWishlist") ? data.data : data;
 
   const favoriteRestro = useSelector(selectFavoriteRestros);
-  const { lat, lng } = useSelector(selectLatAndLng);
+  const { lat, lng } = useSelector(latAndLngSelector);
   const dispatch = useDispatch();
   const [wishlistAdded, setWishlistAdded] = useState(false);
   const [disable, setDisable] = useState(false)

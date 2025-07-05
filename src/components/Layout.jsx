@@ -162,11 +162,14 @@ export default function Layout() {
       else if (item.includes("specificFood")) {
         return decodeURIComponent(item).split("/")[2];
       } else if (item?.includes("restaurantSpecific")) {
-        // console.log(decodeURIComponent(item).split("/")[5])
         return decodeURIComponent(item).split("/")[5];
       } else if (item === "/search/suggestions") return "Suggestions";
       else if (item === "/search/searchResult/dishPage") return "Dishes";
       else if (item === "/search/searchResult/restaurantPage") return "Restaurants";
+      else if (item.includes("/cityPage")) {
+        const city = decodeURIComponent(item).split("/").at(-1);
+        return `City Page - ${city}`;
+      } 
       return item;
     });
 
