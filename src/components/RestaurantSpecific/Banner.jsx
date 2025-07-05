@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { selectCity } from "../../features/home/homeSlice";
+import { selectCity, selectLatAndLng } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Suspense, lazy } from "react";
 const PureVegSvg = lazy(() => import("../../utils/PureVegSvg"));
@@ -7,11 +7,22 @@ const VegAndNonVegSvg = lazy(() => import("../../utils/VegAndNonVegSvg"));
 import updateCityHomeData from "../../utils/updateCityHomeData";
 import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
+import calDistance from "./../../utils/haversineFormula";
 
-const Banner = ({ data, opened }) => {
+const Banner = ({ data }) => {
   const mainData = data?.card?.card?.info;
+  const [lat, lng] = mainData.latLong.split(",");
 
-  // const opened = mainData.availability.opened;
+  const { lat: latUser, lng: lngUser } = useSelector(selectLatAndLng);
+
+  const userDistanceFromTheRestaurant = calDistance(lat, latUser, lng, lngUser);
+
+  let deliverable = true;
+  if (userDistanceFromTheRestaurant > 10) deliverable = false;
+
+  console.log(deliverable);
+
+  const opened = mainData.availability.opened;
 
   const veg = mainData?.veg;
   const searchedCity = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
@@ -92,7 +103,10 @@ const Banner = ({ data, opened }) => {
 
                 <p className={`${opened ? "text-green-500" : "text-red-600"} font-medium`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
               </div>
-              <p>{mainData?.sla?.slaString || "25-30 MINS"}</p>
+              <div className="flex gap-2 items-center">
+                <p>{mainData?.sla?.slaString || "25-30 MINS"}</p>
+                {!deliverable && <p className="text-red-500 font-medium">(Not delivering to your area.)</p>}
+              </div>
             </div>
           </div>
         </div>

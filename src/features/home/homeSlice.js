@@ -28,7 +28,7 @@ const homeSlice = createSlice({
   initialState: initialState,
   reducers: {
     addLatAndLng: (state, action) => {
-      const {lat, lng} = action.payload?.data?.cards?.at(-1)?.card?.card;
+      const {lat, lng} = action.payload;
 
       state.lat = lat;
       state.lng = lng;

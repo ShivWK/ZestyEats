@@ -22,7 +22,7 @@ export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPath
 
         dispatch(setPathHistory(pathHistory))
         dispatch(setUserFriendlyPathHistory(userPathHistory));
-        dispatch(addLatAndLng(res));
+        dispatch(addLatAndLng({ lat, lng }));
         dispatch(addFoodieThoughtsData(res));
         dispatch(addTopRestaurantsData(res));
         dispatch(addRestaurantsWithOnineDelivery(res));

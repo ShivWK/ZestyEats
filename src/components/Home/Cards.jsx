@@ -6,7 +6,7 @@ import {
   setMenuItems,
   setRestaurantItems,
   selectFavoriteRestros,
-  setFavoriteRestro
+  setFavoriteRestro,
 } from "../../features/home/restaurantsSlice";
 
 import { selectCityLatAndLng } from "../../features/cityHome/cityHomeSlice";
@@ -15,23 +15,22 @@ import { memo, use, useEffect, useState } from "react";
 import PureVeg from "../../utils/PureVegSvg";
 import VegAndNonVeg from "../../utils/VegAndNonVegSvg";
 import textToZestyEats from "../../utils/textToZestyEats";
+import calDistance from "../../utils/haversineFormula";
 
 const Cards = memo(({ data, from }) => {
   const [searchParams] = useSearchParams();
   const modPresent = searchParams.get("mode");
 
   const pathname = useLocation().pathname;
-  const cityPresent = decodeURIComponent(pathname).split("/").at(-2).includes("cityPage");
+  const cityPresent = decodeURIComponent(pathname)
+                      .split("/")
+                      .at(-2)
+                      .includes("cityPage");
 
-  const latAndLngSelector = (cityPresent && !modPresent) ? selectCityLatAndLng : selectLatAndLng;
+  const latAndLngSelector = cityPresent && !modPresent ? selectCityLatAndLng : selectLatAndLng;
 
-  let lat1 = null;
-  let lng1 = null;
-
-  if (pathname.includes("ordersAndWishlist")) {
-    lat1 = data.lat;
-    lng1 = data.lng;
-  }
+  let lat1 = data.lat;
+  let lng1 = data.lng;
 
   const dataToMap = pathname.includes("ordersAndWishlist") ? data.data : data;
 
@@ -39,28 +38,27 @@ const Cards = memo(({ data, from }) => {
   const { lat, lng } = useSelector(latAndLngSelector);
   const dispatch = useDispatch();
   const [wishlistAdded, setWishlistAdded] = useState(false);
-  const [disable, setDisable] = useState(false)
+  const [disable, setDisable] = useState(false);
 
   const imageId = encodeURIComponent(dataToMap?.cloudinaryImageId?.trim());
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
-
-  // To get image from public folder give the path of the image after "/" , here "/" means public folder
-  // const imageUrl = `/images/image.png`;
+  const userDistanceFromRestaurant = calDistance(lat1, lat, lng1, lng);
 
   useEffect(() => {
-    const exist = favoriteRestro.find(obj => obj.data.id === dataToMap.id);
+    const exist = favoriteRestro.find((obj) => obj.data.id === dataToMap.id);
     setWishlistAdded(exist);
 
     if (pathname.includes("ordersAndWishlist")) {
-      if (lat !== lat1 && lng !== lng1) {
+      if (userDistanceFromRestaurant > 20) {
         setDisable(true);
       }
     }
-  }, [])
+  }, []);
 
   const handleClick = (e) => {
     if (pathname.includes("ordersAndWishlist")) {
-      if (lat !== lat1 && lng !== lng1) {
+
+      if (userDistanceFromRestaurant > 20) {
         e.preventDefault();
       }
     }
@@ -79,23 +77,43 @@ const Cards = memo(({ data, from }) => {
 
   const crossHandler = () => {
     dispatch(setFavoriteRestro({ lat, lng, data: dataToMap }));
-  }
+  };
 
   return (
     <Link
       to={`/restaurantSpecific/${lat}/${lng}/${dataToMap?.id}/${dataToMap?.name}`}
       onClick={handleClick}
-      className={`relative flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${from === "online" ? "md:w-[240px]" : from === "specificFood" ? "md:w-[360px]" : "md:w-[275px]"}`}
+      className={`relative flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
+        from === "online"
+          ? "md:w-[240px]"
+          : from === "specificFood"
+          ? "md:w-[360px]"
+          : "md:w-[275px]"
+      }`}
     >
-      <div className={`absolute z-20 ${(disable) ? "flex" : "hidden"} items-center justify-center h-full w-full bg-[rgba(0,0,0,0.4)]`}>\
+      <div
+        className={`absolute z-20 ${
+          disable ? "flex" : "hidden"
+        } items-center justify-center h-full w-full bg-[rgba(0,0,0,0.4)]`}
+      >
+        \
         <div className="flex flex-col gap-1 items-center justify-center">
           <p className="text-white font-bold text-3xl">Not Available</p>
-          <i onClick={crossHandler} className="ri-close-large-line text-white text-3xl rounded px-1 bg-black/50"></i>
+          <i
+            onClick={crossHandler}
+            className="ri-close-large-line text-white text-3xl rounded px-1 bg-black/50"
+          ></i>
         </div>
       </div>
 
       <div
-        className={`relative w-full max-md:basis-1/2 h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 pl-4 shrink-0 max-md:max-h-full max-md:min-h-56 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${from === "online" ? "md:h-[160px]" : from === "specificFood" ? "md:h-[240px]" : "md:h-[180px]"}`}
+        className={`relative w-full max-md:basis-1/2 h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 pl-4 shrink-0 max-md:max-h-full max-md:min-h-56 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${
+          from === "online"
+            ? "md:h-[160px]"
+            : from === "specificFood"
+            ? "md:h-[240px]"
+            : "md:h-[180px]"
+        }`}
         style={{
           backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl}), url("/images/fallback.png")`,
         }}
@@ -103,7 +121,8 @@ const Cards = memo(({ data, from }) => {
         <p className="font-bold text-white text-xl">
           {(textToZestyEats(dataToMap.aggregatedDiscountInfoV3?.header) || "") +
             " " +
-            (textToZestyEats(dataToMap.aggregatedDiscountInfoV3?.subHeader) || "")}
+            (textToZestyEats(dataToMap.aggregatedDiscountInfoV3?.subHeader) ||
+              "")}
         </p>
         <div
           className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-full p-0.5"
@@ -123,7 +142,9 @@ const Cards = memo(({ data, from }) => {
         </div>
       </div>
       <div className="md:mt-2 w-[95%] max-md:basis-1/2 max-md:py-2">
-        <p className="font-bold text-[17px] line-clamp-3">{textToZestyEats(dataToMap?.name) || ""}</p>
+        <p className="font-bold text-[17px] line-clamp-3">
+          {textToZestyEats(dataToMap?.name) || ""}
+        </p>
         <div className="flex gap-1 items-center -mt-0.5">
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
           <p className="font-semibold">{dataToMap?.avgRatingString || ""}</p>
@@ -133,12 +154,24 @@ const Cards = memo(({ data, from }) => {
         {dataToMap?.veg ? (
           <PureVeg classes="-ml-5" />
         ) : (
-          <VegAndNonVeg classes={"inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs font-medium pl-1 pr-2 my-0.5 py-0.5 rounded-full border border-gray-300"} />
+          <VegAndNonVeg
+            classes={
+              "inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs font-medium pl-1 pr-2 my-0.5 py-0.5 rounded-full border border-gray-300"
+            }
+          />
         )}
-        <p className={`mt-0.5 max-h-14 line-clamp-2 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[85%] leading-0.5" ${from === "online" ? "max-md:w-[85%]" : "max-md:w-[75%]"}`}>
+        <p
+          className={`mt-0.5 max-h-14 line-clamp-2 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[85%] leading-0.5" ${
+            from === "online" ? "max-md:w-[85%]" : "max-md:w-[75%]"
+          }`}
+        >
           {dataToMap?.cuisines.join(", ") || ""}
         </p>
-        <p className="font-semibold text-gray-900 mt-0.5 truncate max-md:max-w-[80%]">{dataToMap?.locality + ", " + (dataToMap?.city || dataToMap?.areaName)}</p>
+        <p className="font-semibold text-gray-900 mt-0.5 truncate max-md:max-w-[80%]">
+          {dataToMap?.locality +
+            ", " +
+            (dataToMap?.city || dataToMap?.areaName)}
+        </p>
       </div>
     </Link>
   );
