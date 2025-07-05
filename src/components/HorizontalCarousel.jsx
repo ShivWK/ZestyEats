@@ -157,8 +157,8 @@ const HorizontalCarousel = memo(({
           className="flex justify-start gap-4 overflow-x-auto hide-scrollbar"
           onTouchEnd={() => clicked.current = true}
         >
-          {dataToMap.map((item) => (
-            <Card key={item?.id || Math.random()} data={item} restaurantData={restaurantData}/>
+          {dataToMap.map((item, index) => (
+            <Card key={item?.id + index} data={item} restaurantData={restaurantData}/>
           ))}
         </div>
         {(showScrollBar && !hideScrollBar) && (

@@ -19,6 +19,8 @@ import Filter from "../Home/Filters";
 import useScrollToTop from "../../utils/useScrollToTop";
 
 const Card = ({ data, lat, lng }) => {
+    console.log(data);
+
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const [isError, setIsError] = useState(false);
 
@@ -26,8 +28,11 @@ const Card = ({ data, lat, lng }) => {
     const dishData = mainData?.info;
     const restaurantData = mainData?.restaurant?.info;
 
+    const modifiedRestaurantData = structuredClone(restaurantData);
+    modifiedRestaurantData.latLong = `${lat}, ${lng}`;
+
     const restaurantDataToWishlist = {
-        metadata: restaurantData,
+        metadata: modifiedRestaurantData,
         address: restaurantData?.address,
         offers: null
     }

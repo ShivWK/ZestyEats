@@ -28,6 +28,8 @@ const MainContent = ({ data, routes = true }) => {
   const title = textToZestyEats(cards?.[0].card?.card?.text);
   
   const banner = useMemo(() => cards?.[2], [cards]);
+  const opened = banner?.card?.card?.info?.availability.opened;
+
   restaurantData.metadata = banner?.card?.card?.info;
   
   const offers = useMemo(() => cards?.[3], [cards]);
@@ -101,7 +103,7 @@ const MainContent = ({ data, routes = true }) => {
       </div>
 
       {/* Banner */}
-      {banner && <Banner data={banner} />}
+      {banner && <Banner data={banner} opened={opened} />}
 
       {/* Offers */}
       <section className="w-full  my-2">
@@ -133,7 +135,7 @@ const MainContent = ({ data, routes = true }) => {
               </div>
             }
           >
-            <TopPicksCards data={topPicks} restaurantData={restaurantData} />
+            <TopPicksCards data={topPicks} restaurantData={restaurantData} opened={opened} />
           </Suspense>
         )}
       </section>
@@ -164,6 +166,7 @@ const MainContent = ({ data, routes = true }) => {
                     topBorder={index === 0}
                     borderBottom={index === restMenuData.length - 1}
                     restaurantData={restaurantData}
+                    opened={opened}
                   />
                 </Suspense>
               );
@@ -182,6 +185,7 @@ const MainContent = ({ data, routes = true }) => {
                   topBorder={index === 0}
                   borderBottom={index === restMenuData.length - 1}
                   restaurantData={restaurantData}
+                  opened={opened}
                 />
               </Suspense>
             );

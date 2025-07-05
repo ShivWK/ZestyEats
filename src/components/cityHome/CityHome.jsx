@@ -15,9 +15,12 @@ import { selectCityLoading, selectPageData } from "../../features/cityHome/cityH
 import BackToTopBtn from "../BackToTopBtn";
 
 const MainContent = () => {
-    // console.log(data)
     const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
     const data = useSelector(selectPageData);
+
+    console.log(data);
+
+    // city data has lat and lng in the last card in the cards array in the main data coming form the server
 
     const banner_text = data.cityBannerText;
     const foodieThoughtsData = data.cityFoodieData;
@@ -38,7 +41,7 @@ const MainContent = () => {
         <main className="w-full md:max-w-[1070px] mx-auto pb-14 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
             {/* /Banner Image */}
 
-            <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:bg-right">
+            <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:pl-2.5 max-md:bg-right">
                 <h1 className="mt-auto text-white text-2xl md:text-4xl max-md:leading-6 order-2">{banner_text}</h1>
                 <h2 className="md:text-4xl text-white text-3xl order-1 max-md:-mt-2">ZestyEats</h2>
             </div>

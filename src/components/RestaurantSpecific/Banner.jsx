@@ -8,8 +8,11 @@ import updateCityHomeData from "../../utils/updateCityHomeData";
 import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
 
-const Banner = ({ data }) => {
+const Banner = ({ data, opened }) => {
   const mainData = data?.card?.card?.info;
+
+  // const opened = mainData.availability.opened;
+
   const veg = mainData?.veg;
   const searchedCity = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
 
@@ -70,7 +73,7 @@ const Banner = ({ data }) => {
                   return <NavLink to={`/cityPage/${searchedCity}?mode=cuisine?type=${showCuisine}`} key={text} onClick={() => clickHandler(text, searchedCity, cuisine)}>{text}</NavLink>;
                 }
                 const cuisine = text.toLowerCase().replace(/\s/g, "-") + "-cuisine-";
-                  const showCuisine = text.toLowerCase().replace(/\s/g, "-");
+                const showCuisine = text.toLowerCase().replace(/\s/g, "-");
 
                 return <NavLink to={`/cityPage/${searchedCity}?mode=cuisine?type=${showCuisine}`} key={text} onClick={() => clickHandler(text, searchedCity, cuisine)}>{`${text} ,`}</NavLink>;
               })}
@@ -85,6 +88,9 @@ const Banner = ({ data }) => {
               <div className="flex gap-2 p-0">
                 <p>Outlet</p>
                 <p className="text-gray-600 font-semibold">{mainData?.areaName}</p>
+                <p className="text-gray-950">•</p>
+
+                <p className={`${opened ? "text-green-500" : "text-red-600"} font-medium`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
               </div>
               <p>{mainData?.sla?.slaString || "25-30 MINS"}</p>
             </div>

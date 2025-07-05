@@ -3,7 +3,7 @@ import textToZestyEats from "../../utils/textToZestyEats";
 import { useDispatch, useSelector } from "react-redux";
 import { addToWishlistItem, selectWishlistItems, deleteItemFromWishlist } from "../../features/home/restaurantsSlice";
 
-const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null }) => {
+const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) => {
   const [isError, setIsError] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [overFlow, setOverFlow] = useState(false);
@@ -57,7 +57,10 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null }) => {
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item?.imageId}`;
 
   return (
-    <div className="flex flex-col md:flex-row justify-between bg-white p-1 pt-2 md:pt-0 md:py-4 md:px-1 w-full border-b-[1px] border-gray-300">
+    <div className="flex flex-col md:flex-row justify-between bg-white p-1 pt-2 md:pt-0 md:py-4 md:px-1 w-full border-b-[1px] border-gray-300 overflow-hidden">
+      {/* <div className={`absolute z-20 ${(false) ? "hidden" : "flex"} items-center justify-center h-full w-full bg-[rgba(0,0,0,0.4)]`}>
+          <p className="text-white font-bold text-2xl">Not Available</p>
+      </div> */}
       <div className="flex mt-3 flex-col order-2 md:order-1 items-start gap-1.5 p-2 max-w-[525px]">
         {veg ? (
           <svg

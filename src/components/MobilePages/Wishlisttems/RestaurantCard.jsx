@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import ItemCard from "./ItemCard";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { selectItemsToBeAddedInCart, selectWishlistItems, setItemToCart, selectCart, deleteItemFromWishlist, toggleItemsToBeAddedInCart } from "../../../features/home/restaurantsSlice";
+import { selectItemsToBeAddedInCart, selectWishlistItems, setItemToCart, selectCart, deleteItemFromWishlist, toggleItemsToBeAddedInCart, setMenuItems } from "../../../features/home/restaurantsSlice";
 import { toast } from "react-toastify";
 
 const RestaurantCard = ({ data }) => {
+    console.log(data);
+
     const metadata = data.restro.metadata;
     const [lat, lng] = metadata.latLong.split(",");
     const restro_id = metadata.id;
@@ -70,9 +72,13 @@ const RestaurantCard = ({ data }) => {
         }
     }
 
+    const ClickHandler = () => {
+        dispatch(setMenuItems({ mode: "empty" }));
+    }
+
     return <section className="border-2 border-gray-300 rounded m-0.5 my-2">
         <div className="p-1.5 w-full flex flex-col gap-0.5">
-            <Link to={`/restaurantSpecific/${lat}/${lng}/${restro_id}/${name}`} className="flex items-center justify-between">
+            <Link to={`/restaurantSpecific/${lat}/${lng}/${restro_id}/${name}`} onClick={ClickHandler} className="flex items-center justify-between">
                 <p className="basis-[90%] truncate text-xl font-bold select-none">
                     {name}
                 </p>
@@ -81,7 +87,7 @@ const RestaurantCard = ({ data }) => {
                 </div>
             </Link>
 
-            <p className="text-xs font-bold text-gray-700 truncate -mt-1">{data.restro.metadata.areaName + ", " + data.restro.metadata.city}</p>
+            <p className="text-xs font-bold text-gray-700 truncate -mt-1">{data.restro.metadata.areaName + ", " + data.restro.metadata.locality  + ", " + data.restro.metadata.city}</p>
 
             <div className="flex items-center justify-between mt-1.5">
                 <div className="basis-[40%]">
