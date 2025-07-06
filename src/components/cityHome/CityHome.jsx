@@ -15,6 +15,7 @@ const PlaceCardsContainer = lazy(() => import("../Home/PlaceCardsContainer"));
 import {
   selectCityLoading,
   selectPageData,
+  selectSecondaryCity
 } from "../../features/cityHome/cityHomeSlice";
 import BackToTopBtn from "../BackToTopBtn";
 import HomeShimmer from "../Home/HomeShimmer";
@@ -22,6 +23,7 @@ import HomeShimmer from "../Home/HomeShimmer";
 const MainContent = () => {
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const data = useSelector(selectPageData);
+  const secondaryCity = useSelector(selectSecondaryCity);
 
   const banner_text = data.cityBannerText;
   const foodieThoughtsData = data.cityFoodieData;
@@ -37,6 +39,52 @@ const MainContent = () => {
   const restaurantChainInCityData = data.restaurantChainInCityData;
   const popularDishesTitle = data.popularDishInCityTitle;
   const popularDishesData = data.popularDishInCityData;
+
+  const localityClickHandler = async (data, trigger, setLoading, updataCityData, dispatch) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+
+    dispatch(setLoading(true));
+    const type = data.text.toLowerCase() + "-";
+
+    // window.history.pushState({ locality: data.text }, "", `?locality=${data.text}`);
+
+    try {
+      const result = await trigger({ city: secondaryCity, type }).unwrap();
+      updataCityData(result, dispatch);
+    } catch (err) {
+      console.log("Error in fetching data", err);
+      dispatch(setLoading(false));
+      throw new Error("Error occurred", err);
+    }
+  }
+
+// "https://www.swiggy.com/city/kolkata/asian-cuisine-order-online"
+
+  const whatEatingClickHandler = async (data, trigger, setLoading, updataCityData, dispatch) => {
+    const pathName = new URL(data.link).pathname;
+    const cuisine = pathName.match(/\/(.*?)\/(.*?)\/(.*?)order/i)[3];
+    dispatch(setLoading(true));
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+
+    try {
+      const result = await trigger({city: secondaryCity, type: cuisine});
+      console.log(result)
+
+      updataCityData(result?.data, dispatch);
+    } catch(err) {
+      console.log("Error in fetching data", err);
+      dispatch(setLoading(false));
+      throw new Error("Error occurred", err);
+    }
+
+  }
 
   return (
     <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
@@ -129,7 +177,8 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={localitiesData}
                 heading={localitiesTitle}
-                pathLogic={() => {}}
+                path={`/cityPage/${secondaryCity}`}
+                clickHandler={localityClickHandler}
               />
             </Suspense>
           </section>
@@ -157,7 +206,8 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={whatEatingCuisineData}
                 heading={whatEatingCuisineTitle}
-                pathLogic={() => {}}
+                clickHandler={whatEatingClickHandler}
+                path={`/cityPage/${secondaryCity}?mode=city-cuisine`}
               />
             </Suspense>
           </section>
@@ -185,7 +235,7 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={restaurantChainInCityData}
                 heading={restaurantChainInCityTitle}
-                pathLogic={() => {}}
+                pathLogic={() => { }}
               />
             </Suspense>
           </section>
@@ -213,7 +263,7 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={popularDishesData}
                 heading={popularDishesTitle}
-                pathLogic={() => {}}
+                pathLogic={() => { }}
               />
             </Suspense>
           </section>

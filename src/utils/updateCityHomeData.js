@@ -19,6 +19,8 @@ const updateCityHomeData = (data, dispatch) => {
     localStorage.setItem("CityHomeData", JSON.stringify(data));
 
     const mainData = data?.props?.pageProps?.widgetResponse?.success;
+
+    // console.log("maindata", mainData)
     const pageOffset = mainData?.pageOffset?.nextOffset;
     const nextFetch = mainData?.nextFetch;
     const cards = mainData?.cards;

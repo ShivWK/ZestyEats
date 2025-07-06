@@ -380,8 +380,6 @@ exports.cityLocalityCuisineCardHandler = asyncErrorHandler(
   async (req, res, next) => {
     const { city, type } = req.query;
 
-    console.log("Hit", city, type, "citylocality")
-
     if (!city) {
       return missingParamsError("Please provide city or locality or cuisine type", res);
     }

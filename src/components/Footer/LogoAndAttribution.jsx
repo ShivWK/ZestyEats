@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 const LogoAndAttribution = () => {
   const dpModel = useSelector(selectDpModel);
   const dpModelHide = useSelector(selectDpModelHide);
-  console.log(dpModelHide);
 
   const dispatch = useDispatch();
 

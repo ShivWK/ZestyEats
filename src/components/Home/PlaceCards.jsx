@@ -5,12 +5,14 @@ import updateCityHomeData from "../../utils/updateCityHomeData";
 import { useDispatch, useSelector } from "react-redux";
 import { selectCity } from "../../features/home/homeSlice";
 
-const PlaceCards = ({ data, clickHandler, path}) => {
+const PlaceCards = ({ data, clickHandler, path, targetedCity = null}) => {
+    // console.log(data)
+
     const [trigger] = useLazyGetDataForCityLocalityCuisineQuery();
     const dispatch = useDispatch();
-    const city = useSelector(selectCity);
+    const city = targetedCity ? targetedCity : useSelector(selectCity);
 
-    const navPath = path === "DIY" ? `/cityPage/${data?.text}` : path || `cityPAge/${city}`;
+    const navPath = path === "DIY" ? `/cityPage/${data?.text}` : path || `cityPage/${city}`;
 
     const handleNavClick = () => {
         clickHandler(data, trigger, setCityPageLoading, updateCityHomeData, dispatch, setSecondaryCity)
@@ -22,3 +24,4 @@ const PlaceCards = ({ data, clickHandler, path}) => {
 }
 
 export default PlaceCards;
+

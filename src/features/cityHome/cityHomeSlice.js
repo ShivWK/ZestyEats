@@ -54,7 +54,7 @@ const cityHomeSlice = createSlice({
             const cards = action.payload;
 
             const banner_text =
-                cards.find((item) => item?.card?.card?.id === "best_restaurants_header")
+                cards?.find((item) => item?.card?.card?.id === "best_restaurants_header")
                     ?.card?.card?.title || "";
 
             state.bannerTitle = banner_text;

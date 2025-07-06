@@ -3,7 +3,7 @@ import ShowMoreBtn from "./ShowMoreBtn";
 import { useRef } from "react";
 import { memo, useCallback, useEffect, useState } from "react";
 
-const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, showHeading = true }) => {
+const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, showHeading = true, targetedCity }) => {
   const [shownCards, setShownCards] = useState([]);
   const [lastEnd, setLastEnd] = useState(12)
   const [hideShowMoreBtn, setHideShowMoreBtn] = useState(false);
@@ -31,14 +31,12 @@ const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, sh
 
   const title = heading || "Best Cuisines Near Me"
 
-  
-
   return (
     <>
       {showHeading && <h3 className="self-start">{title}</h3>}
       <div id="dd" ref={containerRef} className="flex flex-wrap w-full justify-start gap-y-5 md:gap-x-8 gap-x-2.5">
         {shownCards.map((item) => (
-          <PlaceCards key={item.link + Math.random()} data={item} clickHandler={clickHandler} path={path} />
+          <PlaceCards key={item.link + Math.random()} data={item} clickHandler={clickHandler} path={path} targetedCity={targetedCity} />
         ))}
 
       </div>
