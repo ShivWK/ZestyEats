@@ -19,6 +19,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
     else dispatch(signUpOtpNotSend());
 
     dispatch(setHideLogin(true));
+    window.history.back();
   };
 
   const handleBack = () => {
@@ -35,7 +36,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
     <div className="w-[90%] md:w-[80%] h-auto mt-7">
       <button
         className="group cursor-pointer mb-4"
-        onClick={isLoginOtpSend || isSigUpOtpSend ? handleBack : handleClose}
+        onClick={(isLoginOtpSend || isSigUpOtpSend) ? handleBack : handleClose}
       >
         {isLoginOtpSend || isSigUpOtpSend ? (
           <i className="ri-arrow-left-line text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>

@@ -20,8 +20,6 @@ const Banner = ({ data }) => {
   let deliverable = true;
   if (userDistanceFromTheRestaurant > 10) deliverable = false;
 
-  console.log(deliverable);
-
   const opened = mainData.availability.opened;
 
   const veg = mainData?.veg;

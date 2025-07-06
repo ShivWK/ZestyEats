@@ -39,6 +39,8 @@ const ModalSubContainer = memo(() => {
   const handleClose = () => {
     dispatch(setHideLocation(true));
     setSearchValue("");
+
+    window.history.back();
   };
 
   function debounceCreater(func, delay) {
@@ -85,9 +87,8 @@ const ModalSubContainer = memo(() => {
       {/* Search locations */}
       <div
         onClick={handleDivClick}
-        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-2 md:p-3 cursor-text ${
-          Focused && "shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]"
-        }`}
+        className={`flex justify-between border-[1px] border-gray-400 gap-1.5 w-full mt-7 p-2 md:p-3 cursor-text ${Focused && "shadow-[0_0_10px_1px_rgba(0,0,0,0.2)]"
+          }`}
       >
         <input
           type="text"

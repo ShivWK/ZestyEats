@@ -1,12 +1,17 @@
-import { selectDpModel, setDpModelOpen } from "../../features/home/homeSlice";
+import { selectDpModel, selectDpModelHide, setDpModelHide, setDpModelOpen } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 const LogoAndAttribution = () => {
   const dpModel = useSelector(selectDpModel);
+  const dpModelHide = useSelector(selectDpModelHide);
+  console.log(dpModelHide);
+
   const dispatch = useDispatch();
 
-  const dpClickHandler = (val) => {
-    dispatch(setDpModelOpen(val))
+  const dpOverlayClickHandler = (e) => {
+    console.log("called overlay");
+    e.stopPropagation();
+    dispatch(setDpModelHide(true));
   }
 
   return (
@@ -34,7 +39,11 @@ const LogoAndAttribution = () => {
         <p className="mb-2 text-lg">Developed By</p>
         <div className="flex gap-2.5 w-fit">
           <img
-            onClick={() => dpClickHandler(!dpModel)}
+            onClick={() => {
+              dispatch(setDpModelHide(false))
+              dispatch(setDpModelOpen(true))
+            }}
+
             className="h-[14vh] w-[14vh] rounded-[50%] object-cover border-2 border-primary p-1 cursor-pointer"
             src="/images/MY-min.png"
             alt="Developer image"
@@ -88,8 +97,17 @@ const LogoAndAttribution = () => {
               </a>
             </div>
             {dpModel && <div>
-              <div className="fixed flex items-center justify-center md:justify-start h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)]" onClick={() => dpClickHandler(!dpModel)}>
-                  <img  src="/images/MY-min.png" className={`rounded-full h-[35vh] md:h-[50vh] w-[35vh] md:w-[50vh] p-1 border-2 border-primary transform transition-transform duration-300 ease-in-out md:ml-32 ${dpModel ? "scale(1)" : "scale(0)" }`} alt="Developer image"/>
+              <div className="fixed flex items-center justify-center md:justify-start h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)]" onClick={dpOverlayClickHandler}>
+                <img onAnimationEnd={(e) => {
+                  const classList = e.target.classList;
+
+                  if (classList.contains("animate-dp-hide")) {
+                    window.history.back();
+                    dispatch(setDpModelOpen(false));
+                  }
+                }}
+                  src="/images/MY-min.png"
+                  className={`rounded-full h-[35vh] md:h-[50vh] w-[35vh] md:w-[50vh] p-1 border-2 border-primary transform transition-transform duration-300 ease-in-out md:ml-32 animate-dp-show ${dpModelHide && "animate-dp-hide"}`} alt="Developer image" />
               </div>
             </div>}
           </div>

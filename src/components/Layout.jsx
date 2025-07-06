@@ -10,7 +10,8 @@ import {
   selectLogInModal,
   selectLocationModal,
   selectHoverState,
-  setHideLocation
+  setHideLocation,
+  setHideLogin
 } from "../features/Login/loginSlice";
 
 import {
@@ -21,7 +22,8 @@ import {
   addYourCurrentCity,
   addSearchedCity,
   addSearchedCityAddress,
-  selectDpModel
+  selectDpModel,
+  setDpModelHide
 } from "../features/home/homeSlice";
 
 import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro } from "../features/home/restaurantsSlice";
@@ -245,6 +247,26 @@ export default function Layout() {
       window.removeEventListener("offline", offlineHandler);
     };
   }, []);
+
+  useEffect(() => {
+    const handleModelClose = (e) => {
+      if (isLoginOpen) {
+        dispatch(setHideLogin(true))
+      } else if (isLocationOpen) {
+        dispatch(setHideLocation(true));
+      } else if (menuModel) {
+
+      } else if (dpModel) {
+        console.log("listner called")
+        dispatch(setDpModelHide(true));
+      }
+    } 
+
+    window.addEventListener("popstate", handleModelClose);
+
+    return () => window.removeEventListener("popstate", handleModelClose);
+
+  }, [isLoginOpen, isLocationOpen, menuModel, dpModel])
 
   return (
     <>
