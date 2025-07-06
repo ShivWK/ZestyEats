@@ -99,27 +99,30 @@ const Banner = ({ data }) => {
               <div className="flex gap-2 p-0">
                 <p>Outlet</p>
                 <p className="text-gray-600 font-semibold">{mainData?.areaName}</p>
-                <p className="text-gray-950">•</p>
-
-                <p className={`${opened ? "text-green-500" : "text-red-600"} font-medium`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
+                <p className="text-gray-950 hidden md:inline-block">•</p>
+                <p className={`${opened ? "text-green-500" : "text-red-600"} font-medium hidden md:inline-block`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
               </div>
               <div className="flex gap-2 items-center">
                 <p>{mainData?.sla?.slaString || "25-30 MINS"}</p>
-                {!deliverable && <p className="text-red-500 font-medium">(Not delivering to your area.)</p>}
+                {!deliverable && <p className="text-red-500 font-medium">(Not delivering to your area)</p>}
               </div>
             </div>
           </div>
         </div>
-        {veg ? (
-          <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
-            <PureVegSvg classes="-ml-1.5 mb-1 -mt-2 max-md:block hidden" />
-          </Suspense>
+        <div className="flex items-center gap-2">
+          {veg ? (
+            <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
+              <PureVegSvg classes="-ml-1.5 mb-1 -mt-2 max-md:block hidden" />
+            </Suspense>
 
-        ) : (
-          <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
-            <VegAndNonVegSvg classes="hidden max-md:inline-flex pl-1 my-1 ml-3 pr-2 py-1 mb-2" />
-          </Suspense>
-        )}
+          ) : (
+            <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
+              <VegAndNonVegSvg classes="hidden max-md:inline-flex pl-1 my-1 ml-3 pr-2 py-1 mb-2" />
+            </Suspense>
+          )}
+          <p className="text-gray-950 md:hidden">•</p>
+          <p className={`${opened ? "text-green-500" : "text-red-600"} font-medium md:hidden`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
+        </div>
         <div className="bg-linear-[to_left,rgba(255,81,0,0.15),#ffffff] flex items-center py-3.5 px-2.5">
           <div className="flex items-center gap-2">
             <img
