@@ -120,8 +120,10 @@ const Banner = ({ data }) => {
               <VegAndNonVegSvg classes="hidden max-md:inline-flex pl-1 my-1 ml-3 pr-2 py-1 mb-2" />
             </Suspense>
           )}
-          <p className="text-gray-950 md:hidden">•</p>
-          <p className={`${opened ? "text-green-500" : "text-red-600"} font-medium md:hidden`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
+          <div className={`flex items-center gap-2 ${veg ? "-mt-3 -ml-3 text-sm" : "-mt-1"}`}>
+            <p className="text-gray-950 md:hidden">•</p>
+            <p className={`${opened ? "text-green-500" : "text-red-600"} font-medium md:hidden`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
+          </div>
         </div>
         <div className="bg-linear-[to_left,rgba(255,81,0,0.15),#ffffff] flex items-center py-3.5 px-2.5">
           <div className="flex items-center gap-2">
