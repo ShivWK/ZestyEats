@@ -163,7 +163,7 @@ const MainContent = () => {
         <>
           <section
             className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
-                   flex-col"
+                   flex-col mb-7"
           >
             <Suspense
               fallback={
@@ -182,7 +182,7 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
+          {/* <hr className="mt-10 mb-8 text-gray-400" /> */}
         </>
       )}
 
@@ -192,7 +192,7 @@ const MainContent = () => {
         <>
           <section
             className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
-                   flex-col"
+                   flex-col mb-7"
           >
             <Suspense
               fallback={
@@ -211,7 +211,7 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
+          {/* <hr className="mt-10 mb-8 text-gray-400" /> */}
         </>
       )}
 
@@ -221,7 +221,7 @@ const MainContent = () => {
         <>
           <section
             className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
-                   flex-col"
+                   flex-col mb-7"
           >
             <Suspense
               fallback={
@@ -239,7 +239,7 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          <hr className="mt-10 mb-8 text-gray-400" />
+          {/* <hr className="mt-10 mb-8 text-gray-400" /> */}
         </>
       )}
 
