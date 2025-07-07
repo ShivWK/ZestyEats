@@ -63,7 +63,7 @@ const MainContainer = ({ data }) => {
     }
 };
 
-const CityRestaurant = () => {
+const CityRestaurantPage = () => {
     const dispatch = useDispatch();
     const { data } = useLoaderData();
     const { cityName } = useParams();
@@ -85,4 +85,4 @@ const CityRestaurant = () => {
     </Suspense>
 }
 
-export default CityRestaurant;
+export default CityRestaurantPage;
