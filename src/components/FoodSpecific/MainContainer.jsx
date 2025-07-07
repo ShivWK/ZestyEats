@@ -5,6 +5,7 @@ import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import { useEffect } from "react";
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 import Filter from "../Home/Filters";
+import ScooterAnimation from "../../utils/ScooterAnimation";
 
 const MainContainer = ({ data }) => {
   const dispatch = useDispatch();
@@ -64,11 +65,7 @@ const MainContainer = ({ data }) => {
         </div>
       </div>
       
-      <div className="flex items-center justify-center gap-2 w-fit my-2 animate-dishes">
-        <i className="ri-verified-badge-fill text-xl md:text-2xl text-black"></i>
-        <i className="ri-bowl-fill text-2xl md:text-3xl text-black"></i>
-        <i className="ri-e-bike-2-fill text-2xl md:text-3xl text-black"></i>
-      </div>
+      <ScooterAnimation />
     </div>
     : <div className="flex items-center justify-center bg-gray-300">
       <p className="text-gray-800 font-semibold">{`Sorry we do not have any restaurants for ${title} in your location`}</p>

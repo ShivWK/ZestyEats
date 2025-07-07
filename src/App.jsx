@@ -40,6 +40,8 @@ import CuisinesResultPage from "./components/Search/CuisinesResultPage";
 import OptionsPage from "./components/MobilePages/OptionsPage";
 import ContentPage from "./components/MobilePages/ContentPage";
 import OrdersAndWishlist from "./components/MobilePages/OrdersAndWishlist";
+import CityCuisines from "./components/cityHome/CityCuisines";
+import { cuisineLoader } from "./loaders/cityPageLoaders";
 
 export default function App() {
 
@@ -80,7 +82,7 @@ export default function App() {
             </Suspense>
           }
         />
-        
+
         <Route
           path="profile"
           element={
@@ -123,11 +125,10 @@ export default function App() {
           }
           loader={specificFoodLoader}
         />
-        <Route
-          path="cityPage/:cityName"
-          element={<CityHome />}
-        />
-        <Route path="support" element={<OptionsPage /> } />
+        <Route path="cityPage/:cityName" element={<CityHome />} />
+        <Route path="cityCuisines/:cityName" element={<CityCuisines />} loader={cuisineLoader} />
+
+        <Route path="support" element={<OptionsPage />} />
         <Route path="mbAbout" element={<OptionsPage />} />
         <Route path="mbStaticData" element={<ContentPage />} />
         <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />

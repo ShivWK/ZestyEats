@@ -61,29 +61,13 @@ const MainContent = () => {
     }
   }
 
-// "https://www.swiggy.com/city/kolkata/asian-cuisine-order-online"
-
-  const whatEatingClickHandler = async (data, trigger, setLoading, updataCityData, dispatch) => {
-    const pathName = new URL(data.link).pathname;
-    const cuisine = pathName.match(/\/(.*?)\/(.*?)\/(.*?)order/i)[3];
-    dispatch(setLoading(true));
+  const whatEatingClickHandler = async (data, trigger, setLoading, updateData, dispatch, setSecondaryCity) => {
+    dispatch(setSecondaryCity(secondaryCity))
 
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     })
-
-    try {
-      const result = await trigger({city: secondaryCity, type: cuisine});
-      console.log(result)
-
-      updataCityData(result?.data, dispatch);
-    } catch(err) {
-      console.log("Error in fetching data", err);
-      dispatch(setLoading(false));
-      throw new Error("Error occurred", err);
-    }
-
   }
 
   return (
@@ -206,8 +190,9 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={whatEatingCuisineData}
                 heading={whatEatingCuisineTitle}
+                targetedCity={secondaryCity}
                 clickHandler={whatEatingClickHandler}
-                path={`/cityPage/${secondaryCity}?`}
+                path={"SetCuisine"}
               />
             </Suspense>
           </section>

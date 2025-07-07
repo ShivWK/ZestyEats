@@ -22,10 +22,7 @@ const Cards = memo(({ data, from }) => {
   const modPresent = searchParams.get("mode");
 
   const pathname = useLocation().pathname;
-  const cityPresent = decodeURIComponent(pathname)
-                      .split("/")
-                      .at(-2)
-                      .includes("cityPage");
+  const cityPresent = decodeURIComponent(pathname).split("/").at(-2).includes("cityPage") || decodeURIComponent(pathname).split("/").at(-2).includes("cityCuisines");
 
   const latAndLngSelector = cityPresent && !modPresent ? selectCityLatAndLng : selectLatAndLng;
 
