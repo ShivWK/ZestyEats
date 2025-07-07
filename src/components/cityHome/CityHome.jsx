@@ -87,7 +87,7 @@ const MainContent = () => {
   }
 
   return (
-    <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
+    <main className="w-full md:max-w-[1070px] mx-auto pb-10 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
       {/* /Banner Image */}
 
       <div
@@ -207,7 +207,7 @@ const MainContent = () => {
                 data={whatEatingCuisineData}
                 heading={whatEatingCuisineTitle}
                 clickHandler={whatEatingClickHandler}
-                path={`/cityPage/${secondaryCity}?mode=city-cuisine`}
+                path={`/cityPage/${secondaryCity}?`}
               />
             </Suspense>
           </section>
@@ -294,3 +294,25 @@ const CityHome = () => {
 };
 
 export default CityHome;
+
+
+// fetch("https://www.swiggy.com/api/seo/getListing?lat=12.960059122809971&lng=77.57337538383284&apiV2=true", {
+//   "headers": {
+//     "accept": "*/*",
+//     "accept-language": "en-US,en;q=0.9,hi;q=0.8",
+//     "content-type": "application/json",
+//     "latitude": "12.960059122809971",
+//     "longitude": "77.57337538383284",
+//     "priority": "u=1, i",
+//     "searchstring": "cheese-pizza",
+//     "sec-fetch-dest": "empty",
+//     "sec-fetch-mode": "cors",
+//     "sec-fetch-site": "same-origin"
+//   },
+//   "referrer": "https://www.swiggy.com/city/bangalore/cheese-pizza-dish-restaurants",
+//   "referrerPolicy": "strict-origin-when-cross-origin",
+//   "body": "{\"selectedPlTab\":\"RESTAURANT\",\"query\":\"cheese-pizza\",\"seoParams\":{\"apiName\":\"RestaurantSearchApi\",\"brandId\":\"\",\"seoUrl\":\"www.swiggy.com/city/bangalore/cheese-pizza-dish-restaurants\",\"pageType\":\"CITY_DISH_PAGE\",\"businessLine\":\"FOOD\"},\"supportedMarketplaces\":[{\"marketplaceId\":\"SWIGGY\",\"businessLineId\":\"FOOD\"}],\"submitAction\":\"ENTER\",\"redirection\":\"true\",\"categoryPage\":\"FOOD\",\"supportedTabs\":[\"DISH\",\"RESTAURANT\"],\"marketplaces\":[{\"marketplaceId\":\"SWIGGY\",\"businessLineId\":\"FOOD\"}],\"sldEnabled\":true}",
+//   "method": "POST",
+//   "mode": "cors",
+//   "credentials": "include"
+// });
