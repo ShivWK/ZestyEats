@@ -21,13 +21,14 @@ const PlaceCards = ({ data, clickHandler = () => {}, path, targetedCity = null }
         const pathName = new URL(data.link).pathname;
         const cuisine = pathName.match(/\/(.*?)\/(.*?)\/(.*?)-cuisine-order/i)[3];
         navPath = `/cityCuisines/${city}?cuisine=${cuisine}`;
+    } else if (path === "SetRestaurant") {
+        navPath = `/cityRestaurant/${city}?restaurant=${data?.text}`;
 
     } else if (path) {
         navPath = path;
 
     } else {
         navPath = `cityPage/${city}`
-
     }
 
     const handleNavClick = () => {

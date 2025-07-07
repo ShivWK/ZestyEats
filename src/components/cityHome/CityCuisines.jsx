@@ -1,6 +1,6 @@
 import { useParams, useLoaderData, Await } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 // import useScrollToTop from "../../utils/useScrollToTop";
 import CuisineShimmer from "./CuisineShimmer";
 
@@ -82,7 +82,9 @@ const CityCuisines = () => {
     const { data } = useLoaderData();
     const { cityName } = useParams();
 
-    dispatch(setSecondaryCity(cityName))
+    useEffect(() => {
+        dispatch(setSecondaryCity(cityName))
+    }, []);
 
     return <Suspense fallback={<>
         <main className="w-full md:max-w-[1070px] mx-auto pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">

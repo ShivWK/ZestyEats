@@ -32,7 +32,7 @@ const PageHeader = memo(() => {
     return <RestaurantsHeader />;
   } else if (pathname.includes("specificFood")) {
     return <SpecificFoodHeader />
-  } else if (pathname.includes("/cityPage") || pathname.includes("/cityCuisines")) {
+  } else if (pathname.includes("/cityPage") || pathname.includes("/cityCuisines") || pathname.includes("/cityRestaurant")) {
     return <GeneralHeader placeholder={city} />
   } else if (pathname === "/mbStaticData") {
     return <GeneralHeader placeholder={type} />

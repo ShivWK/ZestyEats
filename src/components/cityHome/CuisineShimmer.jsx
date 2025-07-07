@@ -23,10 +23,11 @@ const CuisineShimmer = () => {
     const { topOnline } = mappingArrays;
 
     return (
-        <div className={`w-full flex flex-col gap-2 md:gap-3 mt-2 md:mt-2`}>
+        <div className={`w-full flex flex-col gap-2 md:gap-3 md:mt-2`}>
 
-            <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover md:h-[50vh] h-[30vh] shimmerBg max-md:bg-right max-md:rounded-e-4xl md:rounded-t-4xl">
+            <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-4 w-full bg-cover md:h-[50vh] h-[30vh] shimmerBg max-md:bg-right max-md:rounded-e-4xl md:rounded-t-4xl">
             </div>
+            <div className="description rounded-md w-72 md:w-3xl h-7 shimmerBg"></div>
 
             <div className="flex justify-start gap-2.5 items-center p-3 flex-wrap gap-y-5">
                 {topOnline.map((index) => (

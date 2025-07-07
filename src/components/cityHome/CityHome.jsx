@@ -70,6 +70,15 @@ const MainContent = () => {
     })
   }
 
+  const restaurantChainHandler = async (data, trigger, setLoading, updateData, dispatch, setSecondaryCity) => {
+    dispatch(setSecondaryCity(secondaryCity))
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
+  }
+
   return (
     <main className="w-full md:max-w-[1070px] mx-auto pb-10 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
       {/* /Banner Image */}
@@ -200,7 +209,7 @@ const MainContent = () => {
         </>
       )}
 
-      {/*  */}
+      {/* Restaurant Chain in city */}
 
       {restaurantChainInCityData?.length !== 0 && (
         <>
@@ -220,7 +229,9 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={restaurantChainInCityData}
                 heading={restaurantChainInCityTitle}
-                pathLogic={() => { }}
+                clickHandler={restaurantChainHandler}
+                targetedCity={secondaryCity}
+                path="SetRestaurant"
               />
             </Suspense>
           </section>

@@ -22,7 +22,7 @@ const Cards = memo(({ data, from }) => {
   const modPresent = searchParams.get("mode");
 
   const pathname = useLocation().pathname;
-  const cityPresent = decodeURIComponent(pathname).split("/").at(-2).includes("cityPage") || decodeURIComponent(pathname).split("/").at(-2).includes("cityCuisines");
+  const cityPresent = decodeURIComponent(pathname).split("/").at(-2).includes("cityPage") || decodeURIComponent(pathname).split("/").at(-2).includes("cityCuisines") || decodeURIComponent(pathname).split("/").at(-2).includes("cityRestaurant");
 
   const latAndLngSelector = cityPresent && !modPresent ? selectCityLatAndLng : selectLatAndLng;
 
@@ -162,7 +162,7 @@ const Cards = memo(({ data, from }) => {
             from === "online" ? "max-md:w-[85%]" : "max-md:w-[75%]"
           }`}
         >
-          {dataToMap?.cuisines.join(", ") || ""}
+          {dataToMap?.cuisines?.join(", ") || ""}
         </p>
         <p className="font-semibold text-gray-900 mt-0.5 truncate max-md:max-w-[80%]">
           {dataToMap?.locality +
