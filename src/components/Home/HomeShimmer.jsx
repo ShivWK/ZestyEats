@@ -29,8 +29,8 @@ const HomeShimmer = () => {
     const { foodie, topChain, topOnline, bestPlaces } = mappingArrays;
 
     return (
-        <div className={`w-full flex flex-col gap-2 md:gap-3 mt-2 ${!pathname.includes("cityPage") && "md:mt-4"}md:mt-4`}>
-            {pathname.includes("cityPage") && (
+        <div className={`w-full flex flex-col gap-2 md:gap-3 mt-2 md:mt-2`}>
+            {(pathname.includes("cityPage") || pathname.includes("cityLocality")) && (
                 <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover md:h-[50vh] h-[30vh] shimmerBg max-md:bg-right max-md:rounded-e-4xl md:rounded-t-4xl">
                 </div>
             )}
@@ -78,11 +78,13 @@ const HomeShimmer = () => {
 
             <hr className="text-gray-300 my-2" />
 
-            <div className="flex justify-around gap-x-4 gap-y-4 md:gap-y-5 flex-wrap max-md:px-3 md:mb-2">
+            {!pathname.includes("cityLocality") && (
+                <div className="flex justify-around gap-x-4 gap-y-4 md:gap-y-5 flex-wrap mt-1 max-md:px-3 md:mb-2">
                 {bestPlaces.map((i) => (
                     <div key={i} className="w-[100px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg shrink-0"></div>
                 ))}
             </div>
+            )}
         </div>
     );
 };

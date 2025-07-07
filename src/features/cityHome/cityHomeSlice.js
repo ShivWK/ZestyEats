@@ -24,15 +24,27 @@ const cityHomeSlice = createSlice({
         popularDishInCityTitle: "",
         cityLat: null,
         cityLng: null,
+        localityLat: null,
+        localityLng: null,
     },
 
     reducers: {
         setCityLatAndLng: (state, action) => {
-            const {lat, lng} = action.payload.at(-1)?.card?.card;
+            const { lat, lng } = action.payload.at(-1)?.card?.card;
 
             state.cityLat = lat;
             state.cityLng = lng;
         },
+
+        setLocalityLatAndLng: (state, action) => {
+            const { lat, lng } = action.payload;
+
+            state.localityLat = lat;
+            state.localityLng = lng;
+
+            localStorage.setItem("localityLatLng", JSON.stringify({ lat: state.localityLat, lng: state.localityLng }))
+        },
+
 
         setSecondaryCity: (state, action) => {
             state.secondaryCity = action.payload;
@@ -152,6 +164,11 @@ export const selectCityLatAndLng = createSelector([
     (state) => state.cityHomeSlice.cityLng,
 ], (lat, lng) => ({ lat, lng }));
 
+export const selectLocalityLatAndLng = createSelector([
+    (state) => state.cityHomeSlice.localityLat,
+    (state) => state.cityHomeSlice.localityLng,
+], (lat, lng) => ({ lat, lng }));
+
 export const selectCityLoading = (state) =>
     state.cityHomeSlice.isCityPageLoading;
 
@@ -224,4 +241,5 @@ export const {
     setRestaurantChainInCityData,
     setPageOffset,
     setNextFetch,
+    setLocalityLatAndLng
 } = cityHomeSlice.actions;

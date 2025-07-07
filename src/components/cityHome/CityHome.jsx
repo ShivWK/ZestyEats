@@ -40,25 +40,27 @@ const MainContent = () => {
   const popularDishesTitle = data.popularDishInCityTitle;
   const popularDishesData = data.popularDishInCityData;
 
-  const localityClickHandler = async (data, trigger, setLoading, updataCityData, dispatch) => {
+  const localityClickHandler = async (data, trigger, setLoading, updataCityData, dispatch, setSecondaryCity) => {
+    dispatch(setSecondaryCity(secondaryCity))
+
     window.scrollTo({
       top: 0,
       behavior: "smooth"
     })
 
-    dispatch(setLoading(true));
-    const type = data.text.toLowerCase() + "-";
+    // dispatch(setLoading(true));
+    // const type = data.text.toLowerCase() + "-";
 
     // window.history.pushState({ locality: data.text }, "", `?locality=${data.text}`);
 
-    try {
-      const result = await trigger({ city: secondaryCity, type }).unwrap();
-      updataCityData(result, dispatch);
-    } catch (err) {
-      console.log("Error in fetching data", err);
-      dispatch(setLoading(false));
-      throw new Error("Error occurred", err);
-    }
+    // try {
+    //   const result = await trigger({ city: secondaryCity, type }).unwrap();
+    //   updataCityData(result, dispatch);
+    // } catch (err) {
+    //   console.log("Error in fetching data", err);
+    //   dispatch(setLoading(false));
+    //   throw new Error("Error occurred", err);
+    // }
   }
 
   const whatEatingClickHandler = async (data, trigger, setLoading, updateData, dispatch, setSecondaryCity) => {
@@ -170,7 +172,8 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={localitiesData}
                 heading={localitiesTitle}
-                path={`/cityPage/${secondaryCity}`}
+                targetedCity={secondaryCity}
+                path="SetLocality"
                 clickHandler={localityClickHandler}
               />
             </Suspense>

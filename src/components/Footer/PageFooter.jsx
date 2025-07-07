@@ -10,7 +10,13 @@ const PageFooter = memo(() => {
   const [isOpen, setIsOpen] = useState(false);
   const { pathname } = useLocation();
 
-  if (pathname === "/" || pathname.includes("/cityPage") || pathname.includes("/cityCuisines") || pathname.includes("/cityRestaurant")) {
+  if (
+    pathname === "/" ||
+    pathname.includes("/cityPage") ||
+    pathname.includes("/cityCuisines") ||
+    pathname.includes("/cityRestaurant") ||
+    pathname.includes("cityLocality")
+  ) {
     return (
       !isLoading && (
         <footer className="pt-1.5 md:pt-2.5 pb-12 md:pb-16 w-full flex flex-col justify-start items-center bg-gray-200">

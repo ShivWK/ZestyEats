@@ -41,9 +41,10 @@ import OptionsPage from "./components/MobilePages/OptionsPage";
 import ContentPage from "./components/MobilePages/ContentPage";
 import OrdersAndWishlist from "./components/MobilePages/OrdersAndWishlist";
 import CityCuisines from "./components/cityHome/CityCuisines";
-import { cuisineLoader, restaurantLoader } from "./loaders/cityPageLoaders";
-import CityRestaurant from "./components/cityHome/cityRestaurant";
+import { cuisineLoader, localityLoader, restaurantLoader } from "./loaders/cityPageLoaders";
+import CityRestaurant from "./components/cityHome/CityRestaurant";
 import PageNotFound from "./components/PageNotFound";
+import CityLocality from "./components/cityHome/CityLocality";
 
 export default function App() {
 
@@ -130,6 +131,7 @@ export default function App() {
         <Route path="cityPage/:cityName" element={<CityHome />} />
         <Route path="cityCuisines/:cityName" element={<CityCuisines />} loader={cuisineLoader} />
         <Route path="cityRestaurant/:cityName" element={<CityRestaurant />} loader={restaurantLoader} />
+        <Route path="cityLocality/:cityName" element={<CityLocality />} loader={localityLoader} />
 
         <Route path="support" element={<OptionsPage />} />
         <Route path="mbAbout" element={<OptionsPage />} />

@@ -35,6 +35,7 @@ import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
 import { updateCurrentCity } from "../utils/addCurrentCity";
 import updateCityHomeData from "../utils/updateCityHomeData";
+import { setLocalityLatAndLng } from "../features/cityHome/cityHomeSlice";
 
 
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
@@ -79,6 +80,7 @@ export default function Layout() {
     const restaurantAllItems = JSON.parse(localStorage.getItem("RestaurantAllItems"));
     const wishlist = JSON.parse(localStorage.getItem("wishlist"));
     const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
+    const localityLatLng = JSON.parse(localStorage.getItem("localityLatLng"));
 
     let userPathHistory = '';
 
@@ -106,6 +108,7 @@ export default function Layout() {
       if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
       if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
       if (favRestros !== undefined && favRestros !== null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
+      if (localityLatLng !== undefined && localityLatLng !== null) dispatch(setLocalityLatAndLng(localityLatLng));
 
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -171,7 +174,7 @@ export default function Layout() {
       else if (item.includes("/cityPage")) {
         const city = decodeURIComponent(item).split("/").at(-1);
         return `City Page - ${city}`;
-      } 
+      }
       return item;
     });
 
@@ -260,7 +263,7 @@ export default function Layout() {
         console.log("listner called")
         dispatch(setDpModelHide(true));
       }
-    } 
+    }
 
     window.addEventListener("popstate", handleModelClose);
 

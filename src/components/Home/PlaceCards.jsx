@@ -24,6 +24,8 @@ const PlaceCards = ({ data, clickHandler = () => {}, path, targetedCity = null }
     } else if (path === "SetRestaurant") {
         navPath = `/cityRestaurant/${city}?restaurant=${data?.text}`;
 
+    } else if (path === "SetLocality") {
+        navPath = `/cityLocality/${city}?locality=${data?.text}`
     } else if (path) {
         navPath = path;
 
