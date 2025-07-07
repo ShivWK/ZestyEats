@@ -33,7 +33,6 @@ import RestaurantResultPage from "./components/Search/RestaurantResultPage";
 import DishResultPage from "./components/Search/DishResultPage";
 import CityHome from "./components/cityHome/CityHome";
 
-
 import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
 import { searchHomeLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
 import CuisinesResultPage from "./components/Search/CuisinesResultPage";
@@ -138,7 +137,6 @@ export default function App() {
         <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
         <Route path='*' element={<PageNotFound />} />
       </Route>
-      
     )
   );
 
