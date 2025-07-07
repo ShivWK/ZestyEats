@@ -43,6 +43,7 @@ import OrdersAndWishlist from "./components/MobilePages/OrdersAndWishlist";
 import CityCuisines from "./components/cityHome/CityCuisines";
 import { cuisineLoader, restaurantLoader } from "./loaders/cityPageLoaders";
 import CityRestaurant from "./components/cityHome/cityRestaurant";
+import PageNotFound from "./components/PageNotFound";
 
 export default function App() {
 
@@ -134,7 +135,9 @@ export default function App() {
         <Route path="mbAbout" element={<OptionsPage />} />
         <Route path="mbStaticData" element={<ContentPage />} />
         <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
+        <Route path='*' element={<PageNotFound />} />
       </Route>
+      
     )
   );
 
