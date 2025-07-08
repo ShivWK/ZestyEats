@@ -21,7 +21,7 @@ const RestaurantCard = ({ data }) => {
 
     const areaName = data.restro.metadata.areaName;
     const locality = data.restro.metadata.locality;
-    const areaOrLocality = locality + ", " + areaName;
+    let areaOrLocality = locality + ", " + areaName;
 
     if (areaName === locality) areaOrLocality = locality;
 

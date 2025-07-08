@@ -78,12 +78,6 @@ const ItemCard = ({ item, restro_id }) => {
           checked={checked}
           onChange={checkHandler}
         />
-        {/* <button
-          onClick={deleteHandler}
-          className="text-xl text-gray-600 mr-1 mt-0.5"
-        >
-          <i className="fa-solid fa-trash-can"></i>
-        </button> */}
         <div className="cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5 mr-0.5 mt-0.5" onClick={deleteHandler} style={{ backgroundColor: "red" }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

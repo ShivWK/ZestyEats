@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, memo } from "react";
 import createDebounce from "../utils/debounceCreater";
 
 const HorizontalCarousel = memo(({
-  heading,
+  heading = null,
   margin_bottom = 0,
   scrollMargin = 0,
   showScrollBar = true,
@@ -76,8 +76,6 @@ const HorizontalCarousel = memo(({
     return () => clearInterval(scrollInterval);
   }, [dataToMap])
 
-  
-
   function handleScroll() {
     const container = containerRef.current;
     if (!container) return;
@@ -130,14 +128,15 @@ const HorizontalCarousel = memo(({
     });
   }
 
-
   return (
     <>
       <div className="flex justify-between flex-wrap items-center" style={{ marginBottom: margin_bottom }}>
-        <h2>
-          {heading}
-        </h2>
-        <div className="hidden md:flex justify-between gap-1">
+        {heading && (
+          <h2>
+            {heading}
+          </h2>
+        )}
+        <div className={`hidden md:flex justify-between gap-1 ${!heading && "ml-auto"}`}>
           <Button
             ref={leftBtnRef}
             clickHandler={debouncedHandleLeftClick.current}
@@ -158,7 +157,7 @@ const HorizontalCarousel = memo(({
           onTouchEnd={() => clicked.current = true}
         >
           {dataToMap.map((item, index) => (
-            <Card key={item?.id + index} data={item} restaurantData={restaurantData}/>
+            <Card key={item?.id + index} data={item} restaurantData={restaurantData} />
           ))}
         </div>
         {(showScrollBar && !hideScrollBar) && (
