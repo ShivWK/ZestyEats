@@ -27,14 +27,23 @@ export const restaurantLoader = async ({ request, params }) => {
     return {data: result};
 }
 
-export const localityLoader = async ({ request, params }) => {
-    const urlObj = new URL(request.url).searchParams;
-
+export const localityLoader = async ({ params }) => {
     const city = params.cityName.toLowerCase().replace(/\s/g, "-");
-    const type = urlObj.get('locality').toLowerCase().replace(/\s/g, "-") + "-";
+    const type = params.locality.toLowerCase().replace(/\s/g, "-") + "-";
 
     const result = store.dispatch(
         cityHomeApiSlice.endpoints.getDataForCityLocalityCuisine.initiate({city, type})
+    )
+
+    return {data: result};
+}
+
+export const dishLoader = async ({ params }) => {
+    const city = params.cityName.toLowerCase().replace(/\s/g, "-");
+    const dish = params.dish.toLowerCase().replace(/\s/g, "-");
+
+    const result = store.dispatch(
+        cityHomeApiSlice.endpoints.getDishInCityData.initiate({city, dish})
     )
 
     return {data: result};

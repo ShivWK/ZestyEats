@@ -38,9 +38,9 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             {theme === "Light" ? (
               <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
             ) : theme === "Dark" ? (
-              <i class="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
+              <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
             ) : (
-              <i class="ri-computer-fill group-hover:text-[#ff5200] active:scale-95"></i>
+              <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95"></i>
             )}
             {/* <i class="ri-smartphone-line text-2xl"></i> */}
             <div

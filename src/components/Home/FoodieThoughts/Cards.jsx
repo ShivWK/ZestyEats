@@ -1,12 +1,22 @@
 import { memo } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { selectLatAndLng } from "../../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentFoodCategory } from "../../../features/header/headerSlice";
+import { selectCityLatAndLng, selectLocalityLatAndLng } from "../../../features/cityHome/cityHomeSlice";
 
 const Cards = memo(({ data }) => {
-  const { lat, lng } = useSelector(selectLatAndLng);
-  const dispatch = useDispatch();
+  const pathname = useLocation().pathname;
+  let latLngSelector = selectLatAndLng;
+
+  if (pathname.includes("cityPage")) {
+    latLngSelector = selectCityLatAndLng
+  } else if (pathname.includes("cityLocality")) {
+    latLngSelector = selectLocalityLatAndLng
+  }
+
+  const { lat, lng } = useSelector(latLngSelector);
+  const dispatch = useDispatch();  
   const category = data?.action?.text;
   const link = data?.action?.link;
   const urlObj = new URL(link).searchParams;
@@ -19,13 +29,13 @@ const Cards = memo(({ data }) => {
   };
 
   return (
-    <NavLink to={path} onClick={handleClick} className="shrink-0 w-28 md:w-36">
+    <Link to={path} onClick={handleClick} className="shrink-0 w-28 md:w-36">
       <img
         className="w-full h-32 my-3 md:my-2 md:h-44 rounded object-cover"
         src={`https://media-assets.swiggy.com/swiggy/image/upload/${data?.imageId}`}
         alt={data?.accessibility?.altText}
       />
-    </NavLink>
+    </Link>
   );
 });
 

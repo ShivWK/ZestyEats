@@ -165,7 +165,7 @@ const CityLocality = () => {
                 const cardData = data?.data?.props?.pageProps?.widgetResponse?.success?.cards;
 
                 if (!cardData) {
-                    return <main className="w-full md:max-w-[1070px] mx-auto pb-4 pt-28 md:pt-40 overflow-x-hidden max-md:px-3 flex flex-col gap-2 items-center h-96">
+                    return <main className="w-full md:max-w-[1070px] mx-auto pb-4 pt-28 md:pt-40 overflow-x-hidden max-md:px-3 flex flex-col gap-2 items-center min-h-96">
                         <p className="text-5xl">😔</p>
                         <p className="text-center mt-2 text-2xl font-bold text-gray-900">No data available for this locality right now.</p> 
                         <p className="text-center text-xl font-semibold text-gray-600">We’re working to bring more restaurants and offers to this area. Stay tuned!</p>

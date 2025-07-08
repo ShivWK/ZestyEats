@@ -1,5 +1,5 @@
 import { Suspense, lazy } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
 const LoginModal = lazy(() => import("./Login/LoginModal"));
@@ -64,12 +64,8 @@ export default function Layout() {
   const isLocationModelOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
-  const pathname = useLocation().pathname;
+  const [searchParams] = useSearchParams();
   useTrackNavigation();
-
-  // useEffect(() => {
-  //   dispatch(setShowBottomMenu(true));
-  // }, [pathname])
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
@@ -173,7 +169,13 @@ export default function Layout() {
       else if (item === "/search/searchResult/restaurantPage") return "Restaurants";
       else if (item.includes("/cityPage")) {
         const city = decodeURIComponent(item).split("/").at(-1);
-        return `City Page - ${city}`;
+        return `${city} City`;
+      } else if (item.includes("/cityLocality")) {
+        const locality = decodeURIComponent(item).split("/").at(-1);
+        return `${locality} Locality`
+      } else if (item.includes("/cityDishes")) {
+        const dish = decodeURIComponent(item).split("/").at(-1);
+        return dish;
       }
       return item;
     });
@@ -251,25 +253,25 @@ export default function Layout() {
     };
   }, []);
 
-  useEffect(() => {
-    const handleModelClose = (e) => {
-      if (isLoginOpen) {
-        dispatch(setHideLogin(true))
-      } else if (isLocationOpen) {
-        dispatch(setHideLocation(true));
-      } else if (menuModel) {
+  // useEffect(() => {
+  //   const handleModelClose = (e) => {
+  //     if (isLoginOpen) {
+  //       dispatch(setHideLogin(true))
+  //     } else if (isLocationOpen) {
+  //       dispatch(setHideLocation(true));
+  //     } else if (menuModel) {
 
-      } else if (dpModel) {
-        console.log("listner called")
-        dispatch(setDpModelHide(true));
-      }
-    }
+  //     } else if (dpModel) {
+  //       console.log("listner called")
+  //       dispatch(setDpModelHide(true));
+  //     }
+  //   }
 
-    window.addEventListener("popstate", handleModelClose);
+  //   window.addEventListener("popstate", handleModelClose);
 
-    return () => window.removeEventListener("popstate", handleModelClose);
+  //   return () => window.removeEventListener("popstate", handleModelClose);
 
-  }, [isLoginOpen, isLocationOpen, menuModel, dpModel])
+  // }, [isLoginOpen, isLocationOpen, menuModel, dpModel])
 
   return (
     <>
@@ -290,4 +292,3 @@ export default function Layout() {
   );
 }
 
-// pathname !== "/" &&

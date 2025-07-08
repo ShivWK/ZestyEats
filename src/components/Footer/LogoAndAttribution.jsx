@@ -96,7 +96,7 @@ const LogoAndAttribution = () => {
               </a>
             </div>
             {dpModel && <div>
-              <div className="fixed flex items-center justify-center md:justify-start h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)]" onClick={dpOverlayClickHandler}>
+              <div className="fixed flex items-center justify-center md:justify-start h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)] z-40" onClick={dpOverlayClickHandler}>
                 <img onAnimationEnd={(e) => {
                   const classList = e.target.classList;
 

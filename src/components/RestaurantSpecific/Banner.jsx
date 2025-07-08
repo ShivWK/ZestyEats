@@ -1,17 +1,19 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useSearchParams } from "react-router-dom";
 import { selectCity, selectLatAndLng } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { Suspense, lazy } from "react";
 const PureVegSvg = lazy(() => import("../../utils/PureVegSvg"));
 const VegAndNonVegSvg = lazy(() => import("../../utils/VegAndNonVegSvg"));
 import updateCityHomeData from "../../utils/updateCityHomeData";
-import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+import { selectSecondaryCity, setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
 import calDistance from "./../../utils/haversineFormula";
 
 const Banner = ({ data }) => {
   const mainData = data?.card?.card?.info;
   const [lat, lng] = mainData.latLong.split(",");
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("mode");
 
   const { lat: latUser, lng: lngUser } = useSelector(selectLatAndLng);
 
@@ -23,7 +25,9 @@ const Banner = ({ data }) => {
   const opened = mainData.availability.opened;
 
   const veg = mainData?.veg;
-  const searchedCity = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
+  const citySelector = mode === "cityPage" ?  selectSecondaryCity : selectCity;
+
+  const searchedCity = useSelector(citySelector).toLowerCase().replace(/\s/g, "-");
 
   const dispatch = useDispatch();
   const [trigger] = useLazyGetDataForCityLocalityCuisineQuery()

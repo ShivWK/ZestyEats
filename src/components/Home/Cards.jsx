@@ -9,7 +9,7 @@ import {
   setFavoriteRestro,
 } from "../../features/home/restaurantsSlice";
 
-import { selectCityLatAndLng } from "../../features/cityHome/cityHomeSlice";
+import { selectCityLatAndLng, selectLocalityLatAndLng } from "../../features/cityHome/cityHomeSlice";
 
 import { memo, use, useEffect, useState } from "react";
 import PureVeg from "../../utils/PureVegSvg";
@@ -18,13 +18,17 @@ import textToZestyEats from "../../utils/textToZestyEats";
 import calDistance from "../../utils/haversineFormula";
 
 const Cards = memo(({ data, from }) => {
-  const [searchParams] = useSearchParams();
-  const modPresent = searchParams.get("mode");
-
   const pathname = useLocation().pathname;
-  const cityPresent = decodeURIComponent(pathname).split("/").at(-2).includes("cityPage") || decodeURIComponent(pathname).split("/").at(-2).includes("cityCuisines") || decodeURIComponent(pathname).split("/").at(-2).includes("cityRestaurant");
+  let latAndLngSelector = selectLatAndLng;
+  let mode = "homePage"
 
-  const latAndLngSelector = cityPresent && !modPresent ? selectCityLatAndLng : selectLatAndLng;
+  if (pathname.includes("/cityPage") || pathname.includes("/cityRestaurant") || pathname.includes("/cityCuisines")) {
+    latAndLngSelector = selectCityLatAndLng;
+    mode = "cityPage"
+  } else if (pathname.includes("cityLocality")) {
+    latAndLngSelector = selectLocalityLatAndLng;
+    mode = "cityPage"
+  } 
 
   let lat1 = data.lat;
   let lng1 = data.lng;
@@ -76,9 +80,15 @@ const Cards = memo(({ data, from }) => {
     dispatch(setFavoriteRestro({ lat, lng, data: dataToMap }));
   };
 
+  let address = dataToMap?.locality + ", " + dataToMap?.areaName;
+
+  if (dataToMap?.locality === dataToMap?.areaName) {
+    address = dataToMap?.locality;
+  }
+
   return (
     <Link
-      to={`/restaurantSpecific/${lat}/${lng}/${dataToMap?.id}/${dataToMap?.name}`}
+      to={`/restaurantSpecific/${lat}/${lng}/${dataToMap?.id}/${dataToMap?.name}?mode=${mode}`}
       onClick={handleClick}
       className={`relative flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
         from === "online"
@@ -165,9 +175,7 @@ const Cards = memo(({ data, from }) => {
           {dataToMap?.cuisines?.join(", ") || ""}
         </p>
         <p className="font-semibold text-gray-900 mt-0.5 truncate max-md:max-w-[80%]">
-          {dataToMap?.locality +
-            ", " +
-            (dataToMap?.city || dataToMap?.areaName)}
+          {address}
         </p>
       </div>
     </Link>

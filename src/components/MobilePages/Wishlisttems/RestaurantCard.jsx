@@ -19,6 +19,15 @@ const RestaurantCard = ({ data }) => {
 
     const [itemsCount, setItemsCount] = useState(restroItemsArray.length);
 
+    const areaName = data.restro.metadata.areaName;
+    const locality = data.restro.metadata.locality;
+    const areaOrLocality = locality + ", " + areaName;
+
+    if (areaName === locality) areaOrLocality = locality;
+
+    const citySmall = data.restro.metadata?.slugs?.city;
+    const city = citySmall[0].toUpperCase() + citySmall.slice(1);
+
     useEffect(() => {
         setItemsCount(itemsToAddInCart[restro_id]?.length || 0);
         localStorage.setItem("ItemsToBeAddedInCart", JSON.stringify(itemsToAddInCart));
@@ -85,7 +94,7 @@ const RestaurantCard = ({ data }) => {
                 </div>
             </Link>
 
-            <p className="text-xs font-bold text-gray-700 truncate -mt-1">{data.restro.metadata.areaName + ", " + data.restro.metadata.locality  + ", " + data.restro.metadata.city}</p>
+            <p className="text-xs font-bold text-gray-700 truncate -mt-1">{areaOrLocality + ", " + city}</p>
 
             <div className="flex items-center justify-between mt-1.5">
                 <div className="basis-[40%]">
@@ -93,7 +102,7 @@ const RestaurantCard = ({ data }) => {
                         <i className="ri-star-fill text-green-700 mb-0.5" />
                         <p>{metadata?.avgRating}</p>
                         <p>•</p>
-                        <p>{metadata?.sla?.slaString}</p>
+                        <p>{metadata?.sla?.slaString || "25-30 MINS"}</p>
                     </div>
                 </div>
                 <div className="basis-[60%] flex">

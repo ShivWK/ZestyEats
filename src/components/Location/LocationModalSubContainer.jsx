@@ -30,7 +30,6 @@ const ModalSubContainer = memo(() => {
           if (data) setSearchedLocation(data?.data);
         }
       } catch (err) {
-        // add toast
         console.log(err);
       }
     }, 300)
@@ -40,7 +39,7 @@ const ModalSubContainer = memo(() => {
     dispatch(setHideLocation(true));
     setSearchValue("");
 
-    window.history.back();
+    // window.history.back();
   };
 
   function debounceCreater(func, delay) {

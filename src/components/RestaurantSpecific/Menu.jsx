@@ -24,7 +24,6 @@ const Menu = () => {
         <div className="pretty-scrollbar text-gray-300 max-h-80 overflow-auto px-3">
           {menuItems.length > 0 ? (
             menuItems.map((item) => {
-              // console.log(item)
               if (!vegOption && item.veg) return;
               if (!nonVegOption && item.nonVeg) return;
 

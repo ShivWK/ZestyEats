@@ -11,6 +11,7 @@ const HeaderWrapper = ({ children }) => {
   const isLocationOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel);
   const dpModel = useSelector(selectDpModel);
+  
   const isLargeScreen = window.innerWidth >= 768;
 
   return (

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Suspense, useEffect, lazy } from "react";
-import { setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+import { selectCityLatAndLng, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import useScrollToTop from "../../utils/useScrollToTop";
 
 import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
@@ -24,6 +24,9 @@ const MainContent = () => {
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const data = useSelector(selectPageData);
   const secondaryCity = useSelector(selectSecondaryCity);
+  const cityLatAndLng = useSelector(selectCityLatAndLng);
+
+  // console.log(cityLatAndLng)
 
   const banner_text = data.cityBannerText;
   const foodieThoughtsData = data.cityFoodieData;
@@ -40,30 +43,7 @@ const MainContent = () => {
   const popularDishesTitle = data.popularDishInCityTitle;
   const popularDishesData = data.popularDishInCityData;
 
-  const localityClickHandler = async (data, trigger, setLoading, updataCityData, dispatch, setSecondaryCity) => {
-    dispatch(setSecondaryCity(secondaryCity))
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    })
-
-    // dispatch(setLoading(true));
-    // const type = data.text.toLowerCase() + "-";
-
-    // window.history.pushState({ locality: data.text }, "", `?locality=${data.text}`);
-
-    // try {
-    //   const result = await trigger({ city: secondaryCity, type }).unwrap();
-    //   updataCityData(result, dispatch);
-    // } catch (err) {
-    //   console.log("Error in fetching data", err);
-    //   dispatch(setLoading(false));
-    //   throw new Error("Error occurred", err);
-    // }
-  }
-
-  const whatEatingClickHandler = async (data, trigger, setLoading, updateData, dispatch, setSecondaryCity) => {
+  const placeCardClickHandler = async (data, trigger, setLoading, updataCityData, dispatch, setSecondaryCity) => {
     dispatch(setSecondaryCity(secondaryCity))
 
     window.scrollTo({
@@ -72,14 +52,6 @@ const MainContent = () => {
     })
   }
 
-  const restaurantChainHandler = async (data, trigger, setLoading, updateData, dispatch, setSecondaryCity) => {
-    dispatch(setSecondaryCity(secondaryCity))
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth"
-    })
-  }
 
   return (
     <main className="w-full md:max-w-[1070px] mx-auto pb-10 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
@@ -174,7 +146,7 @@ const MainContent = () => {
                 heading={localitiesTitle}
                 targetedCity={secondaryCity}
                 path="SetLocality"
-                clickHandler={localityClickHandler}
+                clickHandler={placeCardClickHandler}
               />
             </Suspense>
           </section>
@@ -203,7 +175,7 @@ const MainContent = () => {
                 data={whatEatingCuisineData}
                 heading={whatEatingCuisineTitle}
                 targetedCity={secondaryCity}
-                clickHandler={whatEatingClickHandler}
+                clickHandler={placeCardClickHandler}
                 path={"SetCuisine"}
               />
             </Suspense>
@@ -232,7 +204,7 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={restaurantChainInCityData}
                 heading={restaurantChainInCityTitle}
-                clickHandler={restaurantChainHandler}
+                clickHandler={placeCardClickHandler}
                 targetedCity={secondaryCity}
                 path="SetRestaurant"
               />
@@ -262,7 +234,9 @@ const MainContent = () => {
               <PlaceCardsContainer
                 data={popularDishesData}
                 heading={popularDishesTitle}
-                pathLogic={() => { }}
+                targetedCity={secondaryCity}
+                path="SetDish"
+                clickHandler={placeCardClickHandler}
               />
             </Suspense>
           </section>

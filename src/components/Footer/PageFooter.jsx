@@ -15,7 +15,8 @@ const PageFooter = memo(() => {
     pathname.includes("/cityPage") ||
     pathname.includes("/cityCuisines") ||
     pathname.includes("/cityRestaurant") ||
-    pathname.includes("cityLocality")
+    pathname.includes("cityLocality") ||
+    pathname.includes("cityDishes")
   ) {
     return (
       !isLoading && (
