@@ -57,7 +57,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
                         <polygon points="50,20 78.86,70 21.14,70" fill="red" />
                     </svg>
                 )}
-                <div className="w-[95%] border-2">
+                <div className="w-[95%]">
                     <p className="leading-5 line-clamp-2 tracking-tight font-bold truncate">
                         {item?.name}
                     </p>
@@ -84,7 +84,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
                     <p className="truncate">{item?.description}</p>
                 </div>)}
             </div>
-            <div className="relative h-32 w-32 md:h-36 md:w-36 rounded-xl overflow-hidden shrink-0 m-2 basis-[40%] border-2">
+            <div className="relative h-32 w-32 md:h-36 md:w-36 rounded-xl overflow-hidden shrink-0 m-2 basis-[40%]">
                 <img
                     src={isError ? "/images/fallback.png" : imageUrl}
                     className="absolute top-0 left-0 h-full w-full object-center object-cover shrink-0"
