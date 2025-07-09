@@ -17,7 +17,7 @@ const RestaurantCart = ({ data, latLng }) => {
 
     console.log(dishesData);
 
-    return <section className=" rounded-xl m-0.5 my-2 md:my-4 bg-white">
+    return <section className=" rounded-xl m-0.5 my-4 md:my-4 bg-white">
         <div className="px-2 py-2 w-full flex flex-col gap-0.5">
             <Link
                 to={`/restaurantSpecific/${lat}/${lng}/${restaurantData.id}/${restaurantData.name}`}

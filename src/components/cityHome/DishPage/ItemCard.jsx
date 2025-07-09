@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 const ItemCard = ({ data: item, restaurantData }) => {
-    // console.log(item, restaurantData)
-    // return <p>hi</p>
+    console.log(item)
+
     const [isError, setIsError] = useState(false);
-    const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${item?.imageId}`
 
+    const ratings = item.ratings.aggregatedRating;
     const defaultPrice = item?.price / 100 || item?.defaultPrice / 100 || 0;
     const finalPrice = item?.finalPrice / 100;
     const price = finalPrice ? (
@@ -18,8 +18,9 @@ const ItemCard = ({ data: item, restaurantData }) => {
         <p className="text-sm tracking-tight font-bold">₹{defaultPrice}</p>
     );
 
-    return <div className="border-gray-300 shrink-0 border-2 max-w-80 md:max-w-96 p-0.5 px-1 rounded-2xl flex justify-between bg-white">
-            <div className="flex flex-col gap-2 pl-0.5 justify-center basis-[55%] shrink-0">
+    return (
+        <div className="border-gray-300 shrink-0 border-2 max-w-80 md:max-w-96 p-0.5 px-1 rounded-2xl flex justify-between bg-white">
+            <div className="flex flex-col gap-1 pl-1 md:pl-0.5 py-0.5 justify-center basis-3/5 shrink-0">
                 {item.isVeg === 1 ? (
                     <svg
                         width="15"
@@ -57,45 +58,39 @@ const ItemCard = ({ data: item, restaurantData }) => {
                         <polygon points="50,20 78.86,70 21.14,70" fill="red" />
                     </svg>
                 )}
-                <div className="w-[95%]">
-                    <p className="leading-5 line-clamp-2 tracking-tight font-bold truncate">
+                <div className="w-full">
+                    <p className="leading-5 tracking-tight font-bold line-clamp-2 hyphens-auto">
                         {item?.name}
                     </p>
                 </div>
-                <div>{price}</div>
-                {item?.description && (!isDescriptionOpen 
-                ? (
-                    <div
-                    onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
-                    id="moreCities"
-                    className="flex gap-2.5 cursor-pointer border-[1px] border-gray-500 px-1.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-0.5"
-                >
-                    <p className="font-medium text-sm text-gray-900 select-none">
-                        More
-                    </p>
-                    <i
-                        className="fa-solid fa-caret-down text-gray-900 transition-all duration-300 linear"
-                        style={{
-                            transform: isDescriptionOpen ? "rotate(-180deg)" : "",
-                        }}
-                    ></i>
-                </div>) 
-                : <div className="pb-0.5 text-gray-600 font-medium line-clamp-2 w-[55%] border-2">
-                    <p className="truncate">{item?.description}</p>
-                </div>)}
+                <div className="flex gap-1 items-center">
+                    <p>{price}</p>
+                    {Object.keys(ratings).length !== 0 && (
+                        <>
+                            <p>•</p>
+                            <i className="ri-star-fill text-yellow-400 mb-0.5" />
+                            <p>{ratings.rating}{`(${ratings.ratingCountV2})`}</p>
+                        </>
+                    )}
+                </div>
+                {item?.description && <div className="pb-0.5 text-gray-800 w-[98%]">
+                    <p className="truncate line-clamp-2 text-sm whitespace-normal hyphens-auto">{item?.description}</p>
+                </div>
+                }
             </div>
-            <div className="relative h-32 w-32 md:h-36 md:w-36 rounded-xl overflow-hidden shrink-0 m-2 basis-[40%]">
+            <div className="relative flex flex-col basis-[35%] h-32 w-28 rounded-xl overflow-hidden shrink-0 m-2">
                 <img
                     src={isError ? "/images/fallback.png" : imageUrl}
-                    className="absolute top-0 left-0 h-full w-full object-center object-cover shrink-0"
+                    className="h-full w-full object-cover shrink-0"
                     alt={item?.name}
                     onError={() => setIsError(true)}
                 />
-                <button className="absolute py-0.5 px-5 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out ">
+                <button className="absolute bottom-2 left-1/2 transform -translate-x-1/2 py-0.5 px-5 rounded bg-green-400 text-white font-semibold tracking-tight cursor-pointer active:scale-95 transition-all duration-150 ease-in-out text-sm">
                     Add
                 </button>
             </div>
-    </div>
+        </div>
+    );
 }
 
 export default ItemCard;
