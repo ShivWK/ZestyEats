@@ -24,7 +24,7 @@ const DishShimmer = () => {
                     </div>)}
                 </div>
             </div>)}
-            <div className="shimmerBg w-[25%] md:w-[10%] h-7 self-center rounded"></div>
+            <div className="shimmerBg w-[25%] md:w-[10%] h-7 self-center rounded mt-3"></div>
         </section>
     </main>
 }

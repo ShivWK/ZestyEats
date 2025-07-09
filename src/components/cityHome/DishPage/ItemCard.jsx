@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 const ItemCard = ({ data: item, restaurantData }) => {
-    console.log(item)
+    // console.log(item)
 
     const [isError, setIsError] = useState(false);
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${item?.imageId}`
@@ -20,7 +20,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
 
     return (
         <div className="border-gray-300 shrink-0 border-2 w-80 md:max-w-96 p-0.5 px-1 rounded-2xl flex  bg-white">
-            <div className="flex flex-col gap-1 pl-1 md:pl-0.5 py-0.5 justify-center basis-3/5 shrink-0">
+            <div className="flex flex-col gap-1 pl-1 md:pl-0.5 py-0.5 pt-1.5 justify-center basis-3/5 shrink-0">
                 {item.isVeg === 1 ? (
                     <svg
                         width="15"
@@ -74,7 +74,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
                     )}
                 </div>
                 {item?.description && <div className="pb-0.5 text-gray-800 w-[98%]">
-                    <p className="truncate line-clamp-2 text-sm whitespace-normal hyphens-auto">{item?.description}</p>
+                    <p className="truncate line-clamp-3 text-sm whitespace-normal hyphens-auto break-all">{item?.description}</p>
                 </div>
                 }
             </div>

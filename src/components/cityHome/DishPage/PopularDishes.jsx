@@ -7,10 +7,10 @@ import RestaurantCart from "./RestaurantCard";
 import DishShimmer from "./DishShimmer";
 
 const MainData = ({ data }) => {
-    console.log(data)
+    // console.log(data)
 
     const mainData = dishPageDataFetcher(data);
-    console.log(mainData)
+    // console.log(mainData)
 
     const dish = decodeURIComponent(useLocation().pathname.split("/").at(-1));
 
@@ -33,7 +33,7 @@ const MainData = ({ data }) => {
                     </section>
                     <h1 className="max-md:leading-6 text-xl md:text-3xl">{mainData.heading}</h1>
                     <section className="flex flex-col gap-0.5 md:gap-1 bg-gray-200 rounded p-1 pb-4 pt-3 md:p-7 mt-2 md:pb-5">
-                        <h2 className="text-gray-800 font-bold md:text-xl ml-1.5">{`${mainData.data.length} dishes found for ${dish}`}</h2>
+                        <h2 className="text-gray-800 text-[1.10rem] font-bold md:text-xl ml-1.5">{`${mainData.data.length} dishes found for ${dish}`}</h2>
                         <div className="">
                             {currentDataSet.map(obj => <RestaurantCart key={obj.restaurant.info.id} data={obj} latLng={mainData.latLng} />)}
                         </div>
