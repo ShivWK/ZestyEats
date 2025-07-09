@@ -19,7 +19,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
     );
 
     return (
-        <div className="border-gray-300 shrink-0 border-2 max-w-80 md:max-w-96 p-0.5 px-1 rounded-2xl flex justify-between bg-white">
+        <div className="border-gray-300 shrink-0 border-2 w-80 md:max-w-96 p-0.5 px-1 rounded-2xl flex  bg-white">
             <div className="flex flex-col gap-1 pl-1 md:pl-0.5 py-0.5 justify-center basis-3/5 shrink-0">
                 {item.isVeg === 1 ? (
                     <svg
@@ -78,7 +78,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
                 </div>
                 }
             </div>
-            <div className="relative flex flex-col basis-[35%] h-32 w-28 rounded-xl overflow-hidden shrink-0 m-2">
+            <div className="relative flex flex-col basis-28 h-32 w-28 rounded-xl self-center overflow-hidden shrink-0 m-2">
                 <img
                     src={isError ? "/images/fallback.png" : imageUrl}
                     className="h-full w-full object-cover shrink-0"
