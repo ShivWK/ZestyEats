@@ -68,8 +68,8 @@ const ItemCard = ({ data: item, restaurantData }) => {
                     {Object.keys(ratings).length !== 0 && (
                         <>
                             <p>•</p>
-                            <i className="ri-star-fill text-yellow-400 mb-0.5" />
-                            <p>{ratings.rating}{`(${ratings.ratingCountV2})`}</p>
+                            <i className="ri-star-fill text-yellow-400 mb-0.5 text-sm" />
+                            <p className="text-sm font-medium">{ratings.rating}{`(${ratings.ratingCountV2})`}</p>
                         </>
                     )}
                 </div>

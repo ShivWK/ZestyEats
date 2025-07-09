@@ -4,6 +4,7 @@ import dishPageDataFetcher from "../../../utils/dishPageDataFetcher";
 import BreadcrumbsWrapper from "../../BreadcrumbsWrapper";
 import ScooterAnimation from "../../../utils/ScooterAnimation";
 import RestaurantCart from "./RestaurantCard";
+import DishShimmer from "./DishShimmer";
 
 const MainData = ({ data }) => {
     console.log(data)
@@ -31,7 +32,7 @@ const MainData = ({ data }) => {
                         <BreadcrumbsWrapper />
                     </section>
                     <h1 className="max-md:leading-6 text-xl md:text-3xl">{mainData.heading}</h1>
-                    <section className="flex flex-col gap-0.5 md:gap-1 bg-gray-200 rounded p-1 pb-4 pt-3 md:p-7 mt-2">
+                    <section className="flex flex-col gap-0.5 md:gap-1 bg-gray-200 rounded p-1 pb-4 pt-3 md:p-7 mt-2 md:pb-5">
                         <h2 className="text-gray-800 font-bold md:text-xl ml-1.5">{`${mainData.data.length} dishes found for ${dish}`}</h2>
                         <div className="">
                             {currentDataSet.map(obj => <RestaurantCart key={obj.restaurant.info.id} data={obj} latLng={mainData.latLng} />)}
@@ -59,7 +60,7 @@ const MainData = ({ data }) => {
 const PopularDishes = () => {
     const { data } = useLoaderData();
 
-    return <Suspense fallback={<h1>Loading...</h1>}>
+    return <Suspense fallback={<DishShimmer />}>
         <Await resolve={data}>
             {data => {
                 const dataToSend = data?.data?.props?.pageProps?.widgetResponse?.success?.cards;
