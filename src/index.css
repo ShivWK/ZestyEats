@@ -129,6 +129,7 @@
 
 body {
     scrollbar-gutter: stable both-edges;
+    font-family: sans-serif;
 }
 
 .progress-style {

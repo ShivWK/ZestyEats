@@ -1,6 +1,7 @@
 import { useState, useRef, memo, useEffect } from "react";
 import textToZestyEats from "../../utils/textToZestyEats";
 import { useDispatch, useSelector } from "react-redux";
+import AddToCartBtn from "../AddToCartBtn";
 import { addToWishlistItem, selectWishlistItems, deleteItemFromWishlist } from "../../features/home/restaurantsSlice";
 
 const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) => {
@@ -140,10 +141,13 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
           alt={item?.name}
           onError={() => setIsError(true)}
         />
-        <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2 cursor-pointer active:scale-95 transition-all duration-100 ease-in-out">
+        {/* <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2 cursor-pointer active:scale-95 transition-all duration-100 ease-in-out">
           Add
-        </button>
-        <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData, item }, item?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
+        </button> */}
+        <div className="absolute top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2">
+          <AddToCartBtn data={{restaurantData, item, quantity: 1 }}  />
+        </div>
+        <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData, item , quantity: 1}, item?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"

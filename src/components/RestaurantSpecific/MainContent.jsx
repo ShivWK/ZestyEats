@@ -45,7 +45,7 @@ const MainContent = ({ data, routes = true }) => {
 
   const topPicks = useMemo(
     () =>
-      menu.find((item) => {
+      menu?.find((item) => {
         return item?.card?.card?.title === "Top Picks";
       }),
     [menu]
@@ -53,7 +53,7 @@ const MainContent = ({ data, routes = true }) => {
 
   const RestaurantLicenseInfo = useMemo(
     () =>
-      menu.find((item) => {
+      menu?.find((item) => {
         return (
           item?.card?.card?.["@type"] ===
           "type.googleapis.com/swiggy.presentation.food.v2.RestaurantLicenseInfo"
@@ -76,7 +76,7 @@ const MainContent = ({ data, routes = true }) => {
   restaurantData.address = RestaurantAddress?.card?.card;
 
   const restMenuData = useMemo(() => {
-    return menu.filter((item) => {
+    return menu?.filter((item) => {
       return (
         item?.card?.card?.title !== "Top Picks" &&
         item?.card?.card?.["@type"] !==

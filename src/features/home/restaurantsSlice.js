@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { activeAnimations } from "motion";
 
 const restaurantSlice = createSlice({
   name: "restaurant",
@@ -128,6 +129,18 @@ const restaurantSlice = createSlice({
       }
     },
 
+    setItemQuantity : (state, action) => {
+      const { id, type } = action.payload;
+
+      if (!state.cart[id]) return;
+ 
+      if (type === "plus") {
+        state.cart[id].quantity += 1;
+      } else {
+        state.cart[id].quantity -= 1;
+      }
+    },
+
     setFavoriteRestro: (state, action) => {
       if (action.payload.mode === "initial") {
         state.favoriteRestro = action.payload.object;
@@ -173,4 +186,5 @@ export const {
   toggleItemsToBeAddedInCart,
   setItemToCart,
   setFavoriteRestro,
+  setItemQuantity
 } = restaurantSlice.actions;

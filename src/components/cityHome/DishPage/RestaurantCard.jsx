@@ -15,20 +15,19 @@ const RestaurantCart = ({ data, latLng }) => {
 
     if (areaName === locality) areaOrLocality = locality + ", " + city;
 
-    console.log(dishesData);
+    // console.log(dishesData);
 
     return <section className=" rounded-xl m-0.5 my-4 md:my-4 bg-white">
         <div className="px-2 py-2 w-full flex flex-col gap-0.5">
             <Link
-                to={`/restaurantSpecific/${lat}/${lng}/${restaurantData.id}/${restaurantData.name}`}
-                className="flex items-center justify-between"
+                to={`/restaurantSpecific/${lat}/${lng}/${restaurantData.id}/${restaurantData.name}?mode=dishPage`}
+                className="group flex items-center justify-between"
             >
                 <p className="basis-[90%] md:basis-[96%] truncate text-xl font-bold select-none">
                     {restaurantData.name}
                 </p>
-                <div className="basis-[8%] md:basis-[3%] active:text-primary">
-                    <i className="ri-arrow-right-long-fill text-2xl text-gray-800 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out p-0"></i>
-                </div>
+
+                <i className="basis-[8%] md:basis-[3%] active:text-primary ri-arrow-right-long-fill text-2xl text-gray-900 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
             </Link>
 
             <p className="text-xs md:text-sm font-bold text-gray-700 truncate -mt-1">{areaOrLocality}</p>
@@ -39,7 +38,8 @@ const RestaurantCart = ({ data, latLng }) => {
                 <p>•</p>
                 <p>{restaurantData?.sla?.slaString || "25-30 MINS"}</p>
             </div>
-            <div className="mt-2">
+            <hr className="text-gray-300 mt-1" />
+            <div className="">
                 <HorizontalCarousel showScrollBar={false} dataToMap={dishesData} Card={ItemCard} restaurantData={restaurantData} />
             </div>
         </div>

@@ -3,7 +3,7 @@ const DishShimmer = () => {
     const itemCards = Array.from({ length: 3 }, (_, i) => i)
 
     return <main className="w-full md:max-w-[1070px] mx-auto overflow-hidden pb-2 md:pb-6 pt-[5rem] md:pt-28 overflow-x-hidden max-md:px-2 flex flex-col gap-2.5 md:gap-5">
-        <div id="breadrumbs" className="rounded-md w-[60%] h-5 md:h-4 shimmerBg" />
+        <div id="breadrumbs" className="rounded-md w-[60%] h-5 shimmerBg" />
         <div className="heading rounded-md w-64 md:w-xl h-9 shimmerBg"></div>
         <section className="flex flex-col gap-0.5 md:gap-1 bg-gray-100 rounded p-2 pb-3 pt-3 md:p-7 mt-2 md:pb-5">
             <div className="h-5 md:h-6 w-[40%] shimmerBg rounded"></div>

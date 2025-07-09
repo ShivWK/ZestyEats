@@ -25,7 +25,7 @@ const Banner = ({ data }) => {
   const opened = mainData.availability.opened;
 
   const veg = mainData?.veg;
-  const citySelector = mode === "cityPage" ?  selectSecondaryCity : selectCity;
+  const citySelector = ( mode === "cityPage" || mode === "dishPage" ) ?  selectSecondaryCity : selectCity;
 
   const searchedCity = useSelector(citySelector).toLowerCase().replace(/\s/g, "-");
 

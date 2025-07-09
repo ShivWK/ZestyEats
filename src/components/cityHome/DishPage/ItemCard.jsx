@@ -1,4 +1,5 @@
 import { useState } from "react";
+import AddToCartBtn from "../../AddToCartBtn";
 
 const ItemCard = ({ data: item, restaurantData }) => {
     // console.log(item)
@@ -19,7 +20,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
     );
 
     return (
-        <div className="border-gray-300 shrink-0 border-2 w-80 md:max-w-96 p-0.5 px-1 rounded-2xl flex  bg-white">
+        <div className="border-gray-300 shrink-0 border-[1px] w-80 md:max-w-96 p-0.5 px-1 rounded-2xl flex  bg-white mt-2">
             <div className="flex flex-col gap-1 pl-1 md:pl-0.5 py-0.5 pt-1.5 justify-center basis-3/5 shrink-0">
                 {item.isVeg === 1 ? (
                     <svg
@@ -85,9 +86,13 @@ const ItemCard = ({ data: item, restaurantData }) => {
                     alt={item?.name}
                     onError={() => setIsError(true)}
                 />
-                <button className="absolute bottom-2 left-1/2 transform -translate-x-1/2 py-0.5 px-5 rounded bg-green-400 text-white font-semibold tracking-tight cursor-pointer active:scale-95 transition-all duration-150 ease-in-out text-sm">
+                {/* <button className="absolute bottom-2 left-1/2 transform -translate-x-1/2 py-0.5 px-5 rounded bg-green-400 text-white font-semibold tracking-tight cursor-pointer active:scale-95 transition-all duration-150 ease-in-out text-sm">
                     Add
-                </button>
+                </button> */}
+
+                <div className="absolute bottom-1.5 left-1/2 transform -translate-x-1/2 py-0.5 px-5">
+                    <AddToCartBtn data={{restaurantData, item, quantity: 1}} pX="px-5" pY="py-0.5" font_size="text-sm" quantityBtnPadding="p-1" number_width="w-8"/>
+                </div>
             </div>
         </div>
     );

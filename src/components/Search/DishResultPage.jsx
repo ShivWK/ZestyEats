@@ -17,6 +17,7 @@ import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import Ui3Shimmer from "./Ui3Shimmer";
 import Filter from "../Home/Filters";
 import useScrollToTop from "../../utils/useScrollToTop";
+import AddToCartBtn from "../AddToCartBtn";
 
 const Card = ({ data, lat, lng }) => {
     console.log(data);
@@ -77,10 +78,10 @@ const Card = ({ data, lat, lng }) => {
             <NavLink
                 to={path}
                 onClick={() => handleClick(restaurantData?.name)}
-                className="flex group justify-between  p-3 w-full cursor-pointer"
+                className="flex group justify-between items-center p-3 w-full cursor-pointer"
             >
-                <div>
-                    <p className="font-bold text-gray-800 md:w-64 overflow-hidden">
+                <div className="basis-[95%]">
+                    <p className="font-bold text-gray-800 w-full truncate overflow-hidden">
                         {restaurantData?.name}
                     </p>
                     <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
@@ -92,7 +93,7 @@ const Card = ({ data, lat, lng }) => {
                         <p>{restaurantData?.costForTwoMessage}</p>
                     </div>
                 </div>
-                <i className="ri-arrow-right-long-fill text-2xl text-gray-600 ursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
+                <i className="basis-[5%] ri-arrow-right-long-fill text-2xl text-gray-600 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
             </NavLink>
             <hr className="text-gray-300 my-1.5" />
             <div className="flex justify-between bg-white">
@@ -165,10 +166,13 @@ const Card = ({ data, lat, lng }) => {
                         alt={dishData?.name}
                         onError={() => setIsError(true)}
                     />
-                    <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out ">
+                    {/* <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out ">
                         Add
-                    </button>
-                    <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData: restaurantDataToWishlist, item: dishData }, dishData?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
+                    </button> */}
+                    <div className="absolute top-[75%] transform -translate-x-1/2 left-1/2 ">
+                        <AddToCartBtn data={{restaurantData: restaurantDataToWishlist, item: dishData, quantity: 1}} />
+                    </div>
+                    <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData: restaurantDataToWishlist, item: dishData, quantity: 1 }, dishData?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 24 24"

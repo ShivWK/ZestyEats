@@ -1,14 +1,15 @@
 import { useState, memo } from "react";
 import { selectWishlistItems, addToWishlistItem, deleteItemFromWishlist } from "../../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import AddToCartBtn from "../AddToCartBtn";
 
 const TopPicksCard = memo(({ data, restaurantData }) => {
   const dispatch = useDispatch()
   const wishlist = useSelector(selectWishlistItems);
-  const isWishlisted = data?.id in wishlist || false;
+  const isWishListed = data?.id in wishlist || false;
 
   const [isError, setIsError] = useState(false);
-  const [wishlistAdded, setWishlistAdded] = useState(isWishlisted)
+  const [wishlistAdded, setWishlistAdded] = useState(isWishListed)
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/${data?.creativeId}`;
 
   const defaultPrice = data?.price / 100 || data?.defaultPrice / 100 || 0;
@@ -61,7 +62,7 @@ const TopPicksCard = memo(({ data, restaurantData }) => {
           }}
         >
           {price}
-          <div className="cursor-pointer inline-flex items-center justify-center rounded-full p-0.5" onClick={() => wishlistAddHandler({ restaurantData, item: data }, data?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
+          <div className="cursor-pointer inline-flex items-center justify-center rounded-full p-0.5" onClick={() => wishlistAddHandler({ restaurantData, item: data, quantity: 1 }, data?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
@@ -72,9 +73,10 @@ const TopPicksCard = memo(({ data, restaurantData }) => {
             </svg>
           </div>
         </div>
-        <button className="py-2 px-7 bg-green-500 text-white rounded-md cursor-pointer active:scale-95 transition-all duration-150 ease-in-out font-semibold">
+        {/* <button className="py-1 px-7 bg-green-500 text-white rounded-md cursor-pointer active:scale-95 transition-all duration-150 ease-in-out font-semibold">
           Add
-        </button>
+        </button> */}
+          <AddToCartBtn data={{restaurantData, item: data, quantity: 1}} pX="px-7" />
       </div>
     </div>
   );
