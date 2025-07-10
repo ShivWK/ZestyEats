@@ -97,21 +97,16 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
           <NavItem to="about" icon={"fa-utensils text-lg"} text="About" />
         )}
         {showSearch && (
+
           <NavItem
             to={`search?lat=${lat}&lng=${lng}`}
             icon={"fa-magnifying-glass text-lg"}
             text="Search"
           />
         )}
-        {/* {showOffers && (
-          <NavItem
-            to="offers-dinouts"
-            icon={"ri-discount-percent-line text-xl"}
-            text="Offers"
-            superScript={"NEW"}
-          />
-        )} */}
+
         <NavItem to="help" icon={"fa-solid fa-handshake-angle"} text="Help" />
+
         {loggedIn ? (
           <NavItem to={"/profile"} icon={"fa-user text-lg"} text={`User`} />
         ) : (
@@ -124,8 +119,9 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             <span className="relative group-hover:text-[#ff5200] hidden md:block">Sign In</span>
           </button>
         )}
+
         {showCart && (
-          <NavItem to="cart" icon={"fa-cart-shopping text-lg"} text="Cart" />
+          <NavItem to="cart" icon={"fa-cart-shopping text-lg"} text="Cart" superScript={true} />
         )}
       </ul>
     </nav>

@@ -79,8 +79,6 @@ export default function Layout() {
     const localityLatLng = JSON.parse(localStorage.getItem("localityLatLng"));
     const cartItems = JSON.parse(localStorage.getItem("CartItems"));
 
-    console.log("Layout called", cartItems)
-
     let userPathHistory = '';
 
     if (rawUserPathHistory !== "undefined") {

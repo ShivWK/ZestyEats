@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import ItemCard from "./ItemCard";
 import HorizontalCarousel from "./../../HorizontalCarousel";
+import { addCurrentRestaurant } from "../../../features/home/restaurantsSlice";
 
 const RestaurantCart = ({ data, latLng }) => {
+    const dispatch = useDispatch();
     const restaurantData = data.restaurant.info;
     const dishesData = data.dishes.map(data => data.info);
     const { lat, lng } = latLng;
@@ -16,12 +19,16 @@ const RestaurantCart = ({ data, latLng }) => {
     if (areaName === locality) areaOrLocality = locality + ", " + city;
 
     // console.log(dishesData);
+    const clickHandler = () => {
+        dispatch(addCurrentRestaurant(restaurantData.name));
+    }
 
     return <section className=" rounded-xl m-0.5 my-4 md:my-4 bg-white">
         <div className="px-2 py-2 w-full flex flex-col gap-0.5">
             <Link
                 to={`/restaurantSpecific/${lat}/${lng}/${restaurantData.id}/${restaurantData.name}?mode=dishPage`}
                 className="group flex items-center justify-between"
+                onClick={clickHandler}
             >
                 <p className="basis-[90%] md:basis-[96%] truncate text-xl font-bold select-none">
                     {restaurantData.name}

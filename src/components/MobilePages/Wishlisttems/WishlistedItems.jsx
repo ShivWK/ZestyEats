@@ -25,7 +25,7 @@ const WishlistedItems = () => {
         setWishlist(wishlistArray);
     }, [wishlistItems])
 
-    console.log(wishlist)
+    //console.log(wishlist)
 
     return <div>
         {wishlist ? (wishlist.length !== 0

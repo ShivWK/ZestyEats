@@ -1,8 +1,14 @@
 import { memo } from "react";
 import { NavLink } from "react-router-dom";
+import { Asterisk } from "lucide-react";
+import { selectCart } from "../../features/home/restaurantsSlice";
+import { useSelector } from "react-redux";
 
 const NavItem = memo(
   ({ icon, text, onClick = null, superScript = null, to = null }) => {
+    const cart = useSelector(selectCart);
+    const cartCount = Object.values(cart).length;
+
     return (
       <li>
         <NavLink
@@ -13,14 +19,15 @@ const NavItem = memo(
           }}
           onClick={onClick}
         >
-          <i className={`fa-solid ${icon} group-hover:text-[#ff5200] transform group-hover:translate-x-1 transition-transform duration-150 ease-linear ${(text !== "Help" || text !== "About" || text !== "Cart") && "max-md:text-xl"}`}></i>
-          <span className="relative group-hover:text-[#ff5200] hidden md:block">
-            {text}
-            {superScript ? (
-              <sup className="text-primary text-[10px] ml-0.5 absolute top-1 font-extrabold">
-                {superScript}
+          <i className={`fa-solid ${icon} group-hover:text-[#ff5200] transform ${(!cartCount || !superScript) && "group-hover:translate-x-1"} transition-transform duration-150 ease-linear ${(text !== "Help" || text !== "About" || text !== "Cart") && "max-md:text-xl"} ${(cartCount && superScript) && "cart-animation"}`}>
+            {(superScript && cartCount) ? (
+              <sup className="text-red-600 text-[10px] -mt-1.5 -ml-0.5 absolute font-extrabold">
+                <Asterisk size={16} />
               </sup>
             ) : null}
+          </i>
+          <span className="relative group-hover:text-[#ff5200] hidden md:block">
+            {text}
           </span>
         </NavLink>
       </li>

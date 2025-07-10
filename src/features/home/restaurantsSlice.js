@@ -131,15 +131,26 @@ const restaurantSlice = createSlice({
       localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 
-    setItemQuantity : (state, action) => {
+    setItemQuantity: (state, action) => {
+          // console.log("reducer called")
+
       const { id, type } = action.payload;
+      // console.log(type, id)
 
       if (!state.cart[id]) return;
- 
+
+      // console.log("Item hai")
+
       if (type === "plus") {
         state.cart[id].quantity += 1;
       } else {
-        state.cart[id].quantity -= 1;
+        if (type === "minus") {
+          state.cart[id].quantity -= 1;
+        } else {
+
+          console.log("reducer inner called")
+          state.cart[id].quantity = 0;
+        }
 
         if (state.cart[id].quantity === 0) {
           delete state.cart[id];
