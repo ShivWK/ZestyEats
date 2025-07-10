@@ -8,12 +8,14 @@ import { useSelector } from "react-redux";
 import { memo } from "react";
 
 import { selectSecondaryCity } from "../../features/cityHome/cityHomeSlice";
+import MobileCartHeader from "./MobileCartHeader";
 
 const PageHeader = memo(() => {
   const { pathname, search } = useLocation();
   const searchParams = new URLSearchParams(search);
   const type = searchParams.get("type")
   const city = useSelector(selectSecondaryCity).toUpperCase();
+  const isSmall = window.innerWidth <= 768; 
 
 
   if (pathname === "/") {
@@ -27,7 +29,7 @@ const PageHeader = memo(() => {
   } else if (pathname === "/profile") {
     return <GeneralHeader placeholder={"My Account"} />;
   } else if (pathname === "/cart") {
-    return <CartHeader />;
+    return isSmall ? <MobileCartHeader /> : <CartHeader />;
   } else if (pathname.includes("restaurantSpecific") || pathname.includes("dishSearch")) {
     return <RestaurantsHeader />;
   } else if (pathname.includes("specificFood")) {

@@ -15,6 +15,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   const dispatch = useDispatch();
   const [showDrop, setShowDrop] = useState(false);
   const [theme, setTheme] = useState("Light");
+  const isSmall = window.innerWidth <= 768;
 
   const handleSignIn = useCallback(() => {
     dispatch(setHideLogin(false));
@@ -40,9 +41,8 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             ) : theme === "Dark" ? (
               <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
             ) : (
-              <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95"></i>
+              isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95" />
             )}
-            {/* <i class="ri-smartphone-line text-2xl"></i> */}
             <div
               className="absolute rounded top-[120%] left-1/2 transform -translate-x-1/2 p-1 bg-white shadow-[0_0_5px_1px_#6a7282] text-sm"
               style={{
@@ -86,7 +86,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                     color: theme === "System" ? "black" : ""
                   }}
                 >
-                  <i className="ri-computer-fill"></i>
+                  {isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill"></i>}
                   <span>System</span>
                 </li>
               </ul>
