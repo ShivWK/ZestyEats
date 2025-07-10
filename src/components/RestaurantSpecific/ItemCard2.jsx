@@ -44,16 +44,19 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
   // when parent compo has display none that time the card's scrollHeight and clientHeight bot are 0 they don't render so we need to check it when parent is opened
 
   const veg = item?.itemAttribute?.vegClassifier === "VEG";
+
   const defaultPrice = item?.price / 100 || item?.defaultPrice / 100 || 0;
   const finalPrice = item?.finalPrice / 100;
   const price = finalPrice ? (
-    <p className="text-sm tracking-tight font-bold">
-      <span className="line-through text-gray-500">₹{defaultPrice} </span>₹
-      {finalPrice}
+    <p className="text-sm tracking-tight flex gap-1 items-center font-semibold text-gray-800">
+      <span className="line-through text-gray-500">₹{""}{defaultPrice} </span>₹{""}
+      {finalPrice} {" "}
+      <svg className="inline" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1.63362 8.39604C1.28368 8.7446 1.28368 9.30972 1.63362 9.65828L6.1293 14.1362C6.47924 14.4848 7.0466 14.4848 7.39654 14.1362L12.9543 8.60038C13.1228 8.43251 13.2173 8.20468 13.2168 7.96728L13.2069 3.49924C13.2058 3.00785 12.8061 2.60977 12.3128 2.60868L7.827 2.5988C7.58866 2.59828 7.35993 2.69235 7.1914 2.86022L1.63362 8.39604ZM10.8177 6.90055C11.3458 6.37452 11.3439 5.51976 10.8134 4.99139C10.283 4.46302 9.4248 4.46113 8.89668 4.98717C8.36856 5.5132 8.37045 6.36796 8.90092 6.89633C9.43138 7.4247 10.2895 7.42659 10.8177 6.90055Z" fill="#1BA672"></path></svg>
     </p>
   ) : (
-    <p className="text-sm tracking-tight font-bold">₹{defaultPrice}</p>
+    <p className="text-sm tracking-tight font-semibold text-gray-800">₹{""}{defaultPrice}</p>
   );
+
   const ratingObject = item?.ratings?.aggregatedRating;
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item?.imageId}`;
 
@@ -145,9 +148,9 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
           Add
         </button> */}
         <div className="absolute top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2">
-          <AddToCartBtn data={{restaurantData, item, quantity: 1 }}  />
+          <AddToCartBtn data={{ restaurantData, item, quantity: 1 }} />
         </div>
-        <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData, item , quantity: 1}, item?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
+        <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData, item, quantity: 1 }, item?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
