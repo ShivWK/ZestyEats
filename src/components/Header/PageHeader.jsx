@@ -23,9 +23,9 @@ const PageHeader = memo(() => {
   } else if (pathname === "/search" || pathname === "/search/suggestions" || pathname === "/search/searchResult/dishPage" || pathname === "/search/searchResult/restaurantPage" || pathname === "/search/searchResult/cuisinesPage") {
     return <GeneralHeader placeholder={"Search"} />
   } else if (pathname === "/help" || pathname === "/support") {
-    return <GeneralHeader placeholder={"HELP & SUPPORT"} />;
+    return <GeneralHeader placeholder={"Help & Support"} />;
   } else if (pathname === "/profile") {
-    return <GeneralHeader placeholder={"MY ACCOUNT"} />;
+    return <GeneralHeader placeholder={"My Account"} />;
   } else if (pathname === "/cart") {
     return <CartHeader />;
   } else if (pathname.includes("restaurantSpecific") || pathname.includes("dishSearch")) {

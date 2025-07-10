@@ -5,7 +5,7 @@ const CartHeader = () => {
   return (
     <HeaderWrapper>
       <MainHeader
-        searchPlaceholder="SECURE CHECKOUT"
+        searchPlaceholder="Secure Checkout"
         showAbout={false}
         showSearch={false}
         showCart={false}
