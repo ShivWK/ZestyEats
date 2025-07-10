@@ -114,7 +114,7 @@ const ItemCard = ({ data, restaurantData }) => {
         {isDescriptionOpen && (
             <div className="px-2 pb-0.5 text-gray-600 font-medium">
                 <hr className="text-gray-300 my-1" />
-                <p>{item?.description}</p>
+                <p className="text-sm">{item?.description}</p>
             </div>
         )}
     </div>

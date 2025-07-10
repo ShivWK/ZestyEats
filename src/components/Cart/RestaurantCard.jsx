@@ -65,20 +65,23 @@ const RestaurantCard = ({ data }) => {
                             <div id="No delivery" className="relative">
                                 <i className="fas fa-shipping-fast text-black"></i>
                                 <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
-                                {/* <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
+                                <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform -rotate-45"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="md:hidden flex items-center gap-1">
-                    {!isDeliverable && <p className="text-red-500 font-medium text-sm">(Not delivering to your area)</p>}
-                    <div className="relative flex gap-1.5 items-center">
-                        <div id="No delivery" className="relative">
-                            <i className="fas fa-shipping-fast text-sm text-black"></i>
-                            <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
-                            {/* <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
-                        </div>
-                    </div>
+                    {!isDeliverable &&
+                        <>
+                            <p className="text-red-500 font-medium text-sm">(Not delivering to your area)</p>
+                            <div className="relative flex gap-1.5 items-center">
+                                <div id="No delivery" className="relative">
+                                    <i className="fas fa-shipping-fast text-sm text-black"></i>
+                                    <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
+                                    <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div>
+                                </div>
+                            </div>
+                        </>}
                 </div>
             </div>
             <hr className="text-gray-400 my-2 md:my-3" />
