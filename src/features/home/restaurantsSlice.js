@@ -116,7 +116,7 @@ const restaurantSlice = createSlice({
     },
 
     setItemToCart: (state, action) => {
-      if (action.payload.made === "initial") {
+      if (action.payload.mode === "initial") {
         state.cart = action.payload.object;
       } else {
         const { add, id, data } = action.payload;
@@ -127,6 +127,8 @@ const restaurantSlice = createSlice({
           state.cart = {};
         }
       }
+
+      localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 
     setItemQuantity : (state, action) => {
@@ -138,7 +140,13 @@ const restaurantSlice = createSlice({
         state.cart[id].quantity += 1;
       } else {
         state.cart[id].quantity -= 1;
+
+        if (state.cart[id].quantity === 0) {
+          delete state.cart[id];
+        }
       }
+
+      localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 
     setFavoriteRestro: (state, action) => {

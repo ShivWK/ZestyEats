@@ -26,7 +26,7 @@ import {
   setDpModelHide
 } from "../features/home/homeSlice";
 
-import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro } from "../features/home/restaurantsSlice";
+import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro, setItemToCart } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -77,6 +77,9 @@ export default function Layout() {
     const wishlist = JSON.parse(localStorage.getItem("wishlist"));
     const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
     const localityLatLng = JSON.parse(localStorage.getItem("localityLatLng"));
+    const cartItems = JSON.parse(localStorage.getItem("CartItems"));
+
+    console.log("Layout called", cartItems)
 
     let userPathHistory = '';
 
@@ -105,6 +108,7 @@ export default function Layout() {
       if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
       if (favRestros !== undefined && favRestros !== null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
       if (localityLatLng !== undefined && localityLatLng !== null) dispatch(setLocalityLatAndLng(localityLatLng));
+      if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
 
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {

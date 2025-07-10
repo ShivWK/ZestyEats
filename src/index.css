@@ -60,6 +60,10 @@
         animation: animateDpHide 0.3s ease-in-out;
     }
 
+    .cart-animation {
+        animation: animateCart 0.8s ease-in-out infinite;
+    }
+
     @keyframes bgChange {
         0% {
             background-color: #cfd1d1;
@@ -105,6 +109,20 @@
 
         100% {
             transform: scale(0%);
+        }
+    }
+
+    @keyframes animateCart {
+        0% {
+            transform: translateX(0);
+        } 
+
+        50% {
+            transform: translateX(5px);
+        }
+
+        100% {
+            transform: translateX(0);
         }
     }
 }
