@@ -6,7 +6,7 @@ import Loader from "./../../Loader";
 
 const WishlistedItems = () => {
     const wishlistItems = useSelector(selectWishlistItems);
-    console.log(wishlistItems)
+    // console.log(wishlistItems)
     const [wishlist, setWishlist] = useState(null);
     const wishlistItemsMap = new Map();
 

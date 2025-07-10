@@ -59,17 +59,31 @@ const RestaurantCard = ({ data }) => {
                     <p className={`${opened ? "text-green-500" : "text-red-600"} font-semibold`}>{opened ? "OPEN 😊" : "CLOSED 😟"}
                     </p>
                     {!isDeliverable && <p className="hidden md:inline">•</p>}
-                    <div className="hidden md:inline">
+                    <div className="hidden md:flex items-center gap-1">
                         {!isDeliverable && <p className="text-red-500 font-medium">(Not delivering to your area)</p>}
+                        <div className="relative flex gap-1.5 items-center">
+                            <div id="No delivery" className="relative">
+                                <i className="fas fa-shipping-fast text-black"></i>
+                                <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
+                                {/* <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="md:hidden">
+                <div className="md:hidden flex items-center gap-1">
                     {!isDeliverable && <p className="text-red-500 font-medium text-sm">(Not delivering to your area)</p>}
+                    <div className="relative flex gap-1.5 items-center">
+                        <div id="No delivery" className="relative">
+                            <i className="fas fa-shipping-fast text-sm text-black"></i>
+                            <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
+                            {/* <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
+                        </div>
+                    </div>
                 </div>
             </div>
             <hr className="text-gray-400 my-2 md:my-3" />
             <div className="md:px-1 flex flex-col gap-2">
-                {items.map(data => <ItemCard key={data.item.id} data={data} restaurantData={restaurantData}/>)}
+                {items.map(data => <ItemCard key={data.item.id} data={data} restaurantData={restaurantData} />)}
             </div>
         </div>
     </section>

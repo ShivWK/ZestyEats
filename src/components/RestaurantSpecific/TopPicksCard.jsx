@@ -15,12 +15,13 @@ const TopPicksCard = memo(({ data, restaurantData }) => {
   const defaultPrice = data?.price / 100 || data?.defaultPrice / 100 || 0;
   const finalPrice = data?.finalPrice / 100;
   const price = finalPrice ? (
-    <p className="tracking-tight font-bold">
-      <span className="line-through text-gray-300">₹{defaultPrice}{" "}</span>₹
-      {finalPrice}
+    <p className="tracking-tight flex gap-1 items-center font-semibold text-white">
+      <span className="line-through text-gray-300">₹{defaultPrice} </span>₹
+      {finalPrice} {" "}
+      <svg className="inline" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1.63362 8.39604C1.28368 8.7446 1.28368 9.30972 1.63362 9.65828L6.1293 14.1362C6.47924 14.4848 7.0466 14.4848 7.39654 14.1362L12.9543 8.60038C13.1228 8.43251 13.2173 8.20468 13.2168 7.96728L13.2069 3.49924C13.2058 3.00785 12.8061 2.60977 12.3128 2.60868L7.827 2.5988C7.58866 2.59828 7.35993 2.69235 7.1914 2.86022L1.63362 8.39604ZM10.8177 6.90055C11.3458 6.37452 11.3439 5.51976 10.8134 4.99139C10.283 4.46302 9.4248 4.46113 8.89668 4.98717C8.36856 5.5132 8.37045 6.36796 8.90092 6.89633C9.43138 7.4247 10.2895 7.42659 10.8177 6.90055Z" fill="#1BA672"></path></svg>
     </p>
   ) : (
-    <p className="tracking-tight font-bold">₹{defaultPrice}</p>
+    <p className="tracking-tight font-semibold text-white">₹{defaultPrice}</p>
   );
 
   const wishlistAddHandler = (wishlistObject, id) => {
@@ -56,7 +57,7 @@ const TopPicksCard = memo(({ data, restaurantData }) => {
         className="flex items-center justify-between mt-auto pl-0.5"
       >
         <div
-          className="flex items-center gap-2 text-lg font-semibold"
+          className="flex items-center gap-1.5 text-lg font-semibold"
           style={{
             color: !isError ? "white" : "black",
           }}

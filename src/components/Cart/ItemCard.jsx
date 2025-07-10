@@ -75,7 +75,7 @@ const ItemCard = ({ data, restaurantData }) => {
                     </svg>
                 )}
                 <div className="w-[100%]">
-                    <p className="leading-5 line-clamp-2 tracking-tight max-md:text-sm font-bold mt-1">
+                    <p className="leading-5 line-clamp-2 tracking-tight font-bold mt-1">
                         {item?.name}
                     </p>
                 </div>
@@ -86,7 +86,7 @@ const ItemCard = ({ data, restaurantData }) => {
                         id="moreCities"
                         className="flex gap-2.5 cursor-pointer border-[1px] border-gray-500 px-1.5 py-0.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-1"
                     >
-                        <p className="font-normal text-xs text-gray-900 select-none">
+                        <p className="font-normal text-sm text-gray-900 select-none">
                             More Details
                         </p>
                         <i

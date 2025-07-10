@@ -4,10 +4,18 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectItemsToBeAddedInCart, selectWishlistItems, setItemToCart, selectCart, deleteItemFromWishlist, toggleItemsToBeAddedInCart, setMenuItems } from "../../../features/home/restaurantsSlice";
 import { toast } from "react-toastify";
+import { selectLatAndLng } from "../../../features/home/homeSlice";
+import haversineFormula from "./../../../utils/haversineFormula";
 
 const RestaurantCard = ({ data }) => {
     const metadata = data.restro.metadata;
+    const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
     const [lat, lng] = metadata.latLong.split(",");
+
+    const distance = haversineFormula(lat, latCurrent, lng, lngCurrent);
+    const notDeliverable = distance > 10;
+
+    const opened = metadata.availability.opened;
     const restro_id = metadata.id;
     const name = metadata.name;
     const dispatch = useDispatch();
@@ -96,7 +104,23 @@ const RestaurantCard = ({ data }) => {
 
             <p className="text-xs font-bold text-gray-700 truncate -mt-1">{areaOrLocality + ", " + city}</p>
 
-            <div className="flex items-center justify-between mt-1.5">
+            <div className="flex items-center gap-1.5 -mt-0.5">
+                <p className={`${opened ? "text-green-500" : "text-red-600"} text-sm font-semibold`}>{opened ? "OPEN 😊" : "CLOSED 😟"}
+                </p>
+                {notDeliverable && (
+                    <div className="relative flex gap-1.5 items-center">
+                        <p>•</p>
+                        <div id="No delivery" className="relative">
+                            <i className="fas fa-shipping-fast text-black"></i>
+                            <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
+                            <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div>
+                        </div>
+                    </div>
+                  )
+                }
+            </div>
+
+            <div className="flex items-center justify-between">
                 <div className="basis-[40%]">
                     <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
                         <i className="ri-star-fill text-green-700 mb-0.5" />
