@@ -108,7 +108,7 @@ const RestaurantCard = ({ data }) => {
                 <p className={`${opened ? "text-green-500" : "text-red-600"} text-sm font-semibold`}>{opened ? "OPEN 😊" : "CLOSED 😟"}
                 </p>
                 {notDeliverable && (
-                    <div className="relative flex gap-1.5 items-center">
+                    <div className="relative flex gap-1.5 text-sm items-center">
                         <p>•</p>
                         <div id="No delivery" className="relative">
                             <i className="fas fa-shipping-fast text-black"></i>
