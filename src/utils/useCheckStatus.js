@@ -18,13 +18,13 @@ const useCheckStatus = (lat, lng, restaurant_id) => {
                 const opened = info?.availability?.opened;
                 const [latRestro, lngRestro] = info?.latLong?.split(",") || [];
                 
-                console.log(latRestro, latCurrent, lngRestro, lngCurrent)
+                // console.log(latRestro, latCurrent, lngRestro, lngCurrent)
 
                 let distance = haversineFormula(latRestro, latCurrent, lngRestro, lngCurrent);
                 const isDeliverable = distance <= 10;
                 
-                console.log(opened, isDeliverable, distance.toFixed(2))
-                distance = distance.toFixed(2)
+                // console.log(opened, isDeliverable, distance.toFixed(2))
+                distance = distance.toFixed(3)
                 setStatus({opened, isDeliverable, loading: false, distance})
             } catch (err) {
                 console.log("Some error occurred while checking the status", err);

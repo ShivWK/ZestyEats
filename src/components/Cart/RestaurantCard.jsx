@@ -1,28 +1,18 @@
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
-import { selectLatAndLng } from "../../features/home/homeSlice";
 import ItemCard from "./ItemCard";
-import haversineFormula from "./../../utils/haversineFormula";
 import useCheckStatus from "../../utils/useCheckStatus";
 
 const RestaurantCard = ({ data }) => {
-  // console.log(data)
-
   const dispatch = useDispatch();
-  const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
-
   const restaurantData = data[0].metadata || data[0];
   const items = data.slice(1);
   // console.log(restaurantData, items)
 
   const [lat, lng] = restaurantData.latLong.split(",");
-  const distance = haversineFormula(lat, latCurrent, lng, lngCurrent);
 
   const status = useCheckStatus(lat, lng, restaurantData.id);
-  console.log(status);
-
-  const isDeliverable = distance <= 10;
 
   const id = restaurantData.id;
   const name = restaurantData.name;
@@ -35,8 +25,6 @@ const RestaurantCard = ({ data }) => {
 
   const citySmall = restaurantData?.slugs?.city;
   const city = citySmall[0].toUpperCase() + citySmall.slice(1) + ".";
-
-  const opened = restaurantData.availability.opened;
 
   const ClickHandler = () => {
     dispatch(addCurrentRestaurant(name));
@@ -85,7 +73,7 @@ const RestaurantCard = ({ data }) => {
                         (Not delivering to your area)
                       </p>
                       <div className="relative flex gap-1.5 items-center">
-                        <div id="No delivery" className="relative">
+                        <div id="No delivery" className="relative mt-0.5">
                           <i className="fas fa-shipping-fast text-black"></i>
                           <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
                           <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform -rotate-45"></div>
@@ -123,7 +111,7 @@ const RestaurantCard = ({ data }) => {
                   (Not delivering to your area)
                 </p>
                 <div className="relative flex gap-1.5 items-center">
-                  <div id="No delivery" className="relative">
+                  <div id="No delivery" className="relative mt-0.5">
                     <i className="fas fa-shipping-fast text-sm text-black"></i>
                     <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
                     <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div>

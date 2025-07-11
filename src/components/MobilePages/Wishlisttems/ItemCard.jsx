@@ -70,7 +70,7 @@ const ItemCard = ({ item, restro_id }) => {
     );
   };
 
-  console.log("cart", cart);
+  // console.log("cart", cart);
 
   return (
     <div className="border-t-[1px] border-gray-300 p-0.5">
