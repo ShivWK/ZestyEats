@@ -77,7 +77,7 @@ const ItemCard = ({ data: item, restaurantData }) => {
                     )}
                 </div>
                 {item?.description && <div className="pb-0.5 text-gray-800 w-[98%]">
-                    <p className="truncate line-clamp-3 text-sm whitespace-normal hyphens-auto break-all">{item?.description}</p>
+                    <p className="truncate line-clamp-3 text-sm whitespace-normal break-words">{item?.description}</p>
                 </div>
                 }
             </div>

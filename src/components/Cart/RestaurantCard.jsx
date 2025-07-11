@@ -104,7 +104,7 @@ const RestaurantCard = ({ data }) => {
           </div>
           <div className="md:hidden">
             {status.loading ? (
-              <div className="h-4 w-[50%] shimmerBg rounded md:hidden my-0.5" />
+              <div className="h-4 w-[50%] shimmerBg rounded md:hidden my-[3px]" />
             ) : !status.isDeliverable ? (
               <div className="-my-0.5 flex items-center gap-1">
                 <p className="text-red-500 font-medium text-sm">

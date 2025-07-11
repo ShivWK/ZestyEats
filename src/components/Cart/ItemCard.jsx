@@ -43,7 +43,7 @@ const ItemCard = ({ data, restaurantData }) => {
             <i onClick={deleteHandler} className="fa-solid fa-trash-can text-red-400 cursor-pointer"></i>
         </div>
         <div className="flex justify-between bg-white pl-1">
-            <div className="flex flex-col gap-0.5">
+            <div className="flex flex-col gap-1.5">
                 {item.isVeg === 1 ? (
                     <svg
                         width="15"
@@ -121,7 +121,7 @@ const ItemCard = ({ data, restaurantData }) => {
         {isDescriptionOpen && (
             <div className="px-2 pb-0.5 text-gray-600 font-medium">
                 <hr className="text-gray-300 my-1" />
-                <p className="text-sm">{item?.description}</p>
+                <p className="text-sm break-words">{item?.description}</p>
             </div>
         )}
     </div>

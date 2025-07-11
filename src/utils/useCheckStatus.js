@@ -24,7 +24,7 @@ const useCheckStatus = (lat, lng, restaurant_id) => {
                 const isDeliverable = distance <= 10;
                 
                 // console.log(opened, isDeliverable, distance.toFixed(2))
-                distance = distance.toFixed(3)
+                distance = distance.toFixed(2)
                 setStatus({opened, isDeliverable, loading: false, distance})
             } catch (err) {
                 console.log("Some error occurred while checking the status", err);
