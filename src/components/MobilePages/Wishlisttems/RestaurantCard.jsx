@@ -136,7 +136,7 @@ const RestaurantCard = ({ data }) => {
         </p>
 
         {status.loading ? (
-          <div className="h-4 rounded shimmerBg w-[35%] mb-0.5"></div>
+          <div className="h-4 rounded shimmerBg w-[45%] mb-0.5"></div>
         ) : (
           <div className="flex items-center gap-1.5 -mt-0.5">
             <p
