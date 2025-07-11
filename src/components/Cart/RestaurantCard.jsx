@@ -76,7 +76,7 @@ const RestaurantCard = ({ data }) => {
                         <div id="No delivery" className="relative mt-0.5">
                           <i className="fas fa-shipping-fast text-black"></i>
                           <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
-                          <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform -rotate-45"></div>
+                          {/* <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
                         </div>
                         {status.distance && (
                           <p className="text-gray-600 font-normal">
@@ -114,7 +114,7 @@ const RestaurantCard = ({ data }) => {
                   <div id="No delivery" className="relative mt-0.5">
                     <i className="fas fa-shipping-fast text-sm text-black"></i>
                     <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
-                    <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div>
+                    {/* <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
                   </div>
                  {status.distance && <p className="text-gray-600 text-sm">
                     ({status.distance} kms)
@@ -122,7 +122,7 @@ const RestaurantCard = ({ data }) => {
                 </div>
               </div>
             ) : (
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-1 my-[1px]">
                 <p className="text-green-500 font-medium text-sm">
                   (deliverable to your area)
                 </p>

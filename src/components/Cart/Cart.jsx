@@ -45,7 +45,7 @@ const Cart = () => {
         </>
     } else {
         return <>
-            <main className="w-full bg-gray-200">
+            <main className="w-full h-full bg-gray-200">
                 <div className="w-full flex items-center justify-center  md:max-w-[1070px] pt-20 max-md:px-1.5 md:pt-28 pb-12 mx-auto md:px-3">
                    <p>No items in cart</p>
                 </div>
