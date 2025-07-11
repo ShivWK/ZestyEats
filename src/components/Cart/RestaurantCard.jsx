@@ -98,7 +98,7 @@ const RestaurantCard = ({ data }) => {
             ) : (
               <>
                 <div className="h-4 w-[50%] shimmerBg rounded max-md:hidden" />
-                <div className="h-4 w-[15%] shimmerBg rounded md:hidden" />
+                <div className="h-4 w-[22%] shimmerBg rounded md:hidden" />
               </>
             )}
           </div>
