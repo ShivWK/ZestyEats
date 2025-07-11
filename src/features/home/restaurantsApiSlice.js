@@ -28,4 +28,4 @@ const restaurantsApi = createApi({
 
 export default restaurantsApi;
 
-export const { useLazyGetSearchedDishQuery, useGetSearchedDishQuery } = restaurantsApi;
+export const { useLazyGetSearchedDishQuery, useLazyGetSpecificRestaurantDataQuery, useGetSearchedDishQuery } = restaurantsApi;
