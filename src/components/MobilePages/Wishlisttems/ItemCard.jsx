@@ -32,6 +32,8 @@ const ItemCard = ({ item, restro_id }) => {
     <p className="text-sm tracking-tight font-semibold text-gray-800">₹{defaultPrice}</p>
   );
 
+  const isPresentInCart = item.id in cart;
+
   const checkHandler = (e) => {
     if (e.target.checked) {
       dispatch(
@@ -73,12 +75,16 @@ const ItemCard = ({ item, restro_id }) => {
   return (
     <div className="border-t-[1px] border-gray-300 p-0.5">
       <div className="flex justify-between items-center">
-        <input
-          className="h-4 w-4 ml-1 mt-1"
+        {!isPresentInCart ? <input
+          className="h-4 w-4 ml-1 mt-1 mb-1"
           type="checkbox"
           checked={checked}
           onChange={checkHandler}
-        />
+        /> : (
+          <div className="text-xs md:text-sm px-1 py-0.5 border-[1px] border-gray-300 rounded md:rounded-md bg-gray-100 cursor-pointer my-0.5">
+                <p className="text-gray-600">Present in Cart <i className="fa-solid fa-cart-shopping text-blue-500"></i></p>
+            </div>
+        )}
         <div className="cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5 mr-0.5 mt-0.5" onClick={deleteHandler} style={{ backgroundColor: "red" }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -91,7 +97,7 @@ const ItemCard = ({ item, restro_id }) => {
         </div>
       </div>
       <div className="flex justify-between bg-white">
-        <div className="flex flex-col gap-2 p-4">
+        <div className="flex flex-col gap-2 p-1">
           {item.isVeg === 1 ? (
             <svg
               width="15"
@@ -139,7 +145,7 @@ const ItemCard = ({ item, restro_id }) => {
             <div
               onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
               id="moreCities"
-              className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-0.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-1"
+              className="flex gap-2.5 cursor-pointer border-[1px] border-gray-500 px-2 py-0.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-1"
             >
               <p className="font-normal text-sm text-gray-900 select-none">
                 More Details
@@ -165,7 +171,7 @@ const ItemCard = ({ item, restro_id }) => {
       {isDescriptionOpen && (
         <div className="px-2 pb-0.5 text-gray-600 font-medium">
           <hr className="text-gray-300 my-1" />
-          <p>{item?.description}</p>
+          <p className="max-md:text-sm">{item?.description}</p>
         </div>
       )}
     </div>

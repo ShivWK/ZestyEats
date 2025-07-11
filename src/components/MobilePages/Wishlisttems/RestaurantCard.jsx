@@ -34,7 +34,7 @@ const RestaurantCard = ({ data }) => {
     if (areaName === locality) areaOrLocality = locality;
 
     const citySmall = data.restro.metadata?.slugs?.city;
-    const city = citySmall[0].toUpperCase() + citySmall.slice(1);
+    const city = citySmall[0].toUpperCase() + citySmall.slice(1) + ".";
 
     useEffect(() => {
         setItemsCount(itemsToAddInCart[restro_id]?.length || 0);
@@ -122,7 +122,7 @@ const RestaurantCard = ({ data }) => {
             </div>
 
             <div className="flex items-center justify-between">
-                <div className="basis-[40%]">
+                <div className="basis-[43%] border-2">
                     <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
                         <i className="ri-star-fill text-green-700 mb-0.5" />
                         <p>{metadata?.avgRating}</p>
@@ -130,7 +130,7 @@ const RestaurantCard = ({ data }) => {
                         <p>{metadata?.sla?.slaString || "25-30 MINS"}</p>
                     </div>
                 </div>
-                <div className="basis-[60%] flex">
+                <div className="basis-[57%] flex border-2">
                     <button onClick={addItemsToCart} className="bg-green-500 inline-block text-white ml-auto font-semibold px-2 py-0.5 rounded active:scale-95 transition-all duration-100 ease-linear">{`Move ${itemsCount !== 0 ? (itemsCount > 1 ? `${itemsCount} items` : `${itemsCount} item`) : ""} to cart`}</button>
                 </div>
             </div>

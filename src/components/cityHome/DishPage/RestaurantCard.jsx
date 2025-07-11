@@ -10,6 +10,9 @@ const RestaurantCart = ({ data, latLng }) => {
     const dishesData = data.dishes.map(data => data.info);
     const { lat, lng } = latLng;
 
+    let restaurantDataV2 = structuredClone(restaurantData);
+    restaurantDataV2.latLong = `${lat},${lng}`;
+
     const citySmall = restaurantData?.slugs?.city;
     const city = citySmall[0].toUpperCase() + citySmall.slice(1);
     const areaName = restaurantData.areaName;
@@ -47,7 +50,7 @@ const RestaurantCart = ({ data, latLng }) => {
             </div>
             <hr className="text-gray-300 mt-1" />
             <div className="">
-                <HorizontalCarousel showScrollBar={false} dataToMap={dishesData} Card={ItemCard} restaurantData={restaurantData} />
+                <HorizontalCarousel showScrollBar={false} dataToMap={dishesData} Card={ItemCard} restaurantData={restaurantDataV2} />
             </div>
         </div>
     </section>

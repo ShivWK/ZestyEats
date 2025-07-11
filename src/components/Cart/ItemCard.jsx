@@ -1,11 +1,13 @@
 import { useState } from "react";
-import { setItemQuantity } from "../../features/home/restaurantsSlice";
-import { useDispatch } from "react-redux";
+import { setItemQuantity, selectWishlistItems } from "../../features/home/restaurantsSlice";
+import { useDispatch, useSelector } from "react-redux";
 import AddToCartBtn from "./../AddToCartBtn";
 
 const ItemCard = ({ data, restaurantData }) => {
     const dispatch = useDispatch();
     const { item, quantity } = data;
+    const Wishlist = useSelector(selectWishlistItems);
+    const isPresentInWishlist = item.id in Wishlist;
 
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const [isError, setIsError] = useState(false);
@@ -30,8 +32,8 @@ const ItemCard = ({ data, restaurantData }) => {
 
     return <div className="border-[1px] border-gray-300 p-1 pt-2 rounded-md flex flex-col gap-2">
         <div className="flex justify-between items-center">
-            <button className="text-xs md:text-sm px-1 py-0.5 border-[1px] border-gray-300 rounded md:rounded-md bg-gray-100 cursor-pointer">
-                Move to Wishlist <i className="ri-heart-2-fill text-red-500"></i>
+            <button disabled={isPresentInWishlist} className="text-xs md:text-sm px-1 py-0.5 border-[1px] border-gray-300 rounded md:rounded-md bg-gray-100 cursor-pointer">
+                {isPresentInWishlist ? <p className="text-gray-500">Present in Wishlist <i className="ri-heart-2-fill text-red-500"></i></p> : <p>Move to Wishlist <i className="ri-heart-2-fill text-red-500"></i></p>}
             </button>
             <i onClick={deleteHandler} className="fa-solid fa-trash-can text-red-400 cursor-pointer"></i>
         </div>
@@ -97,7 +99,7 @@ const ItemCard = ({ data, restaurantData }) => {
                         ></i>
                     </div>
                 )}
-                
+
             </div>
             <div className="relative h-32 w-32 rounded-xl overflow-hidden shrink-0 m-2">
                 <img
@@ -107,7 +109,7 @@ const ItemCard = ({ data, restaurantData }) => {
                     onError={() => setIsError(true)}
                 />
                 <div className="absolute top-[75%] left-1/2 transform -translate-x-1/2">
-                    <AddToCartBtn data={{restaurantData, item, quantity}} quantityBtnPadding="p-1" number_width="w-8" />
+                    <AddToCartBtn data={{ restaurantData, item, quantity }} quantityBtnPadding="p-1" number_width="w-8" />
                 </div>
             </div>
         </div>
@@ -122,4 +124,4 @@ const ItemCard = ({ data, restaurantData }) => {
 
 export default ItemCard;
 
-{/* <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.63362 8.39604C1.28368 8.7446 1.28368 9.30972 1.63362 9.65828L6.1293 14.1362C6.47924 14.4848 7.0466 14.4848 7.39654 14.1362L12.9543 8.60038C13.1228 8.43251 13.2173 8.20468 13.2168 7.96728L13.2069 3.49924C13.2058 3.00785 12.8061 2.60977 12.3128 2.60868L7.827 2.5988C7.58866 2.59828 7.35993 2.69235 7.1914 2.86022L1.63362 8.39604ZM10.8177 6.90055C11.3458 6.37452 11.3439 5.51976 10.8134 4.99139C10.283 4.46302 9.4248 4.46113 8.89668 4.98717C8.36856 5.5132 8.37045 6.36796 8.90092 6.89633C9.43138 7.4247 10.2895 7.42659 10.8177 6.90055Z" fill="#1BA672"></path></svg> */}
+{/* <svg width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.63362 8.39604C1.28368 8.7446 1.28368 9.30972 1.63362 9.65828L6.1293 14.1362C6.47924 14.4848 7.0466 14.4848 7.39654 14.1362L12.9543 8.60038C13.1228 8.43251 13.2173 8.20468 13.2168 7.96728L13.2069 3.49924C13.2058 3.00785 12.8061 2.60977 12.3128 2.60868L7.827 2.5988C7.58866 2.59828 7.35993 2.69235 7.1914 2.86022L1.63362 8.39604ZM10.8177 6.90055C11.3458 6.37452 11.3439 5.51976 10.8134 4.99139C10.283 4.46302 9.4248 4.46113 8.89668 4.98717C8.36856 5.5132 8.37045 6.36796 8.90092 6.89633C9.43138 7.4247 10.2895 7.42659 10.8177 6.90055Z" fill="#1BA672"></path></svg> */ }

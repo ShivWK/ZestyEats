@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 
 const AddToCartBtn = ({ data, pY = "py-1", pX = "px-8", font_size = '', quantityBtnPadding = "p-2", number_width = "w-9" }) => {
 
+    console.log(data)
+
     const currentRestaurantId = data.restaurantData.metadata?.id || data.restaurantData.id;
     const cart = useSelector(selectCart);
     const dispatch = useDispatch();
@@ -13,10 +15,11 @@ const AddToCartBtn = ({ data, pY = "py-1", pX = "px-8", font_size = '', quantity
 
     const addItemsToCart = ({ action, type = null }) => {
         const [firstKey] = Object.keys(cart);
-        const presentRestaurant = cart[firstKey]?.restaurantData?.metadata?.id;
+        const presentRestaurant = cart[firstKey]?.restaurantData?.metadata?.id || cart[firstKey]?.restaurantData?.id;
 
         if (action === "Add") {
             if (presentRestaurant && (presentRestaurant !== currentRestaurantId)) {
+                console.log("Called");
                 toast.info("Clear cart to add items from this restaurant.", {
                     autoClose: 3000,
                     style: {

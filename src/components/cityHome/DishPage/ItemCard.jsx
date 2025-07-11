@@ -2,7 +2,7 @@ import { useState } from "react";
 import AddToCartBtn from "../../AddToCartBtn";
 
 const ItemCard = ({ data: item, restaurantData }) => {
-    // console.log(item)
+    console.log(restaurantData)
 
     const [isError, setIsError] = useState(false);
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${item?.imageId}`

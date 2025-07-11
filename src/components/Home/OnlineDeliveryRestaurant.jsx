@@ -11,19 +11,19 @@ const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
   const pathname = useLocation().pathname;
   let defaultHeading = "Restaurants with online food delivery";
 
-  if (!heading) {
-    if (pathname.includes("cityPage")) {
-      const secondaryCity = useSelector(selectSecondaryCity);
-      const cityToPrint = secondaryCity[0].toUpperCase() + secondaryCity.slice(1);
+  // if (!heading) {
+  //   if (pathname.includes("cityPage")) {
+  //     const secondaryCity = useSelector(selectSecondaryCity);
+  //     const cityToPrint = secondaryCity[0].toUpperCase() + secondaryCity.slice(1);
 
-      defaultHeading = `Restaurants with online food delivery in ${cityToPrint}`;
-    } else {
-      const currentCity = useSelector(selectCity);
-      const cityToPrint = currentCity[0].toUpperCase() + currentCity.slice(1);
+  //     defaultHeading = `Restaurants with online food delivery in ${cityToPrint}`;
+  //   } else {
+  //     const currentCity = useSelector(selectCity);
+  //     const cityToPrint = currentCity[0].toUpperCase() + currentCity.slice(1);
 
-      defaultHeading = `Restaurants with online food delivery in ${cityToPrint}`;
-    }
-  }
+  //     defaultHeading = `Restaurants with online food delivery in ${cityToPrint}`;
+  //   }
+  // }
 
   const title = heading || defaultHeading;
   const { vegOption, nonVegOption } = useSelector(selectVegVariant);

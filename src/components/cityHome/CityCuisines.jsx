@@ -59,7 +59,7 @@ const MainContent = ({ data }) => {
                     >
                         <OnlineDeliveryRestaurant
                             data={OnlineRestaurantData}
-                            heading={`Restaurants with online food delivery ${onlineDeliveryCity}`}
+                            heading={``}
                         />
                     </Suspense>
                 </section>

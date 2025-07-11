@@ -1,17 +1,17 @@
-import { useLoaderData, Await, useLocation } from "react-router-dom";
-import { Suspense, useState } from "react";
+import { useLoaderData, Await, useLocation, useParams } from "react-router-dom";
+import { Suspense, useEffect, useState } from "react";
 import dishPageDataFetcher from "../../../utils/dishPageDataFetcher";
 import BreadcrumbsWrapper from "../../BreadcrumbsWrapper";
 import ScooterAnimation from "../../../utils/ScooterAnimation";
 import RestaurantCart from "./RestaurantCard";
 import DishShimmer from "./DishShimmer";
+import { useDispatch } from "react-redux";
+import { setSecondaryCity } from "../../../features/cityHome/cityHomeSlice";
 
 const MainData = ({ data }) => {
     // console.log(data)
 
     const mainData = dishPageDataFetcher(data);
-    // console.log(mainData)
-
     const dish = decodeURIComponent(useLocation().pathname.split("/").at(-1));
 
     if (mainData?.data) {
@@ -58,7 +58,13 @@ const MainData = ({ data }) => {
 }
 
 const PopularDishes = () => {
+    const dispatch = useDispatch();
     const { data } = useLoaderData();
+    const { cityName } = useParams();
+
+    useEffect(() => {
+        dispatch(setSecondaryCity(cityName));
+    }, [])
 
     return <Suspense fallback={<DishShimmer />}>
         <Await resolve={data}>
