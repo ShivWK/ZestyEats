@@ -8,16 +8,18 @@ import { selectLatAndLng } from "../../../features/home/homeSlice";
 import haversineFormula from "./../../../utils/haversineFormula";
 
 const RestaurantCard = ({ data }) => {
+    console.log(data)
+
     const metadata = data.restro.metadata;
     const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
-    const [lat, lng] = metadata.latLong.split(",");
+    const [lat, lng] = metadata?.latLong.split(",") || data.restro.latLong.split(",");
 
     const distance = haversineFormula(lat, latCurrent, lng, lngCurrent);
     const notDeliverable = distance > 10;
 
-    const opened = metadata.availability.opened;
-    const restro_id = metadata.id;
-    const name = metadata.name;
+    const opened = metadata?.availability.opened || data.restro.availability.opened;
+    const restro_id = metadata?.id || data.restro.id;
+    const name = metadata?.name || data.restro.name;
     const dispatch = useDispatch();
 
     const cart = useSelector(selectCart);
@@ -27,13 +29,13 @@ const RestaurantCard = ({ data }) => {
 
     const [itemsCount, setItemsCount] = useState(restroItemsArray.length);
 
-    const areaName = data.restro.metadata.areaName;
-    const locality = data.restro.metadata.locality;
+    const areaName = data.restro.metadata?.areaName || data.restro.areaName;
+    const locality = data.restro.metadata?.locality || data.restro.locality;
     let areaOrLocality = locality + ", " + areaName;
 
     if (areaName === locality) areaOrLocality = locality;
 
-    const citySmall = data.restro.metadata?.slugs?.city;
+    const citySmall = data.restro.metadata?.slugs?.city || data.restro.slugs.city;
     const city = citySmall[0].toUpperCase() + citySmall.slice(1) + ".";
 
     useEffect(() => {
@@ -56,7 +58,7 @@ const RestaurantCard = ({ data }) => {
         }
 
         const [firstKey] = Object.keys(cart);
-        const presentRestaurant = cart[firstKey]?.restaurantData?.metadata?.id;
+        const presentRestaurant = cart[firstKey]?.restaurantData?.metadata?.id || cart[firstKey]?.restaurantData?.id;
 
         if (presentRestaurant && presentRestaurant !== restro_id) {
             toast.info("Clear cart to add items from this restaurant.", {
@@ -122,15 +124,15 @@ const RestaurantCard = ({ data }) => {
             </div>
 
             <div className="flex items-center justify-between">
-                <div className="basis-[43%] border-2">
+                <div className="basis-[43%]">
                     <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
                         <i className="ri-star-fill text-green-700 mb-0.5" />
-                        <p>{metadata?.avgRating}</p>
+                        <p>{metadata?.avgRating || data.restro.avgRating}</p>
                         <p>•</p>
-                        <p>{metadata?.sla?.slaString || "25-30 MINS"}</p>
+                        <p>{metadata?.sla?.slaString || data.restro.sla.slaString || "25-30 MINS"}</p>
                     </div>
                 </div>
-                <div className="basis-[57%] flex border-2">
+                <div className="basis-[57%] flex">
                     <button onClick={addItemsToCart} className="bg-green-500 inline-block text-white ml-auto font-semibold px-2 py-0.5 rounded active:scale-95 transition-all duration-100 ease-linear">{`Move ${itemsCount !== 0 ? (itemsCount > 1 ? `${itemsCount} items` : `${itemsCount} item`) : ""} to cart`}</button>
                 </div>
             </div>

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { setItemQuantity, selectWishlistItems } from "../../features/home/restaurantsSlice";
+import { setItemQuantity, selectWishlistItems, addToWishlistItem } from "../../features/home/restaurantsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AddToCartBtn from "./../AddToCartBtn";
 
@@ -30,9 +30,13 @@ const ItemCard = ({ data, restaurantData }) => {
         <p className="text-sm tracking-tight font-semibold text-gray-800">₹{""}{defaultPrice}</p>
     );
 
+    const moveToWishlistHandler = () => {
+        dispatch(addToWishlistItem({restaurantData, item, quantity: 1}))
+    }
+
     return <div className="border-[1px] border-gray-300 p-1 pt-2 rounded-md flex flex-col gap-2">
         <div className="flex justify-between items-center">
-            <button disabled={isPresentInWishlist} className="text-xs md:text-sm px-1 py-0.5 border-[1px] border-gray-300 rounded md:rounded-md bg-gray-100 cursor-pointer">
+            <button disabled={isPresentInWishlist} onClick={moveToWishlistHandler} className="text-xs md:text-sm px-1 py-0.5 border-[1px] border-gray-300 rounded md:rounded-md bg-gray-100 cursor-pointer">
                 {isPresentInWishlist ? <p className="text-gray-500">Present in Wishlist <i className="ri-heart-2-fill text-red-500"></i></p> : <p>Move to Wishlist <i className="ri-heart-2-fill text-red-500"></i></p>}
             </button>
             <i onClick={deleteHandler} className="fa-solid fa-trash-can text-red-400 cursor-pointer"></i>

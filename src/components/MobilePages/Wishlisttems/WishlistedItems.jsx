@@ -6,12 +6,12 @@ import Loader from "./../../Loader";
 
 const WishlistedItems = () => {
     const wishlistItems = useSelector(selectWishlistItems);
-    // console.log(wishlistItems)
+    console.log(wishlistItems)
     const [wishlist, setWishlist] = useState(null);
     const wishlistItemsMap = new Map();
 
     Object.values(wishlistItems).forEach(({ restaurantData, item }) => {
-        const key = restaurantData.metadata.id;
+        const key = restaurantData.metadata?.id || restaurantData.id;
 
         if (!wishlistItemsMap.has(key)) {
             wishlistItemsMap.set(key, { restro: restaurantData, item: [item] })
@@ -25,11 +25,9 @@ const WishlistedItems = () => {
         setWishlist(wishlistArray);
     }, [wishlistItems])
 
-    //console.log(wishlist)
-
     return <div>
         {wishlist ? (wishlist.length !== 0
-            ? (wishlist.map(data => <RestaurantCard key={data.restro.metadata.id} data={data} />))
+            ? (wishlist.map(data => <RestaurantCard key={data.restro.metadata?.id || data.restro.id} data={data} />))
             : <p className="text-center text-gray-700 font-semibold my-3">No items in wishlist.</p>)
             : <div className="flex items-center justify-center py-3">
                 <Loader size="small" />
