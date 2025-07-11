@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 const AddToCartBtn = ({ data, pY = "py-1", pX = "px-8", font_size = '', quantityBtnPadding = "p-2", number_width = "w-9" }) => {
 
-    console.log(data)
+    // console.log(data)
 
     const currentRestaurantId = data.restaurantData.metadata?.id || data.restaurantData.id;
     const cart = useSelector(selectCart);

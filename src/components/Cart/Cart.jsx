@@ -13,7 +13,7 @@ const Cart = () => {
         cart.push(mainCart[0].restaurantData);
         cart.reverse();
 
-        console.log(cart)
+        // console.log(cart)
 
         return <>
             <main className="w-full h-full bg-gray-200">

@@ -6,13 +6,13 @@ import ItemCard from "./ItemCard";
 import haversineFormula from "./../../utils/haversineFormula";
 
 const RestaurantCard = ({ data }) => {
-    console.log(data)
+    // console.log(data)
     const dispatch = useDispatch();
     const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
 
     const restaurantData = data[0].metadata || data[0];
     const items = data.slice(1);
-    console.log(restaurantData, items)
+    // console.log(restaurantData, items)
 
     const [lat, lng] = restaurantData.latLong.split(",");
     const distance = haversineFormula(lat, latCurrent, lng, lngCurrent);

@@ -8,7 +8,7 @@ import { selectLatAndLng } from "../../../features/home/homeSlice";
 import haversineFormula from "./../../../utils/haversineFormula";
 
 const RestaurantCard = ({ data }) => {
-    console.log(data)
+    // console.log(data)
 
     const metadata = data.restro.metadata;
     const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
