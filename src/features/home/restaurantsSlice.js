@@ -132,14 +132,9 @@ const restaurantSlice = createSlice({
     },
 
     setItemQuantity: (state, action) => {
-          // console.log("reducer called")
-
       const { id, type } = action.payload;
-      // console.log(type, id)
 
       if (!state.cart[id]) return;
-
-      // console.log("Item hai")
 
       if (type === "plus") {
         state.cart[id].quantity += 1;
@@ -147,8 +142,6 @@ const restaurantSlice = createSlice({
         if (type === "minus") {
           state.cart[id].quantity -= 1;
         } else {
-
-          console.log("reducer inner called")
           state.cart[id].quantity = 0;
         }
 

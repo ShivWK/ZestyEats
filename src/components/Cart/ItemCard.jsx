@@ -31,7 +31,8 @@ const ItemCard = ({ data, restaurantData }) => {
     );
 
     const moveToWishlistHandler = () => {
-        dispatch(addToWishlistItem({restaurantData, item, quantity: 1}))
+        dispatch(addToWishlistItem({restaurantData, item, quantity: 1}));
+        deleteHandler();
     }
 
     return <div className="border-[1px] border-gray-300 p-1 pt-2 rounded-md flex flex-col gap-2">

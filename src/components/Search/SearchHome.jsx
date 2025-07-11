@@ -56,11 +56,11 @@ const MainContent = ({ data }) => {
     }
   }
 
-  console.log(query, suggestionsData, isLoading);
+  // console.log(query, suggestionsData, isLoading);
 
   const dataToMap = suggestionsData?.length !== 0 ? suggestionsData : storeSuggestionsData;
 
-  console.log("mapping", suggestionsData, "qury", query, storeSuggestionsData)
+  // console.log("mapping", suggestionsData, "qury", query, storeSuggestionsData)
 
   return ((searchTerm !== "" || query) ? (
     (isLoading || suggestionLoading) ?
