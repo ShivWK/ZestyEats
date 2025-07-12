@@ -88,7 +88,7 @@ const RestaurantCard = ({ data }) => {
                   ) : (
                     <div className="flex items-center gap-1">
                       <p className="text-green-500 font-medium">
-                        (deliverable to your area)
+                        (delivering to your area)
                       </p>
                       <i className="fas fa-shipping-fast text-black mt-0.5"></i>
                     </div>
