@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import updateCityHomeData from "../../utils/updateCityHomeData";
 import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
@@ -13,6 +13,22 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
   const first6Cities = cities.slice(0, 6);
   const remainingCities = cities.length - 6;
   const dispatch = useDispatch();
+
+  const [isSmall, setIsSmall] = useState(true);
+
+  useEffect(() => {
+    const handelResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsSmall(true);
+      } else {
+        setIsSmall(false);
+      }
+    }
+    handelResize()
+
+    window.addEventListener("resize", handelResize);
+    return () => window.removeEventListener("resize", handelResize);
+  }, [])
 
   const clickHandler = async (city, cityPath) => {
     dispatch(setSecondaryCity(city));
@@ -82,7 +98,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
         <p className="font-medium text-lg text-black mb-3">Contact us</p>
         <ul className="list-none text-gray-900 font-normal">
           <li className="mb-3">
-            <NavLink to="/help">Help & Support</NavLink>
+            <NavLink to={isSmall ? "/support?mode=help" : "/help"}>Help & Support</NavLink>
           </li>
         </ul>
       </div>
