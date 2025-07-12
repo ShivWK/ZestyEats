@@ -15,6 +15,8 @@ const Billing = () => {
     const [distance, setDistance] = useState(0);
     const [deliveryFee, setDeliveryFee] = useState(30)
 
+    const [openInfo, setOpenInfo] = useState(false);
+
     const packagingCharge = 35;
     const platformFee = 5;
 
@@ -24,7 +26,7 @@ const Billing = () => {
     useEffect(() => {
         const cartItem = Object.values(cart);
         const [latRestro, lngRestro] = cartItem[0].restaurantData.metadata?.latLong.split(",") ||
-                                       cartItem[0].restaurantData.latLong.split(",");
+            cartItem[0].restaurantData.latLong.split(",");
 
         const distance = (haversineFormula(latRestro, latCurrent, lngRestro, lngCurrent)).toFixed(2);
         setDistance(distance);
@@ -63,8 +65,13 @@ const Billing = () => {
         setCouponsOpen(!couponsOpen)
     }
 
+    const containerClickHandler = () => {
+        setCouponsOpen(false);
+        setOpenInfo(false)
+    }
+
     return <section className="rounded-md md:basis-[39%] bg-white p-2 md:p-5">
-        <div onClick={() => setCouponsOpen(false)} className="h-full w-full flex flex-col gap-4">
+        <div onClick={containerClickHandler} className="h-full w-full flex flex-col gap-4">
             <h2 className="font-sans text-xl font-semibold underline underline-offset-4">Bill Details</h2>
             <div onClick={handlerCouponClick} id="coupon" className="flex items-center justify-between px-3 h-14 border-[1px] border-dashed cursor-pointer">
                 <div className="flex items-center gap-3">
@@ -85,14 +92,35 @@ const Billing = () => {
                 </div>
                 <div className="flex justify-between py-1">
                     <p className="text-gray-600 flex items-center gap-0.5">
-                        <span>Delivery Fee</span> 
+                        <span>Delivery Fee</span>
                         <span>┃</span>
                         <span>{distance} kms</span>
                     </p>
                     <span className="text-gray-700 font-semibold">₹{deliveryFee}</span>
                 </div>
-                <div className="flex justify-between py-1 border-t-[1px] mt-2 border-gray-400 border-dashed">
-                    <span className="text-gray-600">GST & Other Charges</span>
+                <div className="flex justify-between py-1 pt-1.5 border-t-[1px] mt-2 border-gray-400 border-dashed">
+                    <p className="relative flex gap-1 items-center">
+                        <span className="text-gray-600">GST & Other Charges</span>
+                        <i onClick={(e) => {
+                            e.stopPropagation()
+
+                            if (window.innerWidth > 768) return;
+                            setOpenInfo(!openInfo)
+                        }}
+                            className="ri-information-2-line cursor-pointer text-[16px]"
+                            onMouseEnter={() => setOpenInfo(true)}
+                            onMouseLeave={() => setOpenInfo(false)}
+                        />
+
+                        <div onBlur={(e) => e.stopPropagation()} id="dropdown" className="absolute -top-[520%] left-3/4 h-28 w-40 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white" style={{
+                            display: openInfo ? "block" : "none"
+                        }}>
+                            <div onClick={(e) => e.stopPropagation()} className="relative h-full">
+                                <p className="break-words">Shivendra Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, recusandae!</p>
+                                <div className="absolute top-[108%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
+                            </div>
+                        </div>
+                    </p>
                     <span className="text-gray-700 font-semibold">₹{GSTAndOther}</span>
                 </div>
                 <div className="flex justify-between py-2 border-t mt-2 pt-2">

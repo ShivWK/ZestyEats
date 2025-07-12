@@ -43,53 +43,54 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             ) : (
               isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95" />
             )}
-            <div
-              className="absolute rounded top-[120%] left-1/2 transform -translate-x-1/2 p-1 bg-white shadow-[0_0_5px_1px_#6a7282] text-sm"
-              style={{
-                display: showDrop ? "block" : "none",
-              }}
-            >
-              <ul className="list-none">
-                <li
-                  onClick={(e) => {
-                    setTheme("Light");
-                  }}
-                  className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
-                  style={{
-                    backgroundColor: theme === "Light" ? "#e5e7eb" : "",
-                    color: theme === "Light" ? "black" : ""
-                  }}
-                >
-                  <i className="fa-solid fa-sun "></i>
-                  <span>Light</span>
-                </li>
-                <li
-                  onClick={(e) => {
-                    setTheme("Dark");
-                  }}
-                  className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
-                  style={{
-                    backgroundColor: theme === "Dark" ? "#e5e7eb" : "",
-                    color: theme === "Dark" ? "black" : ""
-                  }}
-                >
-                  <i className="ri-moon-fill"></i>
-                  <span>Dark</span>
-                </li>
-                <li
-                  onClick={(e) => {
-                    setTheme("System");
-                  }}
-                  className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
-                  style={{
-                    backgroundColor: theme === "System" ? "#e5e7eb" : "",
-                    color: theme === "System" ? "black" : ""
-                  }}
-                >
-                  {isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill"></i>}
-                  <span>System</span>
-                </li>
-              </ul>
+
+            <div className="absolute rounded top-[135%] drop-shadow-[0_0_5px_#6a7282] left-1/2 transform -translate-x-1/2 p-1 bg-white " style={{
+              display: showDrop ? "block" : "none",
+            }}>
+              <div className="relative text-sm">
+                <ul className="list-none">
+                  <li
+                    onClick={(e) => {
+                      setTheme("Light");
+                    }}
+                    className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                    style={{
+                      backgroundColor: theme === "Light" ? "#e5e7eb" : "",
+                      color: theme === "Light" ? "black" : ""
+                    }}
+                  >
+                    <i className="fa-solid fa-sun "></i>
+                    <span>Light</span>
+                  </li>
+                  <li
+                    onClick={(e) => {
+                      setTheme("Dark");
+                    }}
+                    className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                    style={{
+                      backgroundColor: theme === "Dark" ? "#e5e7eb" : "",
+                      color: theme === "Dark" ? "black" : ""
+                    }}
+                  >
+                    <i className="ri-moon-fill"></i>
+                    <span>Dark</span>
+                  </li>
+                  <li
+                    onClick={(e) => {
+                      setTheme("System");
+                    }}
+                    className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                    style={{
+                      backgroundColor: theme === "System" ? "#e5e7eb" : "",
+                      color: theme === "System" ? "black" : ""
+                    }}
+                  >
+                    {isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill"></i>}
+                    <span>System</span>
+                  </li>
+                </ul>
+                <div id="triangle" className="absolute -top-3 left-1/2 -translate-x-1/2 h-0 w-0 border-b-[12px] border-b-white border-l-[12px] border-r-[12px] border-l-transparent border-r-transparent "></div>
+              </div>
             </div>
           </button>
         </li>
