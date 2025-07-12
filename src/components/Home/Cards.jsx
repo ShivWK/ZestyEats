@@ -167,11 +167,11 @@ const Cards = memo(({ data, from }) => {
           />
         )}
         <p
-          className={`mt-0.5 max-h-14 text-sm line-clamp-2 text-gray-800 break-words whitespace-normal font-semibold max-md:w-[85%] leading-0.5" ${
+          className={`mt-0.5 max-h-14 text-sm line-clamp-2 text-gray-700 break-words whitespace-normal font-semibold max-md:w-[85%] leading-0.5" ${
             from === "online" ? "max-md:w-[85%]" : "max-md:w-[75%]"
           }`}
         >
-          {dataToMap?.cuisines?.join(", ") || ""}
+          {dataToMap?.cuisines?.join(", ") || ""}{"."}
         </p>
         <p className="font-medium md:truncate max-md:text-sm text-black mt-0.5 max-md:line-clamp-2 max-md:max-w-[80%] break-words capitalize">
           {address}{"."}

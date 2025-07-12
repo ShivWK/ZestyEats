@@ -34,7 +34,7 @@ const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
         <h3>{title}</h3>
         <Filter />
       </div>
-      <div className="flex flex-wrap gap-y-7 gap-x-8 justify-start w-full mt-8 mx-auto">
+      <div className="flex flex-wrap gap-y-7 gap-x-8 justify-start w-full mt-8 mx-auto max-md:pl-1">
         {data.map(item => {
           const variant = item?.info?.veg ? "veg" : "non-veg";
 
