@@ -35,6 +35,8 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             onBlur={() => setShowDrop(false)}
             onClick={() => setShowDrop(!showDrop)}
             className="group relative cursor-pointer text-xl"
+            // onMouseEnter={() => setShowDrop(true)}
+            // onMouseLeave={() => setShowDrop(false)}
           >
             {theme === "Light" ? (
               <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
