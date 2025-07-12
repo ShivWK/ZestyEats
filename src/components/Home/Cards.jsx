@@ -148,10 +148,10 @@ const Cards = memo(({ data, from }) => {
         </div>
       </div>
       <div className="md:mt-2 w-[95%] max-md:basis-1/2 max-md:py-2">
-        <p className="font-bold w-[95%] text-[17px] line-clamp-3 break-words leading-5">
+        <p className="font-bold w-[98%] text-[17px] line-clamp-3 break-words leading-5">
           {textToZestyEats(dataToMap?.name) || ""}
         </p>
-        <div className="flex gap-1 items-center -mt-0.5">
+        <div className="flex gap-1 items-center -mt-0.5 max-md:text-sm">
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
           <p className="font-semibold">{dataToMap?.avgRatingString || ""}</p>
           <p className="">•</p>
