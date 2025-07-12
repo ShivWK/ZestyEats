@@ -6,10 +6,11 @@ import Ui2Shimmer from "./Ui2Shimmer";
 import useScrollToTop from "../../utils/useScrollToTop";
 import { selectSuggestions, selectSuggestionsLoading } from "../../features/search/homeSearchSlice";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const MainContent = () => {
     const data = useSelector(selectSuggestions);
-    console.log(data)
+    const [isError , setIsError] = useState(false)
 
     const query = data?.data?.query;
     const suggestionsData = data?.data?.suggestions;
@@ -41,10 +42,11 @@ const MainContent = () => {
                         <NavLink to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 hover:bg-gray-200 rounded cursor-pointer border-[1px] border-gray-300">
                             <img
                                 className="rounded"
-                                src={imageUrl}
+                                src={ isError ? "/images/fallback.png" : imageUrl}
                                 alt="Image rendered"
                                 height={70}
                                 width={70}
+                                onError={() => setIsError(true)}
                             />
                             <div className="flex flex-col justify-center">
                                 <p className="font-bold">{item?.text}</p>

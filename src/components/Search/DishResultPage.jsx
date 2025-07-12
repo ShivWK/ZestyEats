@@ -166,9 +166,6 @@ const Card = ({ data, lat, lng }) => {
                         alt={dishData?.name}
                         onError={() => setIsError(true)}
                     />
-                    {/* <button className="absolute py-1 px-8 rounded bg-green-400 text-white font-semibold tracking-tight mt-auto top-[75%] transform -translate-x-1/2 left-1/2 cursor-pointer active:scale-95 transition-all duration-150 ease-in-out ">
-                        Add
-                    </button> */}
                     <div className="absolute top-[75%] transform -translate-x-1/2 left-1/2 ">
                         <AddToCartBtn data={{restaurantData: restaurantDataToWishlist, item: dishData, quantity: 1}} />
                     </div>
@@ -198,7 +195,6 @@ const MainContent = ({ data, lat, lng, mode }) => {
     useScrollToTop();
     const { vegOption, nonVegOption } = useSelector(selectVegVariant);
 
-    // console.log(data);
     const cards =
         mode === "parent"
             ? data?.data?.data?.cards?.[1].groupedCard?.cardGroupMap?.DISH?.cards.slice(

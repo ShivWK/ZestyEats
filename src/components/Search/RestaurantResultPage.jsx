@@ -80,8 +80,6 @@ const MainContent = ({ data, lat, lng, mode }) => {
       : data?.data?.data?.cards?.[0]?.groupedCard?.cardGroupMap?.RESTAURANT
         ?.cards;
 
-  // console.log("cards", cards)
-
   const clickedRestro = cards?.[0]?.card?.card?.info;
 
   const moreRestrosCardContainer = cards?.[1]?.card?.card;

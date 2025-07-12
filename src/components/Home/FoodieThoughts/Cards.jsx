@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { selectLatAndLng } from "../../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -6,6 +6,7 @@ import { setCurrentFoodCategory } from "../../../features/header/headerSlice";
 import { selectCityLatAndLng, selectLocalityLatAndLng } from "../../../features/cityHome/cityHomeSlice";
 
 const Cards = memo(({ data }) => {
+  const [isError, setIsError] = useState(false)
   const pathname = useLocation().pathname;
   let latLngSelector = selectLatAndLng;
 
@@ -32,8 +33,9 @@ const Cards = memo(({ data }) => {
     <Link to={path} onClick={handleClick} className="shrink-0 w-28 md:w-36">
       <img
         className="w-full h-32 my-3 md:my-2 md:h-44 rounded object-cover"
-        src={`https://media-assets.swiggy.com/swiggy/image/upload/${data?.imageId}`}
+        src={isError ? "/images/fallback.png" : `https://media-assets.swiggy.com/swiggy/image/upload/${data?.imageId}`}
         alt={data?.accessibility?.altText}
+        onError={() => setIsError(true)}
       />
     </Link>
   );
