@@ -185,9 +185,9 @@ const Card = ({ data, lat, lng }) => {
                 </div>
             </div>
             {isDescriptionOpen && (
-                <div className="px-2 text-gray-600 font-medium">
+                <div className="px-2 text-gray-700 font-medium">
                     <hr className="text-gray-300 my-1" />
-                    <p>{dishData?.description}</p>
+                    <p className="max-md:text-sm">{dishData?.description}</p>
                 </div>
             )}
         </div>
