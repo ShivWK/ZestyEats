@@ -212,26 +212,26 @@ const Billing = () => {
                   className="relative h-full"
                 >
                   <div>
-                    <p className="break-words text-xs font-semibold">
+                    <p className="break-words text-xs font-semibold text-black">
                       GST & Other Charges
                     </p>
-                    <div className="flex items-center font-normal justify-between text-xs text-gray-600 mt-2">
-                      <p className="text-gray-800">Restaurant Packaging</p>
+                    <div className="flex items-center font-normal justify-between text-xs text-black mt-2">
+                      <p>Restaurant Packaging</p>
                       <p>₹{packagingCharge}</p>
                     </div>
-                    <div className="flex items-center font-normal justify-between text-xs text-gray-600 mt-1.5">
-                      <p className="text-gray-800">GST(5%)</p>
+                    <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
+                      <p>GST(5%)</p>
                       <p>₹{+GST.toFixed(2)}</p>
                     </div>
-                    <p className="text-[11px] w-[80%] max-md:leading-3.5">
+                    <p className="text-[11px] w-[80%] leading-3.5 text-gray-700" >
                       A government tax calculated as 5% of the total item cost.
                     </p>
 
-                    <div className="flex items-center font-normal justify-between text-xs text-gray-600 mt-1.5">
-                      <p className="text-gray-800">Platform Fee</p>
+                    <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
+                      <p>Platform Fee</p>
                       <p>₹{platformFee}</p>
                     </div>
-                    <p className="text-[11px] w-[80%] max-md:leading-3.5">
+                    <p className="text-[11px] w-[80%] leading-3.5 text-gray-700">
                       A fixed service charge to support app maintenance and
                       operations.
                     </p>
