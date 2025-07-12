@@ -32,7 +32,7 @@ const RestaurantCard = ({ data }) => {
 
   return (
     <section className="md:basis-[59%] flex flex-col gap-2">
-      <div className="bg-white rounded-md p-2">
+      <div className="bg-white rounded-md p-2 pb-3">
         <div className="w-full flex flex-col gap-1">
           <Link
             to={`/restaurantSpecific/${lat}/${lng}/${id}/${name}`}

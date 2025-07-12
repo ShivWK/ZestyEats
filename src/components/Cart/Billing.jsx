@@ -80,7 +80,7 @@ const Billing = () => {
   };
 
   return (
-    <section className="rounded-md md:basis-[39%] bg-white p-2 md:p-5">
+    <section className="rounded-md md:basis-[39%] bg-white p-2 md:p-5 self-start">
       <div
         onClick={containerClickHandler}
         className="h-full w-full flex flex-col gap-4"
@@ -111,8 +111,10 @@ const Billing = () => {
         <div
           className={`-mt-3 bg-gray-200 rounded-md ${
             couponsOpen ? "h-18" : "h-0"
-          } transition-all duration-150 ease-linear`}
-        ></div>
+          } transition-all duration-150 ease-linear flex items-center justify-center`}
+        >
+          <p className={`${couponsOpen ? "block" : "hidden"} text-sm text-gray-900 font-semibold break-words`}>We are working on coupons</p>
+        </div>
 
         <div className="text-sm">
           <div className="flex justify-between py-1">
