@@ -66,7 +66,7 @@ const MainContent = () => {
                     </div>
                     <div className="flex items-center">
                         <p>
-                            See all dishes and restaurants for <span className="font-bold">{decodeURI(query)}</span>
+                            See all results for <span className="font-bold">{decodeURI(query)}</span>
                         </p>
                     </div>
                 </NavLink>
