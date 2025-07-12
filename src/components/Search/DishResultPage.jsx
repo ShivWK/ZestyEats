@@ -78,10 +78,10 @@ const Card = ({ data, lat, lng }) => {
             <NavLink
                 to={path}
                 onClick={() => handleClick(restaurantData?.name)}
-                className="flex group justify-between items-center p-3 w-full cursor-pointer"
+                className="flex group items-center justify-between p-3 w-full cursor-pointer"
             >
-                <div className="basis-[90%] md:basis-[95%]">
-                    <p className="font-bold text-gray-800 w-full truncate overflow-hidden">
+                <div className="basis-[95%]">
+                    <p className="font-bold text-gray-800 line-clamp-2 leading-5 md:w-full break-words">
                         {restaurantData?.name}
                     </p>
                     <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
@@ -93,7 +93,7 @@ const Card = ({ data, lat, lng }) => {
                         <p>{restaurantData?.costForTwoMessage}</p>
                     </div>
                 </div>
-                <i className="basis-[5%] ri-arrow-right-long-fill text-2xl text-gray-600 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
+                <i className="basis-[3%] md:basis-[5%]  ri-arrow-right-long-fill text-2xl text-gray-600 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
             </NavLink>
             <hr className="text-gray-300 my-1.5" />
             <div className="flex justify-between bg-white">
