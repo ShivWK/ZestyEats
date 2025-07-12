@@ -80,7 +80,7 @@ const Billing = () => {
   };
 
   return (
-    <section className="rounded-md md:basis-[39%] bg-white p-2 md:p-5 self-start">
+    <section className="rounded-md md:basis-[39%] bg-white p-2 md:p-5 md:self-start">
       <div
         onClick={containerClickHandler}
         className="h-full w-full flex flex-col gap-4"

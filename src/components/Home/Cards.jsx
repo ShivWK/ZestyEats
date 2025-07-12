@@ -103,7 +103,6 @@ const Cards = memo(({ data, from }) => {
           disable ? "flex" : "hidden"
         } items-center justify-center h-full w-full bg-[rgba(0,0,0,0.4)]`}
       >
-        \
         <div className="flex flex-col gap-1 items-center justify-center">
           <p className="text-white font-bold text-3xl">Not Available</p>
           <i
@@ -114,7 +113,7 @@ const Cards = memo(({ data, from }) => {
       </div>
 
       <div
-        className={`relative w-full max-md:basis-1/2 h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 pl-4 shrink-0 max-md:max-h-full max-md:min-h-56 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${
+        className={`relative w-full max-md:basis-[48%] h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 pl-4 shrink-0 max-md:max-h-full max-md:min-h-52 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${
           from === "online"
             ? "md:h-[160px]"
             : from === "specificFood"
@@ -149,7 +148,7 @@ const Cards = memo(({ data, from }) => {
         </div>
       </div>
       <div className="md:mt-2 w-[95%] max-md:basis-1/2 max-md:py-2">
-        <p className="font-bold text-[17px] line-clamp-3">
+        <p className="font-bold w-[95%] text-[17px] line-clamp-3 break-words leading-5">
           {textToZestyEats(dataToMap?.name) || ""}
         </p>
         <div className="flex gap-1 items-center -mt-0.5">
@@ -168,14 +167,14 @@ const Cards = memo(({ data, from }) => {
           />
         )}
         <p
-          className={`mt-0.5 max-h-14 line-clamp-2 font-semibold text-gray-700 break-words whitespace-normal "max-md:w-[85%] leading-0.5" ${
+          className={`mt-0.5 max-h-14 text-sm line-clamp-2 text-gray-800 break-words whitespace-normal font-semibold max-md:w-[85%] leading-0.5" ${
             from === "online" ? "max-md:w-[85%]" : "max-md:w-[75%]"
           }`}
         >
           {dataToMap?.cuisines?.join(", ") || ""}
         </p>
-        <p className="font-semibold text-gray-900 mt-0.5 truncate max-md:max-w-[80%]">
-          {address}
+        <p className="font-medium md:truncate max-md:text-sm text-black mt-0.5 max-md:line-clamp-2 max-md:max-w-[80%] break-words capitalize">
+          {address}{"."}
         </p>
       </div>
     </Link>
