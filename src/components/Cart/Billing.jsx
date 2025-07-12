@@ -116,7 +116,7 @@ const Billing = () => {
                             display: openInfo ? "block" : "none"
                         }}>
                             <div onClick={(e) => e.stopPropagation()} className="relative h-full">
-                                <p className="break-words">Shivendra Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, recusandae!</p>
+                                <p className="break-words text-xs">Shivendra Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil, recusandae!</p>
                                 <div className="absolute top-[108%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                             </div>
                         </div>
