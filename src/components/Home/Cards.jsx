@@ -90,7 +90,7 @@ const Cards = memo(({ data, from }) => {
     <Link
       to={`/restaurantSpecific/${lat}/${lng}/${dataToMap?.id}/${dataToMap?.name}?mode=${mode}`}
       onClick={handleClick}
-      className={`relative flex flex-row md:flex-col max-md:gap-3 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
+      className={`relative flex flex-row md:flex-col max-md:gap-4 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
         from === "online"
           ? "md:w-[240px]"
           : from === "specificFood"

@@ -74,13 +74,13 @@ const Card = ({ data, lat, lng }) => {
     }
 
     return (
-        <div className="max-md:basis-full md:basis-[49%] pb-1 border-2 border-gray-300 rounded-md bg-white">
+        <div className="max-md:basis-full md:basis-[49%] pb-1 rounded-md bg-white">
             <NavLink
                 to={path}
                 onClick={() => handleClick(restaurantData?.name)}
                 className="flex group justify-between items-center p-3 w-full cursor-pointer"
             >
-                <div className="basis-[95%]">
+                <div className="basis-[90%] md:basis-[95%]">
                     <p className="font-bold text-gray-800 w-full truncate overflow-hidden">
                         {restaurantData?.name}
                     </p>
