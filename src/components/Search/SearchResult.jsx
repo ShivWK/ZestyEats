@@ -34,7 +34,7 @@ const SearchResult = () => {
   const dishPath = `dishPage?lat=${lat}&lng=${lng}&str=${nameRef.current}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab`;
 
   return (
-    <div>
+    <div className="pb-16">
       <div className="sticky top-[160px] md:top-[180px] flex gap-3 py-3 w-full z-20 bg-white">
         <NavLink
           to={restroPath}

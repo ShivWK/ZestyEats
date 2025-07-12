@@ -1,11 +1,10 @@
 import SearchContainer from "../SearchContainer";
-import { useEffect, useRef, useState } from "react";
-import { Outlet, useNavigate, useSearchParams } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Outlet, useSearchParams } from "react-router-dom";
 import createDebounce from "../../utils/debounceCreater";
 import { useDispatch } from "react-redux";
 import { setSuggestionsLoading, setSuggestions } from "../../features/search/homeSearchSlice";
 import { useLazyGetSearchedFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
-import { distance2D } from "motion";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
