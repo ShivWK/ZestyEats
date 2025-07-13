@@ -134,14 +134,14 @@
         font-size: 27px;
     }
 
-    h3 {
-        font-weight: 750;
-        font-size: 25px;
-    }
-
     h2 {
         font-weight: 750;
         font-size: 21px;
+    }
+
+    h3 {
+        font-weight: 750;
+        font-size: 25px;
     }
 }
 
@@ -177,5 +177,10 @@ body {
 
     .pretty-scrollbar::-webkit-scrollbar {
         width: 0.8vw;
+    }
+
+    h3 {
+        font-weight: 750;
+        font-size: 21px;
     }
 }

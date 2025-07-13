@@ -34,7 +34,7 @@ const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, sh
   return (
     <>
       {showHeading && <h3 className="self-start">{title}</h3>}
-      <div id="dd" ref={containerRef} className="flex flex-wrap w-full justify-start gap-y-5 md:gap-x-8 gap-x-2.5">
+      <div id="dd" ref={containerRef} className="flex max-md:pl-1 flex-wrap w-full justify-start gap-y-5 md:gap-x-8 gap-x-2.5">
         {shownCards.map((item) => (
           <PlaceCards key={item.link + Math.random()} data={item} clickHandler={clickHandler} path={path} targetedCity={targetedCity} />
         ))}
