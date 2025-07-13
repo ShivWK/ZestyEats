@@ -77,7 +77,7 @@ const Home = memo(() => {
         {/* Home banner */}
 
         <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-36 md:h-64 mx-auto">
-          <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full " alt="Home banner image" />
+          <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full md:object-cover" alt="Home banner image" />
         </div>
 
         {/* Foodie thoughts */}
