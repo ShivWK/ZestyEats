@@ -132,7 +132,7 @@ const Billing = () => {
                   setOpenDeliveryInfo(!openDeliveryInfo);
                 }}
                 className={`${openDeliveryInfo ? "ri-close-circle-fill" : "ri-information-2-line"
-                  } cursor-pointer text-[16px] text-black ml-0.5 mb-0.5`}
+                  } cursor-pointer text-[16px] text-black ml-0.5`}
                 onMouseEnter={() => setOpenDeliveryInfo(true)}
                 onMouseLeave={() => setOpenDeliveryInfo(false)}
               />
@@ -140,7 +140,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="delivery_dropdown"
-                className="absolute -top-[280%] left-[78%] h-16 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[310%] left-[78%] h-16 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openDeliveryInfo ? "block" : "none",
                 }}
@@ -174,7 +174,7 @@ const Billing = () => {
                   setOpenInfo(!openInfo);
                 }}
                 className={`${openInfo ? "ri-close-circle-fill" : "ri-information-2-line"
-                  } cursor-pointer text-[16px] mb-0.5`}
+                  } cursor-pointer text-[16px]`}
                 onMouseEnter={() => setOpenInfo(true)}
                 onMouseLeave={() => setOpenInfo(false)}
               />
@@ -182,7 +182,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="dropdown"
-                className="absolute -top-[734%] left-[75.52%] h-44 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[797%] left-[75.52%] h-44 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openInfo ? "block" : "none",
                 }}
