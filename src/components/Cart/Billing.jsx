@@ -1,7 +1,7 @@
 import Construction from "../../utils/Construction";
 import { selectCart } from "../../features/home/restaurantsSlice";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { Rotate3D } from "lucide-react";
 import haversineFormula from "./../../utils/haversineFormula";
@@ -16,6 +16,7 @@ const Billing = () => {
   const [deliveryFee, setDeliveryFee] = useState(30);
 
   const [openInfo, setOpenInfo] = useState(false);
+  const [openDeliveryInfo, setOpenDeliveryInfo] = useState(false);
 
   const packagingCharge = 35;
   const platformFee = 5;
@@ -109,9 +110,8 @@ const Billing = () => {
           ></i>
         </div>
         <div
-          className={`-mt-3 bg-gray-200 rounded-md ${
-            couponsOpen ? "h-18" : "h-0"
-          } transition-all duration-150 ease-linear flex items-center justify-center`}
+          className={`-mt-3 bg-gray-200 rounded-md ${couponsOpen ? "h-18" : "h-0"
+            } transition-all duration-150 ease-linear flex items-center justify-center`}
         >
           <p className={`${couponsOpen ? "block" : "hidden"} text-sm text-gray-900 font-semibold break-words`}>We are working on coupons</p>
         </div>
@@ -121,31 +121,28 @@ const Billing = () => {
             <span className="text-gray-600">Item Total</span>
             <span className="text-gray-700 font-semibold">₹{totalAmount}</span>
           </div>
-          <div className="flex justify-between py-1">
-            <p className="text-gray-600 flex items-center gap-0.5">
+          <div className="flex justify-between items-center py-1">
+            <p className="text-gray-600 flex items-center gap-0.5 relative">
               <span>Delivery Fee</span>
               <span>┃</span>
               <span>{distance} kms</span>
-              {/* <i
+              <i
                 onClick={(e) => {
                   e.stopPropagation();
-
-                  // if (window.innerWidth > 768) return;
-                  setOpenInfo(!openInfo);
+                  setOpenDeliveryInfo(!openDeliveryInfo);
                 }}
-                className={`${
-                  openInfo ? "ri-close-circle-fill" : "ri-information-2-line"
-                } cursor-pointer text-[16px]`}
-                onMouseEnter={() => setOpenInfo(true)}
-                onMouseLeave={() => setOpenInfo(false)}
+                className={`${openDeliveryInfo ? "ri-close-circle-fill" : "ri-information-2-line"
+                  } cursor-pointer text-[16px] text-black ml-0.5 mb-0.5`}
+                onMouseEnter={() => setOpenDeliveryInfo(true)}
+                onMouseLeave={() => setOpenDeliveryInfo(false)}
               />
 
               <div
                 onClick={(e) => e.stopPropagation()}
-                id="dropdown"
-                className="absolute -top-[810%] left-3/4 h-44 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                id="delivery_dropdown"
+                className="absolute -top-[280%] left-[78%] h-16 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
-                  display: openInfo ? "block" : "none",
+                  display: openDeliveryInfo ? "block" : "none",
                 }}
               >
                 <div
@@ -153,50 +150,31 @@ const Billing = () => {
                   className="relative h-full"
                 >
                   <div>
-                    <p className="break-words text-xs font-semibold">
-                      GST & Other Charges
-                    </p>
-                    <div className="flex items-center font-normal justify-between text-xs text-gray-600 mt-2">
-                      <p className="text-gray-800">Restaurant Packaging</p>
-                      <p>₹{packagingCharge}</p>
+                    <div className="flex items-center font-normal justify-between text-xs text-gray-600">
+                      <p className="text-black font-semibold">Delivery Fee</p>
+                      <p className="font-semibold text-black">₹{deliveryFee}</p>
                     </div>
-                    <div className="flex items-center font-normal justify-between text-xs text-gray-600 mt-1.5">
-                      <p className="text-gray-800">GST(5%)</p>
-                      <p>₹{+GST.toFixed(2)}</p>
-                    </div>
-                    <p className="text-[11px] w-[80%] max-md:leading-3.5">
-                      A government tax calculated as 5% of the total item cost.
-                    </p>
-
-                    <div className="flex items-center font-normal justify-between text-xs text-gray-600 mt-1.5">
-                      <p className="text-gray-800">Platform Fee</p>
-                      <p>₹{platformFee}</p>
-                    </div>
-                    <p className="text-[11px] w-[80%] max-md:leading-3.5">
-                      A fixed service charge to support app maintenance and
-                      operations.
+                    <p className="text-[11px] w-[80%] max-md:leading-3.5  mt-1">
+                      Calculated based on distance: ₹10 base + ₹5/km after 1 km
                     </p>
                   </div>
-
-                  <div className="absolute top-[105%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
+                  <div className="absolute top-[114%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                 </div>
-              </div> */}
+              </div>
             </p>
             <span className="text-gray-700 font-semibold">₹{deliveryFee}</span>
           </div>
+
           <div className="flex justify-between py-1 pt-1.5 border-t-[1px] mt-2 border-gray-400 border-dashed">
             <div className="relative flex gap-1 items-center">
               <span className="text-gray-600">GST & Other Charges</span>
               <i
                 onClick={(e) => {
                   e.stopPropagation();
-
-                  // if (window.innerWidth > 768) return;
                   setOpenInfo(!openInfo);
                 }}
-                className={`${
-                  openInfo ? "ri-close-circle-fill" : "ri-information-2-line"
-                } cursor-pointer text-[16px]`}
+                className={`${openInfo ? "ri-close-circle-fill" : "ri-information-2-line"
+                  } cursor-pointer text-[16px] mb-0.5`}
                 onMouseEnter={() => setOpenInfo(true)}
                 onMouseLeave={() => setOpenInfo(false)}
               />
@@ -204,7 +182,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="dropdown"
-                className="absolute -top-[810%] left-3/4 h-44 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[734%] left-[75.52%] h-44 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openInfo ? "block" : "none",
                 }}
@@ -219,19 +197,18 @@ const Billing = () => {
                     </p>
                     <div className="flex items-center font-normal justify-between text-xs text-black mt-2">
                       <p>Restaurant Packaging</p>
-                      <p>₹{packagingCharge}</p>
+                      <p className="font-semibold">₹{packagingCharge}</p>
                     </div>
                     <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
                       <p>GST(5%)</p>
-                      <p>₹{+GST.toFixed(2)}</p>
+                      <p className="font-semibold">₹{+GST.toFixed(2)}</p>
                     </div>
                     <p className="text-[11px] w-[80%] leading-3.5 text-gray-700" >
                       A government tax calculated as 5% of the total item cost.
                     </p>
-
                     <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
                       <p>Platform Fee</p>
-                      <p>₹{platformFee}</p>
+                      <p className="font-semibold">₹{platformFee}</p>
                     </div>
                     <p className="text-[11px] w-[80%] leading-3.5 text-gray-700">
                       A fixed service charge to support app maintenance and
@@ -239,7 +216,7 @@ const Billing = () => {
                     </p>
                   </div>
 
-                  <div className="absolute top-[105%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
+                  <div className="absolute top-[104%] left-3.5 bottom-full h-0 w-0 border-t-10 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                 </div>
               </div>
             </div>
