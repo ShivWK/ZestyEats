@@ -27,11 +27,6 @@ const RestaurantCard = ({ data }) => {
   const restro_id = metadata?.id || data.restro.id;
   const status = useCheckStatus(lat, lng, restro_id);
 
-  const distance = haversineFormula(lat, latCurrent, lng, lngCurrent);
-  const notDeliverable = distance > 10;
-
-  const opened =
-    metadata?.availability.opened || data.restro.availability.opened;
   const name = metadata?.name || data.restro.name;
   const dispatch = useDispatch();
 
