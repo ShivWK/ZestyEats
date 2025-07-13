@@ -1,9 +1,7 @@
-import Construction from "../../utils/Construction";
 import { selectCart } from "../../features/home/restaurantsSlice";
 import { useSelector } from "react-redux";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { selectLatAndLng } from "../../features/home/homeSlice";
-import { Rotate3D } from "lucide-react";
 import haversineFormula from "./../../utils/haversineFormula";
 
 const Billing = () => {
@@ -60,9 +58,7 @@ const Billing = () => {
     const GSTAndOther = +(gstAmount + packagingCharge + platformFee).toFixed(2);
     setGSTAndOther(GSTAndOther);
 
-    const grandTotalAmount = +(totalAmount + GSTAndOther + deliveryFee).toFixed(
-      2
-    );
+    const grandTotalAmount = +(totalAmount + GSTAndOther + deliveryFee).toFixed(2);
     setGrandTotal(grandTotalAmount);
   }, [totalAmount]);
 
@@ -77,7 +73,6 @@ const Billing = () => {
   const containerClickHandler = () => {
     setCouponsOpen(false);
     setOpenInfo(false);
-    // console.log("Call")
   };
 
   return (
@@ -227,6 +222,7 @@ const Billing = () => {
             <span className="text-black font-bold">₹{grandTotal}</span>
           </div>
         </div>
+        <button className="bg-green-400 px-2 py-1 rounded text-white font-sans tracking-wide cursor-pointer active:scale-95 transform transition-all duration-150">Proceed Further</button>
       </div>
     </section>
   );

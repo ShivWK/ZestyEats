@@ -26,7 +26,6 @@ const Cart = () => {
 
        window.addEventListener("resize", checkOverflow);
        return () => window.removeEventListener("resize", checkOverflow);
-
     }, [document.documentElement.scrollHeight]);
 
     if (mainCart.length !== 0) {
