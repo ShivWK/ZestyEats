@@ -20,9 +20,7 @@ const RestaurantCard = ({ data }) => {
   // console.log(data)
 
   const metadata = data.restro.metadata;
-  const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
-  const [lat, lng] =
-    metadata?.latLong.split(",") || data.restro.latLong.split(",");
+  const [lat, lng] = metadata?.latLong.split(",") || data.restro.latLong.split(",");
 
   const restro_id = metadata?.id || data.restro.id;
   const status = useCheckStatus(lat, lng, restro_id);
