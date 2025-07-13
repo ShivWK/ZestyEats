@@ -110,7 +110,7 @@ const Billing = () => {
           ></i>
         </div>
         <div
-          className={`-mt-3 bg-gray-200 rounded-md ${couponsOpen ? "h-18" : "h-0"
+          className={`-mt-3 bg-gray-200 ${couponsOpen ? "h-18" : "h-0"
             } transition-all duration-150 ease-linear flex items-center justify-center`}
         >
           <p className={`${couponsOpen ? "block" : "hidden"} text-sm text-gray-900 font-semibold break-words`}>We are working on coupons</p>
