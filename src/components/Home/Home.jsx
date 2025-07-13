@@ -70,8 +70,14 @@ const Home = memo(() => {
 
         {/* dev msg */}
 
-        <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1.5 max-md:-mt-1 mb-3">
+        {/* <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1.5 max-md:-mt-1 mb-3">
           <p className="text-justify">This site is under active development. Features are being added and improved continuously, so some parts may not work as expected right now.</p>
+        </div> */}
+
+        {/* Home banner */}
+
+        <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-36 md:h-64 mx-auto">
+          <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full " alt="Home banner image" />
         </div>
 
         {/* Foodie thoughts */}
