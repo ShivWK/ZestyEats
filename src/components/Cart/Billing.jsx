@@ -97,9 +97,9 @@ const Billing = () => {
           <div className="flex items-center gap-3">
             <i className="ri-discount-percent-fill text-4xl font-extralight"></i>
             {coupon ? (
-              <p className="font-bold text-gray-500">{coupon}</p>
+              <p className="font-bold text-gray-500 select-none">{coupon}</p>
             ) : (
-              <p>Apply Coupon</p>
+              <p className="select-none">Apply Coupon</p>
             )}
           </div>
           <i
