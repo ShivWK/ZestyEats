@@ -45,7 +45,7 @@ const MainContainer = ({ data }) => {
         <h1 className="heading text-black md:text-5xl text-4xl font-bold tracking-tight mx-0">
           {title}
         </h1>
-        <p className="description text-lg font-medium text-gray-800 -mt-2 md:-mt-4 mb-4 max-md:leading-6">
+        <p className="description text-lg font-medium text-gray-800 -mt-2 md:-mt-4 mb-2 max-md:leading-6">
           {description}
         </p>
         <div className="md:-mt-5 -mt-4 -mb-1 md:-mb-2">
