@@ -195,7 +195,7 @@ const Contact = memo(() => {
       <button
         onClick={submitHandler}
         disabled={loading}
-        className={`mt-6 ${loading ? "py-1 px-10" : "py-2 px-6"} max-lg:mx-auto bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-75 cursor-pointer block`}
+        className={`mt-6 py-2 px-6 max-lg:mx-auto bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-75 cursor-pointer block`}
       >
         {loading ? <Loader size={"small"} /> : "Send Email"}
       </button>
