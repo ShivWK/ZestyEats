@@ -36,10 +36,10 @@ const MainContainer = ({ data }) => {
                             delimiterColor={"text-gray-600"}
                         />
                     </div>
-                    <h1 className="heading text-black md:text-4xl text-3xl font-bold tracking-tight mx-0">
+                    <h1 className="heading text-black md:text-4xl text-2xl font-bold tracking-tight mx-0">
                         {restaurantTitle}
                     </h1>
-                    <p className="description md:text-lg font-semibold text-gray-800 max-md:leading-6">
+                    <p className="description md:text-lg font-medium md:-mt-4 -mt-2 mb-2 text-gray-800 max-md:leading-6">
                         Hungry? ZestyEats has you covered. Explore and order from multiple outlets in just a few taps.
                     </p>
                     <div className="md:-mt-5 -mt-4 -mb-1 md:-mb-2">

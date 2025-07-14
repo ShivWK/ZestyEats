@@ -45,12 +45,12 @@ const MainContent = ({ data }) => {
     }
 
     return (
-        <main className="w-full md:max-w-[1070px] mx-auto pb-4 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
+        <main className="w-full md:max-w-[1070px] mx-auto pb-2 md:pb-4 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
             {/* /Banner Image */}
 
             <div
                 id="banner"
-                className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:pl-2.5 max-md:bg-right"
+                className="flex flex-col mt-0.5 md:mt-1 mb-4 md:mb-8 w-full bg-cover  md:h-[50vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:pl-2.5 max-md:bg-right"
             >
                 <h1 className="mt-auto text-white text-2xl md:text-4xl max-md:leading-6 order-2">
                     {banner_text}
@@ -67,7 +67,7 @@ const MainContent = ({ data }) => {
                     <section className="w-full max-w-[1040px] mx-auto ">
                         <FoodieThoughts data={foodieThoughtsData} />
                     </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
+                    <hr className="mt-10 mb-6 md:mb-8 text-gray-400" />
                 </>
             )}
 
@@ -89,7 +89,7 @@ const MainContent = ({ data }) => {
                             />
                         </Suspense>
                     </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
+                    <hr className="mt-10 mb-4 md:mb-8 text-gray-400" />
                 </>
             )}
 
@@ -111,7 +111,7 @@ const MainContent = ({ data }) => {
                             />
                         </Suspense>
                     </section>
-                    <hr className="mt-10 mb-8 text-gray-400" />
+                    <hr className="mt-10 mb-4 md:mb-8 text-gray-400" />
                 </>
             )}
 
