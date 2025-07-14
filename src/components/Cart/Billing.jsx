@@ -135,7 +135,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="delivery_dropdown"
-                className="absolute -top-[310%] left-[78%] h-16 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[310%] left-[80%] h-16 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openDeliveryInfo ? "block" : "none",
                 }}
@@ -177,7 +177,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="dropdown"
-                className="absolute -top-[797%] left-[75.52%] h-44 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[797%] left-[75.6%] h-44 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openInfo ? "block" : "none",
                 }}
