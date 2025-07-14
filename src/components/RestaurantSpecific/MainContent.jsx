@@ -96,7 +96,7 @@ const MainContent = ({ data, routes = true }) => {
       )}
 
       {/* Title */}
-      <div className="w-full md:max-w-[775px] mt-2">
+      <div className="w-full md:max-w-[775px] mt-0.5 md:mt-2">
         <h1>{title}</h1>
       </div>
 
@@ -138,7 +138,7 @@ const MainContent = ({ data, routes = true }) => {
         )}
       </section>
 
-      <hr className="mb-4 mt-6 w-full text-gray-500" />
+      <hr className="mb-2 md:mb-4 mt-6 w-full text-gray-500" />
 
       {/* Sorting */}
       <Filter text1="Veg" text2="Non Veg" />

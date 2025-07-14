@@ -49,7 +49,7 @@ const Banner = ({ data }) => {
   return (
     <div
       id="banner"
-      className="w-full p-3 md:p-5 bg-linear-[to_top,#adabab9d,#ffffff] my-3 rounded-4xl"
+      className="w-full p-3 md:p-5 bg-linear-[to_top,#adabab9d,#ffffff] mt-2 md:my-3 rounded-4xl"
     >
       <div
         id="inner-container"
