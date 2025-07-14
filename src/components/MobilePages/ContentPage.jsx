@@ -1,4 +1,5 @@
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import Contact from "../Help/Contact";
 
 const ContentPage = () => {
   const navigate = useNavigate();
@@ -20,12 +21,7 @@ const ContentPage = () => {
         </div>
         {type === "Support" ? (
           mode === "form" ? (
-            <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-              <h1 className="text-3xl font-semibold text-gray-800 mb-2">🚧 Page Under Construction</h1>
-              <p className="text-gray-600 text-lg">
-                We’re working hard to bring this section to life. Please check back soon!
-              </p>
-            </div>
+            <Contact />
           ) : (
             <p className="px-2 mt-1">{data.description}</p>
           )
