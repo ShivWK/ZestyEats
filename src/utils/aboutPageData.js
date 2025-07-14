@@ -27,7 +27,7 @@ export const about = [
   {
     title: "About ZestyEats",
     description: [
-      "<p><span style='font-weight: bold'>ZestyEats</span> is a <span style='font-weight: bold'>full-stack</span>, production-grade <span style='font-weight: bold'>online food delivery web application</span> inspired by platforms like Swiggy. It is built with a focus on real-world development practices, performance, and security — aimed at delivering a seamless and optimized food ordering experience to users.</p>",
+      "<p><span style='font-weight: bold'>ZestyEats</span> is a <span style='font-weight: bold'>full-stack</span>, production-grade <span style='font-weight: bold'>online food delivery web application</span> inspired by real-world food delivery platforms. It is built with a focus on real-world development practices, performance, and security — aimed at delivering a seamless and optimized food ordering experience to users.</p>",
 
       "<p>This project was created to strengthen my skills in full-stack web development, <span style='font-weight: bold'>API integration</span>, and <span style='font-weight: bold'>secure authentication</span>, while solving a real-world problem end-to-end.</p>",
     ],
@@ -66,7 +66,7 @@ export const about = [
         "<p><span style='font-weight: bold'>Session Management:</span> Using JWT and secure cookie storage.</p>",
         "<p><span style='font-weight: bold'>CSRF Protection:</span> Implemented using CSRF tokens to protect sensitive routes.</p>",
         "<p><span style='font-weight: bold'>Theme Switcher:</span> Toggle between light, dark, and system themes.</p>",
-        "<p><span style='font-weight: bold'>Proxy Server Integration:</span> Fetch data from Swiggy APIs securely by bypassing CORS via a custom backend proxy.</p>",
+        "<p><span style='font-weight: bold'>Proxy Server Integration:</span> Fetches real-world data via a secure custom backend proxy to bypass CORS restrictions and simulate production-level API handling.</p>",
       ],
     },
   },
@@ -115,7 +115,7 @@ export const about = [
         "<p><span style='font-weight: bold'>Frontend:</span> React, Redux Toolkit, React Router DOM, Tailwind CSS, RTK Query</p>",
         "<p><span style='font-weight: bold'>Backend:</span> Node.js, Express.js</p>",
         "<p><span style='font-weight: bold'>Database:</span> MongoDB (Mongoose)</p>",
-        "<p><span style='font-weight: bold'>APIs:</span> RESTful APIs + proxy to Swiggy APIs.</p>",
+        "<p><span style='font-weight: bold'>APIs:</span> RESTful APIs + secure proxy to real-world food delivery data.</p>",
         "<p><span style='font-weight: bold'>Auth:</span> JWT, OAuth 2.0, CSRF tokens, OTP system, cookies.</p>",
         "<p><span style='font-weight: bold'>Deployment:</span></p>",
       ],
