@@ -242,7 +242,7 @@ const MainContent = () => {
           </section>
         </>
       )}
-      <BackToTopBtn percentage={40} />
+      <BackToTopBtn />
     </main>
   );
 };
@@ -267,25 +267,3 @@ const CityHome = () => {
 };
 
 export default CityHome;
-
-
-// fetch("https://www.swiggy.com/api/seo/getListing?lat=12.960059122809971&lng=77.57337538383284&apiV2=true", {
-//   "headers": {
-//     "accept": "*/*",
-//     "accept-language": "en-US,en;q=0.9,hi;q=0.8",
-//     "content-type": "application/json",
-//     "latitude": "12.960059122809971",
-//     "longitude": "77.57337538383284",
-//     "priority": "u=1, i",
-//     "searchstring": "cheese-pizza",
-//     "sec-fetch-dest": "empty",
-//     "sec-fetch-mode": "cors",
-//     "sec-fetch-site": "same-origin"
-//   },
-//   "referrer": "https://www.swiggy.com/city/bangalore/cheese-pizza-dish-restaurants",
-//   "referrerPolicy": "strict-origin-when-cross-origin",
-//   "body": "{\"selectedPlTab\":\"RESTAURANT\",\"query\":\"cheese-pizza\",\"seoParams\":{\"apiName\":\"RestaurantSearchApi\",\"brandId\":\"\",\"seoUrl\":\"www.swiggy.com/city/bangalore/cheese-pizza-dish-restaurants\",\"pageType\":\"CITY_DISH_PAGE\",\"businessLine\":\"FOOD\"},\"supportedMarketplaces\":[{\"marketplaceId\":\"SWIGGY\",\"businessLineId\":\"FOOD\"}],\"submitAction\":\"ENTER\",\"redirection\":\"true\",\"categoryPage\":\"FOOD\",\"supportedTabs\":[\"DISH\",\"RESTAURANT\"],\"marketplaces\":[{\"marketplaceId\":\"SWIGGY\",\"businessLineId\":\"FOOD\"}],\"sldEnabled\":true}",
-//   "method": "POST",
-//   "mode": "cors",
-//   "credentials": "include"
-// });

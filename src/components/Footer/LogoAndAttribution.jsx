@@ -22,9 +22,10 @@ const LogoAndAttribution = () => {
             height={60}
             width={60}
             alt="Bottom Logo"
+            className="max-md:h-12 max-md:w-12"
           />
           <img
-            className="h-11 w-52 mt-2"
+            className="h-9 md:h-11 w-44 md:w-52 mt-2"
             src="/images/bottomLogo.png"
             alt="Company footer logo"
           />
@@ -57,7 +58,7 @@ const LogoAndAttribution = () => {
                 target="__block"
               >
                 <i
-                  className="fa-brands fa-linkedin text-2xl"
+                  className="fa-brands fa-linkedin text-xl"
                   style={{ color: "#0077b5" }}
                 ></i>
               </a>
@@ -66,14 +67,14 @@ const LogoAndAttribution = () => {
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
                 target="__block"
               >
-                <i className="fa-brands fa-square-github text-2xl"></i>
+                <i className="fa-brands fa-square-github text-xl"></i>
               </a>
               <a
                 href="https://x.com/Shivendrawk"
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
                 target="__block"
               >
-                <i className="fa-brands fa-square-x-twitter text-2xl"></i>
+                <i className="fa-brands fa-square-x-twitter text-xl"></i>
               </a>
               <a
                 href="https://instagram.com/shivendrawk"
@@ -81,7 +82,7 @@ const LogoAndAttribution = () => {
                 target="__block"
               >
                 <i
-                  className="fa-brands fa-instagram text-2xl"
+                  className="fa-brands fa-instagram text-xl"
                   style={{ color: "#e1306c" }}
                 ></i>
               </a>
@@ -90,7 +91,7 @@ const LogoAndAttribution = () => {
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
               >
                 <i
-                  className="fa-solid fa-envelope text-2xl"
+                  className="fa-solid fa-envelope text-xl"
                   style={{ color: "#d93025" }}
                 ></i>
               </a>

@@ -7,6 +7,7 @@ import RestaurantCart from "./RestaurantCard";
 import DishShimmer from "./DishShimmer";
 import { useDispatch } from "react-redux";
 import { setSecondaryCity } from "../../../features/cityHome/cityHomeSlice";
+import BackToTopBtn from "../../BackToTopBtn";
 
 const MainData = ({ data }) => {
     // console.log(data)
@@ -44,7 +45,7 @@ const MainData = ({ data }) => {
                     <div className="md:hidden -mb-5">
                         <ScooterAnimation />
                     </div>
-
+                    <BackToTopBtn />
         </main>
             <div className="hidden md:block -mb-2.5">
                 <ScooterAnimation />

@@ -64,7 +64,7 @@ const Cards = memo(({ data, from }) => {
       }
     }
 
-    dispatch(addCurrentRestaurant("Restaurant"));
+    dispatch(addCurrentRestaurant(dataToMap?.name));
     dispatch(setMenuItems({ mode: "empty" }));
     dispatch(setRestaurantItems([]));
   };
@@ -90,7 +90,7 @@ const Cards = memo(({ data, from }) => {
     <Link
       to={`/restaurantSpecific/${lat}/${lng}/${dataToMap?.id}/${dataToMap?.name}?mode=${mode}`}
       onClick={handleClick}
-      className={`relative flex flex-row md:flex-col max-md:gap-4 items-center max-md:w-full rounded-2xl overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
+      className={`relative flex flex-row md:flex-col max-md:gap-4 items-center max-md:w-full rounded-2xl md:overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
         from === "online"
           ? "md:w-[240px]"
           : from === "specificFood"
@@ -113,7 +113,7 @@ const Cards = memo(({ data, from }) => {
       </div>
 
       <div
-        className={`relative w-full max-md:basis-[48%] h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 pl-4 shrink-0 max-md:max-h-full max-md:min-h-52 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.7)] ${
+        className={`relative w-full max-md:basis-[48%] h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 z-20 pl-4 shrink-0 max-md:max-h-full max-md:min-h-52 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.5)] ${
           from === "online"
             ? "md:h-[160px]"
             : from === "specificFood"
@@ -155,7 +155,7 @@ const Cards = memo(({ data, from }) => {
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
           <p className="font-semibold">{dataToMap?.avgRatingString || ""}</p>
           <p className="">•</p>
-          <p className="font-bold">{dataToMap?.sla?.slaString || ""}</p>
+          <p className="font-bold">{dataToMap?.sla?.slaString || "25-30 mins"}</p>
         </div>
         {dataToMap?.veg ? (
           <PureVeg classes="-ml-5" />

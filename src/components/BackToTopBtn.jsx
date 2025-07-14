@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { selectBottomMenu } from "../features/home/homeSlice";
 import { useSelector } from "react-redux";
 
-const BackToTopBtn = ({ percentage = 25, extraMargin = false }) => {
+const BackToTopBtn = ({ extraMargin = false }) => {
     const [showBtn, setShowBtn] = useState(false);
     const pathname = useLocation().pathname;
     
@@ -18,10 +18,9 @@ const BackToTopBtn = ({ percentage = 25, extraMargin = false }) => {
     useEffect(() => {
         const scrollHandler = () => {
             const HTML = document.documentElement;
-            const windowScrollableHeight = HTML.scrollHeight - HTML.clientHeight;
             const windowScrollTop = HTML.scrollTop;
 
-            const hasScrolledALot = windowScrollTop >= (percentage/100) * windowScrollableHeight;
+            const hasScrolledALot = windowScrollTop >= Math.max(HTML.clientHeight * 2.2, 500);
 
             if (hasScrolledALot) setShowBtn(true);
             else setShowBtn(false)
