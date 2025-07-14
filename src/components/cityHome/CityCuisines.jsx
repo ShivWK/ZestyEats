@@ -65,13 +65,13 @@ const MainContent = ({ data }) => {
                 </section>
             </>
         )}
-        <div className="my-5 md:hidden">
+        <div className="my-5 mb-0 md:hidden">
             <ScooterAnimation />
         </div>
 
         {/* <BackToTopBtn percentage={40} /> */}
     </main>
-        <div className=" hidden md:block my-8">
+        <div className="hidden md:block my-8">
             <ScooterAnimation />
         </div>
     </>

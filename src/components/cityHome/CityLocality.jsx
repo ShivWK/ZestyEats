@@ -67,7 +67,7 @@ const MainContent = ({ data }) => {
                     <section className="w-full max-w-[1040px] mx-auto ">
                         <FoodieThoughts data={foodieThoughtsData} />
                     </section>
-                    <hr className="mt-10 mb-6 md:mb-8 text-gray-400" />
+                    <hr className="mt-10 mb-4 md:mb-8 text-gray-400" />
                 </>
             )}
 
