@@ -153,7 +153,7 @@ const HorizontalCarousel = memo(({
         <div
           onScroll={handleScroll}
           ref={containerRef}
-          className="flex justify-start gap-3 md:gap-4 overflow-y-visible overflow-x-auto hide-scrollbar py-1.5"
+          className="flex justify-start gap-3 md:gap-4 overflow-y-visible overflow-x-auto hide-scrollbar py-2"
           onTouchEnd={() => clicked.current = true}
         >
           {dataToMap.map((item, index) => (

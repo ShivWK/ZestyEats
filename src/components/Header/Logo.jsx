@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { memo } from "react";
 import { setLocationModal, setLocationHovered, setHideLocation, setHideLogin } from "../../features/Login/loginSlice";
+import { ChevronDown } from "lucide-react";
 
 import {
   selectSearchedCity,
@@ -40,19 +41,20 @@ const Logo = memo(({ searchPlaceholder }) => {
         <button
           onMouseEnter={hoverHandler}
           onClick={handleClick}
-          className="group flex max-md:flex-col max-md:justify-center items-center gap-0 md:gap-2 cursor-pointer max-md:mt-2.5"
+          className="group flex max-md:flex-col max-md:justify-center items-center gap-2 md:gap-2 cursor-pointer"
         >
-          <span className="font-[750] max-md:self-start max-md:text-sm underline underline-offset-8 max-md:underline-offset-4 decoration-2 group-hover:text-[#ff5200]">
+          <span className="font-[750] max-md:self-start max-md:text-sm underline underline-offset-5 max-md:underline-offset-4 decoration-2 group-hover:text-[#ff5200]">
             {yourCurrentCity ? yourCurrentCity : "Location"}
           </span>
 
-          <div className="flex gap-0 md:gap-2 items-center justify-center max-md:-mt-1">
+          <div className="flex gap-1 md:gap-2 items-center justify-center max-md:-mt-1">
             <span className="max-w-44 md:max-w-48 truncate text-start font-medium text-gray-600 max-md:text-sm">
               {yourCurrentCity
                 ? `${searchedCityAddress}`
                 : `${searchedCity}${searchedCityAddress}`}
             </span>
-            <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2 md:-ml-4 "></i>
+            {/* <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2 md:-ml-4 "></i> */}
+            <ChevronDown size={18} strokeWidth={4} className="text-[#ff5200]"/>
           </div>
         </button>
       )}
