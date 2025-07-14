@@ -1,4 +1,4 @@
-import { NavLink, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { mobileHelpLegalFaqs } from "../../utils/helpAndSupportData";
 import { about } from "../../utils/aboutPageData";
 import SectionAndOptions from "./SectionAndOptions";
@@ -13,7 +13,7 @@ const OptionsPage = () => {
       {mode === "about" ? (
         <div className="p-2 mt-4 h-fit text-gray-700 font-medium flex flex-col justify-start gap-2 bg-white rounded-md">
           {about.map((item, index) => (
-            <NavLink
+            <Link
               className="py-1 pl-2 border-[1px] border-gray-300 rounded-md flex justify-between items-center"
               key={index}
               to={`/mbStaticData?type=About`}
@@ -21,7 +21,7 @@ const OptionsPage = () => {
             >
               <p>{item.title}</p>
               <i className="ri-arrow-drop-right-line text-3xl font-extralight" />
-            </NavLink>
+            </Link>
           ))}
         </div>
       ) : (

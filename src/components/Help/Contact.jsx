@@ -191,7 +191,7 @@ const Contact = memo(() => {
         <input
           type="checkbox"
           name="botcheck"
-          class="hidden"
+          className="hidden"
           style={{ display: "none" }}
         ></input>
       </form>
