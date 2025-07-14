@@ -113,7 +113,7 @@ const MainContent = ({ data }) => {
   ) :
     <div className="flex flex-col mx-auto gap-5 mt-16">
       {itemCards?.length > 0 && (
-        <div className="max-md:pb-8 pt-2">
+        <div className="pb-8 pt-2">
           <h1 className="max-md:text-2xl">Popular Cuisines</h1>
           <div className="flex w-fit flex-wrap justify-evenly">
             {itemCards.map((item) => {
@@ -121,7 +121,7 @@ const MainContent = ({ data }) => {
               return (
                 <button
                   key={item.id}
-                  className="shimmerBg h-40 w-28 md:h-[170px] md:w-[130px] rounded-xl shrink-0 cursor-pointer"
+                  className="shimmerBg h-40 w-28 md:h-[180px] md:w-[130px] rounded-xl shrink-0 cursor-pointer"
                   onClick={() => clickHandler(queryObj.get("query"))}
                 >
                   <img
