@@ -1,4 +1,5 @@
 export const aboutHeadings = [
+  "Educational Use Disclaimer",
   "About ZestyEats",
   "Purpose Behind ZestyEats",
   "Core Features",
@@ -9,7 +10,20 @@ export const aboutHeadings = [
   "What I Learned",
 ];
 
+// 
+// 
+
 export const about = [
+  {
+    title: "Educational Use Disclaimer",
+    description: [
+      "<p>This application is created solely for educational, learning, and portfolio demonstration purposes.All content and data used here are fetched to replicate real - world scenarios for personal skill development.</p>",
+
+      "<p>This project is <span style='font-weight: bold'>not affiliated with, endorsed by, or representing any real-world brand, company, or service.</span></p>",
+
+      "<p> No data is used for commercial purposes, and no user information is collected or stored. If any data usage unintentionally violates any rights, please reach out via the contact section for immediate removal or correction.</p>",
+    ],
+  },
   {
     title: "About ZestyEats",
     description: [
@@ -115,7 +129,7 @@ export const about = [
 
   {
     title: "User Role",
-    description:[
+    description: [
       "<p>ZestyEats is a user-centric platform. While there's no dedicated admin panel, the backend is fully developer-controlled with secure logic for every user interaction — from searching to placing an order.</p>"
     ],
   },

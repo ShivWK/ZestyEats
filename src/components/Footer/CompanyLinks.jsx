@@ -13,7 +13,6 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
   const first6Cities = cities.slice(0, 6);
   const remainingCities = cities.length - 6;
   const dispatch = useDispatch();
-
   const [isSmall, setIsSmall] = useState(true);
 
   useEffect(() => {
@@ -65,8 +64,8 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
         {pathname !== "/" && <div
           onClick={() => openCities(!isOpen)}
           id="moreCities"
-          className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100 w-fit"
-          style={{ borderColor: isOpen ? "black" : "#6a7282" }}
+          className={`flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100 w-fit`}
+          style={{ borderColor: isOpen ? "black" : "#99a1af" }}
         >
           <p className="font-normal text-lg md:text-sm text-gray-900 whitespace-nowrap">
             {remainingCities} cities
