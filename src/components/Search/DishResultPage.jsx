@@ -145,7 +145,7 @@ const Card = ({ data, lat, lng }) => {
                         <div
                             onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
                             id="moreCities"
-                            className="flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-0.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-1"
+                            className="flex gap-2.5 cursor-pointer border-[1px] md:border-2 border-gray-500 px-2 py-0.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-1"
                         >
                             <p className="font-normal text-sm text-gray-900 select-none">
                                 More Details

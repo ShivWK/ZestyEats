@@ -89,7 +89,7 @@ const CityCuisines = () => {
     return <Suspense fallback={<>
         <main className="w-full md:max-w-[1070px] mx-auto pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
             <CuisineShimmer />
-            <div className="my-5 md:hidden">
+            <div className="my-5 mb-0 md:hidden">
                 <ScooterAnimation />
             </div>
         </main>

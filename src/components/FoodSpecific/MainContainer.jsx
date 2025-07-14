@@ -33,7 +33,7 @@ const MainContainer = ({ data }) => {
   }, []);
 
   return (cards ?
-    <div className="relative flex flex-col gap-3 md:gap-5 w-full overflow-hidden md:max-w-[1210px] md:pt-32 pt-20 p-3 mx-auto pb-4 md:pb-5">
+    <div className="relative flex flex-col gap-3 md:gap-5 w-full overflow-hidden md:max-w-[1210px] md:pt-32 pt-20 p-3 mx-auto pb-0 md:pb-5">
       <div>
         <BreadcrumbsWrapper
           normalTextColor={"#4a5565"}
