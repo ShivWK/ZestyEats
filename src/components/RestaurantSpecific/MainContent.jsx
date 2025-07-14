@@ -96,7 +96,7 @@ const MainContent = ({ data, routes = true }) => {
       )}
 
       {/* Title */}
-      <div className="w-full md:max-w-[775px] mt-0.5 md:mt-2">
+      <div className="w-full mt-0.5 md:mt-2">
         <h1>{title}</h1>
       </div>
 
@@ -104,7 +104,7 @@ const MainContent = ({ data, routes = true }) => {
       {banner && <Banner data={banner} opened={opened} />}
 
       {/* Offers */}
-      <section className="w-full  my-2">
+      <section className="w-full max-md:mt-4  my-2">
         {offers && <Offers data={offers} />}
       </section>
 
