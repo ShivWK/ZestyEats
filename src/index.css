@@ -20,8 +20,8 @@
     }
 
     .main-small {
-        height: 4.5vh;
-        width: 4.5vh;
+        height: 4vh;
+        width: 4vh;
         border-radius: 50%;
         border: 0.3em solid white;
         border-top-color: black;
