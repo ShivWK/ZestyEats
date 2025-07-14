@@ -113,26 +113,27 @@ const MainContent = ({ data }) => {
   ) :
     <div className="flex flex-col mx-auto gap-5 mt-16">
       {itemCards?.length > 0 && (
-        <>
-          <h1>Popular Cuisines</h1>
+        <div className="max-md:pb-8 pt-2">
+          <h1 className="max-md:text-2xl">Popular Cuisines</h1>
           <div className="flex w-fit flex-wrap justify-evenly">
             {itemCards.map((item) => {
               const queryObj = new URL(item?.action?.link).searchParams;
               return (
                 <button
                   key={item.id}
-                  className="shimmerBg md:h-[160px] w-[130px] rounded-xl shrink-0 cursor-pointer"
+                  className="shimmerBg h-40 w-28 md:h-[160px] md:w-[130px] rounded-xl shrink-0 cursor-pointer"
                   onClick={() => clickHandler(queryObj.get("query"))}
                 >
                   <img
                     src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/${item?.imageId}`}
                     alt="food category images"
+                    className="h-full w-full"
                   />
                 </button>
               );
             })}
           </div>
-        </>
+        </div>
       )}
     </div>
 

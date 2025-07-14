@@ -87,7 +87,7 @@ const Home = memo(() => {
             <section className="w-full max-w-[1040px] mx-auto ">
               <FoodieThoughts data={foodieThoughtsData} />
             </section>
-            <hr className="my-6 md:mt-10 md:mb-8 text-gray-400" />
+            <hr className="my-6 max-md:mb-4 md:mt-10 md:mb-8 text-gray-400" />
           </>
         )}
 
@@ -106,7 +106,7 @@ const Home = memo(() => {
                 <TopRestaurantChains data={topRestaurantsChainsData} />
               </Suspense>
             </section>
-            <hr className="my-6 md:mt-10 md:mb-8 text-gray-400" />
+            <hr className="my-6 max-md:mb-4 md:mt-10 md:mb-8 text-gray-400" />
           </>
         )}
 
@@ -125,7 +125,7 @@ const Home = memo(() => {
                 <OnlineDeliveryRestaurant data={onlineDeliveryRestaurantData} />
               </Suspense>
             </section>
-            <hr className="my-6 md:mt-10 md:mb-8 text-gray-400" />
+            <hr className="my-6 max-md:mb-4 md:mt-10 md:mb-8 text-gray-400" />
           </>
         )}
 
@@ -147,7 +147,7 @@ const Home = memo(() => {
                 <PlaceCardsContainer data={bestCuisinesNearMe} clickHandler={cuisineClickHandler} path={`/cityPage/${city}?mode=cuisine`} />
               </Suspense>
             </section>
-            <hr className="my-6 md:mt-10 md:mb-8 text-gray-400" />
+            <hr className="my-6 max-md:mb-4 md:mt-10 md:mb-8 text-gray-400" />
           </>
         )}
 
