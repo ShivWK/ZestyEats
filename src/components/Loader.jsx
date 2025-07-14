@@ -4,7 +4,7 @@ const Loader = ({ size }) => {
       <div className="main-large"></div>
     </div>
   ) : (
-    <div className="main-small max-md:h-[3vh] max-md:w-[3vh]"></div>
+    <div className={`main-small max-lg:h-[3vh] max-lg:w-[3vh]`}></div>
   );
 };
 

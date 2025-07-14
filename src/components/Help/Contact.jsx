@@ -1,9 +1,11 @@
+import Loader from "../Loader";
 import { memo, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
 const Contact = memo(() => {
   const formRef = useRef(null);
   const [errorIn, setErrorIn] = useState("");
+  const [loading, setLoading] = useState(false);
   const [fieldValues, setFieldValues] = useState({
     name: "",
     email: "",
@@ -67,6 +69,7 @@ const Contact = memo(() => {
     const formData = new FormData(formRef.current);
 
     try {
+      setLoading(true);
       const res = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
         body: formData,
@@ -75,6 +78,7 @@ const Contact = memo(() => {
       const result = await res.json();
 
       if (result.success) {
+        setLoading(false);
         toast.info("Message sent successfully!", {
           autoClose: 3000,
           style: {
@@ -91,6 +95,7 @@ const Contact = memo(() => {
           query: "",
         });
       } else {
+        setLoading(false);
         toast.error("Failed to send message. Please try again later.", {
           autoClose: 3000,
           style: {
@@ -101,6 +106,7 @@ const Contact = memo(() => {
         });
       }
     } catch (err) {
+      setLoading(false);
       toast.error("An error occurred. Please try again.");
     }
   };
@@ -121,16 +127,6 @@ const Contact = memo(() => {
       <p className="text-[16px] mb-4 lg:mb-6 text-gray-700">
         Have any questions or inquiries? We'd love to hear from you.
       </p>
-
-      {/* <div className="flex items-center gap-2">
-        <span className="text-[16px] font-medium">Email:</span>
-        <a
-          href="mailto:shivendrawk@gmail.com"
-          className="text-primary underline hover:text-primary/80"
-        >
-          zestyeatswk@gmail.com
-        </a>
-      </div> */}
 
       <form
         ref={formRef}
@@ -182,8 +178,8 @@ const Contact = memo(() => {
           ></textarea>
           <p
             className={`absolute right-1 text-xs font-medium ${fieldValues.query.length >= 1000
-                ? "text-red-500"
-                : "text-gray-600"
+              ? "text-red-500"
+              : "text-gray-600"
               }`}
           >{`${fieldValues.query.length}/1000`}</p>
         </div>
@@ -198,12 +194,24 @@ const Contact = memo(() => {
 
       <button
         onClick={submitHandler}
-        className="mt-6 py-1 px-5 lg:py-2 lg:px-6 max-lg:mx-auto bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-75 cursor-pointer block"
+        disabled={loading}
+        className={`mt-6 ${loading ? "py-1 px-10" : "py-2 px-6"} max-lg:mx-auto bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-75 cursor-pointer block`}
       >
-        Send Email
+        {loading ? <Loader size={"small"} /> : "Send Email"}
       </button>
     </div>
   );
 });
 
 export default Contact;
+
+
+{/* <div className="flex items-center gap-2">
+        <span className="text-[16px] font-medium">Email:</span>
+        <a
+          href="mailto:shivendrawk@gmail.com"
+          className="text-primary underline hover:text-primary/80"
+        >
+          zestyeatswk@gmail.com
+        </a>
+</div> */}
