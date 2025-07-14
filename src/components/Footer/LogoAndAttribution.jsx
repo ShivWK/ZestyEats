@@ -30,9 +30,9 @@ const LogoAndAttribution = () => {
             alt="Company footer logo"
           />
         </div>
-        <p className="text-gray-800 text-sm">
-          © 2025 Shivendra | Food delivery app built for learning and
-          demonstration.
+        <p className="text-gray-800 text-sm ">
+          <span className="whitespace-nowrap">© 2025 Shivendra</span><span>┃</span><span>Food delivery app built for learning and
+          demonstration.</span>
         </p>
       </div>
       <div className="attibution text-gray-800 w-fit max-md:mb-3">
@@ -50,7 +50,7 @@ const LogoAndAttribution = () => {
           />
           <div className="flex flex-col justify-center  italic">
             <p className="text-lg ">Shivendra Dwivedi</p>
-            <p className="text-sm">Software Developer</p>
+            <p className="text-sm">Web Developer</p>
             <div className="max-md:flex gap-3 mt-2 hidden">
               <a
                 href="https://www.linkedin.com/in/shivendra-dwivedi"
