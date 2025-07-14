@@ -1,21 +1,123 @@
-import { memo, useState } from "react";
+import { memo, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 const Contact = memo(() => {
-    const [formData, setFormData] = useState({
-      name: "",
-      email: "",
-      query: ""
-    })
+  const formRef = useRef(null);
+  const [errorIn, setErrorIn] = useState("");
+  const [fieldValues, setFieldValues] = useState({
+    name: "",
+    email: "",
+    query: "",
+  });
 
-    const formDataHandler = (e) => {
-        setFormData(prv => ({
-          ...prv,
-          [e.target.name] : e.target.value,
-        }))        
+  const fieldValuesHandler = (e) => {
+    setFieldValues((prv) => ({
+      ...prv,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const submitHandler = async () => {
+    const name = fieldValues.name;
+    const email = fieldValues.email;
+    const message = fieldValues.query;
+
+    if (name.length === 0 || name.length > 100) {
+      setErrorIn("name");
+      toast.info("Name must be between 1 and 100 characters.", {
+        autoClose: 3000,
+        style: {
+          backgroundColor: "red",
+          color: "white",
+          fontWeight: "medium",
+        },
+        progressClassName: "progress-style",
+      });
+      return;
     }
 
-    return <div className="basis-[75%] lg:pl-7 py-2 lg:py-7 text-black">
-      <h1 className="text-[28px] font-bold tracking-tight mb-2 hidden lg:block">Contact Us</h1>
+    if (email.length === 0 || email.length > 254 || !email.includes("@")) {
+      setErrorIn("email");
+      toast.info("Enter a valid email address.", {
+        autoClose: 3000,
+        style: {
+          backgroundColor: "red",
+          color: "white",
+          fontWeight: "medium",
+        },
+        progressClassName: "progress-style",
+      });
+      return;
+    }
+
+    if (message.length === 0 || message.length > 1000) {
+      setErrorIn("query");
+      toast.info("Message must be between 1 and 1000 characters.", {
+        autoClose: 3000,
+        style: {
+          backgroundColor: "red",
+          color: "white",
+          fontWeight: "medium",
+        },
+        progressClassName: "progress-style",
+      });
+      return;
+    }
+
+    const formData = new FormData(formRef.current);
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      const result = await res.json();
+
+      if (result.success) {
+        toast.info("Message sent successfully!", {
+          autoClose: 3000,
+          style: {
+            backgroundColor: "green",
+            color: "white",
+            fontWeight: "medium",
+          },
+          progressClassName: "progress-style",
+        });
+
+        setFieldValues({
+          name: "",
+          email: "",
+          query: "",
+        });
+      } else {
+        toast.error("Failed to send message. Please try again later.", {
+          autoClose: 3000,
+          style: {
+            color: "white",
+            fontWeight: "medium",
+          },
+          progressClassName: "progress-style",
+        });
+      }
+    } catch (err) {
+      toast.error("An error occurred. Please try again.");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (errorIn === e.target.name) setErrorIn("");
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      submitHandler();
+    }
+  };
+
+  return (
+    <div className="basis-[75%] lg:pl-7 py-2 lg:py-7 text-black">
+      <h1 className="text-[28px] font-bold tracking-tight mb-2 hidden lg:block">
+        Contact Us
+      </h1>
       <p className="text-[16px] mb-4 lg:mb-6 text-gray-700">
         Have any questions or inquiries? We'd love to hear from you.
       </p>
@@ -30,25 +132,78 @@ const Contact = memo(() => {
         </a>
       </div> */}
 
-      <form action="" className="p-4 lg:p-5 border-[1px] border-primary w-[95%] lg:w-[70%] max-lg:mx-auto flex flex-col gap-2 rounded-xl">
+      <form
+        ref={formRef}
+        className="p-4 lg:p-5 border-[1px] border-primary w-[95%] lg:w-[70%] max-lg:mx-auto flex flex-col gap-2 rounded-xl"
+      >
+        <input
+          type="hidden"
+          name="access_key"
+          value="21617fe9-bc5d-45cd-b274-eb68c7684cb9"
+        ></input>
         <div className="relative mb-5">
-          <input type="text" value={formData.name} maxLength={100} onChange={formDataHandler} name="name" placeholder="Enter your name" className="w-full bg-gray-100 p-3 outline-none px-4 rounded-md"/>
-          <p className={`absolute right-1 text-xs font-medium mt-1 ${formData.name.length === 100 ? "text-red-500" : "text-gray-600"}`}>{`${formData.name.length}/100`}</p>
+          <input
+            type="text"
+            onKeyDown={handleKeyDown}
+            value={fieldValues.name}
+            onChange={fieldValuesHandler}
+            name="name"
+            placeholder="Enter your name"
+            className={`w-full bg-gray-100 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "name" ? "border-red-500" : "border-transparent"}`}
+          />
+          <p
+            className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.name.length >= 100 ? "text-red-500" : "text-gray-600"
+              }`}
+          >{`${fieldValues.name.length}/100`}</p>
         </div>
         <div className="relative mb-5">
-          <input type="email" value={formData.email} onChange={formDataHandler} maxLength={254} name="email" placeholder="Enter your email" className="w-full bg-gray-100 p-3 outline-none px-4 rounded-md" />
-          <p className={`absolute right-1 text-xs font-medium mt-1 ${formData.email.length === 254 ? "text-red-500" : "text-gray-600"}`}>{`${formData.email.length}/254`}</p>
+          <input
+            type="email"
+            onKeyDown={handleKeyDown}
+            value={fieldValues.email}
+            onChange={fieldValuesHandler}
+            name="email"
+            placeholder="Enter your email"
+            className={`w-full bg-gray-100 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "email" ? "border-red-500" : "border-transparent"}`}
+          />
+          <p
+            className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.email.length >= 254 ? "text-red-500" : "text-gray-600"
+              }`}
+          >{`${fieldValues.email.length}/254`}</p>
         </div>
-       <div className="relative mb-5">
-         <textarea name="query" value={formData.query} onChange={formDataHandler} placeholder="Type your message..." maxLength={1000} className="w-full bg-gray-100 p-3 outline-none px-4 rounded-md  min-h-48 lg:min-h-60"></textarea>
-         <p className={`absolute right-1 text-xs font-medium ${formData.query.length === 1000 ? "text-red-500" : "text-gray-600"}`}>{`${formData.query.length}/1000`}</p>
-       </div>
+        <div className="relative mb-5">
+          <textarea
+            name="query"
+            onKeyDown={handleKeyDown}
+            value={fieldValues.query}
+            onChange={fieldValuesHandler}
+            placeholder="Type your message..."
+            className={`w-full bg-gray-100 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md min-h-48 lg:min-h-60 border-[1px] ${errorIn === "query" ? "border-red-500" : "border-transparent"}`}
+          ></textarea>
+          <p
+            className={`absolute right-1 text-xs font-medium ${fieldValues.query.length >= 1000
+                ? "text-red-500"
+                : "text-gray-600"
+              }`}
+          >{`${fieldValues.query.length}/1000`}</p>
+        </div>
+
+        <input
+          type="checkbox"
+          name="botcheck"
+          class="hidden"
+          style={{ display: "none" }}
+        ></input>
       </form>
 
-      <button className="mt-6 py-1 px-5 lg:py-2 lg:px-6 max-lg:mx-auto bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-75 cursor-pointer block">
-        <a href="mailto:zestyeatswk@gmail.com">Send Email</a>
+      <button
+        onClick={submitHandler}
+        className="mt-6 py-1 px-5 lg:py-2 lg:px-6 max-lg:mx-auto bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-75 cursor-pointer block"
+      >
+        Send Email
       </button>
     </div>
+  );
 });
 
 export default Contact;
