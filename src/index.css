@@ -178,6 +178,10 @@ body {
     background-color: black;
 }
 
+.progress-style-disclaimer {
+    background-color: white;
+}
+
 .pretty-scrollbar::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;

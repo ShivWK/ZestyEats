@@ -163,7 +163,7 @@ export default function App() {
         icon={false}
         closeButton={CloseToastBtn}
         toastClassName={() =>
-          "flex items-center gap-4 lg:rounded-lg shadow-xl px-4 py-3 mt-2 max-lg:mb-4 max-lg:max-w-[70%] dark:bg-[rgba(0,0,0,0.8)] text-semibold"
+          "flex items-center gap-4 rounded lg:rounded-lg shadow-xl px-4 py-3 mt-2 max-lg:mb-4 max-lg:max-w-[70%] dark:bg-[rgba(0,0,0,0.8)] text-semibold"
         }
       />
     </>
