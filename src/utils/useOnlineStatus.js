@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { setOnline } from "../features/home/homeSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 const useOnlineStatus = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const dispatch = useDispatch();
+    const hasUserGownOffline = useRef(false);
 
     const verifyConnection = async () => {
         try {
@@ -18,7 +19,8 @@ const useOnlineStatus = () => {
             setIsOnline(true);
             dispatch(setOnline(true))
 
-            toast("Back Online", {
+           if (hasUserGownOffline.current) {
+             toast("Back Online", {
                 autoClose: 2000,
                 style: {
                     backgroundColor: "rgba(0, 0, 0, 0.9)",
@@ -27,9 +29,11 @@ const useOnlineStatus = () => {
                 },
                 progressClassName: "progress-style",
             });
+           }
         } catch (err) {
             setIsOnline(false);
             dispatch(setOnline(false));
+            hasUserGownOffline.current = true;
 
             toast("Lost Connection", {
                 autoClose: 2000,
@@ -50,6 +54,8 @@ const useOnlineStatus = () => {
         const offlineHandler = () => {
             setOnline(false);
             dispatch(setOnline(false));
+            hasUserGownOffline.current = true;
+
             toast("Lost Connection", {
                 autoClose: 2000,
                 style: {

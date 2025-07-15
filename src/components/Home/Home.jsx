@@ -38,15 +38,6 @@ const Home = memo(() => {
   const city = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
   const online = useSelector(selectOnlineStatus);
 
-  useEffect(() => {
-    if (navigator.onLine) {
-      alert("Conneted")
-    } else {
-      alert("Disconnected")
-    }
-
-  }, [navigator.onLine])
-
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
 
