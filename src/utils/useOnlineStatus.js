@@ -70,10 +70,17 @@ const useOnlineStatus = () => {
 
         verifyConnection();
 
+        const timer = setInterval(() => {
+            if (!document.hidden) {
+                verifyConnection();
+            }
+        }, 5000)
+
         window.addEventListener("online", onlineHandler);
         window.addEventListener("offline", offlineHandler);
 
         return () => {
+            clearInterval(timer);
             window.removeEventListener("online", onlineHandler);
             window.removeEventListener("offline", offlineHandler);
         };
