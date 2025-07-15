@@ -50,7 +50,7 @@ export const termsAndConditions = [
             list: {
                 mainList: [
                     "<p>We support various digital payment options including credit/debit cards, UPI, and wallet payments via Razorpay.</p>",
-                    "<p>ZRefunds will be processed within 5–7 business days in cases of:</p>",
+                    "<p>Refunds will be processed within 5–7 business days in cases of:</p>",
                 ],
                 subList: [
                     "<p>Order cancellation due to unavailability.</p>",

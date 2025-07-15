@@ -26,7 +26,7 @@ const CompanyPolicies = () => {
         <BreadcrumbsWrapper />
         <section className="mt-1 lg:mt-4">
           <h1>{pageMainHeading.mainHeading}</h1>
-          <p className="text-gray-800">{pageMainHeading.description}</p>
+          <p className="text-gray-800 text-justify">{pageMainHeading.description}</p>
         </section>
         <section>
           {restData.map((data) => {
@@ -36,7 +36,7 @@ const CompanyPolicies = () => {
 
                 {data.description && (
                   <p
-                    className="text-gray-900"
+                    className="text-gray-900 text-justify"
                     dangerouslySetInnerHTML={{ __html: data.description }}
                   ></p>
                 )}
@@ -45,7 +45,7 @@ const CompanyPolicies = () => {
                   <ul className="list-disc mt-1 ml-6">
                     {data.list.mainList.map((data) => (
                       <li
-                        className="my-0.5"
+                        className="my-0.5 text-justify"
                         dangerouslySetInnerHTML={{ __html: data }}
                       ></li>
                     ))}
@@ -53,7 +53,7 @@ const CompanyPolicies = () => {
                       <ul className="list-[circle] ml-6 mt-1">
                         {data.list.subList.map((data) => (
                           <li
-                            className="my-0.5"
+                            className="my-0.5 text-justify"
                             dangerouslySetInnerHTML={{ __html: data }}
                           ></li>
                         ))}
@@ -63,19 +63,19 @@ const CompanyPolicies = () => {
                 )}
 
                 {data.description2 && (
-                  <p className="mt-1">{data.description2}</p>
+                  <p className="mt-1 text-justify">{data.description2}</p>
                 )}
 
                 {data.list2 && (
                   <ul className="list-disc ml-6 mt-1">
                     {data.list2.mainList.map((data) => (
-                      <li dangerouslySetInnerHTML={{ __html: data }}></li>
+                      <li className="my-0.5 text-justify" dangerouslySetInnerHTML={{ __html: data }}></li>
                     ))}
                   </ul>
                 )}
 
                 {data.subDescription && (
-                  <p className="mt-1"
+                  <p className="mt-1 text-justify"
                     dangerouslySetInnerHTML={{ __html: data.subDescription }}
                   ></p>
                 )}
