@@ -45,6 +45,7 @@ import PageNotFound from "./components/PageNotFound";
 import CityLocality from "./components/cityHome/CityLocality";
 import CityRestaurantPage from "./components/cityHome/CityRestaurantPage";
 import PopularDishes from "./components/cityHome/DishPage/PopularDishes";
+import CompanyPolicies from "./components/CompanyPolicies";
 
 export default function App() {
 
@@ -139,6 +140,7 @@ export default function App() {
         <Route path="mbStaticData" element={<ContentPage />} />
         <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
         <Route path='*' element={<PageNotFound />} />
+        <Route path="legalAndPolicies" element={<CompanyPolicies />}/>
       </Route>
     )
   );

@@ -40,6 +40,8 @@ const PageHeader = memo(() => {
     return <GeneralHeader placeholder={type} />
   } else if (pathname === "/ordersAndWishlist") {
     return <MobileOrdersHeader />
+  } else if (pathname.includes("legalAndPolicies")) {
+    return <GeneralHeader placeholder={"Legal & Policies"} />
   }
   
   return null;

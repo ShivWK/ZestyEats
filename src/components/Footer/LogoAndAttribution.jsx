@@ -22,7 +22,7 @@ const LogoAndAttribution = () => {
             height={60}
             width={60}
             alt="Bottom Logo"
-            className="max-md:h-12 max-md:w-12"
+            className="max-lg:h-12 max-lg:w-12"
           />
           <img
             className="h-9 md:h-11 w-44 md:w-52 mt-2"

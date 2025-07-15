@@ -13,11 +13,11 @@ const PageFooter = memo(() => {
 
   if (
     pathname === "/" ||
-    pathname.includes("/cityPage") ||
-    pathname.includes("/cityCuisines") ||
-    pathname.includes("/cityRestaurant") ||
+    pathname.includes("cityPage") ||
+    pathname.includes("cityCuisines") ||
+    pathname.includes("cityRestaurant") ||
     pathname.includes("cityLocality") ||
-    pathname.includes("cityDishes")
+    pathname.includes("cityDishes") 
   ) {
     return (
       !isLoading && (

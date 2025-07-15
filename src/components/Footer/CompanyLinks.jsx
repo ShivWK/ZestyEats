@@ -83,13 +83,13 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
         <p className="font-medium text-lg text-black mb-3">Legal</p>
         <ul className="list-none text-gray-900 font-normal">
           <li className="mb-3">
-            <NavLink>Terms & Conditions</NavLink>
+            <NavLink to={"/legalAndPolicies?mode=termsAndConditions"}>Terms & Conditions</NavLink>
           </li>
           <li className="mb-3">
-            <NavLink>Privacy Policy</NavLink>
+            <NavLink to={"/legalAndPolicies?mode=privacyPolicy"}>Privacy Policy</NavLink>
           </li>
           <li className="mb-3">
-            <NavLink>Cookie Policy</NavLink>
+            <NavLink to={"/legalAndPolicies?mode=cookiesPolicy"}>Cookie Policy</NavLink>
           </li>
         </ul>
       </div>
