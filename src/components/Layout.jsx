@@ -67,7 +67,7 @@ export default function Layout() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   useTrackNavigation();
-  useOnlineStatus();
+  // useOnlineStatus();
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));

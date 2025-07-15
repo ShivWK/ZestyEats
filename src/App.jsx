@@ -47,6 +47,7 @@ import CityRestaurantPage from "./components/cityHome/CityRestaurantPage";
 import PopularDishes from "./components/cityHome/DishPage/PopularDishes";
 import CompanyPolicies from "./components/CompanyPolicies";
 import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
+import useOnlineStatus from "./utils/useOnlineStatus";
 
 export default function App() {
 
@@ -145,6 +146,8 @@ export default function App() {
       </Route>
     )
   );
+
+  useOnlineStatus();
 
   return (
     <>

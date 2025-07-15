@@ -5,7 +5,7 @@ import { selectOnlineStatus } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 
 const ErrorBoundary = () => {
-    useOnlineStatus();
+    // useOnlineStatus();
     const navigate = useNavigate();
     const error = useRouteError() // {status, error};
     const isOnline = useSelector(selectOnlineStatus);

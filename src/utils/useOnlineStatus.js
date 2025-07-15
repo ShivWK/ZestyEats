@@ -10,26 +10,28 @@ const useOnlineStatus = () => {
 
     const verifyConnection = async () => {
         try {
-            const res = await fetch("https://clients3.google.com/generate_204", {
+            await fetch("https://clients3.google.com/generate_204", {
                 method: "GET",
                 cache: "no-cache",
                 mode: "no-cors"
             });
 
             setIsOnline(true);
-            dispatch(setOnline(true))
+            dispatch(setOnline(true));
 
-           if (hasUserGownOffline.current) {
-             toast("Back Online", {
-                autoClose: 2000,
-                style: {
-                    backgroundColor: "rgba(0, 0, 0, 0.9)",
-                    fontWeight: "bold",
-                    color: "white",
-                },
-                progressClassName: "progress-style",
-            });
-           }
+            if (hasUserGownOffline.current) {
+                toast("Back Online", {
+                    autoClose: 2000,
+                    style: {
+                        backgroundColor: "rgba(0, 0, 0, 0.9)",
+                        fontWeight: "bold",
+                        color: "white",
+                    },
+                    progressClassName: "progress-style",
+                });
+            }
+
+            hasUserGownOffline.current = false;
         } catch (err) {
             setIsOnline(false);
             dispatch(setOnline(false));
