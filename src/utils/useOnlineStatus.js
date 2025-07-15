@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const useOnlineStatus = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const dispatch = useDispatch();
-    const hasUserGoneOffline = useRef(false);
+    const hasUserGoneOffline = useRef(false); 
 
     const verifyConnection = async () => {
         try {
@@ -46,7 +46,7 @@ const useOnlineStatus = () => {
                 },
             });
         }
-    }
+    };
 
     useEffect(() => {
         const onlineHandler = () => {
@@ -54,21 +54,21 @@ const useOnlineStatus = () => {
         };
 
         const offlineHandler = () => {
-            setIsOnline(false);
+            setIsOnline(false); // ✅ fixed: this was `setOnline(false)` (Redux) before
             dispatch(setOnline(false));
             hasUserGoneOffline.current = true;
 
             toast("Lost Connection", {
                 autoClose: 2000,
                 style: {
-                    backgroundColor: "rgba(0,0,0,0.9)",
+                    backgroundColor: "rgba(0, 0, 0, 0.9)",
                     fontWeight: "bold",
                     color: "white",
                 },
             });
         };
 
-        verifyConnection();
+        verifyConnection(); 
 
         window.addEventListener("online", onlineHandler);
         window.addEventListener("offline", offlineHandler);
@@ -80,6 +80,6 @@ const useOnlineStatus = () => {
     }, []);
 
     return isOnline;
-}
+};
 
 export default useOnlineStatus;
