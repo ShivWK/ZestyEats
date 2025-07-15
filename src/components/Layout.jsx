@@ -178,12 +178,12 @@ export default function Layout() {
       } else if (item.includes("/cityDishes")) {
         const dish = decodeURIComponent(item).split("/").at(-1);
         return dish;
-      }
+      } else if (item.includes("/legalAndPolicies")) return "Legal & Policies";
+
       return item;
     });
 
     dispatch(setUserFriendlyPathHistory(history));
-    // console.log(history);
   }, [pathHistory]);
 
   useEffect(() => {
