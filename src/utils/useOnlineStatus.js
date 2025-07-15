@@ -7,10 +7,17 @@ const useOnlineStatus = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const onlineHandler = () => {
+    const verifyConnection = async () => {
+        try {
+            const res = await fetch("https://clients3.google.com/generate_204", {
+                method: "GET",
+                cache: "no-cache",
+                mode: "no-cors"
+            });
+
             setIsOnline(true);
-            dispatch(setOnline(true));
+            dispatch(setOnline(true))
+
             toast("Back Online", {
                 autoClose: 2000,
                 style: {
@@ -20,6 +27,24 @@ const useOnlineStatus = () => {
                 },
                 progressClassName: "progress-style",
             });
+        } catch (err) {
+            setIsOnline(false);
+            dispatch(setOnline(false));
+
+            toast("Lost Connection", {
+                autoClose: 2000,
+                style: {
+                    backgroundColor: "rgba(0, 0, 0, 0.9)",
+                    fontWeight: "bold",
+                    color: "white",
+                },
+            });
+        }
+    }
+
+    useEffect(() => {
+        const onlineHandler = () => {
+            verifyConnection();
         };
 
         const offlineHandler = () => {
@@ -32,9 +57,10 @@ const useOnlineStatus = () => {
                     fontWeight: "bold",
                     color: "white",
                 },
-                // progressClassName: "progress-style"
             });
         };
+
+        verifyConnection();
 
         window.addEventListener("online", onlineHandler);
         window.addEventListener("offline", offlineHandler);

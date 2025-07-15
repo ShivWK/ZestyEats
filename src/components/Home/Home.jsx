@@ -38,7 +38,14 @@ const Home = memo(() => {
   const city = useSelector(selectCity).toLowerCase().replace(/\s/g, "-");
   const online = useSelector(selectOnlineStatus);
 
-  console.log(online);
+  useEffect(() => {
+    if (navigator.onLine) {
+      alert("Conneted")
+    } else {
+      alert("Disconnected")
+    }
+
+  }, [navigator.onLine])
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
@@ -80,7 +87,7 @@ const Home = memo(() => {
           <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full md:object-cover" alt="Home banner image" />
         </div>
 
-        <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1.5 max-md:-mt-1 mb-3">
+        <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1 max-lg:-mt-1 mb-3">
           <p className="text-justify">Still building — features may not work as expected.</p>
         </div>
 
