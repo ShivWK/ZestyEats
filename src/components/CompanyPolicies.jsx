@@ -22,7 +22,7 @@ const CompanyPolicies = () => {
 
   return (
     <>
-      <main className="w-full lg:max-w-[1070px] mx-auto pt-20 lg:pt-26 overflow-x-hidden max-lg:px-2 font-sans">
+      <main className="w-full lg:max-w-[1070px] mx-auto pt-20 lg:pt-26 overflow-x-hidden max-lg:px-2 max-lg:pr-3 font-sans">
         <BreadcrumbsWrapper />
         <section className="mt-1 lg:mt-4">
           <h1>{pageMainHeading.mainHeading}</h1>
