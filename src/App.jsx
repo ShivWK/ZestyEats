@@ -46,12 +46,13 @@ import CityLocality from "./components/cityHome/CityLocality";
 import CityRestaurantPage from "./components/cityHome/CityRestaurantPage";
 import PopularDishes from "./components/cityHome/DishPage/PopularDishes";
 import CompanyPolicies from "./components/CompanyPolicies";
+import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
 
 export default function App() {
 
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<Layout />}>
+      <Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
         <Route index element={<Home />} />
         <Route
           path="about"

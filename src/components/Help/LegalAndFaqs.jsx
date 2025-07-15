@@ -30,7 +30,7 @@ const LegalAndFaqs = memo(() => {
                     <div onClick={() => handleClick(index)} className="group flex justify-between items-center py-3 px-3 cursor-pointer" style={{
                         backgroundColor: activeIndex === index ? "rgba(255,81,0,0.15)" : "white"
                     }}>
-                        <p className="group-hover:text-primary text-[18px] font-semibold transition-all duration-150 ease-in select-none">{obj.question}</p>
+                        <h2 className="grouh2-hover:text-primary text-[18px] font-semibold transition-all duration-150 ease-in select-none text-gray-800">{obj.question}</h2>
                         <i
                             className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5 inline-block"
                             style={{
@@ -45,7 +45,7 @@ const LegalAndFaqs = memo(() => {
                             display: activeIndex === index ? "block" : "none",
                         }}
                     >
-                        <p className="text-gray-700 font-semibold">{obj.description}</p>
+                        <p className="text-gray-700 font-medium">{obj.description}</p>
                     </div>
                 </div>
             );
