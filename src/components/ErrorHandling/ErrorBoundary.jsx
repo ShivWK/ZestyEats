@@ -1,11 +1,14 @@
 import { useRouteError, isRouteErrorResponse, useNavigate } from "react-router-dom";
 import Offline from "./Offline";
 import useOnlineStatus from "../../utils/useOnlineStatus";
+import { selectOnlineStatus } from "../../features/home/homeSlice";
+import { useSelector } from "react-redux";
 
 const ErrorBoundary = () => {
-    const isOnline = useOnlineStatus();
+    useOnlineStatus();
     const navigate = useNavigate();
     const error = useRouteError() // {status, error};
+    const isOnline = useSelector(selectOnlineStatus);
 
     let message = "Something went wrong. Please try again.";
 

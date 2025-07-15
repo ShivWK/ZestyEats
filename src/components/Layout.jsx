@@ -36,6 +36,7 @@ import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSli
 import { updateCurrentCity } from "../utils/addCurrentCity";
 import updateCityHomeData from "../utils/updateCityHomeData";
 import { setLocalityLatAndLng } from "../features/cityHome/cityHomeSlice";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
@@ -66,6 +67,7 @@ export default function Layout() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   useTrackNavigation();
+  useOnlineStatus();
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
@@ -219,51 +221,41 @@ export default function Layout() {
 
   }, [isLoginOpen, isLocationOpen, menuModel || dpModel]);
 
-  useEffect(() => {
-    const onlineHandler = () => {
-      dispatch(setOnline(true));
-      toast("Back Online", {
-        autoClose: 2000,
-        style: {
-          backgroundColor: "rgba(0, 0, 0, 0.9)",
-          fontWeight: "bold",
-          color: "white",
-        },
-        progressClassName: "progress-style",
-      });
-    };
+  // useEffect(() => {
+  //   const onlineHandler = () => {
+  //     dispatch(setOnline(true));
+  //     toast("Back Online", {
+  //       autoClose: 2000,
+  //       style: {
+  //         backgroundColor: "rgba(0, 0, 0, 0.9)",
+  //         fontWeight: "bold",
+  //         color: "white",
+  //       },
+  //       progressClassName: "progress-style",
+  //     });
+  //   };
 
-    const offlineHandler = () => {
-      dispatch(setOnline(false));
-      toast("Lost Connection", {
-        autoClose: 2000,
-        style: {
-          backgroundColor: "rgba(0,0,0,0.9)",
-          fontWeight: "bold",
-          color: "white",
-        },
-        // progressClassName: "progress-style"
-      });
-    };
+  //   const offlineHandler = () => {
+  //     dispatch(setOnline(false));
+  //     toast("Lost Connection", {
+  //       autoClose: 2000,
+  //       style: {
+  //         backgroundColor: "rgba(0,0,0,0.9)",
+  //         fontWeight: "bold",
+  //         color: "white",
+  //       },
+  //       // progressClassName: "progress-style"
+  //     });
+  //   };
 
-    window.addEventListener("online", onlineHandler);
-    window.addEventListener("offline", offlineHandler);
+  //   window.addEventListener("online", onlineHandler);
+  //   window.addEventListener("offline", offlineHandler);
 
-    toast.info("Still building — features may not work as expected.", {
-      autoClose: 4000,
-      style: {
-        background: "rgba(0,0,0,0.9)",
-        color: "white",
-        fontWeight: "medium",
-      },
-      progressClassName: "progress-style-disclaimer",
-    });
-
-    return () => {
-      window.removeEventListener("online", onlineHandler);
-      window.removeEventListener("offline", offlineHandler);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener("online", onlineHandler);
+  //     window.removeEventListener("offline", offlineHandler);
+  //   };
+  // }, []);
 
   // useEffect(() => {
   //   const handleModelClose = (e) => {
