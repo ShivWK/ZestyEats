@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 const useOnlineStatus = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const dispatch = useDispatch();
-    const hasUserGownOffline = useRef(false);
+    const hasUserGoneOffline = useRef(false);
 
     const verifyConnection = async () => {
         try {
@@ -19,7 +19,7 @@ const useOnlineStatus = () => {
             setIsOnline(true);
             dispatch(setOnline(true));
 
-            if (hasUserGownOffline.current) {
+            if (hasUserGoneOffline.current) {
                 toast("Back Online", {
                     autoClose: 2000,
                     style: {
@@ -31,11 +31,11 @@ const useOnlineStatus = () => {
                 });
             }
 
-            hasUserGownOffline.current = false;
+            hasUserGoneOffline.current = false;
         } catch (err) {
             setIsOnline(false);
             dispatch(setOnline(false));
-            hasUserGownOffline.current = true;
+            hasUserGoneOffline.current = true;
 
             toast("Lost Connection", {
                 autoClose: 2000,
@@ -54,9 +54,9 @@ const useOnlineStatus = () => {
         };
 
         const offlineHandler = () => {
-            setOnline(false);
+            setIsOnline(false);
             dispatch(setOnline(false));
-            hasUserGownOffline.current = true;
+            hasUserGoneOffline.current = true;
 
             toast("Lost Connection", {
                 autoClose: 2000,
@@ -70,17 +70,10 @@ const useOnlineStatus = () => {
 
         verifyConnection();
 
-        // const timer = setInterval(() => {
-        //     if (!document.hidden) {
-        //         verifyConnection();
-        //     }
-        // }, 5000)
-
         window.addEventListener("online", onlineHandler);
         window.addEventListener("offline", offlineHandler);
 
         return () => {
-            // clearInterval(timer);
             window.removeEventListener("online", onlineHandler);
             window.removeEventListener("offline", offlineHandler);
         };
