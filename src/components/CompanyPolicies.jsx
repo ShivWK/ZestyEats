@@ -24,7 +24,7 @@ const CompanyPolicies = () => {
     <>
       <main className="w-full lg:max-w-[1070px] mx-auto pt-20 lg:pt-26 overflow-x-hidden max-lg:px-2 max-lg:pr-3 font-sans">
         <BreadcrumbsWrapper />
-        <section className="mt-1 lg:mt-4">
+        <section className="mt-3 lg:mt-4">
           <h1>{pageMainHeading.mainHeading}</h1>
           <p className="text-gray-800 text-justify">{pageMainHeading.description}</p>
         </section>
@@ -45,7 +45,7 @@ const CompanyPolicies = () => {
                   <ul className="list-disc mt-1 ml-6">
                     {data.list.mainList.map((data) => (
                       <li
-                        className="my-0.5 text-justify"
+                        className="my-0.5"
                         dangerouslySetInnerHTML={{ __html: data }}
                       ></li>
                     ))}
@@ -53,7 +53,7 @@ const CompanyPolicies = () => {
                       <ul className="list-[circle] ml-6 mt-1">
                         {data.list.subList.map((data) => (
                           <li
-                            className="my-0.5 text-justify"
+                            className="my-0.5"
                             dangerouslySetInnerHTML={{ __html: data }}
                           ></li>
                         ))}
@@ -69,7 +69,7 @@ const CompanyPolicies = () => {
                 {data.list2 && (
                   <ul className="list-disc ml-6 mt-1">
                     {data.list2.mainList.map((data) => (
-                      <li className="my-0.5 text-justify" dangerouslySetInnerHTML={{ __html: data }}></li>
+                      <li className="my-0.5" dangerouslySetInnerHTML={{ __html: data }}></li>
                     ))}
                   </ul>
                 )}
