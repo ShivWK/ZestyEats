@@ -130,7 +130,7 @@ const HorizontalCarousel = memo(({
 
   return (
     <>
-      <div className="flex justify-between flex-wrap items-center" style={{ marginBottom: margin_bottom }}>
+      <div className="flex justify-between flex-wrap items-center " style={{ marginBottom: margin_bottom }}>
         {heading && (
           <h2>
             {heading}

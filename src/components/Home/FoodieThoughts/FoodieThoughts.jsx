@@ -13,6 +13,7 @@ const FoodieThoughts = memo(({ data }) => {
       Card={Cards}
       autoScrollWidth="200"
       scrollMargin="10"
+      margin_bottom="-15px"
     />
   );
 });
