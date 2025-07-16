@@ -26,6 +26,7 @@ const CompanyPolicies = () => {
         <BreadcrumbsWrapper />
         <section className="mt-3 lg:mt-4">
           <h1>{pageMainHeading.mainHeading}</h1>
+          <p className="text-xs text-gray-700 mb-3 font-medium">Last updated: 16/07/2025</p>
           <p className="text-gray-800 text-justify">{pageMainHeading.description}</p>
         </section>
         <section>
