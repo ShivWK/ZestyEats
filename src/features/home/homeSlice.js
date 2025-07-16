@@ -3,7 +3,8 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 const initialState = {
   lat: 12.9715987,
   lng: 77.5945627,
-  city:"",
+  city: "",
+  isUnserviceable: false,
   foodieThoughtsData: [],
   topRestaurantsData: [],
   recentLocations: [],
@@ -29,7 +30,7 @@ const homeSlice = createSlice({
   initialState: initialState,
   reducers: {
     addLatAndLng: (state, action) => {
-      const {lat, lng} = action.payload;
+      const { lat, lng } = action.payload;
 
       state.lat = lat;
       state.lng = lng;
@@ -67,8 +68,20 @@ const homeSlice = createSlice({
       state.userFriendlyPathHistory = action.payload;
     },
 
-    addFoodieThoughtsData: (state, action) => {
+    setUnserviceable: (state, action) => {
       const result = action.payload?.data?.cards?.find(
+        (item) => item?.card?.card?.id === "swiggy_not_present"
+      );
+
+      if (result) {
+        state.isUnserviceable = true;
+        state.isLoading = false;
+      } 
+    },
+
+    addFoodieThoughtsData: (state, action) => {
+      const result =
+        action.payload?.data?.cards?.find(
           (item) => item?.card?.card?.id === "whats_on_your_mind"
         )?.card?.card?.imageGridCards?.info || [];
 
@@ -119,7 +132,7 @@ const homeSlice = createSlice({
       )?.card?.card?.header?.title;
 
       state.topRestaurantsTitle = title;
-      state.city = title.split(" ").at(-1);
+      state.city = title?.split(" ").at(-1);
     },
 
     addSearchedCity: (state, action) => {
@@ -132,7 +145,7 @@ const homeSlice = createSlice({
       })?.card?.card?.title;
       state.onlineDeliveryTitle = title;
 
-      state.city = title.split(" ").at(-1);
+      state.city = title?.split(" ").at(-1);
     },
 
     addSearchedCityAddress: (state, action) => {
@@ -187,7 +200,7 @@ const homeSlice = createSlice({
 
     setDpModelHide: (state, action) => {
       state.dpModelHide = action.payload;
-    }
+    },
   },
 });
 
@@ -218,14 +231,16 @@ export const selectLatAndLng = createSelector(
   [(state) => state.home.lat, (state) => state.home.lng],
   (lat, lng) => ({ lat, lng })
 );
-export const selectCity = state => state.home.city
-export const selectDpModel = state => state.home.dbModelOpen; 
-export const selectBottomMenu = state => state.home.showBottomMenu;
-export const selectDpModelHide = state => state.home.dpModelHide;
+export const selectCity = (state) => state.home.city;
+export const selectDpModel = (state) => state.home.dbModelOpen;
+export const selectBottomMenu = (state) => state.home.showBottomMenu;
+export const selectDpModelHide = (state) => state.home.dpModelHide;
+export const selectIsServiceable = (state) => state.home.isUnserviceable;
 
-// if i dont use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
+// if i don't use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
 
 export const {
+  setUnserviceable,
   addFoodieThoughtsData,
   addTopRestaurantsData,
   addSearchedCity,
@@ -248,6 +263,6 @@ export const {
   setUserFriendlyPathHistory,
   setDpModelOpen,
   setShowBottomMenu,
-  setDpModelHide
+  setDpModelHide,
   // setCity
 } = homeSlice.actions;

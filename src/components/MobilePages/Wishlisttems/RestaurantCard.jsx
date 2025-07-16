@@ -144,8 +144,7 @@ const RestaurantCard = ({ data }) => {
                 <p>•</p>
                 <div id="No delivery" className="relative">
                   <i className="fas fa-shipping-fast text-black"></i>
-                  <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
-                  {/* <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
+                  <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45 rounded"></div>
                 </div>
                 {status.distance && <p className="text-gray-600">({status.distance} kms)</p>}
               </div>
