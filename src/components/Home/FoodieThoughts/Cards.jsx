@@ -32,7 +32,7 @@ const Cards = memo(({ data }) => {
   return (
     <Link to={path} onClick={handleClick} className="shrink-0 w-28 lg:w-36">
       <img
-        className="w-full h-[7rem] my-3 lg:my-2 lg:h-44 rounded object-cover"
+        className="w-full h-[9rem] my-3 lg:my-2 lg:h-44 rounded object-cover"
         src={isError ? "/images/fallback.png" : `https://media-assets.swiggy.com/swiggy/image/upload/${data?.imageId}`}
         alt={data?.accessibility?.altText}
         onError={() => setIsError(true)}
