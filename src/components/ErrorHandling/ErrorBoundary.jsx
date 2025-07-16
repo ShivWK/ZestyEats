@@ -23,19 +23,19 @@ const ErrorBoundary = () => {
                 <p className="text-2xl text-gray-700 font-bold -mt-1 text-center">{message}</p>
                 <p className="text-xl text-gray-500 font-medium text-center -mt-2">{`status: ${error.status}, error: ${error.error}`}</p>
             </div>
-            <div className="flex gap-3 mt-2">
-                <button
-                onClick={() => navigate(-1)}
-                className="px-4 py-1 hover:bg-primary hover:text-white font-medium rounded-md bg-gray-200 text-black border-[1px] hover:border-primary border-gray-400 transition-all duration-100 ease-linear active:scale-95"
-            >
-                Go to Back
-            </button>
-            <button
-                onClick={() => window.location.reload()}
-                className="px-4 py-1 hover:bg-primary hover:text-white font-medium rounded-md bg-gray-200 text-black border-[1px] hover:border-primary border-gray-400 transition-all duration-100 ease-linear active:scale-95">
-                Reload
-            </button>
-            </div>
+             <div className="flex gap-3 mt-2">
+                 <button
+                     onClick={() => navigate(-1)}
+                     className="px-4 py-1 hover:bg-primary hover:text-white font-medium rounded-md bg-gray-200 text-black border-[1px] hover:border-primary border-gray-400 transition-all duration-100 ease-linear active:scale-95 cursor-pointer"
+                 >
+                     Go to Back
+                 </button>
+                 <button
+                     onClick={() => window.location.reload()}
+                     className="px-4 py-1 bg-primary text-white font-medium rounded-md hover:bg-gray-200 hover:text-black border-[1px] border-primary hover:border-gray-400 transition-all duration-100 ease-linear active:scale-95 cursor-pointer">
+                     Reload
+                 </button>
+             </div>
         </main>
     );
 }

@@ -78,7 +78,7 @@ const Home = memo(() => {
           <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full md:object-cover" alt="Home banner image" />
         </div>
 
-        <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border mx-1 max-lg:-mt-1 mb-3">
+        <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border max-lg:-mt-1 mb-3">
           <p className="text-justify">Still building — features may not work as expected.</p>
         </div>
 
