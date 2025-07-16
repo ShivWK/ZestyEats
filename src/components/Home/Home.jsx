@@ -39,6 +39,8 @@ const Home = memo(() => {
   const city = useSelector(selectCity)?.toLowerCase().replace(/\s/g, "-");
   const service = useSelector(selectIsServiceable);
 
+  console.log(service)
+
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
 
@@ -71,20 +73,19 @@ const Home = memo(() => {
     <>
       <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-14 pt-[88px] md:pt-26 overflow-x-hidden max-md:px-1.5">
 
-        {/* dev msg */}
-
         {/* Home banner */}
 
         <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-36 md:h-64 mx-auto">
           <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full md:object-cover" alt="Home banner image" />
         </div>
 
+        {/* dev msg */}
         <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border max-lg:-mt-1 mb-3">
           <p className="text-justify">Still building — features may not work as expected.</p>
         </div>
 
         {/* if unserviceable */}
-       {service && (
+       {!service && (
          <section className="mb-6 lg:mb-10">
           <div className="relative flex items-center flex-col">
             <svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 829 364.82907"
