@@ -196,30 +196,30 @@ export default function Layout() {
     }
   }, [loginHovered, locationHovered]);
 
-  useEffect(() => {
-    const scrollbarWidth = "15px";
-    const body = document.body;
+  // useEffect(() => {
+  //   const scrollbarWidth = "15px";
+  //   const body = document.body;
 
-    const isLargeScreen = window.innerWidth >= 768;
+  //   const isLargeScreen = window.innerWidth >= 768;
 
-    if (body.clientHeight >= body.scrollHeight) {
-      body.style.paddingRight = "15px";
-    }
+  //   if (body.clientHeight >= body.scrollHeight) {
+  //     body.style.paddingRight = "15px";
+  //   }
 
-    if (isLoginOpen || isLocationOpen || menuModel || dpModel) {
-      body.classList.add("overflow-hidden");
-      body.style.paddingRight = isLargeScreen ? scrollbarWidth : 0;
-    } else {
-      body.classList.remove("overflow-hidden");
-      body.style.paddingRight = "0px";
-    }
-    // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
-    return () => {
-      body.classList.remove("overflow-hidden");
-      body.style.paddingRight = "0px";
-    };
+  //   if (isLoginOpen || isLocationOpen || menuModel || dpModel) {
+  //     body.classList.add("overflow-hidden");
+  //     body.style.paddingRight = isLargeScreen ? scrollbarWidth : 0;
+  //   } else {
+  //     body.classList.remove("overflow-hidden");
+  //     body.style.paddingRight = "0px";
+  //   }
+  //   // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
+  //   return () => {
+  //     body.classList.remove("overflow-hidden");
+  //     body.style.paddingRight = "0px";
+  //   };
 
-  }, [isLoginOpen, isLocationOpen, menuModel || dpModel]);
+  // }, [isLoginOpen, isLocationOpen, menuModel || dpModel]);
 
   // useEffect(() => {
   //   const onlineHandler = () => {
