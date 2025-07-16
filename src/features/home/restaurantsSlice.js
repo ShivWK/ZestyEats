@@ -53,7 +53,7 @@ const restaurantSlice = createSlice({
     },
 
     toggleMenuModel: (state) => {
-      console.log("Called")
+      console.log("Called menu")
       state.menuModel = !state.menuModel;
     },
 

@@ -196,86 +196,45 @@ export default function Layout() {
     }
   }, [loginHovered, locationHovered]);
 
-  // useEffect(() => {
-  //   const scrollbarWidth = "15px";
-  //   const body = document.body;
+  useEffect(() => {
+    const html = document.documentElement;
+    const scrollbarWidth = (window.innerWidth - html.clientWidth) + "px";
 
-  //   const isLargeScreen = window.innerWidth >= 768;
+    const isLargeScreen = window.innerWidth >= 768;
 
-  //   if (body.clientHeight >= body.scrollHeight) {
-  //     body.style.paddingRight = "15px";
-  //   }
+    if (isLoginOpen || isLocationOpen || menuModel || dpModel) {
+      html.classList.add("overflow-hidden");
+      html.style.paddingRight = isLargeScreen ? scrollbarWidth : "0px";
+    } else {
+      html.classList.remove("overflow-hidden");
+      html.style.paddingRight = "0px";
+    }
+    // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
+    return () => {
+      html.classList.remove("overflow-hidden");
+      html.style.paddingRight = "0px";
+    };
 
-  //   if (isLoginOpen || isLocationOpen || menuModel || dpModel) {
-  //     body.classList.add("overflow-hidden");
-  //     body.style.paddingRight = isLargeScreen ? scrollbarWidth : 0;
-  //   } else {
-  //     body.classList.remove("overflow-hidden");
-  //     body.style.paddingRight = "0px";
-  //   }
-  //   // Hard coded for now, but we can use a library to get the scrollbar width dynamically.
-  //   return () => {
-  //     body.classList.remove("overflow-hidden");
-  //     body.style.paddingRight = "0px";
-  //   };
+  }, [isLoginOpen, isLocationOpen, menuModel, dpModel]);
 
-  // }, [isLoginOpen, isLocationOpen, menuModel || dpModel]);
+  useEffect(() => {
+    const handleModelClose = (e) => {
+      if (isLoginOpen) {
+        dispatch(setHideLogin(true))
+      } else if (isLocationOpen) {
+        dispatch(setHideLocation(true));
+      } else if (menuModel) {
 
-  // useEffect(() => {
-  //   const onlineHandler = () => {
-  //     dispatch(setOnline(true));
-  //     toast("Back Online", {
-  //       autoClose: 2000,
-  //       style: {
-  //         backgroundColor: "rgba(0, 0, 0, 0.9)",
-  //         fontWeight: "bold",
-  //         color: "white",
-  //       },
-  //       progressClassName: "progress-style",
-  //     });
-  //   };
+      } else if (dpModel) {
+        // console.log("listner called")
+        dispatch(setDpModelHide(true));
+      }
+    }
 
-  //   const offlineHandler = () => {
-  //     dispatch(setOnline(false));
-  //     toast("Lost Connection", {
-  //       autoClose: 2000,
-  //       style: {
-  //         backgroundColor: "rgba(0,0,0,0.9)",
-  //         fontWeight: "bold",
-  //         color: "white",
-  //       },
-  //       // progressClassName: "progress-style"
-  //     });
-  //   };
+    window.addEventListener("popstate", handleModelClose);
+    return () => window.removeEventListener("popstate", handleModelClose);
 
-  //   window.addEventListener("online", onlineHandler);
-  //   window.addEventListener("offline", offlineHandler);
-
-  //   return () => {
-  //     window.removeEventListener("online", onlineHandler);
-  //     window.removeEventListener("offline", offlineHandler);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   const handleModelClose = (e) => {
-  //     if (isLoginOpen) {
-  //       dispatch(setHideLogin(true))
-  //     } else if (isLocationOpen) {
-  //       dispatch(setHideLocation(true));
-  //     } else if (menuModel) {
-
-  //     } else if (dpModel) {
-  //       console.log("listner called")
-  //       dispatch(setDpModelHide(true));
-  //     }
-  //   }
-
-  //   window.addEventListener("popstate", handleModelClose);
-
-  //   return () => window.removeEventListener("popstate", handleModelClose);
-
-  // }, [isLoginOpen, isLocationOpen, menuModel, dpModel])
+  }, [isLoginOpen, isLocationOpen, menuModel, dpModel])
 
   return (
     <>

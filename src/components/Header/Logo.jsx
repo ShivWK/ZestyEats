@@ -41,7 +41,7 @@ const Logo = memo(({ searchPlaceholder }) => {
         <button
           onMouseEnter={hoverHandler}
           onClick={handleClick}
-          className="group flex max-md:flex-col max-md:justify-center items-center gap-2 md:gap-2 cursor-pointer"
+          className="group flex max-md:flex-col max-md:justify-center items-center gap-2 md:gap-2 cursor-pointer outline-none border-none"
         >
           <span className="font-[750] max-md:self-start max-md:text-sm underline underline-offset-5 max-md:underline-offset-4 decoration-2 group-hover:text-[#ff5200]">
             {yourCurrentCity ? yourCurrentCity : "Location"}

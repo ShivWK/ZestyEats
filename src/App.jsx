@@ -4,7 +4,7 @@ import {
   RouterProvider,
   createRoutesFromElements,
 } from "react-router-dom";
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
 
@@ -49,7 +49,21 @@ import CompanyPolicies from "./components/CompanyPolicies";
 import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
 import useOnlineStatus from "./utils/useOnlineStatus";
 
+import {
+  selectLocationModal,
+  selectLogInModal,
+  setHideLocation,
+  setHideLogin
+} from "./features/Login/loginSlice";
+
+import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
+import { useSelector, useDispatch } from "react-redux";
+
 export default function App() {
+  const isLoginOpen = useSelector(selectLogInModal);
+  const isLocationModelOpen = useSelector(selectLocationModal);
+  const isMenuModelOpen = useSelector(selectMenuModel);
+  const dispatch = useDispatch();
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -142,12 +156,34 @@ export default function App() {
         <Route path="mbStaticData" element={<ContentPage />} />
         <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
         <Route path='*' element={<PageNotFound />} />
-        <Route path="legalAndPolicies" element={<CompanyPolicies />}/>
+        <Route path="legalAndPolicies" element={<CompanyPolicies />} />
       </Route>
     )
   );
 
   useOnlineStatus();
+
+  useEffect(() => {
+    const handleScapeDown = (e) => {
+
+      if (e.key === "Escape") {
+        if (isLoginOpen) {
+          window.history.back();
+          dispatch(setHideLogin(true));
+        }
+        if (isLocationModelOpen) {
+          window.history.back();
+          dispatch(setHideLocation(true));
+        }
+        if (isMenuModelOpen) {
+          dispatch(toggleMenuModel());
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleScapeDown);
+    return () => document.removeEventListener("keydown", handleScapeDown);
+  }, [isLoginOpen, isLocationModelOpen, isMenuModelOpen]);
 
   return (
     <>

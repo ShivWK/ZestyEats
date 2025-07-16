@@ -19,7 +19,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
     else dispatch(signUpOtpNotSend());
 
     dispatch(setHideLogin(true));
-    // window.history.back();
+    window.history.back();
   };
 
   const handleBack = () => {

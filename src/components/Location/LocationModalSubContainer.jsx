@@ -39,7 +39,7 @@ const ModalSubContainer = memo(() => {
     dispatch(setHideLocation(true));
     setSearchValue("");
 
-    // window.history.back();
+    window.history.back();
   };
 
   function debounceCreater(func, delay) {

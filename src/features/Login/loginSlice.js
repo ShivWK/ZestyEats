@@ -21,24 +21,27 @@ const loginSlice = createSlice({
         setLogInModal: (state, action) => {
             state.isLoginModalOpen = action.payload;
 
-            // if (action.payload) {
-            //     window.history.pushState({model: "login"}, "", "?model=login")
-            // }
+            if (action.payload) {
+                window.history.pushState({model: "login"}, "", "?model=login")
+            }
         },
 
         setHideLogin: (state, action) => {
+            console.log("Login called")
             state.isHideLogin = action.payload;
         },
 
         setLocationModal: (state, action) => {
             state.isLocationModalOpen = action.payload;
 
-            // if (action.payload) {
-            //     window.history.pushState({model: "location"}, "", "?model=location")
-            // }
+            if (action.payload) {
+                window.history.pushState({model: "location"}, "", "?model=location")
+            }
         },
 
         setHideLocation: (state, action) => {
+            console.log("Location called")
+
             state.isHideLocation = action.payload;
         },
 
