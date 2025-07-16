@@ -30,7 +30,7 @@ const Cards = memo(({ data }) => {
   };
 
   return (
-    <Link to={path} onClick={handleClick} className="shrink-0 w-28 max-md:pb-4 lg:w-36">
+    <Link to={path} onClick={handleClick} className="shrink-0 w-28 max-md:pb-1 lg:w-36">
       <img
         className="w-full h-32 my-3 md:my-2 md:h-44 rounded object-cover"
         src={isError ? "/images/fallback.png" : `https://media-assets.swiggy.com/swiggy/image/upload/${data?.imageId}`}
