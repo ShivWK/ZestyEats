@@ -10,6 +10,7 @@ import {
     addLatAndLng,
     setUserFriendlyPathHistory,
     setPathHistory,
+    setUnserviceable,
 } from '../features/home/homeSlice';
 
 export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPathHistory, pathHistory) => {
@@ -27,6 +28,7 @@ export const updateHomeRestaurantData = async (res, dispatch, lat, lng, userPath
         dispatch(addTopRestaurantsData(res));
         dispatch(addRestaurantsWithOnineDelivery(res));
         dispatch(addTopRestaurantsTitle(res));
+        dispatch(setUnserviceable(res))
         dispatch(addOnlineDeliveryTitle(res));
         dispatch(addBestNearCuisions(res));
         dispatch(addAvailableCities(res));

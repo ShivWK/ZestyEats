@@ -73,10 +73,14 @@ const homeSlice = createSlice({
         (item) => item?.card?.card?.id === "swiggy_not_present"
       );
 
+      console.log(result)
+
       if (result) {
         state.isUnserviceable = true;
         state.isLoading = false;
-      } 
+      } else {
+        state.isUnserviceable = false;
+      }
     },
 
     addFoodieThoughtsData: (state, action) => {
