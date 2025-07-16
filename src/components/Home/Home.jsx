@@ -39,8 +39,6 @@ const Home = memo(() => {
   const city = useSelector(selectCity)?.toLowerCase().replace(/\s/g, "-");
   const service = useSelector(selectIsServiceable);
 
-  console.log(service)
-
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
 
@@ -86,7 +84,8 @@ const Home = memo(() => {
         </div>
 
         {/* if unserviceable */}
-        <section className="mb-6 lg:mb-10">
+       {service && (
+         <section className="mb-6 lg:mb-10">
           <div className="relative flex items-center flex-col">
             <svg xmlns="http://www.w3.org/2000/svg" width="200" height="150" viewBox="0 0 829 364.82907"
             className="lg:h-[350px] lg:w-[350px]" 
@@ -96,6 +95,7 @@ const Home = memo(() => {
           <h2 className="text-center text-sm lg:text-2xl lg:-mt-3">😔 Sorry, we’re not delivering in this area yet.</h2>
           <p className="text-center text-xs lg:text-xl text-gray-500 font-medium">ZeastyEats is expanding soon, stay tuned!</p>
         </section>
+       )}
 
         {/* Foodie thoughts */}
 
