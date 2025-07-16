@@ -1,4 +1,3 @@
-import Loader from "../Loader";
 import { memo, useRef, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -195,23 +194,12 @@ const Contact = memo(() => {
       <button
         onClick={submitHandler}
         disabled={loading}
-        className={`mt-6 py-2 px-6 max-lg:mx-auto bg-primary text-white font-semibold rounded-md hover:bg-primary/90 active:scale-95 transition-transform ease-in-out duration-75 cursor-pointer block`}
+        className={`mt-6 py-2 px-6 max-lg:mx-auto font-semibold rounded-md border-[1px] ${loading ? "bg-gray-200 text-gray-400 border-gray-400" : "active:scale-95 hover:bg-primary bg-primary/90 border-primary text-white"} transition-transform ease-in-out duration-75 cursor-pointer block`}
       >
-        {loading ? <Loader size={"small"} /> : "Send Email"}
+        Send Email
       </button>
     </div>
   );
 });
 
 export default Contact;
-
-
-{/* <div className="flex items-center gap-2">
-        <span className="text-[16px] font-medium">Email:</span>
-        <a
-          href="mailto:shivendrawk@gmail.com"
-          className="text-primary underline hover:text-primary/80"
-        >
-          zestyeatswk@gmail.com
-        </a>
-</div> */}
