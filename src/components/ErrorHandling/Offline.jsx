@@ -68,7 +68,7 @@ const Offline = () => {
                     onClick={() => navigate(-1)}
                     className="px-4 py-1 hover:bg-primary hover:text-white font-medium rounded-md bg-gray-200 text-black border-[1px] hover:border-primary border-gray-400 transition-all duration-100 ease-linear active:scale-95 cursor-pointer"
                 >
-                    Go to Back
+                    Go Back
                 </button>
                 <button
                     onClick={() => window.location.reload()}
