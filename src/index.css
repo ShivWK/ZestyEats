@@ -67,12 +67,12 @@
     /* animation-fill-mode: forwards is important to persist the values set by the animation (100% values) otherwise as animation ends its set values are removed */
 
     .show-menu {
-        animation: showMenu 0.3s ease-in-out forwards;
-        bottom: 5rem;
+        animation: showMenu 0.25s ease-in-out forwards;
+        /* bottom: 4rem; */
     }
 
     .hide-menu {
-        animation: hideMenu 0.3s ease-in-out forwards;
+        animation: hideMenu 0.25s ease-in-out forwards;
     }
 
     @keyframes bgChange {
@@ -153,13 +153,13 @@
         }
 
         100% {
-            bottom: 5rem;
+            bottom: 4rem;
         }
     }
 
      @keyframes hideMenu {
         0% {
-            bottom: 5rem
+            bottom: 4rem
         }
 
         100% {
