@@ -29,7 +29,12 @@ const Menu = () => {
 
   return (
     <div
-      onClick={() => dispatch(setHideMenu(true))}
+      onClick={() => {
+        dispatch(setHideMenu(true))
+        // window.history.replaceState(null, "", location.href);
+
+        window.history.back();
+      }}
       className="fixed inset-0 bg-black/30 top-0 left-0 w-[100%] h-[100%] z-40"
     >
       <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[70%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-black rounded-xl py-2 overflow-hidden`}>

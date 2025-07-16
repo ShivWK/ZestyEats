@@ -26,7 +26,7 @@ import {
   setDpModelHide
 } from "../features/home/homeSlice";
 
-import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro, setItemToCart } from "../features/home/restaurantsSlice";
+import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro, setItemToCart, setHideMenu } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -217,16 +217,16 @@ export default function Layout() {
 
   }, [isLoginOpen, isLocationOpen, menuModel, dpModel]);
 
-  useEffect(() => {
+  useEffect((e) => {
     const handleModelClose = (e) => {
       if (isLoginOpen) {
         dispatch(setHideLogin(true))
       } else if (isLocationOpen) {
         dispatch(setHideLocation(true));
       } else if (menuModel) {
-
+        dispatch(setHideMenu(true));
+        e.preventDefault();
       } else if (dpModel) {
-        // console.log("listner called")
         dispatch(setDpModelHide(true));
       }
     }

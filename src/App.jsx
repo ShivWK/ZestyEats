@@ -168,16 +168,17 @@ export default function App() {
 
       if (e.key === "Escape") {
         if (isLoginOpen) {
-          window.history.back();
           dispatch(setHideLogin(true));
         }
         if (isLocationModelOpen) {
-          window.history.back();
           dispatch(setHideLocation(true));
         }
         if (isMenuModelOpen) {
           dispatch(toggleMenuModel());
         }
+
+        window.history.back();
+        // window.history.replaceState(null, "", location.href);
       }
     }
 

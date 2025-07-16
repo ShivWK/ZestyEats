@@ -153,13 +153,13 @@
         }
 
         100% {
-            bottom: 4rem;
+            bottom: 4.5rem;
         }
     }
 
      @keyframes hideMenu {
         0% {
-            bottom: 4rem
+            bottom: 4.5rem
         }
 
         100% {

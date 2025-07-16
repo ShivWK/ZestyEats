@@ -59,6 +59,10 @@ const restaurantSlice = createSlice({
 
     toggleMenuModel: (state) => {
       state.menuModel = !state.menuModel;
+
+      if (state.menuModel) {
+        window.history.pushState({ model: true }, "", window.location.href )
+      }
     },
 
     setRestaurantItems: (state, action) => {

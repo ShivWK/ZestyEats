@@ -22,7 +22,7 @@ const loginSlice = createSlice({
             state.isLoginModalOpen = action.payload;
 
             if (action.payload) {
-                window.history.pushState({model: "login"}, "", "?model=login")
+                window.history.pushState({model: "login"}, "", location.href)
             }
         },
 
@@ -35,7 +35,7 @@ const loginSlice = createSlice({
             state.isLocationModalOpen = action.payload;
 
             if (action.payload) {
-                window.history.pushState({model: "location"}, "", "?model=location")
+                window.history.pushState({model: "location"}, "", location.href)
             }
         },
 
