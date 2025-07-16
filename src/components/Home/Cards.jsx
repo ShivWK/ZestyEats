@@ -101,7 +101,7 @@ const Cards = memo(({ data, from }) => {
       <div
         className={`absolute z-20 ${
           disable ? "flex" : "hidden"
-        } items-center justify-center h-full w-full bg-[rgba(0,0,0,0.4)]`}
+        } items-center justify-center rounded-xl h-full w-full bg-[rgba(0,0,0,0.4)]`}
       >
         <div className="flex flex-col gap-1 items-center justify-center">
           <p className="text-white font-bold text-3xl">Not Available</p>
@@ -113,7 +113,7 @@ const Cards = memo(({ data, from }) => {
       </div>
 
       <div
-        className={`relative w-full max-md:basis-[48%] h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 md:pl-4 shrink-0 max-md:max-h-full max-md:min-h-52 max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.5)] ${
+        className={`relative w-full max-md:basis-[48%] h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 md:pl-4 shrink-0 max-md:max-h-full max-md:min-h-52 ${!disable && "max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.5)]"} ${
           from === "online"
             ? "md:h-[160px]"
             : from === "specificFood"
