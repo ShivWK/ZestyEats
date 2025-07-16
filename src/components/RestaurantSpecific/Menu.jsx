@@ -1,7 +1,9 @@
 import {
   selectMenuItems,
   toggleMenuModel,
-  selectVegVariant
+  selectVegVariant,
+  selectHideMenu,
+  setHideMenu
 } from "../../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import textToZestyEats from "../../utils/textToZestyEats";
@@ -9,18 +11,28 @@ import textToZestyEats from "../../utils/textToZestyEats";
 const Menu = () => {
   const menuItems = useSelector(selectMenuItems);
   const dispatch = useDispatch();
-  const { vegOption, nonVegOption } = useSelector(selectVegVariant)
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
+  const isMenuModelOpen = useSelector(selectHideMenu);
 
   const clickHandler = (id) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
   }
 
+  const handleAnimationEnd = (e) => {
+    const ele = e.target.classList;
+
+    if (ele.contains("hide-menu")) {
+      dispatch(toggleMenuModel());
+      dispatch(setHideMenu(false));
+    }
+  }
+
   return (
     <div
-      onClick={() => dispatch(toggleMenuModel())}
+      onClick={() => dispatch(setHideMenu(true))}
       className="fixed inset-0 bg-black/30 top-0 left-0 w-[100%] h-[100%] z-40"
     >
-      <div className="menu-wrapper fixed bottom-16 left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[70%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-black rounded-xl py-2 overflow-hidden">
+      <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[70%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-black rounded-xl py-2 overflow-hidden`}>
         <div className="pretty-scrollbar text-gray-300 max-h-80 overflow-auto px-3">
           {menuItems.length > 0 ? (
             menuItems.map((item) => {

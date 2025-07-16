@@ -10,6 +10,7 @@ const restaurantSlice = createSlice({
     currentSpecificRestaurant: null,
     menuItems: [],
     menuModel: false,
+    hideMenu: false,
     allProductsOfCurrentRestaurant: [],
     wishListItems: {},
     itemsToBeAddedInCart: {},
@@ -40,6 +41,10 @@ const restaurantSlice = createSlice({
       }
     },
 
+    setHideMenu: (state, action) => {
+      state.hideMenu = action.payload;
+    },
+
     setMenuItems: (state, action) => {
       if (action.payload.mode === "empty") {
         // never use return state in immer js, don’t return a value unless you are replacing the entire state slice
@@ -53,7 +58,6 @@ const restaurantSlice = createSlice({
     },
 
     toggleMenuModel: (state) => {
-      console.log("Called menu")
       state.menuModel = !state.menuModel;
     },
 
@@ -183,6 +187,7 @@ export const selectWishlistItems = (state) => state.restaurant.wishListItems;
 export const selectCart = (state) => state.restaurant.cart;
 export const selectItemsToBeAddedInCart = state => state.restaurant.itemsToBeAddedInCart;
 export const selectFavoriteRestros = state => state.restaurant.favoriteRestro;
+export const selectHideMenu = (state) => state.restaurant.hideMenu;
 
 export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({ vegOption: veg, nonVegOption: non_veg }))
 
@@ -198,5 +203,6 @@ export const {
   toggleItemsToBeAddedInCart,
   setItemToCart,
   setFavoriteRestro,
-  setItemQuantity
+  setItemQuantity,
+  setHideMenu
 } = restaurantSlice.actions;
