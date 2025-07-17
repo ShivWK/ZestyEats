@@ -26,7 +26,7 @@ import {
   setDpModelHide
 } from "../features/home/homeSlice";
 
-import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro, setItemToCart, setHideMenu } from "../features/home/restaurantsSlice";
+import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro, setItemToCart, setHideMenu, toggleMenuModel } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -223,13 +223,15 @@ export default function Layout() {
         dispatch(setHideLogin(true))
       } else if (isLocationOpen) {
         dispatch(setHideLocation(true));
+      } else if (menuModel) {
+          dispatch(toggleMenuModel());
       }
     }
 
     window.addEventListener("popstate", handleModelClose);
     return () => window.removeEventListener("popstate", handleModelClose);
 
-  }, [isLoginOpen, isLocationOpen ])
+  }, [isLoginOpen, isLocationOpen, menuModel])
 
   return (
     <>

@@ -38,8 +38,8 @@ const Menu = () => {
       }}
       className="fixed inset-0 bg-black/30 top-0 left-0 w-[100%] h-[100%] z-40"
     >
-      <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[70%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-black rounded-xl py-2 overflow-hidden max-lg:flex flex-col`}>
-      <button onClick={() => dispatch(setHideMenu(true))} className="self-end text-white/80 mr-2 lg:hidden">
+      <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[70%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-black rounded-xl py-2 pt-0.5 overflow-hidden max-lg:flex flex-col`}>
+      <button className="self-end text-white/80 mr-2 lg:hidden">
         <i className="ri-close-circle-fill text-xl"></i>
       </button>
 
@@ -58,7 +58,7 @@ const Menu = () => {
                   onClick={(e) => {
                     clickHandler(path);
                     dispatch(setHideMenu(true));
-                    // e.stopPropagation();
+                    e.stopPropagation();
                   }}
                   className="block py-2 w-full font-bold text-white hover:bg-gray-400 active:bg-gray-400 px-4 rounded-lg"
                 >
