@@ -60,9 +60,9 @@ const Menu = () => {
                     dispatch(setHideMenu(true));
                     e.stopPropagation();
                   }}
-                  className="block py-2 w-full font-bold text-white hover:bg-gray-400 active:bg-gray-400 px-4 rounded-lg"
+                  className="block py-1.5 lg:py-2 w-full font-bold text-white hover:bg-gray-400 active:bg-gray-400 px-4 rounded-lg"
                 >
-                  <p>{textToZestyEats(item.title)}</p>
+                  <p className="leading-5">{textToZestyEats(item.title)}</p>
                 </button>
               );
             })
