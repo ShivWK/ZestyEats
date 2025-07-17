@@ -27,7 +27,6 @@ const loginSlice = createSlice({
         },
 
         setHideLogin: (state, action) => {
-            console.log("Login called")
             state.isHideLogin = action.payload;
         },
 
@@ -40,8 +39,6 @@ const loginSlice = createSlice({
         },
 
         setHideLocation: (state, action) => {
-            console.log("Location called")
-
             state.isHideLocation = action.payload;
         },
 

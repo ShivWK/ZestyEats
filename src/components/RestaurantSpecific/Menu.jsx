@@ -7,6 +7,7 @@ import {
 } from "../../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import textToZestyEats from "../../utils/textToZestyEats";
+import { useRef } from "react";
 
 const Menu = () => {
   const menuItems = useSelector(selectMenuItems);
@@ -31,13 +32,17 @@ const Menu = () => {
     <div
       onClick={() => {
         dispatch(setHideMenu(true))
-        // window.history.replaceState(null, "", location.href);
-
-        window.history.back();
+        // window.history.go(-1);
+        // window.history.replaceState(null, "");
+        // window.history.replaceState(null, "");
       }}
       className="fixed inset-0 bg-black/30 top-0 left-0 w-[100%] h-[100%] z-40"
     >
-      <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[70%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-black rounded-xl py-2 overflow-hidden`}>
+      <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[70%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-black rounded-xl py-2 overflow-hidden max-lg:flex flex-col`}>
+      <button onClick={() => dispatch(setHideMenu(true))} className="self-end text-white/80 mr-2 lg:hidden">
+        <i className="ri-close-circle-fill text-xl"></i>
+      </button>
+
         <div className="pretty-scrollbar text-gray-300 max-h-80 overflow-auto px-3">
           {menuItems.length > 0 ? (
             menuItems.map((item) => {
@@ -50,7 +55,11 @@ const Menu = () => {
               return (
                 <button
                   key={key}
-                  onClick={() => clickHandler(path)}
+                  onClick={(e) => {
+                    clickHandler(path);
+                    dispatch(setHideMenu(true));
+                    // e.stopPropagation();
+                  }}
                   className="block py-2 w-full font-bold text-white hover:bg-gray-400 active:bg-gray-400 px-4 rounded-lg"
                 >
                   <p>{textToZestyEats(item.title)}</p>

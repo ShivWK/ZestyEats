@@ -56,7 +56,7 @@ import {
   setHideLogin
 } from "./features/Login/loginSlice";
 
-import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
+import { selectMenuModel, setHideMenu, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function App() {

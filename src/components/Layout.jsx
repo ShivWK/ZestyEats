@@ -223,18 +223,13 @@ export default function Layout() {
         dispatch(setHideLogin(true))
       } else if (isLocationOpen) {
         dispatch(setHideLocation(true));
-      } else if (menuModel) {
-        dispatch(setHideMenu(true));
-        e.preventDefault();
-      } else if (dpModel) {
-        dispatch(setDpModelHide(true));
       }
     }
 
     window.addEventListener("popstate", handleModelClose);
     return () => window.removeEventListener("popstate", handleModelClose);
 
-  }, [isLoginOpen, isLocationOpen, menuModel, dpModel])
+  }, [isLoginOpen, isLocationOpen ])
 
   return (
     <>

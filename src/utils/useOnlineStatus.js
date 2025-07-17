@@ -6,46 +6,48 @@ import { toast } from "react-toastify";
 const useOnlineStatus = () => {
     const [isOnline, setIsOnline] = useState(navigator.onLine);
     const dispatch = useDispatch();
-    const hasUserGoneOffline = useRef(false); 
+    const hasUserGoneOffline = useRef(false);
 
-    const verifyConnection = async () => {
-        try {
-            await fetch("https://clients3.google.com/generate_204", {
-                method: "GET",
-                cache: "no-cache",
-                mode: "no-cors"
-            });
+    const verifyConnection = () => {
+        setTimeout(async () => {
+            try {
+                await fetch("https://clients3.google.com/generate_204", {
+                    method: "GET",
+                    cache: "no-cache",
+                    mode: "no-cors"
+                });
 
-            setIsOnline(true);
-            dispatch(setOnline(true));
+                setIsOnline(true);
+                dispatch(setOnline(true));
 
-            if (hasUserGoneOffline.current) {
-                toast("Back Online", {
+                if (hasUserGoneOffline.current) {
+                    toast("Back Online", {
+                        autoClose: 2000,
+                        style: {
+                            backgroundColor: "rgba(0, 0, 0, 0.9)",
+                            fontWeight: "bold",
+                            color: "white",
+                        },
+                        progressClassName: "progress-style",
+                    });
+                }
+
+                hasUserGoneOffline.current = false;
+            } catch (err) {
+                setIsOnline(false);
+                dispatch(setOnline(false));
+                hasUserGoneOffline.current = true;
+
+                toast("Lost Connection", {
                     autoClose: 2000,
                     style: {
                         backgroundColor: "rgba(0, 0, 0, 0.9)",
                         fontWeight: "bold",
                         color: "white",
                     },
-                    progressClassName: "progress-style",
                 });
             }
-
-            hasUserGoneOffline.current = false;
-        } catch (err) {
-            setIsOnline(false);
-            dispatch(setOnline(false));
-            hasUserGoneOffline.current = true;
-
-            toast("Lost Connection", {
-                autoClose: 2000,
-                style: {
-                    backgroundColor: "rgba(0, 0, 0, 0.9)",
-                    fontWeight: "bold",
-                    color: "white",
-                },
-            });
-        }
+        }, 300)
     };
 
     useEffect(() => {
@@ -68,7 +70,7 @@ const useOnlineStatus = () => {
             });
         };
 
-        verifyConnection(); 
+        verifyConnection();
 
         window.addEventListener("online", onlineHandler);
         window.addEventListener("offline", offlineHandler);
