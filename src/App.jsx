@@ -13,6 +13,7 @@ const About = lazy(() => import("./components/About/About"));
 const Search = lazy(() => import("./components/Search/Search"));
 const Cart = lazy(() => import("./components/Cart/Cart"));
 const Profile = lazy(() => import("./components/Profile/Profile"));
+import { toast } from "react-toastify";
 
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
@@ -56,7 +57,7 @@ import {
   setHideLogin
 } from "./features/Login/loginSlice";
 
-import { selectMenuModel, setHideMenu, toggleMenuModel } from "./features/home/restaurantsSlice";
+import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export default function App() {
@@ -178,13 +179,23 @@ export default function App() {
         }
 
         window.history.back();
-        // window.history.replaceState(null, "", location.href);
       }
     }
 
     document.addEventListener("keydown", handleScapeDown);
     return () => document.removeEventListener("keydown", handleScapeDown);
   }, [isLoginOpen, isLocationModelOpen, isMenuModelOpen]);
+
+  useEffect(() => {
+    toast.info("Still building, features may not work as expected.", {
+      autoClose: 2000,
+      style: {
+        backgroundColor: "rgba(0, 0, 0, 0.9)",
+        fontWeight: "bold",
+        color: "white",
+      },
+    });
+  }, [])
 
   return (
     <>
@@ -204,7 +215,7 @@ export default function App() {
         icon={false}
         closeButton={CloseToastBtn}
         toastClassName={() =>
-          "flex items-center gap-4 rounded lg:rounded-lg shadow-xl px-4 py-3 mt-2 max-lg:mb-4 max-lg:max-w-[70%] dark:bg-[rgba(0,0,0,0.8)] text-semibold"
+          "flex items-center gap-4 rounded lg:rounded-lg shadow-xl px-4 py-3 mt-2 max-lg:mb-4 max-lg:max-w-[70%] dark:bg-[rgba(0,0,0,0.8)] text-medium"
         }
       />
     </>
