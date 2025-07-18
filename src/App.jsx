@@ -188,7 +188,7 @@ export default function App() {
 
   useEffect(() => {
     toast.info("Still building, features may not work as expected.", {
-      autoClose: 2000,
+      autoClose: 3000,
       style: {
         backgroundColor: "rgba(0, 0, 0, 0.9)",
         fontWeight: "bold",
