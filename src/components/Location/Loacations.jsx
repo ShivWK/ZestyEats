@@ -27,12 +27,12 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
     >
       <div className="flex gap-2.5 relative">
         <i className={`${icon} text-xl text-gray-500`}></i>
-        <div>
+        <div className="w-full">
           <p className="font-medium group-hover:text-primary group-active:text-primary text-lg">
             {item?.terms?.[0]?.value}
           </p>
-          <p className="text-sm font-semibold text-gray-400">
-            {item?.terms?.[1]?.value}{", "}{item?.terms?.[2]?.value}
+          <p className="text-sm font-semibold tracking-wide text-gray-400 truncate w-[88%]">
+            {item?.terms?.[1]?.value}{item?.terms?.[2]?.value ? (", " + item?.terms?.[2]?.value + ".") : "."}
           </p>
         </div>
         {index !== null && (

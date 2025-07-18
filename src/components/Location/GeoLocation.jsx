@@ -128,9 +128,9 @@ const GeoLocation = memo(({ setSearchValue }) => {
           <i className="ri-crosshair-2-line text-xl text-gray-500"></i>
           <div>
             <p className="font-medium group-hover:text-primary group-active:text-primary text-lg">
-              Get current location
+              Use my current location
             </p>
-            <p className="text-sm font-semibold text-gray-400">Using GPS</p>
+            <p className="text-sm font-semibold text-gray-400 tracking-wide">Using GPS</p>
           </div>
         </div>}
     </div>

@@ -73,14 +73,14 @@ const Home = memo(() => {
 
         {/* Home banner */}
 
-        <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-36 md:h-64 mx-auto">
-          <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full md:object-cover" alt="Home banner image" />
+        <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-40 lg:h-72 mx-auto">
+          <img src="/images/new_banner.jpg" className="h-[100%] md:h-[110%] w-full lg:object-cover" alt="Home banner image" />
         </div>
 
         {/* dev msg */}
-        <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border max-lg:-mt-1 mb-3">
+        {/* <div className="rounded-xl bg-red-400 text-white font-semibold p-3 box-border max-lg:-mt-1 mb-3">
           <p className="text-justify">Still building — features may not work as expected.</p>
-        </div>
+        </div> */}
 
         {/* if unserviceable */}
        {service && (
