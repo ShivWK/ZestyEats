@@ -162,23 +162,23 @@ const Billing = () => {
           </div>
 
           <div className="flex justify-between py-1 pt-1.5 border-t-[1px] mt-2 border-gray-400 border-dashed">
-            <div className="relative flex gap-1 items-center">
+            <div className="flex gap-1 items-center">
               <span className="text-gray-600">GST & Other Charges</span>
               <i
                 onClick={(e) => {
                   e.stopPropagation();
                   setOpenInfo(!openInfo);
                 }}
-                className={`${openInfo ? "ri-close-circle-fill" : "ri-information-2-line"
+                className={`relative ${openInfo ? "ri-close-circle-fill" : "ri-information-2-line"
                   } cursor-pointer text-[16px]`}
                 onMouseEnter={() => setOpenInfo(true)}
                 onMouseLeave={() => setOpenInfo(false)}
-              />
+              >
 
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="dropdown"
-                className="absolute -top-[770%] left-[75.5%] h-[10.6rem] w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[725%] -left-[130%] h-40 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openInfo ? "block" : "none",
                 }}
@@ -215,6 +215,7 @@ const Billing = () => {
                   <div className="absolute top-[104%] left-3.5 bottom-full h-0 w-0 border-t-10 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                 </div>
               </div>
+              </i>
             </div>
             <span className="text-gray-700 font-semibold">₹{GSTAndOther}</span>
           </div>
