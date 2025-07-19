@@ -135,7 +135,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="delivery_dropdown"
-                className="absolute -top-[340%] -left-[130%] h-18 w-48 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[300%] -left-[130%] h-[4rem] w-48 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openDeliveryInfo ? "block" : "none",
                 }}
