@@ -199,14 +199,14 @@ const Billing = () => {
                       <p>GST(5%)</p>
                       <p className="font-semibold">₹{+GST.toFixed(2)}</p>
                     </div>
-                    <p className="text-[11px] w-[80%] leading-3.5 text-gray-700" >
+                    <p className="text-[11px] w-[85%] leading-3.5 text-gray-700" >
                       A government tax calculated as 5% of the total item cost.
                     </p>
                     <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
                       <p>Platform Fee</p>
                       <p className="font-semibold">₹{platformFee}</p>
                     </div>
-                    <p className="text-[11px] w-[80%] leading-3.5 text-gray-700">
+                    <p className="text-[11px] w-[85%] leading-3.5 text-gray-700">
                       A fixed service charge to support app maintenance and
                       operations.
                     </p>
