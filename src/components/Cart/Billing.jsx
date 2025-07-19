@@ -117,7 +117,7 @@ const Billing = () => {
             <span className="text-gray-700 font-semibold">₹{totalAmount}</span>
           </div>
           <div className="flex justify-between items-center py-1">
-            <p className="text-gray-600 flex items-center gap-0.5 relative">
+            <p className="text-gray-600 flex items-center gap-0.5">
               <span>Delivery Fee</span>
               <span>┃</span>
               <span>{distance} kms</span>
@@ -127,15 +127,15 @@ const Billing = () => {
                   setOpenDeliveryInfo(!openDeliveryInfo);
                 }}
                 className={`${openDeliveryInfo ? "ri-close-circle-fill" : "ri-information-2-line"
-                  } cursor-pointer text-[16px] text-black ml-0.5`}
+                  } cursor-pointer text-[16px] text-black ml-0.5 relative`}
                 onMouseEnter={() => setOpenDeliveryInfo(true)}
                 onMouseLeave={() => setOpenDeliveryInfo(false)}
-              />
+              >
 
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="delivery_dropdown"
-                className="absolute -top-[380%] left-[78%] h-20 w-48 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[310%] -left-[130%] h-16 w-48 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openDeliveryInfo ? "block" : "none",
                 }}
@@ -156,6 +156,7 @@ const Billing = () => {
                   <div className="absolute top-[110%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                 </div>
               </div>
+              </i>
             </p>
             <span className="text-gray-700 font-semibold">₹{deliveryFee}</span>
           </div>
