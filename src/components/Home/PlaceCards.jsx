@@ -40,7 +40,7 @@ const PlaceCards = ({ data, clickHandler = () => {}, path, targetedCity = null }
     }
 
     return <NavLink to={navPath} onClick={handleNavClick} className="flex justify-center items-center text-center flex-wrap border-[1px] border-gray-300 w-[48%] md:w-56 px-5 box-border h-16 py-2 rounded-2xl hover:shadow-2xl hover:scale-[1.01] transition-all duration-100 ease-in active:bg-gray-300">
-        <p className="font-medium text-gray-700  line-clamp-2">{data.text}</p>
+        <p className="font-medium text-gray-700 max-md:text-gray-600 max-md:font-sans line-clamp-2">{data.text}</p>
     </NavLink>
 }
 
