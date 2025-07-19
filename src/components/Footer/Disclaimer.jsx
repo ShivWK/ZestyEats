@@ -19,7 +19,7 @@ const Disclaimer = () => {
         return () => window.removeEventListener("resize", handleResize);
     }, [])
 
-    return <div className="bg-red-200 w-full mt-4 pb-18">
+    return <div className="bg-red-200 w-full mt-4 pb-16">
         <div className=" p-2 md:mx-auto w-full md:max-w-[1210px]">
             <div className="flex items-center gap-2 mb-2">
                 <i className="fa-solid fa-triangle-exclamation text-xl text-red-500"></i>
