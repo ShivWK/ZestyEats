@@ -178,7 +178,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="dropdown"
-                className="absolute -top-[725%] -left-[130%] h-40 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[730%] -left-[130%] h-40 lg:h-40 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openInfo ? "block" : "none",
                 }}
@@ -224,7 +224,7 @@ const Billing = () => {
             <span className="text-black font-bold">₹{grandTotal}</span>
           </div>
         </div>
-        <button className="bg-green-400 py-1.5 lg:py-1 rounded text-white font-sans tracking-wide cursor-pointer active:scale-95 transform transition-all duration-150">Proceed Further</button>
+        <button className="bg-green-400 py-1.5 lg:py-1 rounded text-white font-sans font-medium tracking-wide cursor-pointer active:scale-95 transform transition-all duration-150">Proceed Further</button>
       </div>
     </section>
   );
