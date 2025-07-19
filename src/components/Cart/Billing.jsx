@@ -149,7 +149,7 @@ const Billing = () => {
                       <p className="text-black font-semibold">Delivery Fee</p>
                       <p className="font-semibold text-black">₹{deliveryFee}</p>
                     </div>
-                    <p className="text-[11px] w-[80%] max-md:leading-3.5  mt-1">
+                    <p className="text-[11px] leading-4 mt-1 text-gray-700">
                       Calculated based on distance: ₹10 base + ₹5/km after 1 km
                     </p>
                   </div>
@@ -178,7 +178,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="dropdown"
-                className="absolute -top-[800%] left-[75%] h-[10.5rem] w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[770%] left-[76%] h-[10.6rem] w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openInfo ? "block" : "none",
                 }}
