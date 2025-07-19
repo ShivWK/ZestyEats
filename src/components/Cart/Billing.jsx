@@ -144,7 +144,7 @@ const Billing = () => {
                   onClick={(e) => e.stopPropagation()}
                   className="relative h-full"
                 >
-                  <div>
+                  <div className="font-sans">
                     <div className="flex items-center font-normal grow-0 justify-between text-xs text-gray-600">
                       <p className="text-black font-semibold">Delivery Fee</p>
                       <p className="font-semibold text-black">₹{deliveryFee}</p>
@@ -187,22 +187,22 @@ const Billing = () => {
                   onClick={(e) => e.stopPropagation()}
                   className="relative h-full"
                 >
-                  <div>
+                  <div className="font-sans">
                     <p className="break-words text-xs font-semibold text-black">
                       GST & Other Charges
                     </p>
-                    <div className="flex items-center font-normal justify-between text-xs text-black mt-2">
+                    <div className="flex items-center font-medium justify-between text-xs text-black mt-2">
                       <p>Restaurant Packaging</p>
                       <p className="font-semibold">₹{packagingCharge}</p>
                     </div>
-                    <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
+                    <div className="flex items-center font-medium justify-between text-xs text-black mt-1.5">
                       <p>GST(5%)</p>
                       <p className="font-semibold">₹{+GST.toFixed(2)}</p>
                     </div>
                     <p className="text-[12px] font-sans leading-4 mt-0.5 text-gray-700" >
                       A government tax calculated as 5% of the total item cost.
                     </p>
-                    <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
+                    <div className="flex items-center font-medium justify-between text-xs text-black mt-1.5">
                       <p>Platform Fee</p>
                       <p className="font-semibold">₹{platformFee}</p>
                     </div>
