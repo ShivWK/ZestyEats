@@ -153,7 +153,7 @@ const Billing = () => {
                       Calculated based on distance: ₹10 base + ₹5/km after 1 km
                     </p>
                   </div>
-                  <div className="absolute top-[110%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
+                  <div className="absolute top-[112%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                 </div>
               </div>
               </i>
