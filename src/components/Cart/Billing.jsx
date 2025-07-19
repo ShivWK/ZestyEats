@@ -149,7 +149,7 @@ const Billing = () => {
                       <p className="text-black font-semibold">Delivery Fee</p>
                       <p className="font-semibold text-black">₹{deliveryFee}</p>
                     </div>
-                    <p className="text-[11px] leading-4 mt-1 text-gray-700">
+                    <p className="text-[12px] tracking-wide mt-1 text-gray-700">
                       Calculated based on distance: ₹10 base + ₹5/km after 1 km
                     </p>
                   </div>
@@ -178,7 +178,7 @@ const Billing = () => {
               <div
                 onClick={(e) => e.stopPropagation()}
                 id="dropdown"
-                className="absolute -top-[730%] -left-[130%] h-40 lg:h-40 w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                className="absolute -top-[760%] -left-[130%] h-[11rem] lg:h-[10.5rem] w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
                 style={{
                   display: openInfo ? "block" : "none",
                 }}
@@ -199,14 +199,14 @@ const Billing = () => {
                       <p>GST(5%)</p>
                       <p className="font-semibold">₹{+GST.toFixed(2)}</p>
                     </div>
-                    <p className="text-[11px] w-[85%] leading-3.5 text-gray-700" >
+                    <p className="text-[12px] font-sans leading-4 mt-0.5 text-gray-700" >
                       A government tax calculated as 5% of the total item cost.
                     </p>
                     <div className="flex items-center font-normal justify-between text-xs text-black mt-1.5">
                       <p>Platform Fee</p>
                       <p className="font-semibold">₹{platformFee}</p>
                     </div>
-                    <p className="text-[11px] w-[85%] leading-3.5 text-gray-700">
+                    <p className="text-[12px] font-sans leading-4 mt-0.5 text-gray-700">
                       A fixed service charge to support app maintenance and
                       operations.
                     </p>
