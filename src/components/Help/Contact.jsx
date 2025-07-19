@@ -1,6 +1,5 @@
 import { memo, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import Loader from "../Loader";
 
 const Contact = memo(() => {
   const formRef = useRef(null);
@@ -198,9 +197,8 @@ const Contact = memo(() => {
         className={`mt-6 py-2 px-6 max-lg:mx-auto font-semibold rounded-md border-[1px] ${loading ? "bg-gray-200 text-gray-400 border-gray-400" : "active:scale-95 hover:bg-primary bg-primary/90 border-primary text-white "} transition-transform ease-in-out duration-75 cursor-pointer flex items-center gap-2.5`}
       >
         Send Email
-        {loading && <div className="mx-auto block"><Loader /></div>}
+        {loading && <div className="mx-auto block border-4 border-t-black border-white animate-spin rounded-[50%] h-6 w-6"></div>}
       </button>
-      
     </div>
   );
 });
