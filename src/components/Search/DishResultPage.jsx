@@ -1,4 +1,4 @@
-import { useState, Suspense } from "react";
+import { useState, Suspense, useRef, useEffect } from "react";
 import {
     NavLink,
     useLoaderData,
@@ -20,14 +20,21 @@ import useScrollToTop from "../../utils/useScrollToTop";
 import AddToCartBtn from "../AddToCartBtn";
 
 const Card = ({ data, lat, lng }) => {
-    console.log(data);
-
     const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
     const [isError, setIsError] = useState(false);
+    const paraRef = useRef(null);
+    const [paraHeight, setParaHeight] = useState(0);
 
     const mainData = data?.card?.card;
     const dishData = mainData?.info;
     const restaurantData = mainData?.restaurant?.info;
+
+    // when display = none (hidden) then scrollHieght clienteight both are 0 so cal para height when when is not hidden e.i., isDescriptionOpen = true
+    useEffect(() => {
+        if (isDescriptionOpen && paraRef.current) {
+            setParaHeight(paraRef.current.scrollHeight + 10)
+        }
+    }, [isDescriptionOpen])
 
     const modifiedRestaurantData = structuredClone(restaurantData);
     modifiedRestaurantData.latLong = `${lat}, ${lng}`;
@@ -167,7 +174,7 @@ const Card = ({ data, lat, lng }) => {
                         onError={() => setIsError(true)}
                     />
                     <div className="absolute top-[75%] transform -translate-x-1/2 left-1/2 ">
-                        <AddToCartBtn data={{restaurantData: restaurantDataToWishlist, item: dishData, quantity: 1}} />
+                        <AddToCartBtn data={{ restaurantData: restaurantDataToWishlist, item: dishData, quantity: 1 }} />
                     </div>
                     <div className="absolute top-2.5 right-2.5 cursor-pointer flex items-center justify-center rounded-[9999px] p-0.5" onClick={() => wishlistAddHandler({ restaurantData: restaurantDataToWishlist, item: dishData, quantity: 1 }, dishData?.id)} style={{ backgroundColor: wishlistAdded ? "red" : "rgba(0, 0, 0, 0.6)" }}>
                         <svg
@@ -181,12 +188,14 @@ const Card = ({ data, lat, lng }) => {
                     </div>
                 </div>
             </div>
-            {isDescriptionOpen && (
-                <div className="px-2 text-gray-700 font-medium">
-                    <hr className="text-gray-300 my-1" />
-                    <p className="max-md:text-sm">{dishData?.description}</p>
-                </div>
-            )}
+
+            <div className="px-2 transition-all duration-200 ease-linear overflow-hidden text-gray-700 font-medium bg-white"
+                style={{ height: isDescriptionOpen ? `${paraHeight}px` : "0px" }}
+            >
+                <hr className={`text-gray-300 my-1`} />
+                <p ref={paraRef} className={`max-md:text-sm`}>{dishData?.description}</p>
+            </div>
+
         </div>
     );
 };
