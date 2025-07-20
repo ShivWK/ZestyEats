@@ -1,0 +1,22 @@
+const mongoose = require("mongoose");
+
+const sessionSchema = new mongoose.Schema({
+    data: {
+        type: mongoose.Schema.Types.Mixed,
+        default: {
+            cart: {},
+            wishListedItems: {},
+            favRestaurants: [],
+            recentLocations: []
+        }
+    },
+
+    expires: {
+        type: Date,
+        default: Math.round((Date.now() / 1000) + 60 * 60 * 24),
+    }
+});
+
+const SessionModel = mongoose.model("SessionModel" ,sessionSchema);
+
+export default SessionModel;

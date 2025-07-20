@@ -195,6 +195,22 @@ export default function App() {
         color: "white",
       },
     });
+
+    const createGuestSession = async () => {
+      try {
+        const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/session", {
+          method: "POST",
+          credentials: "include"
+        });
+
+        const data = await res.json();
+        console.log(data.data.sessionId)
+      } catch (err) {
+        console.error("Session error", err)
+      }
+    }
+
+    createGuestSession();
   }, [])
 
   return (

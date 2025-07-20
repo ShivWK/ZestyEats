@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 
 const swiggyRouter = require("./routes/swiggyRouter");
 const userRouter = require("./routes/userRouter");
@@ -24,9 +25,11 @@ app.use(
         callback(new Error("Not allowed by CORS"));
       }
     },
+    credentials: true,
   })
 );
 app.use(express.json());
+app.use(cookieParser(process.env.COOKIE_SECRETE));
 
 mongoose.connect(process.env.MONGOOSE_URI)
 .then(() => {

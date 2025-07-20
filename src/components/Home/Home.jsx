@@ -42,6 +42,10 @@ const Home = memo(() => {
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
 
+  useEffect(() => {
+    
+  })
+
   const cuisineClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch) => {
     const pathname = new URL(data.link).pathname;
     const cuisine = pathname.match(/\/(.*?)\-restaurants/)[1]
