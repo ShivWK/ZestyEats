@@ -189,7 +189,7 @@ const Card = ({ data, lat, lng }) => {
                 </div>
             </div>
 
-            <div className="px-2 transition-all duration-200 ease-linear overflow-hidden text-gray-700 font-medium bg-white"
+            <div className="px-2 transition-all duration-150 ease-linear overflow-hidden text-gray-700 font-medium bg-white"
                 style={{ height: isDescriptionOpen ? `${paraHeight}px` : "0px" }}
             >
                 <hr className={`text-gray-300 my-1`} />

@@ -118,7 +118,7 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
         )}
         <div
           ref={containerRef}
-          className="relative transition-all duration-100 ease-linear border-2"
+          className="relative transition-all duration-100 ease-linear overflow-hidden"
           style={{
             height: isOpen ? `${paraSize}px` ?? "200px" : "42px",
           }}
