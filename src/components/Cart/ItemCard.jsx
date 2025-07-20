@@ -118,7 +118,7 @@ const ItemCard = ({ data, restaurantData }) => {
             <div className="relative h-32 w-32 rounded-xl overflow-hidden shrink-0 m-2">
                 <img
                     src={isError ? "/images/fallback.png" : imageUrl}
-                    className="absolute top-0 left-0 h-full w-full object-center object-cover border-2"
+                    className="absolute top-0 left-0 h-full w-full object-center object-cover"
                     alt={item?.name}
                     onError={() => setIsError(true)}
                 />

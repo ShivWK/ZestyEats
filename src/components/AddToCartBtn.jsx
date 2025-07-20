@@ -1,11 +1,9 @@
 import { selectCart, setItemToCart, setItemQuantity } from "../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { Plus, Minus } from "lucide-react";
+import { Plus, Minus, Trash2 } from "lucide-react";
 import { toast } from "react-toastify";
 
 const AddToCartBtn = ({ data, pY = "py-1", pX = "px-8", font_size = '', quantityBtnPadding = "p-2", number_width = "w-9" }) => {
-
-    // console.log(data)
 
     const currentRestaurantId = data.restaurantData.metadata?.id || data.restaurantData.id;
     const cart = useSelector(selectCart);
@@ -61,11 +59,11 @@ const AddToCartBtn = ({ data, pY = "py-1", pX = "px-8", font_size = '', quantity
     } else {
         return <div className="flex items-center w-fit bg-white rounded overflow-hidden">
             <button onClick={() => addItemsToCart({ action: "Change_Quantity", type: "minus"})} className={`group bg-green-400 ${quantityBtnPadding} transform cursor-pointer font-semibold active:bg-transparent transition-all duration-100 ease-in-out`}>
-                <Minus size={16} strokeWidth={2} className="text-white group-active:text-black" />
+                {quantity === 1 ? <Trash2 size={16} strokeWidth={3} className="text-white group-active:text-black" /> : <Minus size={16} strokeWidth={3} className="text-white group-active:text-black" />} 
             </button>
             <span className={`h-full ${number_width} flex items-center font-mono justify-center tracking-tight font-semibold text-black select-none`}>{quantity}</span>
             <button onClick={() => addItemsToCart({ action: "Change_Quantity", type: "plus"})} className={`group bg-green-400 ${quantityBtnPadding} transform cursor-pointer font-semibold active:bg-transparent transition-all duration-100 ease-in-out`}>
-                <Plus size={16} strokeWidth={2} className="text-white group-active:text-black" />
+                <Plus size={16} strokeWidth={3} className="text-white group-active:text-black" />
             </button>
         </div>
     }
