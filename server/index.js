@@ -8,6 +8,9 @@ const swiggyRouter = require("./routes/swiggyRouter");
 const userRouter = require("./routes/userRouter");
 // const userActivityRouter = require("./routes/"))
 
+const secret = process.env.COOKIE_SECRET;
+console.log("Secrete", secret);
+
 const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   "http://localhost:5173",
@@ -29,7 +32,7 @@ app.use(
   })
 );
 app.use(express.json());
-app.use(cookieParser(process.env.COOKIE_SECRETE));
+app.use(cookieParser(secret));
 
 mongoose.connect(process.env.MONGOOSE_URI)
 .then(() => {
