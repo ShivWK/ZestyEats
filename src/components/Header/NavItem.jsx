@@ -19,7 +19,7 @@ const NavItem = memo(
           }}
           onClick={onClick}
         >
-          <i className={`fa-solid ${icon} group-hover:text-[#ff5200] transform ${(!cartCount || !superScript) && "group-hover:translate-x-1"} transition-transform duration-150 ease-linear ${(text !== "Help" || text !== "About" || text !== "Cart") && "max-md:text-xl"} ${(cartCount && superScript) && "cart-animation"}`}>
+          <i className={`fa-solid ${icon} group-hover:text-[#ff5200] transform ${(!cartCount || !superScript) && "lg:group-hover:translate-x-1"} transition-transform duration-150 ease-linear ${(text !== "Help" || text !== "About" || text !== "Cart") && "max-md:text-xl"} ${(cartCount && superScript) && "cart-animation"}`}>
             {(superScript && cartCount) ? (
               <sup className="text-red-600 text-[10px] -mt-1.5 -ml-0.5 absolute font-extrabold">
                 <Asterisk size={16} />
