@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   selectItemsToBeAddedInCart,
   toggleItemsToBeAddedInCart,
@@ -12,11 +12,20 @@ import { useSelector, useDispatch } from "react-redux";
 const ItemCard = ({ item, restro_id }) => {
 
   const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
+  const [paraHeight, setParaHeight] = useState(0);
+  const paraRef = useRef(null);
+
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const itemsToAddInCart = useSelector(selectItemsToBeAddedInCart);
   const wishlist = useSelector(selectWishlistItems);
   const cart = useSelector(selectCart);
+
+  useEffect(() => {
+    if (isDescriptionOpen && paraRef.current) {
+      setParaHeight(paraRef.current.scrollHeight + 11);
+    }
+  }, [isDescriptionOpen])
 
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_208,h_208,c_fit/${item?.imageId}`;
 
@@ -69,8 +78,6 @@ const ItemCard = ({ item, restro_id }) => {
       })
     );
   };
-
-  // console.log("cart", cart);
 
   return (
     <div className="border-t-[1px] border-gray-300 p-0.5">
@@ -168,12 +175,14 @@ const ItemCard = ({ item, restro_id }) => {
           />
         </div>
       </div>
-      {isDescriptionOpen && (
-        <div className="px-2 pb-0.5 text-gray-600 font-medium">
+      
+        <div className="px-2 pb-0.5 text-gray-600 font-medium overflow-hidden transition-all duration-100 ease-linear" style={{
+          height: isDescriptionOpen ? `${paraHeight}px` : "0px"
+        }}>
           <hr className="text-gray-300 my-1" />
-          <p className="max-md:text-sm">{item?.description}</p>
+          <p ref={paraRef} className="max-md:text-sm">{item?.description}</p>
         </div>
-      )}
+
     </div>
   );
 };

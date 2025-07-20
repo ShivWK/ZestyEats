@@ -124,7 +124,7 @@ const RestaurantCard = ({ data }) => {
           </div>
         </Link>
 
-        <p className="text-xs font-bold text-gray-700 truncate -mt-1">
+        <p className="text-xs font-bold text-gray-700 truncate -mt-1 capitalize">
           {areaOrLocality + ", " + city}
         </p>
 

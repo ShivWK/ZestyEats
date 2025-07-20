@@ -45,7 +45,7 @@ const RestaurantCard = ({ data }) => {
             <i className="basis-[4%] ri-arrow-right-long-fill text-2xl text-gray-800 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-200 ease-in-out p-0"></i>
           </Link>
 
-          <p className="text-sm font-bold text-gray-700 truncate -mt-1">
+          <p className="text-sm font-bold text-gray-700 truncate -mt-1 capitalize">
             {areaOrLocality + ", " + city}
           </p>
 
@@ -76,7 +76,6 @@ const RestaurantCard = ({ data }) => {
                         <div id="No delivery" className="relative mt-0.5">
                           <i className="fas fa-shipping-fast text-black"></i>
                           <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
-                          {/* <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
                         </div>
                         {status.distance && (
                           <p className="text-gray-600 font-normal">
@@ -114,7 +113,6 @@ const RestaurantCard = ({ data }) => {
                   <div id="No delivery" className="relative mt-0.5">
                     <i className="fas fa-shipping-fast text-sm text-black"></i>
                     <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform rotate-45"></div>
-                    {/* <div className="absolute ml-2 bottom-0 h-6 w-0.5 bg-red-500 transform -rotate-45"></div> */}
                   </div>
                  {status.distance && <p className="text-gray-600 text-sm">
                     ({status.distance} kms)

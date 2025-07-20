@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setItemQuantity, selectWishlistItems, addToWishlistItem } from "../../features/home/restaurantsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import AddToCartBtn from "./../AddToCartBtn";
 
 const ItemCard = ({ data, restaurantData }) => {
+    const [paraHeight, setParaHeight] = useState(0);
+    const paraRef = useRef(null);
+
     const dispatch = useDispatch();
     const { item, quantity } = data;
     const Wishlist = useSelector(selectWishlistItems);
@@ -18,6 +21,12 @@ const ItemCard = ({ data, restaurantData }) => {
         dispatch(setItemQuantity({ id: item.id, type: "delete" }))
     }
 
+    useEffect(() => {
+        if (isDescriptionOpen && paraRef.current) {
+            setParaHeight(paraRef.current.scrollHeight + 10);
+        }
+    }, [isDescriptionOpen])
+
     const defaultPrice = quantity * item?.price / 100 || quantity * item?.defaultPrice / 100 || 0;
     const finalPrice = quantity * item?.finalPrice / 100;
     const price = finalPrice ? (
@@ -31,7 +40,7 @@ const ItemCard = ({ data, restaurantData }) => {
     );
 
     const moveToWishlistHandler = () => {
-        dispatch(addToWishlistItem({restaurantData, item, quantity: 1}));
+        dispatch(addToWishlistItem({ restaurantData, item, quantity: 1 }));
         deleteHandler();
     }
 
@@ -109,7 +118,7 @@ const ItemCard = ({ data, restaurantData }) => {
             <div className="relative h-32 w-32 rounded-xl overflow-hidden shrink-0 m-2">
                 <img
                     src={isError ? "/images/fallback.png" : imageUrl}
-                    className="absolute top-0 left-0 h-full w-full object-center object-cover"
+                    className="absolute top-0 left-0 h-full w-full object-center object-cover border-2"
                     alt={item?.name}
                     onError={() => setIsError(true)}
                 />
@@ -118,12 +127,14 @@ const ItemCard = ({ data, restaurantData }) => {
                 </div>
             </div>
         </div>
-        {isDescriptionOpen && (
-            <div className="px-2 pb-0.5 text-gray-600 font-medium">
-                <hr className="text-gray-300 my-1" />
-                <p className="text-sm break-words">{item?.description}</p>
-            </div>
-        )}
+
+        <div className="px-2 pb-0.5 text-gray-600 font-medium overflow-hidden transition-all duration-100 ease-linear"
+            style={{ height: isDescriptionOpen ? `${paraHeight}px` : "0px" }}
+        >
+            <hr className="text-gray-300 my-1 mt-0.5" />
+            <p ref={paraRef} className="text-sm break-words">{item?.description}</p>
+        </div>
+
     </div>
 }
 
