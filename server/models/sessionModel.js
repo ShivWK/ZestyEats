@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const sessionSchema = new mongoose.Schema({
     data: {
-        type: Schema.Types.Mixed,
+        type: mongoose.Schema.Types.Mixed,
         default: {
             cart: {},
             wishListedItems: {},
