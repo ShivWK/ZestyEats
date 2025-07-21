@@ -10,6 +10,6 @@ const asyncErrorHandler = func => {
   }
 }
 
-export default asyncErrorHandler;
+module.exports =  asyncErrorHandler;
 
 

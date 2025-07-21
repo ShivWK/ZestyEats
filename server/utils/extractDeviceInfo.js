@@ -28,4 +28,4 @@ const extractDeviceInfo = (userAgent) => {
   };
 }
 
-export default extractDeviceInfo
+module.exports = extractDeviceInfo
