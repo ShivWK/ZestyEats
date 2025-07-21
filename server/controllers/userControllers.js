@@ -1,5 +1,5 @@
-// const User = require("./../models/userModel");
 const SessionModel = require("./../models/sessionModel");
+import extractDeviceInfo from "../utils/extractDeviceInfo";
 
 exports.signup = async (req, res) => {
     const body = req.body;
@@ -7,9 +7,11 @@ exports.signup = async (req, res) => {
 
 exports.guestSession = async (req, res, next) => {
     console.log("hit")
+    const deviceInfo = extractDeviceInfo(req.body.deviceId)
+
     try {
         if (!req.signedCookies?.sid) {
-            const session = await SessionModel.create(req.body);
+            const session = await SessionModel.create({ deviceId: deviceInfo });
 
             res.cookie("sid", session.id, {
                 maxAge: 1000 * 60 * 60 * 24,
