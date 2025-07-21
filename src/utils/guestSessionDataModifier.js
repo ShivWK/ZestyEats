@@ -10,7 +10,7 @@ export const recentLocationModifier = async (locations) => {
         })
 
         const data = await res.json();
-        console.log(data.data.data.recentLocations);
+        // console.log(data.data.data.recentLocations);
     } catch (err) {
         console.error("Error in setting recent location", err)
     }

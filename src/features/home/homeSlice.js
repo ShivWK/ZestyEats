@@ -1,4 +1,5 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import { recentLocationModifier } from "../../utils/guestSessionDataModifier";
 
 const initialState = {
   lat: 12.9715987,
@@ -182,6 +183,8 @@ const homeSlice = createSlice({
 
     removeARecentLocation: (state, action) => {
       state.recentLocations.splice(action.payload, 1);
+
+      recentLocationModifier(state.recentLocations);
     },
 
     setLoading: (state, action) => {

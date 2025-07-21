@@ -94,15 +94,18 @@ const SearchedLocation = memo(({
   }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, addRecentLocations]);
 
   return (
-    <div className="mt-6 overflow-auto last:border-none">
-      {locationsfetched.map((location, index) => (
-        <Location
-          key={location.place_id}
-          icon="ri-map-pin-line"
-          item={location}
-          handleClick={() => handleSearchedLocationClick(location)}
-        />
-      ))}
+    <div className="mt-6 overflow-hidden border-[1px] border-gray-400 p-2 pb-3 overflow-y-auto">
+      <h2 className="text-lg text-gray-400 ml-1 md:ml-2 mt-1 md:mt-2">Matching Locations</h2>
+      <div className="-mt-1">
+        {locationsfetched.map((location, index) => (
+          <Location
+            key={location.place_id}
+            icon="ri-map-pin-line"
+            item={location}
+            handleClick={() => handleSearchedLocationClick(location)}
+          />
+        ))}
+      </div>
     </div>
   );
 });
