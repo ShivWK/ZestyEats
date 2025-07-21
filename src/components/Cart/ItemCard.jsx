@@ -134,7 +134,6 @@ const ItemCard = ({ data, restaurantData }) => {
             <hr className="text-gray-300 my-1 mt-0.5" />
             <p ref={paraRef} className="text-sm break-words">{item?.description}</p>
         </div>
-
     </div>
 }
 

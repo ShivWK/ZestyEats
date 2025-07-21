@@ -45,7 +45,6 @@ export const wishListedItemsModifier = async (items) => {
             credentials: "include"
         })
 
-        // console.log(res)
         const data = await res.json();
         // console.log(data.data.data.wishListedItems);
     } catch (err) {
@@ -64,9 +63,8 @@ export const itemsToBeAddedInCartModifier = async (items) => {
             credentials: "include"
         })
 
-        // console.log(res)
         const data = await res.json();
-        console.log(data.data.data.itemsToBeAddedInCart);
+        // console.log(data.data.data.itemsToBeAddedInCart);
     } catch (err) {
         console.error("Error in setting recent location", err)
     }
@@ -83,9 +81,8 @@ export const cartItemsModifier = async (items) => {
             credentials: "include"
         })
 
-        // console.log(res)
         const data = await res.json();
-        console.log(data.data.data.cartItems);
+        // console.log(data.data.data.cartItems);
     } catch (err) {
         console.error("Error in setting recent location", err)
     }
