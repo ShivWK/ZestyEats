@@ -11,7 +11,7 @@ exports.guestSession = async (req, res, next) => {
 
     try {
         if (!req.signedCookies?.sid) {
-            const session = await SessionModel.create({ deviceId: deviceInfo });
+            const session = await SessionModel.create({ deviceId: deviceInfo.signature });
 
             res.cookie("sid", session.id, {
                 maxAge: 1000 * 60 * 60 * 24,
