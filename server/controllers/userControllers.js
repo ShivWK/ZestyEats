@@ -41,10 +41,27 @@ exports.guestSession = async (req, res, next) => {
 
         res.status(500).json({
             status: "failed",
-            data: {
-                message: "Session not created",
-                errorL: err
-            }
+            message: err.message,
+        })
+    }
+}
+
+exports.addGuestSessionRecentLocation = async (req, res, next) => {
+    const sid = req.signedCookies?.sid;
+
+    try {
+        const recentLocations = await SessionModel.findByIdAndUpdate(sid,
+            { $set: { "data.recentLocations": req.body.recentLocations } }, { new: true });
+        res.status(200).json({
+            status: "success",
+            data: recentLocations,
+        })
+    } catch (err) {
+        console.error("Error in location addition", err);
+
+        res.status(500).json({
+            status: "failed",
+            message: err.message,
         })
     }
 }

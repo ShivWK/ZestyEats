@@ -52,7 +52,7 @@ const SearchedLocation = memo(({
         dispatch(setLoading(false));
         return;
       }
-      
+
       const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
       updateHomeRestaurantData(res2, dispatch, lat, lng);
 
@@ -71,7 +71,7 @@ const SearchedLocation = memo(({
         );
         if (!Array.isArray(previousLocations)) previousLocations = [];
         const exists = previousLocations.some(item => item.place_id === location.place_id)
-        
+
         if (!exists) {
           previousLocations.push({
             place_id: location.place_id,
@@ -81,13 +81,25 @@ const SearchedLocation = memo(({
             "recentLocations",
             JSON.stringify(previousLocations)
           );
+
+          try {
+            const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/recentLocations", {
+              method: "PATCH",
+              body: { recentLocations: previousLocations }
+            })
+
+            const data = await res.json();
+            console.log(data);
+          } catch (err) {
+            console.error("Error in setting recent location", err)
+          }
         }
       }
     } catch (err) {
       console.log(err);
       dispatch(setLoading(false));
     }
-  }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, addRecentLocations]); 
+  }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, addRecentLocations]);
 
   return (
     <div className="mt-6 overflow-auto last:border-none">
