@@ -9,7 +9,7 @@ exports.guestSession = async (req, res, next) => {
     console.log("hit")
     try {
         if (!req.signedCookies?.sid) {
-            const session = await SessionModel.create({});
+            const session = await SessionModel.create(req.body);
 
             res.cookie("sid", session.id, {
                 maxAge: 1000 * 60 * 60 * 24,

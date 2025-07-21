@@ -196,10 +196,16 @@ export default function App() {
       },
     });
 
+    const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+
     const createGuestSession = async () => {
       try {
         const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/session", {
           method: "POST",
+          body: JSON.stringify({ deviceId }),
+          headers: {
+            "Content-Type" : "application/json"
+          },
           credentials: "include"
         });
 

@@ -1,6 +1,16 @@
 const mongoose = require("mongoose");
 
 const sessionSchema = new mongoose.Schema({
+    deviceId: {
+        type: String,
+        required: [true, "Please provide device information."]
+    },
+
+    createdAt: {
+        type: Date,
+        default: () => new Date(),
+    },
+
     data: {
         type: mongoose.Schema.Types.Mixed,
         default: {
@@ -13,7 +23,7 @@ const sessionSchema = new mongoose.Schema({
     },
 
     expires: {
-        type: "number",
+        type: Number,
         default: Math.round(Date.now() / 1000) + 60 * 60 * 24,
     }
 });
