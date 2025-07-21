@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { activeAnimations } from "motion";
-import { favRestaurantsModifier, itemsToBeAddedInCartModifier, wishListedItemsModifier } from "../../utils/guestSessionDataModifier";
+import { cartItemsModifier, favRestaurantsModifier, itemsToBeAddedInCartModifier, wishListedItemsModifier } from "../../utils/guestSessionDataModifier";
 
 const restaurantSlice = createSlice({
   name: "restaurant",
@@ -137,6 +137,7 @@ const restaurantSlice = createSlice({
         }
       }
 
+      cartItemsModifier(state.cart);
       localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 
@@ -159,6 +160,7 @@ const restaurantSlice = createSlice({
         }
       }
 
+      cartItemsModifier(state.cart);
       localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 

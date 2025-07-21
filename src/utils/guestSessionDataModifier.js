@@ -71,3 +71,22 @@ export const itemsToBeAddedInCartModifier = async (items) => {
         console.error("Error in setting recent location", err)
     }
 }
+
+export const cartItemsModifier = async (items) => {
+    try {
+        const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/cartItems", {
+            method: "PATCH",
+            body: JSON.stringify({ cartItems: items }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
+
+        // console.log(res)
+        const data = await res.json();
+        console.log(data.data.data.cartItems);
+    } catch (err) {
+        console.error("Error in setting recent location", err)
+    }
+}

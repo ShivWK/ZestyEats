@@ -4,7 +4,7 @@ const sessionSchema = new mongoose.Schema({
     data: {
         type: mongoose.Schema.Types.Mixed,
         default: {
-            cart: {},
+            cartItems: {},
             itemsToBeAddedInCart: {},
             wishListedItems: {},
             favRestaurants: [],
