@@ -12,7 +12,7 @@ const sessionSchema = new mongoose.Schema({
     },
 
     expires: {
-        type: number,
+        type: "number",
         default: Math.round(Date.now() / 1000) + 60 * 60 * 24,
     }
 });

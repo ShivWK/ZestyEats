@@ -194,10 +194,6 @@ const homeSlice = createSlice({
 
     setDpModelOpen: (state, action) => {
       state.dbModelOpen = action.payload;
-
-      // if (action.payload) {
-      //   window.history.pushState({model: "DP"}, "", "?model=DP")
-      // }
     },
 
     setDpModelHide: (state, action) => {

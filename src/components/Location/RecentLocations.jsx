@@ -51,7 +51,6 @@ const RecentLocations = memo(() => {
 
       dispatch(removeYourCurrentCity());
       dispatch(setHideLocation(true))
-      // dispatch(closeLocationInModal());
 
       try {
         const res1 = await triggerLocationCall(location.place_id).unwrap();
