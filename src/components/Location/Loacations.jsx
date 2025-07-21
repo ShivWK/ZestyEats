@@ -15,7 +15,7 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
       recentLocation.splice(index, 1);
     }
 
-    localStorage.setItem("recentLocations", JSON.stringify(recentLocation))
+    localStorage.setItem("recentLocations", JSON.stringify(recentLocation));
   }, [index, dispatch, removeARecentLocation]);
 
   return (

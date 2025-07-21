@@ -15,6 +15,8 @@ import { useLazySearchedLocationQuery } from "../../features/home/searchApiSlice
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
 import { memo, useCallback } from "react";
 
+import { recentLocationModifier } from "../../utils/guestSessionDataModifier";
+
 const SearchedLocation = memo(({
   locationsfetched,
   setSearchedLocation,
@@ -82,17 +84,7 @@ const SearchedLocation = memo(({
             JSON.stringify(previousLocations)
           );
 
-          try {
-            const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/recentLocations", {
-              method: "PATCH",
-              body: { recentLocations: previousLocations }
-            })
-
-            const data = await res.json();
-            console.log(data);
-          } catch (err) {
-            console.error("Error in setting recent location", err)
-          }
+          recentLocationModifier(previousLocations);
         }
       }
     } catch (err) {
