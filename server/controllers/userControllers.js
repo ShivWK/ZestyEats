@@ -65,3 +65,23 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
         })
     }
 }
+
+exports.addGuestSessionFavRestaurants = async (req, res, next) => {
+    const sid = req.signedCookies?.sid;
+
+    try {
+        const favRestaurants = await SessionModel.findByIdAndUpdate(sid,
+            { $set: { "data.favRestaurants": req.body.favRestaurants } }, { new: true });
+        res.status(200).json({
+            status: "success",
+            data: favRestaurants,
+        })
+    } catch (err) {
+        console.error("Error in favorite restaurant addition", err);
+
+        res.status(500).json({
+            status: "failed",
+            message: err.message,
+        })
+    }
+}

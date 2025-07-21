@@ -1,5 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { activeAnimations } from "motion";
+import { favRestaurantsModifier } from "../../utils/guestSessionDataModifier";
 
 const restaurantSlice = createSlice({
   name: "restaurant",
@@ -171,6 +172,7 @@ const restaurantSlice = createSlice({
         }
       }
 
+      favRestaurantsModifier(state.favoriteRestro);
       localStorage.setItem("favRestros", JSON.stringify(state.favoriteRestro));
     },
 
