@@ -45,9 +45,28 @@ export const wishListedItemsModifier = async (items) => {
             credentials: "include"
         })
 
-        console.log(res)
+        // console.log(res)
         const data = await res.json();
-        console.log(data.data.data.wishListedItems);
+        // console.log(data.data.data.wishListedItems);
+    } catch (err) {
+        console.error("Error in setting recent location", err)
+    }
+}
+
+export const itemsToBeAddedInCartModifier = async (items) => {
+    try {
+        const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/itemsToBeAddedInCart", {
+            method: "PATCH",
+            body: JSON.stringify({ itemsToBeAddedInCart: items }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
+
+        // console.log(res)
+        const data = await res.json();
+        console.log(data.data.data.itemsToBeAddedInCart);
     } catch (err) {
         console.error("Error in setting recent location", err)
     }

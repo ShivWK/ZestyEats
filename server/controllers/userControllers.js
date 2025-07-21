@@ -105,3 +105,23 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
         })
     }
 }
+
+exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
+    const sid = req.signedCookies?.sid;
+
+    try {
+        const itemsToBeAddedInCart = await SessionModel.findByIdAndUpdate(sid,
+            { $set: { "data.itemsToBeAddedInCart": req.body.itemsToBeAddedInCart } }, { new: true });
+        res.status(200).json({
+            status: "success",
+            data: itemsToBeAddedInCart,
+        })
+    } catch (err) {
+        console.error("Error in adding items to wishlist", err);
+
+        res.status(500).json({
+            status: "failed",
+            message: err.message,
+        })
+    }
+}
