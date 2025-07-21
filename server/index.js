@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 
 const swiggyRouter = require("./routes/swiggyRouter");
 const userRouter = require("./routes/userRouter");
-// const userActivityRouter = require("./routes/"))
 
 const secret = process.env.COOKIE_SECRET;
 const PORT = process.env.PORT || 5000;

@@ -57,7 +57,6 @@ const userSchema = new mongoose.Schema({
       },
     ],
     unique: true,
-    // required: [true, "Please provide payments details."]
   },
 });
 
