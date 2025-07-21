@@ -5,9 +5,10 @@ const sessionSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.Mixed,
         default: {
             cart: {},
+            itemsToBeAddedInCart: {},
             wishListedItems: {},
             favRestaurants: [],
-            recentLocations: []
+            recentLocations: [],
         }
     },
 

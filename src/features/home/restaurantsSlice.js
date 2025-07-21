@@ -1,6 +1,6 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { activeAnimations } from "motion";
-import { favRestaurantsModifier } from "../../utils/guestSessionDataModifier";
+import { favRestaurantsModifier, wishListedItemsModifier } from "../../utils/guestSessionDataModifier";
 
 const restaurantSlice = createSlice({
   name: "restaurant",
@@ -78,12 +78,14 @@ const restaurantSlice = createSlice({
         state.wishListItems[itmObject.item?.id] = itmObject;
       }
 
+      wishListedItemsModifier(state.wishListItems);
       localStorage.setItem("wishlist", JSON.stringify(state.wishListItems))
     },
 
     deleteItemFromWishlist: (state, action) => {
       delete state.wishListItems[action.payload];
 
+      wishListedItemsModifier(state.wishListItems);
       localStorage.setItem("wishlist", JSON.stringify(state.wishListItems))
     },
 

@@ -28,7 +28,26 @@ export const favRestaurantsModifier = async (restaurants) => {
         })
 
         const data = await res.json();
-        console.log(data.data.data.favRestaurants);
+        // console.log(data.data.data.favRestaurants);
+    } catch (err) {
+        console.error("Error in setting recent location", err)
+    }
+}
+
+export const wishListedItemsModifier = async (items) => {
+    try {
+        const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/wishListedItems", {
+            method: "PATCH",
+            body: JSON.stringify({ wishListedItems: items }),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            credentials: "include"
+        })
+
+        console.log(res)
+        const data = await res.json();
+        console.log(data.data.data.wishListedItems);
     } catch (err) {
         console.error("Error in setting recent location", err)
     }
