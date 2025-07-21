@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const sessionSchema = new mongoose.Schema({
     data: {
-        type: mongoose.Schema.Types.Mixed,
+        type: Schema.Types.Mixed,
         default: {
             cart: {},
             wishListedItems: {},
@@ -12,8 +12,8 @@ const sessionSchema = new mongoose.Schema({
     },
 
     expires: {
-        type: Date,
-        default: Math.round((Date.now() / 1000) + 60 * 60 * 24),
+        type: number,
+        default: Math.round(Date.now() / 1000) + 60 * 60 * 24,
     }
 });
 

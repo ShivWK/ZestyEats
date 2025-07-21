@@ -9,9 +9,9 @@ const userRouter = require("./routes/userRouter");
 // const userActivityRouter = require("./routes/"))
 
 const secret = process.env.COOKIE_SECRET;
-console.log("Secrete", secret);
-
 const PORT = process.env.PORT || 5000;
+const mongooseURI = process.env.MONGOOSE_URI;
+
 const allowedOrigins = [
   "http://localhost:5173",
   "https://swiggy-clone-beige-gamma.vercel.app",
@@ -34,7 +34,7 @@ app.use(
 app.use(express.json());
 app.use(cookieParser(secret));
 
-mongoose.connect(process.env.MONGOOSE_URI)
+mongoose.connect(mongooseURI)
 .then(() => {
   console.log("Connected to MongoDB Atlas");
 })
