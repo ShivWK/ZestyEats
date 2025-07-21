@@ -1,5 +1,5 @@
 const SessionModel = require("./../models/sessionModel");
-import extractDeviceInfo from "../utils/extractDeviceInfo";
+const extractDeviceInfo = require("../utils/extractDeviceInfo");
 
 exports.signup = async (req, res) => {
     const body = req.body;
