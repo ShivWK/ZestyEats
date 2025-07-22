@@ -201,7 +201,7 @@ const Login = () => {
         <Phone size={16} className="text-green-500 ml-1.5" />
         <Mail size={16} className="text-red-500 mr-1.5" />
         <div className={`absolute rounded-full h-full right-0 w-6 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}
-        style={{left: otpOnPhone ? "0" : "1.76rem"}}
+          style={{ left: otpOnPhone ? "0" : "1.76rem" }}
         >
           {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
             : <i className="fa-solid fa-envelope text-red-500" />
@@ -219,24 +219,36 @@ const Login = () => {
         isOtpSend={isOtpSend}
         isLoading={isLoading}
       >
-        <EntryDiv
+        {otpOnPhone ? <EntryDiv
           type="tel"
           inputMode="numeric"
           purpose={"phone"}
           placeholder="Phone number"
-          fallbackPlacehoder="Enter your phone number"
+          fallbackPlaceholder="Enter your phone number"
           isReadOnly={isOtpSend}
           changeIsEntryMade={changePhoneIsEntryMade}
           changeHasValue={changePhoneHasValue}
           focus="true"
         />
+          : <EntryDiv
+            type={"text"}
+            inputMode={"text"}
+            purpose={"email"}
+            // value={signUpFormData.email}
+            // onChangeHandler={handleSignUpChange}
+            placeholder="Email"
+            fallbackPlaceholder="Invalid email address"
+            // changeIsEntryMade={changeEmailIsEntryMade}
+            // changeHasValue={changeEmailHasValue}
+          />
+        }
         {isOtpSend && (
           <EntryDiv
             type="text"
             inputMode="numeric"
             purpose={"otp"}
             placeholder="One Time Password"
-            fallbackPlacehoder="One Time Password"
+            fallbackPlaceholder="One Time Password"
             changeIsEntryMade={changeOtpIsEntryMade}
             changeHasValue={changeOtpHasValue}
             focus="true"

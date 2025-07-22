@@ -186,16 +186,16 @@ export default function App() {
     return () => document.removeEventListener("keydown", handleScapeDown);
   }, [isLoginOpen, isLocationModelOpen, isMenuModelOpen]);
 
-  useEffect(() => {
-    toast.info("Still building, features may not work as expected.", {
-      autoClose: 3000,
-      style: {
-        backgroundColor: "rgba(0, 0, 0, 0.9)",
-        fontWeight: "bold",
-        color: "white",
-      },
-    });
-  }, []);
+  // useEffect(() => {
+  //   toast.info("Still building, features may not work as expected.", {
+  //     autoClose: 3000,
+  //     style: {
+  //       backgroundColor: "rgba(0, 0, 0, 0.9)",
+  //       fontWeight: "bold",
+  //       color: "white",
+  //     },
+  //   });
+  // }, []);
 
   const pathHistory = useSelector(selectPathHistory);
 

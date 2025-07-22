@@ -9,7 +9,7 @@ const EntryDiv = memo(({
   purpose,
   focus = false,
   placeholder,
-  fallbackPlacehoder,
+  fallbackPlaceholder,
   isReadOnly = false,
   changeIsEntryMade,
   changeHasValue,
@@ -150,7 +150,7 @@ const EntryDiv = memo(({
           isEntryMade ? "top-2.5 text-xs" : "top-[19px] text-lg"
         }`}
       >
-        {hasValue ? fallbackPlacehoder : placeholder}
+        {hasValue ? fallbackPlaceholder : placeholder}
       </p>
       <input
         id="elem"

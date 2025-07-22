@@ -196,7 +196,7 @@ const SignUp = memo(() => {
         value={signUpFormData.phone}
         onChangeHandler={handleSignUpChange}
         placeholder="Phone number"
-        fallbackPlacehoder="Enter your phone number"
+        fallbackPlaceholder="Enter your phone number"
         changeIsEntryMade={changePhoneIsEntryMade}
         changeHasValue={changePhoneHasValue}
         isReadOnly={isSignUpOtpSend}
@@ -210,7 +210,7 @@ const SignUp = memo(() => {
           value={signUpFormData.name}
           onChangeHandler={handleSignUpChange}
           placeholder="Name"
-          fallbackPlacehoder="Name"
+          fallbackPlaceholder="Name"
           changeIsEntryMade={changeNameIsEntryMade}
           changeHasValue={changeNameHasValue}
         />
@@ -223,7 +223,7 @@ const SignUp = memo(() => {
           value={signUpFormData.email}
           onChangeHandler={handleSignUpChange}
           placeholder="Email"
-          fallbackPlacehoder="Invaid email address"
+          fallbackPlaceholder="Invalid email address"
           changeIsEntryMade={changeEmailIsEntryMade}
           changeHasValue={changeEmailHasValue}
         />
@@ -236,7 +236,7 @@ const SignUp = memo(() => {
           value={signUpFormData.otp}
           onChangeHandler={handleSignUpChange}
           placeholder="One Time Password"
-          fallbackPlacehoder="One Time Password"
+          fallbackPlaceholder="One Time Password"
           changeIsEntryMade={changeOtpIsEntryMade}
           changeHasValue={changeOtpHasValue}
           focus="true"
