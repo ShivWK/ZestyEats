@@ -21,6 +21,8 @@ import {
   selectIsLoading,
 } from "../../features/Login/loginSlice";
 
+import { Phone, Mail } from "lucide-react"
+
 const SignUp = memo(() => {
   const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] =
     useState(undefined);
@@ -38,12 +40,13 @@ const SignUp = memo(() => {
     email: "",
     opt: "",
   });
+  const [otpOnPhone, setOtpOnPhone] = useState(true);
   const dispatch = useDispatch();
   const isSignUpOtpSend = useSelector(selectSignUpOtp);
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
 
-  const handleSignUpChange = useCallback( (e) => {
+  const handleSignUpChange = useCallback((e) => {
     setSignUpFormData(prev => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -176,69 +179,96 @@ const SignUp = memo(() => {
     }
   }, [setDataToFirestore, setSignUpFormData, signUpFormData, resetRecaptchaVerifier, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal]);
 
+  const toggleHandler = () => {
+    if (isSignUpOtpSend) return;
+    setOtpOnPhone(!otpOnPhone);
+  }
+
   return (
-    <Form
-      btnId={"SignUpBtn"}
-      refference={formRef}
-      handleSubmit={handleSignUp}
-      handleOtpVerification={handleOtpVerification}
-      signingStatement={"By creating an account"}
-      isOtpSend={isSignUpOtpSend}
-      isLoading={isLoading}
-    >
-      <EntryDiv
-        type={"tel"}
-        inputMode={"numeric"}
-        purpose={"phone"}
-        value={signUpFormData.phone}
-        onChangeHandler={handleSignUpChange}
-        placeholder="Phone number"
-        fallbackPlaceholder="Enter your phone number"
-        changeIsEntryMade={changePhoneIsEntryMade}
-        changeHasValue={changePhoneHasValue}
-        isReadOnly={isSignUpOtpSend}
-      />
-      {!isSignUpOtpSend && (
+    <>
+      <div className="h-fit w-fit flex items-center gap-2">
+        <div id="toggle" onClick={toggleHandler} className={`relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between ${!isSignUpOtpSend && "cursor-pointer"} bg-gray-200`}>
+          {isSignUpOtpSend && <div className="absolute bg-gray-300/50 h-full w-full z-10" />}
+          <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
+          <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
+          <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}
+            style={{ left: otpOnPhone ? "0" : "2rem" }}
+          >
+            {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
+              : <i className="fa-solid fa-envelope text-red-500" />
+            }
+          </div>
+        </div>
+
+        <div className="text-xs font-bold text-gray-600 tracking-wide">
+          {otpOnPhone ? <p>OTP to <span className="text-black">Indian number (+91 only).</span></p>
+            : <p>OTP to <span className="text-black">email (available globally).</span></p>
+          }
+        </div>
+      </div>
+      <Form
+        btnId={"SignUpBtn"}
+        refference={formRef}
+        handleSubmit={handleSignUp}
+        handleOtpVerification={handleOtpVerification}
+        signingStatement={"By creating an account"}
+        isOtpSend={isSignUpOtpSend}
+        isLoading={isLoading}
+      >
         <EntryDiv
-          type={"text"}
-          inputMode={"text"}
-          purpose={"name"}
-          value={signUpFormData.name}
+          type={"tel"}
+          inputMode={"numeric"}
+          purpose={"phone"}
+          value={signUpFormData.phone}
           onChangeHandler={handleSignUpChange}
-          placeholder="Name"
-          fallbackPlaceholder="Name"
-          changeIsEntryMade={changeNameIsEntryMade}
-          changeHasValue={changeNameHasValue}
+          placeholder="Phone number"
+          fallbackPlaceholder="Enter your phone number"
+          changeIsEntryMade={changePhoneIsEntryMade}
+          changeHasValue={changePhoneHasValue}
+          isReadOnly={isSignUpOtpSend}
         />
-      )}
-      {!isSignUpOtpSend && (
-        <EntryDiv
-          type={"text"}
-          inputMode={"text"}
-          purpose={"email"}
-          value={signUpFormData.email}
-          onChangeHandler={handleSignUpChange}
-          placeholder="Email"
-          fallbackPlaceholder="Invalid email address"
-          changeIsEntryMade={changeEmailIsEntryMade}
-          changeHasValue={changeEmailHasValue}
-        />
-      )}
-      {isSignUpOtpSend && (
-        <EntryDiv
-          type="text"
-          inputMode="numeric"
-          purpose={"otp"}
-          value={signUpFormData.otp}
-          onChangeHandler={handleSignUpChange}
-          placeholder="One Time Password"
-          fallbackPlaceholder="One Time Password"
-          changeIsEntryMade={changeOtpIsEntryMade}
-          changeHasValue={changeOtpHasValue}
-          focus="true"
-        />
-      )}
-    </Form>
+        {!isSignUpOtpSend && (
+          <EntryDiv
+            type={"text"}
+            inputMode={"text"}
+            purpose={"name"}
+            value={signUpFormData.name}
+            onChangeHandler={handleSignUpChange}
+            placeholder="Name"
+            fallbackPlaceholder="Name"
+            changeIsEntryMade={changeNameIsEntryMade}
+            changeHasValue={changeNameHasValue}
+          />
+        )}
+        {!isSignUpOtpSend && (
+          <EntryDiv
+            type={"text"}
+            inputMode={"text"}
+            purpose={"email"}
+            value={signUpFormData.email}
+            onChangeHandler={handleSignUpChange}
+            placeholder="Email"
+            fallbackPlaceholder="Invalid email address"
+            changeIsEntryMade={changeEmailIsEntryMade}
+            changeHasValue={changeEmailHasValue}
+          />
+        )}
+        {isSignUpOtpSend && (
+          <EntryDiv
+            type="text"
+            inputMode="numeric"
+            purpose={"otp"}
+            value={signUpFormData.otp}
+            onChangeHandler={handleSignUpChange}
+            placeholder="One Time Password"
+            fallbackPlaceholder="One Time Password"
+            changeIsEntryMade={changeOtpIsEntryMade}
+            changeHasValue={changeOtpHasValue}
+            focus="true"
+          />
+        )}
+      </Form>
+    </>
   );
 });
 

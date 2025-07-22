@@ -40,7 +40,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
   return (
     <div className="w-[90%] md:w-[80%] h-auto mt-7">
       <button
-        className="group cursor-pointer mb-4"
+        className="group cursor-pointer mb-1"
         onClick={isLoginOtpSend || isSigUpOtpSend ? handleBack : handleClose}
       >
         {isLoginOtpSend || isSigUpOtpSend ? (
@@ -82,7 +82,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
               </button>
             </p>
           )}
-          {member ? (
+          {/* {member ? (
             isLoginOtpSend ? (
               ""
             ) : (
@@ -90,14 +90,14 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
             )
           ) : (
             <hr className="w-8 border-t-2 font-bold mt-6" />
-          )}
+          )} */}
         </div>
         <img
           src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/Image-login_btpq7r"
-          height="110px"
-          width="110px"
+          height="90px"
+          width="90px"
           alt="Profile_dummy_image"
-          className="h-20 w-20 md:h-[110px] md:w-[110px] select-none"
+          className="h-20 w-20 md:h-[90px] md:w-[90px] select-none"
         />
       </div>
       {children}
