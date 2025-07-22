@@ -63,7 +63,7 @@ const Form = ({
           )}
         </motion.button>
       )}
-      {guestLogin && !isOtpSend && (
+      {/* {guestLogin && !isOtpSend && (
         <motion.button
           type="button"
           onClick={handleGuestLogin}
@@ -73,7 +73,7 @@ const Form = ({
         >
           Login as Guest
         </motion.button>
-      )}
+      )} */}
       {!isOtpSend && (
         <p className="text-center text-xs mt-2 font-bold text-gray-600">
           {signingStatement} , I accept the{" "}

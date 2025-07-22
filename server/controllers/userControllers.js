@@ -71,11 +71,9 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
 
 exports.getGuestSessionData = async (req, res, next) => {
     const sid = req.signedCookies?.sid;
-    console.log("get session", sid)
 
     try {
         const recentLocations = await SessionModel.findById(sid);
-        console.log("Data", recentLocations)
 
         res.status(200).json({
             status: "success",

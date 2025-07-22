@@ -35,13 +35,13 @@ const RecentLocations = memo(() => {
     }
   };
 
-  useEffect(() => {
-    const recentLocations = JSON.parse(localStorage.getItem("recentLocations"));
+  // useEffect(() => {
+  //   const recentLocations = JSON.parse(localStorage.getItem("recentLocations"));
 
-    if (recentLocations !== null) {
-      dispatch(addRecentLocations(recentLocations));
-    }
-  }, []);
+  //   if (recentLocations !== null) {
+  //     dispatch(addRecentLocations(recentLocations));
+  //   }
+  // }, []);
 
   const handleRecentLocationClick = useCallback(
     async (location) => {
@@ -101,7 +101,7 @@ const RecentLocations = memo(() => {
           />
         ))
       ) : (
-        <p className="text-sm">No Recent Locatons</p>
+        <p className="text-sm">No Recent Locations</p>
       )}
     </div>
   );

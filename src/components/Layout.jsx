@@ -23,7 +23,8 @@ import {
   addSearchedCity,
   addSearchedCityAddress,
   selectDpModel,
-  setDpModelHide
+  setDpModelHide,
+  addRecentLocations
 } from "../features/home/homeSlice";
 
 import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro, setItemToCart, setHideMenu, toggleMenuModel } from "../features/home/restaurantsSlice";
@@ -102,12 +103,18 @@ export default function Layout() {
       if (searchedCity !== undefined && searchedCity !== null) dispatch(addSearchedCity(searchedCity));
       if (searchedCityAddress !== undefined && searchedCityAddress !== null) dispatch(addSearchedCityAddress(searchedCityAddress));
       if (currentCity !== undefined && currentCity !== null) dispatch(addYourCurrentCity(currentCity));
-      if (restaurantAllItems !== undefined && restaurantAllItems !== null) dispatch(setRestaurantItems(restaurantAllItems))
-      if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
-      if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
-      if (favRestros !== undefined && favRestros !== null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
+
+      if (restaurantAllItems !== undefined && restaurantAllItems !== null) dispatch(setRestaurantItems(restaurantAllItems));
+
+      // if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
+
+      // if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
+
+      // if (favRestros !== undefined && favRestros !== null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
+
       if (localityLatLng !== undefined && localityLatLng !== null) dispatch(setLocalityLatAndLng(localityLatLng));
-      if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
+
+      // if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
 
     } else if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(async (position) => {
@@ -160,7 +167,7 @@ export default function Layout() {
           method: "POST",
           body: JSON.stringify({ deviceId }),
           headers: {
-            "Content-Type" : "application/json"
+            "Content-Type": "application/json"
           },
           credentials: "include"
         });
@@ -175,7 +182,29 @@ export default function Layout() {
         });
 
         const sessionData = await result.json();
-        console.log("Session data", sessionData)
+        const mainData = sessionData.data.data;
+
+        const cartItems = mainData?.cartItems;
+        if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
+
+        const itemsToBeAddedInCart = mainData?.itemsToBeAddedInCart;
+        if (itemsToBeAddedInCart !== undefined && itemsToBeAddedInCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedInCart }));
+
+        const favRestaurants = mainData?.favRestaurants;
+        if (favRestaurants !== undefined && favRestaurants !== null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestaurants }));
+
+        const recentLocations = mainData?.recentLocations;
+        if (recentLocations !== undefined && recentLocations !== null) dispatch(addRecentLocations(recentLocations));
+
+        const wishList = mainData?.wishListedItems;
+        if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
+
+        // console.log("Session data", mainData);
+        // console.log("cartItems", cartItems);
+        // console.log("itemsToBeAddedToCart", itemsToBeAddedInCart);
+        // console.log("favRestaurants", favRestaurants);
+        // console.log("recentLocation", recentLocations);
+        // console.log("wishlist", wishList)
 
       } catch (err) {
         console.error("Session error", err)
@@ -221,7 +250,7 @@ export default function Layout() {
       } else if (isLocationOpen) {
         dispatch(setHideLocation(true));
       } else if (menuModel) {
-          dispatch(toggleMenuModel());
+        dispatch(toggleMenuModel());
       }
     }
 
