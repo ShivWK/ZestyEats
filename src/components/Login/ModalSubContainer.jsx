@@ -96,7 +96,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
         />
       </div>
       {children}
-      <button className="absolute mt-10 left-[50%] transform -translate-1/2 text-center text-lg font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1.5 active:scale-95 transition-all duration-150 ease-in-out">
+      <button className="absolute mt-10 left-[50%] transform -translate-1/2 text-center text-lg font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out">
         <p className="whitespace-nowrap flex gap-2 items-center">
           Continue with{" "}
           <svg

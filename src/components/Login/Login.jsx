@@ -196,7 +196,7 @@ const Login = () => {
 
   return (
     <>
-      <div id="toggle" onClick={() => setOtpOnPhone(!otpOnPhone)} className="relative mt-4 lg:mt-2 border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between cursor-pointer  bg-gray-200">
+      <div id="toggle" onClick={() => setOtpOnPhone(!otpOnPhone)} className="relative mt-5 lg:mt-2 border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between cursor-pointer  bg-gray-200">
         <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
         <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
         <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}

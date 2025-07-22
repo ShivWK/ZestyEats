@@ -1,9 +1,10 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   selectLogInModal,
   selectIsMember,
+  setHideLogin,
 } from "../../features/Login/loginSlice";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
 import { motion } from "motion/react";
 
@@ -19,6 +20,12 @@ const Form = ({
 }) => {
   const isLogInModelOpen = useSelector(selectLogInModal);
   const member = useSelector(selectIsMember);
+  const dispatch = useDispatch();
+
+  const handlePageSwitch = () => {
+    dispatch(setHideLogin(true));
+    // window.history.back();
+  }
 
   return (
     <form
@@ -64,9 +71,21 @@ const Form = ({
       {!isOtpSend && (
         <p className="text-center text-xs mt-2 font-bold text-gray-600">
           {signingStatement} , I accept the{" "}
-          <NavLink to="/terms" className="text-black">
-            Terms & Conditions & Privacy Policy
-          </NavLink>
+          <Link
+            to="/legalAndPolicies?mode=termsAndConditions"
+            onClick={handlePageSwitch}
+            className="text-blue-600">
+            Terms & Conditions
+          </Link>
+          {" "}
+          &
+          {" "}
+          <Link
+            to="/legalAndPolicies?mode=privacyPolicy"
+            onClick={handlePageSwitch} 
+            className="text-blue-600">
+            Privacy Policy
+          </Link>
         </p>
       )}
     </form>
