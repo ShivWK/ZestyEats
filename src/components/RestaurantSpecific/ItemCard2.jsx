@@ -144,7 +144,7 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
           onError={() => setIsError(true)}
         />
    
-        <div className="absolute top-[75%] md:top-[80%] transform -translate-x-1/2 left-5/6 md:left-1/2">
+        <div className="absolute top-[75%] md:top-[80%] transform -translate-x-1/2 max-lg:-right-9 md:left-1/2">
           <AddToCartBtn data={{ restaurantData, item, quantity: 1 }} />
         </div>
 

@@ -15,6 +15,7 @@ import {
   setIsLoggedIn,
   setLoading,
 } from "../../features/Login/loginSlice";
+import { Phone, Mail } from "lucide-react";
 
 const Login = () => {
   const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] =
@@ -22,6 +23,7 @@ const Login = () => {
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
+  const [otpOnPhone, setOtpOnPhone] = useState(true)
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
   const isLoading = useSelector(selectIsLoading);
@@ -194,41 +196,52 @@ const Login = () => {
   }
 
   return (
-    <Form
-      btnId="LoginBtn"
-      refference={formRef}
-      guestLogin={true}
-      handleSubmit={handleSubmit}
-      handleGuestLogin={handleGuestLogin}
-      handleOtpVerification={handleOtpVerification}
-      signingStatement={"By clicking on Login"}
-      isOtpSend={isOtpSend}
-      isLoading={isLoading}
-    >
-      <EntryDiv
-        type="tel"
-        inputMode="numeric"
-        purpose={"phone"}
-        placeholder="Phone number"
-        fallbackPlacehoder="Enter your phone number"
-        isReadOnly={isOtpSend}
-        changeIsEntryMade={changePhoneIsEntryMade}
-        changeHasValue={changePhoneHasValue}
-        focus="true"
-      />
-      {isOtpSend && (
+    <>
+      <div id="toggle" onClick={() => setOtpOnPhone(!otpOnPhone)} className="relative mt-4 border-2 border-white rounded-full w-14 h-7 flex items-center justify-between cursor-pointer shadow-[0_0_10px_5px_rgba(0,0,0,0.1)] bg-gray-300">
+        <Phone size={16} className="text-green-500 ml-1.5 mt-0.5" />
+        <Mail size={16} className="text-red-500 mr-1.5" />
+        <div className={`absolute rounded-full h-full right-0 w-6 ${otpOnPhone ? "left-0" : "left-7"} transition-all duration-150 ease-linear flex items-center justify-center bg-white`}>
+          {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
+            : <i className="fa-solid fa-envelope text-red-500" />
+          }
+        </div>
+      </div>
+      <Form
+        btnId="LoginBtn"
+        refference={formRef}
+        guestLogin={true}
+        handleSubmit={handleSubmit}
+        handleGuestLogin={handleGuestLogin}
+        handleOtpVerification={handleOtpVerification}
+        signingStatement={"By clicking on Login"}
+        isOtpSend={isOtpSend}
+        isLoading={isLoading}
+      >
         <EntryDiv
-          type="text"
+          type="tel"
           inputMode="numeric"
-          purpose={"otp"}
-          placeholder="One Time Password"
-          fallbackPlacehoder="One Time Password"
-          changeIsEntryMade={changeOtpIsEntryMade}
-          changeHasValue={changeOtpHasValue}
+          purpose={"phone"}
+          placeholder="Phone number"
+          fallbackPlacehoder="Enter your phone number"
+          isReadOnly={isOtpSend}
+          changeIsEntryMade={changePhoneIsEntryMade}
+          changeHasValue={changePhoneHasValue}
           focus="true"
         />
-      )}
-    </Form>
+        {isOtpSend && (
+          <EntryDiv
+            type="text"
+            inputMode="numeric"
+            purpose={"otp"}
+            placeholder="One Time Password"
+            fallbackPlacehoder="One Time Password"
+            changeIsEntryMade={changeOtpIsEntryMade}
+            changeHasValue={changeOtpHasValue}
+            focus="true"
+          />
+        )}
+      </Form>
+    </>
   );
 };
 

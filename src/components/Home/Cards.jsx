@@ -18,6 +18,7 @@ import textToZestyEats from "../../utils/textToZestyEats";
 import calDistance from "../../utils/haversineFormula";
 
 const Cards = memo(({ data, from }) => {
+  // console.log(data)
   const pathname = useLocation().pathname;
   let latAndLngSelector = selectLatAndLng;
   let mode = "homePage"
@@ -46,7 +47,7 @@ const Cards = memo(({ data, from }) => {
   const userDistanceFromRestaurant = calDistance(lat1, lat, lng1, lng);
 
   useEffect(() => {
-    const exist = favoriteRestro.find((obj) => obj.data.id === dataToMap.id);
+    const exist = favoriteRestro.find((obj) => obj.data?.id === dataToMap?.id);
     setWishlistAdded(exist);
 
     if (pathname.includes("ordersAndWishlist")) {
