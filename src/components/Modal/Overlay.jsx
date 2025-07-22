@@ -1,12 +1,17 @@
-import {selectLogInModal, setHideLocation, setHideLogin} from "../../features/Login/loginSlice";
+import { selectLogInModal, setHideLocation, setHideLogin, setModalTrace, setLoginOpened } from "../../features/Login/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Overlay = () => {
     const dispatch = useDispatch();
     const isLoginOpen = useSelector(selectLogInModal);
     const handleClick = () => {
-        if (isLoginOpen) dispatch(setHideLogin(true));
-        dispatch(setHideLocation(true));
+        if (isLoginOpen) {
+            dispatch(setModalTrace({mode: "empty"}));
+            dispatch(setLoginOpened(false));
+            dispatch(setHideLogin(true));
+        } else {
+            dispatch(setHideLocation(true));
+        }
 
         window.history.back();
     }

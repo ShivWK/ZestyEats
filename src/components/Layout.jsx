@@ -199,12 +199,12 @@ export default function Layout() {
         const wishlist = mainData?.wishListedItems;
         if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
 
-        console.log("Session data", mainData);
-        console.log("cartItems", cartItems);
-        console.log("itemsToBeAddedToCart", itemsToBeAddedInCart);
-        console.log("favRestaurants", favRestaurants);
-        console.log("recentLocation", recentLocations);
-        console.log("wishlist", wishlist)
+        // console.log("Session data", mainData);
+        // console.log("cartItems", cartItems);
+        // console.log("itemsToBeAddedToCart", itemsToBeAddedInCart);
+        // console.log("favRestaurants", favRestaurants);
+        // console.log("recentLocation", recentLocations);
+        // console.log("wishlist", wishlist)
 
       } catch (err) {
         console.error("Session error", err)

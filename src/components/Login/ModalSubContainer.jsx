@@ -6,6 +6,8 @@ import {
   selectLoginOtp,
   selectSignUpOtp,
   setLoading,
+  setModalTrace,
+  setLoginOpened,
 } from "../../features/Login/loginSlice";
 import { memo } from "react";
 
@@ -18,7 +20,10 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
     if (isLoginOtpSend) dispatch(loginOtpNotSend());
     else dispatch(signUpOtpNotSend());
 
+    dispatch(setModalTrace({mode: "empty"}));
+    dispatch(setLoginOpened(false));
     dispatch(setHideLogin(true));
+    
     window.history.back();
   };
 

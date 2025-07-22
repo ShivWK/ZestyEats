@@ -27,9 +27,11 @@ import {
 } from "../../features/home/homeSlice";
 
 import HomeShimmer from "./HomeShimmer";
+import useModalTrace from "./../../utils/useModalTrace";
 
 const Home = memo(() => {
   useScrollToTop();
+  useModalTrace();
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);
   const foodieThoughtsData = useSelector(selectFoodieThoughtsData);
   const onlineDeliveryRestaurantData = useSelector(selectOnlineDeliveryRestaurants);
@@ -41,10 +43,6 @@ const Home = memo(() => {
 
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const bottomMenuUp = useSelector(selectBottomMenu);
-
-  useEffect(() => {
-    
-  })
 
   const cuisineClickHandler = async (data, trigger, setLoading, dataUpdater, dispatch) => {
     const pathname = new URL(data.link).pathname;

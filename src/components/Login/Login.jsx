@@ -207,24 +207,26 @@ const Login = () => {
           }
         </div>
       </div>
-      {otpOnPhone ? (
-        <p className="text-xs mt-2 font-bold text-gray-600 tracking-wide">
-           OTP will be sent to {" "}
-          <span className="text-black">
-            Indian number (+91 only). Use email
-          </span>
-          {" "}if you're outside India.
-        </p>
-      )
-        : (
+      <div className="mt-4">
+        {otpOnPhone ? (
           <p className="text-xs mt-2 font-bold text-gray-600 tracking-wide">
-            OTP will be sent to given email inbox.{" "}
+            OTP will be sent to {" "}
             <span className="text-black">
-              Check spam if you don’t see it.
+              Indian number (+91 only). Use email
             </span>
+            {" "}if you're outside India.
           </p>
         )
-      }
+          : (
+            <p className="text-xs mt-2 font-bold text-gray-600 tracking-wide">
+              OTP will be sent to given email inbox.{" "}
+              <span className="text-black">
+                Check spam if you don’t see it.
+              </span>
+            </p>
+          )
+        }
+      </div>
       <Form
         btnId="LoginBtn"
         reference={formRef}

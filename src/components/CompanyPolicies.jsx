@@ -6,9 +6,20 @@ import {
 } from "../utils/DummyData";
 import BreadcrumbsWrapper from "./BreadcrumbsWrapper";
 import ScooterAnimation from "../utils/ScooterAnimation";
+import { useSelector, useDispatch } from "react-redux";
+import { selectLoginOpened, setModalTrace } from "../features/Login/loginSlice";
+import { useEffect } from "react";
 
 const CompanyPolicies = () => {
   const [searchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const isLoginOpened = useSelector(selectLoginOpened);
+
+  useEffect(() => {
+    if (isLoginOpened) {
+      dispatch(setModalTrace("terms"))
+    }
+  }, [])
 
   let dataToMap = null;
   const searchMode = searchParams.get("mode");
@@ -30,9 +41,9 @@ const CompanyPolicies = () => {
           <p className="text-gray-800 text-justify">{pageMainHeading.description}</p>
         </section>
         <section>
-          {restData.map((data) => {
+          {restData.map((data, index) => {
             return (
-              <div className="mt-4">
+              <div key={index} className="mt-4">
                 <h2>{data.title}</h2>
 
                 {data.description && (
@@ -44,16 +55,18 @@ const CompanyPolicies = () => {
 
                 {data.list && (
                   <ul className="list-disc mt-1 ml-6">
-                    {data.list.mainList.map((data) => (
+                    {data.list.mainList.map((data, index) => (
                       <li
+                      key={index}
                         className="my-0.5"
                         dangerouslySetInnerHTML={{ __html: data }}
                       ></li>
                     ))}
                     {data.list.subList && (
                       <ul className="list-[circle] ml-6 mt-1">
-                        {data.list.subList.map((data) => (
+                        {data.list.subList.map((data, index) => (
                           <li
+                          key={index}
                             className="my-0.5"
                             dangerouslySetInnerHTML={{ __html: data }}
                           ></li>
@@ -69,8 +82,8 @@ const CompanyPolicies = () => {
 
                 {data.list2 && (
                   <ul className="list-disc ml-6 mt-1">
-                    {data.list2.mainList.map((data) => (
-                      <li className="my-0.5" dangerouslySetInnerHTML={{ __html: data }}></li>
+                    {data.list2.mainList.map((data, index) => (
+                      <li key={index} className="my-0.5" dangerouslySetInnerHTML={{ __html: data }}></li>
                     ))}
                   </ul>
                 )}
