@@ -104,9 +104,7 @@ const SignUp = memo(() => {
     } else if (data.get("email").length === 0) {
       setChangeEmailHasValue(true);
       dispatch(setLoading(false));
-    } else if (
-      !/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))
-    ) {
+    } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
       setChangeEmailIsEntryMade(true);
       setChangeEmailHasValue(true);
       dispatch(setLoading(false));
@@ -200,7 +198,6 @@ const SignUp = memo(() => {
         changeIsEntryMade={changePhoneIsEntryMade}
         changeHasValue={changePhoneHasValue}
         isReadOnly={isSignUpOtpSend}
-        focus="true"
       />
       {!isSignUpOtpSend && (
         <EntryDiv

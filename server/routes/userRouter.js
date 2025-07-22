@@ -22,7 +22,12 @@ const checkSessionId = (req, res, next) => {
   next();
 };
 
-userRouter.route("/signup").post(signup);
+userRouter.route("/signup/sendOtp/:mode").post(signup);
+userRouter.route("/signup/verifyOtp").post();
+
+userRouter.route("/login/sendOtp/:mode").post();
+userRouter.route("/signup/verifyOtp").post();
+
 userRouter
   .route("/session")
   .post(guestSession)

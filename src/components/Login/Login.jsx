@@ -18,9 +18,10 @@ import {
 import { Phone, Mail } from "lucide-react";
 
 const Login = () => {
-  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] =
-    useState(undefined);
+  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
+  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(undefined);
+  const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
   const [otpOnPhone, setOtpOnPhone] = useState(true)
@@ -28,18 +29,6 @@ const Login = () => {
   const isOtpSend = useSelector(selectLoginOtp);
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
-
-  const handleGuestLogin = useCallback(() => {
-    toast.info("You are logged in Anonymously!", {
-      autoClose: 5000,
-      style: {
-        backgroundColor: "#ff5200",
-        color: "white",
-        fontWeight: "medium",
-      },
-      progressClassName: "progress-style",
-    });
-  }, []);
 
   function resetRecaptcha() {
     if (window.recaptchaVerifier) {
@@ -78,50 +67,60 @@ const Login = () => {
     const q = query(collectionRef, where("phone", "==", data.get("phone")));
     const snapshot = await getDocs(q);
 
-    if (data.get("phone").length === 0) {
-      setChangePhoneHasValue(true);
-      dispatch(setLoading(false));
-    } else if (data.get("phone").length < 10) {
-      setChangePhoneIsEntryMade(true);
-      setChangePhoneHasValue(true);
-      dispatch(setLoading(false));
-    } else if (snapshot.empty) {
-      toast("User does not exist", {
-        autoClose: 3000,
-        style: {
-          backgroundColor: "rgba(0,0,0,0.9)",
-          fontWeight: "medium",
-          color: "white",
-        },
-      });
-      dispatch(setLoading(false));
-    } else {
-      resetRecaptcha();
-      window.confirmationResult = null;
-
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, "LoginBtn", {
-        size: "invisible",
-      });
-
-      window.recaptchaVerifier
-        .verify()
-        .then(() => {
-          sendOTP();
-        })
-        .catch((err) => {
-          dispatch(setLoading(false));
-          console.log("Recaptcha verification failed", err);
-          toast.info("Recaptcha verification failed, please try again.", {
-            autoClose: 4000,
-            style: {
-              backgroundColor: "red",
-              color: "white",
-              ffontWeight: "medium",
-            },
-            progressClassName: "progress-style",
-          });
+    if (otpOnPhone) {
+      if (data.get("phone").length === 0) {
+        setChangePhoneHasValue(true);
+        dispatch(setLoading(false));
+      } else if (data.get("phone").length < 10) {
+        setChangePhoneIsEntryMade(true);
+        setChangePhoneHasValue(true);
+        dispatch(setLoading(false));
+      } else if (snapshot.empty) {
+        toast("User does not exist", {
+          autoClose: 3000,
+          style: {
+            backgroundColor: "rgba(0,0,0,0.9)",
+            fontWeight: "medium",
+            color: "white",
+          },
         });
+        dispatch(setLoading(false));
+      } else {
+        resetRecaptcha();
+        window.confirmationResult = null;
+
+        window.recaptchaVerifier = new RecaptchaVerifier(auth, "LoginBtn", {
+          size: "invisible",
+        });
+
+        window.recaptchaVerifier
+          .verify()
+          .then(() => {
+            sendOTP();
+          })
+          .catch((err) => {
+            dispatch(setLoading(false));
+            console.log("Recaptcha verification failed", err);
+            toast.info("Recaptcha verification failed, please try again.", {
+              autoClose: 4000,
+              style: {
+                backgroundColor: "red",
+                color: "white",
+                fontWeight: "medium",
+              },
+              progressClassName: "progress-style",
+            });
+          });
+      }
+    } else {
+      if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
+        setChangeEmailIsEntryMade(true);
+        setChangeEmailHasValue(true);
+        dispatch(setLoading(false));
+      }
     }
+
+
   }, [dispatch, firestoreDB, auth, formRef, resetRecaptcha, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
 
   // Firebase SDK functions like: collection(), query(), where(), getDocs(), RecaptchaVerifier
@@ -198,8 +197,8 @@ const Login = () => {
   return (
     <>
       <div id="toggle" onClick={() => setOtpOnPhone(!otpOnPhone)} className="relative mt-4 border-2 border-gray-300 rounded-full w-14 h-7 flex items-center justify-between cursor-pointer  bg-gray-300">
-        <Phone size={18} className="text-green-500 ml-1.5" />
-        <Mail size={18} className="text-red-500 mr-1.5" />
+        <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
+        <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
         <div className={`absolute rounded-full h-full right-0 w-6 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}
           style={{ left: otpOnPhone ? "0" : "1.76rem" }}
         >
@@ -210,10 +209,9 @@ const Login = () => {
       </div>
       <Form
         btnId="LoginBtn"
-        refference={formRef}
+        reference={formRef}
         guestLogin={true}
         handleSubmit={handleSubmit}
-        handleGuestLogin={handleGuestLogin}
         handleOtpVerification={handleOtpVerification}
         signingStatement={"By clicking on Login"}
         isOtpSend={isOtpSend}
@@ -228,18 +226,16 @@ const Login = () => {
           isReadOnly={isOtpSend}
           changeIsEntryMade={changePhoneIsEntryMade}
           changeHasValue={changePhoneHasValue}
-          focus="true"
         />
           : <EntryDiv
             type={"text"}
             inputMode={"text"}
             purpose={"email"}
-            // value={signUpFormData.email}
-            // onChangeHandler={handleSignUpChange}
             placeholder="Email"
             fallbackPlaceholder="Invalid email address"
-            // changeIsEntryMade={changeEmailIsEntryMade}
-            // changeHasValue={changeEmailHasValue}
+            isReadOnly={isOtpSend}
+            changeIsEntryMade={changeEmailIsEntryMade}
+            changeHasValue={changeEmailHasValue}
           />
         }
         {isOtpSend && (

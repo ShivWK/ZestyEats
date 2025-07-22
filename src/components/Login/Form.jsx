@@ -10,10 +10,8 @@ import { motion } from "motion/react";
 const Form = ({
   btnId,
   children,
-  refference,
-  guestLogin = false,
+  reference,
   handleSubmit,
-  handleGuestLogin = null,
   handleOtpVerification,
   signingStatement,
   isOtpSend = false,
@@ -24,7 +22,7 @@ const Form = ({
 
   return (
     <form
-      ref={refference}
+      ref={reference}
       className="mt-7 notFirst-notLast"
       // onSubmit={handleSubmit}
       autoComplete="off"
@@ -63,17 +61,6 @@ const Form = ({
           )}
         </motion.button>
       )}
-      {/* {guestLogin && !isOtpSend && (
-        <motion.button
-          type="button"
-          onClick={handleGuestLogin}
-          className="font-bold text-[#6e6e6e] w-full h-11 mt-2 rounded-lg cursor-pointer hover:text-primary"
-          whileHover={{ scale: 1.07 }}
-          whileTap={{ scale: 1 }}
-        >
-          Login as Guest
-        </motion.button>
-      )} */}
       {!isOtpSend && (
         <p className="text-center text-xs mt-2 font-bold text-gray-600">
           {signingStatement} , I accept the{" "}

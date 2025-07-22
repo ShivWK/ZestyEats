@@ -148,7 +148,7 @@ const EntryDiv = memo(({
           hasValue ? "text-red-500" : "text-gray-400"
         } transition-all duration-[250ms] ease-in-out ${
           isEntryMade ? "top-2.5 text-xs" : "top-[19px] text-lg"
-        }`}
+        } tracking-wide`}
       >
         {hasValue ? fallbackPlaceholder : placeholder}
       </p>

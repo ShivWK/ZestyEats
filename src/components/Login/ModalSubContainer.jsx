@@ -59,7 +59,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
                 or{" "}
                 {/* because JSX removes the white space between p and button so we have manually added it. */}
                 <button
-                  className="text-primary cursor-pointer"
+                  className="text-primary cursor-pointer tracking-wide"
                   onClick={handleSwitch}
                 >
                   create an account
@@ -70,7 +70,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
             <p className="font-semibold">
               or{" "}
               <button
-                className="text-primary cursor-pointer"
+                className="text-primary cursor-pointer tracking-wide"
                 onClick={handleSwitch}
               >
                 login to your account
