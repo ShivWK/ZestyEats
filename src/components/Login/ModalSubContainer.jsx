@@ -82,15 +82,15 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
               </button>
             </p>
           )}
-          {/* {member ? (
+          {member ? (
             isLoginOtpSend ? (
               ""
             ) : (
-              <hr className="w-8 border-t-2 font-bold mt-6" />
+              <hr className="w-8 border-t-2 font-bold mt-6 mb-5 md:hidden" />
             )
           ) : (
-            <hr className="w-8 border-t-2 font-bold mt-6" />
-          )} */}
+            <hr className="w-8 border-t-2 font-bold mt-6 mb-5 md:hidden" />
+          )}
         </div>
         <img
           src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/Image-login_btpq7r"
