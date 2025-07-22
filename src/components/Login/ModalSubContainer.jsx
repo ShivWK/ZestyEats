@@ -97,7 +97,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
           height="90px"
           width="90px"
           alt="Profile_dummy_image"
-          className="h-20 w-20 md:h-[90px] md:w-[90px] select-none"
+          className="h-20 w-20 md:h-[90px] md:w-[90px] select-none max-md:-mt-10"
         />
       </div>
       {children}
