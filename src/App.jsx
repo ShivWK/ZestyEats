@@ -17,15 +17,13 @@ import { toast } from "react-toastify";
 
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
+
 // const RestaurantSearch = lazy(() =>
 //   import("./components/RestaurantSpecific/RestraurantSearch")
 // );
-const RestaurantSpecific = lazy(() =>
-  import("./components/RestaurantSpecific/RestaurantSpecific")
-);
-const FoodSpecific = lazy(() =>
-  import("./components/FoodSpecific/FoodSpecific")
-);
+
+const RestaurantSpecific = lazy(() => import("./components/RestaurantSpecific/RestaurantSpecific"));
+const FoodSpecific = lazy(() => import("./components/FoodSpecific/FoodSpecific"));
 
 import SearchResult from "./components/Search/SearchResult";
 import SearchSuggestions from "./components/Search/SearchSuggestion";
@@ -56,6 +54,8 @@ import {
   setHideLocation,
   setHideLogin
 } from "./features/Login/loginSlice";
+
+import { selectPathHistory, setUserFriendlyPathHistory } from "./features/home/homeSlice";
 
 import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -195,29 +195,42 @@ export default function App() {
         color: "white",
       },
     });
+  }, []);
 
-    const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+  const pathHistory = useSelector(selectPathHistory);
 
-    const createGuestSession = async () => {
-      try {
-        const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/session", {
-          method: "POST",
-          body: JSON.stringify({ deviceId }),
-          headers: {
-            "Content-Type" : "application/json"
-          },
-          credentials: "include"
-        });
+  useEffect(() => {
+    const history = pathHistory.map((item) => {
+      if (item === "/") return "Home";
+      else if (item === "/offers-dinouts") return "Offers";
+      else if (item === "/about") return "About";
+      else if (item === "/search") return "Search";
+      else if (item === "/help") return "Help";
+      else if (item === "/cart") return "Cart";
+      else if (item === "/dishSearch") return "DishSearch";
+      else if (item.includes("specificFood")) {
+        return decodeURIComponent(item).split("/")[2];
+      } else if (item?.includes("restaurantSpecific")) {
+        return decodeURIComponent(item).split("/")[5];
+      } else if (item === "/search/suggestions") return "Suggestions";
+      else if (item === "/search/searchResult/dishPage") return "Dishes";
+      else if (item === "/search/searchResult/restaurantPage") return "Restaurants";
+      else if (item.includes("/cityPage")) {
+        const city = decodeURIComponent(item).split("/").at(-1);
+        return `${city} City`;
+      } else if (item.includes("/cityLocality")) {
+        const locality = decodeURIComponent(item).split("/").at(-1);
+        return `${locality} Locality`
+      } else if (item.includes("/cityDishes")) {
+        const dish = decodeURIComponent(item).split("/").at(-1);
+        return dish;
+      } else if (item.includes("/legalAndPolicies")) return "Legal & Policies";
 
-        const data = await res.json();
-        console.log(data.data.sessionId)
-      } catch (err) {
-        console.error("Session error", err)
-      }
-    }
+      return item;
+    });
 
-    createGuestSession();
-  }, [])
+    dispatch(setUserFriendlyPathHistory(history));
+  }, [pathHistory]);
 
   return (
     <>

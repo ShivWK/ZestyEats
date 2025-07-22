@@ -7,11 +7,12 @@ const {
   addGuestSessionFavRestaurants,
   addGuestSessionWishListedItems,
   addGuestSessionItemsToBeAddedInCart,
-  addGuestSessionCartItems
+  addGuestSessionCartItems,
+  getGuestSessionData
 } = require("./../controllers/userControllers");
 
 userRouter.route("/signup").post(signup);
-userRouter.route("/session").post(guestSession);
+userRouter.route("/session").post(guestSession).get(getGuestSessionData);
 userRouter.route("/recentLocations").patch(addGuestSessionRecentLocation);
 userRouter.route("/favRestaurants").patch(addGuestSessionFavRestaurants);
 userRouter.route("/wishListedItems").patch(addGuestSessionWishListedItems);

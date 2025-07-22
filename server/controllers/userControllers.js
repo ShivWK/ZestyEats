@@ -68,6 +68,26 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
     }
 }
 
+exports.getGuestSessionData = async (req, res, next) => {
+    const sid = req.signedCookies?.sid;
+
+    try {
+        const recentLocations = await SessionModel.findOne({id : sid});
+
+        res.status(200).json({
+            status: "success",
+            data: recentLocations,
+        })
+    } catch (err) {
+        console.error("Error in location addition", err);
+
+        res.status(500).json({
+            status: "failed",
+            message: err.message,
+        })
+    }
+}
+
 exports.addGuestSessionFavRestaurants = async (req, res, next) => {
     const sid = req.signedCookies?.sid;
 
