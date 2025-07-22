@@ -40,7 +40,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
   return (
     <div className="w-[90%] md:w-[80%] h-auto mt-7">
       <button
-        className="group cursor-pointer mb-4 lg:mb-1"
+        className="group cursor-pointer mb-5 lg:mb-1"
         onClick={isLoginOtpSend || isSigUpOtpSend ? handleBack : handleClose}
       >
         {isLoginOtpSend || isSigUpOtpSend ? (
@@ -101,15 +101,16 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
         />
       </div>
       {children}
+      <p className="text-xs font-semibold tracking-wide text-gray-500 text-center my-1">------- or -------</p>
       {!(isLoginOtpSend || isSigUpOtpSend) && (
-        <button className="absolute mt-10 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out">
+        <button className="absolute mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out">
           <p className="whitespace-nowrap flex gap-2 items-center">
             Continue with{" "}
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              height="20"
+              height="24"
               viewBox="0 0 24 24"
-              width="20"
+              width="24"
             >
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
