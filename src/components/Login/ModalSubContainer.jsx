@@ -86,10 +86,10 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
             isLoginOtpSend ? (
               ""
             ) : (
-              <hr className="w-8 border-t-2 font-bold mt-6 mb-5 md:hidden" />
+              <hr className="w-8 border-t-2 font-bold mt-6 mb-7 md:hidden" />
             )
           ) : (
-            <hr className="w-8 border-t-2 font-bold mt-6 mb-5 md:hidden" />
+            <hr className="w-8 border-t-2 font-bold mt-6 mb-7 md:hidden" />
           )}
         </div>
         <img
