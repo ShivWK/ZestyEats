@@ -153,8 +153,9 @@ export default function Layout() {
 
     const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
 
-    const createGuestSession = async () => {
+    const handleGuestSession = async () => {
       try {
+        // 1: create the guest session
         const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/session", {
           method: "POST",
           body: JSON.stringify({ deviceId }),
@@ -165,13 +166,23 @@ export default function Layout() {
         });
 
         const data = await res.json();
-        console.log(data.data.sessionId)
+        console.log(data.data.sessionId);
+
+        // 2: get the guest session data
+        const result = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/session", {
+          method: "GET",
+          credentials: "include"
+        });
+
+        const sessionData = await result.json();
+        console.log("Session data", sessionData)
+
       } catch (err) {
         console.error("Session error", err)
       }
     }
 
-    createGuestSession();
+    handleGuestSession();
   }, []);
 
   useEffect(() => {

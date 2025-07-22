@@ -1,5 +1,6 @@
 const SessionModel = require("./../models/sessionModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
+const userRouter = require("../routes/userRouter");
 
 exports.signup = async (req, res) => {
     const body = req.body;
@@ -70,9 +71,11 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
 
 exports.getGuestSessionData = async (req, res, next) => {
     const sid = req.signedCookies?.sid;
+    console.log("get session", sid)
 
     try {
-        const recentLocations = await SessionModel.findOne({id : sid});
+        const recentLocations = await SessionModel.findById(sid);
+        console.log("Data", recentLocations)
 
         res.status(200).json({
             status: "success",
