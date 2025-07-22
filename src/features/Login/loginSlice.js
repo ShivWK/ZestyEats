@@ -53,20 +53,12 @@ const loginSlice = createSlice({
             state.isLocationHovered = true;
         },
 
-        loginOtpSend: (state) => {
-            state.isLoginOtpSend = true;
+        loginOtpSend: (state, action) => {
+            state.isLoginOtpSend = action.payload;
         },
 
-        loginOtpNotSend: (state) => {
-            state.isLoginOtpSend = false;
-        },
-
-        signUpOtpSend: (state) => {
-            state.isSignUpOtpSend = true;
-        },
-
-        signUpOtpNotSend: (state) => {
-            state.isSignUpOtpSend = false;
+        signUpOtpSend: (state, action) => {
+            state.isSignUpOtpSend = action.payload;
         },
 
         setIsLoggedIn: (state, action) => {
@@ -123,9 +115,7 @@ export const {
     setLogInModal,
     closeLogInModal,
     loginOtpSend,
-    loginOtpNotSend,
     signUpOtpSend,
-    signUpOtpNotSend,
     setLocationModal,
     closeLocationInModal,
     setIsLoggedIn,

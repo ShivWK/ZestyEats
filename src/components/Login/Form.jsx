@@ -24,7 +24,6 @@ const Form = ({
 
   const handlePageSwitch = () => {
     dispatch(setHideLogin(true));
-    // window.history.back();
   }
 
   return (

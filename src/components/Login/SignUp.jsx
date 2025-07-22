@@ -17,7 +17,6 @@ import {
   closeLogInModal,
   selectSignUpOtp,
   signUpOtpSend,
-  signUpOtpNotSend,
   setLoading,
   selectIsLoading,
 } from "../../features/Login/loginSlice";
@@ -140,7 +139,7 @@ const SignUp = memo(() => {
       .then((confirmationResult) => {
         window.confirmationResult = confirmationResult;
         dispatch(setLoading(false));
-        dispatch(signUpOtpSend());
+        dispatch(signUpOtpSend(true));
       })
       .catch((err) => {
         console.log("Error in Sending OTP", err);
@@ -165,7 +164,7 @@ const SignUp = memo(() => {
         .then((result) => {
           setDataToFirestore(result.user.uid, data);
           dispatch(setLoading(false));
-          dispatch(signUpOtpNotSend());
+          dispatch(signUpOtpSend(false));
           dispatch(closeLogInModal());
         })
         .catch((err) => {

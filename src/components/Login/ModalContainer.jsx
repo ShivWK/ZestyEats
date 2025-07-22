@@ -4,7 +4,9 @@ import {
   selectLogInModal,
   selectLoginOtp,
   selectIsMember,
-  setMember
+  setMember,
+  loginOtpSend,
+  signUpOtpSend
 } from "../../features/Login/loginSlice";
 import Login from "./Login";
 import SignUp from "./SignUp";
@@ -19,6 +21,8 @@ const ModalContainer = () => {
 
   const handleSwitch = useCallback(() => {
     dispatch(setMember(!member));
+    dispatch(loginOtpSend(false));
+    dispatch(signUpOtpSend(false))
   }, [dispatch, member, setMember]);
 
   return (
