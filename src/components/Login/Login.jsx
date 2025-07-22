@@ -198,8 +198,8 @@ const Login = () => {
   return (
     <>
       <div id="toggle" onClick={() => setOtpOnPhone(!otpOnPhone)} className="relative mt-4 border-2 border-gray-300 rounded-full w-14 h-7 flex items-center justify-between cursor-pointer  bg-gray-300">
-        <Phone size={16} className="text-green-500 ml-1.5" />
-        <Mail size={16} className="text-red-500 mr-1.5" />
+        <Phone size={18} className="text-green-500 ml-1.5" />
+        <Mail size={18} className="text-red-500 mr-1.5" />
         <div className={`absolute rounded-full h-full right-0 w-6 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}
           style={{ left: otpOnPhone ? "0" : "1.76rem" }}
         >
