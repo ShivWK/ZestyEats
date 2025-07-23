@@ -28,8 +28,9 @@ const sessionSchema = new mongoose.Schema({
     }
 });
 
+sessionSchema.index({createdAt: 1}, { expireAfterSeconds: 60 * 60 * 24 })
+
 const SessionModel = mongoose.model("GuestSession" ,sessionSchema);
 
-sessionSchema.index({createdAt: 1}, { expireAfterSeconds: 60 * 60 * 24 })
 
 module.exports = SessionModel;
