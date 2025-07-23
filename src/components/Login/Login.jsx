@@ -1,9 +1,9 @@
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useCallback } from "react";
 import { toast } from "react-toastify";
-import { auth, firestoreDB } from "../../firebaseConfig";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   closeLogInModal,
   loginOtpSend,
@@ -14,6 +14,7 @@ import {
   toggleOtpOnPhone,
   selectOtpOnPhone,
 } from "../../features/Login/loginSlice";
+
 import { Phone, Mail } from "lucide-react";
 
 const Login = () => {
@@ -23,7 +24,6 @@ const Login = () => {
   const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
-  // const [otpOnPhone, setOtpOnPhone] = useState(true)
   const otpOnPhone = useSelector(selectOtpOnPhone);
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
