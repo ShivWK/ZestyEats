@@ -8,7 +8,7 @@ const sessionSchema = new mongoose.Schema({
 
     createdAt: {
         type: Date,
-        default: () => new Date(),
+        default: Date.now,
         expires: 60 * 60 * 25
     },
 
@@ -22,11 +22,6 @@ const sessionSchema = new mongoose.Schema({
             recentLocations: [],
         }
     },
-
-    expiredWhen: {
-        type: Number,
-        default: () => Math.round(Date.now() / 1000) + 60 * 60 * 24,
-    }
 });
 
 const SessionModel = mongoose.model("GuestSession" ,sessionSchema);
