@@ -47,13 +47,12 @@ const Logo = memo(({ searchPlaceholder }) => {
             {yourCurrentCity ? yourCurrentCity : "Location"}
           </span>
 
-          <div className="flex gap-1 md:gap-2 items-center justify-center max-md:-mt-1">
+          <div className="flex gap-1 md:gap-0.5 items-center justify-center max-md:-mt-1">
             <span className="max-w-44 md:max-w-48 truncate text-start font-medium text-gray-600 max-md:text-sm">
               {yourCurrentCity
                 ? `${searchedCityAddress}`
                 : `${searchedCity}${searchedCityAddress}`}
             </span>
-            {/* <i className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2 md:-ml-4 "></i> */}
             <ChevronDown size={18} strokeWidth={4} className="text-[#ff5200]"/>
           </div>
         </button>

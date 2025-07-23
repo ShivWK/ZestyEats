@@ -103,7 +103,7 @@ const Login = () => {
     }
 
 
-  }, [dispatch, firestoreDB, auth, formRef, resetRecaptcha, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
+  }, [dispatch, formRef, resetRecaptcha, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
 
   function sendOTP() {
     const data = new FormData(formRef.current);
