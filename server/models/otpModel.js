@@ -10,6 +10,7 @@ const otpSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: () => new Date(),
+        expires: 60 * 5
     },
 
     expiredWhen: {
@@ -31,8 +32,6 @@ const otpSchema = new mongoose.Schema({
 
     resendBlockedUntil: Number
 })
-
-otpSchema.index({ createdAt: 10 }, { expireAfterSeconds: 60 * 5 })
 
 const OtpModel = mongoose.model("OTP", otpSchema);
 
