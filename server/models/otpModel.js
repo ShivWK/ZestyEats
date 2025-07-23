@@ -10,7 +10,6 @@ const otpSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: () => new Date(),
-        expires: 300
     },
 
     expiresAt: {
@@ -29,10 +28,12 @@ const otpSchema = new mongoose.Schema({
     },
 
     blockedUntil: Number,
-    
+
     resendBlockedUntil: Number
 })
 
 const OtpModel = mongoose.model("OTP", otpSchema);
+
+otpSchema.index({ createdAt: 10 }, { expireAfterSeconds: 60 * 5 })
 
 exports.default = OtpModel;

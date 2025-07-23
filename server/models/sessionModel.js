@@ -9,7 +9,6 @@ const sessionSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: () => new Date(),
-        expires: 60 * 60 * 24
     },
 
     data: {
@@ -30,5 +29,7 @@ const sessionSchema = new mongoose.Schema({
 });
 
 const SessionModel = mongoose.model("GuestSession" ,sessionSchema);
+
+sessionSchema.index({createdAt: 1}, { expireAfterSeconds: 60 * 60 * 24 })
 
 module.exports = SessionModel;
