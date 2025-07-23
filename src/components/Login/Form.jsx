@@ -94,7 +94,9 @@ const Form = ({
         sitekey={siteKey}
         size="invisible"
         ref={recaptchaReference}
-        onErrorCapture={(err) => console.error(err)}
+        badge="bottomright"
+        onError={(err) => console.error("error occurred", err)}
+        onExpired={() => recaptchaReference.current.reset()}
       />
     </form>
   );

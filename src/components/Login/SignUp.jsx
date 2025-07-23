@@ -76,6 +76,7 @@ const SignUp = memo(() => {
       dispatch(setLoading(false));
     } else {
       try {
+        recaptchaRef.current.reset();
         const token = await recaptchaRef.current.executeAsync();
         recaptchaRef.current.reset();
 

@@ -167,7 +167,7 @@ const EntryDiv = memo(({
           handleChange(event);
           onChangeHandler(event)
         }}
-        className="relative top-5 font-bold text-lg outline-none max-w-full"
+        className="relative px-1 top-5 font-bold text-lg outline-none max-w-full"
       />
     </div>
   );
