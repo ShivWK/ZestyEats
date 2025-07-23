@@ -15,7 +15,7 @@ const otpSchema = new mongoose.Schema({
 
     expiredWhen: {
         type: Number,
-        default: Math.round(Date.now() / 1000) + 60 * 5
+        default: () => Math.round(Date.now() / 1000) + 60 * 5
     },
 
     attempts: {
