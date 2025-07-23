@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+
 import {
   setHideLogin,
   selectLoginOtp,
@@ -8,13 +9,16 @@ import {
   setLoginOpened,
   signUpOtpSend,
   loginOtpSend,
+  selectOtpOnPhone
 } from "../../features/Login/loginSlice";
+
 import { memo } from "react";
 
 const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
   const dispatch = useDispatch();
   const isLoginOtpSend = useSelector(selectLoginOtp);
   const isSigUpOtpSend = useSelector(selectSignUpOtp);
+  const otpOnPhone = useSelector(selectOtpOnPhone);
 
   const handleClose = () => {
     if (isLoginOtpSend) dispatch(loginOtpSend(false));
@@ -57,7 +61,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
           {member ? (
             isLoginOtpSend ? (
               <p className="font-semibold">
-                We've sent an OTP to your phone number
+               {`We've sent an OTP to your ${otpOnPhone ? "phone number" : "email"}`}
               </p>
             ) : (
               <p className="font-semibold">

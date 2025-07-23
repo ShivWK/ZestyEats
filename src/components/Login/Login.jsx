@@ -11,6 +11,8 @@ import {
   selectIsLoading,
   setIsLoggedIn,
   setLoading,
+  toggleOtpOnPhone,
+  selectOtpOnPhone,
 } from "../../features/Login/loginSlice";
 import { Phone, Mail } from "lucide-react";
 
@@ -21,12 +23,13 @@ const Login = () => {
   const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
-  const [otpOnPhone, setOtpOnPhone] = useState(true)
+  // const [otpOnPhone, setOtpOnPhone] = useState(true)
+  const otpOnPhone = useSelector(selectOtpOnPhone);
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
-  const recatpchaRef = useRef(null);
+  const recaptchaRef = useRef(null);
 
   function resetRecaptcha() {
     if (window.recaptchaVerifier) {
@@ -136,7 +139,7 @@ const Login = () => {
 
   const toggleHandler = () => {
     if (isOtpSend) return;
-    setOtpOnPhone(!otpOnPhone);
+    dispatch(toggleOtpOnPhone());
   }
 
   return (
@@ -182,7 +185,7 @@ const Login = () => {
         signingStatement={"By clicking on Login"}
         isOtpSend={isOtpSend}
         isLoading={isLoading}
-        recaptchaReference={recatpchaRef}
+        recaptchaReference={recaptchaRef}
       >
         {otpOnPhone ? <EntryDiv
           type="tel"

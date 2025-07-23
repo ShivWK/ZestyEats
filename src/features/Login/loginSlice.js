@@ -13,6 +13,7 @@ const initialState = {
     isMember: true,
     modalTrace: [],
     loginOpened: false,
+    otpOnPhone: true,
 }
 
 const loginSlice = createSlice({
@@ -78,6 +79,10 @@ const loginSlice = createSlice({
             } else {
                 state.modalTrace.push(action.payload);
             }
+        },
+
+        toggleOtpOnPhone: (state) => {
+            state.otpOnPhone = !state.otpOnPhone;
         }
     }
 });
@@ -93,6 +98,7 @@ export const selectIsLoading = (state) => state.login.isLoading;
 export const selectIsMember = (state) => state.login.isMember;
 export const selectLoginOpened = (state) => state.login.loginOpened;
 export const selectModalTrace = (state) => state.login.modalTrace;
+export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
 
 export const selectHoverState = createSelector([state => state.login.isLoginHovered, state => state.login.isLocationHovered], ( location ) => ({ locationHovered: location }));
 
@@ -118,6 +124,7 @@ export const {
     setHideLogin,
     setLoginOpened,
     setModalTrace,
+    toggleOtpOnPhone
 } = loginSlice.actions;
 
 

@@ -9,6 +9,8 @@ import {
   signUpOtpSend,
   setLoading,
   selectIsLoading,
+  selectOtpOnPhone,
+  toggleOtpOnPhone,
 } from "../../features/Login/loginSlice";
 
 import { Phone, Mail } from "lucide-react"
@@ -31,10 +33,11 @@ const SignUp = memo(() => {
     opt: "",
   });
 
-  const [otpOnPhone, setOtpOnPhone] = useState(true);
+  // const [otpOnPhone, setOtpOnPhone] = useState(true);
   const dispatch = useDispatch();
   const isSignUpOtpSend = useSelector(selectSignUpOtp);
   const isLoading = useSelector(selectIsLoading);
+  const otpOnPhone = useSelector(selectOtpOnPhone);
   const formRef = useRef(null);
   const recaptchaRef = useRef(null);
 
@@ -50,8 +53,6 @@ const SignUp = memo(() => {
     e.stopPropagation();
     dispatch(setLoading(true));
     const data = new FormData(formRef.current);
-
-    const checkIfExists = (phone) => false;
 
     if (data.get("phone").length === 0) {
       setChangePhoneHasValue(true);
@@ -69,9 +70,6 @@ const SignUp = memo(() => {
     } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
       setChangeEmailIsEntryMade(true);
       setChangeEmailHasValue(true);
-      dispatch(setLoading(false));
-    } else if (checkIfExists()) {
-      alert("User already exists");
       dispatch(setLoading(false));
     } else {
       try {
@@ -98,6 +96,11 @@ const SignUp = memo(() => {
   async function sendOtp(data, token, otpOnPhoneLog) {
     const mode = otpOnPhoneLog ? "phone" : "email"
     const sendOtpOn = otpOnPhoneLog ? data.get("phone") : data.get("email");
+    const userData = {
+      name: data.get("name"),
+      phone_number: data.get("phone"),
+      email: data.get("email"),
+    }
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/signup/sendOtp/${mode}`, {
@@ -107,6 +110,7 @@ const SignUp = memo(() => {
         },
         body: JSON.stringify({
           sendOtpOn,
+          userData,
           token
         })
       })
@@ -137,7 +141,7 @@ const SignUp = memo(() => {
 
   const toggleHandler = () => {
     if (isSignUpOtpSend) return;
-    setOtpOnPhone(!otpOnPhone);
+    dispatch(toggleOtpOnPhone())
   }
 
   return (
