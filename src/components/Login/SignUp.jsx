@@ -2,7 +2,6 @@ import { useState, useRef, memo, useCallback } from "react";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
-import { auth, firestoreDB } from "../../firebaseConfig";
 
 import {
   closeLogInModal,

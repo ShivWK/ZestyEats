@@ -1,4 +1,4 @@
-import { memo, lazy, Suspense, useEffect } from "react";
+import { memo, lazy, Suspense } from "react";
 import { useSelector } from "react-redux";
 import useScrollToTop from "../../utils/useScrollToTop";
 
@@ -75,7 +75,7 @@ const Home = memo(() => {
 
         {/* Home banner */}
 
-        <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-40 lg:h-72 mx-auto">
+        <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-32 lg:h-72 mx-auto">
           <img src="/images/new_banner.jpg" className="h-[100%] w-full lg:object-cover" alt="Home banner image" />
         </div>
 

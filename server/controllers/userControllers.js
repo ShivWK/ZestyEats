@@ -1,22 +1,33 @@
 const SessionModel = require("./../models/sessionModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
-const userRouter = require("../routes/userRouter");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 
 exports.signup = async (req, res) => {
-    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     const body = req.body;
     const token = body.token;
-    const params = req.params;
+    const mode = req.params.mode;
 
     const result = await recaptchaVerification(token)
 
-    console.log("hit sign", body, params, "result", result)
+    if (!result.success) {
+        return res.status(400).json({
+            status: "failed",
+            data: result["error-code"],
+        })
+    } else {
+        // generate 6 digit OTP
+
+        if (mode === "phone") {
+            // send otp through Fast2SMS
+        } else {
+            //send OTP through resent email service
+        }
+    }
 
     res.status(200).json({
         status: "success",
         data: body,
-        params,
+        params: req.params,
         result
     })
 }

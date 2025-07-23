@@ -2,7 +2,8 @@ import { Suspense, lazy } from "react";
 import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
-const LoginModal = lazy(() => import("./Login/LoginModal"));
+import LoginModal from "./Login/LoginModal";
+
 const LocationModal = lazy(() => import("./Location/LocationModal"));
 import { toast } from "react-toastify";
 
@@ -17,8 +18,6 @@ import {
 import {
   setOnline,
   setLoading,
-  selectPathHistory,
-  setUserFriendlyPathHistory,
   addYourCurrentCity,
   addSearchedCity,
   addSearchedCityAddress,
@@ -27,7 +26,17 @@ import {
   addRecentLocations
 } from "../features/home/homeSlice";
 
-import { selectMenuModel, setRestaurantItems, addToWishlistItem, toggleItemsToBeAddedInCart, setFavoriteRestro, setItemToCart, setHideMenu, toggleMenuModel } from "../features/home/restaurantsSlice";
+import { 
+  selectMenuModel, 
+  setRestaurantItems, 
+  addToWishlistItem, 
+  toggleItemsToBeAddedInCart, 
+  setFavoriteRestro, 
+  setItemToCart, 
+  setHideMenu, 
+  toggleMenuModel 
+} from "../features/home/restaurantsSlice";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -38,7 +47,6 @@ import { updateCurrentCity } from "../utils/addCurrentCity";
 import updateCityHomeData from "../utils/updateCityHomeData";
 import { setLocalityLatAndLng } from "../features/cityHome/cityHomeSlice";
 import useOnlineStatus from "../utils/useOnlineStatus";
-
 
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
   try {
@@ -62,7 +70,7 @@ export default function Layout() {
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const dpModel = useSelector(selectDpModel);
-  const { loginHovered, locationHovered } = useSelector(selectHoverState);
+  const { locationHovered } = useSelector(selectHoverState);
   const isLocationModelOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
@@ -76,10 +84,10 @@ export default function Layout() {
     const lng = JSON.parse(localStorage.getItem("lng"));
     const rawUserPathHistory = localStorage.getItem("userFriendlyPathHistory");
     const restaurantAllItems = JSON.parse(localStorage.getItem("RestaurantAllItems"));
-    const wishlist = JSON.parse(localStorage.getItem("wishlist"));
-    const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
+    // const wishlist = JSON.parse(localStorage.getItem("wishlist"));
+    // const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
     const localityLatLng = JSON.parse(localStorage.getItem("localityLatLng"));
-    const cartItems = JSON.parse(localStorage.getItem("CartItems"));
+    // const cartItems = JSON.parse(localStorage.getItem("CartItems"));
 
     let userPathHistory = '';
 
@@ -96,7 +104,7 @@ export default function Layout() {
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
       const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
       const currentCity = JSON.parse(localStorage.getItem("currentCity"));
-      const favRestros = JSON.parse(localStorage.getItem("favRestros"));
+      // const favRestros = JSON.parse(localStorage.getItem("favRestros"));
 
       // when asked data is not present in the local storage the it will null instead of undefined
 
@@ -204,7 +212,7 @@ export default function Layout() {
         // console.log("itemsToBeAddedToCart", itemsToBeAddedInCart);
         // console.log("favRestaurants", favRestaurants);
         // console.log("recentLocation", recentLocations);
-        // console.log("wishlist", wishlist)
+        // console.log("wishlist", wishlist);
 
       } catch (err) {
         console.error("Session error", err)
@@ -217,10 +225,8 @@ export default function Layout() {
   useEffect(() => {
     if (locationHovered) {
       import("./Location/LocationModal");
-    } else if (loginHovered) {
-      import("./Login/LoginModal");
-    }
-  }, [loginHovered, locationHovered]);
+    } 
+  }, [ locationHovered ]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -264,9 +270,7 @@ export default function Layout() {
       <PageHeader />
       <Outlet />
       {isLoginOpen && (
-        <Suspense >
           <LoginModal />
-        </Suspense>
       )}
       {isLocationOpen && (
         <Suspense >

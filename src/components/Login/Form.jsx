@@ -33,7 +33,6 @@ const Form = ({
     <form
       ref={reference}
       className="mt-5 notFirst-notLast"
-      // onSubmit={handleSubmit}
       autoComplete="off"
     >
       {children}

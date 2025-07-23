@@ -3,7 +3,6 @@ import {
   setHideLocation,
   setHideLogin,
   setLogInModal,
-  setLoginHovered,
 } from "../../features/Login/loginSlice";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,10 +21,6 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
     dispatch(setHideLocation(false));
     dispatch(setLogInModal(true));
   }, [setLogInModal]);
-
-  const hoverHandler = () => {
-    dispatch(setLoginHovered());
-  };
 
   return (
     <nav className="max-md:pr-1.5">
@@ -114,7 +109,6 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
           <NavItem to={"/profile"} icon={"fa-user text-lg"} text={`User`} />
         ) : (
           <button
-            onMouseEnter={hoverHandler}
             onClick={handleSignIn}
             className="group flex items-center justify-between gap-3 hover:cursor-pointer :hover:font-[#ff5200]"
           >

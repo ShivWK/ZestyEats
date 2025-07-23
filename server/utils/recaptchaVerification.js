@@ -1,12 +1,11 @@
-// const fetch = require("node-fetch");
-// const querystring = require("querystring");
-
 const recaptchaVerification = async (token) => {
     const secret = process.env.RECAPTCHA_SECRET_KEY;
 
     const params = new URLSearchParams();
     params.append("secret", secret);
     params.append('response', token)
+
+    // google recaptcha verifier wants the token and secret in url encoded formate not in JSON that's we have created query string
 
     try {
         const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {

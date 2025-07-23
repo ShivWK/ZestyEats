@@ -4,7 +4,6 @@ const initialState = {
     isLoginModalOpen: false,
     isHideLogin: false,
     isHideLocation: false,
-    isLoginHovered: false,
     isLocationModalOpen: false,
     isLocationHovered: false,
     isLoginOtpSend: false,
@@ -43,10 +42,6 @@ const loginSlice = createSlice({
 
         setHideLocation: (state, action) => {
             state.isHideLocation = action.payload;
-        },
-
-        setLoginHovered: (state) => {
-            state.isLoginHovered = true;
         },
 
         setLocationHovered: state => {
@@ -99,10 +94,7 @@ export const selectIsMember = (state) => state.login.isMember;
 export const selectLoginOpened = (state) => state.login.loginOpened;
 export const selectModalTrace = (state) => state.login.modalTrace;
 
-export const selectHoverState = createSelector([state => state.login.isLoginHovered, state => state.login.isLocationHovered], (login, location) => ({
-    loginHovered: login,
-    locationHovered: location,
-}));
+export const selectHoverState = createSelector([state => state.login.isLoginHovered, state => state.login.isLocationHovered], ( location ) => ({ locationHovered: location }));
 
 export const selectHideModel = createSelector([state => state.login.isHideLogin, state => state.login.isHideLocation], (loginHide, locationHide) => {
     return {
@@ -122,7 +114,6 @@ export const {
     setLoading,
     setMember,
     setLocationHovered,
-    setLoginHovered,
     setHideLocation,
     setHideLogin,
     setLoginOpened,
