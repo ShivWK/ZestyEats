@@ -3,7 +3,15 @@ const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const userRouter = require("../routes/userRouter");
 
 exports.signup = async (req, res) => {
+    const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     const body = req.body;
+    const params = req.params;
+
+    res.status(200).json({
+        status: "success",
+        data: body,
+        params
+    })
 }
 
 exports.guestSession = async (req, res, next) => {

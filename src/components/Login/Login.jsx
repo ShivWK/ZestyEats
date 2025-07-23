@@ -1,8 +1,6 @@
-import { useState, useRef, useEffect, useCallback, use } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { toast } from "react-toastify";
 import { auth, firestoreDB } from "../../firebaseConfig";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
-import { collection, getDocs, query, where } from "firebase/firestore";
 import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
@@ -28,6 +26,7 @@ const Login = () => {
   const isOtpSend = useSelector(selectLoginOtp);
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
+  const recatpchaRef = useRef(null);
 
   function resetRecaptcha() {
     if (window.recaptchaVerifier) {
@@ -62,9 +61,7 @@ const Login = () => {
     dispatch(setLoading(true));
 
     const data = new FormData(formRef.current);
-    const collectionRef = collection(firestoreDB, "users");
-    const q = query(collectionRef, where("phone", "==", data.get("phone")));
-    const snapshot = await getDocs(q);
+    const exists = true
 
     if (otpOnPhone) {
       if (data.get("phone").length === 0) {
@@ -74,7 +71,7 @@ const Login = () => {
         setChangePhoneIsEntryMade(true);
         setChangePhoneHasValue(true);
         dispatch(setLoading(false));
-      } else if (snapshot.empty) {
+      } else if (exists) {
         toast("User does not exist", {
           autoClose: 3000,
           style: {
@@ -85,70 +82,30 @@ const Login = () => {
         });
         dispatch(setLoading(false));
       } else {
-        resetRecaptcha();
-        window.confirmationResult = null;
-
-        window.recaptchaVerifier = new RecaptchaVerifier(auth, "LoginBtn", {
-          size: "invisible",
-        });
-
-        window.recaptchaVerifier
-          .verify()
-          .then(() => {
-            sendOTP();
-          })
-          .catch((err) => {
-            dispatch(setLoading(false));
-            console.log("Recaptcha verification failed", err);
-            toast.info("Recaptcha verification failed, please try again.", {
-              autoClose: 4000,
-              style: {
-                backgroundColor: "red",
-                color: "white",
-                fontWeight: "medium",
-              },
-              progressClassName: "progress-style",
-            });
-          });
       }
     } else {
-      if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
+      if (data.get("email").length === 0) {
+        setChangeEmailHasValue(true);
+        dispatch(setLoading(false));
+      } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
         setChangeEmailIsEntryMade(true);
         setChangeEmailHasValue(true);
         dispatch(setLoading(false));
+      } else {
+        // create recaptcha token
+
+        // call otp send end point
+        sendOTP();
       }
     }
 
 
   }, [dispatch, firestoreDB, auth, formRef, resetRecaptcha, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
 
-  // Firebase SDK functions like: collection(), query(), where(), getDocs(), RecaptchaVerifier
-  // are pure functions from Firebase. They do not change between renders and don’t need to be tracked in the dependency array.
-
   function sendOTP() {
     const data = new FormData(formRef.current);
-    const appVerifier = window.recaptchaVerifier;
-    const number = "+91" + data.get("phone");
-
-    signInWithPhoneNumber(auth, number, appVerifier)
-      .then((confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        dispatch(setLoading(false));
-        dispatch(loginOtpSend(true));
-      })
-      .catch((err) => {
-        console.log("Error in Sending OTP", err);
-        toast.info("Error in Sending OTP", {
-          autoClose: 4000,
-          style: {
-            backgroundColor: "red",
-            color: "white",
-            fontWeight: "medium",
-          },
-          progressClassName: "progress-style",
-        });
-        resetRecaptcha();
-      });
+    
+    //otp send logic
   }
 
   function handleOtpVerification() {
@@ -160,36 +117,20 @@ const Login = () => {
       setChangeOtpIsEntryMade(true);
       setChangeOtpHasValue(true);
     } else {
+      // call otp verification
+
       dispatch(setLoading(true));
       const otp = data.get("otp");
 
-      window.confirmationResult
-        .confirm(otp)
-        .then((result) => {
-          console.log("OTP Verified");
-          dispatch(closeLogInModal());
-          dispatch(loginOtpSend(false));
-          resetRecaptcha();
-          window.confirmationResult = null;
-          dispatch(setLoading(false));
-          dispatch(setIsLoggedIn(true));
-        })
-        .catch((err) => {
-          setChangeOtpHasValue(true);
-          dispatch(setLoading(false));
-          resetRecaptcha();
-          toast.info("Invalid OTP", {
-            autoClose: 4000,
-            style: {
-              backgroundColor: "rgb(0,0,0,0.8)",
-              color: "white",
-              fontWeight: "bold",
-            },
-            progressClassName: "progress-style",
-          });
-          window.recaptchaVerifier = null;
-        });
-      // Reset the Profile for logged in user
+      toast.info("Invalid OTP ", {
+        autoClose: 4000,
+        style: {
+          backgroundColor: "rgb(0,0,0,0.8)",
+          color: "white",
+          fontWeight: "bold",
+        },
+        progressClassName: "progress-style",
+      });
     }
   }
 
@@ -241,6 +182,7 @@ const Login = () => {
         signingStatement={"By clicking on Login"}
         isOtpSend={isOtpSend}
         isLoading={isLoading}
+        recaptchaReference={recatpchaRef}
       >
         {otpOnPhone ? <EntryDiv
           type="tel"

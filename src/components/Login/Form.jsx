@@ -7,6 +7,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
 import { motion } from "motion/react";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Form = ({
   btnId,
@@ -17,10 +18,12 @@ const Form = ({
   signingStatement,
   isOtpSend = false,
   isLoading,
+  recaptchaReference
 }) => {
   const isLogInModelOpen = useSelector(selectLogInModal);
   const member = useSelector(selectIsMember);
   const dispatch = useDispatch();
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   const handlePageSwitch = () => {
     dispatch(setHideLogin(true));
@@ -87,6 +90,11 @@ const Form = ({
           </Link>
         </p>
       )}
+      <ReCAPTCHA
+        sitekey={siteKey}
+        size="invisible"
+        ref={recaptchaReference}
+      />
     </form>
   );
 };

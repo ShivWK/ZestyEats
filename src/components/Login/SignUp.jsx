@@ -3,15 +3,6 @@ import Form from "./Form";
 import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
 import { auth, firestoreDB } from "../../firebaseConfig";
-import {
-  collection,
-  doc,
-  getDocs,
-  query,
-  setDoc,
-  where,
-} from "firebase/firestore";
-import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 
 import {
   closeLogInModal,
@@ -22,29 +13,31 @@ import {
 } from "../../features/Login/loginSlice";
 
 import { Phone, Mail } from "lucide-react"
+import { toast } from "react-toastify";
 
 const SignUp = memo(() => {
-  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] =
-    useState(undefined);
+  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
   const [changeNameIsEntryMade, setChangeNameIsEntryMade] = useState(undefined);
   const [changeNameHasValue, setChangeNameHasValue] = useState(undefined);
-  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] =
-    useState(undefined);
+  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(undefined);
   const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
+
   const [signUpFormData, setSignUpFormData] = useState({
     phone: "",
     name: "",
     email: "",
     opt: "",
   });
+
   const [otpOnPhone, setOtpOnPhone] = useState(true);
   const dispatch = useDispatch();
   const isSignUpOtpSend = useSelector(selectSignUpOtp);
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
+  const recaptchaRef = useRef(null);
 
   const handleSignUpChange = useCallback((e) => {
     setSignUpFormData(prev => ({
@@ -53,45 +46,13 @@ const SignUp = memo(() => {
     }));
   }, [setSignUpFormData]);
 
-  const resetRecaptchaVerifier = () => {
-    if (window.recaptchaVerifier) {
-      try {
-        window.recaptchaVerifier.clear();
-
-        const recaptchaWidgetId = window.recaptchaVerifier.widgetId;
-        if (recaptchaWidgetId && typeof grecaptcha !== "undefined") {
-          grecaptcha.reset(recaptchaWidgetId);
-        }
-      } catch (err) {
-        console.error("Error in resetting recaptcha ", err);
-      } finally {
-        window.recaptchaVerifier = null;
-      }
-    }
-  };
-
-  const setDataToFirestore = async (userId, data) => {
-    const docRef = doc(firestoreDB, "users", userId);
-    try {
-      await setDoc(docRef, {
-        phone: signUpFormData.phone,
-        name: signUpFormData.name,
-        email: signUpFormData.email,
-      });
-    } catch (err) {
-      console.log("Error writing to firebase", err);
-    }
-  };
-
   const handleSignUp = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
     dispatch(setLoading(true));
     const data = new FormData(formRef.current);
 
-    const collectionRef = collection(firestoreDB, "users");
-    const q = query(collectionRef, where("phone", "==", data.get("phone")));
-    const snapshot = await getDocs(q);
+    const checkIfExists = (phone) => false;
 
     if (data.get("phone").length === 0) {
       setChangePhoneHasValue(true);
@@ -110,44 +71,52 @@ const SignUp = memo(() => {
       setChangeEmailIsEntryMade(true);
       setChangeEmailHasValue(true);
       dispatch(setLoading(false));
-    } else if (!snapshot.empty) {
+    } else if (checkIfExists()) {
       alert("User already exists");
       dispatch(setLoading(false));
     } else {
-      resetRecaptchaVerifier();
+      try {
+        const token = await recaptchaRef.current.executeAsync();
+        recaptchaRef.current.reset();
 
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, "SignUpBtn", {
-        size: "invisible",
-      });
-
-      window.recaptchaVerifier
-        .verify()
-        .then(() => {
-          sendOtp();
+        sendOtp(data, token);
+      } catch (err) {
+        console.log("Recaptcha failed", err);
+        dispatch(setLoading(false))
+        toast.error("Recaptcha failed, please try again.", {
+          autoClose: 3000,
+          style: {
+            backgroundColor: "rgba(0,0,0,0.9)",
+            fontWeight: "medium",
+            color: "white",
+          },
         })
-        .catch((err) => {
-          dispatch(setLoading(false));
-          console.log("Recaptcha verification failed", err);
-          alert("Recaptcha verification failed, please try again.");
-        });
+      }
     }
-  }, [setSignUpFormData, signUpFormData, firestoreDB, auth, setDataToFirestore, resetRecaptchaVerifier, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade]);
+  }, [setSignUpFormData, signUpFormData, firestoreDB, auth, setDataToFirestore, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade]);
 
-  function sendOtp() {
-    const data = new FormData(formRef.current);
-    const appVerifier = window.recaptchaVerifier;
-    const number = "+91" + data.get("phone");
+  async function sendOtp(data, token) {
+    const mode = otpOnPhone ? "phone" : "email"
+    const sendOtpOn = otpOnPhone ? data.get("email") : data.get("phone");
 
-    signInWithPhoneNumber(auth, number, appVerifier)
-      .then((confirmationResult) => {
-        window.confirmationResult = confirmationResult;
-        dispatch(setLoading(false));
-        dispatch(signUpOtpSend(true));
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/signup/sendOtp/${mode}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: {
+          sendOtpOn,
+          token
+        }
       })
-      .catch((err) => {
-        console.log("Error in Sending OTP", err);
-        resetRecaptchaVerifier();
-      });
+      const data = res.json();
+      console.log(data)
+      dispatch(setLoading(false))
+    } catch (err) {
+      console.log("Error in sending OTP", err);
+      dispatch(setLoading(false))
+    }
   }
 
   const handleOtpVerification = useCallback(() => {
@@ -162,20 +131,7 @@ const SignUp = memo(() => {
       setChangeOtpHasValue(true);
       dispatch(setLoading(false));
     } else {
-      window.confirmationResult
-        .confirm(data.get("otp"))
-        .then((result) => {
-          setDataToFirestore(result.user.uid, data);
-          dispatch(setLoading(false));
-          dispatch(signUpOtpSend(false));
-          dispatch(closeLogInModal());
-        })
-        .catch((err) => {
-          console.log("Error", err);
-          dispatch(setLoading(false));
-          setChangeOtpIsEntryMade(true);
-          setChangeOtpHasValue(true);
-        });
+      // call otp verification
     }
   }, [setDataToFirestore, setSignUpFormData, signUpFormData, resetRecaptchaVerifier, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal]);
 
@@ -208,12 +164,13 @@ const SignUp = memo(() => {
       </div>
       <Form
         btnId={"SignUpBtn"}
-        refference={formRef}
+        reference={formRef}
         handleSubmit={handleSignUp}
         handleOtpVerification={handleOtpVerification}
         signingStatement={"By creating an account"}
         isOtpSend={isSignUpOtpSend}
         isLoading={isLoading}
+        recaptchaReference={recaptchaRef}
       >
         <EntryDiv
           type={"tel"}
