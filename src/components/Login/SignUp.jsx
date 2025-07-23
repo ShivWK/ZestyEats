@@ -93,7 +93,7 @@ const SignUp = memo(() => {
         })
       }
     }
-  }, [setSignUpFormData, signUpFormData, firestoreDB, auth, setDataToFirestore, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade]);
+  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade]);
 
   async function sendOtp(data, token) {
     const mode = otpOnPhone ? "phone" : "email"
@@ -133,7 +133,7 @@ const SignUp = memo(() => {
     } else {
       // call otp verification
     }
-  }, [setDataToFirestore, setSignUpFormData, signUpFormData, resetRecaptchaVerifier, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal]);
+  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal]);
 
   const toggleHandler = () => {
     if (isSignUpOtpSend) return;

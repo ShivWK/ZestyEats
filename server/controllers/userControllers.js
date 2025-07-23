@@ -7,6 +7,8 @@ exports.signup = async (req, res) => {
     const body = req.body;
     const params = req.params;
 
+    console.log("hit sign", body, params)
+
     res.status(200).json({
         status: "success",
         data: body,
