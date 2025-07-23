@@ -79,7 +79,7 @@ const SignUp = memo(() => {
         const token = await recaptchaRef.current.executeAsync();
         recaptchaRef.current.reset();
 
-        sendOtp(data, token);
+        sendOtp(data, token, otpOnPhone);
       } catch (err) {
         console.log("Recaptcha failed", err);
         dispatch(setLoading(false))
@@ -93,11 +93,11 @@ const SignUp = memo(() => {
         })
       }
     }
-  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade]);
+  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade, otpOnPhone]);
 
-  async function sendOtp(data, token) {
-    const mode = otpOnPhone ? "phone" : "email"
-    const sendOtpOn = otpOnPhone ? data.get("email") : data.get("phone");
+  async function sendOtp(data, token, otpOnPhoneLog) {
+    const mode = otpOnPhoneLog ? "phone" : "email"
+    const sendOtpOn = otpOnPhoneLog ? data.get("phone") : data.get("email");
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/signup/sendOtp/${mode}`, {
@@ -105,12 +105,12 @@ const SignUp = memo(() => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: {
+        body: JSON.stringify({
           sendOtpOn,
           token
-        }
+        })
       })
-      const data = res.json();
+      const data = await res.json();
       console.log(data)
       dispatch(setLoading(false))
     } catch (err) {

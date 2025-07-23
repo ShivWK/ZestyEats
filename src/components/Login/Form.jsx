@@ -94,6 +94,7 @@ const Form = ({
         sitekey={siteKey}
         size="invisible"
         ref={recaptchaReference}
+        onErrorCapture={(err) => console.error(err)}
       />
     </form>
   );

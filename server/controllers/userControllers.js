@@ -1,18 +1,23 @@
 const SessionModel = require("./../models/sessionModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const userRouter = require("../routes/userRouter");
+const recaptchaVerification = require("./../utils/recaptchaVerification");
 
 exports.signup = async (req, res) => {
     const secretKey = process.env.RECAPTCHA_SECRET_KEY;
     const body = req.body;
+    const token = body.token;
     const params = req.params;
 
-    console.log("hit sign", body, params)
+    const result = await recaptchaVerification(token)
+
+    console.log("hit sign", body, params, "result", result)
 
     res.status(200).json({
         status: "success",
         data: body,
-        params
+        params,
+        result
     })
 }
 
