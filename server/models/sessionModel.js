@@ -9,6 +9,7 @@ const sessionSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: () => new Date(),
+        expires: 30
     },
 
     data: {
@@ -28,6 +29,6 @@ const sessionSchema = new mongoose.Schema({
     }
 });
 
-const SessionModel = mongoose.model("SessionModel" ,sessionSchema);
+const SessionModel = mongoose.model("GuestSession" ,sessionSchema);
 
 module.exports = SessionModel;

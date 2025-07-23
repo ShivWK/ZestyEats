@@ -2,28 +2,37 @@ const mongoose = require("mongoose");
 
 const otpSchema = new mongoose.Schema({
     phone: Number,
+
     email: String,
+
     hashedOtp: String,
+
     createdAt: {
-        type: Number,
-        default: Math.round(Date.now() / 1000)
+        type: Date,
+        default: () => new Date(),
+        expires: 300
     },
+
     expiresAt: {
         type: Number,
         default: Math.round(Date.now() / 1000) + 60 * 5
     },
+
     attempts: {
         type: Number,
         max: 5
     },
+
     resendCount: {
         type: Number,
         max: 3
     },
+
     blockedUntil: Number,
+    
     resendBlockedUntil: Number
 })
 
-const OtpModel = mongoose.model("OTPModel", otpSchema);
+const OtpModel = mongoose.model("OTP", otpSchema);
 
 exports.default = OtpModel;
