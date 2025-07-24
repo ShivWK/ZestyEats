@@ -14,7 +14,8 @@ import {
   selectHoverState,
   setHideLocation,
   setHideLogin,
-  selectLocationInfoModal
+  selectLocationInfoModal,
+  setLocationInfoModal
 } from "../features/Login/loginSlice";
 
 import {
@@ -161,12 +162,14 @@ export default function Layout() {
           }
         } catch (err) {
           console.log("Error fetching current location data.");
-          fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
+          dispatch(setLocationInfoModal(true))
+          // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
         }
       },
         err => {
           console.log("Some error occurred", err.message);
-          fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
+          dispatch(setLocationInfoModal(true))
+          // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
         },
         {
           timeout: 5000, // works when user gaive input to fetch location but api took more than given time
@@ -175,7 +178,8 @@ export default function Layout() {
         }
       );
     } else {
-      fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
+      dispatch(setLocationInfoModal(true))
+      // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
     }
 
     const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
