@@ -121,7 +121,7 @@ const MainContent = ({ data }) => {
               return (
                 <button
                   key={item.id}
-                  className="shimmerBg h-40 w-28 md:h-[180px] md:w-[130px] rounded-xl shrink-0 cursor-pointer"
+                  className="shimmerBg h-40 w-28 md:h-[180px] md:w-[130px] rounded-xl shrink-0 cursor-pointer border-[1px] overflow-hidden mt-2 border-gray-400"
                   onClick={() => clickHandler(queryObj.get("query"))}
                 >
                   <img
