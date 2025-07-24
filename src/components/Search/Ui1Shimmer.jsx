@@ -5,7 +5,7 @@ const Ui1Shimmer = () => {
         <div className="w-52 h-7 md:h-8 rounded shimmerBg mt-3 max-d:mb-2 self-start"></div>
         <div className="flex flex-wrap max-md:gap-y-5 md:gap-7 justify-evenly w-full">
             {arr.map(item => {
-                return <div key={item} className="shimmerBg h-28 md:h-32 md:w-28 w-24 rounded-xl shrink-0">
+                return <div key={item} className="shimmerBg h-36 md:w-28 w-28 rounded-xl shrink-0">
                 </div>
             })}
         </div>
