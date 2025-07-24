@@ -5,16 +5,16 @@ import PageFooter from "./Footer/PageFooter";
 import LoginModal from "./Login/LoginModal";
 import LocationInfoModal from "./Location/LocationInfoModal";
 
-const LocationModal = lazy(() => import("./Location/LocationModal"));
+import LocationModal from "./Location/LocationModal";
 import { toast } from "react-toastify";
 
 import {
   selectLogInModal,
   selectLocationModal,
-  selectHoverState,
   setHideLocation,
   setHideLogin,
   selectLocationInfoModal,
+  setLocationInfoModalReason,
   setLocationInfoModal
 } from "../features/Login/loginSlice";
 
@@ -73,7 +73,6 @@ export default function Layout() {
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const dpModel = useSelector(selectDpModel);
-  const { locationHovered } = useSelector(selectHoverState);
   const isLocationModelOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
@@ -130,7 +129,7 @@ export default function Layout() {
 
     } else if (navigator.geolocation) {
       toast.info("Please allow location to show nearby results.", {
-        autoClose: 3000,
+        autoClose: 1000,
         style: {
           backgroundColor: "#ff5200",
           fontWeight: "semibold",
@@ -157,29 +156,40 @@ export default function Layout() {
             const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
             updateHomeRestaurantData(res2, dispatch, lat, lng);
           } catch (err) {
-            alert(err.message);
-            fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
+            console.error("ERROR in fetching data", err);
+            dispatch(setLocationInfoModalReason("error"))
+            dispatch(setLocationInfoModal(true))
           }
         } catch (err) {
-          console.log("Error fetching current location data.");
+          console.log("Error fetching current location data.", err);
+          dispatch(setLocationInfoModalReason("error"))
           dispatch(setLocationInfoModal(true))
-          // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
         }
       },
         err => {
-          console.log("Some error occurred", err.message);
-          dispatch(setLocationInfoModal(true))
-          // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
+          if (err.code === err.TIMEOUT) {
+            dispatch(setLocationInfoModalReason("error"))
+            dispatch(setLocationInfoModal(true))
+          } else if (err.code === err.PERMISSION_DENIED) {
+            dispatch(setLocationInfoModalReason("permission"))
+            dispatch(setLocationInfoModal(true))
+          } else if (err.code === err.POSITION_UNAVAILABLE) {
+            dispatch(setLocationInfoModalReason("error"))
+            dispatch(setLocationInfoModal(true))
+          } else {
+            dispatch(setLocationInfoModalReason("error"))
+            dispatch(setLocationInfoModal(true))
+          }
         },
         {
-          timeout: 5000, // works when user gaive input to fetch location but api took more than given time
+          timeout: 5000, // works when user give input to fetch location but api took more than given time
           enableHighAccuracy: false,
           maximumAge: 20000
         }
       );
     } else {
+      dispatch(setLocationInfoModalReason("error"))
       dispatch(setLocationInfoModal(true))
-      // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
     }
 
     const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
@@ -187,7 +197,7 @@ export default function Layout() {
     const handleGuestSession = async () => {
       try {
         // 1: create the guest session
-        const res = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/session", {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
           method: "POST",
           body: JSON.stringify({ deviceId }),
           headers: {
@@ -200,7 +210,7 @@ export default function Layout() {
         console.log(data.data.sessionId);
 
         // 2: get the guest session data
-        const result = await fetch("https://swiggy-clone-klzu.onrender.com/api/user/session", {
+        const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
           method: "GET",
           credentials: "include"
         });
@@ -237,12 +247,6 @@ export default function Layout() {
 
     handleGuestSession();
   }, []);
-
-  useEffect(() => {
-    if (locationHovered) {
-      import("./Location/LocationModal");
-    }
-  }, [locationHovered]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -285,16 +289,13 @@ export default function Layout() {
     <>
       <PageHeader />
       <Outlet />
-      {isLoginOpen && (
-        <LoginModal />
-      )}
-      {isLocationOpen && (
-        <Suspense >
-          <LocationModal />
-        </Suspense>
-      )}
+
+      {isLoginOpen && ( <LoginModal /> )}
+      {isLocationOpen && ( <LocationModal /> )}
+
       <PageFooter />
-      { !OpenLocationInfoModal && <LocationInfoModal /> }
+
+      {OpenLocationInfoModal && <LocationInfoModal />}
     </>
   );
 }

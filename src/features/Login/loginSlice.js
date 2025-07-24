@@ -5,7 +5,6 @@ const initialState = {
   isHideLogin: false,
   isHideLocation: false,
   isLocationModalOpen: false,
-  isLocationHovered: false,
   isLoginOtpSend: false,
   isSignUpOtpSend: false,
   isLoggedIn: false,
@@ -16,6 +15,7 @@ const initialState = {
   otpOnPhone: true,
   isLocationInfoModalOpen: false,
   hideLocationInfoModal: false,
+  locationInfoModalReason: "permission"
 };
 
 const loginSlice = createSlice({
@@ -55,8 +55,8 @@ const loginSlice = createSlice({
       state.isLocationInfoModalOpen = action.payload;
     },
 
-    setLocationHovered: (state) => {
-      state.isLocationHovered = true;
+    setLocationInfoModalReason: (state, action) => {
+        state.locationInfoModalReason = action.payload;
     },
 
     loginOtpSend: (state, action) => {
@@ -109,6 +109,7 @@ export const selectIsMember = (state) => state.login.isMember;
 export const selectLoginOpened = (state) => state.login.loginOpened;
 export const selectModalTrace = (state) => state.login.modalTrace;
 export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
+export const selectLocationInfoModalReason = (state) => state.login.locationInfoModalReason;
 
 export const selectLocationInfoModal = createSelector(
   [
@@ -119,11 +120,6 @@ export const selectLocationInfoModal = createSelector(
     OpenLocationInfoModal, 
     hideLocationInfoModal
   })
-);
-
-export const selectHoverState = createSelector(
-  [(state) => state.login.isLocationHovered],
-  (location) => ({ locationHovered: location })
 );
 
 export const selectHideModel = createSelector(
@@ -146,12 +142,12 @@ export const {
   setIsLoggedIn,
   setLoading,
   setMember,
-  setLocationHovered,
   setHideLocation,
   setHideLogin,
   setLoginOpened,
   setModalTrace,
   toggleOtpOnPhone,
   setHideLocationInfoModal,
-  setLocationInfoModal
+  setLocationInfoModal,
+  setLocationInfoModalReason
 } = loginSlice.actions;

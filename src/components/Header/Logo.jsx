@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { memo } from "react";
-import { setLocationModal, setLocationHovered, setHideLocation, setHideLogin } from "../../features/Login/loginSlice";
+import { setLocationModal, setHideLocation, setHideLogin } from "../../features/Login/loginSlice";
 import { ChevronDown } from "lucide-react";
 
 import {
@@ -24,10 +24,6 @@ const Logo = memo(({ searchPlaceholder }) => {
     dispatch(setLocationModal(true));
   };
 
-  const hoverHandler = () => {
-    dispatch(setLocationHovered());
-  }
-  // 
   return (
     <div className="flex gap-1.5 md:gap-6 items-center">
       <NavLink to="/" className={`active:scale-95 shrink-0`}>
@@ -39,7 +35,6 @@ const Logo = memo(({ searchPlaceholder }) => {
           {searchPlaceholder}</span></p>
       ) : (
         <button
-          onMouseEnter={hoverHandler}
           onClick={handleClick}
           className="group flex max-md:flex-col max-md:justify-center items-center gap-2 md:gap-2 cursor-pointer outline-none border-none"
         >

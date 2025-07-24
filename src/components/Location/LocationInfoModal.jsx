@@ -3,8 +3,11 @@ import {
     setLocationInfoModal,
     selectLocationInfoModal,
     setLocationModal,
+    selectLocationInfoModalReason,
+    setLocationInfoModalReason
 } from "../../features/Login/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
 import { setLoading } from "../../features/home/homeSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
@@ -27,14 +30,15 @@ export const fetchDefaultHomeAPIData = async (
         updateHomeRestaurantData(apiResponse, dispatch, lat, lng);
     } catch (err) {
         dispatch(setLoading(false));
-        // alert(err.error);
     }
 };
 
 const LocationInfoModal = () => {
     const dispatch = useDispatch();
     const { hideLocationInfoModal } = useSelector(selectLocationInfoModal);
+    const reasonOfOpening = useSelector(selectLocationInfoModalReason);
     const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
+    const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
     const [shouldOpenLocationModal, setShouldOpenLocationModal] = useState(false);
     const locationInfoModalRef = useRef(null);
 
@@ -59,6 +63,59 @@ const LocationInfoModal = () => {
         }
     ]
 
+    const permissionGrantHandler = () => {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat1 = position.coords.latitude;
+            const lng1 = position.coords.longitude;
+
+            try {
+                const data = await triggerLocationByCoordinates({
+                    lat1,
+                    lng1,
+                }).unwrap();
+
+                updateCurrentCity(data, dispatch);
+
+                const lat = data?.data?.[0]?.geometry?.location?.lat;
+                const lng = data?.data?.[0]?.geometry?.location?.lng;
+
+                try {
+                    const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
+                    updateHomeRestaurantData(res2, dispatch, lat, lng);
+                } catch (err) {
+                    console.error("ERROR in fetching data", err);
+                    dispatch(setLocationInfoModalReason("error"))
+                    dispatch(setLocationInfoModal(true))
+                }
+            } catch (err) {
+                console.log("Error fetching current location data.", err);
+                dispatch(setLocationInfoModalReason("error"))
+                dispatch(setLocationInfoModal(true))
+            }
+        },
+            err => {
+                if (err.code === err.TIMEOUT) {
+                    dispatch(setLocationInfoModalReason("error"))
+                    dispatch(setLocationInfoModal(true))
+                } else if (err.code === err.PERMISSION_DENIED) {
+                    dispatch(setLocationInfoModalReason("permission"))
+                    dispatch(setLocationInfoModal(true))
+                } else if (err.code === err.POSITION_UNAVAILABLE) {
+                    dispatch(setLocationInfoModalReason("error"))
+                    dispatch(setLocationInfoModal(true))
+                } else {
+                    dispatch(setLocationInfoModalReason("error"))
+                    dispatch(setLocationInfoModal(true))
+                }
+            },
+            {
+                timeout: 5000,
+                enableHighAccuracy: false,
+                maximumAge: 20000
+            }
+        );
+    }
+
     const searchClickHandler = (e) => {
         e.stopPropagation();
         setShouldOpenLocationModal(true);
@@ -72,7 +129,6 @@ const LocationInfoModal = () => {
             dispatch(setLocationInfoModal(false));
 
             if (classList.contains("open-location-modal")) {
-                console.log("true")
                 dispatch(setLocationModal(true));
                 setShouldOpenLocationModal(false);
             }
@@ -80,7 +136,6 @@ const LocationInfoModal = () => {
     }
 
     const hideLocationInfoModalHandler = () => dispatch(setHideLocationInfoModal(true));
-    const unmountLocationInfoModalHandler = () => dispatch(setLocationInfoModal(false));
 
     const placeClickHandler = (data) => {
         const location = {
@@ -102,6 +157,8 @@ const LocationInfoModal = () => {
         >
             <div
                 ref={locationInfoModalRef}
+                role="dialog"
+                aria-modal={true}
                 onAnimationEnd={runOnAnimationEnd}
                 className={`absolute block left-1/2 transform -translate-x-1/2 font-sans tracking-wide bg-white overflow-hidden rounded-xl w-[90%] lg:w-[30%] ${hideLocationInfoModal
                     ? "hide-locationInfoModal"
@@ -111,11 +168,12 @@ const LocationInfoModal = () => {
             >
                 <div className="bg-primary w-full p-2 text-white font-medium flex items-center justify-between">
                     <p className="leading-5">
-                        Location blocked. Tap 'Grant' to get nearby results.
+                        {reasonOfOpening === "permission" ? "Location blocked. Tap 'Grant' to get nearby results." : "Location unavailable. Choose a city below or search to see results"}
                     </p>
-                    <button className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-medium px-3 py-0.5 rounded active:scale-95 transition-all duration-150 ease-in-out shadow-[0_0_10px_2px_rgba(0,0,0,0.3)]">
+                    {reasonOfOpening === "permission" 
+                    && <button onClick={permissionGrantHandler} className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-medium px-3 py-0.5 rounded active:scale-95 transition-all duration-150 ease-in-out shadow-[0_0_10px_2px_rgba(0,0,0,0.3)]">
                         Grant
-                    </button>
+                    </button>}
                 </div>
 
                 {/* default city options */}
@@ -152,47 +210,3 @@ const LocationInfoModal = () => {
     );
 };
 export default LocationInfoModal;
-
-
-
-// const getDataFOrCurrentLocation = () => {
-//     navigator.geolocation.getCurrentPosition(async (position) => {
-//         const lat1 = position.coords.latitude;
-//         const lng1 = position.coords.longitude;
-
-//         try {
-//             const data = await triggerLocationByCoordinates({
-//                 lat1,
-//                 lng1,
-//             }).unwrap();
-
-//             updateCurrentCity(data, dispatch);
-
-//             const lat = data?.data?.[0]?.geometry?.location?.lat;
-//             const lng = data?.data?.[0]?.geometry?.location?.lng;
-
-//             try {
-//                 const res2 = await triggerHomeAPI({ lat, lng }).unwrap();
-//                 updateHomeRestaurantData(res2, dispatch, lat, lng);
-//             } catch (err) {
-//                 alert(err.message);
-//                 fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
-//             }
-//         } catch (err) {
-//             console.log("Error fetching current location data.");
-//             dispatch(setLocationInfoModal(true))
-//             // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
-//         }
-//     },
-//         err => {
-//             console.log("Some error occurred", err.message);
-//             dispatch(setLocationInfoModal(true))
-//             // fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
-//         },
-//         {
-//             timeout: 5000, // works when user gaive input to fetch location but api took more than given time
-//             enableHighAccuracy: false,
-//             maximumAge: 20000
-//         }
-//     );
-// }
