@@ -15,7 +15,8 @@ const initialState = {
   otpOnPhone: true,
   isLocationInfoModalOpen: false,
   hideLocationInfoModal: false,
-  locationInfoModalReason: "permission"
+  locationInfoModalReason: "permission",
+  isGrantClicked: false,
 };
 
 const loginSlice = createSlice({
@@ -57,6 +58,10 @@ const loginSlice = createSlice({
 
     setLocationInfoModalReason: (state, action) => {
         state.locationInfoModalReason = action.payload;
+    },
+
+    setGrantBTnClicked: (state, action) => {
+      state.isGrantClicked = action.payload;
     },
 
     loginOtpSend: (state, action) => {
@@ -110,6 +115,7 @@ export const selectLoginOpened = (state) => state.login.loginOpened;
 export const selectModalTrace = (state) => state.login.modalTrace;
 export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
 export const selectLocationInfoModalReason = (state) => state.login.locationInfoModalReason;
+export const selectGrantBtnClicked = (state) => state.login.isGrantClicked;
 
 export const selectLocationInfoModal = createSelector(
   [
@@ -149,5 +155,6 @@ export const {
   toggleOtpOnPhone,
   setHideLocationInfoModal,
   setLocationInfoModal,
-  setLocationInfoModalReason
+  setLocationInfoModalReason,
+  setGrantBTnClicked
 } = loginSlice.actions;

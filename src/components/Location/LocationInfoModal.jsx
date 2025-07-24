@@ -4,7 +4,9 @@ import {
     selectLocationInfoModal,
     setLocationModal,
     selectLocationInfoModalReason,
-    setLocationInfoModalReason
+    setLocationInfoModalReason,
+    selectGrantBtnClicked,
+    setGrantBTnClicked,
 } from "../../features/Login/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
@@ -13,6 +15,8 @@ import { setLoading } from "../../features/home/homeSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
+import { updateCurrentCity } from "../../utils/addCurrentCity";
 
 export const fetchDefaultHomeAPIData = async (
     triggerHomeAPI,
@@ -40,7 +44,9 @@ const LocationInfoModal = () => {
     const [triggerHomeAPI] = useLazyGetHomePageDataQuery();
     const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
     const [shouldOpenLocationModal, setShouldOpenLocationModal] = useState(false);
+    const [isUserInteracted, setIsUserInteracted] = useState(false)
     const locationInfoModalRef = useRef(null);
+    const grantBtnClicked = useSelector(selectGrantBtnClicked);
 
     const placeArray = [
         {
@@ -64,7 +70,10 @@ const LocationInfoModal = () => {
     ]
 
     const permissionGrantHandler = () => {
+        setIsUserInteracted(true)
+        dispatch(setGrantBTnClicked(true));
         navigator.geolocation.getCurrentPosition(async (position) => {
+            respond = true;
             const lat1 = position.coords.latitude;
             const lng1 = position.coords.longitude;
 
@@ -95,15 +104,25 @@ const LocationInfoModal = () => {
         },
             err => {
                 if (err.code === err.TIMEOUT) {
+                    dispatch(setHideLocationInfoModal(false))
                     dispatch(setLocationInfoModalReason("error"))
                     dispatch(setLocationInfoModal(true))
                 } else if (err.code === err.PERMISSION_DENIED) {
-                    dispatch(setLocationInfoModalReason("permission"))
-                    dispatch(setLocationInfoModal(true))
+                    dispatch(setHideLocationInfoModal(false))
+
+                    if (grantBtnClicked) {
+                        dispatch(setLocationInfoModalReason("error"));
+                        dispatch(setLocationInfoModal(true));
+                    } else {
+                        dispatch(setLocationInfoModalReason("permission"));
+                        dispatch(setLocationInfoModal(true));
+                    }
                 } else if (err.code === err.POSITION_UNAVAILABLE) {
+                    dispatch(setHideLocationInfoModal(false))
                     dispatch(setLocationInfoModalReason("error"))
                     dispatch(setLocationInfoModal(true))
                 } else {
+                    dispatch(setHideLocationInfoModal(false))
                     dispatch(setLocationInfoModalReason("error"))
                     dispatch(setLocationInfoModal(true))
                 }
@@ -117,9 +136,26 @@ const LocationInfoModal = () => {
     }
 
     const searchClickHandler = (e) => {
+        setIsUserInteracted(true);
+
         e.stopPropagation();
         setShouldOpenLocationModal(true);
         dispatch(setHideLocationInfoModal(true));
+    }
+
+    const placeClickHandler = (data) => {
+        setIsUserInteracted(true);
+
+        const location = {
+            terms: [
+                { value: data.city },
+                { value: data.location.split(", ")[0] },
+                { value: data.location.split(", ")[1] }
+            ]
+        }
+
+        updateSearchedCity(location, dispatch);
+        fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, data.lat, data.lng)
     }
 
     const runOnAnimationEnd = (e) => {
@@ -132,23 +168,23 @@ const LocationInfoModal = () => {
                 dispatch(setLocationModal(true));
                 setShouldOpenLocationModal(false);
             }
+
+            if (!isUserInteracted) {
+                toast.info("No location selected. Showing restaurants in Bangalore by default.", {
+                    autoClose: 2000,
+                    style: {
+                        backgroundColor: "#ff5200",
+                        fontWeight: "semibold",
+                        color: "white",
+                    },
+                    progressClassName: "progress-style",
+                })
+                placeClickHandler(placeArray[1]);
+            }
         }
     }
 
     const hideLocationInfoModalHandler = () => dispatch(setHideLocationInfoModal(true));
-
-    const placeClickHandler = (data) => {
-        const location = {
-            terms: [
-                { value: data.city },
-                { value: data.location.split(", ")[0] },
-                { value: data.location.split(", ")[1] }
-            ]
-        }
-
-        updateSearchedCity(location, dispatch);
-        fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, data.lat, data.lng)
-    }
 
     return (
         <div
@@ -170,10 +206,10 @@ const LocationInfoModal = () => {
                     <p className="leading-5">
                         {reasonOfOpening === "permission" ? "Location blocked. Tap 'Grant' to get nearby results." : "Location unavailable. Choose a city below or search to see results"}
                     </p>
-                    {reasonOfOpening === "permission" 
-                    && <button onClick={permissionGrantHandler} className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-medium px-3 py-0.5 rounded active:scale-95 transition-all duration-150 ease-in-out shadow-[0_0_10px_2px_rgba(0,0,0,0.3)]">
-                        Grant
-                    </button>}
+                    {reasonOfOpening === "permission"
+                        && <button onClick={permissionGrantHandler} className="bg-blue-600 cursor-pointer hover:bg-blue-700 text-white font-medium px-3 py-0.5 rounded active:scale-95 transition-all duration-150 ease-in-out shadow-[0_0_10px_2px_rgba(0,0,0,0.3)]">
+                            Grant
+                        </button>}
                 </div>
 
                 {/* default city options */}
