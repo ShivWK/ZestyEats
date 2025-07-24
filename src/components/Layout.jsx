@@ -3,6 +3,7 @@ import { Outlet, useLocation, useSearchParams } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
 import LoginModal from "./Login/LoginModal";
+import LocationInfoModal from "./Location/LocationInfoModal";
 
 const LocationModal = lazy(() => import("./Location/LocationModal"));
 import { toast } from "react-toastify";
@@ -12,7 +13,8 @@ import {
   selectLocationModal,
   selectHoverState,
   setHideLocation,
-  setHideLogin
+  setHideLogin,
+  selectLocationInfoModal
 } from "../features/Login/loginSlice";
 
 import {
@@ -26,15 +28,15 @@ import {
   addRecentLocations
 } from "../features/home/homeSlice";
 
-import { 
-  selectMenuModel, 
-  setRestaurantItems, 
-  addToWishlistItem, 
-  toggleItemsToBeAddedInCart, 
-  setFavoriteRestro, 
-  setItemToCart, 
-  setHideMenu, 
-  toggleMenuModel 
+import {
+  selectMenuModel,
+  setRestaurantItems,
+  addToWishlistItem,
+  toggleItemsToBeAddedInCart,
+  setFavoriteRestro,
+  setItemToCart,
+  setHideMenu,
+  toggleMenuModel
 } from "../features/home/restaurantsSlice";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -75,6 +77,7 @@ export default function Layout() {
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
+  const { OpenLocationInfoModal } = useSelector(selectLocationInfoModal)
   useTrackNavigation();
 
   useEffect(() => {
@@ -125,6 +128,15 @@ export default function Layout() {
       // if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
 
     } else if (navigator.geolocation) {
+      toast.info("Please allow location to show nearby results.", {
+        autoClose: 3000,
+        style: {
+          backgroundColor: "#ff5200",
+          fontWeight: "semibold",
+          color: "white",
+        },
+        progressClassName: "progress-style",
+      });
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
         const lng1 = position.coords.longitude;
@@ -153,11 +165,11 @@ export default function Layout() {
         }
       },
         err => {
-          console.log("Some error occured", err.message);
+          console.log("Some error occurred", err.message);
           fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, isLocationModelOpen);
         },
         {
-          timeout: 5000, //didn't worked
+          timeout: 5000, // works when user gaive input to fetch location but api took more than given time
           enableHighAccuracy: false,
           maximumAge: 20000
         }
@@ -225,8 +237,8 @@ export default function Layout() {
   useEffect(() => {
     if (locationHovered) {
       import("./Location/LocationModal");
-    } 
-  }, [ locationHovered ]);
+    }
+  }, [locationHovered]);
 
   useEffect(() => {
     const html = document.documentElement;
@@ -234,7 +246,7 @@ export default function Layout() {
 
     const isLargeScreen = window.innerWidth >= 768;
 
-    if (isLoginOpen || isLocationOpen || menuModel || dpModel) {
+    if (isLoginOpen || isLocationOpen || menuModel || OpenLocationInfoModal) {
       html.classList.add("overflow-hidden");
       html.style.paddingRight = isLargeScreen ? scrollbarWidth : "0px";
     } else {
@@ -247,7 +259,7 @@ export default function Layout() {
       html.style.paddingRight = "0px";
     };
 
-  }, [isLoginOpen, isLocationOpen, menuModel, dpModel]);
+  }, [isLoginOpen, isLocationOpen, menuModel, OpenLocationInfoModal]);
 
   useEffect((e) => {
     const handleModelClose = (e) => {
@@ -270,7 +282,7 @@ export default function Layout() {
       <PageHeader />
       <Outlet />
       {isLoginOpen && (
-          <LoginModal />
+        <LoginModal />
       )}
       {isLocationOpen && (
         <Suspense >
@@ -278,6 +290,7 @@ export default function Layout() {
         </Suspense>
       )}
       <PageFooter />
+      { !OpenLocationInfoModal && <LocationInfoModal /> }
     </>
   );
 }

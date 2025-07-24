@@ -67,12 +67,33 @@
     /* animation-fill-mode: forwards is important to persist the values set by the animation (100% values) otherwise as animation ends its set values are removed */
 
     .show-menu {
-        animation: showMenu 0.25s ease-in-out forwards;
-        /* bottom: 4rem; */
+        animation: showMenu 0.3s ease forwards;
     }
 
     .hide-menu {
-        animation: hideMenu 0.25s ease-in-out forwards;
+        animation: hideMenu 0.3s ease forwards;
+    }
+
+    .menu-button {
+        animation: menuButton 0.27s ease forwards;
+    }
+
+    .show-locationInfoModal {
+        animation: showLocationInfoModal 0.3s ease forwards;
+    }
+
+    .hide-locationInfoModal {
+        animation: hideLocationInfoModal 0.3s ease forwards;
+    }
+
+    @keyframes menuButton {
+        0% {
+            bottom: -2rem;
+        }
+
+        100% {
+            bottom: 1rem;
+        }
     }
 
     @keyframes bgChange {
@@ -160,6 +181,26 @@
      @keyframes hideMenu {
         0% {
             bottom: 4.5rem
+        }
+
+        100% {
+            bottom: -110%;
+        }
+    }
+
+     @keyframes showLocationInfoModal {
+        0% {
+            bottom: -110%
+        }
+
+        100% {
+            bottom: 1rem;
+        }
+    }
+
+     @keyframes hideLocationInfoModal {
+        0% {
+            bottom: 1rem
         }
 
         100% {

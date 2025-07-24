@@ -1,90 +1,100 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const initialState = {
-    isLoginModalOpen: false,
-    isHideLogin: false,
-    isHideLocation: false,
-    isLocationModalOpen: false,
-    isLocationHovered: false,
-    isLoginOtpSend: false,
-    isSignUpOtpSend: false,
-    isLoggedIn: false,
-    isLoading: false,
-    isMember: true,
-    modalTrace: [],
-    loginOpened: false,
-    otpOnPhone: true,
-}
+  isLoginModalOpen: false,
+  isHideLogin: false,
+  isHideLocation: false,
+  isLocationModalOpen: false,
+  isLocationHovered: false,
+  isLoginOtpSend: false,
+  isSignUpOtpSend: false,
+  isLoggedIn: false,
+  isLoading: false,
+  isMember: true,
+  modalTrace: [],
+  loginOpened: false,
+  otpOnPhone: true,
+  isLocationInfoModalOpen: false,
+  hideLocationInfoModal: false,
+};
 
 const loginSlice = createSlice({
-    name: "login",
-    initialState: initialState,
+  name: "login",
+  initialState: initialState,
 
-    reducers: {
-        setLogInModal: (state, action) => {
-            state.isLoginModalOpen = action.payload;
+  reducers: {
+    setLogInModal: (state, action) => {
+      state.isLoginModalOpen = action.payload;
 
-            if (action.payload) {
-                window.history.pushState({ model: "login" }, "", location.href)
-            }
-        },
+      if (action.payload) {
+        window.history.pushState({ model: "login" }, "", location.href);
+      }
+    },
 
-        setHideLogin: (state, action) => {
-            state.isHideLogin = action.payload;
-        },
+    setHideLogin: (state, action) => {
+      state.isHideLogin = action.payload;
+    },
 
-        setLocationModal: (state, action) => {
-            state.isLocationModalOpen = action.payload;
+    setLocationModal: (state, action) => {
+      state.isLocationModalOpen = action.payload;
 
-            if (action.payload) {
-                window.history.pushState({ model: "location" }, "", location.href)
-            }
-        },
+      if (action.payload) {
+        window.history.pushState({ model: "location" }, "", location.href);
+      }
+    },
 
-        setHideLocation: (state, action) => {
-            state.isHideLocation = action.payload;
-        },
+    setHideLocation: (state, action) => {
+      state.isHideLocation = action.payload;
+    },
 
-        setLocationHovered: state => {
-            state.isLocationHovered = true;
-        },
+    setHideLocationInfoModal: (state, action) => {
+      state.hideLocationInfoModal = action.payload;
+    },
 
-        loginOtpSend: (state, action) => {
-            state.isLoginOtpSend = action.payload;
-        },
+    setLocationInfoModal: (state, action) => {
+      state.isLocationInfoModalOpen = action.payload;
+    },
 
-        signUpOtpSend: (state, action) => {
-            state.isSignUpOtpSend = action.payload;
-        },
+    setLocationHovered: (state) => {
+      state.isLocationHovered = true;
+    },
 
-        setIsLoggedIn: (state, action) => {
-            state.isLoggedIn = action.payload;
-        },
+    loginOtpSend: (state, action) => {
+      state.isLoginOtpSend = action.payload;
+    },
 
-        setLoading: (state, action) => {
-            state.isLoading = action.payload;
-        },
+    signUpOtpSend: (state, action) => {
+      state.isSignUpOtpSend = action.payload;
+    },
 
-        setMember: (state, action) => {
-            state.isMember = action.payload;
-        },
+    setIsLoggedIn: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
 
-        setLoginOpened: (state, action) => {
-            state.loginOpened = action.payload;
-        },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload;
+    },
 
-        setModalTrace: (state, action) => {
-            if (action.payload.mode === "empty") {
-                state.modalTrace = [];
-            } else {
-                state.modalTrace.push(action.payload);
-            }
-        },
+    setMember: (state, action) => {
+      state.isMember = action.payload;
+    },
 
-        toggleOtpOnPhone: (state) => {
-            state.otpOnPhone = !state.otpOnPhone;
-        }
-    }
+    setLoginOpened: (state, action) => {
+      state.loginOpened = action.payload;
+    },
+
+    setModalTrace: (state, action) => {
+      if (action.payload.mode === "empty") {
+        state.modalTrace = [];
+      } else {
+        state.modalTrace.push(action.payload);
+      }
+    },
+
+    toggleOtpOnPhone: (state) => {
+      state.otpOnPhone = !state.otpOnPhone;
+    },
+  },
 });
 
 export default loginSlice.reducer;
@@ -100,32 +110,48 @@ export const selectLoginOpened = (state) => state.login.loginOpened;
 export const selectModalTrace = (state) => state.login.modalTrace;
 export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
 
-export const selectHoverState = createSelector([state => state.login.isLoginHovered, state => state.login.isLocationHovered], ( location ) => ({ locationHovered: location }));
+export const selectLocationInfoModal = createSelector(
+  [
+    (state) => state.login.isLocationInfoModalOpen,
+    (state) => state.login.hideLocationInfoModal,
+  ],
+  (OpenLocationInfoModal, hideLocationInfoModal) => ({
+    OpenLocationInfoModal, 
+    hideLocationInfoModal
+  })
+);
 
-export const selectHideModel = createSelector([state => state.login.isHideLogin, state => state.login.isHideLocation], (loginHide, locationHide) => {
+export const selectHoverState = createSelector(
+  [(state) => state.login.isLocationHovered],
+  (location) => ({ locationHovered: location })
+);
+
+export const selectHideModel = createSelector(
+  [(state) => state.login.isHideLogin, (state) => state.login.isHideLocation],
+  (loginHide, locationHide) => {
     return {
-        loginHide,
-        locationHide
-    }
-})
+      loginHide,
+      locationHide,
+    };
+  }
+);
 
 export const {
-    setLogInModal,
-    closeLogInModal,
-    loginOtpSend,
-    signUpOtpSend,
-    setLocationModal,
-    closeLocationInModal,
-    setIsLoggedIn,
-    setLoading,
-    setMember,
-    setLocationHovered,
-    setHideLocation,
-    setHideLogin,
-    setLoginOpened,
-    setModalTrace,
-    toggleOtpOnPhone
+  setLogInModal,
+  closeLogInModal,
+  loginOtpSend,
+  signUpOtpSend,
+  setLocationModal,
+  closeLocationInModal,
+  setIsLoggedIn,
+  setLoading,
+  setMember,
+  setLocationHovered,
+  setHideLocation,
+  setHideLogin,
+  setLoginOpened,
+  setModalTrace,
+  toggleOtpOnPhone,
+  setHideLocationInfoModal,
+  setLocationInfoModal
 } = loginSlice.actions;
-
-
-

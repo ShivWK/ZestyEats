@@ -232,6 +232,8 @@ export default function App() {
     dispatch(setUserFriendlyPathHistory(history));
   }, [pathHistory]);
 
+  
+
   return (
     <>
       <RouterProvider router={router} />

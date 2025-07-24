@@ -32,9 +32,6 @@ const Menu = () => {
     <div
       onClick={() => {
         dispatch(setHideMenu(true))
-        // window.history.go(-1);
-        // window.history.replaceState(null, "");
-        // window.history.replaceState(null, "");
       }}
       className="fixed inset-0 bg-black/30 top-0 left-0 w-[100%] h-[100%] z-40"
     >
