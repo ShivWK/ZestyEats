@@ -1,13 +1,36 @@
 const SessionModel = require("./../models/sessionModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
+const crypto = require("crypto");
 
 exports.signup = async (req, res) => {
     const body = req.body;
+    const { name, phone_number, email } = body.userData;
     const token = body.token;
     const mode = req.params.mode;
 
-    const result = await recaptchaVerification(token)
+    const nameRule = /^[a-zA-Z\s]{1,50}$/;
+    const phoneRule = /^[0-9]{10}$/;
+    const emailRule = /^[^.][a-zA-z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$/;
+
+    // Data validation 
+
+    if (!nameRule.test(name.trim()) ||
+        !phoneRule.test(phone_number.trim()) ||
+        !emailRule.test(email.trim())) {
+        return res.status(400).json({
+            status: "failed",
+            message: "Invalid Credentials",
+        })
+    }
+
+    // Data sanitization
+
+    const cleanName = name.trim().replace(/\s+/g, " ");
+    const cleanPhone = +phone_number.trim();
+    const cleanEmail = email.trim();
+
+    const result = await recaptchaVerification(token);
 
     if (!result.success) {
         return res.status(400).json({
@@ -16,6 +39,9 @@ exports.signup = async (req, res) => {
         })
     } else {
         // generate 6 digit OTP
+        // const OTP = Math.floor(Math.random() * (999999 - 100000) + 100000); // unsafe
+        const signUpOTP = crypto.randomInt(100000, 1000000);
+        console.log(signUpOTP)
 
         if (mode === "phone") {
             // send otp through Fast2SMS
