@@ -9,7 +9,6 @@ exports.signup = async (req, res) => {
     const { name, phone_number, email } = body.userData;
     const token = body.token;
     const mode = req.params.mode;
-    const sendOtpTo = body.sendOtpOn;
 
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
     const phoneRule = /^[0-9]{10}$/;
@@ -40,15 +39,13 @@ exports.signup = async (req, res) => {
             data: result["error-code"],
         })
     } else {
-        // const OTP = Math.floor(Math.random() * (999999 - 100000) + 100000); // unsafe
         const signUpOTP = crypto.randomInt(100000, 1000000);
 
         if (mode === "phone") {
-            // send otp through Fast2SMS
             const options = {
                 authorization: "zMJcDQ5smKZnIylCEA36fYVbrXRGqdeWhg48oOHvt7FULujx29dYcROu0m5onQ2UWCtPxgpkGKzZsA7I",
-                message: `Use ${signUpOTP} as your verification code to continue signing up. Please do not share this code with anyone.`,
-                numbers: [`${sendOtpTo}`]
+                message: `Hi ${cleanName}, use ${signUpOTP} as your verification code to continue signing up. Please do not share this code with anyone.`,
+                numbers: [`${cleanPhone}`]
             }
 
             fast2sms.sendMessage(options)
