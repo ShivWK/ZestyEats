@@ -43,7 +43,7 @@ exports.signup = async (req, res) => {
 
         if (mode === "phone") {
             const options = {
-                authorization: "zMJcDQ5smKZnIylCEA36fYVbrXRGqdeWhg48oOHvt7FULujx29dYcROu0m5onQ2UWCtPxgpkGKzZsA7I",
+                authorization: process.env.FAST_TWO_SMS_KEY,
                 message: `Hi ${cleanName}, use ${signUpOTP} as your verification code to continue signing up. Please do not share this code with anyone.`,
                 numbers: [`${cleanPhone}`]
             }
