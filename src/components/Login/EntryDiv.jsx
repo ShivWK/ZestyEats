@@ -150,7 +150,7 @@ const EntryDiv = memo(({
     >
       <p
         className={`absolute font-semibold ${hasValue ? "text-red-500" : "text-gray-400"
-          } transform transition-all duration-[170ms] ease-linear ${isEntryMade ? "top-2.5 text-xs ml-0.5" : "top-1/2 -translate-y-1/2 text-lg"
+          } transform transition-all duration-[170ms] ease-linear ${isEntryMade ? "top-2.5 text-xs" : "top-1/2 -translate-y-1/2 text-lg"
           } tracking-wide`}
       >
         {hasValue ? fallbackPlaceholder : placeholder}
@@ -170,7 +170,7 @@ const EntryDiv = memo(({
             handleChange(event);
             onChangeHandler(event)
           }}
-          className={`relative top-5 font-bold text-lg outline-none w-full bg-transparent`}
+          className={`relative top-5 font-semibold text-lg outline-none w-full bg-transparent`}
         />
     </div>
   );

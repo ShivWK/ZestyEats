@@ -3,6 +3,7 @@ const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 
+
 exports.signup = async (req, res) => {
     const body = req.body;
     const { name, phone_number, email } = body.userData;
@@ -55,7 +56,7 @@ exports.signup = async (req, res) => {
                 })
             }
 
-           fetch("https://www.fast2sms.com/dev/bulkV2", options)
+            fetch("https://www.fast2sms.com/dev/bulkV2", options)
                 .then(res => res.json())
                 .then(response => {
                     console.log("API response", response)
@@ -72,7 +73,8 @@ exports.signup = async (req, res) => {
                 })
 
         } else {
-            //send OTP through resent email service
+            
+            
         }
     }
 }

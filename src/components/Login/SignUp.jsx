@@ -155,9 +155,9 @@ const SignUp = memo(() => {
 
   return (
     <>
-      <div className="h-fit w-fit flex items-center gap-2">
-        <div id="toggle" onClick={toggleHandler} className={`relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between ${!isSignUpOtpSend && "cursor-pointer"} bg-gray-200`}>
-          {isSignUpOtpSend && <div className="absolute bg-gray-300/50 h-full w-full z-10" />}
+      {!isSignUpOtpSend && (
+        <div className="h-fit w-fit flex items-center gap-2">
+        <div id="toggle" onClick={toggleHandler} className="relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between cursor-pointer bg-gray-200">
           <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
           <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
           <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}
@@ -175,6 +175,7 @@ const SignUp = memo(() => {
           }
         </div>
       </div>
+      )}
       <Form
         btnId={"SignUpBtn"}
         reference={formRef}

@@ -1,11 +1,20 @@
 const mongoose = require("mongoose");
 
 const otpSchema = new mongoose.Schema({
-    phone: Number,
+    phone:  {
+        type: Number,
+        unique: true,
+    },
 
-    email: String,
+    email: {
+        type: String,
+        unique: true,
+    },
 
-    hashedOtp: String,
+    hashedOtp: {
+        type: String,
+        required: [true, "Please provide the OTP"]
+    },
 
     createdAt: {
         type: Date,
@@ -15,17 +24,19 @@ const otpSchema = new mongoose.Schema({
 
     expiredWhen: {
         type: Number,
-        default: () => Math.round(Date.now() / 1000) + 60 * 5
+        default: () => Math.floor(Date.now() / 1000) + 60 * 5
     },
 
     attempts: {
         type: Number,
-        max: 5
+        max: 5,
+        required: true
     },
 
     resendCount: {
         type: Number,
-        max: 3
+        max: 3,
+        required: true
     },
 
     blockedUntil: Number,
@@ -35,4 +46,4 @@ const otpSchema = new mongoose.Schema({
 
 const OtpModel = mongoose.model("OTP", otpSchema);
 
-exports.default = OtpModel;
+module.exports = OtpModel;

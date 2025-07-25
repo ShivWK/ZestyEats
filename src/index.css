@@ -75,7 +75,9 @@
     }
 
     .menu-button {
-        animation: menuButton 0.27s ease forwards;
+
+        animation: menuButton 0.5s ease forwards;
+        /* animation-delay: 800ms; */
     }
 
     .show-locationInfoModal {

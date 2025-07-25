@@ -75,8 +75,8 @@ const Home = memo(() => {
 
         {/* Home banner */}
 
-        <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-32 lg:h-72 mx-auto">
-          <img src="/images/new_banner.jpg" className="h-[100%] w-full lg:object-cover" alt="Home banner image" />
+        <div className="relative rounded-2xl md:rounded-4xl overflow-hidden max-md:-mt-2 mb-3 w-full h-32 lg:h-80 mx-auto">
+          <img src="/images/new_banner.jpg" className="h-full w-full r" alt="Home banner image" />
         </div>
 
         {/* if unserviceable */}

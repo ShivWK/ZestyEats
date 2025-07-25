@@ -12,6 +12,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please provide a valid phone number."],
     unique: true
   },
+  isNumberVerified: {
+    type: Boolean,
+    default: false
+  },
   email: {
     type: String,
     require: [true, "Please enter an email."],
@@ -20,6 +24,10 @@ const userSchema = new mongoose.Schema({
     lowercase: true, // this make the value into lowercase before saving it into the db
     validate: [validator.isEmail, "Please enter a valid email."],
   },
+  isEmailVerified: {
+    type: Boolean,
+    default: false
+  },
   address: [String],
   payments: {
     type: [
@@ -27,7 +35,7 @@ const userSchema = new mongoose.Schema({
         cardType: {
           type: String,
           enum: ["Visa", "MasterCard", "Rupay"],
-          require: [true, "Please provide a valid card number."],
+          required: [true, "Please provide a valid card number."],
         },
         last4: {
           type: String,

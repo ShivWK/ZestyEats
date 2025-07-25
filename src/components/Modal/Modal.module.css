@@ -12,20 +12,20 @@
 
 .model-left {
     left: 0;
-    animation: leftSlideShow 0.3s ease;
+    animation: leftSlideShow 0.4s ease-in-out;
 }
 
 .model-right {
     right: 0;
-    animation: rightSlideShow 0.3s ease;
+    animation: rightSlideShow 0.4s ease-in-out;
 }
 
 .hide-left-model {
-    animation: leftSlideHide 0.3s ease forwards;
+    animation: leftSlideHide 0.4s ease-in-out forwards;
 }
 
 .hide-right-model {
-    animation: rightSlideHide 0.3s ease forwards;
+    animation: rightSlideHide 0.4s ease-in-out forwards;
 }
 
 @keyframes leftSlideShow {

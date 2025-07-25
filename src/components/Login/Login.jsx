@@ -31,33 +31,6 @@ const Login = () => {
   const formRef = useRef(null);
   const recaptchaRef = useRef(null);
 
-  function resetRecaptcha() {
-    if (window.recaptchaVerifier) {
-      try {
-        window.recaptchaVerifier.clear();
-
-        const recaptchaWidgetId = window.recaptchaVerifier.widgetId;
-        console.log(recaptchaWidgetId);
-        if (recaptchaWidgetId && typeof grecaptcha !== "undefined") {
-          grecaptcha.reset(recaptchaWidgetId);
-        }
-      } catch (err) {
-        toast("Error in resetting recaptcha", {
-          autoClose: 2000,
-          style: {
-            backgroundColor: "rgba(0,0,0,0.9)",
-            fontWeight: "medium",
-            color: "white",
-          },
-        });
-
-        console.log("Error in Recaptcha", err);
-      } finally {
-        window.recaptchaVerifier = null;
-      }
-    }
-  }
-
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -103,11 +76,11 @@ const Login = () => {
     }
 
 
-  }, [dispatch, formRef, resetRecaptcha, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
+  }, [dispatch, formRef, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
 
   function sendOTP() {
     const data = new FormData(formRef.current);
-    
+
     //otp send logic
   }
 
@@ -144,18 +117,20 @@ const Login = () => {
 
   return (
     <>
-      <div id="toggle" onClick={toggleHandler} className={`relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between ${!isOtpSend && "cursor-pointer"} bg-gray-200`}>
-        {isOtpSend && <div className="absolute bg-gray-300/50 h-full w-full z-10" />}
-        <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
-        <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
-        <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}
-          style={{ left: otpOnPhone ? "0" : "2rem" }}
-        >
-          {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
-            : <i className="fa-solid fa-envelope text-red-500" />
-          }
+      {!isOtpSend && (
+        <div id="toggle" onClick={toggleHandler} className={`relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between ${!isOtpSend && "cursor-pointer"} bg-gray-200`}>
+          {isOtpSend && <div className="absolute bg-gray-300/50 h-full w-full z-10" />}
+          <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
+          <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
+          <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white`}
+            style={{ left: otpOnPhone ? "0" : "2rem" }}
+          >
+            {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
+              : <i className="fa-solid fa-envelope text-red-500" />
+            }
+          </div>
         </div>
-      </div>
+      )}
       <div className="mt-5">
         {otpOnPhone ? (
           <p className="text-xs mt-2 font-bold text-gray-600 tracking-wide">
