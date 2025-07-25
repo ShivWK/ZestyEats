@@ -58,7 +58,7 @@ const MobileFooterMenu = memo(() => {
 
     return (showOnMobile &&
         <div
-            className="flex left-0 right-0 w-full items-center justify-around text-2xl text-black h-14 shadow-[0_0_20px_1px_rgba(0,0,0,0.3)] position fixed bottom-0 transform transition-transform duration-200 ease-linear bg-white z-30"
+            className="flex left-0 right-0 w-full items-center justify-around text-2xl text-black h-14 shadow-[0_0_20px_1px_rgba(0,0,0,0.3)] position fixed bottom-0 transform transition-transform duration-200 ease-linear dark:bg-gray-800 dark:text-white bg-white z-30"
             style={{ transform: show ? "translateY(0)" : "translateY(100%)" }}
         >
             <NavLink to={"/support?mode=help"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
