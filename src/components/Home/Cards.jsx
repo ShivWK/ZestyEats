@@ -91,7 +91,7 @@ const Cards = memo(({ data, from }) => {
     <Link
       to={`/restaurantSpecific/${lat}/${lng}/${dataToMap?.id}/${dataToMap?.name}?mode=${mode}`}
       onClick={handleClick}
-      className={`relative flex flex-row md:flex-col max-md:gap-4 items-center max-md:w-full rounded-2xl md:overflow-hidden shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
+      className={`relative flex flex-row md:flex-col max-md:gap-4 items-center max-md:w-full rounded-2xl  shrink-0 hover:scale-95 transition-all duration-100 ease-in-out ${
         from === "online"
           ? "md:w-[240px]"
           : from === "specificFood"
@@ -108,13 +108,13 @@ const Cards = memo(({ data, from }) => {
           <p className="text-white font-bold text-3xl">Not Available</p>
           <i
             onClick={crossHandler}
-            className="ri-close-large-line text-white text-3xl rounded px-1 bg-black/50"
+            className="ri-close-large-line text-white text-3xl rounded px-1 dark:bg-gray-500/50 bg-black/50"
           ></i>
         </div>
       </div>
 
       <div
-        className={`relative w-full max-md:basis-[48%] h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 md:pl-4 shrink-0 max-md:max-h-full max-md:min-h-52 ${!disable && "max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.5)]"} ${
+        className={`relative w-full max-md:basis-[48%] h-40 bg-no-repeat bg-cover bg-center rounded-2xl flex items-end p-3 md:pl-4 shrink-0 max-md:max-h-full max-md:min-h-52 dark:shadow-[0_0_10px_2px_rgba(156,145,145,0.5)] ${!disable && "max-md:shadow-[0_0_10px_2px_rgba(0,0,0,0.5)]"} ${
           from === "online"
             ? "md:h-[160px]"
             : from === "specificFood"
@@ -125,7 +125,7 @@ const Cards = memo(({ data, from }) => {
           backgroundImage: `linear-gradient(0deg,rgba(23, 23, 23, 1) 0%, rgba(247, 247, 247, 0) 48%), url(${imageUrl}), url("/images/fallback.png")`,
         }}
       >
-        <p className="font-bold text-white text-xl">
+        <p className="font-bold dark:text-gray-200 text-white text-xl">
           {(textToZestyEats(dataToMap.aggregatedDiscountInfoV3?.header) || "") +
             " " +
             (textToZestyEats(dataToMap.aggregatedDiscountInfoV3?.subHeader) ||
@@ -148,33 +148,33 @@ const Cards = memo(({ data, from }) => {
           </svg>
         </div>
       </div>
-      <div className="md:mt-2 w-[95%] max-md:basis-1/2 max-md:py-2">
-        <p className="font-bold w-[98%] text-[17px] line-clamp-3 break-words leading-5">
+      <div className="md:mt-3 w-[95%] max-md:basis-1/2 max-md:py-2">
+        <p className="font-bold w-[98%] text-[17px] line-clamp-3 break-words leading-5 dark:text-gray-300">
           {textToZestyEats(dataToMap?.name) || ""}
         </p>
         <div className="flex gap-1 items-center -mt-0.5 max-md:text-sm">
           <i className="ri-user-star-fill text-green-600 text-xl"></i>
-          <p className="font-semibold">{dataToMap?.avgRatingString || ""}</p>
-          <p className="">•</p>
-          <p className="font-bold">{dataToMap?.sla?.slaString || "25-30 mins"}</p>
+          <p className="font-semibold dark:text-gray-300">{dataToMap?.avgRatingString || ""}</p>
+          <p className="dark:text-gray-300">•</p>
+          <p className="font-bold dark:text-gray-300">{dataToMap?.sla?.slaString || "25-30 mins"}</p>
         </div>
         {dataToMap?.veg ? (
-          <PureVeg classes="-ml-5" />
+          <PureVeg classes="-ml-5 lg:mt-1" />
         ) : (
           <VegAndNonVeg
             classes={
-              "inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs font-medium pl-1 pr-2 my-0.5 py-0.5 rounded-full border border-gray-300"
+              "inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs font-medium pl-1 pr-2 my-0.5 py-0.5 rounded-full border border-gray-300 lg:mt-1"
             }
           />
         )}
         <p
-          className={`mt-0.5 max-h-14 text-sm line-clamp-2 text-gray-700 break-words whitespace-normal font-semibold max-md:w-[85%] leading-0.5" ${
+          className={`mt-0.5 max-h-14 text-sm line-clamp-2 dark:text-gray-400 text-gray-700 break-words whitespace-normal font-semibold max-md:w-[85%] leading-0.5" ${
             from === "online" ? "max-md:w-[85%]" : "max-md:w-[75%]"
           }`}
         >
           {dataToMap?.cuisines?.join(", ") || ""}{"."}
         </p>
-        <p className="font-medium md:truncate max-md:text-sm text-black mt-0.5 max-md:line-clamp-2 max-md:max-w-[80%] break-words capitalize">
+        <p className="font-medium md:truncate max-md:text-sm text-black mt-0.5 max-md:line-clamp-2 max-md:max-w-[80%] break-words capitalize dark:text-gray-300">
           {address}{"."}
         </p>
       </div>

@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { memo, useEffect, useState } from "react";
@@ -50,14 +50,16 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
 
   return (
     <div className="flex gap-8 md:gap-20 max-md:mt-3 max-md:px-1">
-      <div id="Available_in">
-        <p className="font-medium text-lg text-black mb-3">Available In:</p>
+      <div id="Available_in" >
+        <p className="font-semibold text-lg dark:text-white text-black mb-3">Available In:</p>
         <ul className="list-none text-gray-900 font-normal">
           {first6Cities.map((city) => {
             const path = city.text.toLowerCase().replace(/\s/g, "-");
 
             return <li key={city.link} className="mb-3">
-              <NavLink to={`cityPage/${city?.text}?mode=city`} onClick={() => clickHandler(city?.text, path)}>{city.text}</NavLink>
+              <Link to={`cityPage/${city?.text}?mode=city`} onClick={() => clickHandler(city?.text, path)}>
+              <p className="dark:text-gray-200">{city.text}</p>
+              </Link>
             </li>
           })}
         </ul>
@@ -80,24 +82,24 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
       </div>
 
       <div id="legal">
-        <p className="font-medium text-lg text-black mb-3">Legal</p>
+        <p className="font-semibold text-lg text-black mb-3 dark:text-white">Legal</p>
         <ul className="list-none text-gray-900 font-normal">
           <li className="mb-3">
-            <NavLink to={"/legalAndPolicies?mode=termsAndConditions"}>Terms & Conditions</NavLink>
+            <Link to={"/legalAndPolicies?mode=termsAndConditions"} className="dark:text-gray-200">Terms & Conditions</Link>
           </li>
           <li className="mb-3">
-            <NavLink to={"/legalAndPolicies?mode=privacyPolicy"}>Privacy Policy</NavLink>
+            <Link to={"/legalAndPolicies?mode=privacyPolicy"} className="dark:text-gray-200">Privacy Policy</Link>
           </li>
           <li className="mb-3">
-            <NavLink to={"/legalAndPolicies?mode=cookiesPolicy"}>Cookie Policy</NavLink>
+            <Link to={"/legalAndPolicies?mode=cookiesPolicy"} className="dark:text-gray-200">Cookie Policy</Link>
           </li>
         </ul>
       </div>
       <div id="Contact">
-        <p className="font-medium text-lg text-black mb-3">Contact us</p>
+        <p className="font-semibold text-lg text-black mb-3 dark:text-white">Contact us</p>
         <ul className="list-none text-gray-900 font-normal">
           <li className="mb-3">
-            <NavLink to={isSmall ? "/support?mode=help" : "/help"}>Help & Support</NavLink>
+            <Link to={isSmall ? "/support?mode=help" : "/help"} className="dark:text-gray-200">Help & Support</Link>
           </li>
         </ul>
       </div>

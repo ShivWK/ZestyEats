@@ -21,7 +21,7 @@ const PageFooter = memo(() => {
   ) {
     return (
       !isLoading && (
-        <footer className="pt-0.5 md:pt-2.5 w-full flex flex-col justify-start items-center bg-gray-200">
+        <footer className="pt-0.5 md:pt-2.5 w-full flex flex-col justify-start items-center dark:bg-gray-800 bg-gray-200">
           <SubFooter isOpen={isOpen} openCities={setIsOpen} />
           {isOpen && <AllCities />}
           <Disclaimer />

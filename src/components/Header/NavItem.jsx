@@ -26,7 +26,7 @@ const NavItem = memo(
               </sup>
             ) : null}
           </i>
-          <span className="relative group-hover:text-[#ff5200] hidden md:block">
+          <span className="relative group-hover:text-[#ff5200] dark:text-gray-100 hidden md:block">
             {text}
           </span>
         </NavLink>

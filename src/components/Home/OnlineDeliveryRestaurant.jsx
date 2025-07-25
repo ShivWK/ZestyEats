@@ -5,25 +5,9 @@ import { selectCity } from "../../features/home/homeSlice";
 import { selectSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import { memo } from "react";
-import { useLocation } from "react-router-dom";
 
 const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
-  const pathname = useLocation().pathname;
   let defaultHeading = "Restaurants with online food delivery";
-
-  // if (!heading) {
-  //   if (pathname.includes("cityPage")) {
-  //     const secondaryCity = useSelector(selectSecondaryCity);
-  //     const cityToPrint = secondaryCity[0].toUpperCase() + secondaryCity.slice(1);
-
-  //     defaultHeading = `Restaurants with online food delivery in ${cityToPrint}`;
-  //   } else {
-  //     const currentCity = useSelector(selectCity);
-  //     const cityToPrint = currentCity[0].toUpperCase() + currentCity.slice(1);
-
-  //     defaultHeading = `Restaurants with online food delivery in ${cityToPrint}`;
-  //   }
-  // }
 
   const title = heading || defaultHeading;
   const { vegOption, nonVegOption } = useSelector(selectVegVariant);
@@ -31,7 +15,7 @@ const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
   return (
     <>
       <div>
-        <h3>{title}</h3>
+        <h3 className="dark:text-white">{title}</h3>
         <Filter />
       </div>
       <div className="flex flex-wrap gap-y-7 gap-x-8 justify-start w-full mt-8 mx-auto max-md:pl-1">

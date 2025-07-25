@@ -132,7 +132,7 @@ const HorizontalCarousel = memo(({
     <>
       <div className="flex justify-between flex-wrap items-center" style={{ marginBottom: margin_bottom }}>
         {heading && (
-          <h2>
+          <h2 className="dark:text-white">
             {heading}
           </h2>
         )}
@@ -153,7 +153,7 @@ const HorizontalCarousel = memo(({
         <div
           onScroll={handleScroll}
           ref={containerRef}
-          className="flex justify-start gap-3 md:gap-4 overflow-y-visible overflow-x-auto hide-scrollbar py-2"
+          className="flex justify-start gap-3 md:gap-7 overflow-y-visible overflow-x-auto hide-scrollbar py-2"
           onTouchEnd={() => clicked.current = true}
         >
           {dataToMap.map((item, index) => (

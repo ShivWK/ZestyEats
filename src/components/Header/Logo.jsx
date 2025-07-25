@@ -27,7 +27,7 @@ const Logo = memo(({ searchPlaceholder }) => {
   return (
     <div className="flex gap-1.5 md:gap-6 items-center">
       <NavLink to="/" className={`active:scale-95 shrink-0`}>
-        <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-in-out max-lg:h-12 max-lg:w-12 rounded-md outline-none border-none " />
+        <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-linear max-lg:h-12 max-lg:w-12 rounded-md outline-none border-none " />
       </NavLink>
 
       {searchPlaceholder ? (
@@ -43,7 +43,7 @@ const Logo = memo(({ searchPlaceholder }) => {
           </span>
 
           <div className="flex gap-1 md:gap-0.5 items-center justify-center max-md:-mt-1">
-            <span className="max-w-44 md:max-w-48 truncate text-start font-medium text-gray-600 max-md:text-sm">
+            <span className="max-w-44 md:max-w-48 truncate text-start font-medium dark:text-gray-300 text-gray-600 max-md:text-sm">
               {yourCurrentCity
                 ? `${searchedCityAddress}`
                 : `${searchedCity}${searchedCityAddress}`}

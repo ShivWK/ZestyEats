@@ -30,13 +30,13 @@ const LogoAndAttribution = () => {
             alt="Company footer logo"
           />
         </div>
-        <p className="text-gray-800 text-sm ">
+        <p className="text-gray-800 text-sm dark:text-gray-200">
           <span className="whitespace-nowrap">© 2025 Shivendra</span><span>┃</span><span>Food delivery app built for learning and
           demonstration.</span>
         </p>
       </div>
       <div className="attibution text-gray-800 w-fit max-md:mb-3">
-        <p className="mb-2 text-lg">Developed By</p>
+        <p className="mb-2 text-lg dark:text-white">Developed By</p>
         <div className="flex gap-2.5 w-fit">
           <img
             onClick={() => {
@@ -48,7 +48,7 @@ const LogoAndAttribution = () => {
             src="/images/MY-min.png"
             alt="Developer image"
           />
-          <div className="flex flex-col justify-center  italic">
+          <div className="flex flex-col justify-center italic dark:text-gray-200">
             <p className="text-lg ">Shivendra Dwivedi</p>
             <p className="text-sm">Web Developer</p>
             <div className="max-md:flex gap-3 mt-2 hidden">
@@ -67,14 +67,14 @@ const LogoAndAttribution = () => {
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
                 target="__block"
               >
-                <i className="fa-brands fa-square-github text-xl"></i>
+                <i className="fa-brands fa-square-github text-xl dark:text-gray-300"></i>
               </a>
               <a
                 href="https://x.com/Shivendrawk"
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
                 target="__block"
               >
-                <i className="fa-brands fa-square-x-twitter text-xl"></i>
+                <i className="fa-brands fa-square-x-twitter text-xl dark:text-gray-300"></i>
               </a>
               <a
                 href="https://instagram.com/shivendrawk"

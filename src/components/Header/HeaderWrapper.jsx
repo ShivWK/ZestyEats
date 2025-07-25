@@ -17,7 +17,7 @@ const HeaderWrapper = ({ children }) => {
 
   return (
     <div
-      className="flex justify-center w-full items-center shadow-[0_0_20px_1px_rgb(0,0,0,0.3)] max-md:px-1.5 h-16 md:h-20 fixed z-30 bg-white"
+      className="flex justify-center w-full items-center shadow-[0_0_20px_1px_rgb(0,0,0,0.3)] max-md:px-1.5 h-16 md:h-20 fixed z-30 dark:bg-gray-800 dark:text-white bg-white"
       style={{ paddingRight: (isLocationOpen || isLoginOpen || menuModel || OpenLocationInfoModal) ? (isLargeScreen ? 15 : 0) : 0 }}
     >
       {children}
