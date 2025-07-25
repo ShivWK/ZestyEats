@@ -17,7 +17,7 @@ import {
 
 import { Phone, Mail } from "lucide-react";
 
-const Login = () => {
+const Login = ({ recaptchaRef }) => {
   const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
   const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(undefined);
@@ -29,7 +29,6 @@ const Login = () => {
   const isOtpSend = useSelector(selectLoginOtp);
   const isLoading = useSelector(selectIsLoading);
   const formRef = useRef(null);
-  const recaptchaRef = useRef(null);
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -160,7 +159,6 @@ const Login = () => {
         signingStatement={"By clicking on Login"}
         isOtpSend={isOtpSend}
         isLoading={isLoading}
-        recaptchaReference={recaptchaRef}
       >
         {otpOnPhone ? <EntryDiv
           type="tel"

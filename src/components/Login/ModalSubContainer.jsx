@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { isValidElement, cloneElement, useRef } from "react";
 
 import {
   setHideLogin,
@@ -11,6 +12,7 @@ import {
   loginOtpSend,
   selectOtpOnPhone
 } from "../../features/Login/loginSlice";
+import ReCAPTCHA from "react-google-recaptcha";
 
 import { memo } from "react";
 
@@ -19,6 +21,8 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
   const isLoginOtpSend = useSelector(selectLoginOtp);
   const isSigUpOtpSend = useSelector(selectSignUpOtp);
   const otpOnPhone = useSelector(selectOtpOnPhone);
+  const recaptchaReference = useRef(null);
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
 
   const handleClose = () => {
     if (isLoginOtpSend) dispatch(loginOtpSend(false));
@@ -104,7 +108,11 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
           className="h-20 w-20 md:h-[90px] md:w-[90px] select-none max-md:-mt-10"
         />
       </div>
-      {children}
+
+      {/* {children} */}
+
+      {isValidElement(children) ? cloneElement(children, {recaptchaRef: recaptchaReference}) : children}
+
       <p className="text-xs font-semibold tracking-wide text-gray-500 text-center mt-2 lg:mt-1">------- or -------</p>
       {!(isLoginOtpSend || isSigUpOtpSend) && (
         <button className="absolute mt-7 lg:mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out bg-white">
@@ -137,6 +145,14 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
           </p>
         </button>
       )}
+      <ReCAPTCHA
+        sitekey={siteKey}
+        size="invisible"
+        ref={recaptchaReference}
+        badge="bottomright"
+        onError={(err) => console.error("error occurred", err)}
+        onExpired={() => recaptchaReference.current.reset()}
+      />
     </div>
   );
 });

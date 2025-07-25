@@ -16,7 +16,7 @@ import {
 import { Phone, Mail } from "lucide-react"
 import { toast } from "react-toastify";
 
-const SignUp = memo(() => {
+const SignUp = memo(({ recaptchaRef }) => {
   const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
@@ -39,7 +39,6 @@ const SignUp = memo(() => {
   const isLoading = useSelector(selectIsLoading);
   const otpOnPhone = useSelector(selectOtpOnPhone);
   const formRef = useRef(null);
-  const recaptchaRef = useRef(null);
 
   const handleSignUpChange = useCallback((e) => {
     setSignUpFormData(prev => ({
@@ -184,7 +183,6 @@ const SignUp = memo(() => {
         signingStatement={"By creating an account"}
         isOtpSend={isSignUpOtpSend}
         isLoading={isLoading}
-        recaptchaReference={recaptchaRef}
       >
         <EntryDiv
           type={"tel"}
