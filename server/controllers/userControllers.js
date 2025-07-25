@@ -53,7 +53,7 @@ exports.signup = async (req, res) => {
 
             fast2sms.sendMessage(options)
                 .then(response => {
-                    console.log(response)
+                    console.log("send", response)
                     res.status(200).json({
                         status: "success",
                         message: "OTP send successfully to your number"
