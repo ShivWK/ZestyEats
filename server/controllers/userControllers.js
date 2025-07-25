@@ -2,12 +2,14 @@ const SessionModel = require("./../models/sessionModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
+const fast2sms = require('fast-two-sms')
 
 exports.signup = async (req, res) => {
     const body = req.body;
     const { name, phone_number, email } = body.userData;
     const token = body.token;
     const mode = req.params.mode;
+    const sendOtpTo = body.sendOtpOn;
 
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
     const phoneRule = /^[0-9]{10}$/;
@@ -38,24 +40,33 @@ exports.signup = async (req, res) => {
             data: result["error-code"],
         })
     } else {
-        // generate 6 digit OTP
         // const OTP = Math.floor(Math.random() * (999999 - 100000) + 100000); // unsafe
         const signUpOTP = crypto.randomInt(100000, 1000000);
-        console.log(signUpOTP)
 
         if (mode === "phone") {
             // send otp through Fast2SMS
+            const options = {
+                authorization: "zMJcDQ5smKZnIylCEA36fYVbrXRGqdeWhg48oOHvt7FULujx29dYcROu0m5onQ2UWCtPxgpkGKzZsA7I",
+                message: `Use ${signUpOTP} as your verification code to continue signing up. Please do not share this code with anyone.`,
+                numbers: [`${sendOtpTo}`]
+            }
+
+            fast2sms.sendMessage(options)
+                .then(response => {
+                    console.log(response)
+                    res.status(200).json({
+                        status: "success",
+                        message: "OTP send successfully to your number"
+                    })
+                })
+                .catch(err => {
+                    console.log("Error in sending OTP", err)
+                })
+
         } else {
             //send OTP through resent email service
         }
     }
-
-    res.status(200).json({
-        status: "success",
-        data: body,
-        params: req.params,
-        result
-    })
 }
 
 exports.guestSession = async (req, res, next) => {
