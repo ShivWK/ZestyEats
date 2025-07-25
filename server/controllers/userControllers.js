@@ -60,7 +60,11 @@ exports.signup = async (req, res) => {
                     })
                 })
                 .catch(err => {
-                    console.log("Error in sending OTP", err)
+                    console.log("Error in sending OTP", err);
+                    res.status(500).json({
+                        status: "failed",
+                        message: "OTP not send"
+                    })
                 })
 
         } else {
