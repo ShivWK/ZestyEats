@@ -1,8 +1,6 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../features/Login/loginSlice";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
 
 const EntryDiv = memo(({
   type,
@@ -172,7 +170,7 @@ const EntryDiv = memo(({
             handleChange(event);
             onChangeHandler(event)
           }}
-          className={`relative px-0.5 top-5 font-bold text-lg outline-none w-full`}
+          className={`relative top-5 font-bold text-lg outline-none w-full bg-transparent`}
         />
     </div>
   );
