@@ -2,7 +2,6 @@ const SessionModel = require("./../models/sessionModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
-const fast2sms = require('fast-two-sms')
 
 exports.signup = async (req, res) => {
     const body = req.body;
@@ -43,22 +42,30 @@ exports.signup = async (req, res) => {
 
         if (mode === "phone") {
             const options = {
-                authorization: process.env.FAST_TWO_SMS_KEY,
-                message: `Hi ${cleanName}, use ${signUpOTP} as your verification code to continue signing up. Please do not share this code with anyone.`,
-                numbers: [`${cleanPhone}`]
+                method: "POST",
+                headers: {
+                    "COntent-Type": "application/json",
+                    "Authorization": process.env.FAST_TWO_SMS_KEY,
+                },
+                body: JSON.stringify({
+                    message: `Hi ${cleanName}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`,
+                    language: "english",
+                    route: "q",
+                    numbers: `91${cleanPhone}`,
+                })
             }
 
-            fast2sms.sendMessage(options)
+           fetch("https://www.fast2sms.com/dev/bulkV2", options)
+                .then(res => res.json())
                 .then(response => {
-                    console.log("send", response)
-                    res.status(200).json({
+                    console.log("API response", response)
+                    return res.status(200).json({
                         status: "success",
                         message: "OTP send successfully to your number"
                     })
-                })
-                .catch(err => {
+                }).catch(err => {
                     console.log("Error in sending OTP", err);
-                    res.status(500).json({
+                    return res.status(500).json({
                         status: "failed",
                         message: "OTP not send"
                     })

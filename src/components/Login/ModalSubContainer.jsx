@@ -107,7 +107,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
       {children}
       <p className="text-xs font-semibold tracking-wide text-gray-500 text-center mt-2 lg:mt-1">------- or -------</p>
       {!(isLoginOtpSend || isSigUpOtpSend) && (
-        <button className="absolute mt-7 lg:mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out">
+        <button className="absolute mt-7 lg:mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out bg-white">
           <p className="whitespace-nowrap flex gap-2 items-center">
             Continue with{" "}
             <svg

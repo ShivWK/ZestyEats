@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
 import { selectIsLoggedIn } from "../../features/Login/loginSlice";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
 const EntryDiv = memo(({
   type,
@@ -13,7 +15,7 @@ const EntryDiv = memo(({
   isReadOnly = false,
   changeIsEntryMade,
   changeHasValue,
-  onChangeHandler = () => {},
+  onChangeHandler = () => { },
 }) => {
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
@@ -48,7 +50,7 @@ const EntryDiv = memo(({
 
   const handleDivClick = (e) => {
     e.stopPropagation();
-      inputRef.current.focus();
+    inputRef.current.focus();
   };
 
   const onPhoneBlur = () => {
@@ -80,6 +82,8 @@ const EntryDiv = memo(({
     if (inputRef.current.value.length == 0) {
       setIsEntryMade(false);
       setHasValue(false);
+    } else if (/[^a-zA-z\s]/g.test(inputRef.current.value)) {
+      setHasValue(true);
     }
   };
 
@@ -87,11 +91,7 @@ const EntryDiv = memo(({
     if (inputRef.current.value.length == 0) {
       setIsEntryMade(false);
       setHasValue(false);
-    } else if (
-      !/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-        inputRef.current.value
-      )
-    ) {
+    } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(inputRef.current.value)) {
       setHasValue(true);
     } else {
       setHasValue(false);
@@ -110,6 +110,11 @@ const EntryDiv = memo(({
     e.target.value = e.target.value.slice(0, 6);
   };
 
+  const handleNameInput = (e) => {
+    setHasValue(false);
+    e.target.value = e.target.value.slice(0, 50);
+  };
+
   const handleGeneralInput = () => {
     setHasValue(false);
   };
@@ -123,20 +128,22 @@ const EntryDiv = memo(({
   }
 
   const handleBlur =
-    purpose == "phone"
+    purpose === "phone"
       ? onPhoneBlur
-      : purpose == "otp"
-      ? onOtpBlur
-      : purpose == "name"
-      ? onNameBlur
-      : onEmailBlur;
+      : purpose === "otp"
+        ? onOtpBlur
+        : purpose === "name"
+          ? onNameBlur
+          : onEmailBlur;
 
   const handleInput =
-    purpose == "phone"
+    purpose === "phone"
       ? handlePhoneInput
-      : purpose == "otp"
-      ? handleOtpInput
-      : handleGeneralInput;
+      : purpose === "otp"
+        ? handleOtpInput
+        : purpose === "name"
+          ? handleNameInput
+          : handleGeneralInput;
 
   return (
     <div
@@ -144,31 +151,29 @@ const EntryDiv = memo(({
       className="relative p-2.5 border-2 border-gray-300 h-[70px] cursor-text"
     >
       <p
-        className={`absolute font-semibold ${
-          hasValue ? "text-red-500" : "text-gray-400"
-        } transition-all duration-[250ms] ease-in-out ${
-          isEntryMade ? "top-2.5 text-xs" : "top-[19px] text-lg"
-        } tracking-wide`}
+        className={`absolute font-semibold ${hasValue ? "text-red-500" : "text-gray-400"
+          } transform transition-all duration-[170ms] ease-linear ${isEntryMade ? "top-2.5 text-xs ml-0.5" : "top-1/2 -translate-y-1/2 text-lg"
+          } tracking-wide`}
       >
         {hasValue ? fallbackPlaceholder : placeholder}
       </p>
-      <input
-        id="elem"
-        name={purpose}
-        type={type}
-        value={fieldValue}
-        onBlur={handleBlur}
-        onFocus={handleFocus}
-        inputMode={inputMode}
-        readOnly={isReadOnly}
-        ref={inputRef}
-        onChange={(event) => {
-          handleInput(event);
-          handleChange(event);
-          onChangeHandler(event)
-        }}
-        className="relative px-1 top-5 font-bold text-lg outline-none max-w-full"
-      />
+        <input
+          id="elem"
+          name={purpose}
+          type={type}
+          value={fieldValue}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          inputMode={inputMode}
+          readOnly={isReadOnly}
+          ref={inputRef}
+          onChange={(event) => {
+            handleInput(event);
+            handleChange(event);
+            onChangeHandler(event)
+          }}
+          className={`relative px-0.5 top-5 font-bold text-lg outline-none w-full`}
+        />
     </div>
   );
 });

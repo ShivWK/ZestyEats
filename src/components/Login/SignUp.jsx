@@ -57,17 +57,28 @@ const SignUp = memo(() => {
     if (data.get("phone").length === 0) {
       setChangePhoneHasValue(true);
       dispatch(setLoading(false));
-    } else if (data.get("phone").length < 10) {
+    }
+
+    if (data.get("name").length === 0) {
+      setChangeNameHasValue(true);
+      dispatch(setLoading(false));
+    }
+
+    if (data.get("email").length === 0) {
+      setChangeEmailHasValue(true);
+      dispatch(setLoading(false));
+      return;
+    }
+
+    if (data.get("phone").length < 10) {
       setChangePhoneIsEntryMade(true);
       setChangePhoneHasValue(true);
       dispatch(setLoading(false));
-    } else if (data.get("name").length === 0) {
+    } else if (/[^a-zA-z\s]/g.test(data.get("name"))) {
+      setChangeNameIsEntryMade(true)
       setChangeNameHasValue(true);
       dispatch(setLoading(false));
-    } else if (data.get("email").length === 0) {
-      setChangeEmailHasValue(true);
-      dispatch(setLoading(false));
-    } else if (!/^[a-zA-Z0-9.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
+    } else if (!/^[^.][a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
       setChangeEmailIsEntryMade(true);
       setChangeEmailHasValue(true);
       dispatch(setLoading(false));
@@ -95,7 +106,6 @@ const SignUp = memo(() => {
 
   async function sendOtp(data, token, otpOnPhoneLog) {
     const mode = otpOnPhoneLog ? "phone" : "email"
-    const sendOtpOn = otpOnPhoneLog ? data.get("phone") : data.get("email");
     const userData = {
       name: data.get("name"),
       phone_number: data.get("phone"),
@@ -109,7 +119,6 @@ const SignUp = memo(() => {
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          sendOtpOn,
           userData,
           token
         })
@@ -161,8 +170,8 @@ const SignUp = memo(() => {
         </div>
 
         <div className="text-xs font-bold text-gray-600 tracking-wide">
-          {otpOnPhone ? <p>OTP to <span className="text-black">Indian number (+91 only).</span></p>
-            : <p>OTP to <span className="text-black">email (available globally).</span></p>
+          {otpOnPhone ? <p>OTP to <span className="text-black">Indian number.</span></p>
+            : <p>OTP to <span className="text-black">email (works globally).</span></p>
           }
         </div>
       </div>
@@ -196,7 +205,7 @@ const SignUp = memo(() => {
             value={signUpFormData.name}
             onChangeHandler={handleSignUpChange}
             placeholder="Name"
-            fallbackPlaceholder="Name"
+            fallbackPlaceholder="Enter a valid name"
             changeIsEntryMade={changeNameIsEntryMade}
             changeHasValue={changeNameHasValue}
           />
