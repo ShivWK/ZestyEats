@@ -26,7 +26,7 @@ const SearchContainer = ({
             delimiterColor={"text-gray-600"}
           />
         </div>
-        {!pathname.includes("searchResult") ? (<div id="searchBAr" className="flex w-full items-center justify-evenly px-2 py-1.5 border-b-2 rounded-md dark:bg-gray-600/50 bg-gray-100 ">
+        {!pathname.includes("searchResult") ? (<div id="searchBAr" className="flex w-full items-center justify-evenly px-2 py-1.5 border-b-2 rounded-md dark:bg-gray-600/50 dark:border-gray-300 bg-gray-100 ">
           {pathname.includes("dishSearch") && (<i
             onClick={() => navigate(-1)}
             className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"

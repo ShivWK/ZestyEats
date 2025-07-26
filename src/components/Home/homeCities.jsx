@@ -61,7 +61,7 @@ const HomeCities = memo(() => {
             }
         >   <>
                 <h3 className="self-start dark:text-white">Find food and restaurants in</h3>
-                <div id="searchBAr" className="flex w-full items-center gap-1.5 p-2.5 py-1.5 dark:border-gray-400 border-b-2 rounded-md dark:bg-gray-600/50 bg-gray-100 mb-3 mt=1">
+                <div id="searchBAr" className="flex w-full items-center gap-1.5 p-2.5 py-1.5 dark:border-gray-300 border-b-2 rounded-md dark:bg-gray-600/50 bg-gray-100 mb-3 mt=1">
                     <input
                         className="text-gray-900 dark:text-gray-200 py-1 md:py-1.5 px-2 outline-none bg-transparent text-lg font-semibold basis-[98%] dark:placeholder:text-gray-400"
                         type="text"

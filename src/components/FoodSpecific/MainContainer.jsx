@@ -42,7 +42,7 @@ const MainContainer = ({ data }) => {
             delimiterColor={"text-gray-600"}
           />
         </div>
-        <h1 className="heading text-black md:text-5xl text-4xl font-bold tracking-tight mx-0 dark:text-white">
+        <h1 className="heading text-black md:text-5xl text-3xl font-bold tracking-tight mx-0 dark:text-white">
           {title}
         </h1>
         <p className="description text-lg font-medium text-gray-800 -mt-2 md:-mt-4 mb-2 max-md:leading-6 dark:text-gray-300">
@@ -55,7 +55,7 @@ const MainContainer = ({ data }) => {
           <p>Explore Restaurants</p>
         </div>
         <div className="flex justify-center">
-          <div className="flex w-full gap-9 p-1 flex-wrap">
+          <div className="flex w-full gap-9 py-1 flex-wrap">
             {dataToSend.map((item, index) => {
 
               if (!vegOption && item.veg) return;

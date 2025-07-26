@@ -23,16 +23,14 @@ const LegalAndFaqs = memo(() => {
     const heading = faqsStatus ? "FAQs" : "Legal"
     
     return (<div className="basis-[75%] pl-7 py-7">
-        <p className="text-[28px] font-bold text-black tracking-tight mb-4 ">{heading}</p>
+        <p className="text-[28px] font-bold text-black tracking-tight mb-4 dark:text-white">{heading}</p>
         {data.map((obj, index) => {
             return (
                 <div key={index} className="border-b-2 border-gray-300">
-                    <div onClick={() => handleClick(index)} className="group flex justify-between items-center py-3 px-3 cursor-pointer" style={{
-                        backgroundColor: activeIndex === index ? "rgba(255,81,0,0.15)" : "white"
-                    }}>
-                        <h2 className="grouh2-hover:text-primary text-[18px] font-semibold transition-all duration-150 ease-in select-none text-gray-800">{obj.question}</h2>
+                    <div onClick={() => handleClick(index)} className={`group flex justify-between items-center py-3 px-3 cursor-pointer ${activeIndex === index ? "bg-[rgba(255,81,0,0.15)]" : "bg-white dark:bg-gray-400 dark:hover:bg-gray-500 hover:bg-gray-200"}`}>
+                        <h2 className={`group-hover:text-primary text-[18px] font-medium transition-all duration-100 ease-in select-none text-gray-800 ${activeIndex === index ? "dark:text-primary" : "dark:text-black"}`}>{obj.question}</h2>
                         <i
-                            className="ri-arrow-drop-down-line text-[#ff5200] text-4xl font-[200] -ml-2.5 inline-block"
+                            className={`ri-arrow-drop-down-line ${activeIndex === index ? "text-primary" : "group-hover:text-primary text-gray-800"} text-4xl font-[200] -ml-2.5 inline-block`}
                             style={{
                                 transform: activeIndex === index ? "rotate(-180deg)" : "rotate(0deg)",
                                 transition: "transform 0.2s linear",
@@ -45,7 +43,7 @@ const LegalAndFaqs = memo(() => {
                             display: activeIndex === index ? "block" : "none",
                         }}
                     >
-                        <p className="text-gray-700 font-medium">{obj.description}</p>
+                        <p className="text-gray-700 font-medium dark:text-gray-200">{obj.description}</p>
                     </div>
                 </div>
             );

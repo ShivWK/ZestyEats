@@ -120,10 +120,10 @@ const Contact = memo(() => {
 
   return (
     <div className="basis-[75%] lg:pl-7 py-2 lg:py-7 text-black">
-      <h1 className="text-[28px] font-bold tracking-tight mb-2 hidden lg:block">
+      <h1 className="text-[28px] dark:text-white font-bold tracking-tight mb-2 hidden lg:block">
         Contact Us
       </h1>
-      <p className="text-[16px] mb-4 lg:mb-6 text-gray-700">
+      <p className="text-[16px] mb-4 lg:mb-6 text-gray-700 dark:text-gray-200">
         Have any questions or inquiries? We'd love to hear from you.
       </p>
 
@@ -144,10 +144,10 @@ const Contact = memo(() => {
             onChange={fieldValuesHandler}
             name="name"
             placeholder="Enter your name"
-            className={`w-full bg-gray-100 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "name" ? "border-red-500" : "border-transparent"}`}
+            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "name" ? "border-red-500" : "border-transparent"}`}
           />
           <p
-            className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.name.length >= 100 ? "text-red-500" : "text-gray-600"
+            className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.name.length >= 100 ? "text-red-500" : "text-gray-600 dark:text-gray-300"
               }`}
           >{`${fieldValues.name.length}/100`}</p>
         </div>
@@ -159,10 +159,10 @@ const Contact = memo(() => {
             onChange={fieldValuesHandler}
             name="email"
             placeholder="Enter your email"
-            className={`w-full bg-gray-100 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "email" ? "border-red-500" : "border-transparent"}`}
+            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "email" ? "border-red-500" : "border-transparent"}`}
           />
           <p
-            className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.email.length >= 254 ? "text-red-500" : "text-gray-600"
+            className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.email.length >= 254 ? "text-red-500" : "text-gray-600 dark:text-gray-300"
               }`}
           >{`${fieldValues.email.length}/254`}</p>
         </div>
@@ -173,12 +173,12 @@ const Contact = memo(() => {
             value={fieldValues.query}
             onChange={fieldValuesHandler}
             placeholder="Type your message..."
-            className={`w-full bg-gray-100 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md min-h-48 lg:min-h-60 border-[1px] ${errorIn === "query" ? "border-red-500" : "border-transparent"}`}
+            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md min-h-48 lg:min-h-60 border-[1px] ${errorIn === "query" ? "border-red-500" : "border-transparent"}`}
           ></textarea>
           <p
             className={`absolute right-1 text-xs font-medium ${fieldValues.query.length >= 1000
               ? "text-red-500"
-              : "text-gray-600"
+              : "text-gray-600 dark:text-gray-300"
               }`}
           >{`${fieldValues.query.length}/1000`}</p>
         </div>
@@ -194,7 +194,7 @@ const Contact = memo(() => {
       <button
         onClick={submitHandler}
         disabled={loading}
-        className={`mt-6 py-2 px-6 max-lg:mx-auto font-semibold rounded-md border-[1px] ${loading ? "bg-gray-200 text-gray-400 border-gray-400" : "active:scale-95 hover:bg-primary bg-primary/90 border-primary text-white "} transition-transform ease-in-out duration-75 cursor-pointer flex items-center gap-2.5`}
+        className={`mt-6 py-2 px-6 max-lg:mx-auto font-semibold rounded-md border-[1px] ${loading ? "bg-gray-200 text-gray-400 border-gray-400" : "active:scale-95 hover:bg-primary bg-primary/90 border-primary dark:bg-darkPrimary text-white "} transition-transform ease-in-out duration-75 cursor-pointer flex items-center gap-2.5`}
       >
         Send Email
         {loading && <div className="mx-auto block border-4 border-t-black border-white animate-spin rounded-[50%] h-6 w-6"></div>}
