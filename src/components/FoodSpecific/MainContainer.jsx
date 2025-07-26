@@ -42,16 +42,16 @@ const MainContainer = ({ data }) => {
             delimiterColor={"text-gray-600"}
           />
         </div>
-        <h1 className="heading text-black md:text-5xl text-4xl font-bold tracking-tight mx-0">
+        <h1 className="heading text-black md:text-5xl text-4xl font-bold tracking-tight mx-0 dark:text-white">
           {title}
         </h1>
-        <p className="description text-lg font-medium text-gray-800 -mt-2 md:-mt-4 mb-2 max-md:leading-6">
+        <p className="description text-lg font-medium text-gray-800 -mt-2 md:-mt-4 mb-2 max-md:leading-6 dark:text-gray-300">
           {description}
         </p>
         <div className="md:-mt-5 -mt-4 -mb-1 md:-mb-2">
           <Filter />
         </div>
-        <div className="restro-count text-2xl font-bold tracking-tight">
+        <div className="restro-count text-2xl font-bold tracking-tight dark:text-gray-200">
           <p>Explore Restaurants</p>
         </div>
         <div className="flex justify-center">

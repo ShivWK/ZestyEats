@@ -4,7 +4,6 @@ const VegSvg = ({veg = false}) => {
             height="16"
             viewBox="0 0 100 100"
             xmlns="http://www.w3.org/2000/svg"
-            className="dark:bg-green-400"
           >
             <rect
               x="5"
@@ -12,10 +11,10 @@ const VegSvg = ({veg = false}) => {
               width="90"
               height="90"
               fill="none"
-              stroke={veg ? "white" : "green"}
+              stroke={veg ? "white" : "#05df72"}
               strokeWidth="8"
             />
-            <circle cx="50" cy="50" r="25" fill={!veg ? "green" : "white"} />
+            <circle cx="50" cy="50" r="25" fill={!veg ? "#05df72" : "white"} />
           </svg>
 }
 
