@@ -80,7 +80,7 @@ const ItemCard = ({ item, restro_id }) => {
   };
 
   return (
-    <div className="border-t-[1px] dark:bg-black border-gray-300 p-0.5">
+    <div className="border-t-[1px] dark:bg-black border-gray-300 p-0.5 pl-1">
       <div className="flex justify-between items-center">
         {!isPresentInCart ? <input
           className="h-4 w-4 ml-1 mt-1 mb-1"
