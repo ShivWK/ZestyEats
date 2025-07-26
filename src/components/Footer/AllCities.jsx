@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
@@ -40,7 +40,7 @@ const AllCities = memo(() => {
             const path = city.text.toLowerCase().replace(/\s/g, "-");
 
             return <li key={city.link} className="mb-2">
-              <NavLink to={`/cityPage/${city?.text}?mode=city`} onClick={() => clickHandler(city?.text, path)}>{city.text}</NavLink>
+              <Link className="dark:text-gray-200" to={`/cityPage/${city?.text}?mode=city`} onClick={() => clickHandler(city?.text, path)}>{city.text}</Link>
             </li>;
           })}
         </ul>

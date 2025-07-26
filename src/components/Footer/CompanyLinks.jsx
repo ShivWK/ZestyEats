@@ -66,14 +66,13 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
         {pathname !== "/" && <div
           onClick={() => openCities(!isOpen)}
           id="moreCities"
-          className={`flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-100 w-fit`}
-          style={{ borderColor: isOpen ? "black" : "#99a1af" }}
+          className={`group flex gap-2.5 cursor-pointer border-2 border-gray-500 px-2 py-1 rounded items-center transition-all duration-300 linear hover:bg-gray-200 w-fit ${isOpen ? "border-black dark:border-gray-200" : "border-[#99a1af] dark:border-gray-500"}`}
         >
-          <p className="font-normal text-lg md:text-sm text-gray-900 whitespace-nowrap">
+          <p className="font-normal dark:group-hover:text-black text-lg md:text-sm text-gray-900 whitespace-nowrap dark:text-gray-200">
             {remainingCities} cities
           </p>
           <i
-            className="fa-solid fa-caret-down text-gray-900 transition-all duration-300 linear"
+            className="fa-solid fa-caret-down dark:group-hover:text-black text-gray-900 transition-all duration-300 linear dark:text-gray-200"
             style={{
               transform: isOpen ? "rotate(-180deg)" : "",
             }}

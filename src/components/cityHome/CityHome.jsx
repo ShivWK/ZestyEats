@@ -59,7 +59,7 @@ const MainContent = () => {
 
       <div
         id="banner"
-        className="flex flex-col mt-0.5 md:mt-1 mb-4 md:mb-8 w-full bg-cover md:h-[45vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:pl-2.5 max-md:bg-right"
+        className="flex flex-col mt-0.5 md:mt-1 mb-4 md:mb-8 w-full bg-cover md:h-[45vh] h-[30vh]  bg-[url('/images/food-banner.jpg')] p-5 max-md:pl-2.5 max-md:bg-right rounded-e-3xl md:rounded-4xl overflow-hidden"
       >
         <h1 className="mt-auto text-white text-2xl md:text-4xl max-md:leading-6 order-2">
           {banner_text}
