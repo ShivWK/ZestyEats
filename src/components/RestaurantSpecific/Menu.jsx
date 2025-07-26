@@ -33,7 +33,7 @@ const Menu = () => {
       onClick={() => {
         dispatch(setHideMenu(true))
       }}
-      className="fixed inset-0 bg-black/30 dark:bg-gray-300/30 top-0 left-0 w-[100%] h-[100%] z-40"
+      className="fixed inset-0 bg-black/30 dark:bg-black/40 top-0 left-0 w-[100%] h-[100%] z-40"
     >
       <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[75%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-red-800/99 rounded-xl py-2 pt-0.5 overflow-hidden max-lg:flex flex-col`}>
       <button className="self-end text-white/80 mr-2 lg:hidden">

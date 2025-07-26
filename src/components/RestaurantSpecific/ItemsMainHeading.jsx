@@ -156,7 +156,7 @@ const ItemsMainHeading = ({
           </div>
           <div
             ref={containerRef}
-            className="overflow-hidden transition-all duration-300 linear p-0.5"
+            className="overflow-hidden transition-all duration-300 linear p-0.5 "
             style={{
               display: isOpen ? "block" : "none",
             }}

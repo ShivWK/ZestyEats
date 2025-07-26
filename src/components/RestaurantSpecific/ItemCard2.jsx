@@ -48,28 +48,29 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
   const defaultPrice = item?.price / 100 || item?.defaultPrice / 100 || 0;
   const finalPrice = item?.finalPrice / 100;
   const price = finalPrice ? (
-    <p className="text-sm tracking-tight flex gap-1 items-center font-semibold text-gray-800">
-      <span className="line-through text-gray-500">₹{""}{defaultPrice} </span>₹{""}
+    <p className="text-sm tracking-tight flex gap-1 items-center font-semibold text-gray-800 dark:text-white">
+      <span className="line-through text-gray-500 dark:text-gray-300">₹{""}{defaultPrice} </span>₹{""}
       {finalPrice} {" "}
       <svg className="inline" width="14" height="14" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" clipRule="evenodd" d="M1.63362 8.39604C1.28368 8.7446 1.28368 9.30972 1.63362 9.65828L6.1293 14.1362C6.47924 14.4848 7.0466 14.4848 7.39654 14.1362L12.9543 8.60038C13.1228 8.43251 13.2173 8.20468 13.2168 7.96728L13.2069 3.49924C13.2058 3.00785 12.8061 2.60977 12.3128 2.60868L7.827 2.5988C7.58866 2.59828 7.35993 2.69235 7.1914 2.86022L1.63362 8.39604ZM10.8177 6.90055C11.3458 6.37452 11.3439 5.51976 10.8134 4.99139C10.283 4.46302 9.4248 4.46113 8.89668 4.98717C8.36856 5.5132 8.37045 6.36796 8.90092 6.89633C9.43138 7.4247 10.2895 7.42659 10.8177 6.90055Z" fill="#1BA672"></path></svg>
     </p>
   ) : (
-    <p className="text-sm tracking-tight font-semibold text-gray-800">₹{""}{defaultPrice}</p>
+    <p className="text-sm tracking-tight font-semibold text-gray-800 dark:text-white">₹{""}{defaultPrice}</p>
   );
 
   const ratingObject = item?.ratings?.aggregatedRating;
   const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/${item?.imageId}`;
 
   return (
-    <div className="flex flex-col md:flex-row justify-between bg-white p-1 pt-2 md:pt-0 md:py-4 md:px-1 w-full border-b-[1px] border-gray-300 overflow-hidden">
+    <div className="flex flex-col md:flex-row justify-between dark:bg-gray-800 bg-white p-1 pt-2 md:pt-0 md:py-4 md:px-1 w-full border-b-[1px] dark:border-white border-gray-300 overflow-hidden">
  
-      <div className="flex mt-3 flex-col order-2 md:order-1 items-start gap-1.5 p-2 max-w-[525px]">
+      <div className="flex mt-3 flex-col order-2 md:order-1 items-start gap-1.5 p-2 max-w-[525px]  dark:bg-gray-00">
         {veg ? (
           <svg
             width="15"
             height="15"
             viewBox="0 0 100 100"
             xmlns="http://www.w3.org/2000/svg"
+            className="dark:bg-green-400"
           >
             <rect
               x="5"
@@ -101,12 +102,12 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
             <polygon points="50,20 78.86,70 21.14,70" fill="red" />
           </svg>
         )}
-        <p className="text-gray-800 font-bold text-lg">{textToZestyEats(item?.name)}</p>
+        <p className="text-gray-800 font-bold text-lg dark:text-white">{textToZestyEats(item?.name)}</p>
         <div>{price}</div>
         {ratingObject.rating && (
           <div className="flex items-center gap-1">
-            <i className="ri-star-fill text-green-700"></i>{" "}
-            <p className="flex items-center gap-0.5 text-sm text-green-700 font-bold mt-0.5">
+            <i className="ri-star-fill text-green-700 dark:text-green-400"></i>{" "}
+            <p className="flex items-center gap-0.5 text-sm text-green-700 font-bold mt-0.5 dark:text-white">
               {ratingObject?.rating}
               {ratingObject?.ratingCountV2 && (
                 <span className="text-gray-500 font-semibold">
@@ -118,16 +119,16 @@ const ItemCard2 = memo(({ item, isParentOpen, restaurantData = null, opened }) =
         )}
         <div
           ref={containerRef}
-          className="relative transition-all duration-100 ease-linear overflow-hidden"
+          className="relative  transition-all duration-100 ease-linear overflow-hidden"
           style={{
             height: isOpen ? `${paraSize}px` ?? "200px" : "42px",
           }}
         >
-          <p ref={paraRef} className="text-black text-sm text-wrap">{textToZestyEats(item?.description)}</p>
+          <p ref={paraRef} className="text-black dark:text-gray-200 text-sm text-wrap">{textToZestyEats(item?.description)}</p>
         </div>
         {(overFlow && !isOpen) && (
           <span
-            className="inline-flex w-fit gap-2 items-center font-bold text-gray-600 cursor-pointer -mt-4"
+            className="inline-flex w-fit gap-2 items-center font-bold dark:text-primary text-gray-600 cursor-pointer -mt-4"
             onClick={() => setIsOpen(!isOpen)}
           >
             ...more

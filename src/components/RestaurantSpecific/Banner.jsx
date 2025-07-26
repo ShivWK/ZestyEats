@@ -93,7 +93,7 @@ const Banner = ({ data }) => {
             <div className="flex flex-col gap-4 text-black font-bold text-sm">
               <div className="flex gap-2 p-0">
                 <p className="dark:text-white">Outlet</p>
-                <p className="text-gray-600 font-semibold dark:text-gray-400">{mainData?.areaName}</p>
+                <p className="text-gray-600 font-semibold dark:text-gray-300">{mainData?.areaName}</p>
                 <p className="text-gray-950 hidden md:inline-block dark:text-gray-300">•</p>
                 <p className={`${opened ? "text-green-500 dark:text-green-400" : "text-red-600"} font-semibold hidden md:inline-block`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
               </div>
