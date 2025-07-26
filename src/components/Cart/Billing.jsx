@@ -76,7 +76,7 @@ const Billing = () => {
   };
 
   return (
-    <section className="rounded-md md:basis-[39%] bg-white p-2 md:p-5 md:self-start">
+    <section className="rounded-md md:basis-[39%] dark:bg-gray-300 bg-white p-2 md:p-5 md:self-start">
       <div
         onClick={containerClickHandler}
         className="h-full w-full flex flex-col gap-4"
@@ -113,14 +113,14 @@ const Billing = () => {
 
         <div className="text-sm">
           <div className="flex justify-between py-1">
-            <span className="text-gray-600">Item Total</span>
-            <span className="text-gray-700 font-semibold">₹{totalAmount}</span>
+            <span className="text-gray-600 dark:text-gray-950">Item Total</span>
+            <span className="text-gray-700 dark:text-black font-semibold">₹{totalAmount}</span>
           </div>
           <div className="flex justify-between items-center py-1">
             <p className="text-gray-600 flex items-center gap-0.5">
-              <span>Delivery Fee</span>
-              <span>┃</span>
-              <span>{distance} kms</span>
+              <span className="dark:text-gray-950">Delivery Fee</span>
+              <span className="dark:text-gray-950">┃</span>
+              <span className="dark:text-gray-950">{distance} kms</span>
               <i
                 onClick={(e) => {
                   e.stopPropagation();
@@ -158,12 +158,12 @@ const Billing = () => {
               </div>
               </i>
             </p>
-            <span className="text-gray-700 font-semibold">₹{deliveryFee}</span>
+            <span className="text-gray-700 dark:text-black font-semibold">₹{deliveryFee}</span>
           </div>
 
           <div className="flex justify-between py-1 pt-1.5 border-t-[1px] mt-2 border-gray-400 border-dashed">
             <div className="flex gap-1 items-center">
-              <span className="text-gray-600">GST & Other Charges</span>
+              <span className="text-gray-600 dark:text-gray-950">GST & Other Charges</span>
               <i
                 onClick={(e) => {
                   e.stopPropagation();
@@ -217,7 +217,7 @@ const Billing = () => {
               </div>
               </i>
             </div>
-            <span className="text-gray-700 font-semibold">₹{GSTAndOther}</span>
+            <span className="text-gray-700 dark:text-black font-semibold">₹{GSTAndOther}</span>
           </div>
           <div className="flex justify-between py-2 border-t mt-2 pt-2">
             <span className="text-black font-bold">Total Amount</span>

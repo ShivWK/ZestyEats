@@ -32,7 +32,7 @@ const RestaurantCard = ({ data }) => {
 
   return (
     <section className="md:basis-[59%] flex flex-col gap-2">
-      <div className="bg-white rounded-md p-2 pb-3">
+      <div className="bg-white dark:bg-gray-300 rounded-md p-2 pb-3">
         <div className="w-full flex flex-col gap-1">
           <Link
             to={`/restaurantSpecific/${lat}/${lng}/${id}/${name}`}
@@ -45,12 +45,12 @@ const RestaurantCard = ({ data }) => {
             <i className="basis-[4%] ri-arrow-right-long-fill text-2xl text-gray-800 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-200 ease-in-out p-0"></i>
           </Link>
 
-          <p className="text-sm font-bold text-gray-700 truncate -mt-1 capitalize">
+          <p className="text-sm font-bold dark:text-gray-900 text-gray-700 truncate -mt-1 capitalize">
             {areaOrLocality + ", " + city}
           </p>
 
-          <div className="flex gap-1.5 items-center text-gray-500 font-semibold text-sm">
-            <i className="ri-star-fill text-green-700 mb-0.5" />
+          <div className="flex gap-1.5 items-center dark:text-gray-800 text-gray-500 font-semibold text-sm">
+            <i className="ri-star-fill text-green-700 dark:text-green-400 mb-0.5" />
             <p>{restaurantData?.avgRating}</p>
             <p>•</p>
             <p>{restaurantData?.sla?.slaString || "25-30 MINS"}</p>

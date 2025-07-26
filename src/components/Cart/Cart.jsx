@@ -34,7 +34,7 @@ const Cart = () => {
         cart.reverse();
 
         return <>
-            <main className={`w-full min-h-[110%] ${!overflowing  && "h-full"} bg-gray-200`}>
+            <main className={`w-full min-h-[110%] ${!overflowing  && "h-full"} dark:bg-black bg-gray-200`}>
                 <div className="w-full flex flex-col max-md:gap-3 md:flex-row justify-between  md:max-w-[1070px] pt-20 max-md:px-1.5 md:pt-28 pb-28 mx-auto md:px-3">
                     <RestaurantCard data={cart} />
                     <Billing />
@@ -44,9 +44,9 @@ const Cart = () => {
         </>
     } else {
         return <>
-            <main className="w-full h-full bg-gray-200">
+            <main className="w-full h-full dark:bg-black bg-gray-200">
                 <div className="w-full flex items-center justify-center  md:max-w-[1070px] pt-20 max-md:px-1.5 md:pt-28 pb-12 mx-auto md:px-3">
-                   <p>No items in cart</p>
+                   <p className="dark:text-gray-200">No items in cart</p>
                 </div>
             </main>
             <MobileFooterMenu />

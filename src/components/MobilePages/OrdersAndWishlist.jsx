@@ -11,8 +11,8 @@ const OrdersAndWishlist = () => {
     const wishlist = useSelector(selectWishlistItems);
 
     return <main className={`pt-18 pb-16 px-1.5`}>
-        <div className="bg-white p-0.5 rounded ">
-            <section className="w-full p-1 bg-white rounded border-[1px] border-gray-300">
+        <div className="bg-white dark:bg-gray-800 p-0.5 rounded ">
+            <section className="w-full p-1 dark:bg-gray-800 bg-white rounded border-[1px] border-gray-300">
                 <div className="flex justify-between">
                     <button onClick={() => setCurrentTab("Orders")} className="basis-[49%] h-full flex gap-2.5 items-center justify-center border-[1px] border-gray-300 rounded py-1 transition-all duration-150 ease-linear" style={{ backgroundColor: currentTab === "Orders" ? "#d1d5dc" : "white" }}>
                         <i className="ri-box-3-fill text-2xl text-[#2196F3]"></i>
@@ -30,19 +30,19 @@ const OrdersAndWishlist = () => {
             </section>
             {currentTab === "Orders"
                 ? <section className="mt-1">
-                    <div className="w-full bg-primary text-white font-semibold text-xl px-2 py-1.5 rounded ">
+                    <div className="w-full bg-primary dark:bg-darkPrimary text-white font-semibold text-xl px-2 py-1.5 rounded ">
                         <p>Orders</p>
                     </div>
                     <Construction />
                 </section>
                 : (currentTab === "Wishlist") ? <section className="mt-1">
-                    <div className="w-full bg-primary text-white font-semibold text-xl px-2 py-1.5 rounded ">
+                    <div className="w-full bg-primary dark:bg-darkPrimary text-white font-semibold text-xl px-2 py-1.5 rounded ">
                         <p>Wishlist</p>
                     </div>
                     <WishlistedItems />
                 </section>
                 : <section className="mt-1">
-                    <div className="w-full bg-primary text-white font-semibold text-xl px-2 py-1.5 rounded ">
+                    <div className="w-full bg-primary dark:bg-darkPrimary text-white font-semibold text-xl px-2 py-1.5 rounded ">
                         <p>Favorite Restaurants</p>
                     </div>
                     <FavoriteRestros />
