@@ -2,7 +2,7 @@ import { Suspense, useEffect, useState } from "react";
 import {
   useLoaderData,
   Await,
-  NavLink,
+  Link,
   useSearchParams,
   useOutletContext
 } from "react-router-dom";
@@ -68,8 +68,8 @@ const MainContent = ({ data }) => {
         <div className="pb-16">
           <div className="p-2 mt-14">
             {query !== "" && <button onClick={() => dispatch(setTabQueryData(""))} className="w-fit flex items-center cursor-pointer">
-              <i className="ri-arrow-drop-left-line text-4xl -ml-3.5"></i>
-              <p className="-ml-1 font-medium">Back</p>
+              <i className="ri-arrow-drop-left-line text-4xl -ml-3.5 dark:text-gray-200"></i>
+              <p className="-ml-1 font-medium dark:text-gray-200">Back</p>
             </button>}
             {((suggestionsData && suggestionsData?.length !== 0) || storeSuggestionsData) ? dataToMap?.map((item) => {
               const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/${item?.cloudinaryId}`;
@@ -90,22 +90,22 @@ const MainContent = ({ data }) => {
               return <SuggestionsCard path={path} item={item} imageUrl={imageUrl} />;
             })
 
-              : <p className="text-gray-500 text-center py-3">No result for this search.</p>}
+              : <p className="text-gray-500 text-center dark:text-gray-200 py-3">No result for this search.</p>}
           </div>
           {((suggestionsData && suggestionsData?.length !== 0) || (storeSuggestionsData && storeSuggestionsData?.length !== 0)) && (
-            <NavLink
+            <Link
               to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query || searchTerm}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query || searchTerm}`}
-              className={`flex gap-3 my-1 p-2 hover:bg-gray-200 rounded border-2 border-gray-300`}
+              className={`flex gap-3 my-1 p-2 dark:hover:bg-gray-900 hover:bg-gray-200 rounded border-2 border-gray-300`}
             >
               <div className="rounded h-14 w-14 flex items-center justify-center border-2 border-gray-200">
-                <i className="ri-search-2-line text-3xl cursor-pointer"></i>
+                <i className="ri-search-2-line text-3xl cursor-pointer dark:text-white" />
               </div>
-              <div className="flex items-center">
-                <p>
+              <div className="flex items-center ">
+                <p className="dark:text-gray-200">
                   See all results for <span className="font-bold">{decodeURI(query || searchTerm)}</span>
                 </p>
               </div>
-            </NavLink>
+            </Link>
           )
 
           }
@@ -114,7 +114,7 @@ const MainContent = ({ data }) => {
     <div className="flex flex-col mx-auto gap-5 mt-16">
       {itemCards?.length > 0 && (
         <div className="pb-8 pt-2">
-          <h1 className="max-md:text-2xl">Popular Cuisines</h1>
+          <h1 className="max-md:text-2xl dark:text-white">Popular Cuisines</h1>
           <div className="flex w-fit flex-wrap justify-evenly">
             {itemCards.map((item) => {
               const queryObj = new URL(item?.action?.link).searchParams;

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { addCurrentRestaurant, setMenuItems } from "../../features/home/restaurantsSlice";
 import {
-  NavLink,
+  Link,
   Await,
   useLoaderData,
   useSearchParams,
@@ -22,7 +22,7 @@ const Card = ({ data, lat, lng }) => {
   };
 
   return (
-    <NavLink
+    <Link
       to={path}
       onClick={() => handleClick(data?.name)}
       className="flex basis-full md:basis-[49%] w-1/2 pt-3 px-4 gap-3 cursor-pointer bg-white pb-8"
@@ -67,7 +67,7 @@ const Card = ({ data, lat, lng }) => {
           <p className="text-sm">{data?.cuisines?.join(", ")}</p>
         </div>
       </div>
-    </NavLink>
+    </Link>
   );
 };
 
@@ -92,7 +92,7 @@ const MainContent = ({ data, lat, lng, mode }) => {
   const tabRestaurantData = cards?.map((data) => data?.card?.card?.info);
 
   return (
-    <div className="p-3 pt-18 w-full bg-gray-200 flex flex-col">
+    <div className="p-3 pt-18 w-full rounded dark:bg-gray-800 bg-gray-200 flex flex-col">
       {mode === "parent" ? (
         <>
           {clickedRestro && (
@@ -113,14 +113,14 @@ const MainContent = ({ data, lat, lng, mode }) => {
               <Card key={data?.id} data={data} lat={lat} lng={lng} />
             ))
           ) : (
-            <p className="font-semibold text-center py-4">
+            <p className="font-semibold dark:text-gray-200 text-center py-4">
               Sorry no data for this restaurant
             </p>
           )}
         </div>
       )}
       {mode === "parent" && !clickedRestro && !moreRestros && (
-        <p className="font-semibold text-center py-4">
+        <p className="font-semibold dark:text-gray-200 text-center py-4">
           Sorry no data for this restaurant
         </p>
       )}

@@ -58,8 +58,7 @@ const LogoAndAttribution = () => {
                 target="__block"
               >
                 <i
-                  className="fa-brands fa-linkedin text-xl"
-                  style={{ color: "#0077b5" }}
+                  className="fa-brands fa-linkedin text-xl text-[#0077b5] dark:text-[rgb(41,140,240)]"
                 ></i>
               </a>
               <a
@@ -114,15 +113,15 @@ const LogoAndAttribution = () => {
         </div>
         <div className="hidden md:flex flex-col gap-2 w-full mt-7">
           <p>Social Links</p>
-          <div className="flex gap-3">
+          <div className="flex gap-3"> 
             <a
               href="https://www.linkedin.com/in/shivendra-dwivedi"
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
               target="__block"
             >
               <i
-                className="fa-brands fa-linkedin text-2xl"
-                style={{ color: "#0077b5" }}
+                className="fa-brands fa-linkedin text-2xl text-[#0077b5] dark:text-[rgb(41,140,240)]"
+                // style={{ color: "#0077b5" }}
               ></i>
             </a>
             <a
@@ -130,14 +129,14 @@ const LogoAndAttribution = () => {
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
               target="__block"
             >
-              <i className="fa-brands fa-square-github text-2xl"></i>
+              <i className="fa-brands fa-square-github text-2xl dark:text-gray-300"></i>
             </a>
             <a
               href="https://x.com/Shivendrawk"
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
               target="__block"
             >
-              <i className="fa-brands fa-square-x-twitter text-2xl"></i>
+              <i className="fa-brands fa-square-x-twitter text-2xl dark:text-gray-300"></i>
             </a>
             <a
               href="https://instagram.com/shivendrawk"

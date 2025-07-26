@@ -1,6 +1,6 @@
 import { useState, Suspense, useRef, useEffect } from "react";
 import {
-    NavLink,
+    Link,
     useLoaderData,
     useSearchParams,
     Await,
@@ -82,7 +82,7 @@ const Card = ({ data, lat, lng }) => {
 
     return (
         <div className="max-md:basis-full md:basis-[49%] pb-1 rounded-md bg-white">
-            <NavLink
+            <Link
                 to={path}
                 onClick={() => handleClick(restaurantData?.name)}
                 className="flex group items-center justify-between p-3 w-full cursor-pointer"
@@ -101,7 +101,7 @@ const Card = ({ data, lat, lng }) => {
                     </div>
                 </div>
                 <i className="basis-[3%] md:basis-[5%]  ri-arrow-right-long-fill text-2xl text-gray-600 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
-            </NavLink>
+            </Link>
             <hr className="text-gray-300 my-1.5" />
             <div className="flex justify-between bg-white">
                 <div className="flex flex-col gap-2 p-4">
@@ -214,7 +214,7 @@ const MainContent = ({ data, lat, lng, mode }) => {
             );
 
     return (
-        <div className="bg-gray-200 p-1.5 rounded-md mt-14">
+        <div className="bg-gray-200 dark:bg-gray-800 p-1.5 rounded-md mt-14">
             <div className="w-full mb-2.5 -mt-1.5">
                 <Filter text1="Veg" text2="Non Veg" />
             </div>

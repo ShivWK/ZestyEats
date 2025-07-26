@@ -1,5 +1,5 @@
 import {
-  NavLink,
+  Link,
   useSearchParams,
   Outlet
 } from "react-router-dom";
@@ -35,31 +35,23 @@ const SearchResult = () => {
 
   return (
     <div className="pb-16">
-      <div className="sticky top-[160px] md:top-[180px] flex gap-3 py-3 w-full z-20 bg-white">
-        <NavLink
+      <div className="sticky top-[159px] md:top-[180px] flex gap-3 py-3 w-full z-20 dark:bg-black bg-white">
+        <Link
           to={restroPath}
           onClick={(e) => clickHandler(e, "Restaurant")}
-          className="py-1.5 font-bold px-4 rounded-3xl hover:bg-gray-200 border-[1px] border-gray-400 cursor-pointer"
-          style={{
-            backgroundColor: (currentType === "Restaurant" || currentType === "Cuisine") ? "black" : "white",
-            color: (currentType === "Restaurant" || currentType === "Cuisine") ? "white" : "black",
-          }}
+          className={`py-1.5 font-bold px-4 rounded-3xl dark:hover:bg-gray-600 dark:hover:text-black hover:bg-gray-200 border-[1px] border-gray-400 cursor-pointer ${(currentType === "Restaurant" || currentType === "Cuisine") ? "bg-black dark:bg-white text-white dark:text-black" : "bg-white dark:bg-black text-black dark:text-white"}`}
         >
           Restaurant
-        </NavLink>
-        <NavLink
+        </Link>
+        <Link
           to={dishPath}
           onClick={(e) => clickHandler(e, "Dish")}
-          className="py-1.5 font-bold px-4 rounded-3xl hover:bg-gray-200 border-[1px] border-gray-400 cursor-pointer"
-          style={{
-            backgroundColor: currentType === "Dish" ? "black" : "white",
-            color: currentType === "Dish" ? "white" : "black",
-          }}
+          className={`py-1.5 font-bold px-4 rounded-3xl dark:hover:bg-gray-600 dark:hover:text-black  hover:bg-gray-200 border-[1px] border-gray-400 cursor-pointer ${(currentType === "Dish") ? "bg-black dark:bg-white text-white dark:text-black" : "bg-white dark:bg-black text-black dark:text-white"}`}
         >
           Dish
-        </NavLink>
+        </Link>
       </div>
-      <Outlet />
+      <Outlet />                          
       <BackToTopBtn percentage={30} />
     </div>
   );
