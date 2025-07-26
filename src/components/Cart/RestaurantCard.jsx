@@ -60,7 +60,7 @@ const RestaurantCard = ({ data }) => {
                 <p>•</p>
                 <p
                   className={`${
-                    status.opened ? "text-green-500" : "text-red-600"
+                    status.opened ? "text-green-500 dark:text-green-400" : "text-red-600"
                   } font-semibold`}
                 >
                   {status.opened ? "OPEN 😊" : "CLOSED 😟"}
@@ -86,7 +86,7 @@ const RestaurantCard = ({ data }) => {
                     </>
                   ) : (
                     <div className="flex items-center gap-1">
-                      <p className="text-green-500 font-medium">
+                      <p className="text-green-500 dark:text-green-400 font-medium">
                         (Delivering to your area)
                       </p>
                       <i className="fas fa-shipping-fast text-black mt-0.5"></i>
@@ -121,7 +121,7 @@ const RestaurantCard = ({ data }) => {
               </div>
             ) : (
               <div className="flex items-center gap-1 my-[1px]">
-                <p className="text-green-500 font-medium text-sm">
+                <p className="text-green-500 dark:text-green-400 font-medium text-sm">
                   (Delivering to your area)
                 </p>
                 <i className="fas fa-shipping-fast text-sm text-black mt-0.5"></i>
