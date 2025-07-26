@@ -105,10 +105,10 @@ const Cards = memo(({ data, from }) => {
         } items-center justify-center rounded-xl h-full w-full dark:bg-gray-300/25 bg-[rgba(0,0,0,0.4)]`}
       >
         <div className="flex flex-col gap-1 items-center justify-center">
-          <p className="text-white font-bold text-3xl dark:text-gray-100">Not Available</p>
+          <p className="text-white font-bold text-3xl dark:text-white">Not Available</p>
           <i
             onClick={crossHandler}
-            className="ri-close-large-line dark:text-gray-100 text-white text-3xl rounded px-1 dark:bg-gray-900/50 bg-black/50"
+            className="ri-close-large-line dark:text-white text-white text-3xl rounded px-1 dark:bg-gray-950/60 bg-black/50"
           ></i>
         </div>
       </div>
