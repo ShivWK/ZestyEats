@@ -64,15 +64,8 @@ const Banner = ({ data }) => {
             <p className="text-gray-500">•</p>
             <p className="font-bold">{mainData?.costForTwoMessage}</p>
             <p className="text-gray-500 hidden md:block">•</p>
-            {veg ? (
-          
-                <PureVegSvg classes="-ml-3.5 hidden md:block" />
-             
-            ) : (
-   
-                <VegAndNonVegSvg classes="hidden md:inline-flex pl-1 my-1 py-0.5 pr-2" />
-          
-            )}
+            {veg ? (<PureVegSvg classes="-ml-3.5 hidden md:inline-flex" />
+             ) : ( <VegAndNonVegSvg classes="hidden md:inline-flex px-2 my-1 py-0.5 pr-2" /> )}
           </div>
           <div
             id="cuisines"
@@ -113,14 +106,9 @@ const Banner = ({ data }) => {
         </div>
         <div className="flex items-center gap-2">
           {veg ? (
-            <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
-              <PureVegSvg classes="-ml-1.5 mb-1 -mt-2 max-md:block hidden" />
-            </Suspense>
-
+              <PureVegSvg classes="mb-1 -mt-2 max-md:block hidden" />
           ) : (
-            <Suspense fallback={<p className="flex md:hidden items-center ml-3"><span>•••</span></p>}>
-              <VegAndNonVegSvg classes="hidden max-md:inline-flex pl-1 my-1 ml-3 pr-2 py-1 mb-2" />
-            </Suspense>
+              <VegAndNonVegSvg classes="hidden ml-3 max-md:inline-flex px-2 my-1 pr-2 py-1 mb-2" />
           )}
           <div className={`flex items-center gap-2 ${veg ? "-mt-3 -ml-3 text-sm" : "-mt-1"}`}>
             <p className="text-gray-950 md:hidden">•</p>

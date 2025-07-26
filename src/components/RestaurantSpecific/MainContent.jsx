@@ -98,7 +98,7 @@ const MainContent = ({ data, routes = true }) => {
 
         {/* Title */}
         <div className="w-full mt-0.5 md:mt-2">
-          <h1>{title}</h1>
+          <h1 className="dark:text-white">{title}</h1>
         </div>
 
         {/* Banner */}

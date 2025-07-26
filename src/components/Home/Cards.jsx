@@ -159,13 +159,9 @@ const Cards = memo(({ data, from }) => {
           <p className="font-bold dark:text-gray-300">{dataToMap?.sla?.slaString || "25-30 mins"}</p>
         </div>
         {dataToMap?.veg ? (
-          <PureVeg classes="-ml-5 lg:mt-1" />
+          <PureVeg />
         ) : (
-          <VegAndNonVeg
-            classes={
-              "inline-flex items-center gap-1 bg-gray-100 text-gray-700 text-xs font-medium pl-1 pr-2 my-0.5 py-0.5 rounded-full border border-gray-300 lg:mt-1"
-            }
-          />
+          <VegAndNonVeg />
         )}
         <p
           className={`mt-0.5 max-h-14 text-sm line-clamp-2 dark:text-gray-400 text-gray-700 break-words whitespace-normal font-semibold max-md:w-[85%] leading-0.5" ${

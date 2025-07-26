@@ -26,14 +26,14 @@ const SearchContainer = ({
             delimiterColor={"text-gray-600"}
           />
         </div>
-        {!pathname.includes("searchResult") ? (<div id="searchBAr" className="flex w-full items-center justify-evenly px-2 lg:px-2.5 py-1.5 border-b-2 rounded-md dark:bg-gray-600/50 bg-gray-100 ">
+        {!pathname.includes("searchResult") ? (<div id="searchBAr" className="flex w-full items-center justify-evenly px-2 py-1.5 border-b-2 rounded-md dark:bg-gray-600/50 bg-gray-100 ">
           {pathname.includes("dishSearch") && (<i
             onClick={() => navigate(-1)}
             className="ri-arrow-left-long-fill text-3xl cursor-pointer transform hover:translate-x-[-5px] transition-all duration-300 ease-in-out"
           ></i>)
           }
           <input
-            className="text-gray-900 py-1 md:py-1.5 px-0.5 lg:px-2 outline-none bg-transparent text-lg font-semibold basis-[95%] dark:placeholder:text-gray-400 dark:text-gray-200"
+            className="text-gray-900 py-1 md:py-1.5 px-0.5 lg:px-1 outline-none bg-transparent text-lg font-semibold basis-[95%] dark:placeholder:text-gray-400 dark:text-gray-200"
             type="text"
             value={searchTerm}
             onChange={handleSearch}

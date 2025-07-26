@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 const SuggestionsCard = ({ imageUrl, item, path }) => {
     const [isError, setIsError] = useState(false);
 
-    return <Link to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 dark:hover:bg-gray-900 hover:bg-gray-200 rounded cursor-pointer border-[1px] border-gray-300 dark:bg-gray-600 mt-4">
+    return <Link to={path} key={item?.cloudinaryId} className="flex gap-3 my-2 p-2 dark:hover:bg-gray-950 hover:bg-gray-200 rounded cursor-pointer border-[1px] dark:border-gray-400 border-gray-300 dark:bg-gray-800 mt-4">
         <img
             className="rounded"
             src={isError ? "/images/fallback.png" : imageUrl}

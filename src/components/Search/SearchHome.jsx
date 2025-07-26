@@ -95,9 +95,9 @@ const MainContent = ({ data }) => {
           {((suggestionsData && suggestionsData?.length !== 0) || (storeSuggestionsData && storeSuggestionsData?.length !== 0)) && (
             <Link
               to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query || searchTerm}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query || searchTerm}`}
-              className={`flex gap-3 my-1 p-2 dark:hover:bg-gray-900 hover:bg-gray-200 rounded border-2 border-gray-300`}
+              className={`flex gap-3 my-1 p-2 dark:hover:bg-gray-900 hover:bg-gray-200 rounded border-2 border-gray-300 dark:border-gray-400`}
             >
-              <div className="rounded h-14 w-14 flex items-center justify-center border-2 border-gray-200">
+              <div className="rounded h-14 w-14 flex items-center justify-center border-2 dark:border-gray-400 border-gray-200">
                 <i className="ri-search-2-line text-3xl cursor-pointer dark:text-white" />
               </div>
               <div className="flex items-center ">
@@ -114,14 +114,14 @@ const MainContent = ({ data }) => {
     <div className="flex flex-col mx-auto gap-5 mt-16">
       {itemCards?.length > 0 && (
         <div className="pb-8 pt-2">
-          <h1 className="max-md:text-2xl dark:text-white">Popular Cuisines</h1>
+          <h1 className="max-md:text-2xl dark:text-white mb-3 ">Popular Cuisines</h1>
           <div className="flex w-fit flex-wrap justify-evenly">
             {itemCards.map((item) => {
               const queryObj = new URL(item?.action?.link).searchParams;
               return (
                 <button
                   key={item.id}
-                  className="shimmerBg h-40 w-28 md:h-[180px] md:w-[130px] rounded-xl shrink-0 cursor-pointer border-[1px] overflow-hidden mt-2 border-gray-400"
+                  className="shimmerBg h-40 w-28 md:h-[180px] md:w-[130px] rounded-xl shrink-0 cursor-pointer border-[1px] overflow-hidden mt-2 border-gray-400 dark:shadow-[0_0_1px_1px_rgba(156,145,145,0.8)]"
                   onClick={() => clickHandler(queryObj.get("query"))}
                 >
                   <img

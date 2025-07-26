@@ -57,8 +57,8 @@ const Card = ({ data, lat, lng }) => {
     const defaultPrice = dishData?.price / 100 || dishData?.defaultPrice / 100 || 0;
     const finalPrice = dishData?.finalPrice / 100;
     const price = finalPrice ? (
-        <p className="text-sm tracking-tight font-bold">
-            <span className="line-through text-gray-500">₹{defaultPrice} </span>₹
+        <p className="text-sm tracking-tight flex items-center gap-1 font-bold">
+            <span className="line-through dark:text-gray-700 text-gray-500">₹{defaultPrice} </span>₹
             {finalPrice}
         </p>
     ) : (
@@ -81,18 +81,18 @@ const Card = ({ data, lat, lng }) => {
     }
 
     return (
-        <div className="max-md:basis-full md:basis-[49%] pb-1 rounded-md bg-white">
+        <div className="max-md:basis-full md:basis-[49%] pb-1 rounded-md dark:bg-gray-300 bg-white">
             <Link
                 to={path}
                 onClick={() => handleClick(restaurantData?.name)}
                 className="flex group items-center justify-between p-3 w-full cursor-pointer"
             >
                 <div className="basis-[95%]">
-                    <p className="font-bold text-gray-800 line-clamp-2 leading-5 md:w-full break-words">
+                    <p className="font-bold dark:text-black text-gray-800 line-clamp-2 leading-5 md:w-full break-words">
                         {restaurantData?.name}
                     </p>
-                    <div className="flex gap-1 items-center text-gray-500 font-semibold text-sm">
-                        <i className="ri-star-fill text-green-700 mb-0.5" />
+                    <div className="flex gap-1 items-center dark:text-gray-800 text-gray-500 font-semibold text-sm">
+                        <i className="ri-star-fill dark:text-green-400 text-green-700 mb-0.5" />
                         <p>{restaurantData?.avgRating}</p>
                         <p>•</p>
                         <p>{restaurantData?.sla?.slaString}</p>
@@ -100,10 +100,10 @@ const Card = ({ data, lat, lng }) => {
                         <p>{restaurantData?.costForTwoMessage}</p>
                     </div>
                 </div>
-                <i className="basis-[3%] md:basis-[5%]  ri-arrow-right-long-fill text-2xl text-gray-600 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
+                <i className="basis-[3%] md:basis-[5%] dark:text-black ri-arrow-right-long-fill text-2xl text-gray-600 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
             </Link>
             <hr className="text-gray-300 my-1.5" />
-            <div className="flex justify-between bg-white">
+            <div className="flex justify-between">
                 <div className="flex flex-col gap-2 p-4">
                     {dishData.isVeg === 1 ? (
                         <svg
@@ -152,7 +152,7 @@ const Card = ({ data, lat, lng }) => {
                         <div
                             onClick={() => setIsDescriptionOpen(!isDescriptionOpen)}
                             id="moreCities"
-                            className="flex gap-2.5 cursor-pointer border-[1px] md:border-2 border-gray-500 px-2 py-0.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-1"
+                            className="flex gap-2.5 cursor-pointer border-[1px] md:border-2 dark:border-gray-700 dark:text-gray-700 border-gray-500 px-2 py-0.5 w-fit rounded-2xl items-center transition-all duration-300 linear hover:bg-gray-100 mt-1"
                         >
                             <p className="font-normal text-sm text-gray-900 select-none">
                                 More Details
@@ -189,11 +189,11 @@ const Card = ({ data, lat, lng }) => {
                 </div>
             </div>
 
-            <div className="px-2 transition-all duration-100 ease-linear overflow-hidden text-gray-700 font-medium bg-white"
+            <div className="px-2 transition-all duration-100 ease-linear overflow-hidden dark:text-black text-gray-700 font-medium dark:bg-gray-300 bg-white"
                 style={{ height: isDescriptionOpen ? `${paraHeight}px` : "0px" }}
             >
                 <hr className={`text-gray-300 my-1`} />
-                <p ref={paraRef} className={`max-md:text-sm`}>{dishData?.description}</p>
+                <p ref={paraRef} className="max-md:text-sm " >{dishData?.description}</p>
             </div>
 
         </div>

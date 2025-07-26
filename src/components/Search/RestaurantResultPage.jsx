@@ -25,7 +25,7 @@ const Card = ({ data, lat, lng }) => {
     <Link
       to={path}
       onClick={() => handleClick(data?.name)}
-      className="flex basis-full md:basis-[49%] w-1/2 pt-3 px-4 gap-3 cursor-pointer bg-white pb-8"
+      className="flex basis-full md:basis-[49%] rounded-md w-1/2 pt-3 px-4 gap-3 cursor-pointer dark:bg-gray-300 bg-white pb-8"
     >
       <div className="relative shrink-0">
         <img
@@ -48,23 +48,23 @@ const Card = ({ data, lat, lng }) => {
         )}
       </div>
       <div className="flex gap-1 justify-center flex-col w-[65%] md:w-[70%]">
-        <p className="font-bold text-gray-800 w-full truncate">
+        <p className="font-bold text-gray-800 dark:text-black w-full truncate">
           {data?.name}
         </p>
         <div className="flex max-md:items-start flex-col md:flex-row gap-1 items-center text-gray-500 font-semibold text-sm">
-          <div className="flex flex-row gap-1 items-center">
+          <div className="flex flex-row gap-1 items-center dark:text-gray-700">
             <i className="ri-star-fill text-green-700 mb-0.5" />
             <p>{data?.avgRating}</p>
             <p>•</p>
             <p>{data?.sla?.slaString}</p>
           </div>
-          <div className="flex flex-row gap-1 items-center">
+          <div className="flex flex-row gap-1 items-center dark:text-gray-700">
             <p className="md:block hidden">•</p>
             <p>{data?.costForTwoMessage}</p>
           </div>
         </div>
         <div className="line-clamp-2">
-          <p className="text-sm">{data?.cuisines?.join(", ")}</p>
+          <p className="text-sm font-medium tracking-wide">{data?.cuisines?.join(", ")}</p>
         </div>
       </div>
     </Link>
@@ -92,13 +92,13 @@ const MainContent = ({ data, lat, lng, mode }) => {
   const tabRestaurantData = cards?.map((data) => data?.card?.card?.info);
 
   return (
-    <div className="p-3 pt-18 w-full rounded dark:bg-gray-800 bg-gray-200 flex flex-col">
+    <div className="p-3 pt-18 w-full rounded-md dark:bg-gray-800 bg-gray-200 flex flex-col">
       {mode === "parent" ? (
         <>
           {clickedRestro && (
             <div className="flex w-full"><Card data={clickedRestro} lat={lat} lng={lng} /></div>
           )}
-          {moreText && <p className="font-bold mt-8 mb-6">{moreText}</p>}
+          {moreText && <p className="font-bold mt-8 mb-6 dark:text-white">{moreText}</p>}
           <div className="flex flex-wrap gap-1 gap-y-3 justify-between">
             {moreRestros &&
               moreRestros.map((data) => (
