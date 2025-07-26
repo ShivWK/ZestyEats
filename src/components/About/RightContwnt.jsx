@@ -1,7 +1,7 @@
 const RightContent = ({ data }) => {
   return (
     <section className="basis-[74%] py-7 pl-5">
-      <div className="bg-primary p-3">
+      <div className="bg-primary dark:bg-darkPrimary p-3">
         <p className="text-2xl font-bold tracking-tight text-white">
           {data.title}
         </p>
@@ -11,7 +11,7 @@ const RightContent = ({ data }) => {
           data.description.map((item, index) => {
             return (
               <div
-                className="mt-2"
+                className="mt-2 dark:text-gray-200"
                 key={index}
                 dangerouslySetInnerHTML={{ __html: item }}
               />
@@ -21,7 +21,7 @@ const RightContent = ({ data }) => {
           <ul className="list-disc ml-6 mt-2">
             {data.list.mainList.map((item, index) => (
               <li
-                className="mt-1.5"
+                className="mt-1.5 dark:text-gray-200"
                 key={index}
                 dangerouslySetInnerHTML={{ __html: item }}
               />
@@ -30,7 +30,7 @@ const RightContent = ({ data }) => {
               <ul className="list-[circle] ml-6">
                 {data.list.subList.map((item, index) => (
                   <li
-                    className="mt-1.5"
+                    className="mt-1.5 dark:text-gray-200"
                     key={index}
                     dangerouslySetInnerHTML={{ __html: item }}
                   />
@@ -43,7 +43,7 @@ const RightContent = ({ data }) => {
           data.lastDescription.map((item, index) => {
             return (
               <div
-                className="mt-2"
+                className="mt-2 dark:text-gray-200"
                 key={index}
                 dangerouslySetInnerHTML={{ __html: item }}
               />
