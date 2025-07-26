@@ -7,7 +7,7 @@ import Banner from "./Banner";
 import Footer from "./Footer";
 
 import Offers from "./Offers";
-// const SearchBar = lazy(() => import("./SearchBar"));
+const SearchBar = lazy(() => import("./SearchBar"));
 import BackToTopBtn from "../BackToTopBtn";
 
 const TopPicksCards = lazy(() => import("./TopPicksCards"));
@@ -124,12 +124,12 @@ const MainContent = ({ data, routes = true }) => {
           {topPicks && (
             <Suspense
               fallback={
-                <div className="flex justify-between">
-                  <div className="w-64 h-60 rounded-xl shimmerBg">
+                <div className="flex justify-between overflow-hidden">
+                  <div className="w-64 h-60 shrink-0 rounded-xl shimmerBg">
                   </div>
-                  <div className="w-64 h-60 rounded-xl shimmerBg">
+                  <div className="w-64 h-60 shrink-0 rounded-xl shimmerBg">
                   </div>
-                  <div className="w-64 h-60 rounded-xl shimmerBg">
+                  <div className="w-64 h-60 shrink-0 rounded-xl shimmerBg">
                   </div>
                 </div>
               }
@@ -139,7 +139,7 @@ const MainContent = ({ data, routes = true }) => {
           )}
         </section>
 
-        <hr className="mb-2 md:mb-4 mt-6 w-full text-gray-500" />
+        <hr className="mb-2 md:mb-4 mt-6 w-full text-gray-500 dark:text-gray-300" />
 
         {/* Sorting */}
         <Filter text1="Veg" text2="Non Veg" />
