@@ -28,7 +28,7 @@ const LegalAndFaqs = memo(() => {
             return (
                 <div key={index} className="border-b-2 border-gray-300">
                     <div onClick={() => handleClick(index)} className={`group flex justify-between items-center py-3 px-3 cursor-pointer ${activeIndex === index ? "bg-[rgba(255,81,0,0.15)]" : "bg-white dark:bg-gray-400 dark:hover:bg-gray-500 hover:bg-gray-200"}`}>
-                        <h2 className={`group-hover:text-primary text-[18px] font-medium transition-all duration-100 ease-in select-none text-gray-800 ${activeIndex === index ? "dark:text-primary" : "dark:text-black"}`}>{obj.question}</h2>
+                        <h2 className={`text-[18px] font-medium transition-all duration-100 ease-in select-none text-gray-800 ${activeIndex === index ? "dark:text-primary" : "dark:text-black group-hover:text-primary"}`}>{obj.question}</h2>
                         <i
                             className={`ri-arrow-drop-down-line ${activeIndex === index ? "text-primary" : "group-hover:text-primary text-gray-800"} text-4xl font-[200] -ml-2.5 inline-block`}
                             style={{
