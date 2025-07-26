@@ -49,11 +49,11 @@ const Banner = ({ data }) => {
   return (
     <div
       id="banner"
-      className="w-full p-3 md:p-5 bg-gradient-to-t from-[#fdfdfd9d] to-[#ffffff] dark:from-[rgba(254,250,250,0.62)] dark:to-black mt-2 md:my-3 rounded-4xl"
+      className="w-full p-3 md:p-5 bg-gradient-to-t from-[#c7c6c69d] to-[#ffffff] dark:from-[rgba(254,250,250,0.62)] dark:to-black mt-2 md:my-3 rounded-4xl"
     >
       <div
         id="inner-container"
-        className="flex flex-col gap-2.5 rounded-3xl w-full overflow-hidden border-2 dark:border-0 bg-white dark:bg-gray-800"
+        className="flex flex-col gap-2.5 rounded-3xl w-full overflow-hidden border border-[#c7c6c69d] dark:border-0 bg-white dark:bg-gray-800"
       >
         <div className="self-center w-full p-3.5 flex flex-col gap-1.5">
           <div id="rating" className="flex gap-2.5 items-center dark:text-white">
