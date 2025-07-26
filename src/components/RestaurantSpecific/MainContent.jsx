@@ -147,7 +147,7 @@ const MainContent = ({ data, routes = true }) => {
         {/* Menu */}
         {menuModel && <Menu clickHandler={setShowMenu} />}
 
-        <section className="w-full  mt-4 first:border-t-gray-200 first:border-t-[16px]">
+        <section className="w-full mt-4 first:border-t-gray-200 first:border-t-[16px]">
           {restMenuData?.length > 0 &&
             restMenuData?.map((item, index) => {
               if (item?.card?.card?.categories) {
@@ -208,7 +208,7 @@ const MainContent = ({ data, routes = true }) => {
         </section>
 
         {/* menu button */}
-        <button onClick={() => dispatch(toggleMenuModel())} className={`fixed menu-button right-4 md:right-[300px] py-4 px-3.5 rounded-md bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-200 ease-linear ${menuModel && "md:hidden"}`}
+        <button onClick={() => dispatch(toggleMenuModel())} className={`fixed menu-button right-4 md:right-[300px] py-4 px-3.5 rounded-md dark:bg-red-800 bg-black text-white text-xs font-bold shadow-[0_0_10px_5px_rgba(0,0,0,0.4)] cursor-pointer active:scale-95 transform transition-all duration-200 ease-linear ${menuModel && "md:hidden"}`}
         >
           MENU
         </button>

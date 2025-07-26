@@ -43,14 +43,13 @@ const ItemsSubHeading = memo(({ title, itemCards, borderBottom = true, restauran
     >
       <div
         onClick={handleClick}
-        className="flex justify-between items-center bg-white p-2 cursor-pointer"
+        className={`flex justify-between items-center p-2 cursor-pointer ${isOpen ? "bg-[rgba(255,81,0,0.15)] dark:text-white" : "bg-white dark:bg-gray-800 dark:text-white"}`}
         style={{
           borderBottom: borderBottom
             ? isOpen
               ? "none"
               : "2px solid #e5e7eb"
             : "none",
-          backgroundColor: isOpen ? "rgba(255,81,0,0.15)" : "#ffffff",
           transition: "all 0.2s linear",
         }}
       >

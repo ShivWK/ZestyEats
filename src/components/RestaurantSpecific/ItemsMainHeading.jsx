@@ -92,7 +92,7 @@ const ItemsMainHeading = ({
         <>
           <div
             id={path}
-            className="flex justify-start items-center bg-primary text-white py-3 px-2 scroll-mt-28"
+            className="flex justify-start items-center dark:bg-red-800 bg-primary text-white py-3 px-2 scroll-mt-28"
           >
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
           </div>
@@ -143,7 +143,7 @@ const ItemsMainHeading = ({
           <div
             id={path}
             onClick={handleClick}
-            className="flex justify-between items-center bg-primary p-2 text-white cursor-pointer scroll-mt-28"
+            className="flex justify-between items-center dark:bg-red-800 bg-primary p-2 text-white cursor-pointer scroll-mt-28"
           >
             <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
             <i
