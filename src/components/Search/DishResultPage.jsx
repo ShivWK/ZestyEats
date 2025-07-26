@@ -102,7 +102,7 @@ const Card = ({ data, lat, lng }) => {
                 </div>
                 <i className="basis-[3%] md:basis-[5%] dark:text-black ri-arrow-right-long-fill text-2xl text-gray-600 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out"></i>
             </Link>
-            <hr className="text-gray-300 my-1.5" />
+            <hr className="text-gray-300 dark:text-black my-1.5" />
             <div className="flex justify-between">
                 <div className="flex flex-col gap-2 p-4">
                     {dishData.isVeg === 1 ? (

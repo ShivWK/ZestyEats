@@ -16,8 +16,10 @@ import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 import Menu from "./Menu";
 import Filter from "../Home/Filters";
 import textToZestyEats from "../../utils/textToZestyEats";
+import useScrollToTop from "../../utils/useScrollToTop";
 
 const MainContent = ({ data, routes = true }) => {
+  useScrollToTop();
   const restaurantData = {};
   const [showMenu, setShowMenu] = useState(false);
   const dispatch = useDispatch();
