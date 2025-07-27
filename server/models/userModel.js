@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   },
   number: {
     type: Number,
-    required: [true, "Please provide a valid phone number."],
     unique: true
   },
   isNumberVerified: {

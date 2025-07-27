@@ -3,6 +3,7 @@ const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 
+exports.oAuthAuthorization = (req, res, next) => {}
 
 exports.signup = async (req, res) => {
     const body = req.body;
