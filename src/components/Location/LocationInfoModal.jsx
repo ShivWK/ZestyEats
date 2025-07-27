@@ -195,7 +195,7 @@ const LocationInfoModal = () => {
                 role="dialog"
                 aria-modal={true}
                 onAnimationEnd={runOnAnimationEnd}
-                className={`absolute block left-1/2 transform -translate-x-1/2 font-sans tracking-wide bg-white overflow-hidden rounded-xl w-[90%] lg:w-[30%] ${hideLocationInfoModal
+                className={`absolute block left-1/2 transform -translate-x-1/2 font-sans tracking-wide dark:bg-transparent bg-white overflow-hidden rounded-xl w-[90%] lg:w-[30%] ${hideLocationInfoModal
                     ? "hide-locationInfoModal"
                     : "show-locationInfoModal"
                     }
@@ -222,7 +222,7 @@ const LocationInfoModal = () => {
                         <div className="flex gap-2.5 relative w-full items-center">
                             <i className={`ri-map-pin-line text-xl dark:text-gray-950 text-gray-500`}></i>
                             <div className="w-full flex items-center gap-1.5">
-                                <p className="font-medium dark:text-gray-950 group-hover:text-primary group-active:text-primary dark:group-active:text-darkPrimary dark:group-hover:text-darkPrimary line-clamp-2 break-words leading-5">
+                                <p className="font-medium dark:text-gray-950 group-hover:text-primary group-active:text-primary dark:group-active:text-darkPrimary dark:group-hover:text-red-500 line-clamp-2 break-words leading-5">
                                     {data.city}
                                 </p>
                                 <span className="text-black font-medium">┃</span>

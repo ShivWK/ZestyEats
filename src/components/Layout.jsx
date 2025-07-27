@@ -295,7 +295,7 @@ export default function Layout() {
 
       <PageFooter />
 
-      {OpenLocationInfoModal && <LocationInfoModal />}
+      {!OpenLocationInfoModal && <LocationInfoModal />}
     </>
   );
 }
