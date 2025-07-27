@@ -60,8 +60,8 @@ const Offline = () => {
                     </g>
                 </svg>
 
-                <p className="text-2xl text-gray-700 font-bold mt-1">You're Offline</p>
-                <p className="text-xl text-gray-500 font-medium text-center -mt-3">Please check your internet connection.</p>
+                <p className="text-2xl text-gray-700 dark:text-gray-200 font-bold mt-1">You're Offline</p>
+                <p className="text-xl text-gray-500 dark:text-gray-300 font-medium text-center -mt-3">Please check your internet connection.</p>
             </div>
             <div className="flex gap-3 mt-2">
                 <button
