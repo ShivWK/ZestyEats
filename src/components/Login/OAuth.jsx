@@ -73,35 +73,3 @@ const OAuth = () => {
 }
 
 export default OAuth;
-
-// `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=85933172238-ah6d3fr9r43oh77h3b9bkfmmhau05b2l.apps.googleusercontent.com&scope=openid%20email%20profile&redirect_uri=http://localhost:5173`
-
-//     `http://localhost:5173/?code=4%2F0AVMBsJimmZi9ZMPfFBIAA42AtRaqX2uTSVKTdk7EsllyN3JDwX5wyCmrSjDuA2vclmYYtw&scope=email+profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+openid&authuser=0&prompt=consent`
-
-// async function fetchIdToken() {
-//     const code = "4%2F0AVMBsJimmZi9ZMPfFBIAA42AtRaqX2uTSVKTdk7EsllyN3JDwX5wyCmrSjDuA2vclmYYtw";
-//     const clientId = "85933172238-ah6d3fr9r43oh77h3b9bkfmmhau05b2l.apps.googleusercontent.com";
-//     const clientSecret = "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";
-//     const redirect_uri = "http://localhost:5173"
-
-//     const payload = `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirect_uri}&grant_type=authorization_code`
-
-//     const resp = await fetch("https://oauth2.googleapis.com/token", {
-//         method: "POST",
-//         headers: {
-//             "Content-Type": "application/x-www-form-urlencoded"
-//         },
-//         body: payload
-//     })
-//     const data = await resp.json();
-//     console.log(data);
-// }
-
-
-// {
-//     "access_token": "ya29.a0AS3H6NzwGwUftzjkdlnG2itpHiW_kdmurdwJRurvpwOFrces_g1no1owkV7PVFI-9cpwNj7xPaohcbMsbiLhjcrQLsbnvik83amYHafMzfTA07cpfOW8cwLE3hQnzuAo29Ne0my135ykGsppUXmzHPRHvt4bz848r6ew07NSaCgYKARwSARQSFQHGX2MiQiHhwiP7tbSk5uS25FXtNw0175",
-//     "expires_in": 3599,
-//     "scope": "https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile openid",
-//     "token_type": "Bearer",
-//     "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6ImI1MDljNTEzODc2OGY3Y2YyZTgyN2UwNGIyN2U3ZTRjYmM3YmI5MTkiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI4NTkzMzE3MjIzOC1haDZkM2ZyOXI0M29oNzdoM2I5YmtmbW1oYXUwNWIybC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6Ijg1OTMzMTcyMjM4LWFoNmQzZnI5cjQzb2g3N2gzYjlia2ZtbWhhdTA1YjJsLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA4MzAzNjIwNTM2MjQ1MzU3MzQ0IiwiZW1haWwiOiJzaGl2ZW5kcmF3a0BnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImM5aXBKZm1GdXRpTDdHbHJKdXUxX2ciLCJuYW1lIjoiU2hpdmVuZHJhIER3aXZlZGkiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSUFydDNpYmJoRXJmdFJ0X0M3VUdidUZ5QmZCb21VV0RZaWdkVGptY2RONnZUZTNEUT1zOTYtYyIsImdpdmVuX25hbWUiOiJTaGl2ZW5kcmEiLCJmYW1pbHlfbmFtZSI6IkR3aXZlZGkiLCJpYXQiOjE3NTM2MTkzNjUsImV4cCI6MTc1MzYyMjk2NX0.eAvyZs1nIzV6CUjT_25Pzdfyktfou737erE_lHGKzLjfenwRiVP31b1aMwJT4D8KkOH5lNJDshdaE00fP80xoy1jrwZIPlCLwqGmX-8m2FGLtE0suVzRH6QwTwfaEH9HQsTw_vwwLFhsAkzCfM88qpL3Wv5QUPDRblKeGwiVCRcXBuFDOxA0zH6mYH4XWZCmUNlNQKDvWQTsVzIQLyCfIwaa-zg1jeW3jt0oNVAS_fLC6PSchT7jeSEswyICnx_x6MEsXX2Pvo8mFa2F1l95VXtfCF8VGgtMQ25RFJ5weyvvVCxmE66tacc23kDGdkPBE1FgQ3kELhHRbsfEyq95qw"
-// }

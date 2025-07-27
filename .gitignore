@@ -13,7 +13,7 @@ node_modules
 dist
 dist-ssr
 random.json
-src/components/Login/OAuth.jsx
+components/Login/OAuth.jsx
 
 *.local
 
