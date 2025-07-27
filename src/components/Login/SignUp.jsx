@@ -33,7 +33,6 @@ const SignUp = memo(({ recaptchaRef }) => {
     opt: "",
   });
 
-  // const [otpOnPhone, setOtpOnPhone] = useState(true);
   const dispatch = useDispatch();
   const isSignUpOtpSend = useSelector(selectSignUpOtp);
   const isLoading = useSelector(selectIsLoading);
@@ -169,8 +168,8 @@ const SignUp = memo(({ recaptchaRef }) => {
         </div>
 
         <div className="text-xs font-bold text-gray-600 tracking-wide">
-          {otpOnPhone ? <p>OTP to <span className="text-black">Indian number.</span></p>
-            : <p>OTP to <span className="text-black">email (works globally).</span></p>
+          {otpOnPhone ? <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">Indian number.</span></p>
+            : <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">email (works globally).</span></p>
           }
         </div>
       </div>

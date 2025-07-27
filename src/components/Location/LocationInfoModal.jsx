@@ -202,7 +202,7 @@ const LocationInfoModal = () => {
                     }
                 ${shouldOpenLocationModal && "open-location-modal"}`}
             >
-                <div className="bg-primary w-full p-2 text-white font-medium flex items-center justify-between">
+                <div className="bg-primary dark:bg-darkPrimary w-full p-2 text-white font-medium flex items-center justify-between">
                     <p className="leading-5">
                         {reasonOfOpening === "permission" ? "Location blocked. Tap 'Grant' to get nearby results." : "Location unavailable. Choose a city below or search to see results"}
                     </p>
@@ -218,16 +218,16 @@ const LocationInfoModal = () => {
                     return <div
                         key={index}
                         onClick={() => placeClickHandler(data)}
-                        className={`group cursor-pointer ${index !== placeArray.length - 1 && "border-b-[1px]"}  border-gray-400 py-2 px-3 md:py-3 md:px-4 w-full`}
+                        className={`group cursor-pointer ${index !== placeArray.length - 1 && "border-b-[1px]"} dark:bg-gray-400 dark:border-gray-800 border-gray-400 py-2 px-3 md:py-3 md:px-4 w-full`}
                     >
                         <div className="flex gap-2.5 relative w-full items-center">
-                            <i className={`ri-map-pin-line text-xl text-gray-500`}></i>
+                            <i className={`ri-map-pin-line text-xl dark:text-gray-950 text-gray-500`}></i>
                             <div className="w-full flex items-center gap-1.5">
-                                <p className="font-medium group-hover:text-primary group-active:text-primary line-clamp-2 break-words leading-5">
+                                <p className="font-medium dark:text-gray-950 group-hover:text-primary group-active:text-primary dark:group-active:text-darkPrimary dark:group-hover:text-darkPrimary line-clamp-2 break-words leading-5">
                                     {data.city}
                                 </p>
                                 <span className="text-black font-medium">┃</span>
-                                <p className="text-sm font-medium tracking-wide text-gray-500 truncate">
+                                <p className="text-sm dark:text-gray-800 font-medium tracking-wide text-gray-500 truncate">
                                     {data.location + "."}
                                 </p>
                             </div>
@@ -237,7 +237,7 @@ const LocationInfoModal = () => {
 
                 {/* Search city */}
 
-                <div onClick={searchClickHandler} className="w-full bg-gray-200 py-2 px-3 flex items-center justify-between cursor-pointer">
+                <div onClick={searchClickHandler} className="w-full dark:bg-gray-800 dark:text-gray-200 bg-gray-200 py-2 px-3 flex items-center justify-between cursor-pointer">
                     <p className="font-semibold">Search for a city</p>
                     <i className="ri-search-2-line text-xl cursor-pointer"></i>
                 </div>

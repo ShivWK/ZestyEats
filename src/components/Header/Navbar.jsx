@@ -30,8 +30,6 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             onBlur={() => setShowDrop(false)}
             onClick={() => setShowDrop(!showDrop)}
             className="group relative cursor-pointer text-xl"
-            // onMouseEnter={() => setShowDrop(true)}
-            // onMouseLeave={() => setShowDrop(false)}
           >
             {theme === "Light" ? (
               <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
@@ -41,7 +39,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
               isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95" />
             )}
 
-            <div className="absolute rounded top-[135%] drop-shadow-[0_0_5px_#6a7282] left-1/2 transform -translate-x-1/2 p-1 bg-white " style={{
+            <div className="absolute rounded top-[135%] drop-shadow-[0_0_5px_#6a7282] left-1/2 transform -translate-x-1/2 p-1 bg-white dark:bg-gray-800" style={{
               display: showDrop ? "block" : "none",
             }}>
               <div className="relative text-sm">
@@ -86,7 +84,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                     <span>System</span>
                   </li>
                 </ul>
-                <div id="triangle" className="absolute -top-3 left-1/2 -translate-x-1/2 h-0 w-0 border-b-[12px] border-b-white border-l-[12px] border-r-[12px] border-l-transparent border-r-transparent "></div>
+                <div id="triangle" className="absolute -top-3 left-1/2 -translate-x-1/2 h-0 w-0 border-b-[12px] border-b-white dark:border-b-gray-800 border-l-[12px] border-r-[12px] border-l-transparent border-r-transparent "></div>
               </div>
             </div>
           </button>

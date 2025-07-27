@@ -89,7 +89,7 @@ const RecentLocations = memo(() => {
         className="fixed top-0 h-2bg-primary left-0 origin-left"
         style={{ scaleX: scrollYProgress }}
       />
-      <p className="text-sm font-semibold text-gray-400">RECENT SEARCHES</p>
+      <p className="text-sm font-semibold text-gray-400 dark:text-gray-300">RECENT SEARCHES</p>
       {recentLocations.length !== 0 ? (
         recentLocations.map((location, index) => (
           <Location
@@ -101,7 +101,7 @@ const RecentLocations = memo(() => {
           />
         ))
       ) : (
-        <p className="text-sm">No Recent Locations</p>
+        <p className="text-sm dark:text-gray-400">No Recent Locations</p>
       )}
     </div>
   );

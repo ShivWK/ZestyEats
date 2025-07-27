@@ -19,7 +19,7 @@ const Modal = ({ children, modal }) => {
           dispatch(setLocationModal(false));
         }
       }}
-      className={`${Style["model"]} ${modal == "left" ? Style["model-left"] : Style["model-right"]
+      className={`dark:bg-gray-800 bg-white ${Style["model"]} ${modal == "left" ? Style["model-left"] : Style["model-right"]
         } ${loginHide ? Style["hide-right-model"] : locationHide ? Style["hide-left-model"] : ""}`}
     >
       {children}

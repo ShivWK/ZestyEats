@@ -129,7 +129,7 @@ const Contact = memo(() => {
 
       <form
         ref={formRef}
-        className="p-4 lg:p-5 border-[1px] border-primary w-[95%] lg:w-[70%] max-lg:mx-auto flex flex-col gap-2 rounded-xl"
+        className="p-4 lg:p-5 border-[1px] dark:border-2 border-primary w-[95%] lg:w-[70%] max-lg:mx-auto flex flex-col gap-2 rounded-xl"
       >
         <input
           type="hidden"
@@ -144,7 +144,7 @@ const Contact = memo(() => {
             onChange={fieldValuesHandler}
             name="name"
             placeholder="Enter your name"
-            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "name" ? "border-red-500" : "border-transparent"}`}
+            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] dark:border-2 ${errorIn === "name" ? "border-red-500" : "border-transparent"}`}
           />
           <p
             className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.name.length >= 100 ? "text-red-500" : "text-gray-600 dark:text-gray-300"
@@ -159,7 +159,7 @@ const Contact = memo(() => {
             onChange={fieldValuesHandler}
             name="email"
             placeholder="Enter your email"
-            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] ${errorIn === "email" ? "border-red-500" : "border-transparent"}`}
+            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md border-[1px] dark:border-2 ${errorIn === "email" ? "border-red-500" : "border-transparent"}`}
           />
           <p
             className={`absolute right-1 text-xs font-medium mt-1 ${fieldValues.email.length >= 254 ? "text-red-500" : "text-gray-600 dark:text-gray-300"
@@ -173,7 +173,7 @@ const Contact = memo(() => {
             value={fieldValues.query}
             onChange={fieldValuesHandler}
             placeholder="Type your message..."
-            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md min-h-48 lg:min-h-60 border-[1px] ${errorIn === "query" ? "border-red-500" : "border-transparent"}`}
+            className={`w-full bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-200 py-2 lg:py-3 outline-none px-3 lg:px-4 rounded-md min-h-48 lg:min-h-60 border-[1px] dark:border-2 ${errorIn === "query" ? "border-red-500" : "border-transparent"}`}
           ></textarea>
           <p
             className={`absolute right-1 text-xs font-medium ${fieldValues.query.length >= 1000

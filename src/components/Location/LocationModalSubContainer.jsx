@@ -79,7 +79,7 @@ const ModalSubContainer = memo(() => {
     >
       <button
         onClick={handleClose}
-        className="group cursor-pointer  self-start"
+        className="group cursor-pointer self-start dark:text-white text-black"
       >
         <i className="ri-close-large-fill text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
       </button>
@@ -94,7 +94,7 @@ const ModalSubContainer = memo(() => {
           ref={inputRef}
           value={searchValue}
           onChange={handleInputChange}
-          className="p-0.5 outline-none text-[18px] font-medium w-[80%] md:w-[82%]"
+          className="p-0.5 outline-none text-[18px] font-medium w-[80%] md:w-[82%] dark:placeholder:text-gray-400 dark:text-gray-200"
           placeholder="Search for area, streat..."
         />
         {searchValue.length !== 0 && (

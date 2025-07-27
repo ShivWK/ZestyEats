@@ -125,9 +125,9 @@ const GeoLocation = memo(({ setSearchValue }) => {
       {showLoader
         ? <Loader size={"small"} />
         : <div className="flex gap-2.5">
-          <i className="ri-crosshair-2-line text-xl text-gray-500"></i>
+          <i className="ri-crosshair-2-line text-xl text-gray-500 dark:text-gray-300"></i>
           <div>
-            <p className="font-medium group-hover:text-primary group-active:text-primary text-lg">
+            <p className="font-medium dark:text-gray-200 group-hover:text-primary group-active:text-primary text-lg">
               Use my current location
             </p>
             <p className="text-sm font-semibold text-gray-400 tracking-wide">Using GPS</p>

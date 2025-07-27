@@ -52,14 +52,14 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
         onClick={isLoginOtpSend || isSigUpOtpSend ? handleBack : handleClose}
       >
         {isLoginOtpSend || isSigUpOtpSend ? (
-          <i className="ri-arrow-left-line text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
+          <i className="ri-arrow-left-line text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out dark:text-white"></i>
         ) : (
-          <i className="ri-close-large-fill text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
+          <i className="ri-close-large-fill text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out dark:text-white"></i>
         )}
       </button>
       <div className="flex items-center justify-between">
         <div>
-          <h2>
+          <h2 className="dark:text-white">
             {member ? (isLoginOtpSend ? "Enter OTP" : "Login") : "Sign up"}
           </h2>
           {member ? (
@@ -68,7 +68,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
                {`We've sent an OTP to your ${otpOnPhone ? "phone number" : "email"}`}
               </p>
             ) : (
-              <p className="font-semibold">
+              <p className="font-semibold dark:text-gray-300">
                 or{" "}
                 {/* because JSX removes the white space between p and button so we have manually added it. */}
                 <button
@@ -80,7 +80,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
               </p>
             )
           ) : (
-            <p className="font-semibold">
+            <p className="font-semibold dark:text-gray-300">
               or{" "}
               <button
                 className="text-primary cursor-pointer tracking-wide"
@@ -94,10 +94,10 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
             isLoginOtpSend ? (
               ""
             ) : (
-              <hr className="w-8 border-t-2 font-bold mt-6 mb-7 md:hidden" />
+              <hr className="w-8 border-t-2 font-bold mt-6 mb-7 md:hidden dark:text-gray-400" />
             )
           ) : (
-            <hr className="w-8 border-t-2 font-bold mt-6 mb-7 md:hidden" />
+            <hr className="w-8 border-t-2 font-bold mt-6 mb-7 md:hidden dark:text-gray-400" />
           )}
         </div>
         <img
@@ -113,9 +113,9 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
 
       {isValidElement(children) ? cloneElement(children, {recaptchaRef: recaptchaReference}) : children}
 
-      <p className="text-xs font-semibold tracking-wide text-gray-500 text-center mt-2 lg:mt-1">------- or -------</p>
+      <p className="text-xs font-semibold tracking-wide text-gray-500 text-center mt-2 lg:mt-1 dark:text-gray-200">------- or -------</p>
       {!(isLoginOtpSend || isSigUpOtpSend) && (
-        <button className="absolute mt-7 lg:mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out bg-white">
+        <button className="absolute mt-7 lg:mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out bg-white dark:bg-black">
           <p className="whitespace-nowrap flex gap-2 items-center">
             Continue with{" "}
             <svg

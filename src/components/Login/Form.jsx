@@ -53,8 +53,7 @@ const Form = ({
           disabled={isLoading}
           type="button"
           onClick={handleSubmit}
-          className="flex justify-center items-center
-           bg-primary font-bold text-white w-full h-11 mt-5 rounded-lg cursor-"
+          className="flex justify-center items-center bg-primary dark:bg-darkPrimary font-bold text-white w-full h-11 mt-5 rounded-lg"
           style={{ cursor: isLoading ? "auto" : "pointer" }}
           whileTap={{ scale: isLoading ? 0 : 0.95 }}
         >
@@ -68,12 +67,12 @@ const Form = ({
         </motion.button>
       )}
       {!isOtpSend && (
-        <p className="text-center text-xs mt-2 font-bold text-gray-600">
+        <p className="text-center text-xs mt-2 font-bold text-gray-600 dark:text-gray-200">
           {signingStatement} , I accept the{" "}
           <Link
             to="/legalAndPolicies?mode=termsAndConditions"
             onClick={handlePageSwitch}
-            className="text-blue-600">
+            className="text-blue-600 dark:text-blue-400">
             Terms & Conditions
           </Link>
           {" "}
@@ -82,19 +81,11 @@ const Form = ({
           <Link
             to="/legalAndPolicies?mode=privacyPolicy"
             onClick={handlePageSwitch} 
-            className="text-blue-600">
+            className="text-blue-600 dark:text-blue-400">
             Privacy Policy
           </Link>
         </p>
       )}
-      {/* <ReCAPTCHA
-        sitekey={siteKey}
-        size="invisible"
-        ref={recaptchaReference}
-        badge="bottomright"
-        onError={(err) => console.error("error occurred", err)}
-        onExpired={() => recaptchaReference.current.reset()}
-      /> */}
     </form>
   );
 };

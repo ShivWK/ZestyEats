@@ -132,18 +132,18 @@ const Login = ({ recaptchaRef }) => {
       )}
       <div className="mt-5">
         {otpOnPhone ? (
-          <p className="text-xs mt-2 font-bold text-gray-600 tracking-wide">
+          <p className="text-xs mt-2 font-bold text-gray-600 dark:text-gray-300 tracking-wide">
             OTP will be sent to {" "}
-            <span className="text-black">
+            <span className="text-black dark:text-white">
               Indian number (+91 only). Use email
             </span>
             {" "}if you're outside India.
           </p>
         )
           : (
-            <p className="text-xs mt-2 font-bold text-gray-600 tracking-wide">
+            <p className="text-xs mt-2 font-bold text-gray-600 dark:text-gray-300 tracking-wide">
               OTP will be sent to given email inbox.{" "}
-              <span className="text-black">
+              <span className="text-black dark:text-white">
                 Check spam if you don’t see it.
               </span>
             </p>
