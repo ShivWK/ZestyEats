@@ -44,7 +44,7 @@ const LogoAndAttribution = () => {
               dispatch(setDpModelOpen(true))
             }}
 
-            className="h-[14vh] w-[14vh] rounded-[50%] object-cover border-2 border-primary p-1 cursor-pointer"
+            className="h-[14vh] w-[14vh] rounded-[50%] object-cover border-2 border-primary p-1"
             src="/images/MY-min.png"
             alt="Developer image"
           />
@@ -95,7 +95,7 @@ const LogoAndAttribution = () => {
                 ></i>
               </a>
             </div>
-            {dpModel && <div>
+            {/* {dpModel && <div>
               <div className="fixed flex items-center justify-center md:justify-start h-full w-full top-0 right-0 bg-[rgba(0,0,0,0.3)] z-40" onClick={dpOverlayClickHandler}>
                 <img onAnimationEnd={(e) => {
                   const classList = e.target.classList;
@@ -108,11 +108,11 @@ const LogoAndAttribution = () => {
                   src="/images/MY-min.png"
                   className={`rounded-full h-[35vh] md:h-[50vh] w-[35vh] md:w-[50vh] p-1 border-2 border-primary transform transition-transform duration-300 ease-in-out md:ml-32 animate-dp-show ${dpModelHide && "animate-dp-hide"}`} alt="Developer image" />
               </div>
-            </div>}
+            </div>} */}
           </div>
         </div>
         <div className="hidden md:flex flex-col gap-2 w-full mt-7">
-          <p>Social Links</p>
+          <p className="dark:text-white">Social Links</p>
           <div className="flex gap-3"> 
             <a
               href="https://www.linkedin.com/in/shivendra-dwivedi"
