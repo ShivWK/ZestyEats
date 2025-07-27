@@ -6,10 +6,8 @@ const OAuth = () => {
     const code = searchParams.get("code");
 
     async function fetchIdToken() {
-        console.log("Called")
-    // const code = "4%2F0AVMBsJg9eXC5fqulggtQl0MAzQa4AsuJxOG_80D2WrHaOQ3elTGznG1vzlIDv8aCY80PSA";
-    const clientId = "85933172238-ah6d3fr9r43oh77h3b9bkfmmhau05b2l.apps.googleusercontent.com";
-    const clientSecret = "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";
+    const clientId = import.meta.env.VITE_OAUTH_CLIENT_KEY;
+    const clientSecret = import.meta.env.VITE_OAUTH_SECRET_KEY;
     const redirect_uri = "http://localhost:5173"
 
     const payload = `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirect_uri}&grant_type=authorization_code`
