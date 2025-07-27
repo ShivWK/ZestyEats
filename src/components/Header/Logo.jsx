@@ -20,7 +20,7 @@ const Logo = memo(({ searchPlaceholder }) => {
 
   const handleClick = () => {
     dispatch(setHideLocation(false));
-    dispatch(setHideLogin(false))
+    dispatch(setHideLogin(false));
     dispatch(setLocationModal(true));
   };
 
@@ -29,7 +29,6 @@ const Logo = memo(({ searchPlaceholder }) => {
       <Link to="/" className={`active:scale-95 shrink-0`}>
         <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-linear max-lg:h-12 max-lg:w-12 rounded-md outline-none border-none" />
       </Link>
-
       {searchPlaceholder ? (
         <p className="flex items-center font-bold text-xl max-w-48 md:max-w-80 truncate"><span className="truncate">
           {searchPlaceholder}</span></p>

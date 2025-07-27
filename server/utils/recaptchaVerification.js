@@ -10,7 +10,7 @@ const recaptchaVerification = async (token) => {
     try {
         const res = await fetch("https://www.google.com/recaptcha/api/siteverify", {
             method: "POST",
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, //body will url string type
             body: params
         })
 

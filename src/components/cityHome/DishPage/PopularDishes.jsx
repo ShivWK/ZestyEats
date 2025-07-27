@@ -47,7 +47,7 @@ const MainData = ({ data }) => {
             </div>
         </>
     } else {
-        return <main className="w-full md:max-w-[1070px] mx-auto overflow-hidden pb-2 md:pb-6 pt-[5rem] md:pt-28 overflow-x-hidden max-md:px-2 flex flex-col gap-2.5 md:gap-5 min-h-96">
+        return <main className="w-full md:max-w-[1070px] mx-auto overflow-hidden pb-2 md:pb-6 pt-[5rem] md:pt-28 overflow-x-hidden max-md:px-2 flex flex-col gap-2.5 md:gap-5 min-h-96 dark:text-gray-300">
             <p>Sorry no data</p>
         </main>
     }
