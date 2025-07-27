@@ -12,7 +12,7 @@ firebaseConfig.js
 node_modules
 dist
 dist-ssr
-random.json
+random.jsx
 components/Login/OAuth.jsx
 
 *.local

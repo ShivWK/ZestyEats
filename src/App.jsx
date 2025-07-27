@@ -55,7 +55,7 @@ import {
   setHideLogin
 } from "./features/Login/loginSlice";
 
-import { selectPathHistory, setUserFriendlyPathHistory } from "./features/home/homeSlice";
+import { selectPathHistory, setUserFriendlyPathHistory, selectCurrentTheme, setCurrentTheme } from "./features/home/homeSlice";
 
 import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
@@ -65,6 +65,12 @@ export default function App() {
   const isLocationModelOpen = useSelector(selectLocationModal);
   const isMenuModelOpen = useSelector(selectMenuModel);
   const dispatch = useDispatch();
+  let theme = useSelector(selectCurrentTheme);
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme");
+    dispatch(setCurrentTheme(storedTheme));
+  }, [])
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -232,7 +238,39 @@ export default function App() {
     dispatch(setUserFriendlyPathHistory(history));
   }, [pathHistory]);
 
-  
+  useEffect(() => {
+    const html = document.documentElement;
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+    if (theme === "dark") {
+      html.classList.add("dark");
+    } else if (theme === "light") {
+      html.classList.remove("dark");
+    } else if (theme === "system") {
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+
+      if (systemTheme.matches) {
+        html.classList.add("dark");
+      } else {
+        html.classList.remove("dark");
+      }
+    }
+
+    const themeChangeHandler = (e) => {
+      const currentTheme = localStorage.getItem("theme");
+
+      if (currentTheme === "system") {
+        if (e.matches) {
+          html.classList.add("dark");
+        } else {
+          html.classList.remove("dark");
+        }
+      }
+    }
+
+    systemTheme.addEventListener("change", themeChangeHandler)
+    return () => systemTheme.removeEventListener("change", themeChangeHandler)
+  }, [theme])
 
   return (
     <>

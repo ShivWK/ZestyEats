@@ -4,7 +4,7 @@ import {
   setHideLogin,
   setLogInModal,
 } from "../../features/Login/loginSlice";
-import { selectLatAndLng } from "../../features/home/homeSlice";
+import { selectLatAndLng, selectCurrentTheme, setCurrentTheme } from "../../features/home/homeSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { memo, useCallback, useState } from "react";
 
@@ -13,8 +13,9 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   const loggedIn = false;
   const dispatch = useDispatch();
   const [showDrop, setShowDrop] = useState(false);
-  const [theme, setTheme] = useState("Light");
+  // const [theme, setTheme] = useState("Light");
   const isSmall = window.innerWidth <= 768;
+  const theme = useSelector(selectCurrentTheme);
 
   const handleSignIn = useCallback(() => {
     dispatch(setHideLogin(false));
@@ -31,9 +32,9 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
             onClick={() => setShowDrop(!showDrop)}
             className="group relative cursor-pointer text-xl"
           >
-            {theme === "Light" ? (
+            {theme === "light" ? (
               <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
-            ) : theme === "Dark" ? (
+            ) : theme === "dark" ? (
               <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
             ) : (
               isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95" />
@@ -45,9 +46,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
               <div className="relative text-sm">
                 <ul className="list-none">
                   <li
-                    onClick={(e) => {
-                      setTheme("Light");
-                    }}
+                    onClick={() => dispatch(setCurrentTheme("light"))}
                     className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
                     style={{
                       backgroundColor: theme === "Light" ? "#e5e7eb" : "",
@@ -58,9 +57,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                     <span>Light</span>
                   </li>
                   <li
-                    onClick={(e) => {
-                      setTheme("Dark");
-                    }}
+                    onClick={() => dispatch(setCurrentTheme("dark"))}
                     className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
                     style={{
                       backgroundColor: theme === "Dark" ? "#e5e7eb" : "",
@@ -71,9 +68,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                     <span>Dark</span>
                   </li>
                   <li
-                    onClick={(e) => {
-                      setTheme("System");
-                    }}
+                    onClick={() => dispatch(setCurrentTheme("system"))}
                     className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
                     style={{
                       backgroundColor: theme === "System" ? "#e5e7eb" : "",

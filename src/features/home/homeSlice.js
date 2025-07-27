@@ -24,12 +24,19 @@ const initialState = {
   dbModelOpen: false,
   dpModelHide: false,
   showBottomMenu: true,
+  currentTheme:"system",
 };
 
 const homeSlice = createSlice({
   name: "home",
   initialState: initialState,
   reducers: {
+    setCurrentTheme: (state, action) => {
+      state.currentTheme = action.payload;
+
+      localStorage.setItem("theme", state.currentTheme);
+    },
+
     addLatAndLng: (state, action) => {
       const { lat, lng } = action.payload;
 
@@ -206,6 +213,7 @@ const homeSlice = createSlice({
 });
 
 export default homeSlice.reducer;
+export const selectCurrentTheme = (state) => state.home.currentTheme;
 export const selectFoodieThoughtsData = (state) =>
   state.home.foodieThoughtsData;
 export const selectTopRestaurantsTitle = (state) =>
@@ -241,6 +249,7 @@ export const selectIsServiceable = (state) => state.home.isUnserviceable;
 // if i don't use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
 
 export const {
+  setCurrentTheme,
   setUnserviceable,
   addFoodieThoughtsData,
   addTopRestaurantsData,
@@ -265,5 +274,4 @@ export const {
   setDpModelOpen,
   setShowBottomMenu,
   setDpModelHide,
-  // setCity
 } = homeSlice.actions;

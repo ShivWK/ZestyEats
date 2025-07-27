@@ -26,7 +26,8 @@ import {
   addSearchedCityAddress,
   selectDpModel,
   setDpModelHide,
-  addRecentLocations
+  addRecentLocations,
+  setCurrentTheme
 } from "../features/home/homeSlice";
 
 import {
@@ -90,6 +91,7 @@ export default function Layout() {
     // const wishlist = JSON.parse(localStorage.getItem("wishlist"));
     // const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
     const localityLatLng = JSON.parse(localStorage.getItem("localityLatLng"));
+    const theme = localStorage.getItem("theme");
     // const cartItems = JSON.parse(localStorage.getItem("CartItems"));
 
     let userPathHistory = '';
@@ -116,6 +118,8 @@ export default function Layout() {
       if (currentCity !== undefined && currentCity !== null) dispatch(addYourCurrentCity(currentCity));
 
       if (restaurantAllItems !== undefined && restaurantAllItems !== null) dispatch(setRestaurantItems(restaurantAllItems));
+
+      if (theme !== undefined && theme !== null) dispatch(setCurrentTheme(theme));
 
       // if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
 
@@ -290,8 +294,8 @@ export default function Layout() {
       <PageHeader />
       <Outlet />
 
-      {isLoginOpen && ( <LoginModal /> )}
-      {isLocationOpen && ( <LocationModal /> )}
+      {isLoginOpen && (<LoginModal />)}
+      {isLocationOpen && (<LocationModal />)}
 
       <PageFooter />
 
