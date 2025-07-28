@@ -49,8 +49,8 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                     onClick={() => dispatch(setCurrentTheme("light"))}
                     className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
                     style={{
-                      backgroundColor: theme === "Light" ? "#e5e7eb" : "",
-                      color: theme === "Light" ? "black" : ""
+                      backgroundColor: theme === "light" ? "#e5e7eb" : "",
+                      color: theme === "light" ? "black" : ""
                     }}
                   >
                     <i className="fa-solid fa-sun "></i>
@@ -58,10 +58,10 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                   </li>
                   <li
                     onClick={() => dispatch(setCurrentTheme("dark"))}
-                    className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                    className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded mt-0.5"
                     style={{
-                      backgroundColor: theme === "Dark" ? "#e5e7eb" : "",
-                      color: theme === "Dark" ? "black" : ""
+                      backgroundColor: theme === "dark" ? "#e5e7eb" : "",
+                      color: theme === "dark" ? "black" : ""
                     }}
                   >
                     <i className="ri-moon-fill"></i>
@@ -69,10 +69,10 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
                   </li>
                   <li
                     onClick={() => dispatch(setCurrentTheme("system"))}
-                    className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded"
+                    className="flex gap-2 items-center py-1.5 px-3.5 md:py-1 md:px-3 hover:bg-primary hover:text-white transition-all duration-100 rounded mt-0.5"
                     style={{
-                      backgroundColor: theme === "System" ? "#e5e7eb" : "",
-                      color: theme === "System" ? "black" : ""
+                      backgroundColor: theme === "system" ? "#e5e7eb" : "",
+                      color: theme === "system" ? "black" : ""
                     }}
                   >
                     {isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill"></i>}
