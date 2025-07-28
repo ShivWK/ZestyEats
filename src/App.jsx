@@ -243,13 +243,13 @@ export default function App() {
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
 
     function changeStatusBarColor(color) {
-      const metaElement = document.querySelector("meta[name=theme-color]");
+      let metaElement = document.querySelector("meta[name=theme-color]");
 
       if (!metaElement) {
         metaElement = document.createElement("meta");
-        newMeta.name = "theme-color";
+        metaElement.name = "theme-color";
 
-        document.head.appendChild(newMeta);
+        document.head.appendChild(metaElement);
       }
 
       metaElement.setAttribute("content", color);
