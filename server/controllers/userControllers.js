@@ -2,8 +2,9 @@ const SessionModel = require("./../models/sessionModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
+const sendMail = require("./../utils/email");
 
-exports.oAuthAuthorization = (req, res, next) => {}
+exports.oAuthAuthorization = (req, res, next) => { }
 
 exports.signup = async (req, res) => {
     const body = req.body;
@@ -50,7 +51,7 @@ exports.signup = async (req, res) => {
                     "Authorization": process.env.FAST_TWO_SMS_KEY,
                 },
                 body: JSON.stringify({
-                    message: `Hi ${cleanName}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`,
+                    message: `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`,
                     language: "english",
                     route: "q",
                     numbers: `91${cleanPhone}`,
@@ -74,8 +75,23 @@ exports.signup = async (req, res) => {
                 })
 
         } else {
-            
-            
+            try {
+                const text = `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`;
+
+                const resp = await sendMail(cleanEmail, text)
+                console.log("API response", resp)
+                return res.status(200).json({
+                    status: "success",
+                    message: "OTP send successfully to your email"
+                })
+            } catch (err) {
+                console.log("Error in sending OTP", err);
+                return res.status(500).json({
+                    status: "failed",
+                    message: "OTP not send"
+                })
+            }
+
         }
     }
 }
