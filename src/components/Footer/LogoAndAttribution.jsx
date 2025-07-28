@@ -149,7 +149,7 @@ const LogoAndAttribution = () => {
               ></i>
             </a>
             <a
-              href="mailto:shivendrawk@gmail.com"
+              href="mailto:shivendra@shivendra.site"
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
             >
               <i

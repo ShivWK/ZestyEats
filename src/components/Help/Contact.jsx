@@ -134,7 +134,7 @@ const Contact = memo(() => {
         <input
           type="hidden"
           name="access_key"
-          value="21617fe9-bc5d-45cd-b274-eb68c7684cb9"
+          value={import.meta.env.VITE_WEB_3_FORMS_ACCESS_KEY}
         ></input>
         <div className="relative mb-5">
           <input
