@@ -3,7 +3,19 @@
 
 @theme {
     --color-primary: #ff5200;
-    --color-darkPrimary: #9f0712
+    --color-darkPrimary: #9f0712;
+
+    --animate-height: height 0.6s ease forwards;
+
+    @keyframes height {
+        0% {
+            height: 0px;
+        }
+
+        100% {
+            height: 100%
+        }
+    }
 }
 
 @layer utilities {
