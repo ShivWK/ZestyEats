@@ -240,19 +240,36 @@ export default function App() {
 
   useEffect(() => {
     const html = document.documentElement;
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function changeStatusBarColor(color) {
+      const metaElement = document.querySelector("meta[name=theme-color]");
+
+      if (!metaElement) {
+        metaElement = document.createElement("meta");
+        newMeta.name = "theme-color";
+
+        document.head.appendChild(newMeta);
+      }
+
+      metaElement.setAttribute("content", color);
+    }
 
     if (theme === "dark") {
       html.classList.add("dark");
+      changeStatusBarColor("#1e2939");
     } else if (theme === "light") {
       html.classList.remove("dark");
+      changeStatusBarColor("#ffffff");
     } else if (theme === "system") {
-    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
 
       if (systemTheme.matches) {
         html.classList.add("dark");
+        changeStatusBarColor("#1e2939");
       } else {
         html.classList.remove("dark");
+        changeStatusBarColor("#ffffff");
       }
     }
 
@@ -262,8 +279,10 @@ export default function App() {
       if (currentTheme === "system") {
         if (e.matches) {
           html.classList.add("dark");
+          changeStatusBarColor("#1e2939");
         } else {
           html.classList.remove("dark");
+          changeStatusBarColor("#ffffff");
         }
       }
     }
