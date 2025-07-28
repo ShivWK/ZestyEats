@@ -77,7 +77,7 @@ const MobileFooterMenu = memo(() => {
 
             <NavLink to={"/cart"} style={({ isActive }) => { if (isActive) return { color: "#ff5200" } }}>
                 <i className={`fa-solid fa-cart-shopping ${cartItemsCount && "cart-animation"}`}>
-                    <sub className="text-[10px] text-red-600 ">
+                    <sub className="text-[10px] text-red-600 dark:text-red-400 ">
                             {cartItemsCount !== 0 && cartItemsCount}  
                     </sub>
                 </i>
