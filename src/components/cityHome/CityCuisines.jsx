@@ -13,12 +13,9 @@ import {
     selectSecondaryCity,
     setSecondaryCity
 } from "../../features/cityHome/cityHomeSlice";
-import BackToTopBtn from "../BackToTopBtn";
 import ScooterAnimation from "../../utils/ScooterAnimation";
 
 const MainContent = ({ data }) => {
-    // const {lat, lng} = useSelector(selectCityLatAndLng)
-    // console.log(lat, lng)
 
     const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
     const secondaryCity = useSelector(selectSecondaryCity);
@@ -68,8 +65,6 @@ const MainContent = ({ data }) => {
         <div className="my-5 mb-0 md:hidden">
             <ScooterAnimation />
         </div>
-
-        {/* <BackToTopBtn percentage={40} /> */}
     </main>
         <div className="hidden md:block my-8">
             <ScooterAnimation />
