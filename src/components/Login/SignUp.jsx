@@ -122,7 +122,8 @@ const SignUp = memo(({ recaptchaRef }) => {
         })
       })
       const data = await res.json();
-      console.log(data)
+      console.log(data);
+      dispatch(signUpOtpSend(true));
       dispatch(setLoading(false))
     } catch (err) {
       console.log("Error in sending OTP", err);
