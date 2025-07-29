@@ -32,7 +32,7 @@ const missingParamsError = (msg, res) => {
 };
 
 exports.homePageData = async (req, res) => {
-  console.log(req.headers["x-identifier"]);
+  console.log(req.headers);
 
   try {
     const { lat, lng } = req.query;
