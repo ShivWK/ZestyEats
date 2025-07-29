@@ -5,7 +5,7 @@ const homeApiSlice = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "https://swiggy-clone-klzu.onrender.com/api/zestyeats",
     prepareHeaders: (headers) => {
-      headers.set("x-identifier" , import.meta.env.HASHED_IDENTIFIER);
+      headers.set("x-identifier" , import.meta.env.VITE_HASHED_IDENTIFIER);
       return headers
     }
   }),
