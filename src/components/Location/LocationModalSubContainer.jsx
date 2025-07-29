@@ -81,7 +81,7 @@ const ModalSubContainer = memo(() => {
         onClick={handleClose}
         className="group cursor-pointer self-start dark:text-white text-black"
       >
-        <i className="ri-close-large-fill text-xl group-hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.08)] rounded-[50%] transition-all duration-150 ease-in-out"></i>
+        <i className="ri-close-large-fill text-xl p-1 -ml-1 dark:group-hover:bg-gray-300/40 group-hover:bg-black/30 group-hover:text-white rounded-[50%] transition-all duration-150 ease-in-out"></i>
       </button>
       {/* Search locations */}
       <div

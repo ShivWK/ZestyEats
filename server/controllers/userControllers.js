@@ -1,9 +1,11 @@
 const SessionModel = require("./../models/sessionModel");
+const OtpModal = require("./../models/otpModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 const sendMail = require("./../utils/email");
 const sms = require("./../utils/sms");
+
 
 exports.oAuthAuthorization = (req, res, next) => { }
 
@@ -49,8 +51,14 @@ exports.signup = async (req, res) => {
 
             sms(cleanPhone, text)
                 .then(res => res.json())
-                .then(response => {
-                    console.log("API response", response)
+                .then( async (response) => {
+                    // console.log("API response", response);
+                    await OtpModal.create({
+                        phone: cleanPhone,
+                        for: "signup",
+                        hashedOtp: signUpOTP,
+                    })
+
                     return res.status(200).json({
                         status: "success",
                         message: "OTP send successfully to your number"

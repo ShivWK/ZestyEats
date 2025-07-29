@@ -1,14 +1,25 @@
 const mongoose = require("mongoose");
 
+const blockedSchema = new mongoose.Schema({
+    value: Boolean,
+    blockedAt: {
+        type: Date,
+        default: () => new Date()
+    }
+}, { _id: false });
+
 const otpSchema = new mongoose.Schema({
-    phone:  {
+    phone: {
         type: Number,
-        unique: true,
     },
 
     email: {
         type: String,
-        unique: true,
+    },
+
+    for: {
+        type: String,
+        required: [true, "Please provide the 'for' prop value"]
     },
 
     hashedOtp: {
@@ -18,7 +29,7 @@ const otpSchema = new mongoose.Schema({
 
     createdAt: {
         type: Date,
-        default: () => new Date(),
+        default: Date.now,
         expires: 60 * 6
     },
 
@@ -30,20 +41,18 @@ const otpSchema = new mongoose.Schema({
     attempts: {
         type: Number,
         max: 5,
-        required: true
+        default: 0
     },
 
     resendCount: {
         type: Number,
         max: 3,
-        required: true
+        default: 0
     },
 
-    blockedUntil: Number,
-
-    resendBlockedUntil: Number
+    blockedUntil: blockedSchema,
+    resendBlockedUntil: blockedSchema,
 })
 
 const OtpModel = mongoose.model("OTP", otpSchema);
-
 module.exports = OtpModel;
