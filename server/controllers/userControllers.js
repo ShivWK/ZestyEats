@@ -86,7 +86,7 @@ exports.signup = async (req, res) => {
                     console.log("API response", response);
 
                     // GENERATE OTP DOC
-                    const hashedOTP = crypto.createHash("sha256").update(signUpOTP).digest("hex");
+                    const hashedOTP = crypto.createHash("sha256").update(String(signUpOTP)).digest("hex");
                     await OtpModal.create({
                         phone: cleanPhone,
                         for: "signup",
@@ -117,7 +117,7 @@ exports.signup = async (req, res) => {
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
 
-                const hashedOTP = crypto.createHash("sha256").update(signUpOTP).digest("hex");
+                const hashedOTP = crypto.createHash("sha256").update(String(signUpOTP)).digest("hex");
                 await OtpModal.create({
                     email: cleanEmail,
                     for: "signup",
