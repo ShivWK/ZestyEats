@@ -64,7 +64,6 @@ import {
 } from "./features/home/homeSlice";
 
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { UAParser } from "ua-parser-js";
 import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
