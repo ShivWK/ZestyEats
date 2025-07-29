@@ -1,4 +1,4 @@
-const Resend = require("resend");
+const  { Resend } = require("resend");
 
 const sendMail = async (userEmail, text) => {
     const resend = new Resend(process.env.RESEND_API_KEY);
