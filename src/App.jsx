@@ -219,9 +219,10 @@ export default function App() {
       const result = await fp.get();
       dispatch(setDeviceFingerPrint(result.visitorId));
 
+      console.log(UAParser(navigator.userAgent));
+
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
         method: "POST",
-        body: JSON.stringify({ deviceId }),
         headers: {
           "Content-Type": "application/json",
           "x-device-id": result.visitorId,

@@ -18,19 +18,19 @@ exports.signup = async (req, res) => {
 
     if (!req.signedCookies?.gSid) {
         const ua = headers["x-user-agent"];
-        const result = UAParser(ua)
-
+        const uaResult = UAParser(ua);
+        
         const session = await SessionModel.create({
             deviceInfo: {
                 visitorId: headers["x-device-id"],
-                deviceIp: String,
-                deviceModal: String,
-                deviceVender: String,
-                oSName: String,
-                oSVersion: String,
-                browserName: String,
-                browserVersion: String,
-                uA: String
+                deviceIp: headers["x-forwarded-for"] || req.socket.remoteAddress,
+                deviceModal: uaResult.device?.model?.trim()?.toLowerCase() || "",
+                deviceVender: uaResult.device?.vendor?.trim()?.toLowerCase() || "",
+                oSName: uaResult.os?.name?.trim()?.toLowerCase(),
+                oSVersion: uaResult.os?.version?.trim()?.split(".")[0],
+                browserName: uaResult.browser?.name?.trim()?.toLowerCase(),
+                browserVersion: uaResult.browser?.version?.trim()?.split(".")[0],
+                uA: uaResult.ua?.trim()?.toLowerCase()
             },
 
             type: "guest"
@@ -194,17 +194,30 @@ exports.signup = async (req, res) => {
 }
 
 exports.guestSession = async (req, res, next) => {
-    const deviceInfo = extractDeviceInfo(req.body.deviceId)
     const headers = req.headers;
 
     const ua = headers["x-user-agent"];
     const result = UAParser(ua);
 
-    console.log(result)
+    console.log(result);
 
     try {
         if (!req.signedCookies?.gSid) {
-            const session = await SessionModel.create({ deviceId: deviceInfo.signature });
+            const session = await SessionModel.create({
+                deviceInfo: {
+                    visitorId: headers["x-device-id"],
+                    deviceIp: headers["x-forwarded-for"] || req.socket.remoteAddress,
+                    deviceModal: result.device?.model?.trim()?.toLowerCase() || "",
+                    deviceVender: result.device?.vendor?.trim()?.toLowerCase() || "",
+                    oSName: result.os?.name?.trim()?.toLowerCase(),
+                    oSVersion: result.os?.version?.trim()?.split(".")[0],
+                    browserName: result.browser?.name?.trim()?.toLowerCase(),
+                    browserVersion: result.browser?.version?.trim()?.split(".")[0],
+                    uA: result.ua?.trim()?.toLowerCase()
+                },
+
+                type: "guest"
+            });
 
             res.cookie("gSid", session.id, {
                 maxAge: 1000 * 60 * 60 * 24,
@@ -226,7 +239,7 @@ exports.guestSession = async (req, res, next) => {
                 status: "success",
                 data: {
                     message: "Session created",
-                    sessionId: req.signedCookies.sid,
+                    sessionId: req.signedCookies.gSid,
                 }
             })
         }
