@@ -4,6 +4,10 @@ const restaurantsApi = createApi({
   reducerPath: "restuarants",
   baseQuery: fetchBaseQuery({
     baseUrl: "https://swiggy-clone-klzu.onrender.com/api/zestyeats",
+    prepareHeaders: (headers) => {
+      headers.set("x-identifier" , import.meta.env.HASHED_IDENTIFIER);
+      return headers
+    }
   }),
   keepUnusedDataFor: 120,
 

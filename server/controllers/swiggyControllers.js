@@ -151,6 +151,7 @@ exports.addressFromCoordinates = async (req, res) => {
 };
 
 exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
+  console.log(req.headers);
   const { lat, lng, id } = req.query;
 
   if (!lat || !lng || !id) {

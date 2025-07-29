@@ -55,8 +55,15 @@ import {
   setHideLogin
 } from "./features/Login/loginSlice";
 
-import { selectPathHistory, setUserFriendlyPathHistory, selectCurrentTheme, setCurrentTheme } from "./features/home/homeSlice";
+import { 
+  selectPathHistory, 
+  setUserFriendlyPathHistory, 
+  selectCurrentTheme, 
+  setCurrentTheme 
+} from "./features/home/homeSlice";
 
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import { UAParser } from "ua-parser-js";
 import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -204,6 +211,21 @@ export default function App() {
   // }, []);
 
   const pathHistory = useSelector(selectPathHistory);
+
+  useEffect(() => {
+   const deviceInfo = async () => {
+    const fp = await FingerprintJS.load();
+    const result = await fp.get();
+
+    // console.log(result);
+    const uaResult = UAParser(navigator.userAgent);
+
+    console.log(uaResult)
+
+   }
+
+   deviceInfo();
+  }, [])
 
   useEffect(() => {
     const history = pathHistory.map((item) => {
