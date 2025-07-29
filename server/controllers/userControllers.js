@@ -65,19 +65,73 @@ exports.signup = async (req, res) => {
 
         } else {
             try {
-                const text = ` <div style="background-color: white; width: 100%; border-radius: 10px; overflow: hidden; font-family: Arial, Helvetica, sans-serif;">
-        <div style="background-color: #ff5200; display: flex; align-items: center; justify-content: center; padding-block: 0.1rem; width: 100%;">
-            <h1 style="color: white; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Your OTP code</h1>
-        </div>
-        <p>Hi ${cleanName.split(" ")[0]}, your One-Time Password (OTP) to complete your signup is:</p>
-        <div style="background-color: rgb(45, 236, 45); padding-block: 2px; padding-inline: 50px; width: fit-content; display: block; margin-inline: auto; border-radius: 15px;">
-            <p style="font-size: x-large; font-weight: 500; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;">${signUpOTP}</p>
-        </div>
-        <p>Do not share this code with anyone. This code is valid for 5 minutes.</p>
-    </div>`;
+                const text = `<!DOCTYPE html>
+                                <html>
+                                <head>
+                                    <meta charset="UTF-8" />
+                                    <title>Your ZestyEats OTP</title>
+                                    <style>
+                                    body {
+                                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                                        background-color: #f6f8fa;
+                                        padding: 0;
+                                        margin: 0;
+                                    }
+                                    .container {
+                                        max-width: 500px;
+                                        margin: 40px auto;
+                                        background-color: #ffffff;
+                                        border-radius: 8px;
+                                        padding: 30px;
+                                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+                                        text-align: center;
+                                    }
+                                    .logo {
+                                        font-size: 24px;
+                                        color: #ff6347;
+                                        font-weight: bold;
+                                        margin-bottom: 20px;
+                                    }
+                                    .otp {
+                                        font-size: 32px;
+                                        font-weight: 700;
+                                        letter-spacing: 4px;
+                                        color: #333;
+                                        margin: 20px 0;
+                                    }
+                                    .text {
+                                        font-size: 16px;
+                                        color: #555;
+                                        margin-bottom: 30px;
+                                    }
+                                    .footer {
+                                        font-size: 12px;
+                                        color: #aaa;
+                                        margin-top: 20px;
+                                    }
+                                    </style>
+                                </head>
+                                <body>
+                                    <div class="container">
+                                    <div class="logo">ZestyEats 🍽️</div>
+                                    <div class="text">
+                                        Hey ${cleanName.split(" ")[0]} <br />
+                                        Use the OTP below to complete your signup:
+                                    </div>
+                                    <div class="otp">${signUpOTP}</div>
+                                    <div class="text">
+                                        This OTP is valid for only 10 minutes. <br />
+                                        If you did not request this, you can safely ignore this email.
+                                    </div>
+                                    <div class="footer">
+                                        © 2025 ZestyEats. All rights reserved.
+                                    </div>
+                                    </div>
+                                </body>
+                                </html>`;
 
                 const resp = await sendMail(cleanEmail, text)
-                console.log("API response", resp)
+                // console.log("API response", resp)
                 return res.status(200).json({
                     status: "success",
                     message: "OTP send successfully to your email"
