@@ -52,7 +52,7 @@ exports.signup = async (req, res) => {
             sms(cleanPhone, text)
                 .then(res => res.json())
                 .then( async (response) => {
-                    // console.log("API response", response);
+                    console.log("API response", response);
                     await OtpModal.create({
                         phone: cleanPhone,
                         for: "signup",
@@ -139,7 +139,14 @@ exports.signup = async (req, res) => {
                                 </html>`;
 
                 const resp = await sendMail(cleanEmail, text)
-                // console.log("API response", resp)
+                console.log("API response", resp)
+
+                await OtpModal.create({
+                        email: cleanEmail,
+                        for: "signup",
+                        hashedOtp: signUpOTP,
+                })
+
                 return res.status(200).json({
                     status: "success",
                     message: "OTP send successfully to your email"

@@ -88,7 +88,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
           </h2>
           {member ? (
             isLoginOtpSend ? (
-              <p className="font-semibold">
+              <p className="font-medium text-gray-800 dark:text-gray-300">
                 {`We've sent an OTP to your ${otpOnPhone ? "phone number" : "email"}`}
               </p>
             ) : (
@@ -104,7 +104,7 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
             )
           ) : (
             isSigUpOtpSend ? (
-              <p className="font-semibold">
+              <p className="font-medium text-gray-800 dark:text-gray-300">
                 {`We've sent an OTP to your ${otpOnPhone ? "phone number" : "email"}`}
               </p>
             )

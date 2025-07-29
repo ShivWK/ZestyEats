@@ -156,24 +156,24 @@ const SignUp = memo(({ recaptchaRef }) => {
     <>
       {!isSignUpOtpSend && (
         <div className="h-fit w-fit flex items-center gap-2">
-        <div id="toggle" onClick={toggleHandler} className="relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between cursor-pointer bg-gray-200">
-          <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
-          <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
-          <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white dark:bg-black`}
-            style={{ left: otpOnPhone ? "0" : "2rem" }}
-          >
-            {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
-              : <i className="fa-solid fa-envelope text-red-500" />
+          <div id="toggle" onClick={toggleHandler} className="relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between cursor-pointer bg-gray-200">
+            <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
+            <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
+            <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white dark:bg-black`}
+              style={{ left: otpOnPhone ? "0" : "2rem" }}
+            >
+              {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
+                : <i className="fa-solid fa-envelope text-red-500" />
+              }
+            </div>
+          </div>
+
+          <div className="text-xs font-bold text-gray-600 tracking-wide">
+            {otpOnPhone ? <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">Indian number.</span></p>
+              : <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">email (works globally).</span></p>
             }
           </div>
         </div>
-
-        <div className="text-xs font-bold text-gray-600 tracking-wide">
-          {otpOnPhone ? <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">Indian number.</span></p>
-            : <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">email (works globally).</span></p>
-          }
-        </div>
-      </div>
       )}
       <Form
         btnId={"SignUpBtn"}
@@ -184,7 +184,7 @@ const SignUp = memo(({ recaptchaRef }) => {
         isOtpSend={isSignUpOtpSend}
         isLoading={isLoading}
       >
-        <EntryDiv
+        {(!isSignUpOtpSend || otpOnPhone) && <EntryDiv
           type={"tel"}
           inputMode={"numeric"}
           purpose={"phone"}
@@ -195,7 +195,8 @@ const SignUp = memo(({ recaptchaRef }) => {
           changeIsEntryMade={changePhoneIsEntryMade}
           changeHasValue={changePhoneHasValue}
           isReadOnly={isSignUpOtpSend}
-        />
+        />}
+
         {!isSignUpOtpSend && (
           <EntryDiv
             type={"text"}
@@ -209,7 +210,7 @@ const SignUp = memo(({ recaptchaRef }) => {
             changeHasValue={changeNameHasValue}
           />
         )}
-        {!isSignUpOtpSend && (
+        {(!isSignUpOtpSend || !otpOnPhone) && (
           <EntryDiv
             type={"text"}
             inputMode={"text"}
