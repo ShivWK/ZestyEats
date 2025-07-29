@@ -1,9 +1,27 @@
 const mongoose = require("mongoose");
 
+const deviceInfoSchema = new mongoose.Schema({
+    visitorId: String,
+    deviceIp: String,
+    deviceModal: String,
+    deviceVender: String,
+    oSName: String,
+    oSVersion: String,
+    browserName: String,
+    browserVersion: String,
+    uA: String
+}, { _id: false})
+
 const sessionSchema = new mongoose.Schema({
-    deviceId: {
+    deviceInfo : {
+        type: deviceInfoSchema,
+        required: true,
+    },
+
+    type: {
         type: String,
-        required: [true, "Please provide device information."]
+        enum: ["guest", "registered"],
+        required: true,
     },
 
     createdAt: {
@@ -24,6 +42,5 @@ const sessionSchema = new mongoose.Schema({
     },
 });
 
-const SessionModel = mongoose.model("GuestSession" ,sessionSchema);
-
+const SessionModel = mongoose.model("Session" ,sessionSchema);
 module.exports = SessionModel;

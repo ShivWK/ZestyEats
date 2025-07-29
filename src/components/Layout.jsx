@@ -200,20 +200,7 @@ export default function Layout() {
 
     const handleGuestSession = async () => {
       try {
-        // 1: create the guest session
-        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
-          method: "POST",
-          body: JSON.stringify({ deviceId }),
-          headers: {
-            "Content-Type": "application/json"
-          },
-          credentials: "include"
-        });
-
-        const data = await res.json();
-        console.log(data.data.sessionId);
-
-        // 2: get the guest session data
+        //get the guest session data
         const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
           method: "GET",
           credentials: "include"

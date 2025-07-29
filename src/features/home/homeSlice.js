@@ -25,12 +25,17 @@ const initialState = {
   dpModelHide: false,
   showBottomMenu: true,
   currentTheme:"system",
+  deviceFingerprint: null,
 };
 
 const homeSlice = createSlice({
   name: "home",
   initialState: initialState,
   reducers: {
+    setDeviceFingerPrint: (state, action) => {
+      state.deviceFingerprint = action.payload;
+    },
+
     setCurrentTheme: (state, action) => {
       state.currentTheme = action.payload;
 
@@ -213,6 +218,8 @@ const homeSlice = createSlice({
 });
 
 export default homeSlice.reducer;
+
+export const selectDeviceFingerPrint = (state) => state.home.deviceFingerprint;
 export const selectCurrentTheme = (state) => state.home.currentTheme;
 export const selectFoodieThoughtsData = (state) =>
   state.home.foodieThoughtsData;
@@ -274,4 +281,5 @@ export const {
   setDpModelOpen,
   setShowBottomMenu,
   setDpModelHide,
+  setDeviceFingerPrint
 } = homeSlice.actions;

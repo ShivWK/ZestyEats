@@ -1,13 +1,5 @@
 const mongoose = require("mongoose");
 
-const blockedSchema = new mongoose.Schema({
-    value: Boolean,
-    blockedAt: {
-        type: Date,
-        default: () => new Date()
-    }
-}, { _id: false });
-
 const otpSchema = new mongoose.Schema({
     phone: {
         type: Number,
@@ -30,23 +22,8 @@ const otpSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 60 * 6
+        expires: 60 * 5
     },
-
-    attempts: {
-        type: Number,
-        max: 5,
-        default: 0
-    },
-
-    resendCount: {
-        type: Number,
-        max: 3,
-        default: 0
-    },
-
-    blockedUntil: blockedSchema,
-    resendBlockedUntil: blockedSchema,
 })
 
 const OtpModel = mongoose.model("OTP", otpSchema);

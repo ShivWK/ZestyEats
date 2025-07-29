@@ -1,19 +1,49 @@
-const SessionModel = require("./../models/sessionModel");
-const OtpModal = require("./../models/otpModel");
+const SessionModel = require("../models/authModals/sessionModel");
+const OtpModal = require("../models/authModals/otpModel");
 const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 const sendMail = require("./../utils/email");
 const sms = require("./../utils/sms");
-
+const { UAParser } = require('ua-parser-js');
 
 exports.oAuthAuthorization = (req, res, next) => { }
 
 exports.signup = async (req, res) => {
+    const headers = req.header;
     const body = req.body;
     const { name, phone_number, email } = body.userData;
     const token = body.token;
     const mode = req.params.mode;
+
+    if (!req.signedCookies?.gSid) {
+        const ua = headers["x-user-agent"];
+        const result = UAParser(ua)
+
+        const session = await SessionModel.create({
+            deviceInfo: {
+                visitorId: headers["x-device-id"],
+                deviceIp: String,
+                deviceModal: String,
+                deviceVender: String,
+                oSName: String,
+                oSVersion: String,
+                browserName: String,
+                browserVersion: String,
+                uA: String
+            },
+
+            type: "guest"
+        });
+
+        res.cookie("gSid", session.id, {
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
+            signed: true,
+            secure: true,
+            sameSite: "None"
+        })
+    }
 
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
     const phoneRule = /^[0-9]{10}$/;
@@ -51,7 +81,7 @@ exports.signup = async (req, res) => {
 
             sms(cleanPhone, text)
                 .then(res => res.json())
-                .then( async (response) => {
+                .then(async (response) => {
                     console.log("API response", response);
                     await OtpModal.create({
                         phone: cleanPhone,
@@ -142,9 +172,9 @@ exports.signup = async (req, res) => {
                 console.log("API response", resp)
 
                 await OtpModal.create({
-                        email: cleanEmail,
-                        for: "signup",
-                        hashedOtp: signUpOTP,
+                    email: cleanEmail,
+                    for: "signup",
+                    hashedOtp: signUpOTP,
                 })
 
                 return res.status(200).json({
@@ -164,14 +194,19 @@ exports.signup = async (req, res) => {
 }
 
 exports.guestSession = async (req, res, next) => {
-    console.log("hit")
     const deviceInfo = extractDeviceInfo(req.body.deviceId)
+    const headers = req.headers;
+
+    const ua = headers["x-user-agent"];
+    const result = UAParser(ua);
+
+    console.log(result)
 
     try {
-        if (!req.signedCookies?.sid) {
+        if (!req.signedCookies?.gSid) {
             const session = await SessionModel.create({ deviceId: deviceInfo.signature });
 
-            res.cookie("sid", session.id, {
+            res.cookie("gSid", session.id, {
                 maxAge: 1000 * 60 * 60 * 24,
                 httpOnly: true,
                 signed: true,

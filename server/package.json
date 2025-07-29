@@ -18,6 +18,7 @@
     "jsdom": "^26.1.0",
     "mongoose": "^8.15.2",
     "nodemailer": "^7.0.5",
-    "resend": "^4.7.0"
+    "resend": "^4.7.0",
+    "ua-parser-js": "^2.0.4"
   }
 }

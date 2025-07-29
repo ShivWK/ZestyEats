@@ -55,11 +55,12 @@ import {
   setHideLogin
 } from "./features/Login/loginSlice";
 
-import { 
-  selectPathHistory, 
-  setUserFriendlyPathHistory, 
-  selectCurrentTheme, 
-  setCurrentTheme 
+import {
+  selectPathHistory,
+  setUserFriendlyPathHistory,
+  selectCurrentTheme,
+  setCurrentTheme,
+  setDeviceFingerPrint
 } from "./features/home/homeSlice";
 
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
@@ -213,18 +214,27 @@ export default function App() {
   const pathHistory = useSelector(selectPathHistory);
 
   useEffect(() => {
-   const deviceInfo = async () => {
-    const fp = await FingerprintJS.load();
-    const result = await fp.get();
+    const deviceInfo = async () => {
+      const fp = await FingerprintJS.load();
+      const result = await fp.get();
+      dispatch(setDeviceFingerPrint(result.visitorId));
 
-    // console.log(result);
-    const uaResult = UAParser(navigator.userAgent);
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
+        method: "POST",
+        body: JSON.stringify({ deviceId }),
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-id": result.visitorId,
+          "x-user-agent": navigator.userAgent,
+        },
+        credentials: "include"
+      });
 
-    console.log(uaResult)
+      const data = await res.json();
+      console.log(data.data.sessionId);
+    }
 
-   }
-
-   deviceInfo();
+    deviceInfo();
   }, [])
 
   useEffect(() => {
