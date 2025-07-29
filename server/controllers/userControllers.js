@@ -3,6 +3,7 @@ const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 const sendMail = require("./../utils/email");
+const sms = require("./../utils/sms");
 
 exports.oAuthAuthorization = (req, res, next) => { }
 
@@ -44,21 +45,25 @@ exports.signup = async (req, res) => {
         const signUpOTP = crypto.randomInt(100000, 1000000);
 
         if (mode === "phone") {
-            const options = {
-                method: "POST",
-                headers: {
-                    "COntent-Type": "application/json",
-                    "Authorization": process.env.FAST_TWO_SMS_KEY,
-                },
-                body: JSON.stringify({
-                    message: `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`,
-                    language: "english",
-                    route: "q",
-                    numbers: `91${cleanPhone}`,
-                })
-            }
+            // const options = {
+            //     method: "POST",
+            //     headers: {
+            //         "COntent-Type": "application/json",
+            //         "Authorization": process.env.FAST_TWO_SMS_KEY,
+            //     },
+            //     body: JSON.stringify({
+            //         message: `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`,
+            //         language: "english",
+            //         route: "q",
+            //         numbers: `91${cleanPhone}`,
+            //     })
+            // }
 
-            fetch("https://www.fast2sms.com/dev/bulkV2", options)
+            // fetch("https://www.fast2sms.com/dev/bulkV2", options)
+
+            const text = `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`;
+
+            sms(cleanPhone, text)
                 .then(res => res.json())
                 .then(response => {
                     console.log("API response", response)
