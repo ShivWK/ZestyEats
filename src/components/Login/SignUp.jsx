@@ -121,8 +121,8 @@ const SignUp = memo(({ recaptchaRef }) => {
           token
         })
       })
-      const data = await res.json();
-      console.log(data);
+      // const data = await res.json();
+      // console.log(data);
       dispatch(signUpOtpSend(true));
       dispatch(setLoading(false))
     } catch (err) {

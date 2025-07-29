@@ -1,24 +1,16 @@
-const nodemailer = require("nodemailer");
+const Resend = require("resend");
 
 const sendMail = async (userEmail, text) => {
-    const transporter = nodemailer.createTransport({
-        host: "smtp.resend.com",
-        port: process.env.EMAIL_PORT,
-        secure: true,
-        auth: {
-            user: "resend",
-            pass: process.env.RESEND_API_KEY
-        }
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const mailOption = {
+    const send = resend.send({
         from: "ZestyEats <zestyeats@shivendra.site>",
         to: userEmail,
         subject: "OTP from ZestyEats",
-        text
-    }
+        html: text
+    })
 
-    return await transporter.sendMail(mailOption);
+    return await send;
 }
 
 module.exports = sendMail;

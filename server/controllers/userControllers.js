@@ -65,7 +65,16 @@ exports.signup = async (req, res) => {
 
         } else {
             try {
-                const text = `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`;
+                const text = ` <div style="background-color: white; width: 100%; border-radius: 10px; overflow: hidden; font-family: Arial, Helvetica, sans-serif;">
+        <div style="background-color: #ff5200; display: flex; align-items: center; justify-content: center; padding-block: 0.1rem; width: 100%;">
+            <h1 style="color: white; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;">Your OTP code</h1>
+        </div>
+        <p>Hi ${cleanName.split(" ")[0]}, your One-Time Password (OTP) to complete your signup is:</p>
+        <div style="background-color: rgb(45, 236, 45); padding-block: 2px; padding-inline: 50px; width: fit-content; display: block; margin-inline: auto; border-radius: 15px;">
+            <p style="font-size: x-large; font-weight: 500; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; box-sizing: border-box;">${signUpOTP}</p>
+        </div>
+        <p>Do not share this code with anyone. This code is valid for 5 minutes.</p>
+    </div>`;
 
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
