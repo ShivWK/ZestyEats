@@ -6,6 +6,7 @@ const sendMail = require("./../utils/email");
 const sms = require("./../utils/sms");
 const { UAParser } = require('ua-parser-js');
 const signupEmail = require("./../utils/emailTemplates/signupEmail");
+const bcrypt = require("bcrypt");
 
 exports.oAuthAuthorization = (req, res, next) => { }
 
@@ -86,11 +87,11 @@ exports.signup = async (req, res) => {
                     console.log("API response", response);
 
                     // GENERATE OTP DOC
-
+                    const hashedOTP = bcrypt.hash(signUpOTP, 12);
                     await OtpModal.create({
                         phone: cleanPhone,
                         for: "signup",
-                        hashedOtp: signUpOTP,
+                        hashedOtp: hashedOTP,
                     })
 
                     await OtpModal.create({
@@ -117,10 +118,11 @@ exports.signup = async (req, res) => {
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
 
+                const hashedOTP = bcrypt.hash(signUpOTP, 12);
                 await OtpModal.create({
                     email: cleanEmail,
                     for: "signup",
-                    hashedOtp: signUpOTP,
+                    hashedOtp: hashedOTP
                 })
 
                 return res.status(200).json({
