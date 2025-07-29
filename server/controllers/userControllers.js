@@ -87,8 +87,8 @@ exports.signup = async (req, res) => {
                                         text-align: center;
                                     }
                                     .logo {
-                                        font-size: 24px;
-                                        color: #ff6347;
+                                        font-size: 30px;
+                                        color: #ff5200;
                                         font-weight: bold;
                                         margin-bottom: 20px;
                                     }
@@ -113,14 +113,14 @@ exports.signup = async (req, res) => {
                                 </head>
                                 <body>
                                     <div class="container">
-                                    <div class="logo">ZestyEats 🍽️</div>
+                                    <div class="logo">ZestyEats</div>
                                     <div class="text">
                                         Hey ${cleanName.split(" ")[0]} <br />
                                         Use the OTP below to complete your signup:
                                     </div>
                                     <div class="otp">${signUpOTP}</div>
                                     <div class="text">
-                                        This OTP is valid for only 10 minutes. <br />
+                                        This OTP is valid for only 5 minutes. <br />
                                         If you did not request this, you can safely ignore this email.
                                     </div>
                                     <div class="footer">
