@@ -13,6 +13,8 @@ const deviceInfoSchema = new mongoose.Schema({
 }, { _id: false})
 
 const sessionSchema = new mongoose.Schema({
+    userId: mongoose.Schema.Types.ObjectId,
+    
     deviceInfo : {
         type: deviceInfoSchema,
         required: true,

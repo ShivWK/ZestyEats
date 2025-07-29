@@ -1,11 +1,11 @@
 const SessionModel = require("../models/authModals/sessionModel");
 const OtpModal = require("../models/authModals/otpModel");
-const extractDeviceInfo = require("../utils/extractDeviceInfo");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 const sendMail = require("./../utils/email");
 const sms = require("./../utils/sms");
 const { UAParser } = require('ua-parser-js');
+const signupEmail = require("./../utils/emailTemplates/signupEmail");
 
 exports.oAuthAuthorization = (req, res, next) => { }
 
@@ -19,7 +19,7 @@ exports.signup = async (req, res) => {
     if (!req.signedCookies?.gSid) {
         const ua = headers["x-user-agent"];
         const uaResult = UAParser(ua);
-        
+
         const session = await SessionModel.create({
             deviceInfo: {
                 visitorId: headers["x-device-id"],
@@ -41,7 +41,8 @@ exports.signup = async (req, res) => {
             httpOnly: true,
             signed: true,
             secure: true,
-            sameSite: "None"
+            sameSite: "None",
+            path: "/"
         })
     }
 
@@ -83,6 +84,15 @@ exports.signup = async (req, res) => {
                 .then(res => res.json())
                 .then(async (response) => {
                     console.log("API response", response);
+
+                    // GENERATE OTP DOC
+
+                    await OtpModal.create({
+                        phone: cleanPhone,
+                        for: "signup",
+                        hashedOtp: signUpOTP,
+                    })
+
                     await OtpModal.create({
                         phone: cleanPhone,
                         for: "signup",
@@ -103,71 +113,7 @@ exports.signup = async (req, res) => {
 
         } else {
             try {
-                const text = `<!DOCTYPE html>
-                                <html>
-                                <head>
-                                    <meta charset="UTF-8" />
-                                    <title>Your ZestyEats OTP</title>
-                                    <style>
-                                    body {
-                                        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-                                        background-color: #f6f8fa;
-                                        padding: 0;
-                                        margin: 0;
-                                    }
-                                    .container {
-                                        max-width: 500px;
-                                        margin: 40px auto;
-                                        background-color: #ffffff;
-                                        border-radius: 8px;
-                                        padding: 30px;
-                                        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-                                        text-align: center;
-                                    }
-                                    .logo {
-                                        font-size: 30px;
-                                        color: #ff5200;
-                                        font-weight: bold;
-                                        margin-bottom: 20px;
-                                    }
-                                    .otp {
-                                        font-size: 32px;
-                                        font-weight: 700;
-                                        letter-spacing: 4px;
-                                        color: #333;
-                                        margin: 20px 0;
-                                    }
-                                    .text {
-                                        font-size: 16px;
-                                        color: #555;
-                                        margin-bottom: 30px;
-                                    }
-                                    .footer {
-                                        font-size: 12px;
-                                        color: #aaa;
-                                        margin-top: 20px;
-                                    }
-                                    </style>
-                                </head>
-                                <body>
-                                    <div class="container">
-                                    <div class="logo">ZestyEats</div>
-                                    <div class="text">
-                                        Hey ${cleanName.split(" ")[0]} <br />
-                                        Use the OTP below to complete your signup:
-                                    </div>
-                                    <div class="otp">${signUpOTP}</div>
-                                    <div class="text">
-                                        This OTP is valid for only 5 minutes. <br />
-                                        If you did not request this, you can safely ignore this email.
-                                    </div>
-                                    <div class="footer">
-                                        © 2025 ZestyEats. All rights reserved.
-                                    </div>
-                                    </div>
-                                </body>
-                                </html>`;
-
+                const text = signupEmail(cleanName, signUpOTP);
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
 
@@ -195,11 +141,8 @@ exports.signup = async (req, res) => {
 
 exports.guestSession = async (req, res, next) => {
     const headers = req.headers;
-
     const ua = headers["x-user-agent"];
     const result = UAParser(ua);
-
-    console.log(result);
 
     try {
         if (!req.signedCookies?.gSid) {
