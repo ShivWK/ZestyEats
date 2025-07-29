@@ -32,6 +32,8 @@ const missingParamsError = (msg, res) => {
 };
 
 exports.homePageData = async (req, res) => {
+  console.log(req.headers["x-identifier"]);
+
   try {
     const { lat, lng } = req.query;
 
