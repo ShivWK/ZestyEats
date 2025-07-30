@@ -148,6 +148,7 @@ exports.verifyOTP = async (req, res, next) => {
     console.log(result);
 
     let OtpDoc = null;
+    console.log("OTP", body.OTP);
     console.log("OTP for", body.otpFor);
 
     if (mode === "phone") {
@@ -158,7 +159,7 @@ exports.verifyOTP = async (req, res, next) => {
 
     console.log(OtpDoc);
 
-    const userOTP = crypto.createHash("sha256").update(body.OTP).digest('hex');
+    const userOTP = crypto.createHash("sha256").update(String(body.OTP)).digest('hex');
     const isMatch = userOTP === OtpDoc.hashedOTP;
 
     if (isMatch) {
@@ -167,9 +168,9 @@ exports.verifyOTP = async (req, res, next) => {
             message: "Matched"
         })
     } else {
-        return res.status(400).json({
+        return res.status(401).json({
             status: "failed",
-            message: "OTP mismatched"
+            message: "Invalid or expired OTP"
         })
     }
 }
