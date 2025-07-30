@@ -1,11 +1,13 @@
 const SessionModel = require("../models/authModals/sessionModel");
 const OtpModal = require("../models/authModals/otpModel");
+const AccessModal = require("./../models/authModals/blockAccessModal");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 const sendMail = require("./../utils/email");
 const sms = require("./../utils/sms");
 const { UAParser } = require('ua-parser-js');
 const signupEmail = require("./../utils/emailTemplates/signupEmail");
+const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 
 exports.oAuthAuthorization = (req, res, next) => { }
 
@@ -16,23 +18,12 @@ exports.signup = async (req, res) => {
     const token = body.token;
     const mode = req.params.mode;
 
+    const ua = headers["x-user-agent"];
+    const uaResult = UAParser(ua);
+
     if (!req.signedCookies?.gSid) {
-        const ua = headers["x-user-agent"];
-        const uaResult = UAParser(ua);
-
         const session = await SessionModel.create({
-            deviceInfo: {
-                visitorId: headers["x-device-id"],
-                deviceIp: headers["x-forwarded-for"] || req.socket.remoteAddress,
-                deviceModal: uaResult.device?.model?.trim()?.toLowerCase() || "",
-                deviceVender: uaResult.device?.vendor?.trim()?.toLowerCase() || "",
-                oSName: uaResult.os?.name?.trim()?.toLowerCase(),
-                oSVersion: uaResult.os?.version?.trim()?.split(".")[0],
-                browserName: uaResult.browser?.name?.trim()?.toLowerCase(),
-                browserVersion: uaResult.browser?.version?.trim()?.split(".")[0],
-                uA: uaResult.ua?.trim()?.toLowerCase()
-            },
-
+            deviceInfo: deviceFingerPrinter(headers, uaResult),
             type: "guest"
         });
 
@@ -93,10 +84,10 @@ exports.signup = async (req, res) => {
                         hashedOtp: hashedOTP,
                     })
 
-                    await OtpModal.create({
-                        phone: cleanPhone,
-                        for: "signup",
-                        hashedOtp: signUpOTP,
+                    // Generate Access Doc
+                    await AccessModal.create({
+                        sessionId: req.signedCookies.gSid,
+                        deviceInfo: deviceFingerPrinter(headers, uaResult),
                     })
 
                     return res.status(200).json({
@@ -117,11 +108,18 @@ exports.signup = async (req, res) => {
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
 
+                // Generate OTP Doc
                 const hashedOTP = crypto.createHash("sha256").update(String(signUpOTP)).digest("hex");
                 await OtpModal.create({
                     email: cleanEmail,
                     for: "signup",
                     hashedOtp: hashedOTP
+                })
+
+                // Generate Access Doc
+                await AccessModal.create({
+                    sessionId: req.signedCookies.gSid,
+                    deviceInfo: deviceFingerPrinter(headers, uaResult),
                 })
 
                 return res.status(200).json({
@@ -140,26 +138,25 @@ exports.signup = async (req, res) => {
     }
 }
 
+exports.verifyOTP = async (req, res, next) => {
+    const headers = req.headers;
+    const clientVisitorId = headers["x-device-id"];
+    const body = req.body;
+
+    const result = await AccessModal.find({ "deviceInfo.visitorId" : clientVisitorId});
+
+    console.log(result)
+}
+
 exports.guestSession = async (req, res, next) => {
     const headers = req.headers;
     const ua = headers["x-user-agent"];
-    const result = UAParser(ua);
+    const uaResult = UAParser(ua);
 
     try {
         if (!req.signedCookies?.gSid) {
             const session = await SessionModel.create({
-                deviceInfo: {
-                    visitorId: headers["x-device-id"],
-                    deviceIp: headers["x-forwarded-for"] || req.socket.remoteAddress,
-                    deviceModal: result.device?.model?.trim()?.toLowerCase() || "",
-                    deviceVender: result.device?.vendor?.trim()?.toLowerCase() || "",
-                    oSName: result.os?.name?.trim()?.toLowerCase(),
-                    oSVersion: result.os?.version?.trim()?.split(".")[0],
-                    browserName: result.browser?.name?.trim()?.toLowerCase(),
-                    browserVersion: result.browser?.version?.trim()?.split(".")[0],
-                    uA: result.ua?.trim()?.toLowerCase()
-                },
-
+                deviceInfo: deviceFingerPrinter(headers, uaResult),
                 type: "guest"
             });
 

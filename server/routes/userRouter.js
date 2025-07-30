@@ -9,6 +9,7 @@ const {
   addGuestSessionItemsToBeAddedInCart,
   addGuestSessionCartItems,
   getGuestSessionData,
+  verifyOTP
 } = require("./../controllers/userControllers");
 
 const checkSessionId = (req, res, next) => {
@@ -23,10 +24,8 @@ const checkSessionId = (req, res, next) => {
 };
 
 userRouter.route("/signup/sendOtp/:mode").post(signup);
-userRouter.route("/signup/verifyOtp").post(signup);
-
+userRouter.route("/verifyOtp/:mode").post(verifyOTP);
 userRouter.route("/login/sendOtp/:mode").post(signup);
-userRouter.route("/signup/verifyOtp").post(signup);
 
 userRouter
   .route("/session")

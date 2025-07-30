@@ -13,6 +13,7 @@ import {
   toggleOtpOnPhone,
 } from "../../features/Login/loginSlice";
 
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import { Phone, Mail } from "lucide-react"
 import { toast } from "react-toastify";
 
@@ -38,6 +39,7 @@ const SignUp = memo(({ recaptchaRef }) => {
   const isSignUpOtpSend = useSelector(selectSignUpOtp);
   const isLoading = useSelector(selectIsLoading);
   const otpOnPhone = useSelector(selectOtpOnPhone);
+  const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
   const formRef = useRef(null);
 
   const handleSignUpChange = useCallback((e) => {
@@ -144,13 +146,38 @@ const SignUp = memo(({ recaptchaRef }) => {
       setChangeOtpHasValue(true);
       dispatch(setLoading(false));
     } else {
-      // call otp verification
+      verifyOTP(data, otpOnPhone);
     }
-  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal]);
+  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal, otpOnPhone]);
 
   const toggleHandler = () => {
     if (isSignUpOtpSend) return;
     dispatch(toggleOtpOnPhone())
+  }
+
+  const verifyOTP = async (data, otpOnPhoneStatus) => {
+    const OTP = data.get("otp");
+    const mode = otpOnPhoneStatus ? "phone" : "email";
+    const otpFor = otpOnPhoneStatus ===  "phone" ? data.get("phone") : data.get("email");
+
+    try {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/verifyOtp/${mode}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-id": deviceFingerPrint,
+          "x-user-agent": navigator.userAgent,
+        },
+        body: JSON.stringify({ OTP, otpFor })
+      });
+
+      const result = res.json();
+      console.log(result);
+    } catch (err) {
+      console.log("Error in verifying OTP:", err);
+      dispatch(setLoading(false));
+      setValidationMessage(err.message)
+    }
   }
 
   return (
