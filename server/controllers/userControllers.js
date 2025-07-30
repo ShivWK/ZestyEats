@@ -39,7 +39,7 @@ exports.signup = async (req, res) => {
     }
 
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
-    const phoneRule = /^[0-9]{10}$/;
+    const phoneRule = /^[2-9]\d{9}$/;
     const emailRule = /^[^.][a-zA-z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$/;
 
     // Data validation 

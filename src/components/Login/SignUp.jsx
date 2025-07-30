@@ -71,7 +71,7 @@ const SignUp = memo(({ recaptchaRef }) => {
       return;
     }
 
-    if (data.get("phone").length < 10) {
+    if (!/^[2-9]\d{9}$/.test(data.get("phone"))) {
       setChangePhoneIsEntryMade(true);
       setChangePhoneHasValue(true);
       dispatch(setLoading(false));
