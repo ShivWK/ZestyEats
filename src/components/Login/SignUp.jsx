@@ -158,7 +158,7 @@ const SignUp = memo(({ recaptchaRef }) => {
   const verifyOTP = async (data, otpOnPhoneStatus) => {
     const OTP = data.get("otp");
     const mode = otpOnPhoneStatus ? "phone" : "email";
-    const otpFor = otpOnPhoneStatus ===  "phone" ? data.get("phone") : data.get("email");
+    const otpFor = otpOnPhoneStatus === "phone" ? data.get("phone") : data.get("email");
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}`, {
@@ -172,11 +172,14 @@ const SignUp = memo(({ recaptchaRef }) => {
       });
 
       const result = await res.json();
+      if (!res.ok) {
+        throw new Error(result.message)
+      }
       console.log("API response", result);
     } catch (err) {
       console.log("Error in verifying OTP:", err);
       dispatch(setLoading(false));
-      setValidationMessage(err.message)
+      setValidationMessage(err)
     }
   }
 
