@@ -67,6 +67,14 @@ exports.signup = async (req, res) => {
             data: result["error-code"],
         })
     } else {
+        const user = await UserModal.findOne({ email: cleanEmail });
+        if (user) {
+            return res.status(409).json({
+                status: "failed",
+                message: "Email already exists. Please log in instead."
+            })
+        }
+
         const signUpOTP = crypto.randomInt(100000, 1000000);
 
         if (mode === "phone") {

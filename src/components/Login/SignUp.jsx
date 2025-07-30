@@ -49,8 +49,6 @@ const SignUp = memo(({ recaptchaRef }) => {
     }));
   }, [setSignUpFormData]);
 
-  console.log(signUpFormData)
-
   const handleSignUp = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -127,11 +125,21 @@ const SignUp = memo(({ recaptchaRef }) => {
         })
       })
       const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message)
       console.log(data);
       dispatch(signUpOtpSend(true));
       dispatch(setLoading(false))
     } catch (err) {
-      console.log("Error in sending OTP", err);
+      console.log("Error in sending OTP", err.message);
+      toast.error(err.message, {
+        autoClose: 3000,
+        style: {
+          backgroundColor: "rgba(0,0,0,0.9)",
+          fontWeight: "medium",
+          color: "white",
+        },
+      })
       dispatch(setLoading(false))
     }
   }
@@ -151,11 +159,6 @@ const SignUp = memo(({ recaptchaRef }) => {
       verifyOTP(data, otpOnPhone);
     }
   }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal, otpOnPhone]);
-
-  const toggleHandler = () => {
-    if (isSignUpOtpSend) return;
-    dispatch(toggleOtpOnPhone())
-  }
 
   const verifyOTP = async (data, otpOnPhoneStatus) => {
     const OTP = data.get("otp");
@@ -185,12 +188,16 @@ const SignUp = memo(({ recaptchaRef }) => {
       }
       console.log("API response", result);
       setValidationMessage(result.message);
-
     } catch (err) {
       console.log("Error in verifying OTP:", err);
       dispatch(setLoading(false));
       setValidationMessage(err.message);
     }
+  }
+
+  const toggleHandler = () => {
+    if (isSignUpOtpSend) return;
+    dispatch(toggleOtpOnPhone())
   }
 
   return (

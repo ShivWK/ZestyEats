@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: Number,
-    unique: true
   },
   isNumberVerified: {
     type: Boolean,
