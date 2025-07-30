@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
     required: [true, "Please enter your name."],
     trim: true,
   },
-  number: {
+  phone: {
     type: Number,
     unique: true
   },
@@ -67,5 +67,5 @@ const userSchema = new mongoose.Schema({
   },
 });
 
-const User = mongoose.model("User", userSchema);
-module.exports = User;
+const UserModal = mongoose.model("User", userSchema);
+module.exports = UserModal;

@@ -1,6 +1,7 @@
 const SessionModel = require("../models/authModals/sessionModel");
 const OtpModal = require("../models/authModals/otpModel");
 const AccessModal = require("./../models/authModals/blockAccessModal");
+const UserModal = require("./../models/userModel");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 const sendMail = require("./../utils/email");
@@ -46,7 +47,7 @@ exports.signup = async (req, res) => {
     if (!nameRule.test(name.trim()) ||
         !phoneRule.test(phone_number.trim()) ||
         !emailRule.test(email.trim())) {
-        return res.status(400).json({
+        return res.status(401).json({
             status: "failed",
             message: "Invalid Credentials",
         })
@@ -144,32 +145,58 @@ exports.verifyOTP = async (req, res, next) => {
     const clientVisitorId = headers["x-device-id"];
     const body = req.body;
 
-    const result = await AccessModal.find({ "deviceInfo.visitorId" : clientVisitorId});
+    const result = await AccessModal.find({ "deviceInfo.visitorId": clientVisitorId });
     console.log(result);
 
-    let OtpDoc = null;
-    console.log("OTP", body.OTP);
-    console.log("OTP for", body.otpFor);
+    const otpRule = /^[0-9]{6}/$
+    const nameRule = /^[a-zA-Z\s]{1,50}$/;
+    const phoneRule = /^[0-9]{10}$/;
+    const emailRule = /^[^.][a-zA-z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$/;
 
-    if (mode === "phone") {
-        OtpDoc = await OtpModal.findOne({ phone : body.otpFor })
-    } else {
-        OtpDoc = await OtpModal.findOne({ email : body.otpFor })
+    // Data validation 
+
+    if (!nameRule.test(body.name.trim()) ||
+        !phoneRule.test(body.phone.trim()) ||
+        !emailRule.test(body.email.trim()) ||
+        !otpRule.test(body.OTP)) {
+        return res.status(401).json({
+            status: "failed",
+            message: "Invalid Credentials",
+        })
     }
 
-    console.log(OtpDoc);
+    // Data sanitization
+
+    const cleanName = name.trim().replace(/\s+/g, " ");
+    const cleanPhone = +phone_number.trim();
+    const cleanEmail = email.trim();
+
+    let OtpDoc = null;
+    if (mode === "phone") {
+        OtpDoc = await OtpModal.findOne({ phone: body.otpFor })
+    } else {
+        OtpDoc = await OtpModal.findOne({ email: body.otpFor.trim() })
+    }
+
     if (!OtpDoc) {
         return res.status(410).json({ status: "failed", message: "OTP expired" });
     }
 
     const userOTP = crypto.createHash("sha256").update(String(body.OTP)).digest('hex');
-    console.log("user hased OTP", userOTP)
-    console.log("Storeed hash", OtpDoc.hashedOtp)
 
     if (userOTP === OtpDoc.hashedOtp) {
+        const User = await UserModal.create({
+            name: cleanName,
+            phone: cleanPhone,
+            isNumberVerified: mode === "phone",
+            email: cleanEmail,
+            isEmailVerified: mode === "email",
+        })
+
         return res.status(200).json({
             status: "success",
-            message: "Matched"
+            message: "Matched",
+            user_id: User.id,
         })
     } else {
         return res.status(401).json({

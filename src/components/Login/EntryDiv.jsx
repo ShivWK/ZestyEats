@@ -5,6 +5,7 @@ import { selectIsLoggedIn, selectLoginOtp, selectSignUpOtp } from "../../feature
 const EntryDiv = memo(({
   type,
   inputMode,
+  value,
   purpose,
   focus = false,
   placeholder,

@@ -49,6 +49,8 @@ const SignUp = memo(({ recaptchaRef }) => {
     }));
   }, [setSignUpFormData]);
 
+  console.log(signUpFormData)
+
   const handleSignUp = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -168,7 +170,13 @@ const SignUp = memo(({ recaptchaRef }) => {
           "x-device-id": deviceFingerPrint,
           "x-user-agent": navigator.userAgent,
         },
-        body: JSON.stringify({ OTP, otpFor })
+        body: JSON.stringify({
+          OTP,
+          otpFor,
+          name: signUpFormData.name,
+          phone: signUpFormData.phone,
+          email: signUpFormData.email,
+        })
       });
 
       const result = await res.json();
@@ -176,14 +184,14 @@ const SignUp = memo(({ recaptchaRef }) => {
         throw new Error(result.message)
       }
       console.log("API response", result);
+      setValidationMessage(result.message);
+
     } catch (err) {
       console.log("Error in verifying OTP:", err);
       dispatch(setLoading(false));
-      // setValidationMessage(err)
+      setValidationMessage(err.message);
     }
   }
-
-  // 812ca5d20212f547139349dd3b4f295be2030a3351855ab55ad5546239b27d44 812ca5d20212f547139349dd3b4f295be2030a3351855ab55ad5546239b27d44
 
   return (
     <>
