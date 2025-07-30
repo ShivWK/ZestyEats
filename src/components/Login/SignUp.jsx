@@ -179,9 +179,11 @@ const SignUp = memo(({ recaptchaRef }) => {
     } catch (err) {
       console.log("Error in verifying OTP:", err);
       dispatch(setLoading(false));
-      setValidationMessage(err)
+      // setValidationMessage(err)
     }
   }
+
+  // 812ca5d20212f547139349dd3b4f295be2030a3351855ab55ad5546239b27d44 812ca5d20212f547139349dd3b4f295be2030a3351855ab55ad5546239b27d44
 
   return (
     <>

@@ -164,8 +164,9 @@ exports.verifyOTP = async (req, res, next) => {
 
     const userOTP = crypto.createHash("sha256").update(String(body.OTP)).digest('hex');
     console.log("user hased OTP", userOTP)
+    console.log("Storeed hash", OtpDoc.hashedOtp)
 
-    if (userOTP === OtpDoc.hashedOTP) {
+    if (String(userOTP) === OtpDoc.hashedOTP) {
         return res.status(200).json({
             status: "success",
             message: "Matched"
