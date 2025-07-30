@@ -148,7 +148,7 @@ exports.verifyOTP = async (req, res, next) => {
     const result = await AccessModal.find({ "deviceInfo.visitorId": clientVisitorId });
     console.log(result);
 
-    const otpRule = /^[0-9]{6}/$
+    const otpRule = /^[0-9]{6}$/;
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
     const phoneRule = /^[0-9]{10}$/;
     const emailRule = /^[^.][a-zA-z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$/;
