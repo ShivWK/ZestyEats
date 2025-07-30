@@ -161,7 +161,7 @@ const SignUp = memo(({ recaptchaRef }) => {
     const otpFor = otpOnPhoneStatus ===  "phone" ? data.get("phone") : data.get("email");
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/verifyOtp/${mode}`, {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -171,8 +171,8 @@ const SignUp = memo(({ recaptchaRef }) => {
         body: JSON.stringify({ OTP, otpFor })
       });
 
-      const result = res.json();
-      console.log(result);
+      const result = await res.json();
+      console.log("API response", result);
     } catch (err) {
       console.log("Error in verifying OTP:", err);
       dispatch(setLoading(false));

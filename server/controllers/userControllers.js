@@ -140,12 +140,38 @@ exports.signup = async (req, res) => {
 
 exports.verifyOTP = async (req, res, next) => {
     const headers = req.headers;
+    const mode = req.params.mode;
     const clientVisitorId = headers["x-device-id"];
     const body = req.body;
 
     const result = await AccessModal.find({ "deviceInfo.visitorId" : clientVisitorId});
+    console.log(result);
 
-    console.log(result)
+    let OtpDoc = null;
+    console.log("OTP for", body.otpFor);
+
+    if (mode === "phone") {
+        OtpDoc = await OtpModal.find({ "phone" : body.otpFor })
+    } else {
+        OtpDoc = await OtpModal.find({ "email" : body.otpFor })
+    }
+
+    console.log(OtpDoc);
+
+    const userOTP = crypto.createHash("sha256").update(body.OTP).digest('hex');
+    const isMatch = userOTP === OtpDoc.hashedOTP;
+
+    if (isMatch) {
+        return res.status(200).json({
+            status: "success",
+            message: "Matched"
+        })
+    } else {
+        return res.status(400).json({
+            status: "failed",
+            message: "OTP mismatched"
+        })
+    }
 }
 
 exports.guestSession = async (req, res, next) => {
