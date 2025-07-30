@@ -11,9 +11,11 @@ import {
   selectIsLoading,
   selectOtpOnPhone,
   toggleOtpOnPhone,
+  setHideLogin,
+  setIsLoggedIn
 } from "../../features/Login/loginSlice";
 
-import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { selectDeviceFingerPrint, setUserDetails } from "../../features/home/homeSlice";
 import { Phone, Mail } from "lucide-react"
 import { toast } from "react-toastify";
 
@@ -48,7 +50,7 @@ const SignUp = memo(({ recaptchaRef }) => {
       [e.target.name]: e.target.value,
     }));
   }, [setSignUpFormData]);
-
+  0
   const handleSignUp = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -183,11 +185,14 @@ const SignUp = memo(({ recaptchaRef }) => {
       });
 
       const result = await res.json();
-      if (!res.ok) {
-        throw new Error(result.message)
-      }
+      if (!res.ok) throw new Error(result.message);
+
       console.log("API response", result);
-      setValidationMessage(result.message);
+      dispatch(setUserDetails(result.data));
+      dispatch(setIsLoggedIn(true))
+      dispatch(setLoading(false));
+      dispatch(setHideLogin(true));
+      dispatch(signUpOtpSend(false));
     } catch (err) {
       console.log("Error in verifying OTP:", err);
       dispatch(setLoading(false));

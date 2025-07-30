@@ -26,12 +26,17 @@ const initialState = {
   showBottomMenu: true,
   currentTheme:"system",
   deviceFingerprint: null,
+  user: {}
 };
 
 const homeSlice = createSlice({
   name: "home",
   initialState: initialState,
   reducers: {
+    setUserDetails: (state, action) => {
+      state.user = action.payload;
+    },
+
     setDeviceFingerPrint: (state, action) => {
       state.deviceFingerprint = action.payload;
     },
@@ -220,6 +225,7 @@ const homeSlice = createSlice({
 export default homeSlice.reducer;
 
 export const selectDeviceFingerPrint = (state) => state.home.deviceFingerprint;
+export const selectUserDetails = (state) => state.home.user;
 export const selectCurrentTheme = (state) => state.home.currentTheme;
 export const selectFoodieThoughtsData = (state) =>
   state.home.foodieThoughtsData;
@@ -253,9 +259,8 @@ export const selectBottomMenu = (state) => state.home.showBottomMenu;
 export const selectDpModelHide = (state) => state.home.dpModelHide;
 export const selectIsServiceable = (state) => state.home.isUnserviceable;
 
-// if i don't use createSelector()_ then each time when selector is called it will create a new object though it returns the same lat and lng this will cause unnecessary rerenders because store variable are states when they change compo rerenders
-
 export const {
+  setUserDetails,
   setCurrentTheme,
   setUnserviceable,
   addFoodieThoughtsData,

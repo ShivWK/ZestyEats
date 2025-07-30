@@ -13,7 +13,7 @@ const NavItem = memo(
       <li>
         <NavLink
           to={to}
-          className={`group flex items-center justify-between gap-3 dark:text-gray-100 hover:cursor-pointer active:scale-95 ${(text === "Help" || text === "About" || text === "Cart") && "max-md:hidden"}`}
+          className={`group flex items-center gap-3 dark:text-gray-100 hover:cursor-pointer active:scale-95 ${(text === "Help" || text === "About" || text === "Cart") && "max-md:hidden"}`}
           style={({ isActive }) => {
             if (isActive) return { color: "#ff5200" };
           }}
@@ -26,7 +26,7 @@ const NavItem = memo(
               </sup>
             ) : null}
           </i>
-          <span className="relative group-hover:text-[#ff5200] hidden md:block">
+          <span className="relative group-hover:text-[#ff5200] hidden md:block max-w-24 truncate">
             {text}
           </span>
         </NavLink>

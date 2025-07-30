@@ -106,11 +106,11 @@ const Banner = ({ data }) => {
         </div>
         <div className="flex items-center gap-2">
           {veg ? (
-              <PureVegSvg classes="mb-1 -mt-2 max-md:block hidden" />
+              <PureVegSvg classes="mb-1 ml-3 -mt-2 max-md:inline-flex hidden" />
           ) : (
               <VegAndNonVegSvg classes="hidden ml-3 max-md:inline-flex px-2 my-1 pr-2 py-1 mb-2" />
           )}
-          <div className={`flex items-center gap-2 ${veg ? "-mt-3 -ml-3 text-sm" : "-mt-1"}`}>
+          <div className={`flex items-center gap-2 ${veg ? "-mt-3 text-sm" : "-mt-1"}`}>
             <p className="text-gray-950 md:hidden dark:text-gray-300">•</p>
             <p className={`${opened ? "text-green-500 dark:text-green-400" : "text-red-600"} font-medium md:hidden`}>{opened ? "OPEN 😊" : "CLOSED 😟"}</p>
           </div>

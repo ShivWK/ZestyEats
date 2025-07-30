@@ -3,19 +3,27 @@ import {
   setHideLocation,
   setHideLogin,
   setLogInModal,
+  selectIsLoggedIn
 } from "../../features/Login/loginSlice";
-import { selectLatAndLng, selectCurrentTheme, setCurrentTheme } from "../../features/home/homeSlice";
+import {
+  selectLatAndLng,
+  selectCurrentTheme,
+  setCurrentTheme,
+  selectUserDetails
+} from "../../features/home/homeSlice";
+
 import { useDispatch, useSelector } from "react-redux";
 import { memo, useCallback, useState } from "react";
 
 const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
   const { lat, lng } = useSelector(selectLatAndLng);
-  const loggedIn = false;
+  const theme = useSelector(selectCurrentTheme);
+  const loggedIn = useSelector(selectIsLoggedIn);
+  const userDetails = useSelector(selectUserDetails);
+
   const dispatch = useDispatch();
   const [showDrop, setShowDrop] = useState(false);
-  // const [theme, setTheme] = useState("Light");
   const isSmall = window.innerWidth <= 768;
-  const theme = useSelector(selectCurrentTheme);
 
   const handleSignIn = useCallback(() => {
     dispatch(setHideLogin(false));
@@ -25,20 +33,24 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
 
   return (
     <nav className="max-md:pr-1.5">
-      <ul className="flex gap-2 md:gap-12 font-semibold tracking-wide font-sans items-center justify-evenly text-md">
+      <ul className="flex gap-2 md:gap-12 font-semibold tracking-wide font-sans items-center justify-evenly">
         <li>
           <button
             onBlur={() => setShowDrop(false)}
             onClick={() => setShowDrop(!showDrop)}
-            className="group relative cursor-pointer text-xl"
+            className="group relative cursor-pointer"
           >
-            {theme === "light" ? (
-              <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 " />
-            ) : theme === "dark" ? (
-              <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95"></i>
-            ) : (
-              isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95" />
-            )}
+            <p className="group flex items-center justify-between gap-3 hover:cursor-pointer">
+              {theme === "light" ? (
+                <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 text-lg" />
+              ) : theme === "dark" ? (
+                <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95 text-lg"></i>
+              ) : (
+                isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95 text-lg" />
+              )}
+
+              <span className={`group-hover:text-[#ff5200] hidden md:block`}>Theme</span>
+            </p>
 
             <div className="absolute rounded top-[135%] drop-shadow-[0_0_5px_#6a7282] left-1/2 transform -translate-x-1/2 p-1 bg-white dark:bg-gray-800" style={{
               display: showDrop ? "block" : "none",
@@ -99,11 +111,11 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
         <NavItem to="help" icon={"fa-solid fa-handshake-angle"} text="Help" />
 
         {loggedIn ? (
-          <NavItem to={"/profile"} icon={"fa-user text-lg"} text={`User`} />
+          <NavItem to={"/profile"} icon={"fa-user text-lg"} text={userDetails.userName.split(" ")[0]} />
         ) : (
           <button
             onClick={handleSignIn}
-            className="group flex items-center justify-between gap-3 hover:cursor-pointer :hover:font-[#ff5200]"
+            className="group flex items-center justify-between gap-3 hover:cursor-pointer hover:font-[#ff5200]"
           >
             <i className="fas fa-sign-in text-lg group-hover:text-[#ff5200] transform group-hover:translate-x-1 transition-transform duration-150 ease-linear"></i>
             <span className="relative group-hover:text-[#ff5200] hidden md:block">Sign In</span>
