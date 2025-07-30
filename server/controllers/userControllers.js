@@ -166,7 +166,7 @@ exports.verifyOTP = async (req, res, next) => {
     console.log("user hased OTP", userOTP)
     console.log("Storeed hash", OtpDoc.hashedOtp)
 
-    if (String(userOTP) === OtpDoc.hashedOTP) {
+    if (userOTP === OtpDoc.hashedOtp) {
         return res.status(200).json({
             status: "success",
             message: "Matched"
