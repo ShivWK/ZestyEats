@@ -1,4 +1,4 @@
-const deviceFingerPrinter = (headers, UAResult) => {
+const deviceFingerPrinter = (headers, UAResult, req) => {
     return {
         visitorId: headers["x-device-id"],
         deviceIp: headers["x-forwarded-for"] || req.socket.remoteAddress,

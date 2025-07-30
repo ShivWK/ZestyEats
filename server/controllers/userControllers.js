@@ -23,7 +23,7 @@ exports.signup = async (req, res) => {
 
     if (!req.signedCookies?.gSid) {
         const session = await SessionModel.create({
-            deviceInfo: deviceFingerPrinter(headers, uaResult),
+            deviceInfo: deviceFingerPrinter(headers, uaResult, req),
             type: "guest"
         });
 
@@ -87,7 +87,7 @@ exports.signup = async (req, res) => {
                     // Generate Access Doc
                     await AccessModal.create({
                         sessionId: req.signedCookies.gSid,
-                        deviceInfo: deviceFingerPrinter(headers, uaResult),
+                        deviceInfo: deviceFingerPrinter(headers, uaResult, req),
                     })
 
                     return res.status(200).json({
@@ -119,7 +119,7 @@ exports.signup = async (req, res) => {
                 // Generate Access Doc
                 await AccessModal.create({
                     sessionId: req.signedCookies.gSid,
-                    deviceInfo: deviceFingerPrinter(headers, uaResult),
+                    deviceInfo: deviceFingerPrinter(headers, uaResult, req),
                 })
 
                 return res.status(200).json({
@@ -156,7 +156,7 @@ exports.guestSession = async (req, res, next) => {
     try {
         if (!req.signedCookies?.gSid) {
             const session = await SessionModel.create({
-                deviceInfo: deviceFingerPrinter(headers, uaResult),
+                deviceInfo: deviceFingerPrinter(headers, uaResult, req),
                 type: "guest"
             });
 
