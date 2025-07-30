@@ -143,10 +143,12 @@ exports.verifyOTP = async (req, res, next) => {
     const headers = req.headers;
     const mode = req.params.mode;
     const clientVisitorId = headers["x-device-id"];
+    const ua = headers["x-user-agent"];
     const body = req.body;
 
     const result = await AccessModal.find({ "deviceInfo.visitorId": clientVisitorId });
     console.log(result);
+    const uaResult = UAParser(ua);
 
     const otpRule = /^[0-9]{6}$/;
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
@@ -178,9 +180,7 @@ exports.verifyOTP = async (req, res, next) => {
         OtpDoc = await OtpModal.findOne({ email: body.otpFor.trim() })
     }
 
-    if (!OtpDoc) {
-        return res.status(410).json({ status: "failed", message: "OTP expired" });
-    }
+    if (!OtpDoc) return res.status(410).json({ status: "failed", message: "OTP expired" });
 
     const userOTP = crypto.createHash("sha256").update(String(body.OTP)).digest('hex');
 
@@ -193,10 +193,31 @@ exports.verifyOTP = async (req, res, next) => {
             isEmailVerified: mode === "email",
         })
 
+        // Create a registered session
+
+        const session = await SessionModel.create({
+            userId: User.id,
+            deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+            type: "registered"
+        });
+
+        res.cookie("rSid", session.id, {
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
+            signed: true,
+            secure: true,
+            sameSite: "None"
+        })
+
         return res.status(200).json({
             status: "success",
-            message: "Matched",
-            user_id: User.id,
+            data: {
+                userName: User.name,
+                userEmail: User.email,
+                userPhone: User.phone,
+                isEmailVerified: User.isEmailVerified,
+                isPhoneVerified: User.isNumberVerified,
+            }
         })
     } else {
         return res.status(401).json({
