@@ -18,6 +18,7 @@ const Form = ({
   signingStatement,
   isOtpSend = false,
   isLoading,
+  errorMessage
 }) => {
   const isLogInModelOpen = useSelector(selectLogInModal);
   const member = useSelector(selectIsMember);
@@ -86,6 +87,11 @@ const Form = ({
           </Link>
         </p>
       )}
+
+      {errorMessage && <p className="text-center text-red-600 text-sm tracking-wide font-medium mt-8 break-words">
+        {errorMessage}
+      </p>}
+
     </form>
   );
 };

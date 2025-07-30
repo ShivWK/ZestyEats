@@ -1,10 +1,9 @@
 import { useState, useRef, useEffect, memo } from "react";
 import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../features/Login/loginSlice";
+import { selectIsLoggedIn, selectLoginOtp, selectSignUpOtp } from "../../features/Login/loginSlice";
 
 const EntryDiv = memo(({
   type,
-  value,
   inputMode,
   purpose,
   focus = false,
@@ -18,8 +17,28 @@ const EntryDiv = memo(({
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const [fieldValue, setFiledValue] = useState("");
+  const [seconds, setSeconds] = useState(60);
+  const [disable, setDisable] = useState(true);
   const inputRef = useRef(null);
   let isLoggedIn = useSelector(selectIsLoggedIn);
+  const loginOTP = useSelector(selectLoginOtp);
+  const signupOTP = useSelector(selectSignUpOtp);
+  let startCounter = null;
+
+  useEffect(() => {
+    startCounter = () => {
+      const timer = setInterval(() => {
+        setSeconds(prev => prev - 1)
+        if (seconds === 0) clearInterval(timer);
+      }, 1000);
+    }
+
+    if (loginOTP || signupOTP) startCounter();
+  }, [loginOTP, signupOTP]);
+
+  useEffect(() => {
+    if (seconds === 0) setDisable(false);
+  }, [seconds]);
 
   useEffect(() => {
     if (focus) {
@@ -125,6 +144,13 @@ const EntryDiv = memo(({
     setFiledValue(e.target.value);
   }
 
+  const resendClickHandler = (e) => {
+    e.stopPropagation();
+    setDisable(true);
+    setSeconds(60);
+    startCounter();
+  }
+
   const handleBlur =
     purpose === "phone"
       ? onPhoneBlur
@@ -144,17 +170,18 @@ const EntryDiv = memo(({
           : handleGeneralInput;
 
   return (
-    <div
-      onClick={handleDivClick}
-      className="relative p-2.5 border-2 border-gray-300 h-[70px] cursor-text"
-    >
-      <p
-        className={`absolute font-semibold ${hasValue ? "text-red-500" : "text-gray-400 dark:text-gray-300"
-          } transform transition-all duration-[170ms] ease-linear ${isEntryMade ? "top-2.5 text-xs" : "top-1/2 -translate-y-1/2 text-lg"
-          } tracking-wide`}
+    <>
+      <div
+        onClick={handleDivClick}
+        className="relative p-2.5 border-2 border-gray-300 h-[70px] cursor-text"
       >
-        {hasValue ? fallbackPlaceholder : placeholder}
-      </p>
+        <p
+          className={`absolute font-semibold ${hasValue ? "text-red-500" : "text-gray-400 dark:text-gray-300"
+            } transform transition-all duration-[170ms] ease-linear ${isEntryMade ? "top-2.5 text-xs" : "top-1/2 -translate-y-1/2 text-lg"
+            } tracking-wide`}
+        >
+          {hasValue ? fallbackPlaceholder : placeholder}
+        </p>
         <input
           id="elem"
           name={purpose}
@@ -172,7 +199,17 @@ const EntryDiv = memo(({
           }}
           className={`relative top-5 dark:text-white font-semibold text-lg outline-none w-full bg-transparent`}
         />
-    </div>
+      </div>
+      { purpose === "otp" && <div className="flex justify-between px-0.5 mt-1">
+        <button onClick={resendClickHandler} disabled={disable} className={`text-xs font-bold ${disable ? "text-gray-400" : "text-primary cursor-pointer"}  underline underline-offset-2`}>
+          Resend OTP
+        </button>
+        {disable && <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
+          <span className="tracking-wide">remaining time: </span>
+          <span>{seconds}</span>
+        </p>}
+      </div>}
+    </>
   );
 });
 
