@@ -75,7 +75,7 @@ const Home = memo(() => {
 
         {/* Home banner */}
 
-        <div className="px-1.5 py-0.5 w-fit mx-auto bg-red-500 rounded-md mb-2 max-md:-mt-3 max-md:mb-4">
+        <div className="px-2 py-0.5 w-fit mx-auto bg-red-500 rounded-md mb-2 max-md:-mt-3 max-md:mb-4">
           <p className="text-white font-bold tracking-wide max-md:text-xs">Under development</p>
         </div>
 

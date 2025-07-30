@@ -170,7 +170,7 @@ const Cards = memo(({ data, from }) => {
         >
           {dataToMap?.cuisines?.join(", ") || ""}{"."}
         </p>
-        <p className="font-medium md:truncate max-md:text-sm text-black mt-0.5 max-md:line-clamp-2 max-md:max-w-[80%] break-words capitalize dark:text-gray-300">
+        <p className="font-medium md:truncate text-sm text-black mt-0.5 max-md:line-clamp-2 max-md:max-w-[80%] break-words capitalize dark:text-gray-300">
           {address}{"."}
         </p>
       </div>

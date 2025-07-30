@@ -181,6 +181,8 @@ exports.verifyOTP = async (req, res, next) => {
     const cleanPhone = +body.phone.trim();
     const cleanEmail = body.email.trim();
 
+    console.log(body.otpFor);
+
     let OtpDoc = null;
     if (mode === "phone") {
         OtpDoc = await OtpModal.findOne({ phone: body.otpFor.trim() })
