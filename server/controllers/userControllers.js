@@ -163,6 +163,7 @@ exports.verifyOTP = async (req, res, next) => {
     }
 
     const userOTP = crypto.createHash("sha256").update(String(body.OTP)).digest('hex');
+    console.log("user hased OTP", userOTP)
 
     if (userOTP === OtpDoc.hashedOTP) {
         return res.status(200).json({
