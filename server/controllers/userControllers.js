@@ -214,7 +214,8 @@ exports.verifyOTP = async (req, res, next) => {
             httpOnly: true,
             signed: true,
             secure: true,
-            sameSite: "None"
+            sameSite: "None",
+            path: "/"
         })
 
         return res.status(200).json({
