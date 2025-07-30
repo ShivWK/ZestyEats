@@ -25,7 +25,7 @@ const SignUp = memo(({ recaptchaRef }) => {
   const [changeNameHasValue, setChangeNameHasValue] = useState(undefined);
   const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(undefined);
   const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
-  const [validationMessage, setValidationMessage] = useState("Invalid credentials. Please try again.");
+  const [validationMessage, setValidationMessage] = useState("");
 
   const [signUpFormData, setSignUpFormData] = useState({
     phone: "",
