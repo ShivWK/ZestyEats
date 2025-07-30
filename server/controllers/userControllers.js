@@ -167,13 +167,13 @@ exports.verifyOTP = async (req, res, next) => {
 
     // Data sanitization
 
-    const cleanName = name.trim().replace(/\s+/g, " ");
-    const cleanPhone = +phone_number.trim();
-    const cleanEmail = email.trim();
+    const cleanName = body.name.trim().replace(/\s+/g, " ");
+    const cleanPhone = +body.phone.trim();
+    const cleanEmail = body.email.trim();
 
     let OtpDoc = null;
     if (mode === "phone") {
-        OtpDoc = await OtpModal.findOne({ phone: body.otpFor })
+        OtpDoc = await OtpModal.findOne({ phone: body.otpFor.trim() })
     } else {
         OtpDoc = await OtpModal.findOne({ email: body.otpFor.trim() })
     }
