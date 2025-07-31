@@ -7,7 +7,7 @@ const MobileProfile = () => {
     const navigate = useNavigate();
 
     return <main className="pt-14">
-        <section className="relative px-3 pt-5 pb-2 bg-primary/70 rounded-b-3xl h-40 profile-animation overflow-hidden">
+        <section className="relative px-3 pt-5 pb-2 dark:bg-gray-800 bg-primary rounded-b-3xl h-40 profile-animation overflow-hidden">
             <i onClick={() => navigate(-1)} className="ri-arrow-left-long-line text-2xl text-white font-medium"></i>
             <div className="flex items-center justify-between mt-2.5">
                 <div>
