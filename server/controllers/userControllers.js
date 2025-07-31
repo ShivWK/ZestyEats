@@ -299,13 +299,13 @@ exports.verifyOTP = async (req, res, next) => {
     const clientVisitorId = headers["x-device-id"];
     const body = req.body;
 
-    console.log(mode, forWhat);
+    console.log(mode, forWhat, body.OTP, body.otpFor);
 
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
 
     const result = await AccessModal.find({ "deviceInfo.visitorId": clientVisitorId });
-    console.log(result);
+    // console.log(result);
 
     const otpRule = /^[0-9]{6}$/;
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
@@ -377,8 +377,8 @@ exports.verifyOTP = async (req, res, next) => {
                 isEmailVerified: mode === "email",
             })
         } else {
-            if (mode === "phone") User = await UserModal.findOne({ phone: otpFor });
-            else User = await UserModal.findOne({ email: otpFor });
+            if (mode === "phone") User = await UserModal.findOne({ phone: body.otpFor });
+            else User = await UserModal.findOne({ email: body.otpFor });
         }
 
         // Create a registered session
