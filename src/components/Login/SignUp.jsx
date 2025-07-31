@@ -12,7 +12,8 @@ import {
   selectOtpOnPhone,
   toggleOtpOnPhone,
   setHideLogin,
-  setIsLoggedIn
+  setIsLoggedIn,
+  setErrorMessage
 } from "../../features/Login/loginSlice";
 
 import { selectDeviceFingerPrint, setUserDetails } from "../../features/home/homeSlice";
@@ -28,7 +29,6 @@ const SignUp = memo(({ recaptchaRef }) => {
   const [changeNameHasValue, setChangeNameHasValue] = useState(undefined);
   const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(undefined);
   const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
-  const [validationMessage, setValidationMessage] = useState("");
 
   const [signUpFormData, setSignUpFormData] = useState({
     phone: "",
@@ -50,7 +50,7 @@ const SignUp = memo(({ recaptchaRef }) => {
       [e.target.name]: e.target.value,
     }));
   }, [setSignUpFormData]);
-  0
+
   const handleSignUp = useCallback(async (e) => {
     e.preventDefault();
     e.stopPropagation();
@@ -119,7 +119,9 @@ const SignUp = memo(({ recaptchaRef }) => {
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/signup/sendOtp/${mode}`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
+          "x-device-id": deviceFingerPrint,
+          "x-user-agent": navigator.userAgent,
         },
         body: JSON.stringify({
           userData,
@@ -128,7 +130,8 @@ const SignUp = memo(({ recaptchaRef }) => {
       })
       const data = await res.json();
 
-      if (!res.ok) throw new Error(data.message)
+      if (!res.ok) throw new Error(data.message);
+      
       console.log(data);
       dispatch(signUpOtpSend(true));
       dispatch(setLoading(false))
@@ -165,7 +168,7 @@ const SignUp = memo(({ recaptchaRef }) => {
   const verifyOTP = async (data, otpOnPhoneStatus) => {
     const OTP = data.get("otp");
     const mode = otpOnPhoneStatus ? "phone" : "email";
-    const otpFor = otpOnPhoneStatus === "phone" ? data.get("phone") : data.get("email");
+    const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
 
     try {
       const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}`, {
@@ -196,7 +199,7 @@ const SignUp = memo(({ recaptchaRef }) => {
     } catch (err) {
       console.log("Error in verifying OTP:", err);
       dispatch(setLoading(false));
-      setValidationMessage(err.message);
+      dispatch(setErrorMessage(err.message));
     }
   }
 
@@ -236,7 +239,6 @@ const SignUp = memo(({ recaptchaRef }) => {
         signingStatement={"By creating an account"}
         isOtpSend={isSignUpOtpSend}
         isLoading={isLoading}
-        errorMessage={validationMessage}
       >
         {(!isSignUpOtpSend || otpOnPhone) && <EntryDiv
           type={"tel"}

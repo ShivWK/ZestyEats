@@ -17,6 +17,7 @@ const initialState = {
   hideLocationInfoModal: false,
   locationInfoModalReason: "permission",
   isGrantClicked: false,
+  errorMessage: ""
 };
 
 const loginSlice = createSlice({
@@ -30,6 +31,10 @@ const loginSlice = createSlice({
       if (action.payload) {
         window.history.pushState({ model: "login" }, "", location.href);
       }
+    },
+
+    setErrorMessage: (state, action) => {
+      state.errorMessage = action.payload;
     },
 
     setHideLogin: (state, action) => {
@@ -116,7 +121,8 @@ export const selectModalTrace = (state) => state.login.modalTrace;
 export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
 export const selectLocationInfoModalReason = (state) => state.login.locationInfoModalReason;
 export const selectGrantBtnClicked = (state) => state.login.isGrantClicked;
-
+export const selectErrorMessage = (state) => state.login.errorMessage;
+ 
 export const selectLocationInfoModal = createSelector(
   [
     (state) => state.login.isLocationInfoModalOpen,
@@ -156,5 +162,6 @@ export const {
   setHideLocationInfoModal,
   setLocationInfoModal,
   setLocationInfoModalReason,
-  setGrantBTnClicked
+  setGrantBTnClicked,
+  setErrorMessage
 } = loginSlice.actions;

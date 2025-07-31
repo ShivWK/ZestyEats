@@ -113,7 +113,7 @@ exports.signup = async (req, res) => {
 
         } else {
             try {
-                const text = signupEmail(cleanName, signUpOTP);
+                const text = signupEmail(cleanName, signUpOTP, "signup");
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
 
@@ -143,6 +143,152 @@ exports.signup = async (req, res) => {
                 })
             }
 
+        }
+    }
+}
+
+exports.login = async (req, res, next) => {
+    const headers = req.header;
+    const mode = req.params.mode;
+    const body = req.body;
+
+    const otpFor = body.otpFor;
+    const token = body.token;
+
+    const ua = headers["x-user-agent"];
+    const uaResult = UAParser(ua);
+
+    if (!req.signedCookies?.gSid) {
+        const session = await SessionModel.create({
+            deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+            type: "guest"
+        });
+
+        res.cookie("gSid", session.id, {
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
+            signed: true,
+            secure: true,
+            sameSite: "None",
+            path: "/"
+        })
+    }
+
+    const phoneRule = /^[2-9]\d{9}$/;
+    const emailRule = /^[^.][a-zA-z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+[a-zA-Z]{2,}$/;
+
+    // Data validation 
+
+    if (mode === "phone") {
+        if (!phoneRule.test(otpFor.trim())) {
+            return res.status(401).json({
+                status: "failed",
+                message: "Invalid Credentials",
+            })
+        }
+    } else {
+        if (!emailRule.test(otpFor.trim())) {
+            return res.status(401).json({
+                status: "failed",
+                message: "Invalid Credentials",
+            })
+        }
+    }
+
+    // Data sanitization
+    let cleanEmail = null;
+    let cleanPhone = null;
+
+    if (mode === "phone") cleanPhone = +otpFor.trim();
+    else cleanEmail = otpFor.trim();
+
+    const result = await recaptchaVerification(token);
+
+    if (!result.success) {
+        return res.status(400).json({
+            status: "failed",
+            data: result["error-code"],
+        })
+    } else {
+        let user = null;
+
+        if (mode === "phone") user = await UserModal.findOne({ phone: cleanPhone });
+        else user = await UserModal.findOne({ email: cleanEmail });
+
+        if (!user) {
+            return res.status(401).json({
+                status: "failed",
+                message: "Invalid credential. Please try again."
+            })
+        }
+
+        const loginOTP = crypto.randomInt(100000, 1000000);
+
+        if (mode === "phone") {
+            const text = `Hi, your OTP is ${loginOTP} to complete your login. Do not share this code with anyone. This code is valid for 5 minutes.`;
+
+            sms(cleanPhone, text)
+                .then(res => res.json())
+                .then(async (response) => {
+                    console.log("API response", response);
+
+                    // GENERATE OTP DOC
+                    const hashedOTP = crypto.createHash("sha256").update(String(loginOTP)).digest("hex");
+                    await OtpModal.create({
+                        phone: cleanPhone,
+                        for: "login",
+                        hashedOtp: hashedOTP,
+                    })
+
+                    // Generate Access Doc
+                    await AccessModal.create({
+                        sessionId: req.signedCookies.gSid,
+                        deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                    })
+
+                    return res.status(200).json({
+                        status: "success",
+                        message: "OTP send successfully to your number"
+                    })
+                }).catch(err => {
+                    console.log("Error in sending OTP", err);
+                    return res.status(500).json({
+                        status: "failed",
+                        message: "OTP not send. Please try again."
+                    })
+                })
+
+        } else {
+            try {
+                const text = signupEmail(null, loginOTP, "login");
+                const resp = await sendMail(cleanEmail, text)
+                console.log("API response", resp)
+
+                // Generate OTP Doc
+                const hashedOTP = crypto.createHash("sha256").update(String(loginOTP)).digest("hex");
+                await OtpModal.create({
+                    email: cleanEmail,
+                    for: "login",
+                    hashedOtp: hashedOTP
+                })
+
+                // Generate Access Doc
+                await AccessModal.create({
+                    sessionId: req.signedCookies.gSid,
+                    deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                })
+
+                return res.status(200).json({
+                    status: "success",
+                    message: "OTP send successfully to your email"
+                })
+            } catch (err) {
+                console.log("Error in sending OTP", err);
+                return res.status(500).json({
+                    status: "failed",
+                    message: "OTP not send. Please try again."
+                })
+            }
         }
     }
 }
@@ -180,8 +326,6 @@ exports.verifyOTP = async (req, res, next) => {
     const cleanName = body.name.trim().replace(/\s+/g, " ");
     const cleanPhone = +body.phone.trim();
     const cleanEmail = body.email.trim();
-
-    console.log(body.otpFor);
 
     let OtpDoc = null;
     if (mode === "phone") {

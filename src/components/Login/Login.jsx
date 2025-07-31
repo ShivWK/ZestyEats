@@ -13,7 +13,10 @@ import {
   setLoading,
   toggleOtpOnPhone,
   selectOtpOnPhone,
+  setErrorMessage,
 } from "../../features/Login/loginSlice";
+
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 
 import { Phone, Mail } from "lucide-react";
 
@@ -28,6 +31,7 @@ const Login = ({ recaptchaRef }) => {
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
   const isLoading = useSelector(selectIsLoading);
+  const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
   const formRef = useRef(null);
 
   const handleSubmit = useCallback(async (e) => {
@@ -36,27 +40,34 @@ const Login = ({ recaptchaRef }) => {
     dispatch(setLoading(true));
 
     const data = new FormData(formRef.current);
-    const exists = true
 
     if (otpOnPhone) {
       if (data.get("phone").length === 0) {
         setChangePhoneHasValue(true);
         dispatch(setLoading(false));
-      } else if (data.get("phone").length < 10) {
+      } else if (/^[2-9]\d{9}$/.test(data.get("phone"))) {
         setChangePhoneIsEntryMade(true);
         setChangePhoneHasValue(true);
         dispatch(setLoading(false));
-      } else if (exists) {
-        toast("User does not exist", {
-          autoClose: 3000,
-          style: {
-            backgroundColor: "rgba(0,0,0,0.9)",
-            fontWeight: "medium",
-            color: "white",
-          },
-        });
-        dispatch(setLoading(false));
       } else {
+        try {
+          recaptchaRef.current.reset();
+          const token = await recaptchaRef.current.executeAsync();
+          recaptchaRef.current.reset();
+
+          sendOTP(data, token, otpOnPhone);
+        } catch (err) {
+          console.log("Recaptcha failed", err);
+          dispatch(setLoading(false))
+          toast.error("Recaptcha failed, please try again.", {
+            autoClose: 3000,
+            style: {
+              backgroundColor: "rgba(0,0,0,0.9)",
+              fontWeight: "medium",
+              color: "white",
+            },
+          })
+        }
       }
     } else {
       if (data.get("email").length === 0) {
@@ -67,20 +78,66 @@ const Login = ({ recaptchaRef }) => {
         setChangeEmailHasValue(true);
         dispatch(setLoading(false));
       } else {
-        // create recaptcha token
+        try {
+          recaptchaRef.current.reset();
+          const token = await recaptchaRef.current.executeAsync();
+          recaptchaRef.current.reset();
 
-        // call otp send end point
-        sendOTP();
+          sendOTP(data, token, otpOnPhone);
+        } catch (err) {
+          console.log("Recaptcha failed", err);
+          dispatch(setLoading(false))
+          toast.error("Recaptcha failed, please try again.", {
+            autoClose: 3000,
+            style: {
+              backgroundColor: "rgba(0,0,0,0.9)",
+              fontWeight: "medium",
+              color: "white",
+            },
+          })
+        }
       }
     }
+  }, [dispatch, formRef, setLoading, otpOnPhone, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
 
+  async function sendOTP(data, token, otpOnPhoneStatus) {
+    const mode = otpOnPhoneStatus ? "phone" : "email";
+    const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
+    // const OTP = data.get("otp");
 
-  }, [dispatch, formRef, setLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade]);
+    try {
+      const resp = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/login/sendOtp/${mode}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-id": deviceFingerPrint,
+          "x-user-agent": navigator.userAgent,
+        },
+        body: JSON.stringify({
+          otpFor,
+          token
+        })
+      });
 
-  function sendOTP() {
-    const data = new FormData(formRef.current);
+      const response = await resp.json();
 
-    //otp send logic
+      if (!resp.ok) throw new Error(response.message);
+
+      console.log(response);
+      dispatch(setLoading(false));
+      dispatch(loginOtpSend(true));
+    } catch (err) {
+      console.log("Error in sending OTP:", err);
+      toast.error(err.message, {
+        autoClose: 3000,
+        style: {
+          backgroundColor: "rgba(0,0,0,0.9)",
+          fontWeight: "medium",
+          color: "white",
+        },
+      })
+      dispatch(setLoading(false))
+    }
   }
 
   function handleOtpVerification() {

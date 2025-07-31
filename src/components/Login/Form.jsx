@@ -1,13 +1,12 @@
 import { Link } from "react-router-dom";
 import {
-  selectLogInModal,
   selectIsMember,
   setHideLogin,
+  selectErrorMessage
 } from "../../features/Login/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import Loader from "../Loader";
 import { motion } from "motion/react";
-import ReCAPTCHA from "react-google-recaptcha";
 
 const Form = ({
   btnId,
@@ -18,10 +17,9 @@ const Form = ({
   signingStatement,
   isOtpSend = false,
   isLoading,
-  errorMessage
 }) => {
-  const isLogInModelOpen = useSelector(selectLogInModal);
   const member = useSelector(selectIsMember);
+  const errorMessage = useSelector(selectErrorMessage);
   const dispatch = useDispatch();
 
   const handlePageSwitch = () => {

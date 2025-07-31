@@ -2,6 +2,7 @@ const express = require("express");
 const userRouter = express.Router();
 const {
   signup,
+  login,
   guestSession,
   addGuestSessionRecentLocation,
   addGuestSessionFavRestaurants,
@@ -25,7 +26,7 @@ const checkSessionId = (req, res, next) => {
 
 userRouter.route("/signup/sendOtp/:mode").post(signup);
 userRouter.route("/verifyOtp/:mode").post(verifyOTP);
-userRouter.route("/login/sendOtp/:mode").post(signup);
+userRouter.route("/login/sendOtp/:mode").post(login);
 
 userRouter
   .route("/session")

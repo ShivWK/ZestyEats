@@ -27,7 +27,8 @@ import {
   selectDpModel,
   setDpModelHide,
   addRecentLocations,
-  setCurrentTheme
+  setCurrentTheme,
+  selectDeviceFingerPrint
 } from "../features/home/homeSlice";
 
 import {
@@ -79,7 +80,28 @@ export default function Layout() {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { OpenLocationInfoModal } = useSelector(selectLocationInfoModal)
+  const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
+
   useTrackNavigation();
+
+  useEffect(() => {
+    const createGuestSession = async () => {
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-id": deviceFingerPrint,
+          "x-user-agent": navigator.userAgent,
+        },
+        credentials: "include"
+      });
+
+      const data = await res.json();
+      console.log(data.data.sessionId);
+    }
+
+    createGuestSession();
+  }, [])
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
@@ -196,7 +218,7 @@ export default function Layout() {
       dispatch(setLocationInfoModal(true))
     }
 
-    const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
+    // const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
 
     const handleGuestSession = async () => {
       try {

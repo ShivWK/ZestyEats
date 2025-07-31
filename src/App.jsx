@@ -179,7 +179,6 @@ export default function App() {
 
   useEffect(() => {
     const handleScapeDown = (e) => {
-
       if (e.key === "Escape") {
         if (isLoginOpen) {
           dispatch(setHideLogin(true));
@@ -199,17 +198,6 @@ export default function App() {
     return () => document.removeEventListener("keydown", handleScapeDown);
   }, [isLoginOpen, isLocationModelOpen, isMenuModelOpen]);
 
-  // useEffect(() => {
-  //   toast.info("Still building, features may not work as expected.", {
-  //     autoClose: 3000,
-  //     style: {
-  //       backgroundColor: "rgba(0, 0, 0, 0.9)",
-  //       fontWeight: "bold",
-  //       color: "white",
-  //     },
-  //   });
-  // }, []);
-
   const pathHistory = useSelector(selectPathHistory);
 
   useEffect(() => {
@@ -217,19 +205,6 @@ export default function App() {
       const fp = await FingerprintJS.load();
       const result = await fp.get();
       dispatch(setDeviceFingerPrint(result.visitorId));
-
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-device-id": result.visitorId,
-          "x-user-agent": navigator.userAgent,
-        },
-        credentials: "include"
-      });
-
-      const data = await res.json();
-      console.log(data.data.sessionId);
     }
 
     deviceInfo();
@@ -268,6 +243,8 @@ export default function App() {
     dispatch(setUserFriendlyPathHistory(history));
   }, [pathHistory]);
 
+
+  // Important
   useEffect(() => {
     const html = document.documentElement;
     const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');

@@ -11,12 +11,13 @@ const otpSchema = new mongoose.Schema({
 
     for: {
         type: String,
-        required: [true, "Please provide the 'for' prop value"]
+        enum: ["signup", "login"],
+        required: true,
     },
 
     hashedOtp: {
         type: String,
-        required: [true, "Please provide the OTP"]
+        required: true
     },
 
     createdAt: {
