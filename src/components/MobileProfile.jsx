@@ -43,7 +43,7 @@ const MobileProfile = () => {
                 <p className="text-gray-600 dark:text-gray-100">Addresses</p>
                 <i class="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
             </div>
-            <div className="flex gap-2 items-center p-2">
+            <div className="flex gap-2 items-center px-2 py-4">
                 <i className="ri-logout-circle-r-line text-gray-700 text-xl dark:text-primary"></i>
                 <p className="text-gray-600 dark:text-gray-100">Logout</p>
                 <i class="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
