@@ -34,7 +34,7 @@ const MobileProfile = () => {
             <i class="ri-map-pin-user-fill"></i> */}
             </section>
             <MobileFooterMenu />
-            <div className="relative top-86">
+            <div className="my-4">
                 <ScooterAnimation />
             </div>
         </main>
