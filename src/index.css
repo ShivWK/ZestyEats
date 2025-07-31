@@ -103,16 +103,16 @@
     }
 
     .profile-animation {
-        animation: animateProfile 0.5s ease-in forwards;
+        animation: animateProfile 0.5s ease forwards;
     }
 
     @keyframes animateProfile {
         0% {
-            height: 0;
+            top: -200px;
         }
 
         100% {
-            height: 10rem;
+            top: 0;
         }
     }
 
