@@ -27,6 +27,11 @@ const MobileProfile = () => {
                 </button>
             </div>
         </section>
+        <section>
+            {/* <i class="fas fa-credit-card"></i>
+            <i class="ri-logout-circle-r-line"></i>
+            <i class="ri-map-pin-user-fill"></i> */}
+        </section>
         <MobileFooterMenu />
     </main>
 }
