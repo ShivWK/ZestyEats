@@ -18,7 +18,7 @@ const MobileProfile = () => {
                     </div>
                     <div className="flex items-center gap-0.5 ">
                         <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">shivendra@shivendra.site</p>
-                        <Link className="text-sm dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
+                        <Link className="text-sm mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
                     </div>
                 </div>
                 <button className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
