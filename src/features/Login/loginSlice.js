@@ -25,16 +25,16 @@ const loginSlice = createSlice({
   initialState: initialState,
 
   reducers: {
+    setErrorMessage: (state, action) => {
+      state.errorMessage = action.payload;
+    },
+
     setLogInModal: (state, action) => {
       state.isLoginModalOpen = action.payload;
 
       if (action.payload) {
         window.history.pushState({ model: "login" }, "", location.href);
       }
-    },
-
-    setErrorMessage: (state, action) => {
-      state.errorMessage = action.payload;
     },
 
     setHideLogin: (state, action) => {
@@ -62,7 +62,7 @@ const loginSlice = createSlice({
     },
 
     setLocationInfoModalReason: (state, action) => {
-        state.locationInfoModalReason = action.payload;
+      state.locationInfoModalReason = action.payload;
     },
 
     setGrantBTnClicked: (state, action) => {
@@ -122,14 +122,14 @@ export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
 export const selectLocationInfoModalReason = (state) => state.login.locationInfoModalReason;
 export const selectGrantBtnClicked = (state) => state.login.isGrantClicked;
 export const selectErrorMessage = (state) => state.login.errorMessage;
- 
+
 export const selectLocationInfoModal = createSelector(
   [
     (state) => state.login.isLocationInfoModalOpen,
     (state) => state.login.hideLocationInfoModal,
   ],
   (OpenLocationInfoModal, hideLocationInfoModal) => ({
-    OpenLocationInfoModal, 
+    OpenLocationInfoModal,
     hideLocationInfoModal
   })
 );
@@ -146,11 +146,9 @@ export const selectHideModel = createSelector(
 
 export const {
   setLogInModal,
-  closeLogInModal,
   loginOtpSend,
   signUpOtpSend,
   setLocationModal,
-  closeLocationInModal,
   setIsLoggedIn,
   setLoading,
   setMember,

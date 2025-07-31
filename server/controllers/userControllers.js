@@ -10,7 +10,54 @@ const { UAParser } = require('ua-parser-js');
 const signupEmail = require("./../utils/emailTemplates/signupEmail");
 const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 
-exports.oAuthAuthorization = (req, res, next) => { }
+exports.guestSession = async (req, res, next) => {
+    const headers = req.headers;
+    const ua = headers["x-user-agent"];
+    const uaResult = UAParser(ua);
+
+    console.log(req.signedCookies);
+
+    try {
+        if (!req.signedCookies?.gSid) {
+            const session = await SessionModel.create({
+                deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                type: "guest"
+            });
+
+            res.cookie("gSid", session.id, {
+                maxAge: 1000 * 60 * 60 * 24,
+                httpOnly: true,
+                signed: true,
+                secure: true,
+                sameSite: "None"
+            })
+
+            res.status(200).json({
+                status: "success",
+                data: {
+                    message: "Session created",
+                    sessionId: session.id,
+                }
+            })
+        } else {
+            res.status(200).json({
+                status: "success",
+                data: {
+                    message: "Session created",
+                    sessionId: req.signedCookies.gSid,
+                }
+            })
+        }
+
+    } catch (err) {
+        console.error("Error in session creation", err);
+
+        res.status(500).json({
+            status: "failed",
+            message: err.message,
+        })
+    }
+}
 
 exports.signup = async (req, res) => {
     const headers = req.headers;
@@ -416,53 +463,6 @@ exports.verifyOTP = async (req, res, next) => {
     }
 }
 
-exports.guestSession = async (req, res, next) => {
-    const headers = req.headers;
-    const ua = headers["x-user-agent"];
-    const uaResult = UAParser(ua);
-
-    try {
-        if (!req.signedCookies?.gSid) {
-            const session = await SessionModel.create({
-                deviceInfo: deviceFingerPrinter(headers, uaResult, req),
-                type: "guest"
-            });
-
-            res.cookie("gSid", session.id, {
-                maxAge: 1000 * 60 * 60 * 24,
-                httpOnly: true,
-                signed: true,
-                secure: true,
-                sameSite: "None"
-            })
-
-            res.status(200).json({
-                status: "success",
-                data: {
-                    message: "Session created",
-                    sessionId: session.id,
-                }
-            })
-        } else {
-            res.status(200).json({
-                status: "success",
-                data: {
-                    message: "Session created",
-                    sessionId: req.signedCookies.gSid,
-                }
-            })
-        }
-
-    } catch (err) {
-        console.error("Error in session creation", err);
-
-        res.status(500).json({
-            status: "failed",
-            message: err.message,
-        })
-    }
-}
-
 exports.addGuestSessionRecentLocation = async (req, res, next) => {
     const sid = req.signedCookies?.sid;
 
@@ -582,3 +582,5 @@ exports.addGuestSessionCartItems = async (req, res, next) => {
         })
     }
 }
+
+exports.oAuthAuthorization = (req, res, next) => { }

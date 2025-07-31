@@ -5,18 +5,18 @@ import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  closeLogInModal,
   loginOtpSend,
   selectLoginOtp,
   selectIsLoading,
   setIsLoggedIn,
   setLoading,
+  setHideLogin,
   toggleOtpOnPhone,
   selectOtpOnPhone,
   setErrorMessage,
 } from "../../features/Login/loginSlice";
 
-import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { selectDeviceFingerPrint, setUserDetails } from "../../features/home/homeSlice";
 
 import { Phone, Mail } from "lucide-react";
 
@@ -43,9 +43,12 @@ const Login = ({ recaptchaRef }) => {
 
     if (otpOnPhone) {
       if (data.get("phone").length === 0) {
+        console.log("Called")
         setChangePhoneHasValue(true);
         dispatch(setLoading(false));
-      } else if (/^[2-9]\d{9}$/.test(data.get("phone"))) {
+      } else if (!/^[2-9]\d{9}$/.test(data.get("phone"))) {
+        console.log("Called")
+
         setChangePhoneIsEntryMade(true);
         setChangePhoneHasValue(true);
         dispatch(setLoading(false));
@@ -103,7 +106,6 @@ const Login = ({ recaptchaRef }) => {
   async function sendOTP(data, token, otpOnPhoneStatus) {
     const mode = otpOnPhoneStatus ? "phone" : "email";
     const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
-    // const OTP = data.get("otp");
 
     try {
       const resp = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/login/sendOtp/${mode}`, {

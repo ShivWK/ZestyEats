@@ -4,7 +4,6 @@ import EntryDiv from "./EntryDiv";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
-  closeLogInModal,
   selectSignUpOtp,
   signUpOtpSend,
   setLoading,
@@ -197,7 +196,7 @@ const SignUp = memo(({ recaptchaRef }) => {
         dispatch(setErrorMessage(err.message));
       }
     }
-  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal, otpOnPhone]);
+  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, otpOnPhone]);
 
   const toggleHandler = () => {
     if (isSignUpOtpSend) return;
