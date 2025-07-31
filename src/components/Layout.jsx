@@ -100,7 +100,7 @@ export default function Layout() {
       console.log(data.data.sessionId);
     }
 
-    createGuestSession();
+    setTimeout(createGuestSession, 1000)
   }, [])
 
   useEffect(() => {

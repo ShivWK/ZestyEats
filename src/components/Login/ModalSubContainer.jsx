@@ -11,7 +11,8 @@ import {
   setLoginOpened,
   signUpOtpSend,
   loginOtpSend,
-  selectOtpOnPhone
+  selectOtpOnPhone,
+  setErrorMessage
 } from "../../features/Login/loginSlice";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -44,30 +45,32 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
       dispatch(signUpOtpSend(false));
       dispatch(setLoading(false));
     }
+
+    dispatch(setErrorMessage(null));
   };
 
-  async function fetchIdToken() {
-    const code = "4%2F0AVMBsJg9eXC5fqulggtQl0MAzQa4AsuJxOG_80D2WrHaOQ3elTGznG1vzlIDv8aCY80PSA";
-    const clientId = "85933172238-ah6d3fr9r43oh77h3b9bkfmmhau05b2l.apps.googleusercontent.com";
-    const clientSecret = "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";
-    const redirect_uri = "http://localhost:5173"
+  // async function fetchIdToken() {
+  //   const code = "4%2F0AVMBsJg9eXC5fqulggtQl0MAzQa4AsuJxOG_80D2WrHaOQ3elTGznG1vzlIDv8aCY80PSA";
+  //   const clientId = "85933172238-ah6d3fr9r43oh77h3b9bkfmmhau05b2l.apps.googleusercontent.com";
+  //   const clientSecret = "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";
+  //   const redirect_uri = "http://localhost:5173"
 
-    const payload = `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirect_uri}&grant_type=authorization_code`
+  //   const payload = `code=${code}&client_id=${clientId}&client_secret=${clientSecret}&redirect_uri=${redirect_uri}&grant_type=authorization_code`
 
-    const resp = await fetch("https://oauth2.googleapis.com/token", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded"
-      },
-      body: payload
-    })
-    const data = await resp.json();
-    const userDataString = data["id_token"].split(".")[1];
-    const userData = JSON.parse(atob(userDataString));
+  //   const resp = await fetch("https://oauth2.googleapis.com/token", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/x-www-form-urlencoded"
+  //     },
+  //     body: payload
+  //   })
+  //   const data = await resp.json();
+  //   const userDataString = data["id_token"].split(".")[1];
+  //   const userData = JSON.parse(atob(userDataString));
 
-    console.log(data)
-    console.log(userData);
-  }
+  //   console.log(data)
+  //   console.log(userData);
+  // }
 
   return (
     <div className="w-[90%] md:w-[80%] h-auto mt-7">
@@ -142,7 +145,6 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
       {/* {children} */}
 
       {isValidElement(children) ? cloneElement(children, { recaptchaRef: recaptchaReference }) : children}
-
 
       {
         !(isLoginOtpSend || isSigUpOtpSend) && (

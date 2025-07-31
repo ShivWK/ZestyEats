@@ -13,7 +13,7 @@ const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 exports.oAuthAuthorization = (req, res, next) => { }
 
 exports.signup = async (req, res) => {
-    const headers = req.header;
+    const headers = req.headers;
     const body = req.body;
     const { name, phone_number, email } = body.userData;
     const token = body.token;
@@ -142,13 +142,12 @@ exports.signup = async (req, res) => {
                     message: "OTP not send"
                 })
             }
-
         }
     }
 }
 
 exports.login = async (req, res, next) => {
-    const headers = req.header;
+    const headers = req.headers;
     const mode = req.params.mode;
     const body = req.body;
 
