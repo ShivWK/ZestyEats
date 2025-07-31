@@ -12,11 +12,14 @@ const MobileProfile = () => {
             <div className="flex items-center justify-between mt-2.5">
                 <div>
                     <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs">Shivendra Dwivedi</h1>
-                    <div className="flex items-center gap-1 ">
+                    <div className="flex items-center gap-0.5 ">
                         <p className="font-medium text-gray-100 dark:text-gray-200">7897532327</p>
-                        <Link className="text-xs underline dark:text-primary">verify</Link>
+                        <Link className="text-sm dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
                     </div>
-                    <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">shivendra@shivendra.site</p>
+                    <div className="flex items-center gap-0.5 ">
+                        <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">shivendra@shivendra.site</p>
+                        <Link className="text-sm mb-1 dark:text-primary text-black tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
+                    </div>
                 </div>
                 <button className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
                     Edit
