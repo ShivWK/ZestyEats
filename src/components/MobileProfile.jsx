@@ -1,6 +1,7 @@
 import { selectUserDetails } from "../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
+import MobileFooterMenu from "./Footer/MobileFooterMenu";
 
 const MobileProfile = () => {
     const userDetails = useSelector(selectUserDetails);
@@ -26,6 +27,7 @@ const MobileProfile = () => {
                 </button>
             </div>
         </section>
+        <MobileFooterMenu />
     </main>
 }
 

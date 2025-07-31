@@ -42,7 +42,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
           >
             <p className="group flex items-center justify-between gap-3 hover:cursor-pointer">
               {theme === "light" ? (
-                <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 text-xl transform group-hover:translate-x-1 transition-transform duration-150 ease-linear" />
+                <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 text-lg transform group-hover:translate-x-1 transition-transform duration-150 ease-linear" />
               ) : theme === "dark" ? (
                 <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95 text-lg transform group-hover:translate-x-1 transition-transform duration-150 ease-linear"></i>
               ) : (
