@@ -299,6 +299,8 @@ exports.verifyOTP = async (req, res, next) => {
     const clientVisitorId = headers["x-device-id"];
     const body = req.body;
 
+    console.log(mode, forWhat);
+
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
 
@@ -324,14 +326,14 @@ exports.verifyOTP = async (req, res, next) => {
         }
     } else {
         if (mode === "phone") {
-            if (!phoneRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP)) {
+            if (!phoneRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP.trim())) {
                 return res.status(401).json({
                     status: "failed",
                     message: "Invalid Credentials",
                 })
             }
         } else {
-            if (!emailRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP)) {
+            if (!emailRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP.trim())) {
                 return res.status(401).json({
                     status: "failed",
                     message: "Invalid Credentials",
@@ -342,9 +344,15 @@ exports.verifyOTP = async (req, res, next) => {
 
     // Data sanitization
 
-    const cleanName = body.name.trim().replace(/\s+/g, " ");
-    const cleanPhone = +body.phone.trim();
-    const cleanEmail = body.email.trim();
+    let cleanEmail = null;
+    let cleanName = null;
+    let cleanPhone = null;
+
+    if (forWhat === "signup") {
+        cleanName = body.name.trim().replace(/\s+/g, " ");
+        cleanPhone = +body.phone.trim();
+        cleanEmail = body.email.trim();
+    }
 
     let OtpDoc = null;
     if (mode === "phone") {
@@ -369,7 +377,7 @@ exports.verifyOTP = async (req, res, next) => {
                 isEmailVerified: mode === "email",
             })
         } else {
-            if ( mode === "phone") User = await UserModal.findOne({ phone: otpFor });
+            if (mode === "phone") User = await UserModal.findOne({ phone: otpFor });
             else User = await UserModal.findOne({ email: otpFor });
         }
 

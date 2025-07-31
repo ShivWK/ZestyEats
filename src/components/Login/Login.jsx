@@ -151,8 +151,10 @@ const Login = ({ recaptchaRef }) => {
     } else {
       dispatch(setLoading(true));
       const OTP = data.get("otp");
-      const mode = otpOnPhoneStatus ? "phone" : "email";
+      const mode = otpOnPhone ? "phone" : "email";
       const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
+
+      console.log(otpFor)
 
       try {
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}/login`, {
@@ -206,7 +208,7 @@ const Login = ({ recaptchaRef }) => {
         </div>
       )}
       <div className="mt-5">
-        {otpOnPhone ? (
+        {!isOtpSend &&  ( otpOnPhone ? (
           <p className="text-xs mt-2 font-bold text-gray-600 dark:text-gray-300 tracking-wide">
             OTP will be sent to {" "}
             <span className="text-black dark:text-white">
@@ -222,7 +224,7 @@ const Login = ({ recaptchaRef }) => {
                 Check spam if you don’t see it.
               </span>
             </p>
-          )
+          ))
         }
       </div>
       <Form
