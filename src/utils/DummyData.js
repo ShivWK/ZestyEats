@@ -157,7 +157,7 @@ export const privacyPolicy = [
                     "<p>Withdraw consent at any time.</p>"
                 ],
             },
-            subDescription: "<p>Please write to <a style='color: blue; text-decoration: underline; cursor:pointer' href='mailto:zestyeatssupport@shivendra.site'>zestyeatssupport@shivendra.site</a> for privacy-related queries.</p>"
+            subDescription: "<p>Please write to <a style='color: #ff5200; font-weight:600; text-decoration: underline; cursor:pointer' href='mailto:zestyeatssupport@shivendra.site'>zestyeatssupport@shivendra.site</a> for privacy-related queries.</p>"
         },
     ]
 ]

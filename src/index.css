@@ -102,6 +102,20 @@
         animation: hideLocationInfoModal 0.3s ease forwards;
     }
 
+    .profile-animation {
+        animation: animateProfile 0.5s ease-in forwards;
+    }
+
+    @keyframes animateProfile {
+        0% {
+            height: 0;
+        }
+
+        100% {
+            height: 9rem;
+        }
+    }
+
     @keyframes menuButton {
         0% {
             bottom: -2rem;

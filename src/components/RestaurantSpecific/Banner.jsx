@@ -64,7 +64,7 @@ const Banner = ({ data }) => {
             <p className="text-gray-500 dark:text-gray-300">•</p>
             <p className="font-bold">{mainData?.costForTwoMessage}</p>
             <p className="text-gray-500 hidden md:block dark:text-gray-300">•</p>
-            {veg ? (<PureVegSvg classes="-ml-3.5 hidden md:inline-flex" />
+            {veg ? (<PureVegSvg classes="hidden md:inline-flex" />
              ) : ( <VegAndNonVegSvg classes="hidden md:inline-flex px-2 my-1 py-0.5 pr-2" /> )}
           </div>
           <div

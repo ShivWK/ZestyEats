@@ -1,9 +1,4 @@
-import {
-  createBrowserRouter,
-  Route,
-  RouterProvider,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { createBrowserRouter, Route, RouterProvider, createRoutesFromElements } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
@@ -13,7 +8,6 @@ const About = lazy(() => import("./components/About/About"));
 const Search = lazy(() => import("./components/Search/Search"));
 const Cart = lazy(() => import("./components/Cart/Cart"));
 const Profile = lazy(() => import("./components/Profile/Profile"));
-import { toast } from "react-toastify";
 
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
@@ -52,7 +46,8 @@ import {
   selectLocationModal,
   selectLogInModal,
   setHideLocation,
-  setHideLogin
+  setHideLogin,
+  selectLocationInfoModalReason
 } from "./features/Login/loginSlice";
 
 import {
@@ -66,116 +61,23 @@ import {
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
+import MobileProfile from "./components/MobileProfile";
 
 export default function App() {
+  useOnlineStatus();
+
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationModelOpen = useSelector(selectLocationModal);
   const isMenuModelOpen = useSelector(selectMenuModel);
   const dispatch = useDispatch();
   let theme = useSelector(selectCurrentTheme);
 
+  console.log(isLocationModelOpen, isLoginOpen)
+
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     dispatch(setCurrentTheme(storedTheme));
   }, [])
-
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
-        <Route index element={<Home />} />
-        <Route
-          path="about"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <About />
-            </Suspense>
-          }
-        />
-        <Route
-          path="search"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <Search />
-            </Suspense>
-          }
-        >
-          <Route index loader={searchHomeLoader} element={<SearchHome />} />
-          <Route path="suggestions" element={<SearchSuggestions />} />
-          <Route path="searchResult" element={<SearchResult />} >
-            <Route path="restaurantPage" loader={resultDataLoader} element={<RestaurantResultPage />} />
-            <Route path="dishPage" loader={resultDataLoader} element={<DishResultPage />} />
-            <Route path="cuisinesPage" loader={resultDataLoader} element={<CuisinesResultPage />} />
-          </Route>
-        </Route>
-
-        <Route
-          path="help"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <HelpMain />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path="profile"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <Profile />
-            </Suspense>
-          }
-        />
-        <Route
-          path="cart"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <Cart />
-            </Suspense>
-          }
-        />
-        <Route
-          path="restaurantSpecific/:lat/:lng/:id/:name"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <RestaurantSpecific />
-            </Suspense>
-          }
-          loader={specificRestroLoader}
-        />
-        {/* <Route
-          path="dishSearch"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <RestaurantSearch />
-            </Suspense>
-          }
-        /> */}
-        <Route
-          path="specificFood/:food"
-          element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
-              <FoodSpecific />
-            </Suspense>
-          }
-          loader={specificFoodLoader}
-        />
-        <Route path="cityPage/:cityName" element={<CityHome />} />
-        <Route path="cityCuisines/:cityName" element={<CityCuisines />} loader={cuisineLoader} />
-        <Route path="cityRestaurant/:cityName" element={<CityRestaurantPage />} loader={restaurantLoader} />
-        <Route path="cityLocality/:cityName/:locality" element={<CityLocality />} loader={localityLoader} />
-        <Route path="cityDishes/:cityName/:dish" element={<PopularDishes />} loader={dishLoader} />
-
-        <Route path="support" element={<OptionsPage />} />
-        <Route path="mbAbout" element={<OptionsPage />} />
-        <Route path="mbStaticData" element={<ContentPage />} />
-        <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
-        <Route path='*' element={<PageNotFound />} />
-        <Route path="legalAndPolicies" element={<CompanyPolicies />} />
-      </Route>
-    )
-  );
-
-  useOnlineStatus();
 
   useEffect(() => {
     const handleScapeDown = (e) => {
@@ -210,6 +112,19 @@ export default function App() {
     deviceInfo();
   }, [])
 
+  // useEffect(() => {
+  //   const unloadHandler = () => {
+  //     console.log(isLoginOpen, isLocationModelOpen);
+
+  //     if (isLoginOpen || isLocationModelOpen) {
+  //       window.history.back();
+  //     }
+  //   }
+
+  //   window.addEventListener("beforeunload", unloadHandler);
+  //   return () => window.removeEventListener("beforeunload", unloadHandler);
+  // }, [isLoginOpen, isLocationModelOpen])
+
   useEffect(() => {
     const history = pathHistory.map((item) => {
       if (item === "/") return "Home";
@@ -242,7 +157,6 @@ export default function App() {
 
     dispatch(setUserFriendlyPathHistory(history));
   }, [pathHistory]);
-
 
   // Important
   useEffect(() => {
@@ -297,6 +211,112 @@ export default function App() {
     systemTheme.addEventListener("change", themeChangeHandler)
     return () => systemTheme.removeEventListener("change", themeChangeHandler)
   }, [theme])
+
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Layout />} errorElement={<ErrorBoundary />}>
+        <Route index element={<Home />} />
+        <Route
+          path="about"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <About />
+            </Suspense>
+          }
+        />
+        <Route
+          path="search"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <Search />
+            </Suspense>
+          }
+        >
+          <Route index loader={searchHomeLoader} element={<SearchHome />} />
+          <Route path="suggestions" element={<SearchSuggestions />} />
+          <Route path="searchResult" element={<SearchResult />} >
+            <Route path="restaurantPage" loader={resultDataLoader} element={<RestaurantResultPage />} />
+            <Route path="dishPage" loader={resultDataLoader} element={<DishResultPage />} />
+            <Route path="cuisinesPage" loader={resultDataLoader} element={<CuisinesResultPage />} />
+          </Route>
+        </Route>
+
+        <Route
+          path="help"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <HelpMain />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="profile"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <Profile />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="mobileProfile"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <MobileProfile />
+            </Suspense>
+          }
+        />
+
+        <Route
+          path="cart"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <Cart />
+            </Suspense>
+          }
+        />
+        <Route
+          path="restaurantSpecific/:lat/:lng/:id/:name"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <RestaurantSpecific />
+            </Suspense>
+          }
+          loader={specificRestroLoader}
+        />
+        {/* <Route
+          path="dishSearch"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <RestaurantSearch />
+            </Suspense>
+          }
+        /> */}
+        <Route
+          path="specificFood/:food"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+              <FoodSpecific />
+            </Suspense>
+          }
+          loader={specificFoodLoader}
+        />
+        <Route path="cityPage/:cityName" element={<CityHome />} />
+        <Route path="cityCuisines/:cityName" element={<CityCuisines />} loader={cuisineLoader} />
+        <Route path="cityRestaurant/:cityName" element={<CityRestaurantPage />} loader={restaurantLoader} />
+        <Route path="cityLocality/:cityName/:locality" element={<CityLocality />} loader={localityLoader} />
+        <Route path="cityDishes/:cityName/:dish" element={<PopularDishes />} loader={dishLoader} />
+
+        <Route path="support" element={<OptionsPage />} />
+        <Route path="mbAbout" element={<OptionsPage />} />
+        <Route path="mbStaticData" element={<ContentPage />} />
+        <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
+        <Route path='*' element={<PageNotFound />} />
+        <Route path="legalAndPolicies" element={<CompanyPolicies />} />
+      </Route>
+    )
+  );
 
   return (
     <>

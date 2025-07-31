@@ -10,9 +10,6 @@ export const aboutHeadings = [
   "What I Learned",
 ];
 
-// 
-// 
-
 export const about = [
   {
     title: "Educational Use Disclaimer",
@@ -120,9 +117,9 @@ export const about = [
         "<p><span style='font-weight: bold'>Deployment:</span></p>",
       ],
       subList: [
-        "<p><span style='font-weight: bold'>Codebase:</span> <a style='color: blue; text-decoration: underline; font-weight: bold' href='https://github.com/ShivWK/ZestyEats.git'>GitHub Repo</a></p>",
-        "<p><span style='font-weight: bold'>Frontend:</span> <a style='color: blue; text-decoration: underline; font-weight: bold' href='https://vercel.com'>Vercel</a></p>",
-        "<p><span style='font-weight: bold'>Backend:</span> <a style='color: blue; text-decoration: underline; font-weight: bold' href='https://render.com'>Render</a></p>",
+        "<p><span style='font-weight: bold'>Codebase:</span> <a style='color: #ff5200; text-decoration: underline; font-weight: bold' href='https://github.com/ShivWK/ZestyEats.git'>GitHub Repo</a></p>",
+        "<p><span style='font-weight: bold'>Frontend:</span> <a style='color: #ff5200; text-decoration: underline; font-weight: bold' href='https://vercel.com'>Vercel</a></p>",
+        "<p><span style='font-weight: bold'>Backend:</span> <a style='color: #ff5200; text-decoration: underline; font-weight: bold' href='https://render.com'>Render</a></p>",
       ],
     },
   },

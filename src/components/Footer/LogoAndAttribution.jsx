@@ -1,3 +1,4 @@
+import { Globe } from "lucide-react";
 import { selectDpModel, selectDpModelHide, setDpModelHide, setDpModelOpen } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -51,6 +52,9 @@ const LogoAndAttribution = () => {
           <div className="flex flex-col justify-center italic dark:text-gray-200">
             <p className="text-lg ">Shivendra Dwivedi</p>
             <p className="text-sm">Web Developer</p>
+            {/* <a href="" className="flex items-center text-primary gap-1 text-sm tracking-wider">
+              Portfolio
+            </a> */}
             <div className="max-md:flex gap-3 mt-2 hidden">
               <a
                 href="https://www.linkedin.com/in/shivendra-dwivedi"
@@ -152,11 +156,9 @@ const LogoAndAttribution = () => {
               href="mailto:shivendra@shivendra.site"
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
             >
-              <i
-                className="fa-solid fa-envelope text-2xl"
-                style={{ color: "#d93025" }}
-              ></i>
+              <i className="fa-solid fa-envelope text-2xl text-[#d93025]"></i>
             </a>
+            
           </div>
         </div>
       </div>

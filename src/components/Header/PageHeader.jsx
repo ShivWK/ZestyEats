@@ -26,7 +26,7 @@ const PageHeader = memo(() => {
     return <GeneralHeader placeholder={"Search"} />
   } else if (pathname === "/help" || pathname === "/support") {
     return <GeneralHeader placeholder={"Help & Support"} />;
-  } else if (pathname === "/profile") {
+  } else if (pathname === "/profile" || pathname === "/mobileProfile") {
     return <GeneralHeader placeholder={"My Account"} />;
   } else if (pathname === "/cart") {
     return isSmall ? <MobileCartHeader /> : <CartHeader />;
