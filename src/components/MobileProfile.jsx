@@ -13,11 +13,11 @@ const MobileProfile = () => {
             <div className="flex items-center justify-between mt-2.5">
                 <div>
                     <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs">Shivendra Dwivedi</h1>
-                    <div className="flex items-center gap-0.5 ">
+                    <div className="flex items-center gap-1 ">
                         <p className="font-medium text-gray-100 dark:text-gray-200">7897532327</p>
                         <Link className=" dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
                     </div>
-                    <div className="flex items-center gap-0.5 ">
+                    <div className="flex items-center gap-1 ">
                         <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">shivendra@shivendra.site</p>
                         <Link className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
                     </div>
