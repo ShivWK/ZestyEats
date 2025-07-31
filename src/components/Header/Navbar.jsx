@@ -44,7 +44,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
               {theme === "light" ? (
                 <i className="fa-solid fa-sun group-hover:text-[#ff5200] active:scale-95 text-lg transform lg:group-hover:translate-x-1 transition-transform duration-150 ease-linear" />
               ) : theme === "dark" ? (
-                <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95 text-lg transform lg:group-hover:translate-x-1 transition-transform duration-150 ease-linear"></i>
+                <i className="fa-solid fa-moon group-hover:text-[#ff5200] active:scale-95 text-lg transform lg:group-hover:translate-x-1 transition-transform duration-150 ease-linear"></i>
               ) : (
                 isSmall ? <i className="fa-solid fa-mobile text-lg active:scale-95 transition-all duration-150 ease-linear" /> 
                 : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95 text-lg transform lg:group-hover:translate-x-1 transition-transform duration-150 ease-linear" />
@@ -111,10 +111,10 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
 
         <NavItem to="help" icon={"fa-solid fa-handshake-angle"} text="Help" />
 
- {/* userDetails.userName.split(" ")[0] */}
+ {/*  */}
 
-        {!loggedIn ? (
-          <NavItem to={isSmall ? "/mobileProfile" : "/profile"} icon={"fa-user text-lg"} text={"Hi"} />
+        {loggedIn ? (
+          <NavItem to={isSmall ? "/mobileProfile" : "/profile"} icon={"fa-user text-lg"} text={userDetails.userName.split(" ")[0]} />
         ) : (
           <button
             onClick={handleSignIn}

@@ -49,7 +49,7 @@ const signupEmail = (name, otp, forWhat) => {
                                 <div class="container">
                                 <div class="logo">ZestyEats</div>
                                 <div class="text">
-                                    Hi${name && " " + name.split(" ")[0]}, <br />
+                                    Hi${name ? " " + name.split(" ")[0] : ""}, <br />
                                     Use the OTP below to complete your ${forWhat}:
                                 </div>
                                     <div class="otp">${otp}</div>

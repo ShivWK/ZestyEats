@@ -9,19 +9,25 @@ const MobileProfile = () => {
     const theme = useSelector(selectCurrentTheme);
     const navigate = useNavigate();
 
-    return <main className="pt-14 overflow-hidden h-full">
+    const name = userDetails.userName;
+    const email = userDetails.userEmail;
+    const phone = userDetails.userPhone;
+    const isNumberVerified = userDetails.isPhoneVerified;
+    const isEmailVerified = userDetails.isEmailVerified;
+
+    return <main className="pt-14 overflow-x-hidden h-full pb-20">
         <section className="relative px-3 pt-5 pb-2 dark:bg-gray-800 bg-primary rounded-b-3xl h-44 profile-animation overflow-hidden">
             <i onClick={() => navigate(-1)} className="ri-arrow-left-long-line text-2xl text-white font-medium"></i>
             <div className="flex items-center justify-between mt-7">
                 <div>
-                    <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs">Shivendra Dwivedi</h1>
+                    <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs">{name}</h1>
                     <div className="flex items-center gap-1 ">
-                        <p className="font-medium text-gray-100 dark:text-gray-200">7897532327</p>
-                        <Link className=" dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
+                        <p className="font-medium text-gray-100 dark:text-gray-200">{phone}</p>
+                       {!isNumberVerified && <Link className=" dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>}
                     </div>
                     <div className="flex items-center gap-1 ">
-                        <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">shivendra@shivendra.site</p>
-                        <Link className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>
+                        <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">{email}</p>
+                        {!isEmailVerified && <Link className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]"><i className="ri-information-2-line"></i></Link>}
                     </div>
                 </div>
                 <button className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
@@ -36,17 +42,17 @@ const MobileProfile = () => {
             <div className="flex gap-2 items-center px-2 py-4 border-b-[1px] dark:border-b-white border-gray-400">
                 <i className="fas fa-credit-card text-gray-700 dark:text-primary text-xl"></i>
                 <p className="text-gray-600 dark:text-gray-100">Payments</p>
-                <i class="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
+                <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
             </div>
             <div className="flex gap-2 items-center px-2 py-4 border-b-[1px] dark:border-b-white border-gray-400">
                 <i className="ri-map-pin-user-fill text-gray-700 text-xl dark:text-primary"></i>
                 <p className="text-gray-600 dark:text-gray-100">Addresses</p>
-                <i class="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
+                <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
             </div>
             <div className="flex gap-2 items-center px-2 py-4">
                 <i className="ri-logout-circle-r-line text-gray-700 text-xl dark:text-primary"></i>
                 <p className="text-gray-600 dark:text-gray-100">Logout</p>
-                <i class="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
+                <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
             </div>
         </section>
         <section className="mx-auto w-[90%] flex items-center mt-11 gap-4">

@@ -258,8 +258,6 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   return res.status(200).json(result?.data);
 });
 
-// https://www.swiggy.com/dapi/restaurants/search/suggest?lat=28.7040592&lng=77.10249019999999&str=burger%20king&trackingId=undefined&includeIMItem=true
-
 exports.specificFoodSearchSuggestions = asyncErrorHandler(
   async (req, res, next) => {
     const { lat, lng, food } = req.query;

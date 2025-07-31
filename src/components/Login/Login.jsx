@@ -156,8 +156,6 @@ const Login = ({ recaptchaRef }) => {
       const mode = otpOnPhone ? "phone" : "email";
       const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
 
-      console.log(otpFor)
-
       try {
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}/login`, {
           method: "POST",

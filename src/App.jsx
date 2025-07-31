@@ -72,8 +72,6 @@ export default function App() {
   const dispatch = useDispatch();
   let theme = useSelector(selectCurrentTheme);
 
-  console.log(isLocationModelOpen, isLoginOpen)
-
   useEffect(() => {
     const storedTheme = localStorage.getItem("theme");
     dispatch(setCurrentTheme(storedTheme));
