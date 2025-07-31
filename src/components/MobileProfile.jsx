@@ -1,6 +1,6 @@
 import { selectUserDetails } from "../features/home/homeSlice";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 
 const MobileProfile = () => {
     const userDetails = useSelector(selectUserDetails);
@@ -12,10 +12,13 @@ const MobileProfile = () => {
             <div className="flex items-center justify-between mt-2.5">
                 <div>
                     <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs">Shivendra Dwivedi</h1>
-                    <p className="font-medium text-gray-200 dark:text-gray-200">7897532327</p>
-                    <p className="font-medium text-gray-200 dark:text-gray-200 -mt-1 tracking-wide">shivendra@shivendra.site</p>
+                    <div className="flex items-center gap-1 ">
+                        <p className="font-medium text-gray-100 dark:text-gray-200">7897532327</p>
+                        <Link className="text-xs underline dark:text-primary">verify</Link>
+                    </div>
+                    <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">shivendra@shivendra.site</p>
                 </div>
-                <button className="px-5 py-0.5 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
+                <button className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
                     Edit
                 </button>
             </div>
