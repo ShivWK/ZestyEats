@@ -46,7 +46,8 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
               ) : theme === "dark" ? (
                 <i className="ri-moon-fill group-hover:text-[#ff5200] active:scale-95 text-lg transform lg:group-hover:translate-x-1 transition-transform duration-150 ease-linear"></i>
               ) : (
-                isSmall ? <i className="fa-solid fa-mobile" /> : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95 text-lg transform lg:group-hover:translate-x-1 transition-transform duration-150 ease-linear" />
+                isSmall ? <i className="fa-solid fa-mobile text-lg active:scale-95 transition-all duration-150 ease-linear" /> 
+                : <i className="ri-computer-fill group-hover:text-[#ff5200] active:scale-95 text-lg transform lg:group-hover:translate-x-1 transition-transform duration-150 ease-linear" />
               )}
 
               <span className={`group-hover:text-[#ff5200] hidden md:block`}>Theme</span>
