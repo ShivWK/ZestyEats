@@ -25,7 +25,7 @@ const checkSessionId = (req, res, next) => {
 };
 
 userRouter.route("/signup/sendOtp/:mode").post(signup);
-userRouter.route("/verifyOtp/:mode").post(verifyOTP);
+userRouter.route("/verifyOtp/:mode/:forWhat").post(verifyOTP);
 userRouter.route("/login/sendOtp/:mode").post(login);
 
 userRouter

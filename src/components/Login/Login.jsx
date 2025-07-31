@@ -140,7 +140,7 @@ const Login = ({ recaptchaRef }) => {
     }
   }
 
-  function handleOtpVerification() {
+  async function handleOtpVerification() {
     const data = new FormData(formRef.current);
 
     if (data.get("otp").length === 0) {
@@ -149,20 +149,39 @@ const Login = ({ recaptchaRef }) => {
       setChangeOtpIsEntryMade(true);
       setChangeOtpHasValue(true);
     } else {
-      // call otp verification
-
       dispatch(setLoading(true));
-      const otp = data.get("otp");
+      const OTP = data.get("otp");
+      const mode = otpOnPhoneStatus ? "phone" : "email";
+      const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
 
-      toast.info("Invalid OTP ", {
-        autoClose: 4000,
-        style: {
-          backgroundColor: "rgb(0,0,0,0.8)",
-          color: "white",
-          fontWeight: "bold",
-        },
-        progressClassName: "progress-style",
-      });
+      try {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceFingerPrint,
+            "x-user-agent": navigator.userAgent,
+          },
+          body: JSON.stringify({
+            OTP,
+            otpFor,
+          })
+        });
+
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message);
+
+        console.log("API response", result);
+        dispatch(setUserDetails(result.data));
+        dispatch(setIsLoggedIn(true))
+        dispatch(setLoading(false));
+        dispatch(setHideLogin(true));
+        dispatch(loginOtpSend(false));
+      } catch (err) {
+        console.log("Error in verifying OTP:", err);
+        dispatch(setLoading(false));
+        dispatch(setErrorMessage(err.message));
+      }
     }
   }
 

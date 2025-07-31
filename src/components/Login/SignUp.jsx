@@ -131,7 +131,7 @@ const SignUp = memo(({ recaptchaRef }) => {
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message);
-      
+
       console.log(data);
       dispatch(signUpOtpSend(true));
       dispatch(setLoading(false))
@@ -149,7 +149,7 @@ const SignUp = memo(({ recaptchaRef }) => {
     }
   }
 
-  const handleOtpVerification = useCallback(() => {
+  const handleOtpVerification = useCallback(async () => {
     const data = new FormData(formRef.current);
     dispatch(setLoading(true));
 
@@ -161,47 +161,43 @@ const SignUp = memo(({ recaptchaRef }) => {
       setChangeOtpHasValue(true);
       dispatch(setLoading(false));
     } else {
-      verifyOTP(data, otpOnPhone);
+      const OTP = data.get("otp");
+      const mode = otpOnPhone ? "phone" : "email";
+      const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
+
+      try {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceFingerPrint,
+            "x-user-agent": navigator.userAgent,
+          },
+          body: JSON.stringify({
+            OTP,
+            otpFor,
+            name: signUpFormData.name,
+            phone: signUpFormData.phone,
+            email: signUpFormData.email,
+          })
+        });
+
+        const result = await res.json();
+        if (!res.ok) throw new Error(result.message);
+
+        console.log("API response", result);
+        dispatch(setUserDetails(result.data));
+        dispatch(setIsLoggedIn(true))
+        dispatch(setLoading(false));
+        dispatch(setHideLogin(true));
+        dispatch(signUpOtpSend(false));
+      } catch (err) {
+        console.log("Error in verifying OTP:", err);
+        dispatch(setLoading(false));
+        dispatch(setErrorMessage(err.message));
+      }
     }
   }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, closeLogInModal, otpOnPhone]);
-
-  const verifyOTP = async (data, otpOnPhoneStatus) => {
-    const OTP = data.get("otp");
-    const mode = otpOnPhoneStatus ? "phone" : "email";
-    const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
-
-    try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-device-id": deviceFingerPrint,
-          "x-user-agent": navigator.userAgent,
-        },
-        body: JSON.stringify({
-          OTP,
-          otpFor,
-          name: signUpFormData.name,
-          phone: signUpFormData.phone,
-          email: signUpFormData.email,
-        })
-      });
-
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.message);
-
-      console.log("API response", result);
-      dispatch(setUserDetails(result.data));
-      dispatch(setIsLoggedIn(true))
-      dispatch(setLoading(false));
-      dispatch(setHideLogin(true));
-      dispatch(signUpOtpSend(false));
-    } catch (err) {
-      console.log("Error in verifying OTP:", err);
-      dispatch(setLoading(false));
-      dispatch(setErrorMessage(err.message));
-    }
-  }
 
   const toggleHandler = () => {
     if (isSignUpOtpSend) return;

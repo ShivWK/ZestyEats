@@ -295,13 +295,15 @@ exports.login = async (req, res, next) => {
 exports.verifyOTP = async (req, res, next) => {
     const headers = req.headers;
     const mode = req.params.mode;
+    const forWhat = req.params.forWhat;
     const clientVisitorId = headers["x-device-id"];
-    const ua = headers["x-user-agent"];
     const body = req.body;
+
+    const ua = headers["x-user-agent"];
+    const uaResult = UAParser(ua);
 
     const result = await AccessModal.find({ "deviceInfo.visitorId": clientVisitorId });
     console.log(result);
-    const uaResult = UAParser(ua);
 
     const otpRule = /^[0-9]{6}$/;
     const nameRule = /^[a-zA-Z\s]{1,50}$/;
@@ -310,14 +312,32 @@ exports.verifyOTP = async (req, res, next) => {
 
     // Data validation 
 
-    if (!nameRule.test(body.name.trim()) ||
-        !phoneRule.test(body.phone.trim()) ||
-        !emailRule.test(body.email.trim()) ||
-        !otpRule.test(body.OTP)) {
-        return res.status(401).json({
-            status: "failed",
-            message: "Invalid Credentials",
-        })
+    if (forWhat === "signup") {
+        if (!nameRule.test(body.name.trim()) ||
+            !phoneRule.test(body.phone.trim()) ||
+            !emailRule.test(body.email.trim()) ||
+            !otpRule.test(body.OTP)) {
+            return res.status(401).json({
+                status: "failed",
+                message: "Invalid Credentials",
+            })
+        }
+    } else {
+        if (mode === "phone") {
+            if (!phoneRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP)) {
+                return res.status(401).json({
+                    status: "failed",
+                    message: "Invalid Credentials",
+                })
+            }
+        } else {
+            if (!emailRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP)) {
+                return res.status(401).json({
+                    status: "failed",
+                    message: "Invalid Credentials",
+                })
+            }
+        }
     }
 
     // Data sanitization
@@ -338,13 +358,20 @@ exports.verifyOTP = async (req, res, next) => {
     const userOTP = crypto.createHash("sha256").update(String(body.OTP)).digest('hex');
 
     if (userOTP === OtpDoc.hashedOtp) {
-        const User = await UserModal.create({
-            name: cleanName,
-            phone: cleanPhone,
-            isNumberVerified: mode === "phone",
-            email: cleanEmail,
-            isEmailVerified: mode === "email",
-        })
+        let User = null;
+
+        if (forWhat === "signup") {
+            User = await UserModal.create({
+                name: cleanName,
+                phone: cleanPhone,
+                isNumberVerified: mode === "phone",
+                email: cleanEmail,
+                isEmailVerified: mode === "email",
+            })
+        } else {
+            if ( mode === "phone") User = await UserModal.findOne({ phone: otpFor });
+            else User = await UserModal.findOne({ email: otpFor });
+        }
 
         // Create a registered session
 

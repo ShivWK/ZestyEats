@@ -28,13 +28,13 @@ const accessSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 60 * 60 * 24
+        expires: 60 * 60,
     },
 
     attempts: {
         type: Number,
         max: 5,
-        default: 0
+        default: 0,
     },
 
     resendCount: {
