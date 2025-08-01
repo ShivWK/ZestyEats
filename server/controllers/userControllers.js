@@ -388,9 +388,9 @@ exports.resendOtp = async (req, res, next) => {
             }
         }
 
-        async function updateResendCount(value) {
+        async function updateResendCount(value, findThrough) {
             const newValue = await AccessModal.findOneAndUpdate(
-                { phone: value },
+                { [findThrough]: value },
                 { $inc: { resendCount: 1 } },
                 { new: true, upsert: true }
             )
@@ -432,7 +432,7 @@ exports.resendOtp = async (req, res, next) => {
                     })
 
                     // Update in access doc
-                    const count = await updateResendCount(resendOtpTo);
+                    const count = await updateResendCount(resendOtpTo, "phone");
 
                     res.status(200).json({
                         status: "success",
@@ -464,7 +464,7 @@ exports.resendOtp = async (req, res, next) => {
                 })
 
                 // Update access doc
-                const count = await updateResendCount(resendOtpTo);
+                const count = await updateResendCount(resendOtpTo, "email");
 
                 res.status(200).json({
                     status: "success",

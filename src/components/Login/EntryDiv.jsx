@@ -197,6 +197,11 @@ const EntryDiv = memo(({
       
       if (!res.ok) throw new Error(response.message);
       console.log(data);
+
+      if (data.count === 3) {
+        dispatch(setFullDisable(true));
+      }
+
       dispatch(setLoading(false));
       dispatch(setFullDisable(false));
       startCounter();
