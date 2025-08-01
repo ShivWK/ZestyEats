@@ -215,11 +215,8 @@ const EntryDiv = memo(({
       startCounter();
     } catch (err) {
       console.log("Error in resending OTP", err);
-
-      if (!err.block) {
-        dispatch(setFullDisable(false));
-        startCounter();
-      }
+      dispatch(setFullDisable(false));
+      startCounter();
 
       dispatch(setLoading(false));
       dispatch(setErrorMessage(err.message))

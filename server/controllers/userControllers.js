@@ -389,7 +389,7 @@ exports.resendOtp = async (req, res, next) => {
                         }
                     )
 
-                    console.log(update);
+                    console.log("Unblocking result", update);
                 }
             }
         }
@@ -406,7 +406,7 @@ exports.resendOtp = async (req, res, next) => {
             if (newValue?.resendCount >= 3) {
                 const newValue = await AccessModal.updateOne(
                     { [findThrough]: value },
-                    { $set: { "resendBlocked.value": true } },
+                    { $set: { "resendBlocked.value": true, "resendBlocked.blockedAt": new Date()} },
                     { new: true, upsert: true }
                 )
 
