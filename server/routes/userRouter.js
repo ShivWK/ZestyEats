@@ -33,6 +33,7 @@ const checkIfBlocked = async (req, res, next) => {
 
     // const arr = result.map(doc => doc.blockedUntil)
     console.log(result);
+    next();
 }
 
 userRouter.route("/signup/sendOtp/:mode").post(checkIfBlocked ,signup);
