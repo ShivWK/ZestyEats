@@ -290,6 +290,7 @@ const Login = ({ recaptchaRef }) => {
             otpFormData={{ phone: loginFormData.phone, email: loginFormData.email}}
             focus="true"
             onChangeHandler={handleChange}
+            recaptchaRef={recaptchaRef}
           />
         )}
       </Form>

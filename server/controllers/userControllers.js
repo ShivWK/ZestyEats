@@ -349,125 +349,135 @@ exports.resendOtp = async (req, res, next) => {
         })
     }
 
-    const result = await AccessModal.find({ "deviceInfo.visitorId": visiterId });
+    const recaptchaResult = await recaptchaVerification(token);
 
-    for (const doc of result) {
-        const block = doc.resendBlocked;
+    if (!recaptchaResult.success) {
+        return res.status(401).json({
+            status: "failed",
+            data: recaptchaResult["error-code"],
+        })
+        
+    } else {
+        const result = await AccessModal.find({ "deviceInfo.visitorId": visiterId });
 
-        if (block?.value && block.blockedAt) {
-            const blockExpiresAt = new Date(block.blockedAt.getTime() + 10 * 60 * 1000);
+        for (const doc of result) {
+            const block = doc.resendBlocked;
 
-            if (Date.now() < blockExpiresAt.getTime()) {
-                return res.status(429).json({
-                    status: "failed",
-                    message: "Resend limit reached. Try again after some time."
-                });
-            } else {
-                const findThrough = doc.phone ? "phone" : "email";
-                const findThroughValue = doc.phone ?? doc.email;
+            if (block?.value && block.blockedAt) {
+                const blockExpiresAt = new Date(block.blockedAt.getTime() + 10 * 60 * 1000);
 
-                await AccessModal.updateOne(
-                    { [findThrough]: findThroughValue },
-                    {
-                        $set: {
-                            "resendBlocked.value": false,
-                            "resendBlocked.blockedAt": null,
+                if (Date.now() < blockExpiresAt.getTime()) {
+                    return res.status(429).json({
+                        status: "failed",
+                        message: "Resend limit reached. Try again after some time."
+                    });
+                } else {
+                    const findThrough = doc.phone ? "phone" : "email";
+                    const findThroughValue = doc.phone ?? doc.email;
+
+                    await AccessModal.updateOne(
+                        { [findThrough]: findThroughValue },
+                        {
+                            $set: {
+                                "resendBlocked.value": false,
+                                "resendBlocked.blockedAt": null,
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         }
-    }
 
-    async function updateResendCount(value) {
-        const newValue = await AccessModal.findOneAndUpdate(
-            { phone: value },
-            { $inc: { resendCount: 1 } },
-            { new: true, upsert: true }
-        )
-
-        console.log(newValue)
-
-        if (newValue?.resendCount >= 3) {
-            const newValue = await AccessModal.updateOne(
+        async function updateResendCount(value) {
+            const newValue = await AccessModal.findOneAndUpdate(
                 { phone: value },
-                { $set: { "resendBlocked.value": true } },
+                { $inc: { resendCount: 1 } },
                 { new: true, upsert: true }
             )
 
             console.log(newValue)
+
+            if (newValue?.resendCount >= 3) {
+                const newValue = await AccessModal.updateOne(
+                    { phone: value },
+                    { $set: { "resendBlocked.value": true } },
+                    { new: true, upsert: true }
+                )
+
+                console.log(newValue)
+            }
+
+            return newValue?.resendCount;
         }
 
-        return newValue?.resendCount;
-    }
+        const resendOTP = crypto.randomInt(100000, 1000000);
 
-    const resendOTP = crypto.randomInt(100000, 1000000);
+        if (mode === "phone") {
+            await OtpModal.deleteMany({ phone: resendOtpTo });
 
-    if (mode === "phone") {
-        await OtpModal.deleteMany({ phone: resendOtpTo });
+            text = `Hi, your OTP is ${resendOTP}. Do not share this code with anyone. This code is valid for 5 minutes.`;
 
-        text = `Hi, your OTP is ${resendOTP}. Do not share this code with anyone. This code is valid for 5 minutes.`;
+            sms(resendOtpTo, text)
+                .then(res => res.json())
+                .then(async (response) => {
+                    console.log("API response", response);
 
-        sms(resendOtpTo, text)
-            .then(res => res.json())
-            .then(async (response) => {
-                console.log("API response", response);
+                    // GENERATE OTP DOC
+                    const hashedOTP = crypto.createHash("sha256").update(String(resendOTP)).digest("hex");
+                    await OtpModal.create({
+                        visiterId,
+                        phone: resendOtpTo,
+                        for: "login",
+                        hashedOtp: hashedOTP,
+                    })
 
-                // GENERATE OTP DOC
+                    // Update in access doc
+                    const count = await updateResendCount(resendOtpTo);
+
+                    res.status(200).json({
+                        status: "success",
+                        message: "OTP send successfully to your number",
+                        resendCount: count
+                    })
+
+                }).catch(err => {
+                    console.log("Error in sending OTP", err);
+                    return res.status(500).json({
+                        status: "failed",
+                        message: "OTP not send. Please try again."
+                    })
+                })
+        } else {
+            await OtpModal.deleteMany({ email: resendOtpTo });
+
+            try {
+                const text = signupEmail(null, resendOTP, "Authentication");
+                const resp = await sendMail(resendOtpTo, text)
+                console.log("API response", resp)
+
+                // Generate OTP Doc
                 const hashedOTP = crypto.createHash("sha256").update(String(resendOTP)).digest("hex");
                 await OtpModal.create({
-                    visiterId,
-                    phone: resendOtpTo,
+                    email: resendOtpTo,
                     for: "login",
-                    hashedOtp: hashedOTP,
+                    hashedOtp: hashedOTP
                 })
 
-                // Update in access doc
+                // Update access doc
                 const count = await updateResendCount(resendOtpTo);
 
                 res.status(200).json({
                     status: "success",
-                    message: "OTP send successfully to your number",
-                    resendCount: count
+                    message: "OTP send successfully to your email",
+                    resendCount: count,
                 })
-
-            }).catch(err => {
+            } catch (err) {
                 console.log("Error in sending OTP", err);
                 return res.status(500).json({
                     status: "failed",
                     message: "OTP not send. Please try again."
                 })
-            })
-    } else {
-        await OtpModal.deleteMany({ email: resendOtpTo });
-
-        try {
-            const text = signupEmail(null, resendOTP, "Authentication");
-            const resp = await sendMail(cleanEmail, text)
-            console.log("API response", resp)
-
-            // Generate OTP Doc
-            const hashedOTP = crypto.createHash("sha256").update(String(resendOTP)).digest("hex");
-            await OtpModal.create({
-                email: resendOtpTo,
-                for: "login",
-                hashedOtp: hashedOTP
-            })
-
-            // Update access doc
-            const count = await updateResendCount(resendOtpTo);
-
-            res.status(200).json({
-                status: "success",
-                message: "OTP send successfully to your email",
-                resendCount: count,
-            })
-        } catch (err) {
-            console.log("Error in sending OTP", err);
-            return res.status(500).json({
-                status: "failed",
-                message: "OTP not send. Please try again."
-            })
+            }
         }
     }
 }
