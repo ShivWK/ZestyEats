@@ -149,11 +149,11 @@ const ModalSubContainer = memo(({ children, member, handleSwitch }) => {
       {
         !(isLoginOtpSend || isSigUpOtpSend) && (
           <>
-            <p className="text-xs font-semibold tracking-wide text-gray-500 text-center mt-2 lg:mt-1 dark:text-gray-200">------- or -------</p>
+            <p className="text-xs font-semibold tracking-wide text-gray-500 text-center mt-3 lg:mt-1 dark:text-gray-200">------- or -------</p>
             <Link
               to={`https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=85933172238-ah6d3fr9r43oh77h3b9bkfmmhau05b2l.apps.googleusercontent.com&scope=openid%20email%20profile&redirect_uri=http://localhost:5173`}
 
-              className="absolute mt-7 lg:mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out bg-white dark:bg-black">
+              className="absolute mt-8 lg:mt-6 left-[50%] transform -translate-1/2 text-center font-semibold text-blue-500 cursor-pointer border-2 rounded-md px-3.5 py-1 active:scale-95 transition-all duration-150 ease-in-out bg-white dark:bg-black">
               <p className="whitespace-nowrap flex gap-2 items-center">
                 Continue with{" "}
                 <svg

@@ -363,7 +363,7 @@ exports.resendOtp = async (req, res, next) => {
         for (const doc of result) {
             const block = doc.resendBlocked;
 
-            console.log(block)
+            // console.log(block)
 
             if (block?.value && block.blockedAt) {
                 const blockExpiresAt = new Date(block.blockedAt.getTime() + 5 * 60 * 1000);

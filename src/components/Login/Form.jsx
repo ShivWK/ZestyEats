@@ -86,7 +86,7 @@ const Form = ({
         </p>
       )}
 
-      {(errorMessage && isOtpSend ) && <p className="text-center text-red-600 text-sm tracking-wide font-medium mt-8 break-words">
+      {(errorMessage && isOtpSend ) && <p className="text-center text-gray-800 dark:text-gray-200 text-sm tracking-wide font-medium mt-8 break-words">
         {errorMessage}
       </p>}
 
