@@ -66,22 +66,14 @@ exports.signup = async (req, res) => {
     const token = body.token;
     const mode = req.params.mode;
 
+    const visiterId = headers["x-device-id"]
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
 
-    if (!req.signedCookies?.gSid) {
-        const session = await SessionModel.create({
-            deviceInfo: deviceFingerPrinter(headers, uaResult, req),
-            type: "guest"
-        });
-
-        res.cookie("gSid", session.id, {
-            maxAge: 1000 * 60 * 60 * 24,
-            httpOnly: true,
-            signed: true,
-            secure: true,
-            sameSite: "None",
-            path: "/"
+    if (!name || !phone_number || !email || !token || !ua || !visiterId) {
+        return res.status(400).json({
+            status: "failed",
+            message: "invalid credentials"
         })
     }
 
@@ -106,12 +98,12 @@ exports.signup = async (req, res) => {
     const cleanPhone = +phone_number.trim();
     const cleanEmail = email.trim();
 
-    const result = await recaptchaVerification(token);
+    const recaptchaResult = await recaptchaVerification(token);
 
-    if (!result.success) {
-        return res.status(400).json({
+    if (!recaptchaResult.success) {
+        return res.status(401).json({
             status: "failed",
-            data: result["error-code"],
+            data: recaptchaResult["error-code"],
         })
     } else {
         const user = await UserModal.findOne({ email: cleanEmail });
@@ -135,6 +127,7 @@ exports.signup = async (req, res) => {
                     // GENERATE OTP DOC
                     const hashedOTP = crypto.createHash("sha256").update(String(signUpOTP)).digest("hex");
                     await OtpModal.create({
+                        visiterId,
                         phone: cleanPhone,
                         for: "signup",
                         hashedOtp: hashedOTP,
@@ -201,22 +194,14 @@ exports.login = async (req, res, next) => {
     const otpFor = body.otpFor;
     const token = body.token;
 
+    const visiterId = headers["x-device-id"]
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
 
-    if (!req.signedCookies?.gSid) {
-        const session = await SessionModel.create({
-            deviceInfo: deviceFingerPrinter(headers, uaResult, req),
-            type: "guest"
-        });
-
-        res.cookie("gSid", session.id, {
-            maxAge: 1000 * 60 * 60 * 24,
-            httpOnly: true,
-            signed: true,
-            secure: true,
-            sameSite: "None",
-            path: "/"
+    if (!otpFor || !token || !ua || !visiterId) {
+        return res.status(400).json({
+            status: "failed",
+            message: "Invalid credentials"
         })
     }
 
@@ -248,12 +233,12 @@ exports.login = async (req, res, next) => {
     if (mode === "phone") cleanPhone = +otpFor.trim();
     else cleanEmail = otpFor.trim();
 
-    const result = await recaptchaVerification(token);
+    const recaptchaResult = await recaptchaVerification(token);
 
-    if (!result.success) {
-        return res.status(400).json({
+    if (!recaptchaResult.success) {
+        return res.status(401).json({
             status: "failed",
-            data: result["error-code"],
+            data: recaptchaResult["error-code"],
         })
     } else {
         let user = null;
@@ -273,6 +258,9 @@ exports.login = async (req, res, next) => {
         if (mode === "phone") {
             const text = `Hi, your OTP is ${loginOTP} to complete your login. Do not share this code with anyone. This code is valid for 5 minutes.`;
 
+            // Delete existing otp(s)
+            if (visiterId) await OtpModal.deleteMany({ visiterId });
+
             sms(cleanPhone, text)
                 .then(res => res.json())
                 .then(async (response) => {
@@ -281,6 +269,7 @@ exports.login = async (req, res, next) => {
                     // GENERATE OTP DOC
                     const hashedOTP = crypto.createHash("sha256").update(String(loginOTP)).digest("hex");
                     await OtpModal.create({
+                        visiterId,
                         phone: cleanPhone,
                         for: "login",
                         hashedOtp: hashedOTP,
@@ -339,20 +328,34 @@ exports.login = async (req, res, next) => {
     }
 }
 
+exports.resendOtp = async (req, res, next) => {
+    const headers = req.headers;
+    const visiterId = headers["x-device-id"]
+    const ua = headers["x-user-agent"];
+
+    const body = req.body;
+    const resendOtpTo = body.resendOtpTo;
+    const token = body.token;
+
+    if (!token || !resendOtpTo || !visiterId || !ua) {
+        return res.status(400).json({
+            status: "failed",
+            message: "Invalid credentials"
+        })
+    }
+}
+
 exports.verifyOTP = async (req, res, next) => {
     const headers = req.headers;
     const mode = req.params.mode;
     const forWhat = req.params.forWhat;
-    const clientVisitorId = headers["x-device-id"];
+    const visiterId = headers["x-device-id"];
     const body = req.body;
 
     console.log(mode, forWhat, body.OTP, body.otpFor);
 
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
-
-    const result = await AccessModal.find({ "deviceInfo.visitorId": clientVisitorId });
-    // console.log(result);
 
     const otpRule = /^[0-9]{6}$/;
     const nameRule = /^[a-zA-Z\s]{1,50}$/;

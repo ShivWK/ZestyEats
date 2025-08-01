@@ -285,6 +285,8 @@ const SignUp = memo(({ recaptchaRef }) => {
             fallbackPlaceholder="One Time Password"
             changeIsEntryMade={changeOtpIsEntryMade}
             changeHasValue={changeOtpHasValue}
+            otpFormData={{ phone: signUpFormData.phone, email: signUpFormData.email }}
+            recaptchaRef={recaptchaRef}
             focus="true"
           />
         )}

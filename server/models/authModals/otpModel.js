@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
 const otpSchema = new mongoose.Schema({
+    visiterId: String,
+    
     phone: {
         type: Number,
     },

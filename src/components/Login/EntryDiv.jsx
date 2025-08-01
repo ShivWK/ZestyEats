@@ -1,6 +1,17 @@
 import { useState, useRef, useEffect, memo } from "react";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn, selectLoginOtp, selectSignUpOtp } from "../../features/Login/loginSlice";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  selectIsLoggedIn,
+  selectLoginOtp,
+  selectSignUpOtp,
+  selectFullDisable,
+  selectOtpOnPhone,
+  setLoading,
+  setErrorMessage,
+  setFullDisable,
+} from "../../features/Login/loginSlice";
+
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 
 const EntryDiv = memo(({
   type,
@@ -13,19 +24,26 @@ const EntryDiv = memo(({
   isReadOnly = false,
   changeIsEntryMade,
   changeHasValue,
+  otpFormData = null,
+  recaptchaRef = null,
   onChangeHandler = () => { },
 }) => {
+  const loginOTP = useSelector(selectLoginOtp);
+  const signupOTP = useSelector(selectSignUpOtp);
+  const fullDisable = useSelector(selectFullDisable);
+  const otpOnPhone = useSelector(selectOtpOnPhone);
+  const deviceId = useSelector(selectDeviceFingerPrint);
+  const dispatch = useDispatch();
+
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const [fieldValue, setFiledValue] = useState("");
   const [seconds, setSeconds] = useState(60);
   const [disable, setDisable] = useState(true);
   const inputRef = useRef(null);
-  let isLoggedIn = useSelector(selectIsLoggedIn);
-  const loginOTP = useSelector(selectLoginOtp);
-  const signupOTP = useSelector(selectSignUpOtp);
-  let startCounter = null;
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
+  let startCounter = null;
   useEffect(() => {
     startCounter = () => {
       const timer = setInterval(() => {
@@ -145,11 +163,49 @@ const EntryDiv = memo(({
     setFiledValue(e.target.value);
   }
 
-  const resendClickHandler = (e) => {
+  const resendClickHandler = async (e) => {
     e.stopPropagation();
     setDisable(true);
     setSeconds(60);
-    startCounter();
+    dispatch(setLoading(true));
+    dispatch(setFullDisable(true));
+
+    const mode = otpOnPhone ? "phone" : "email";
+    let resendOtpTo = null;
+
+    if (mode === "phone") resendOtpTo = otpFormData.phone;
+    else resendOtpTo = otpFormData.email;
+
+    try {
+      const token = await recaptchaRef.current.executeAsync();
+      recaptchaRef.current.reset();
+
+      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/resendOtp/${mode}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-device-id": deviceId,
+          "x-user-agent": navigator.userAgent,
+        },
+        body: JSON.stringify({
+          resendOtpTo,
+          token
+        })
+      })
+
+      const response = await res.json();
+      
+      if (!res.ok) throw new Error(response.message);
+      console.log(data);
+      dispatch(setLoading(false));
+      dispatch(setFullDisable(false));
+      startCounter();
+    } catch (err) {
+      console.log("Error in resending OTP", err);
+      
+      dispatch(setLoading(false));
+      dispatch(setErrorMessage("Error in sending OTP. Please try again."))
+    }
   }
 
   const handleBlur =
@@ -201,15 +257,23 @@ const EntryDiv = memo(({
           className={`relative top-5 dark:text-white font-semibold text-lg outline-none w-full bg-transparent`}
         />
       </div>
-      { purpose === "otp" && <div className="flex justify-between px-0.5 mt-1">
-        <button onClick={resendClickHandler} disabled={disable} className={`text-xs font-bold ${disable ? "text-gray-400" : "text-primary cursor-pointer"}  underline underline-offset-2`}>
-          Resend OTP
-        </button>
-        {disable && <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
-          <span className="tracking-wide">remaining time: </span>
-          <span>{seconds}</span>
-        </p>}
-      </div>}
+      {!fullDisable ? (
+        purpose === "otp" && <div className="flex justify-between px-0.5 mt-1">
+          <button onClick={resendClickHandler} disabled={disable} className={`text-xs font-bold ${disable ? "text-gray-400" : "text-primary cursor-pointer"}  underline underline-offset-2`}>
+            Resend OTP
+          </button>
+          {disable && <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
+            <span className="tracking-wide">remaining time: </span>
+            <span>{seconds}</span>
+          </p>}
+        </div>
+      ) : (
+        <div className="px-0.5 mt-1">
+          <p className={`text-xs font-bold "text-gray-400 underline underline-offset-2`}>
+            Resend OTP
+          </p>
+        </div>
+      )}
     </>
   );
 });

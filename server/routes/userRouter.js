@@ -1,5 +1,7 @@
 const express = require("express");
 const userRouter = express.Router();
+const AccessModal = require("./../models/authModals/blockAccessModal");
+
 const {
   signup,
   login,
@@ -10,7 +12,8 @@ const {
   addGuestSessionItemsToBeAddedInCart,
   addGuestSessionCartItems,
   getGuestSessionData,
-  verifyOTP
+  verifyOTP,
+  resendOtp,
 } = require("./../controllers/userControllers");
 
 const checkSessionId = (req, res, next) => {
@@ -24,23 +27,27 @@ const checkSessionId = (req, res, next) => {
   next();
 };
 
-userRouter.route("/signup/sendOtp/:mode").post(signup);
-userRouter.route("/verifyOtp/:mode/:forWhat").post(verifyOTP);
-userRouter.route("/login/sendOtp/:mode").post(login);
+const checkIfBlocked = async (req, res, next) => {
+    const visiterId = req.headers["x-device-id"];
+    const result = await AccessModal.find({ "deviceInfo.visitorId": visiterId });
 
-userRouter
-  .route("/session")
-  .post(guestSession)
-  .get(checkSessionId, getGuestSessionData);
+    // const arr = result.map(doc => doc.blockedUntil)
+    console.log(result);
+}
+
+userRouter.route("/signup/sendOtp/:mode").post(checkIfBlocked ,signup);
+userRouter.route("/verifyOtp/:mode/:forWhat").post(checkIfBlocked ,verifyOTP);
+userRouter.route("/login/sendOtp/:mode").post(checkIfBlocked ,login);
+userRouter.route("/resendOtp/:mode").post(checkIfBlocked ,resendOtp);
+
+userRouter.route("/session").post(guestSession).get(checkSessionId, getGuestSessionData);
 
 userRouter.use(checkSessionId);
 
 userRouter.route("/recentLocations").patch(addGuestSessionRecentLocation);
 userRouter.route("/favRestaurants").patch(addGuestSessionFavRestaurants);
 userRouter.route("/wishListedItems").patch(addGuestSessionWishListedItems);
-userRouter
-  .route("/itemsToBeAddedInCart")
-  .patch(addGuestSessionItemsToBeAddedInCart);
+userRouter.route("/itemsToBeAddedInCart").patch(addGuestSessionItemsToBeAddedInCart);
 userRouter.route("/cartItems").patch(addGuestSessionCartItems);
 
 module.exports = userRouter;

@@ -17,7 +17,8 @@ const initialState = {
   hideLocationInfoModal: false,
   locationInfoModalReason: "permission",
   isGrantClicked: false,
-  errorMessage: ""
+  errorMessage: "",
+  fullDisable: false,
 };
 
 const loginSlice = createSlice({
@@ -27,6 +28,10 @@ const loginSlice = createSlice({
   reducers: {
     setErrorMessage: (state, action) => {
       state.errorMessage = action.payload;
+    },
+
+    setFullDisable: (state, action) => {
+      state.fullDisable = action.payload;
     },
 
     setLogInModal: (state, action) => {
@@ -122,6 +127,7 @@ export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
 export const selectLocationInfoModalReason = (state) => state.login.locationInfoModalReason;
 export const selectGrantBtnClicked = (state) => state.login.isGrantClicked;
 export const selectErrorMessage = (state) => state.login.errorMessage;
+export const selectFullDisable = (state) => state.login.fullDisable;
 
 export const selectLocationInfoModal = createSelector(
   [
@@ -161,5 +167,6 @@ export const {
   setLocationInfoModal,
   setLocationInfoModalReason,
   setGrantBTnClicked,
-  setErrorMessage
+  setErrorMessage,
+  setFullDisable,
 } = loginSlice.actions;
