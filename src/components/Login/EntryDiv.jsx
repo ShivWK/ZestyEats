@@ -196,11 +196,9 @@ const EntryDiv = memo(({
       const response = await res.json();
       
       if (!res.ok) throw new Error(response.message);
-      console.log(data);
+      console.log(response);
 
-      if (data.count === 3) {
-        dispatch(setFullDisable(true));
-      }
+      dispatch(setErrorMessage("OTP send successfully"))
 
       dispatch(setLoading(false));
       dispatch(setFullDisable(false));
@@ -273,8 +271,8 @@ const EntryDiv = memo(({
           </p>}
         </div>
       ) : (
-        <div className="px-0.5 mt-1">
-          <p className={`text-xs font-bold "text-gray-400 underline underline-offset-2`}>
+        purpose === "otp" && <div className="px-0.5 mt-1">
+          <p className={`text-xs font-bold text-gray-400 underline underline-offset-2`}>
             Resend OTP
           </p>
         </div>

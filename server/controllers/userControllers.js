@@ -356,7 +356,7 @@ exports.resendOtp = async (req, res, next) => {
             status: "failed",
             data: recaptchaResult["error-code"],
         })
-        
+
     } else {
         const result = await AccessModal.find({ "deviceInfo.visitorId": visiterId });
 
@@ -379,6 +379,7 @@ exports.resendOtp = async (req, res, next) => {
                         { [findThrough]: findThroughValue },
                         {
                             $set: {
+                                resendCount: 0,
                                 "resendBlocked.value": false,
                                 "resendBlocked.blockedAt": null,
                             }
@@ -399,7 +400,7 @@ exports.resendOtp = async (req, res, next) => {
 
             if (newValue?.resendCount >= 3) {
                 const newValue = await AccessModal.updateOne(
-                    { phone: value },
+                    { [findThrough]: value },
                     { $set: { "resendBlocked.value": true } },
                     { new: true, upsert: true }
                 )
