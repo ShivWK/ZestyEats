@@ -360,8 +360,21 @@ exports.resendOtp = async (req, res, next) => {
             if (Date.now() < blockExpiresAt.getTime()) {
                 return res.status(429).json({
                     status: "failed",
-                    message: "You have used resend OTP to the max limit. Try again after some time."
+                    message: "Resend limit reached. Try again after some time."
                 });
+            } else {
+                const findThrough = doc.phone ? "phone" : "email";
+                const findThroughValue = doc.phone ?? doc.email;
+
+                await AccessModal.updateOne(
+                    { [findThrough]: findThroughValue },
+                    {
+                        $set: {
+                            "resendBlocked.value": false,
+                            "resendBlocked.blockedAt": null,
+                        }
+                    }
+                )
             }
         }
     }
