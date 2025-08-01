@@ -41,18 +41,27 @@ const EntryDiv = memo(({
   const [seconds, setSeconds] = useState(60);
   const [disable, setDisable] = useState(true);
   const inputRef = useRef(null);
+  const timer = useRef(null);
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  let startCounter = null;
-  useEffect(() => {
-    startCounter = () => {
-      const timer = setInterval(() => {
-        setSeconds(prev => prev - 1)
-        if (seconds === 0) clearInterval(timer);
-      }, 1000);
-    }
+  const startCounter = () => {
+    setDisable(true)
+    timer.current = setInterval(() => {
+      setSeconds(prev => {
+        if (prev <= 1) {
+          clearInterval(timer.current);
+          return 0;
+        }
 
+        return prev = 1;
+      })
+
+    }, 1000);
+  };
+
+  useEffect(() => {
     if (loginOTP || signupOTP) startCounter();
+    return () => clearInterval(timer);
   }, [loginOTP, signupOTP]);
 
   useEffect(() => {
@@ -194,7 +203,7 @@ const EntryDiv = memo(({
       })
 
       const response = await res.json();
-      
+
       if (!res.ok) throw new Error(response.message);
       console.log(response);
 
@@ -205,7 +214,7 @@ const EntryDiv = memo(({
       startCounter();
     } catch (err) {
       console.log("Error in resending OTP", err);
-      
+
       dispatch(setLoading(false));
       dispatch(setErrorMessage("Error in sending OTP. Please try again."))
     }

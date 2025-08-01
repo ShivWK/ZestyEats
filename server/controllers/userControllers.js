@@ -366,7 +366,7 @@ exports.resendOtp = async (req, res, next) => {
             console.log(block)
 
             if (block?.value && block.blockedAt) {
-                const blockExpiresAt = new Date(block.blockedAt.getTime() + 10 * 60 * 1000);
+                const blockExpiresAt = new Date(block.blockedAt.getTime() + 2 * 60 * 1000);
 
                 if (Date.now() < blockExpiresAt.getTime()) {
                     return res.status(429).json({
