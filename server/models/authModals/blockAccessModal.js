@@ -2,10 +2,7 @@ const mongoose = require("mongoose");
 
 const blockedSchema = new mongoose.Schema({
     value: Boolean,
-    blockedAt: {
-        type: Date,
-        default: () => new Date()
-    }
+    blockedAt: Date
 }, { _id: false });
 
 const deviceInfoSchema = new mongoose.Schema({
