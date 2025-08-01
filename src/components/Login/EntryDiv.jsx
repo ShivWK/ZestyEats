@@ -16,7 +16,7 @@ import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 const EntryDiv = memo(({
   type,
   inputMode,
-  value,
+  value = null,
   purpose,
   focus = false,
   placeholder,
@@ -243,7 +243,7 @@ const EntryDiv = memo(({
           id="elem"
           name={purpose}
           type={type}
-          value={fieldValue}
+          value={value === "null" ? fieldValue : value}
           onBlur={handleBlur}
           onFocus={handleFocus}
           inputMode={inputMode}

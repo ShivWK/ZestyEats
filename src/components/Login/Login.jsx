@@ -27,12 +27,27 @@ const Login = ({ recaptchaRef }) => {
   const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
+  const [loginFormData, setLOginFormData] = useState({
+    phone: "",
+    email: "",
+    otp: "",
+  })
+
   const otpOnPhone = useSelector(selectOtpOnPhone);
   const dispatch = useDispatch();
   const isOtpSend = useSelector(selectLoginOtp);
   const isLoading = useSelector(selectIsLoading);
   const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
   const formRef = useRef(null);
+
+  const handleChange = (e) => {
+    setLOginFormData(prv => {
+      return {
+        ...prv,
+        [e.target.name] : e.target.value,
+      }
+    })
+  }
 
   const handleSubmit = useCallback(async (e) => {
     e.preventDefault();
@@ -239,6 +254,7 @@ const Login = ({ recaptchaRef }) => {
       >
         {otpOnPhone ? <EntryDiv
           type="tel"
+          value={loginFormData.phone}
           inputMode="numeric"
           purpose={"phone"}
           placeholder="Phone number"
@@ -246,9 +262,11 @@ const Login = ({ recaptchaRef }) => {
           isReadOnly={isOtpSend}
           changeIsEntryMade={changePhoneIsEntryMade}
           changeHasValue={changePhoneHasValue}
+          onChangeHandler={handleChange}
         />
           : <EntryDiv
             type={"text"}
+            value={loginFormData.email}
             inputMode={"text"}
             purpose={"email"}
             placeholder="Email"
@@ -256,18 +274,22 @@ const Login = ({ recaptchaRef }) => {
             isReadOnly={isOtpSend}
             changeIsEntryMade={changeEmailIsEntryMade}
             changeHasValue={changeEmailHasValue}
+            onChangeHandler={handleChange}
           />
         }
         {isOtpSend && (
           <EntryDiv
             type="text"
+            value={loginFormData.otp}
             inputMode="numeric"
             purpose={"otp"}
             placeholder="One Time Password"
             fallbackPlaceholder="One Time Password"
             changeIsEntryMade={changeOtpIsEntryMade}
             changeHasValue={changeOtpHasValue}
+            otpFormData={{ phone: loginFormData.phone, email: loginFormData.email}}
             focus="true"
+            onChangeHandler={handleChange}
           />
         )}
       </Form>

@@ -239,7 +239,7 @@ const SignUp = memo(({ recaptchaRef }) => {
           type={"tel"}
           inputMode={"numeric"}
           purpose={"phone"}
-          value={signUpFormData.phone}
+          // value={signUpFormData.phone}
           onChangeHandler={handleSignUpChange}
           placeholder="Phone number"
           fallbackPlaceholder="Enter your phone number"
@@ -253,7 +253,7 @@ const SignUp = memo(({ recaptchaRef }) => {
             type={"text"}
             inputMode={"text"}
             purpose={"name"}
-            value={signUpFormData.name}
+            // value={signUpFormData.name}
             onChangeHandler={handleSignUpChange}
             placeholder="Name"
             fallbackPlaceholder="Enter a valid name"
@@ -266,7 +266,7 @@ const SignUp = memo(({ recaptchaRef }) => {
             type={"text"}
             inputMode={"text"}
             purpose={"email"}
-            value={signUpFormData.email}
+            // value={signUpFormData.email}
             onChangeHandler={handleSignUpChange}
             placeholder="Email"
             fallbackPlaceholder="Invalid email address"
@@ -279,7 +279,7 @@ const SignUp = memo(({ recaptchaRef }) => {
             type="text"
             inputMode="numeric"
             purpose={"otp"}
-            value={signUpFormData.otp}
+            // value={signUpFormData.otp}
             onChangeHandler={handleSignUpChange}
             placeholder="One Time Password"
             fallbackPlaceholder="One Time Password"

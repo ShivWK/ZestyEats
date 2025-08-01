@@ -22,6 +22,10 @@ const deviceInfoSchema = new mongoose.Schema({
 
 const accessSchema = new mongoose.Schema({
     sessionId: mongoose.Schema.Types.ObjectId,
+
+    email: String,
+
+    phone: Number,
     
     deviceInfo: deviceInfoSchema,
 
@@ -43,8 +47,8 @@ const accessSchema = new mongoose.Schema({
         default: 0
     },
 
-    blockedUntil: blockedSchema,
-    resendBlockedUntil: blockedSchema,
+    blocked: blockedSchema,
+    resendBlocked: blockedSchema,
 })
 
 const AccessModal = mongoose.model("Access", accessSchema);
