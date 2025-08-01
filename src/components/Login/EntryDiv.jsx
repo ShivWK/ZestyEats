@@ -38,7 +38,7 @@ const EntryDiv = memo(({
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const [fieldValue, setFiledValue] = useState("");
-  const [seconds, setSeconds] = useState(60);
+  const [seconds, setSeconds] = useState(6);
   const [disable, setDisable] = useState(true);
   const inputRef = useRef(null);
   const timer = useRef(null);
@@ -46,6 +46,7 @@ const EntryDiv = memo(({
 
   const startCounter = () => {
     setDisable(true)
+    // setSeconds(60);
     timer.current = setInterval(() => {
       setSeconds(prev => {
         if (prev <= 1) {
@@ -53,7 +54,7 @@ const EntryDiv = memo(({
           return 0;
         }
 
-        return prev = 1;
+        return prev - 1;
       })
 
     }, 1000);
@@ -175,7 +176,7 @@ const EntryDiv = memo(({
   const resendClickHandler = async (e) => {
     e.stopPropagation();
     setDisable(true);
-    setSeconds(60);
+    setSeconds(6);
     dispatch(setLoading(true));
     dispatch(setFullDisable(true));
 
@@ -215,8 +216,13 @@ const EntryDiv = memo(({
     } catch (err) {
       console.log("Error in resending OTP", err);
 
+      if (!err.block) {
+        dispatch(setFullDisable(false));
+        startCounter();
+      }
+
       dispatch(setLoading(false));
-      dispatch(setErrorMessage("Error in sending OTP. Please try again."))
+      dispatch(setErrorMessage(err.message))
     }
   }
 

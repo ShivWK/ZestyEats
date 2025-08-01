@@ -371,13 +371,14 @@ exports.resendOtp = async (req, res, next) => {
                 if (Date.now() < blockExpiresAt.getTime()) {
                     return res.status(429).json({
                         status: "failed",
-                        message: "Resend limit reached. Try again after some time."
+                        message: "Resend limit reached. Try again after some time.",
+                        block: true
                     });
                 } else {
                     const findThrough = doc.phone ? "phone" : "email";
                     const findThroughValue = doc.phone ?? doc.email;
 
-                    await AccessModal.updateOne(
+                    const update = await AccessModal.findOneAndUpdate(
                         { [findThrough]: findThroughValue },
                         {
                             $set: {
@@ -387,6 +388,8 @@ exports.resendOtp = async (req, res, next) => {
                             }
                         }
                     )
+
+                    console.log(update);
                 }
             }
         }
