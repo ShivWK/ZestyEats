@@ -1,5 +1,4 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
-import { encrypt, decrypt } from "crypto";
 
 const initialState = {
   isLoginModalOpen: false,
