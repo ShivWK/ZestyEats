@@ -629,12 +629,14 @@ exports.getGuestSessionData = async (req, res, next) => {
                 })
             } else {
                 res.clearCookie("rSid", {
-                    httpOnly: true,
-                    secure: true,
-                    sameSite: "None",
-                    path: "/"
-                }
+                        httpOnly: true,
+                        secure: true,
+                        sameSite: "None",
+                        path: "/"
+                    }
                 )
+
+                console.log("Called")
             }
         } catch (err) {
             console.error("Error in getting session data", err);

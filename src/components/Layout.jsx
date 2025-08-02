@@ -234,7 +234,7 @@ export default function Layout() {
         });
 
         const sessionData = await result.json();
-        const mainData = sessionData.data;
+        const mainData = sessionData;
 
         console.log(mainData);
 
