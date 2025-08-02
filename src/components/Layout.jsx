@@ -16,7 +16,8 @@ import {
   selectLocationInfoModal,
   setLocationInfoModalReason,
   setLocationInfoModal,
-  setAppLoading
+  setAppLoading,
+  setIsLoggedIn
 } from "../features/Login/loginSlice";
 
 import {
@@ -29,7 +30,8 @@ import {
   setDpModelHide,
   addRecentLocations,
   setCurrentTheme,
-  selectDeviceFingerPrint
+  selectDeviceFingerPrint,
+  setUserDetails
 } from "../features/home/homeSlice";
 
 import {
@@ -53,6 +55,7 @@ import { updateCurrentCity } from "../utils/addCurrentCity";
 import updateCityHomeData from "../utils/updateCityHomeData";
 import { setLocalityLatAndLng } from "../features/cityHome/cityHomeSlice";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UpdateStorage from "../utils/UpdateStorage";
 
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
   try {
@@ -111,11 +114,11 @@ export default function Layout() {
     const lng = JSON.parse(localStorage.getItem("lng"));
     const rawUserPathHistory = localStorage.getItem("userFriendlyPathHistory");
     const restaurantAllItems = JSON.parse(localStorage.getItem("RestaurantAllItems"));
-    // const wishlist = JSON.parse(localStorage.getItem("wishlist"));
-    // const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
+    const wishlist = JSON.parse(localStorage.getItem("wishlist"));
+    const itemsToBeAddedToCart = JSON.parse(localStorage.getItem("ItemsToBeAddedInCart"));
     const localityLatLng = JSON.parse(localStorage.getItem("localityLatLng"));
     const theme = localStorage.getItem("theme");
-    // const cartItems = JSON.parse(localStorage.getItem("CartItems"));
+    const cartItems = JSON.parse(localStorage.getItem("CartItems"));
 
     let userPathHistory = '';
 
@@ -132,27 +135,32 @@ export default function Layout() {
       const searchedCity = JSON.parse(localStorage.getItem("searchedCity"));
       const searchedCityAddress = JSON.parse(localStorage.getItem("searchedCityAddress"));
       const currentCity = JSON.parse(localStorage.getItem("currentCity"));
-      // const favRestros = JSON.parse(localStorage.getItem("favRestros"));
+      const favRestros = JSON.parse(localStorage.getItem("favRestros"));
+      const auth = localStorage.getItem("auth");
 
       // when asked data is not present in the local storage the it will null instead of undefined
 
-      if (searchedCity !== undefined && searchedCity !== null) dispatch(addSearchedCity(searchedCity));
-      if (searchedCityAddress !== undefined && searchedCityAddress !== null) dispatch(addSearchedCityAddress(searchedCityAddress));
-      if (currentCity !== undefined && currentCity !== null) dispatch(addYourCurrentCity(currentCity));
+      if (searchedCity != null) dispatch(addSearchedCity(searchedCity));
+      if (searchedCityAddress != null) dispatch(addSearchedCityAddress(searchedCityAddress));
+      if (currentCity != null) dispatch(addYourCurrentCity(currentCity));
+      if (auth != null) {
+        if (auth === "true") dispatch(setIsLoggedIn(true));
+        else dispatch(setIsLoggedIn(false));
+      }
 
-      if (restaurantAllItems !== undefined && restaurantAllItems !== null) dispatch(setRestaurantItems(restaurantAllItems));
+      if (restaurantAllItems != null) dispatch(setRestaurantItems(restaurantAllItems));
 
-      if (theme !== undefined && theme !== null) dispatch(setCurrentTheme(theme));
+      if (theme != null) dispatch(setCurrentTheme(theme));
 
-      // if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
+      if (wishlist != null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
 
-      // if (itemsToBeAddedToCart !== undefined && itemsToBeAddedToCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
+      if (itemsToBeAddedToCart != null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
 
-      // if (favRestros !== undefined && favRestros !== null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
+      if (favRestros != null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
 
-      if (localityLatLng !== undefined && localityLatLng !== null) dispatch(setLocalityLatAndLng(localityLatLng));
+      if (localityLatLng != null) dispatch(setLocalityLatAndLng(localityLatLng));
 
-      // if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
+      if (cartItems != null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
 
     } else if (navigator.geolocation) {
       toast.info("Please allow location to show nearby results.", {
@@ -219,11 +227,7 @@ export default function Layout() {
       dispatch(setLocationInfoModal(true))
     }
 
-    // const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
-
     const handleGuestSession = async () => {
-      console.log("Called")
-
       try {
         //get the guest session data
         const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
@@ -237,32 +241,36 @@ export default function Layout() {
         });
 
         const sessionData = await result.json();
-        const mainData = sessionData;
+        console.log("Log", sessionData);
 
-        console.log("Log", mainData);
-
-        // const cartItems = mainData?.cartItems;
-        // if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
-
-        // const itemsToBeAddedInCart = mainData?.itemsToBeAddedInCart;
-        // if (itemsToBeAddedInCart !== undefined && itemsToBeAddedInCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedInCart }));
-
-        // const favRestaurants = mainData?.favRestaurants;
-        // if (favRestaurants !== undefined && favRestaurants !== null && favRestaurants.length !== 0) dispatch(setFavoriteRestro({ mode: "initial", object: favRestaurants }));
-
-        // const recentLocations = mainData?.recentLocations;
-        // if (recentLocations !== undefined && recentLocations !== null) dispatch(addRecentLocations(recentLocations));
-
-        // const wishlist = mainData?.wishListedItems;
-        // if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
-
-        // console.log("Session data", mainData);
-        // console.log("cartItems", cartItems);
-        // console.log("itemsToBeAddedToCart", itemsToBeAddedInCart);
-        // console.log("favRestaurants", favRestaurants);
-        // console.log("recentLocation", recentLocations);
-        // console.log("wishlist", wishlist);
-
+        if (sessionData.auth === false) {
+          dispatch(setIsLoggedIn(false));
+          UpdateStorage({
+            sessionData,
+            dispatch,
+            setItemToCart,
+            toggleItemsToBeAddedInCart,
+            setFavoriteRestro,
+            addRecentLocations,
+            addToWishlistItem
+          });
+        } else if (sessionData.auth === true) {
+          dispatch(setIsLoggedIn(true));
+          dispatch(setAppLoading(true));
+          const userData = sessionData.data;
+          
+          data = {
+                userName: userData.name,
+                userEmail: userData.email,
+                userPhone: userData.phone,
+                isEmailVerified: userData.isEmailVerified,
+                isPhoneVerified: userData.isNumberVerified,
+            }
+          dispatch(setUserDetails(data));
+          
+          const id = userData._id;
+          
+        }
       } catch (err) {
         console.error("Session error", err)
       }

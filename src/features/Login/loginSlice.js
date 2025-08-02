@@ -1,4 +1,5 @@
 import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { encrypt, decrypt } from "crypto";
 
 const initialState = {
   isLoginModalOpen: false,
@@ -89,6 +90,8 @@ const loginSlice = createSlice({
 
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
+
+      localStorage.setItem("auth", "true")
     },
 
     setLoading: (state, action) => {
