@@ -609,28 +609,6 @@ exports.verifyOTP = async (req, res, next) => {
     }
 }
 
-exports.addGuestSessionRecentLocation = async (req, res, next) => {
-    console.log("Hit", req.body);
-
-    const sid = req.signedCookies?.sid;
-
-    try {
-        const recentLocations = await SessionModel.findByIdAndUpdate(sid,
-            { $set: { "data.recentLocations": req.body.recentLocations } }, { new: true });
-        res.status(200).json({
-            status: "success",
-            data: recentLocations,
-        })
-    } catch (err) {
-        console.error("Error in location addition", err);
-
-        res.status(500).json({
-            status: "failed",
-            message: err.message,
-        })
-    }
-}
-
 exports.getGuestSessionData = async (req, res, next) => {
     console.log("Hit", req.body);
 
@@ -653,6 +631,28 @@ exports.getGuestSessionData = async (req, res, next) => {
     }
 }
 
+exports.addGuestSessionRecentLocation = async (req, res, next) => {
+    console.log("Hit", req.body);
+
+    const sid = req.signedCookies?.sid;
+
+    try {
+        const recentLocations = await SessionModel.findByIdAndUpdate(sid,
+            { $set: { "data.recentLocations": req.body.recentLocations } }, { new: true, upsert: true });
+        res.status(200).json({
+            status: "success",
+            data: recentLocations,
+        })
+    } catch (err) {
+        console.error("Error in location addition", err);
+
+        res.status(500).json({
+            status: "failed",
+            message: err.message,
+        })
+    }
+}
+
 exports.addGuestSessionFavRestaurants = async (req, res, next) => {
     console.log("Hit", req.body);
 
@@ -660,7 +660,7 @@ exports.addGuestSessionFavRestaurants = async (req, res, next) => {
 
     try {
         const favRestaurants = await SessionModel.findByIdAndUpdate(sid,
-            { $set: { "data.favRestaurants": req.body.favRestaurants } }, { new: true });
+            { $set: { "data.favRestaurants": req.body.favRestaurants } }, { new: true, upsert: true });
         res.status(200).json({
             status: "success",
             data: favRestaurants,
@@ -684,7 +684,7 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
 
     try {
         const wishListedItems = await SessionModel.findByIdAndUpdate(sid,
-            { $set: { "data.wishListedItems": req.body.wishListedItems } }, { new: true });
+            { $set: { "data.wishListedItems": req.body.wishListedItems } }, { new: true, upsert: true });
         res.status(200).json({
             status: "success",
             data: wishListedItems,
@@ -708,7 +708,7 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
 
     try {
         const itemsToBeAddedInCart = await SessionModel.findByIdAndUpdate(sid,
-            { $set: { "data.itemsToBeAddedInCart": req.body.itemsToBeAddedInCart } }, { new: true });
+            { $set: { "data.itemsToBeAddedInCart": req.body.itemsToBeAddedInCart } }, { new: true, upsert: true });
         res.status(200).json({
             status: "success",
             data: itemsToBeAddedInCart,
@@ -732,7 +732,7 @@ exports.addGuestSessionCartItems = async (req, res, next) => {
 
     try {
         const cartItems = await SessionModel.findByIdAndUpdate(sid,
-            { $set: { "data.cartItems": req.body.cartItems } }, { new: true });
+            { $set: { "data.cartItems": req.body.cartItems } }, { new: true, upsert: true });
         res.status(200).json({
             status: "success",
             data: cartItems,
