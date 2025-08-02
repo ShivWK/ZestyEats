@@ -654,7 +654,7 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
 }
 
 exports.addGuestSessionFavRestaurants = async (req, res, next) => {
-    console.log("Hit", req.body);
+    console.log("Hit fav restaurant", req.body);
 
     const sid = req.signedCookies?.sid;
 
@@ -678,7 +678,7 @@ exports.addGuestSessionFavRestaurants = async (req, res, next) => {
 }
 
 exports.addGuestSessionWishListedItems = async (req, res, next) => {
-    console.log("Hit", req.body);
+    console.log("Hit wishlist items", req.body);
 
     const sid = req.signedCookies?.sid;
 
@@ -702,7 +702,7 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
 }
 
 exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
-    console.log("Hit", req.body);
+    console.log("Hit items to be added in cart", req.body);
 
     const sid = req.signedCookies?.sid;
 
@@ -726,7 +726,7 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
 }
 
 exports.addGuestSessionCartItems = async (req, res, next) => {
-    console.log("Hit", req.body);
+    console.log("Hit cart items", req.body);
 
     const sid = req.signedCookies?.sid;
 
