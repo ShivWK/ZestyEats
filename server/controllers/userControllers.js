@@ -630,6 +630,7 @@ exports.getGuestSessionData = async (req, res, next) => {
             } else {
                 res.clearCookie("rSid", {
                         httpOnly: true,
+                        signed: true,
                         secure: true,
                         sameSite: "None",
                         path: "/"
