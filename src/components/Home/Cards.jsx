@@ -59,12 +59,15 @@ const Cards = memo(({ data, from }) => {
 
   const handleClick = (e) => {
     if (pathname.includes("ordersAndWishlist")) {
-
       if (userDistanceFromRestaurant > 20) {
         e.preventDefault();
       }
     }
 
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    })
     dispatch(addCurrentRestaurant(dataToMap?.name));
     dispatch(setMenuItems({ mode: "empty" }));
     dispatch(setRestaurantItems([]));

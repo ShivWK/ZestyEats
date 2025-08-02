@@ -10,7 +10,7 @@ export const recentLocationModifier = async (locations) => {
         })
 
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
     } catch (err) {
         console.error("Error in setting recent location", err)
     }
@@ -83,7 +83,7 @@ export const cartItemsModifier = async (items) => {
         })
 
         const data = await res.json();
-        console.log(data);
+        // console.log(data);
     } catch (err) {
         console.error("Error in setting recent location", err)
     }
