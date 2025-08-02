@@ -178,7 +178,8 @@ const SignUp = memo(({ recaptchaRef }) => {
             name: signUpFormData.name,
             phone: signUpFormData.phone,
             email: signUpFormData.email,
-          })
+          }),
+          credentials: "include",
         });
 
         const result = await res.json();

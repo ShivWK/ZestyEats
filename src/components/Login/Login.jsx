@@ -182,7 +182,8 @@ const Login = ({ recaptchaRef }) => {
           body: JSON.stringify({
             OTP,
             otpFor,
-          })
+          }),
+          credentials: "include"
         });
 
         const result = await res.json();

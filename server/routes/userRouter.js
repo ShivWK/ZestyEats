@@ -36,12 +36,12 @@ const checkIfBlocked = async (req, res, next) => {
     next();
 }
 
+userRouter.route("/session").post(guestSession).get(checkSessionId, getGuestSessionData);
+
 userRouter.route("/signup/sendOtp/:mode").post(checkIfBlocked ,signup);
 userRouter.route("/verifyOtp/:mode/:forWhat").post(checkIfBlocked ,verifyOTP);
 userRouter.route("/login/sendOtp/:mode").post(checkIfBlocked ,login);
 userRouter.route("/resendOtp/:mode").post(checkIfBlocked ,resendOtp);
-
-userRouter.route("/session").post(guestSession).get(checkSessionId, getGuestSessionData);
 
 userRouter.use(checkSessionId);
 

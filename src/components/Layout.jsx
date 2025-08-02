@@ -225,26 +225,33 @@ export default function Layout() {
         //get the guest session data
         const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
           method: "GET",
-          credentials: "include"
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceFingerPrint,
+            "x-user-agent": navigator.userAgent,
+          }
         });
 
         const sessionData = await result.json();
-        const mainData = sessionData.data.data;
+        const mainData = sessionData.data;
 
-        const cartItems = mainData?.cartItems;
-        if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
+        console.log(mainData);
 
-        const itemsToBeAddedInCart = mainData?.itemsToBeAddedInCart;
-        if (itemsToBeAddedInCart !== undefined && itemsToBeAddedInCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedInCart }));
+        // const cartItems = mainData?.cartItems;
+        // if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
 
-        const favRestaurants = mainData?.favRestaurants;
-        if (favRestaurants !== undefined && favRestaurants !== null && favRestaurants.length !== 0) dispatch(setFavoriteRestro({ mode: "initial", object: favRestaurants }));
+        // const itemsToBeAddedInCart = mainData?.itemsToBeAddedInCart;
+        // if (itemsToBeAddedInCart !== undefined && itemsToBeAddedInCart !== null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedInCart }));
 
-        const recentLocations = mainData?.recentLocations;
-        if (recentLocations !== undefined && recentLocations !== null) dispatch(addRecentLocations(recentLocations));
+        // const favRestaurants = mainData?.favRestaurants;
+        // if (favRestaurants !== undefined && favRestaurants !== null && favRestaurants.length !== 0) dispatch(setFavoriteRestro({ mode: "initial", object: favRestaurants }));
 
-        const wishlist = mainData?.wishListedItems;
-        if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
+        // const recentLocations = mainData?.recentLocations;
+        // if (recentLocations !== undefined && recentLocations !== null) dispatch(addRecentLocations(recentLocations));
+
+        // const wishlist = mainData?.wishListedItems;
+        // if (wishlist !== undefined && wishlist !== null) dispatch(addToWishlistItem({ mode: "initial", object: wishlist }));
 
         // console.log("Session data", mainData);
         // console.log("cartItems", cartItems);

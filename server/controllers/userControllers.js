@@ -29,7 +29,8 @@ exports.guestSession = async (req, res, next) => {
                 httpOnly: true,
                 signed: true,
                 secure: true,
-                sameSite: "None"
+                sameSite: "None",
+                path: "/"
             })
 
             res.status(200).json({
@@ -406,7 +407,7 @@ exports.resendOtp = async (req, res, next) => {
             if (newValue?.resendCount >= 3) {
                 const newValue = await AccessModal.updateOne(
                     { [findThrough]: value },
-                    { $set: { "resendBlocked.value": true, "resendBlocked.blockedAt": new Date()} },
+                    { $set: { "resendBlocked.value": true, "resendBlocked.blockedAt": new Date() } },
                     { new: true, upsert: true }
                 )
 
@@ -613,21 +614,90 @@ exports.getGuestSessionData = async (req, res, next) => {
     console.log("Hit", req.body);
 
     const gSid = req.signedCookies?.gSid;
+    const rSid = req.signedCookies?.rSid;
 
-    try {
-        const sessionData = await SessionModel.findById(gSid);
+    if (rSid) {
+        try {
+            const session = await SessionModel.findById(rSid);
+            if (session) {
+                const user = await UserModal.findById(session.userId);
 
-        res.status(200).json({
-            status: "success",
-            data: sessionData,
-        })
-    } catch (err) {
-        console.error("Error in location addition", err);
+                return res.status(200).json({
+                    status: "success",
+                    data: user,
+                    auth: true
+                })
+            } else {
+                res.clearCookie("rSid", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "None",
+                    path: "/"
+                }
+                )
+            }
+        } catch (err) {
+            console.error("Error in getting session data", err);
 
-        res.status(500).json({
-            status: "failed",
-            message: err.message,
-        })
+            return res.status(500).json({
+                status: "failed",
+                message: err.message,
+            })
+        }
+    } else if (gSid) {
+        try {
+            const sessionData = await SessionModel.findById(gSid);
+
+            return res.status(200).json({
+                status: "success",
+                data: sessionData,
+                auth: false
+            })
+        } catch (err) {
+            console.error("Error in getting session Data", err);
+
+            return res.status(500).json({
+                status: "failed",
+                message: err.message,
+            })
+        }
+    } else {
+        const headers = req.headers;
+        const ua = headers["x-user-agent"];
+        const uaResult = UAParser(ua);
+
+        try {
+            const session = await SessionModel.create({
+                deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                type: "guest"
+            });
+
+            res.cookie("gSid", session.id, {
+                maxAge: 1000 * 60 * 60 * 24,
+                httpOnly: true,
+                signed: true,
+                secure: true,
+                sameSite: "None",
+                path: "/"
+            })
+
+            return res.status(200).json({
+                status: "success",
+                data: {
+                    message: "Session created",
+                    sessionId: session.id,
+                    data: session,
+                    auth: false,
+                }
+            })
+        } catch (err) {
+            console.error("Error in session creation", err);
+
+            res.status(500).json({
+                status: "failed",
+                message: err.message,
+            })
+        }
     }
 }
 
