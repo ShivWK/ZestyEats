@@ -610,6 +610,8 @@ exports.verifyOTP = async (req, res, next) => {
 }
 
 exports.addGuestSessionRecentLocation = async (req, res, next) => {
+    console.log("Hit", req.body);
+
     const sid = req.signedCookies?.sid;
 
     try {
@@ -630,14 +632,16 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
 }
 
 exports.getGuestSessionData = async (req, res, next) => {
+    console.log("Hit", req.body);
+
     const sid = req.signedCookies?.sid;
 
     try {
-        const recentLocations = await SessionModel.findById(sid);
+        const sessionData = await SessionModel.findById(sid);
 
         res.status(200).json({
             status: "success",
-            data: recentLocations,
+            data: sessionData,
         })
     } catch (err) {
         console.error("Error in location addition", err);
@@ -650,6 +654,8 @@ exports.getGuestSessionData = async (req, res, next) => {
 }
 
 exports.addGuestSessionFavRestaurants = async (req, res, next) => {
+    console.log("Hit", req.body);
+
     const sid = req.signedCookies?.sid;
 
     try {
@@ -659,6 +665,8 @@ exports.addGuestSessionFavRestaurants = async (req, res, next) => {
             status: "success",
             data: favRestaurants,
         })
+
+        console.log("Added", favRestaurants)
     } catch (err) {
         console.error("Error in favorite restaurant addition", err);
 
@@ -670,6 +678,8 @@ exports.addGuestSessionFavRestaurants = async (req, res, next) => {
 }
 
 exports.addGuestSessionWishListedItems = async (req, res, next) => {
+    console.log("Hit", req.body);
+
     const sid = req.signedCookies?.sid;
 
     try {
@@ -679,6 +689,8 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
             status: "success",
             data: wishListedItems,
         })
+
+        console.log("Added", wishListedItems);
     } catch (err) {
         console.error("Error in adding items to wishlist", err);
 
@@ -690,6 +702,8 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
 }
 
 exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
+    console.log("Hit", req.body);
+
     const sid = req.signedCookies?.sid;
 
     try {
@@ -699,6 +713,8 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
             status: "success",
             data: itemsToBeAddedInCart,
         })
+
+        console.log("Added", itemsToBeAddedInCart);
     } catch (err) {
         console.error("Error in adding items to wishlist", err);
 
@@ -710,6 +726,8 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
 }
 
 exports.addGuestSessionCartItems = async (req, res, next) => {
+    console.log("Hit", req.body);
+
     const sid = req.signedCookies?.sid;
 
     try {
@@ -719,6 +737,7 @@ exports.addGuestSessionCartItems = async (req, res, next) => {
             status: "success",
             data: cartItems,
         })
+        console.log("Added", cartItems)
     } catch (err) {
         console.error("Error in adding items to wishlist", err);
 

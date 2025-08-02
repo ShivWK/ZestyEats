@@ -151,7 +151,7 @@ exports.addressFromCoordinates = async (req, res) => {
 };
 
 exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
-  console.log(req.headers);
+  // console.log(req.headers);
   const { lat, lng, id } = req.query;
 
   if (!lat || !lng || !id) {
@@ -186,7 +186,7 @@ exports.dishSearchData = async (req, res) => {
 
   const searchUrl = `${process.env.BASE_URL}/dapi/menu/pl/search?lat=${lat}&lng=${lng}&restaurantId=${restro_Id}&isMenuUx4=true&query=${searchTerm}&submitAction=ENTER`;
 
-  console.log(searchUrl);
+  // console.log(searchUrl);
 
   try {
     const response = await client.get(searchUrl);
