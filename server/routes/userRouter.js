@@ -17,7 +17,7 @@ const {
 } = require("./../controllers/userControllers");
 
 const checkSessionId = (req, res, next) => {
-  if (!req.signedCookies.sid) {
+  if (!req.signedCookies.gSid) {
     return res.status(400).json({
       status: "failed",
       message: "Session ID not found in signed cookies",
