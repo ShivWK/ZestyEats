@@ -7,7 +7,8 @@ const homeApiSlice = createApi({
     prepareHeaders: (headers) => {
       headers.set("x-identifier" , import.meta.env.VITE_HASHED_IDENTIFIER);
       return headers
-    }
+    },
+    credentials: "include"
   }),
   keepUnusedDataFor: 60,
   refetchOnReconnect: true,
