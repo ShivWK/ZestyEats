@@ -33,6 +33,7 @@ const missingParamsError = (msg, res) => {
 
 exports.homePageData = async (req, res) => {
   console.log(req.headers);
+  console.log(req.signedCookies)
 
   try {
     const { lat, lng } = req.query;
