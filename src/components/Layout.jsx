@@ -15,7 +15,8 @@ import {
   setHideLogin,
   selectLocationInfoModal,
   setLocationInfoModalReason,
-  setLocationInfoModal
+  setLocationInfoModal,
+  setAppLoading
 } from "../features/Login/loginSlice";
 
 import {

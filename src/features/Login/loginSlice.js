@@ -19,6 +19,7 @@ const initialState = {
   isGrantClicked: false,
   errorMessage: "",
   fullDisable: false,
+  appLoading: false,
 };
 
 const loginSlice = createSlice({
@@ -26,6 +27,10 @@ const loginSlice = createSlice({
   initialState: initialState,
 
   reducers: {
+    setAppLoading: (state, action) => {
+      state.appLoading = action.payload;
+    },
+
     setErrorMessage: (state, action) => {
       state.errorMessage = action.payload;
     },
@@ -114,6 +119,7 @@ const loginSlice = createSlice({
 
 export default loginSlice.reducer;
 
+export const selectAppLoading = (state) => state.login.appLoading;
 export const selectLogInModal = (state) => state.login.isLoginModalOpen;
 export const selectLoginOtp = (state) => state.login.isLoginOtpSend;
 export const selectSignUpOtp = (state) => state.login.isSignUpOtpSend;
@@ -151,6 +157,7 @@ export const selectHideModel = createSelector(
 );
 
 export const {
+  setAppLoading,
   setLogInModal,
   loginOtpSend,
   signUpOtpSend,

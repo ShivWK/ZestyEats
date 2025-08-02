@@ -649,7 +649,9 @@ exports.getGuestSessionData = async (req, res, next) => {
                 message: err.message,
             })
         }
-    } else if (gSid) {
+    } 
+    
+    if (gSid) {
         try {
             const sessionData = await SessionModel.findById(gSid);
 
