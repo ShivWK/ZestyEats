@@ -196,6 +196,7 @@ const homeSlice = createSlice({
       );
 
       state.recentLocations = combine;
+      recentLocationModifier(state.recentLocations);
     },
 
     removeARecentLocation: (state, action) => {

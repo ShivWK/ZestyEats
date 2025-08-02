@@ -612,10 +612,10 @@ exports.verifyOTP = async (req, res, next) => {
 exports.getGuestSessionData = async (req, res, next) => {
     console.log("Hit", req.body);
 
-    const sid = req.signedCookies?.sid;
+    const gSid = req.signedCookies?.gSid;
 
     try {
-        const sessionData = await SessionModel.findById(sid);
+        const sessionData = await SessionModel.findById(gSid);
 
         res.status(200).json({
             status: "success",
@@ -634,11 +634,11 @@ exports.getGuestSessionData = async (req, res, next) => {
 exports.addGuestSessionRecentLocation = async (req, res, next) => {
     console.log("Hit", req.body);
 
-    const sid = req.signedCookies?.sid;
+    const gSid = req.signedCookies?.gSid;
 
     try {
-        const recentLocations = await SessionModel.findByIdAndUpdate(sid,
-            { $set: { "data.recentLocations": req.body.recentLocations } }, { new: true, upsert: true });
+        const recentLocations = await SessionModel.findByIdAndUpdate(gSid,
+            { $set: { "data.recentLocations": req.body.recentLocations } }, { new: true });
         res.status(200).json({
             status: "success",
             data: recentLocations,
@@ -656,11 +656,11 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
 exports.addGuestSessionFavRestaurants = async (req, res, next) => {
     console.log("Hit fav restaurant", req.body);
 
-    const sid = req.signedCookies?.sid;
+    const gSid = req.signedCookies?.gSid;
 
     try {
-        const favRestaurants = await SessionModel.findByIdAndUpdate(sid,
-            { $set: { "data.favRestaurants": req.body.favRestaurants } }, { new: true, upsert: true });
+        const favRestaurants = await SessionModel.findByIdAndUpdate(gSid,
+            { $set: { "data.favRestaurants": req.body.favRestaurants } }, { new: true });
         res.status(200).json({
             status: "success",
             data: favRestaurants,
@@ -680,10 +680,10 @@ exports.addGuestSessionFavRestaurants = async (req, res, next) => {
 exports.addGuestSessionWishListedItems = async (req, res, next) => {
     console.log("Hit wishlist items", req.body);
 
-    const sid = req.signedCookies?.sid;
+    const gSid = req.signedCookies?.gSid;
 
     try {
-        const wishListedItems = await SessionModel.findByIdAndUpdate(sid,
+        const wishListedItems = await SessionModel.findByIdAndUpdate(gSid,
             { $set: { "data.wishListedItems": req.body.wishListedItems } }, { new: true, upsert: true });
         res.status(200).json({
             status: "success",
@@ -704,10 +704,10 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
 exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
     console.log("Hit items to be added in cart", req.body);
 
-    const sid = req.signedCookies?.sid;
+    const gSid = req.signedCookies?.gSid;
 
     try {
-        const itemsToBeAddedInCart = await SessionModel.findByIdAndUpdate(sid,
+        const itemsToBeAddedInCart = await SessionModel.findByIdAndUpdate(gSid,
             { $set: { "data.itemsToBeAddedInCart": req.body.itemsToBeAddedInCart } }, { new: true, upsert: true });
         res.status(200).json({
             status: "success",
@@ -728,10 +728,10 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
 exports.addGuestSessionCartItems = async (req, res, next) => {
     console.log("Hit cart items", req.body);
 
-    const sid = req.signedCookies?.sid;
+    const gSid = req.signedCookies?.gSid;
 
     try {
-        const cartItems = await SessionModel.findByIdAndUpdate(sid,
+        const cartItems = await SessionModel.findByIdAndUpdate(gSid,
             { $set: { "data.cartItems": req.body.cartItems } }, { new: true, upsert: true });
         res.status(200).json({
             status: "success",
