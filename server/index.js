@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 
 const swiggyRouter = require("./routes/swiggyRouter");
 const userRouter = require("./routes/userRouter");
+const userActivityRouter = require("./routes/userActivityRouter");
 
 const secret = process.env.COOKIE_SECRET;
 const PORT = process.env.PORT || 5000;
@@ -56,6 +57,7 @@ app.get("/api/server/wake-up", (req, res) => {
 
 app.use("/api/zestyeats", swiggyRouter);
 app.use("/api/user", userRouter);
+app.use("/api/userActivity", userActivityRouter);
 
 // Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
 
@@ -66,3 +68,14 @@ app.use((req, res) => {
 app.listen(PORT, () => {
   console.log(`Proxy server running on ${PORT}`);
 });
+
+
+// Activity-based session extension
+
+// If a user is active near expiry, refresh the TTL (e.g., on certain routes).
+
+// js
+// Copy
+// Edit
+// session.expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+// await session.save();

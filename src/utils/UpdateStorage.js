@@ -9,7 +9,7 @@ const UpdateStorage = ({
 }) => {
     const mainData = sessionData.data.data;
 
-    console.log( "from", mainData)
+    // console.log( "from", mainData)
 
     const CART = "CartItems";
     const ITEMSTOBEADDEDINCART = "ItemsToBeAddedInCart";

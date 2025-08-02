@@ -1,4 +1,0 @@
-const express = require("express");
-const userActivityRouter = express.Router();
-
-module.exports = userActivityRouter;
