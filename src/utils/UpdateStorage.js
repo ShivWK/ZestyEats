@@ -9,6 +9,8 @@ const UpdateStorage = ({
 }) => {
     const mainData = sessionData.data.data;
 
+    console.log( "from", mainData)
+
     const CART = "CartItems";
     const ITEMSTOBEADDEDINCART = "ItemsToBeAddedInCart";
     const WISHLIST = "wishlist";
@@ -43,7 +45,7 @@ const UpdateStorage = ({
     }
 
     const recentLocations = mainData?.recentLocations;
-    if (recentLocations != null) {
+    if (recentLocations != null && recentLocations.length !== 0 ) {
         dispatch(addRecentLocations(recentLocations));
         localStorage.setItem(RECENTLOCATIONS, JSON.stringify(recentLocations))
     } else {

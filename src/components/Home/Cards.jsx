@@ -37,6 +37,7 @@ const Cards = memo(({ data, from }) => {
   const dataToMap = pathname.includes("ordersAndWishlist") ? data.data : data;
 
   const favoriteRestro = useSelector(selectFavoriteRestros);
+
   const { lat, lng } = useSelector(latAndLngSelector);
   const dispatch = useDispatch();
   const [wishlistAdded, setWishlistAdded] = useState(false);
@@ -47,7 +48,7 @@ const Cards = memo(({ data, from }) => {
   const userDistanceFromRestaurant = calDistance(lat1, lat, lng1, lng);
 
   useEffect(() => {
-    const exist = favoriteRestro.find((obj) => obj.data?.id === dataToMap?.id);
+    const exist = favoriteRestro?.find((obj) => obj.data?.id === dataToMap?.id);
     setWishlistAdded(exist);
 
     if (pathname.includes("ordersAndWishlist")) {

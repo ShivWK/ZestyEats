@@ -90,7 +90,7 @@ const loginSlice = createSlice({
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
 
-      localStorage.setItem("auth", "true")
+      {action.payload && localStorage.setItem("auth", "true")}
     },
 
     setLoading: (state, action) => {
