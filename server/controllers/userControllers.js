@@ -627,18 +627,20 @@ exports.getGuestSessionData = async (req, res, next) => {
                     data: user,
                     auth: true
                 })
-            } else {
-                res.clearCookie("rSid", {
-                        httpOnly: true,
-                        signed: true,
-                        secure: true,
-                        sameSite: "None",
-                        path: "/"
-                    }
-                )
+            } 
+            // else {
+            //     res.clearCookie("rSid", {
+            //             httpOnly: true,
+            //             signed: true,
+            //             secure: true,
+            //             sameSite: "None",
+            //             path: "/"
+            //         }
+            //     )
 
-                console.log("Called")
-            }
+            //     console.log("Called");
+            //     rSid = null;
+            // }
         } catch (err) {
             console.error("Error in getting session data", err);
 

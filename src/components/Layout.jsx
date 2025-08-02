@@ -97,7 +97,7 @@ export default function Layout() {
       });
 
       const data = await res.json();
-      console.log(data.data.sessionId);
+      // console.log(data.data.sessionId);
     }
 
     setTimeout(createGuestSession, 1000)
@@ -221,6 +221,8 @@ export default function Layout() {
     // const deviceId = `${navigator.userAgent} | ${Intl.DateTimeFormat().resolvedOptions().timeZone}`;
 
     const handleGuestSession = async () => {
+      console.log("Called")
+
       try {
         //get the guest session data
         const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
@@ -236,7 +238,7 @@ export default function Layout() {
         const sessionData = await result.json();
         const mainData = sessionData;
 
-        console.log(mainData);
+        console.log("Log", mainData);
 
         // const cartItems = mainData?.cartItems;
         // if (cartItems !== undefined && cartItems !== null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
