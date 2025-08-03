@@ -10,13 +10,16 @@ const {
     setUserItemsToBeAddedInCartData,
     setUserRecentLocationData,
     setUserWishListData,
-    setAllDataAtOnce
+    setAllDataAtOnce,
+    getLiveSessions
 } = require("../controllers/userActivityControllers");
 
 userActivityRouter.use(checkSessionId);
 userActivityRouter.use(protected);
 
 userActivityRouter.route("/userActivityData").get(getUserActivityData);
+userActivityRouter.route("/loggedInSession").get(getLiveSessions);
+
 userActivityRouter.route("/userCartData").patch(setUserCartData);
 userActivityRouter.route("/userWishListData").patch(setUserWishListData);
 userActivityRouter.route("/userFavRestaurantData").patch(setUserFavRestaurantData);

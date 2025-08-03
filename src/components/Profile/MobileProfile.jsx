@@ -1,6 +1,7 @@
 import {
   selectUserDetails,
   selectCurrentTheme,
+  selectDeviceFingerPrint,
 } from "./../../features/home/homeSlice";
 import { selectAppLoading } from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
@@ -13,6 +14,7 @@ const MobileProfile = () => {
   const theme = useSelector(selectCurrentTheme);
   const navigate = useNavigate();
   const AppLoading = useSelector(selectAppLoading);
+  const deviceId = useSelector(selectDeviceFingerPrint);
 
   const name = userDetails.userName;
   const email = userDetails.userEmail;
@@ -24,20 +26,23 @@ const MobileProfile = () => {
     {
       icon: "fas fa-credit-card",
       text: "Payment",
+      link: "Payment Methods"
     },
 
     {
       icon: "ri-map-pin-user-fill",
       text: "Address",
+      link: "Saved Address"
     },
 
     {
       icon: "ri-logout-circle-r-line",
       text: "Logout",
+      link: "Logout Options"
     },
   ];
 
-  const divClickHandler = () => {
+  const divClickHandler = (mode) => {
     if (!AppLoading) {
     }
   };
@@ -83,9 +88,9 @@ const MobileProfile = () => {
         ) : (
           <div className="flex items-center justify-between mt-7">
             <div className="w-full">
-              <div className="w-3/4 h-7 rounded-md shimmerBg my-1" />
-              <div className="w-3/5 h-5 rounded-md shimmerBg my-1" />
-              <div className="w-2/3 h-5 rounded-md shimmerBg my-1" />
+              <div className="w-3/4 h-6 rounded-md shimmerBg my-1.5" />
+              <div className="w-3/5 h-4 rounded-md shimmerBg my-1.5" />
+              <div className="w-2/3 h-4 rounded-md shimmerBg my-1.5" />
             </div>
             <div className="w-20 rounded-md shimmerBg h-7" />
           </div>
@@ -96,19 +101,20 @@ const MobileProfile = () => {
       </div>
       <section className="mx-auto w-[90%] rounded-2xl p-2 bg-white border not-dark:border-gray-400 dark:bg-gray-800">
         {buttons.map((button, index) => (
-          <div
+          <Link key={index} to={`/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}`}
             onClick={divClickHandler}
             className={`flex gap-2 items-center px-2 py-4 ${index !== (buttons.length - 1) && "border-b-[1px] dark:border-b-white border-gray-400"}`}>
-           { AppLoading 
-           ? (<div className="w-[100%] self-center shimmerBg h-7 rounded-md" />)
-            : (<>
-             <i
-              className={`${button.icon} text-gray-700 text-xl dark:text-primary`}
-            ></i>
-            <p className="text-gray-600 dark:text-gray-100">{button.text}</p>
-            <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i></>)
-           }
-          </div>
+            {AppLoading
+              ? (<div className="w-[100%] self-center shimmerBg h-7 rounded-md" />)
+              : (<>
+                <i
+                  className={`${button.icon} text-gray-700 text-xl dark:text-primary`}
+                ></i>
+                <p className="text-gray-600 dark:text-gray-100">{button.text}</p>
+                <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
+              </>)
+            }
+          </Link>
         ))}
       </section>
       <section className="mx-auto w-[90%] flex items-center mt-11 gap-4">

@@ -26,7 +26,7 @@ import RestaurantResultPage from "./components/Search/RestaurantResultPage";
 import DishResultPage from "./components/Search/DishResultPage";
 import CityHome from "./components/cityHome/CityHome";
 
-import { specificRestroLoader, specificFoodLoader } from "./loaders/loaders";
+import { specificRestroLoader, specificFoodLoader, profileResponseLoader } from "./loaders/loaders";
 import { searchHomeLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
 import CuisinesResultPage from "./components/Search/CuisinesResultPage";
 import OptionsPage from "./components/MobilePages/OptionsPage";
@@ -62,6 +62,7 @@ import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { selectMenuModel, setDeviceFingerPrintRestro, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import MobileProfile from "./components/Profile/MobileProfile";
+import MobileProfileResponse from "./components/Profile/MobileProfileResponse";
 
 export default function App() {
   useOnlineStatus();
@@ -313,6 +314,7 @@ export default function App() {
         <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
         <Route path='*' element={<PageNotFound />} />
         <Route path="legalAndPolicies" element={<CompanyPolicies />} />
+        <Route path="mobileProfileResponse" loader={profileResponseLoader} element={<MobileProfileResponse />} />
       </Route>
     )
   );

@@ -63,7 +63,8 @@ exports.protected = async (req, res, next) => {
         ) {
             return res.status(401).json({
                 status: "failed",
-                message: "Not a valid session. Please login again."
+                message: "Not a valid session. Please login again.",
+                login: true
             })
         }
 
@@ -94,6 +95,28 @@ exports.getUserActivityData = async (req, res, next) => {
         })
     } catch (err) {
         console.log("Error in getting the doc", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error"
+        })
+    }
+}
+
+exports.getLiveSessions = async (req, res, next) => {
+    const userId = req.UserID;
+
+    try {
+        const sessions = await SessionModel.find({ userId, type: "registered" });
+        console.log(sessions);
+
+        return res.status(200).json({
+            status: "success",
+            data: sessions
+        })
+
+    } catch (err) {
+        console.log("Error in finding sessions", err);
 
         return res.status(500).json({
             status: "error",
