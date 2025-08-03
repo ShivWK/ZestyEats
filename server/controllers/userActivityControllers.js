@@ -22,6 +22,8 @@ exports.protected = async (req, res, next) => {
 
     const clientFingerPrint = deviceFingerPrinter(headers, uaResult, req);
 
+    console.log(clientFingerPrint);
+
     if (!rSid) {
         return res.status(401).json({
             status: "failed",

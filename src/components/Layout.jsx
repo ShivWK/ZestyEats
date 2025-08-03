@@ -266,14 +266,16 @@ export default function Layout() {
 
           const userData = sessionData.data;
 
-          data = {
+          console.log("AUTHO", userData);
+
+          const userProfileData = {
             userName: userData.name,
             userEmail: userData.email,
             userPhone: userData.phone,
             isEmailVerified: userData.isEmailVerified,
             isPhoneVerified: userData.isNumberVerified,
           }
-          dispatch(setUserDetails(data));
+          dispatch(setUserDetails(userProfileData));
 
           try {
             const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userActivityData`, {
@@ -281,7 +283,8 @@ export default function Layout() {
               headers: {
                 "x-device-id": deviceFingerPrint,
                 "x-user-agent": navigator.userAgent,
-              }
+              },
+              credentials: "include"
             })
 
             const data = await response.json();

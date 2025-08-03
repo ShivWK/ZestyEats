@@ -114,7 +114,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
  {/*  */}
 
         {loggedIn ? (
-          <NavItem to={isSmall ? "/mobileProfile" : "/profile"} icon={"fa-user text-lg"} text={userDetails.userName.split(" ")[0]} />
+          <NavItem to={isSmall ? "/mobileProfile" : "/profile"} icon={"fa-user text-lg"} text={userDetails?.userName?.split(" ")[0]} />
         ) : (
           <button
             onClick={handleSignIn}
