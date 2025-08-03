@@ -132,7 +132,7 @@ exports.setUserCartData = async (req, res, next) => {
 }
 
 exports.setUserWishListData = async (req, res, next) => {
-    const data = req.body.wishList;
+    const data = req.body.wishListedItems;
     const userId = req.UserID;
 
     try {

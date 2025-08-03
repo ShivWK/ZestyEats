@@ -59,7 +59,7 @@ import {
 } from "./features/home/homeSlice";
 
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
+import { selectMenuModel, setDeviceFingerPrintRestro, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import MobileProfile from "./components/Profile/MobileProfile";
 
@@ -105,6 +105,7 @@ export default function App() {
       const fp = await FingerprintJS.load();
       const result = await fp.get();
       dispatch(setDeviceFingerPrint(result.visitorId));
+      dispatch(setDeviceFingerPrintRestro(result.visitorId));
     }
 
     deviceInfo();

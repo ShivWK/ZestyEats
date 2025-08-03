@@ -129,8 +129,10 @@ export default function Layout() {
             dispatch(setIsLoggedInHome(false));
             dispatch(setIsLoggedInRestro(false));
 
+            const data = sessionData.data.data
+
             UpdateStorage({
-              sessionData,
+              data,
               dispatch,
               setItemToCart,
               toggleItemsToBeAddedInCart,
@@ -169,10 +171,22 @@ export default function Layout() {
                 credentials: "include"
               })
 
-              const data = await response.json();
+              const respData = await response.json();
 
-              if (!response.ok) throw new Error(data.message);
-              console.log(data.data);
+              if (!response.ok) throw new Error(respData.message);
+              const data = respData.data;
+              console.log(data);
+
+              UpdateStorage({
+                data, 
+                dispatch,
+                setItemToCart,
+                toggleItemsToBeAddedInCart,
+                setFavoriteRestro,
+                addRecentLocations,
+                addToWishlistItem
+              })
+
             } catch (err) {
               console.log("Failed get user Activity data", err);
               // toast.error(err.message, {

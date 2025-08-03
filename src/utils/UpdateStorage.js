@@ -1,6 +1,5 @@
 const UpdateStorage = ({
-    sessionData,
-    registeredSessionData,
+    data,
     dispatch,
     setItemToCart,
     toggleItemsToBeAddedInCart,
@@ -8,7 +7,7 @@ const UpdateStorage = ({
     addRecentLocations,
     addToWishlistItem
 }) => {
-    const mainData = sessionData.data.data;
+    const mainData = data;
 
     // console.log( "from", mainData)
 

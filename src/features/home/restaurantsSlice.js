@@ -18,9 +18,14 @@ const restaurantSlice = createSlice({
     cart: {},
     favoriteRestro: [],
     isLoggedIn: false,
+    deviceFingerPrint: null
   },
 
   reducers: {
+    setDeviceFingerPrintRestro: (state, action) => {
+      state.deviceFingerPrint = action.payload
+    },
+
     setIsLoggedInRestro: (state, action) => {
       state.isLoggedIn = action.payload;
     },
@@ -83,14 +88,14 @@ const restaurantSlice = createSlice({
         state.wishListItems[itmObject.item?.id] = itmObject;
       }
 
-      wishListedItemsModifier(state.wishListItems);
+      wishListedItemsModifier(state.wishListItems, state.isLoggedIn, state.deviceFingerPrint);
       localStorage.setItem("wishlist", JSON.stringify(state.wishListItems))
     },
 
     deleteItemFromWishlist: (state, action) => {
       delete state.wishListItems[action.payload];
 
-      wishListedItemsModifier(state.wishListItems);
+      wishListedItemsModifier(state.wishListItems, state.isLoggedIn, state.deviceFingerPrint);
       localStorage.setItem("wishlist", JSON.stringify(state.wishListItems))
     },
 
@@ -125,7 +130,7 @@ const restaurantSlice = createSlice({
           }
         }
 
-        itemsToBeAddedInCartModifier(state.itemsToBeAddedInCart);
+        itemsToBeAddedInCartModifier(state.itemsToBeAddedInCart, state.isLoggedIn, state.deviceFingerPrint);
       }
     },
 
@@ -142,7 +147,7 @@ const restaurantSlice = createSlice({
         }
       }
 
-      cartItemsModifier(state.cart);
+      cartItemsModifier(state.cart, state.isLoggedIn, state.deviceFingerPrint);
       localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 
@@ -165,7 +170,7 @@ const restaurantSlice = createSlice({
         }
       }
 
-      cartItemsModifier(state.cart);
+      cartItemsModifier(state.cart, state.isLoggedIn, state.deviceFingerPrint);
       localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 
@@ -183,7 +188,7 @@ const restaurantSlice = createSlice({
         }
       }
 
-      favRestaurantsModifier(state.favoriteRestro);
+      favRestaurantsModifier(state.favoriteRestro, state.isLoggedIn, state.deviceFingerPrint);
       localStorage.setItem("favRestros", JSON.stringify(state.favoriteRestro));
     },
 
@@ -218,5 +223,6 @@ export const {
   setItemToCart,
   setFavoriteRestro,
   setItemQuantity,
-  setHideMenu
+  setHideMenu,
+  setDeviceFingerPrintRestro,
 } = restaurantSlice.actions;

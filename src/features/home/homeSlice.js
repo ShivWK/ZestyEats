@@ -201,13 +201,13 @@ const homeSlice = createSlice({
       );
 
       state.recentLocations = combine;
-      recentLocationModifier(state.recentLocations);
+      recentLocationModifier(state.recentLocations, state.isLoggedIn, state.deviceFingerprint);
     },
 
     removeARecentLocation: (state, action) => {
       state.recentLocations.splice(action.payload, 1);
 
-      recentLocationModifier(state.recentLocations);
+      recentLocationModifier(state.recentLocations, state.isLoggedIn, state.deviceFingerprint);
     },
 
     setLoading: (state, action) => {
