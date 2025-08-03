@@ -53,7 +53,7 @@ const MainContent = ({ mainData }) => {
     try {
 
     } catch {
-        
+
     }
   }
 
@@ -121,7 +121,7 @@ const MainContent = ({ mainData }) => {
                               )}
                               {` Browser`}
                             </p>
-                            <button className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading ? "px-5" : "px-3 py-1"} rounded text-xs font-semibold tracking-wide text-white`}>
+                            <button className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading ? "px-5 py-0.5" : "px-3 py-1"} rounded text-xs font-semibold tracking-wide text-white`}>
                               {deleteLoading ? <DotBounceLoader /> : "LOGOUT"}
                             </button>
                           </div>
