@@ -49,6 +49,14 @@ const MainContent = ({ mainData }) => {
     return inIndianTime;
   };
 
+  const deleteHandler = (sessionId) => {
+    try {
+
+    } catch {
+        
+    }
+  }
+
   return (
     <>
       <main className="pt-14 h-full overflow-x-hidden">

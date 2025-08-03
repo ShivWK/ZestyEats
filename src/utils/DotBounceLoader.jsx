@@ -1,5 +1,5 @@
 const DotBounceLoader = () => {
-    return <p className="flex gap-2 items-center -mb-1" >
+    return <p className="flex gap-1.5 items-center -mb-1.5" >
         <span className='animate-dotBounce' style={{fontSize: "20px", animationDelay: "0s"}}>•</span>
         <span className='animate-dotBounce' style={{fontSize: "20px", animationDelay: "0.2s"}}>•</span>
         <span className='animate-dotBounce ' style={{fontSize: "20px", animationDelay: "0.4s"}}>•</span>
