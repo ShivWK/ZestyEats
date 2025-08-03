@@ -16,6 +16,18 @@
             height: 100%
         }
     }
+
+    --animate-dotBounce: animateDot 0.4s infinite alternate;
+
+    @keyframes animateDot {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-15px);
+        }
+    }
 }
 
 @layer utilities {
@@ -53,7 +65,7 @@
         }
     }
 
-    .notFirst-notLast > div:not(:first-child):not(:last-child) {
+    .notFirst-notLast>div:not(:first-child):not(:last-child) {
         border-top: none;
     }
 
@@ -177,7 +189,7 @@
     @keyframes animateCart {
         0% {
             transform: translateX(0);
-        } 
+        }
 
         50% {
             transform: translateX(8px);
@@ -208,7 +220,7 @@
         }
     }
 
-     @keyframes hideMenu {
+    @keyframes hideMenu {
         0% {
             bottom: 4.5rem
         }
@@ -218,7 +230,7 @@
         }
     }
 
-     @keyframes showLocationInfoModal {
+    @keyframes showLocationInfoModal {
         0% {
             bottom: -110%
         }
@@ -228,7 +240,7 @@
         }
     }
 
-     @keyframes hideLocationInfoModal {
+    @keyframes hideLocationInfoModal {
         0% {
             bottom: 1rem
         }

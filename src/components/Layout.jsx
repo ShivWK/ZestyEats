@@ -263,15 +263,15 @@ export default function Layout() {
       if (cartItems != null) dispatch(setItemToCart({ mode: "initial", object: cartItems }));
 
     } else if (navigator.geolocation) {
-      toast.info("Please allow location to show nearby results.", {
-        autoClose: 1000,
-        style: {
-          backgroundColor: "#ff5200",
-          fontWeight: "semibold",
-          color: "white",
-        },
-        progressClassName: "progress-style",
-      });
+      // toast.info("Please allow location to show nearby results.", {
+      //   autoClose: 1000,
+      //   style: {
+      //     backgroundColor: "#ff5200",
+      //     fontWeight: "semibold",
+      //     color: "white",
+      //   },
+      //   progressClassName: "progress-style",
+      // });
       navigator.geolocation.getCurrentPosition(async (position) => {
         const lat1 = position.coords.latitude;
         const lng1 = position.coords.longitude;
