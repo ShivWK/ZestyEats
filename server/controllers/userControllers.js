@@ -255,7 +255,7 @@ exports.login = async (req, res, next) => {
         if (!user) {
             return res.status(401).json({
                 status: "failed",
-                message: "Invalid credential. Please try again."
+                message: "Invalid credential. Please sign up if you're new."
             })
         }
 
