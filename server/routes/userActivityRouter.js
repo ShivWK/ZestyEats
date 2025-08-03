@@ -11,7 +11,8 @@ const {
     setUserRecentLocationData,
     setUserWishListData,
     setAllDataAtOnce,
-    getLiveSessions
+    getLiveSessions,
+    logTheUserOut,
 } = require("../controllers/userActivityControllers");
 
 userActivityRouter.use(checkSessionId);
@@ -19,6 +20,8 @@ userActivityRouter.use(protected);
 
 userActivityRouter.route("/userActivityData").get(getUserActivityData);
 userActivityRouter.route("/loggedInSession").get(getLiveSessions);
+
+userActivityRouter.route("/logout").post(logTheUserOut);
 
 userActivityRouter.route("/userCartData").patch(setUserCartData);
 userActivityRouter.route("/userWishListData").patch(setUserWishListData);

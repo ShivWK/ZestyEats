@@ -24,6 +24,13 @@ const MainContent = ({ mainData }) => {
                 <ScooterAnimation />
             </div>
         </main>
+        {mode === "Logout Options"
+            ? ("")
+            : mode === "Saved Address"
+                ? ""
+                : ""
+        }
+
         <MobileFooterMenu />
     </>
 }
