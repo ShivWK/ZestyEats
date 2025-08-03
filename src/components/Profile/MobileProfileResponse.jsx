@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import ScooterAnimation from "../../utils/ScooterAnimation";
 import ProfileResponseShimmer from "./ProfileResponseShimmer";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
+import DotBounceLoader from "./../../utils/DotBounceLoader"
 
 const MainContent = ({ mainData }) => {
   const navigate = useNavigate();
@@ -111,8 +112,8 @@ const MainContent = ({ mainData }) => {
                               )}
                               {` Browser`}
                             </p>
-                            <button className="bg-primary self-start dark:bg-darkPrimary px-3 py-1 rounded text-xs font-semibold tracking-wide text-white">
-                              LOGOUT
+                            <button className="bg-primary flex items-center justify-center self-start dark:bg-darkPrimary px-5 rounded text-xs font-semibold tracking-wide text-white">
+                              <DotBounceLoader />
                             </button>
                           </div>
 
