@@ -2,6 +2,7 @@ const SessionModel = require("../models/authModals/sessionModel");
 const OtpModal = require("../models/authModals/otpModel");
 const AccessModal = require("./../models/authModals/blockAccessModal");
 const UserModal = require("./../models/userModel");
+const UserActivityModal = require("./../models/userActivityModel");
 const recaptchaVerification = require("./../utils/recaptchaVerification");
 const crypto = require("crypto");
 const sendMail = require("./../utils/email");
@@ -14,11 +15,13 @@ exports.guestSession = async (req, res, next) => {
     const headers = req.headers;
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
+    const gSid = req.signedCookies.gSid;
 
     console.log(req.signedCookies);
 
     try {
-        if (!req.signedCookies?.gSid) {
+        const session = await SessionModel.findById(gSid);
+        if (!session) {
             const session = await SessionModel.create({
                 deviceInfo: deviceFingerPrinter(headers, uaResult, req),
                 type: "guest"
@@ -583,6 +586,9 @@ exports.verifyOTP = async (req, res, next) => {
             type: "registered"
         });
 
+        // Generate user activity doc
+        await UserActivityModal.create({ userId: User.id })
+
         res.cookie("rSid", session.id, {
             maxAge: 1000 * 60 * 60 * 24,
             httpOnly: true,
@@ -627,7 +633,7 @@ exports.getGuestSessionData = async (req, res, next) => {
                     data: user,
                     auth: true
                 })
-            } 
+            }
             // else {
             //     res.clearCookie("rSid", {
             //             httpOnly: true,
@@ -649,8 +655,8 @@ exports.getGuestSessionData = async (req, res, next) => {
                 message: err.message,
             })
         }
-    } 
-    
+    }
+
     if (gSid) {
         try {
             const sessionData = await SessionModel.findById(gSid);

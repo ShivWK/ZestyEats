@@ -31,7 +31,8 @@ import {
   addRecentLocations,
   setCurrentTheme,
   selectDeviceFingerPrint,
-  setUserDetails
+  setUserDetails,
+  setIsLoggedInHome
 } from "../features/home/homeSlice";
 
 import {
@@ -42,7 +43,8 @@ import {
   setFavoriteRestro,
   setItemToCart,
   setHideMenu,
-  toggleMenuModel
+  toggleMenuModel,
+  setIsLoggedInRestro
 } from "../features/home/restaurantsSlice";
 
 import { useSelector, useDispatch } from "react-redux";
@@ -245,6 +247,9 @@ export default function Layout() {
 
         if (sessionData.auth === false) {
           dispatch(setIsLoggedIn(false));
+          dispatch(setIsLoggedInHome(false));
+          dispatch(setIsLoggedInRestro(false));
+
           UpdateStorage({
             sessionData,
             dispatch,
@@ -254,22 +259,42 @@ export default function Layout() {
             addRecentLocations,
             addToWishlistItem
           });
+
         } else if (sessionData.auth === true) {
           dispatch(setIsLoggedIn(true));
           dispatch(setAppLoading(true));
+
           const userData = sessionData.data;
-          
+
           data = {
-                userName: userData.name,
-                userEmail: userData.email,
-                userPhone: userData.phone,
-                isEmailVerified: userData.isEmailVerified,
-                isPhoneVerified: userData.isNumberVerified,
-            }
+            userName: userData.name,
+            userEmail: userData.email,
+            userPhone: userData.phone,
+            isEmailVerified: userData.isEmailVerified,
+            isPhoneVerified: userData.isNumberVerified,
+          }
           dispatch(setUserDetails(data));
-          
-          const id = userData._id;
-          
+
+          try {
+            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userActivityData`, {
+              method: "GET",
+              headers: {
+                "x-device-id": deviceFingerPrint,
+                "x-user-agent": navigator.userAgent,
+              }
+            })
+
+            const data = await response.json();
+
+            if (!response.ok) throw new Error(data.message);
+            console.log(data);
+          } catch (err) {
+            console.log("Failed get user Activity data", err);
+            // toast.error(err.message, {
+              
+            // })
+          }
+
         }
       } catch (err) {
         console.error("Session error", err)

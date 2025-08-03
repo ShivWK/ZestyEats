@@ -54,7 +54,7 @@ exports.protected = async (req, res, next) => {
         ) {
             return res.status(401).json({
                 status: "failed",
-                message: "Not a valid session"
+                message: "Not a valid session. Please login again."
             })
         }
 

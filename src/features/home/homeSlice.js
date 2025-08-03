@@ -26,7 +26,8 @@ const initialState = {
   showBottomMenu: true,
   currentTheme:"system",
   deviceFingerprint: null,
-  user: {}
+  user: {},
+  isLoggedIn: false,
 };
 
 const homeSlice = createSlice({
@@ -35,6 +36,10 @@ const homeSlice = createSlice({
   reducers: {
     setUserDetails: (state, action) => {
       state.user = action.payload;
+    },
+
+    setIsLoggedInHome: (state, action) => {
+      state.isLoggedIn = action.payload;
     },
 
     setDeviceFingerPrint: (state, action) => {
@@ -261,6 +266,7 @@ export const selectDpModelHide = (state) => state.home.dpModelHide;
 export const selectIsServiceable = (state) => state.home.isUnserviceable;
 
 export const {
+  setIsLoggedInHome,
   setUserDetails,
   setCurrentTheme,
   setUnserviceable,

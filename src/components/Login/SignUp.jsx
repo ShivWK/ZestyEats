@@ -15,9 +15,10 @@ import {
   setErrorMessage
 } from "../../features/Login/loginSlice";
 
-import { selectDeviceFingerPrint, setUserDetails } from "../../features/home/homeSlice";
+import { selectDeviceFingerPrint, setIsLoggedInHome, setUserDetails } from "../../features/home/homeSlice";
 import { Phone, Mail } from "lucide-react"
 import { toast } from "react-toastify";
+import { setIsLoggedInRestro } from "../../features/home/restaurantsSlice";
 
 const SignUp = memo(({ recaptchaRef }) => {
   const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
@@ -188,6 +189,8 @@ const SignUp = memo(({ recaptchaRef }) => {
         console.log("API response", result);
         dispatch(setUserDetails(result.data));
         dispatch(setIsLoggedIn(true))
+        dispatch(setIsLoggedInHome(true));
+        dispatch(setIsLoggedInRestro(true));
         dispatch(setLoading(false));
         dispatch(setHideLogin(true));
         dispatch(signUpOtpSend(false));

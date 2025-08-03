@@ -16,10 +16,15 @@ const restaurantSlice = createSlice({
     wishListItems: {},
     itemsToBeAddedInCart: {},
     cart: {},
-    favoriteRestro: []
+    favoriteRestro: [],
+    isLoggedIn: false,
   },
 
   reducers: {
+    setIsLoggedInRestro: (state, action) => {
+      state.isLoggedIn = action.payload;
+    },
+
     addCurrentRestaurant: (state, action) => {
       state.currentSpecificRestaurant = action.payload;
     },
@@ -200,6 +205,7 @@ export const selectHideMenu = (state) => state.restaurant.hideMenu;
 export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({ vegOption: veg, nonVegOption: non_veg }))
 
 export const {
+  setIsLoggedInRestro,
   addCurrentRestaurant,
   setVegOption,
   setNonVegOption,

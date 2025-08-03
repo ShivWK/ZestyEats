@@ -16,7 +16,8 @@ import {
   setErrorMessage,
 } from "../../features/Login/loginSlice";
 
-import { selectDeviceFingerPrint, setUserDetails } from "../../features/home/homeSlice";
+import { selectDeviceFingerPrint, setUserDetails, setIsLoggedInHome } from "../../features/home/homeSlice";
+import { setIsLoggedInRestro } from "../../features/home/restaurantsSlice";
 
 import { Phone, Mail } from "lucide-react";
 
@@ -192,6 +193,8 @@ const Login = ({ recaptchaRef }) => {
         console.log("API response", result);
         dispatch(setUserDetails(result.data));
         dispatch(setIsLoggedIn(true))
+        dispatch(setIsLoggedInHome(true));
+        dispatch(setIsLoggedInRestro(true))
         dispatch(setLoading(false));
         dispatch(setHideLogin(true));
         dispatch(loginOtpSend(false));
