@@ -44,15 +44,18 @@ exports.protected = async (req, res, next) => {
         }
 
         const sessionDeviceInfo = session.deviceInfo;
-    console.log("Existing vistor", sessionDeviceInfo)
+        console.log("Existing vistor", sessionDeviceInfo)
 
+        const clientIPs = clientFingerPrint.deviceIp.split(",").map(ip => ip.trim());
+        const sessionIPs = sessionDeviceInfo.deviceIp.split(",").map(ip => ip.trim());
 
+        const doesMatch = clientIPs.some(ip => sessionIPs.includes(ip));
 
         if (
             clientFingerPrint.visitorId !== sessionDeviceInfo.visitorId ||
             clientFingerPrint.browserName !== sessionDeviceInfo.browserName ||
             clientFingerPrint.browserVersion !== sessionDeviceInfo.browserVersion ||
-            !clientFingerPrint.deviceIp.startsWith(sessionDeviceInfo.deviceIp) ||
+            !doesMatch ||
             clientFingerPrint.deviceModal !== sessionDeviceInfo.deviceModal ||
             clientFingerPrint.deviceVender !== sessionDeviceInfo.deviceVender ||
             clientFingerPrint.oSName !== sessionDeviceInfo.oSName ||

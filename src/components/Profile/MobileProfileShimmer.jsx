@@ -1,20 +1,4 @@
-import { selectUserDetails, selectCurrentTheme } from "../features/home/homeSlice";
-import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router";
-import MobileFooterMenu from "./Footer/MobileFooterMenu";
-import ScooterAnimation from "./../utils/ScooterAnimation";
-
-const MobileProfile = () => {
-    const userDetails = useSelector(selectUserDetails);
-    const theme = useSelector(selectCurrentTheme);
-    const navigate = useNavigate();
-
-    const name = userDetails.userName;
-    const email = userDetails.userEmail;
-    const phone = userDetails.userPhone;
-    const isNumberVerified = userDetails.isPhoneVerified;
-    const isEmailVerified = userDetails.isEmailVerified;
-
+const MobileProfileShimmer = () => {
     return <main className="pt-14 overflow-x-hidden h-full pb-20">
         <section className="relative px-3 pt-5 pb-2 dark:bg-gray-800 bg-primary rounded-b-3xl h-44 profile-animation overflow-hidden">
             <i onClick={() => navigate(-1)} className="ri-arrow-left-long-line text-2xl text-white font-medium"></i>
@@ -66,5 +50,4 @@ const MobileProfile = () => {
     </main>
 }
 
-export default MobileProfile;
-
+export default MobileProfileShimmer;

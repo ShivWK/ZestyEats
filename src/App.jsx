@@ -61,7 +61,7 @@ import {
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
 import { selectMenuModel, toggleMenuModel } from "./features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
-import MobileProfile from "./components/MobileProfile";
+import MobileProfile from "./components/Profile/MobileProfile";
 
 export default function App() {
   useOnlineStatus();

@@ -91,23 +91,105 @@ export default function Layout() {
   useTrackNavigation();
 
   useEffect(() => {
-    const createGuestSession = async () => {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-device-id": deviceFingerPrint,
-          "x-user-agent": navigator.userAgent,
-        },
-        credentials: "include"
-      });
+    if (deviceFingerPrint) {
+      const createGuestSession = async () => {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "x-device-id": deviceFingerPrint,
+            "x-user-agent": navigator.userAgent,
+          },
+          credentials: "include"
+        });
 
-      const data = await res.json();
-      // console.log(data.data.sessionId);
+        const data = await res.json();
+        // console.log(data.data.sessionId);
+      }
+
+      const handleGuestSession = async () => {
+        try {
+          //get the guest session data
+          dispatch(setAppLoading(true));
+          const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              "x-device-id": deviceFingerPrint,
+              "x-user-agent": navigator.userAgent,
+            }
+          });
+
+          const sessionData = await result.json();
+          console.log("Log", sessionData);
+
+          if (sessionData.auth === false) {
+            dispatch(setIsLoggedIn(false));
+            dispatch(setIsLoggedInHome(false));
+            dispatch(setIsLoggedInRestro(false));
+
+            UpdateStorage({
+              sessionData,
+              dispatch,
+              setItemToCart,
+              toggleItemsToBeAddedInCart,
+              setFavoriteRestro,
+              addRecentLocations,
+              addToWishlistItem
+            });
+
+          } else if (sessionData.auth === true) {
+            dispatch(setIsLoggedIn(true));
+            dispatch(setIsLoggedInHome(true));
+            dispatch(setIsLoggedInRestro(true));
+
+            const userData = sessionData.data;
+
+            console.log("AUTHO", userData);
+
+            const userProfileData = {
+              userName: userData.name,
+              userEmail: userData.email,
+              userPhone: userData.phone,
+              isEmailVerified: userData.isEmailVerified,
+              isPhoneVerified: userData.isNumberVerified,
+            }
+            
+            dispatch(setUserDetails(userProfileData));
+            dispatch(setAppLoading(false));
+
+            try {
+              const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userActivityData`, {
+                method: "GET",
+                headers: {
+                  "x-device-id": deviceFingerPrint,
+                  "x-user-agent": navigator.userAgent,
+                },
+                credentials: "include"
+              })
+
+              const data = await response.json();
+
+              if (!response.ok) throw new Error(data.message);
+              console.log(data);
+            } catch (err) {
+              console.log("Failed get user Activity data", err);
+              // toast.error(err.message, {
+
+              // })
+            }
+
+          }
+        } catch (err) {
+          console.error("Session error", err)
+        }
+      }
+
+      createGuestSession();
+      handleGuestSession();
     }
-
-    setTimeout(createGuestSession, 1000)
-  }, [])
+  }, [deviceFingerPrint])
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
@@ -228,83 +310,6 @@ export default function Layout() {
       dispatch(setLocationInfoModalReason("error"))
       dispatch(setLocationInfoModal(true))
     }
-
-    const handleGuestSession = async () => {
-      try {
-        //get the guest session data
-        const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            "x-device-id": deviceFingerPrint,
-            "x-user-agent": navigator.userAgent,
-          }
-        });
-
-        const sessionData = await result.json();
-        console.log("Log", sessionData);
-
-        if (sessionData.auth === false) {
-          dispatch(setIsLoggedIn(false));
-          dispatch(setIsLoggedInHome(false));
-          dispatch(setIsLoggedInRestro(false));
-
-          UpdateStorage({
-            sessionData,
-            dispatch,
-            setItemToCart,
-            toggleItemsToBeAddedInCart,
-            setFavoriteRestro,
-            addRecentLocations,
-            addToWishlistItem
-          });
-
-        } else if (sessionData.auth === true) {
-          dispatch(setIsLoggedIn(true));
-          dispatch(setAppLoading(true));
-
-          const userData = sessionData.data;
-
-          console.log("AUTHO", userData);
-
-          const userProfileData = {
-            userName: userData.name,
-            userEmail: userData.email,
-            userPhone: userData.phone,
-            isEmailVerified: userData.isEmailVerified,
-            isPhoneVerified: userData.isNumberVerified,
-          }
-          dispatch(setUserDetails(userProfileData));
-
-          try {
-            const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userActivityData`, {
-              method: "GET",
-              headers: {
-                "x-device-id": deviceFingerPrint,
-                "x-user-agent": navigator.userAgent,
-              },
-              credentials: "include"
-            })
-
-            const data = await response.json();
-
-            if (!response.ok) throw new Error(data.message);
-            console.log(data);
-          } catch (err) {
-            console.log("Failed get user Activity data", err);
-            // toast.error(err.message, {
-              
-            // })
-          }
-
-        }
-      } catch (err) {
-        console.error("Session error", err)
-      }
-    }
-
-    handleGuestSession();
   }, []);
 
   useEffect(() => {
