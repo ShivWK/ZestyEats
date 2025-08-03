@@ -84,9 +84,9 @@ exports.getUserActivityData = async (req, res, next) => {
 
     try {
         const doc = await UserActivityModal.findOneAndUpdate(
-            { userId }, 
-            {}, 
-            {new: true, upsert: true}
+            { userId },
+            {},
+            { new: true, upsert: true }
         );
 
         return res.status(200).json({
@@ -105,14 +105,26 @@ exports.getUserActivityData = async (req, res, next) => {
 
 exports.getLiveSessions = async (req, res, next) => {
     const userId = req.UserID;
+    const sid = req.signedCookies.rSid;
 
     try {
         const sessions = await SessionModel.find({ userId, type: "registered" });
         console.log(sessions);
 
+        const resultArr = sessions.map(session => {
+            const activeNow = sid == session.id;
+
+            return {
+                id: session.id,
+                data: session.deviceInfo,
+                lastActive: session.createdAt,
+                activeNow
+            }
+        })
+
         return res.status(200).json({
             status: "success",
-            data: sessions
+            data: resultArr
         })
 
     } catch (err) {
@@ -126,7 +138,7 @@ exports.getLiveSessions = async (req, res, next) => {
 }
 
 exports.setAllDataAtOnce = async (req, res, next) => {
-    
+
 }
 
 exports.setUserCartData = async (req, res, next) => {
@@ -135,9 +147,9 @@ exports.setUserCartData = async (req, res, next) => {
 
     try {
         const doc = await UserActivityModal.findOneAndUpdate(
-            { userId }, 
-            {$set: { cartItems : data } }, 
-            {new: true}
+            { userId },
+            { $set: { cartItems: data } },
+            { new: true }
         );
 
         return res.status(200).json({
@@ -160,9 +172,9 @@ exports.setUserWishListData = async (req, res, next) => {
 
     try {
         const doc = await UserActivityModal.findOneAndUpdate(
-            { userId }, 
-            {$set: { wishListedItems : data } }, 
-            {new: true}
+            { userId },
+            { $set: { wishListedItems: data } },
+            { new: true }
         );
 
         return res.status(200).json({
@@ -185,9 +197,9 @@ exports.setUserFavRestaurantData = async (req, res, next) => {
 
     try {
         const doc = await UserActivityModal.findOneAndUpdate(
-            { userId }, 
-            {$set: { favRestaurants : data } }, 
-            {new: true}
+            { userId },
+            { $set: { favRestaurants: data } },
+            { new: true }
         );
 
         return res.status(200).json({
@@ -210,9 +222,9 @@ exports.setUserRecentLocationData = async (req, res, next) => {
 
     try {
         const doc = await UserActivityModal.findOneAndUpdate(
-            { userId }, 
-            {$set: { recentLocations : data } }, 
-            {new: true}
+            { userId },
+            { $set: { recentLocations: data } },
+            { new: true }
         );
 
         return res.status(200).json({
@@ -235,9 +247,9 @@ exports.setUserItemsToBeAddedInCartData = async (req, res, next) => {
 
     try {
         const doc = await UserActivityModal.findOneAndUpdate(
-            { userId }, 
-            {$set: { itemsToBeAddedInCart : data } }, 
-            {new: true}
+            { userId },
+            { $set: { itemsToBeAddedInCart: data } },
+            { new: true }
         );
 
         return res.status(200).json({
