@@ -155,7 +155,7 @@ export default function Layout() {
               isEmailVerified: userData.isEmailVerified,
               isPhoneVerified: userData.isNumberVerified,
             }
-            
+
             dispatch(setUserDetails(userProfileData));
             dispatch(setAppLoading(false));
 
@@ -172,7 +172,7 @@ export default function Layout() {
               const data = await response.json();
 
               if (!response.ok) throw new Error(data.message);
-              console.log(data);
+              console.log(data.data);
             } catch (err) {
               console.log("Failed get user Activity data", err);
               // toast.error(err.message, {

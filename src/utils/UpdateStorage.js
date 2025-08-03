@@ -1,5 +1,6 @@
 const UpdateStorage = ({
     sessionData,
+    registeredSessionData,
     dispatch,
     setItemToCart,
     toggleItemsToBeAddedInCart,
