@@ -63,7 +63,7 @@ const MainContent = ({ mainData }) => {
           <ScooterAnimation />
         </div>
         {mode === "Logout Options" ? (
-          <div className="bg-gray-100 dark:bg-gray-800 rounded-md overflow-hidden w-[95%] mx-auto">
+          <div className="bg-gray-100 pb-3 dark:bg-gray-800 rounded-md overflow-hidden w-[95%] mx-auto">
             <div>
               <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
                 <h2 className="text-white text-xl">CURRENT DEVICE</h2>
@@ -100,10 +100,7 @@ const MainContent = ({ mainData }) => {
                   {otherActiveSessions.map((session, index) => {
                     return (
                       <div
-                        className={` px-2 py-4 ${
-                          index !== otherActiveSessions.length - 1 &&
-                          "border-b-2 border-gray-800 dark:border-gray-400"
-                        }`}
+                        className="px-2 py-4 border-b-2 rounded border-gray-800 dark:border-gray-400"
                       >
                         <div>
                           <div className="flex items-center justify-between">
@@ -120,7 +117,9 @@ const MainContent = ({ mainData }) => {
                           </div>
 
                           <p className="text-gray-500 dark:text-gray-400 font-bold text-sm flex items-center gap-1.5 mt-1">
-                            <span className="tracking-wide">{session.data.oSName.toUpperCase()}</span>
+                            <span className="tracking-wide">
+                              {session.data.oSName.toUpperCase()}
+                            </span>
                             <span className="text-black dark:text-gray-300">
                               •
                             </span>
@@ -139,6 +138,10 @@ const MainContent = ({ mainData }) => {
                 </div>
               )}
             </div>
+
+            {otherActiveSessions.length !== 0 && (
+              <button className="bg-primary mx-auto block dark:bg-darkPrimary px-3 py-1 rounded text-sm font-semibold tracking-wide text-white mt-5">Logout of All Devices</button>
+            )}
           </div>
         ) : mode === "Saved Address" ? (
           ""
