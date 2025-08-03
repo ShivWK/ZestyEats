@@ -98,7 +98,7 @@ const MainContent = ({ mainData }) => {
                     </span>
                   </p>
                 </div>
-                <button className="bg-primary dark:bg-darkPrimary px-3 py-1.5 rounded text-xs font-semibold tracking-wide text-white">
+                <button className="bg-primary dark:bg-darkPrimary px-3 py-[0.300rem] rounded text-xs font-semibold tracking-wide text-white">
                   LOGOUT
                 </button>
               </div>
