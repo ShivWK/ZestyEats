@@ -4,13 +4,14 @@ import {
   Await,
   useLoaderData,
 } from "react-router";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import ScooterAnimation from "../../utils/ScooterAnimation";
 import ProfileResponseShimmer from "./ProfileResponseShimmer";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import DotBounceLoader from "./../../utils/DotBounceLoader"
 
 const MainContent = ({ mainData }) => {
+    const [deleteLoading, setDeleteLoading] = useState(true)
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
@@ -112,8 +113,8 @@ const MainContent = ({ mainData }) => {
                               )}
                               {` Browser`}
                             </p>
-                            <button className="bg-primary flex items-center justify-center self-start dark:bg-darkPrimary px-5 rounded text-xs font-semibold tracking-wide text-white">
-                              <DotBounceLoader />
+                            <button className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading ? "px-5" : "px-3 py-1"} rounded text-xs font-semibold tracking-wide text-white`}>
+                              {deleteLoading ? <DotBounceLoader /> : "LOGOUT"}
                             </button>
                           </div>
 
