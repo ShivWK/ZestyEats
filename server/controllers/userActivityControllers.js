@@ -20,6 +20,8 @@ exports.protected = async (req, res, next) => {
     const clientUa = headers["x-user-agent"];
     const uaResult = UAParser(clientUa);
 
+    console.log("Protext vistor", headers["x-device-id"])
+
     const clientFingerPrint = deviceFingerPrinter(headers, uaResult, req);
 
     console.log(clientFingerPrint);
@@ -42,6 +44,9 @@ exports.protected = async (req, res, next) => {
         }
 
         const sessionDeviceInfo = session.deviceInfo;
+    console.log("Existing vistor", sessionDeviceInfo)
+
+
 
         if (
             clientFingerPrint.visitorId !== sessionDeviceInfo.visitorId ||

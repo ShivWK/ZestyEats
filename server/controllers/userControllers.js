@@ -71,6 +71,8 @@ exports.signup = async (req, res) => {
     const mode = req.params.mode;
 
     const visiterId = headers["x-device-id"]
+    console.log("SignUp visitor", visiterId)
+
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
 
