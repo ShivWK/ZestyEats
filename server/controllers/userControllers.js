@@ -589,7 +589,7 @@ exports.verifyOTP = async (req, res, next) => {
         });
 
         // Generate user activity doc
-        await UserActivityModal.create({ userId: User.id })
+        if (forWhat === "signup") await UserActivityModal.create({ userId: User.id });
 
         res.cookie("rSid", session.id, {
             maxAge: 1000 * 60 * 60 * 24,

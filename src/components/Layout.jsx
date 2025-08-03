@@ -17,7 +17,8 @@ import {
   setLocationInfoModalReason,
   setLocationInfoModal,
   setAppLoading,
-  setIsLoggedIn
+  setIsLoggedIn,
+  selectIsLoggedIn
 } from "../features/Login/loginSlice";
 
 import {
@@ -87,6 +88,7 @@ export default function Layout() {
   const [searchParams] = useSearchParams();
   const { OpenLocationInfoModal } = useSelector(selectLocationInfoModal)
   const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   useTrackNavigation();
 
@@ -175,7 +177,7 @@ export default function Layout() {
 
               if (!response.ok) throw new Error(respData.message);
               const data = respData.data;
-              console.log(data);
+              console.log("registered data", data);
 
               UpdateStorage({
                 data, 
@@ -203,7 +205,7 @@ export default function Layout() {
       createGuestSession();
       handleGuestSession();
     }
-  }, [deviceFingerPrint])
+  }, [ deviceFingerPrint, isLoggedIn ])
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));
