@@ -28,8 +28,8 @@ const MainContent = ({ mainData }) => {
       (session) => session.activeNow === false
     );
 
-    console.log("current", currentActiveSession);
-    console.log("other", otherActiveSessions);
+    // console.log("current", currentActiveSession);
+    // console.log("other", otherActiveSessions);
   }
 
   const extractLastActive = (data) => {
@@ -98,7 +98,7 @@ const MainContent = ({ mainData }) => {
                     </span>
                   </p>
                 </div>
-                <button className="bg-primary dark:bg-darkPrimary px-3 py-[0.300rem] rounded text-xs font-semibold tracking-wide text-white">
+                <button className="bg-primary dark:bg-darkPrimary px-3 py-[0.300rem] rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out">
                   LOGOUT
                 </button>
               </div>
@@ -121,7 +121,7 @@ const MainContent = ({ mainData }) => {
                               )}
                               {` Browser`}
                             </p>
-                            <button className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading ? "px-5 py-0.5" : "px-3 py-1"} rounded text-xs font-semibold tracking-wide text-white`}>
+                            <button className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading ? "px-5 py-0.5" : "px-3 py-[0.300rem]"} rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out`}>
                               {deleteLoading ? <DotBounceLoader /> : "LOGOUT"}
                             </button>
                           </div>
@@ -150,7 +150,7 @@ const MainContent = ({ mainData }) => {
             </div>
 
             {otherActiveSessions.length !== 0 && (
-              <button className="bg-primary mx-auto block dark:bg-darkPrimary px-3 py-1 rounded text-sm font-semibold tracking-wide text-white mt-5">Logout of All Devices</button>
+              <button className="bg-primary mx-auto block dark:bg-darkPrimary px-3 py-1 rounded text-sm font-semibold tracking-wide text-white mt-5 transform active:scale-95 transition-all duration-75 ease-in-out">Logout of All Devices</button>
             )}
           </div>
         ) : mode === "Saved Address" ? (
