@@ -38,7 +38,7 @@ const EntryDiv = memo(({
   const [isEntryMade, setIsEntryMade] = useState(false);
   const [hasValue, setHasValue] = useState(false);
   const [fieldValue, setFiledValue] = useState("");
-  const [seconds, setSeconds] = useState(6);
+  const [seconds, setSeconds] = useState(60);
   const [disable, setDisable] = useState(true);
   const inputRef = useRef(null);
   const timer = useRef(null);
@@ -176,7 +176,7 @@ const EntryDiv = memo(({
   const resendClickHandler = async (e) => {
     e.stopPropagation();
     setDisable(true);
-    setSeconds(6);
+    setSeconds(60);
     dispatch(setLoading(true));
     dispatch(setFullDisable(true));
 
