@@ -123,9 +123,10 @@ exports.signup = async (req, res) => {
         const signUpOTP = crypto.randomInt(100000, 1000000);
 
         // Delete existing otp(s)
-        await OtpModal.deleteMany({ visiterId });
 
         if (mode === "phone") {
+            await OtpModal.deleteMany({ $or: [{ visiterId }, { phone: cleanPhone }] });
+
             const text = `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`;
 
             sms(cleanPhone, text)
@@ -163,6 +164,8 @@ exports.signup = async (req, res) => {
 
         } else {
             try {
+                await OtpModal.deleteMany({ $or: [{ visiterId }, { email: cleanEmail }] });
+
                 const text = signupEmail(cleanName, signUpOTP, "signup");
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
@@ -268,10 +271,11 @@ exports.login = async (req, res, next) => {
         const loginOTP = crypto.randomInt(100000, 1000000);
 
         // Delete existing otp(s)
-        await OtpModal.deleteMany({ visiterId });
 
         if (mode === "phone") {
             const text = `Hi, your OTP is ${loginOTP} to complete your login. Do not share this code with anyone. This code is valid for 5 minutes.`;
+
+            await OtpModal.deleteMany({ $or: [{ visiterId }, { phone: cleanPhone }] });
 
             sms(cleanPhone, text)
                 .then(res => res.json())
@@ -308,6 +312,8 @@ exports.login = async (req, res, next) => {
 
         } else {
             try {
+                await OtpModal.deleteMany({ $or: [{ visiterId }, { email: cleanEmail }] });
+
                 const text = signupEmail(null, loginOTP, "login");
                 const resp = await sendMail(cleanEmail, text)
                 console.log("API response", resp)
