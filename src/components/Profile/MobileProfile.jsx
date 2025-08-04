@@ -3,11 +3,12 @@ import {
   selectCurrentTheme,
   selectDeviceFingerPrint,
 } from "./../../features/home/homeSlice";
-import { selectAppLoading } from "../../features/Login/loginSlice";
+import { selectAppLoading, selectIsLoggedIn } from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import ScooterAnimation from "../../utils/ScooterAnimation";
+import UnauthorizedError from "../ErrorHandling/UnauthorizedError";
 
 const MobileProfile = () => {
   const userDetails = useSelector(selectUserDetails);
@@ -15,6 +16,7 @@ const MobileProfile = () => {
   const navigate = useNavigate();
   const AppLoading = useSelector(selectAppLoading);
   const deviceId = useSelector(selectDeviceFingerPrint);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
 
   const name = userDetails.userName;
   const email = userDetails.userEmail;
@@ -49,6 +51,8 @@ const MobileProfile = () => {
       e.preventDefault();
     }
   };
+
+  if (!isLoggedIn) return <UnauthorizedError />
 
   return (
     <main className="pt-14 overflow-x-hidden h-full pb-20">

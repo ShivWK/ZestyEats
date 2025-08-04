@@ -5,18 +5,25 @@ import {
     useLoaderData,
 } from "react-router";
 
+import { useSelector } from "react-redux";
+
 import { Suspense } from "react";
 import ScooterAnimation from "../../utils/ScooterAnimation";
 import ProfileResponseShimmer from "./ProfileResponseShimmer";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import Logout from "./Logout";
+import { selectIsLoggedIn } from "../../features/Login/loginSlice";
+import UnauthorizedError from "../ErrorHandling/UnauthorizedError";
 
 const MainContent = ({ mainData }) => {
+    const isLoggedIn = useSelector(selectIsLoggedIn);
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const mode = searchParams.get("mode");
 
     // console.log(mainData);
+
+    if (!isLoggedIn) return <UnauthorizedError />
 
     return (
         <>

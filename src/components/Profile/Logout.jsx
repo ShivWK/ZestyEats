@@ -28,7 +28,6 @@ const Logout = ({ mainData }) => {
         setOtherActiveSessions(otherSessions);
     }, [])
 
-
     const extractLastActive = (data) => {
         const date = new Date(data);
 
@@ -95,31 +94,35 @@ const Logout = ({ mainData }) => {
             } dark:bg-gray-800 rounded-md overflow-hidden w-[95%] mx-auto`}
     >
         <div>
-            <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
-                <h2 className="text-white text-xl">CURRENT DEVICE</h2>
-            </div>
-            <div className="flex justify-between items-center px-2 py-4">
+            {Object.keys(currentActiveSession).length !== 0 && (
                 <div>
-                    <p className="block dark:text-gray-200">
-                        {currentActiveSession?.data?.browserName.replace(
-                            /\b\w/g,
-                            (word) => word.toUpperCase()
-                        )}
-                        {` Browser`}
-                    </p>
-                    <p className="text-gray-500 dark:text-gray-400 font-bold text-sm flex items-center gap-2">
-                        <span>
-                            {currentActiveSession?.data?.oSName.toUpperCase()}
-                        </span>
-                        <span className="text-black dark:text-gray-300">•</span>
-                        <span className="font-normal text-green-600">
-                            {" "}
-                            Active now
-                        </span>
-                    </p>
+                    <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
+                        <h2 className="text-white text-xl">CURRENT DEVICE</h2>
+                    </div>
+                    <div className="flex justify-between items-center px-2 py-4">
+                        <div>
+                            <p className="block dark:text-gray-200">
+                                {currentActiveSession?.data?.browserName.replace(
+                                    /\b\w/g,
+                                    (word) => word.toUpperCase()
+                                )}
+                                {` Browser`}
+                            </p>
+                            <p className="text-gray-500 dark:text-gray-400 font-bold text-sm flex items-center gap-2">
+                                <span>
+                                    {currentActiveSession?.data?.oSName.toUpperCase()}
+                                </span>
+                                <span className="text-black dark:text-gray-300">•</span>
+                                <span className="font-normal text-green-600">
+                                    {" "}
+                                    Active now
+                                </span>
+                            </p>
+                        </div>
+                        <LogoutButton sessionId={currentActiveSession?.id} type="current" />
+                    </div>
                 </div>
-                <LogoutButton sessionId={currentActiveSession?.id} type="current" />
-            </div>
+            )}
             {otherActiveSessions.length !== 0 && (
                 <div>
                     <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
