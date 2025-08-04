@@ -20,7 +20,7 @@ const MainContent = ({ mainData }) => {
 
     return (
         <>
-            <main className="pt-14 h-full overflow-x-hidden">
+            <main className="pt-14 pb-20 h-full overflow-x-hidden">
                 <section className="relative px-3 pt-5 pb-2 dark:bg-gray-800 bg-primary rounded-b-3xl profile-animation overflow-hidden h-28">
                     <i
                         onClick={() => navigate(-1)}

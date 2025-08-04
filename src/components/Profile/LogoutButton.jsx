@@ -18,7 +18,7 @@ const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter 
         setIsLoading(true);
         try {
             const result = await fetch(
-                `${import.meta.env.VITE_BASE_URL}/api/userActivity/logout`,
+                `${import.meta.env.VITE_BASE_URL}/api/userActivity/logout/single`,
                 {
                     method: "POST",
                     headers: {
@@ -69,11 +69,9 @@ const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter 
     };
 
     return <button
+        disabled={isLoading}
         onClick={(e) => deleteHandler(sessionId, index, type, e)}
-        className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${isLoading
-            ? "px-5 py-0.5"
-            : "px-3 py-[0.300rem]"
-            } rounded text-xs font-semibold tracking-wide text-white transform active:bg-white transition-all duration-75 ease-linear`}
+        className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary h-6 w-[23%] rounded text-xs font-semibold tracking-wide text-white transform active:bg-white transition-all duration-75 ease-linear `}
     >
         {isLoading ? <DotBounceLoader /> : "LOGOUT"}
     </button>

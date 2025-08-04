@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { selectDeviceFingerPrint, setIsLoggedInHome } from "../../features/home/homeSlice";
+import { setIsLoggedIn } from "../../features/Login/loginSlice";
+import { setIsLoggedInRestro } from "../../features/home/restaurantsSlice";
 import LogoutButton from "./LogoutButton";
+import DotBounceLoader from "../../utils/DotBounceLoader";
+import { toast } from "react-toastify";
 
 const Logout = ({ mainData }) => {
     const [currentActiveSession, setCurrentActiveSession] = useState({});
@@ -42,11 +46,11 @@ const Logout = ({ mainData }) => {
         return inIndianTime;
     };
 
-    const deleteHandler = async (sessionId, index, type) => {
+    const deleteHandler = async () => {
         setDeleteLoading(true);
         try {
             const result = await fetch(
-                `${import.meta.env.VITE_BASE_URL}/api/userActivity/logout`,
+                `${import.meta.env.VITE_BASE_URL}/api/userActivity/logout/many`,
                 {
                     method: "POST",
                     headers: {
@@ -54,9 +58,6 @@ const Logout = ({ mainData }) => {
                         "x-device-id": deviceFingerPrint,
                         "x-user-agent": navigator.userAgent,
                     },
-                    body: JSON.stringify({
-                        id: sessionId,
-                    }),
                     credentials: "include",
                 }
             );
@@ -67,19 +68,12 @@ const Logout = ({ mainData }) => {
 
             console.log(data);
 
-            if (type === "other") {
-                setOtherActiveSessions((prv) => {
-                    const update = [...prv];
-                    update.splice(index, 1);
-
-                    return update;
-                });
-            } else {
-                window.location.href = "/";
-                dispatch(setIsLoggedIn(false));
-                dispatch(setIsLoggedInHome(false));
-                dispatch(setIsLoggedInRestro(false));
-            }
+            window.location.href = "/";
+            setOtherActiveSessions([]);
+            setCurrentActiveSession({});
+            dispatch(setIsLoggedIn(false));
+            dispatch(setIsLoggedInHome(false));
+            dispatch(setIsLoggedInRestro(false));
             setDeleteLoading(false);
         } catch (err) {
             console.log("Error in logout", err);
@@ -124,9 +118,6 @@ const Logout = ({ mainData }) => {
                         </span>
                     </p>
                 </div>
-                {/* <button onClick={() => deleteHandler(currentActiveSession?.id, null, "current")} className="bg-primary dark:bg-darkPrimary px-3 py-[0.300rem] rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out">
-                    LOGOUT
-                </button> */}
                 <LogoutButton sessionId={currentActiveSession?.id} type="current" />
             </div>
             {otherActiveSessions.length !== 0 && (
@@ -146,16 +137,6 @@ const Logout = ({ mainData }) => {
                                             )}
                                             {` Browser`}
                                         </p>
-                                        {/* <button
-                                            onClick={() => deleteHandler(session.id, index, "other")}
-                                            className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading
-                                                ? "px-5 py-0.5"
-                                                : "px-3 py-[0.300rem]"
-                                                } rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out`}
-                                        >
-                                            {deleteLoading ? <DotBounceLoader /> : "LOGOUT"}
-                                        </button> */}
-
                                         <LogoutButton
                                             sessionId={session.id}
                                             index={index}
@@ -188,8 +169,14 @@ const Logout = ({ mainData }) => {
         </div>
 
         {otherActiveSessions.length !== 0 && (
-            <button className="bg-primary mx-auto block dark:bg-darkPrimary px-3 py-1 rounded text-sm font-semibold tracking-wide text-white mt-5 transform active:scale-95 transition-all duration-75 ease-in-out">
-                Logout of All Devices
+            <button
+                disabled={deleteLoading}
+                onClick={deleteHandler}
+                className="bg-primary max-lg:w-[70%] h-8 mx-auto flex items-center justify-center dark:bg-darkPrimary px-3 py-1 rounded text-sm font-semibold tracking-wide text-white mt-5"
+            >
+                {deleteLoading ? <DotBounceLoader />
+                    : "Logout of All Devices"
+                }
             </button>
         )}
     </div>

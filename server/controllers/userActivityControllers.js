@@ -267,7 +267,9 @@ exports.setUserItemsToBeAddedInCartData = async (req, res, next) => {
 }
 
 exports.logTheUserOut = async (req, res, next) => {
+    const mode = req.params.mode;
     const sessionId = req.body.id;
+    const userId = req.UserID;
 
     if (!sessionId) {
         return res.status(400).json({
@@ -276,28 +278,55 @@ exports.logTheUserOut = async (req, res, next) => {
         })
     }
 
-    try {
-        const deletedSession = await SessionModel.findByIdAndDelete(sessionId);
+    if (mode === "single") {
+        try {
+            const deletedSession = await SessionModel.findByIdAndDelete(sessionId);
 
-        if (!deletedSession) {
-            return res.status(404).json({
-                status: "failed",
-                message: "Session not found"
+            if (!deletedSession) {
+                return res.status(404).json({
+                    status: "failed",
+                    message: "Session not found"
+                })
+            }
+
+
+            return res.status(200).json({
+                status: "success",
+                message: "User logged out successfully",
+            })
+
+        } catch (err) {
+            console.log("Error in logging the user out", err);
+
+            return res.status(500).json({
+                status: "error",
+                login: "Internal server error"
             })
         }
+    } else {
+        try {
+            const deletedSession = await SessionModel.deleteMany({ userId });
+
+            if (!deletedSession) {
+                return res.status(404).json({
+                    status: "failed",
+                    message: "Sessions with the given user are not found"
+                })
+            }
 
 
-        return res.status(200).json({
-            status: "success",
-            message: "User logged out successfully",
-        })
+            return res.status(200).json({
+                status: "success",
+                message: "User logged out from all sessions successfully",
+            })
 
-    } catch (err) {
-        console.log("Error in logging the user out", err);
+        } catch (err) {
+            console.log("Error in logging the user out", err);
 
-        return res.status(500).json({
-            status: "error",
-            login: "Internal server error"
-        })
+            return res.status(500).json({
+                status: "error",
+                login: "Internal server error"
+            })
+        }
     }
 }
