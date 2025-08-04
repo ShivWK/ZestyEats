@@ -5,20 +5,23 @@ import {
     useLoaderData,
 } from "react-router";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import { Suspense, useEffect, useState } from "react";
 import ScooterAnimation from "../../utils/ScooterAnimation";
 import ProfileResponseShimmer from "./ProfileResponseShimmer";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
-import DotBounceLoader from "./../../utils/DotBounceLoader"
+import DotBounceLoader from "./../../utils/DotBounceLoader";
 import { toast } from "react-toastify";
+import { setIsLoggedIn } from "../../features/Login/loginSlice";
 
 const MainContent = ({ mainData }) => {
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [otherActiveSessions, setOtherActiveSessions] = useState([]);
     const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
+    const dispatch = useDispatch();
+
     const navigate = useNavigate();
     const [searchParams] = useSearchParams();
     const mode = searchParams.get("mode");
@@ -27,11 +30,15 @@ const MainContent = ({ mainData }) => {
     console.log(mainData);
 
     if (mode === "Logout Options") {
-        currentActiveSession = mainData.data?.find((session) => session.activeNow === true);
+        currentActiveSession = mainData.data?.find(
+            (session) => session.activeNow === true
+        );
     }
 
     useEffect(() => {
-        const otherSessions = mainData.data?.filter((session) => session.activeNow === false);
+        const otherSessions = mainData.data?.filter(
+            (session) => session.activeNow === false
+        );
         setOtherActiveSessions(otherSessions);
     }, []);
 
@@ -52,48 +59,54 @@ const MainContent = ({ mainData }) => {
         return inIndianTime;
     };
 
-    const deleteHandler = async (sessionId, index) => {
+    const deleteHandler = async (sessionId, index, type) => {
         setDeleteLoading(true);
         try {
-            const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/logout`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "x-device-id": deviceFingerPrint,
-                    "x-user-agent": navigator.userAgent,
-                },
-                body: JSON.stringify({
-                    id: sessionId
-                }),
-                credentials: "include"
-            })
+            const result = await fetch(
+                `${import.meta.env.VITE_BASE_URL}/api/userActivity/logout`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-device-id": deviceFingerPrint,
+                        "x-user-agent": navigator.userAgent,
+                    },
+                    body: JSON.stringify({
+                        id: sessionId,
+                    }),
+                    credentials: "include",
+                }
+            );
 
             const data = await result.json();
             console.log(data);
 
-            setOtherActiveSessions((prv) => {
-                const update = [...prv];
-                update.splice(index, 1);
+            if (type === "other") {
+                setOtherActiveSessions((prv) => {
+                    const update = [...prv];
+                    update.splice(index, 1);
 
-                return update;
-            })
+                    return update;
+                });
+            } else {
+                dispatch(setIsLoggedIn(false));
+                window.location.href = "/";
+            }
             setDeleteLoading(false);
         } catch {
             console.log("Error in logout", err);
 
-            toast.error("Can't logout. Please try after sometime",
-                {
-                    autoClose: 3000,
-                    style: {
-                        backgroundColor: "rgba(0,0,0,0.9)",
-                        fontWeight: "medium",
-                        color: "white",
-                    }
-                }
-            )
+            toast.error("Can't logout. Please try after sometime", {
+                autoClose: 3000,
+                style: {
+                    backgroundColor: "rgba(0,0,0,0.9)",
+                    fontWeight: "medium",
+                    color: "white",
+                },
+            });
             setDeleteLoading(false);
         }
-    }
+    };
 
     return (
         <>
@@ -103,7 +116,7 @@ const MainContent = ({ mainData }) => {
                         onClick={() => navigate(-1)}
                         className="ri-arrow-left-long-line text-2xl text-white font-medium"
                     />
-                    <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs mt-0.5">
+                    <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs mt-2">
                         {mode}
                     </h1>
                 </section>
@@ -111,7 +124,10 @@ const MainContent = ({ mainData }) => {
                     <ScooterAnimation />
                 </div>
                 {mode === "Logout Options" ? (
-                    <div className={`bg-gray-100 ${otherActiveSessions.length !== 0 && "pb-3"} dark:bg-gray-800 rounded-md overflow-hidden w-[95%] mx-auto`}>
+                    <div
+                        className={`bg-gray-100 ${otherActiveSessions.length !== 0 && "pb-3"
+                            } dark:bg-gray-800 rounded-md overflow-hidden w-[95%] mx-auto`}
+                    >
                         <div>
                             <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
                                 <h2 className="text-white text-xl">CURRENT DEVICE</h2>
@@ -136,7 +152,7 @@ const MainContent = ({ mainData }) => {
                                         </span>
                                     </p>
                                 </div>
-                                <button className="bg-primary dark:bg-darkPrimary px-3 py-[0.300rem] rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out">
+                                <button onClick={() => deleteHandler(currentActiveSession.id, null, "current")} className="bg-primary dark:bg-darkPrimary px-3 py-[0.300rem] rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out">
                                     LOGOUT
                                 </button>
                             </div>
@@ -147,9 +163,7 @@ const MainContent = ({ mainData }) => {
                                     </div>
                                     {otherActiveSessions.map((session, index) => {
                                         return (
-                                            <div
-                                                className="px-2 py-4 border-b-2 rounded border-gray-800 dark:border-gray-400"
-                                            >
+                                            <div className="px-2 py-4 border-b-2 rounded border-gray-800 dark:border-gray-400">
                                                 <div>
                                                     <div className="flex items-center justify-between">
                                                         <p className="block dark:text-gray-200">
@@ -160,8 +174,12 @@ const MainContent = ({ mainData }) => {
                                                             {` Browser`}
                                                         </p>
                                                         <button
-                                                            onClick={() => deleteHandler(session.id, index)}
-                                                            className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading ? "px-5 py-0.5" : "px-3 py-[0.300rem]"} rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out`}>
+                                                            onClick={() => deleteHandler(session.id, index, "other")}
+                                                            className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${deleteLoading
+                                                                    ? "px-5 py-0.5"
+                                                                    : "px-3 py-[0.300rem]"
+                                                                } rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out`}
+                                                        >
                                                             {deleteLoading ? <DotBounceLoader /> : "LOGOUT"}
                                                         </button>
                                                     </div>
@@ -190,7 +208,9 @@ const MainContent = ({ mainData }) => {
                         </div>
 
                         {otherActiveSessions.length !== 0 && (
-                            <button className="bg-primary mx-auto block dark:bg-darkPrimary px-3 py-1 rounded text-sm font-semibold tracking-wide text-white mt-5 transform active:scale-95 transition-all duration-75 ease-in-out">Logout of All Devices</button>
+                            <button className="bg-primary mx-auto block dark:bg-darkPrimary px-3 py-1 rounded text-sm font-semibold tracking-wide text-white mt-5 transform active:scale-95 transition-all duration-75 ease-in-out">
+                                Logout of All Devices
+                            </button>
                         )}
                     </div>
                 ) : mode === "Saved Address" ? (
