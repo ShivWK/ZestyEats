@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectDeviceFingerPrint, setIsLoggedInHome } from "../../features/home/homeSlice";
 import { setIsLoggedIn } from "../../features/Login/loginSlice";
@@ -13,7 +13,8 @@ const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter 
     const [isLoading, setIsLoading] = useState(false);
 
 
-    const deleteHandler = async (sessionId, index, type) => {
+    const deleteHandler = async (sessionId, index, type, e) => {
+        e.stopPropagation();
         setIsLoading(true);
         try {
             const result = await fetch(
@@ -68,11 +69,11 @@ const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter 
     };
 
     return <button
-        onClick={() => deleteHandler(sessionId, index, type)}
+        onClick={(e) => deleteHandler(sessionId, index, type, e)}
         className={`bg-primary flex items-center justify-center self-start dark:bg-darkPrimary ${isLoading
             ? "px-5 py-0.5"
             : "px-3 py-[0.300rem]"
-            } rounded text-xs font-semibold tracking-wide text-white transform active:scale-95 transition-all duration-75 ease-in-out`}
+            } rounded text-xs font-semibold tracking-wide text-white transform active:bg-white transition-all duration-75 ease-linear`}
     >
         {isLoading ? <DotBounceLoader /> : "LOGOUT"}
     </button>
