@@ -122,6 +122,9 @@ exports.signup = async (req, res) => {
 
         const signUpOTP = crypto.randomInt(100000, 1000000);
 
+        // Delete existing otp(s)
+        await OtpModal.deleteMany({ visiterId });
+
         if (mode === "phone") {
             const text = `Hi ${cleanName.split(" ")[0]}, your OTP is ${signUpOTP} to complete your signup. Do not share this code with anyone. This code is valid for 5 minutes.`;
 
@@ -167,6 +170,7 @@ exports.signup = async (req, res) => {
                 // Generate OTP Doc
                 const hashedOTP = crypto.createHash("sha256").update(String(signUpOTP)).digest("hex");
                 await OtpModal.create({
+                    visiterId,
                     email: cleanEmail,
                     for: "signup",
                     hashedOtp: hashedOTP
@@ -263,11 +267,11 @@ exports.login = async (req, res, next) => {
 
         const loginOTP = crypto.randomInt(100000, 1000000);
 
+        // Delete existing otp(s)
+        await OtpModal.deleteMany({ visiterId });
+
         if (mode === "phone") {
             const text = `Hi, your OTP is ${loginOTP} to complete your login. Do not share this code with anyone. This code is valid for 5 minutes.`;
-
-            // Delete existing otp(s)
-            await OtpModal.deleteMany({ visiterId });
 
             sms(cleanPhone, text)
                 .then(res => res.json())
@@ -311,6 +315,7 @@ exports.login = async (req, res, next) => {
                 // Generate OTP Doc
                 const hashedOTP = crypto.createHash("sha256").update(String(loginOTP)).digest("hex");
                 await OtpModal.create({
+                    visiterId,
                     email: cleanEmail,
                     for: "login",
                     hashedOtp: hashedOTP
