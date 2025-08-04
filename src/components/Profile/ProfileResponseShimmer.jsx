@@ -12,7 +12,7 @@ const ProfileResponseShimmer = () => {
             <ScooterAnimation />
         </div>
 
-        <div className="absolute top-3/5 -translate-y-1/2  -translate-x-1/2 left-1/2 w-[95%] flex flex-col gap-4">
+        <div className="w-[95%] flex flex-col gap-4 mx-auto">
             <div className="border flex flex-col gap-3 border-gray-500 rounded-md p-2" > 
                 <div className="shimmerBg rounded w-[80%] h-5"></div>
                 <div className="shimmerBg rounded w-[70%] h-5"></div>
@@ -40,6 +40,8 @@ const ProfileResponseShimmer = () => {
                 </div>
             </div>
         </div>
+
+        <DotBounceLoader />
 
         <MobileFooterMenu />
     </main>
