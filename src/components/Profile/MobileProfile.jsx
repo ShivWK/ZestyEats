@@ -42,8 +42,11 @@ const MobileProfile = () => {
     },
   ];
 
-  const divClickHandler = (mode) => {
-    if (!AppLoading) {
+  const clickHandler = (mode, e) => {
+    if (AppLoading) {
+      e.preventDefault();
+    } else if (mode === "address" || mode === "payment") {
+      e.preventDefault();
     }
   };
 
@@ -101,8 +104,7 @@ const MobileProfile = () => {
       </div>
       <section className="mx-auto w-[90%] rounded-2xl p-2 bg-white border not-dark:border-gray-400 dark:bg-gray-800">
         {buttons.map((button, index) => (
-          <Link key={index} to={`/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}`}
-            onClick={divClickHandler}
+          <Link key={index} onClick={(e) => clickHandler(button.text.toLowerCase(), e)} to={`/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}`}
             className={`flex gap-2 items-center px-2 py-4 ${index !== (buttons.length - 1) && "border-b-[1px] dark:border-b-white border-gray-400"}`}>
             {AppLoading
               ? (<div className="w-[100%] self-center shimmerBg h-7 rounded-md" />)
