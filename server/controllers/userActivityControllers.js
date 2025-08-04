@@ -271,14 +271,14 @@ exports.logTheUserOut = async (req, res, next) => {
     const sessionId = req.body.id;
     const userId = req.UserID;
 
-    if (!sessionId) {
-        return res.status(400).json({
-            status: "failed",
-            message: "Session ID is required"
-        })
-    }
-
     if (mode === "single") {
+        if (!sessionId) {
+            return res.status(400).json({
+                status: "failed",
+                message: "Session ID is required"
+            })
+        }
+
         try {
             const deletedSession = await SessionModel.findByIdAndDelete(sessionId);
 
