@@ -14,6 +14,20 @@ exports.checkSessionId = (req, res, next) => {
     next();
 }
 
+const calSessionValidationScore = (stored, current) => {
+    let score = 0;
+
+    if (stored.visitorId === current.visitorId) score += 5;
+    if (stored.browserName === current.browserName) score += 3;
+    if (stored.browserVersion === current.browserVersion) score += 2;
+    if (stored.oSName === current.oSName) score += 2;
+    if (stored.oSVersion === current.oSVersion) score += 1;
+    if (stored.uA === current.uA) score += 2;
+    if (stored.deviceModal === current.deviceModal) score += 1;
+    if (stored.deviceVender === current.deviceVender) score += 1;
+    
+}
+
 exports.protected = async (req, res, next) => {
     const rSid = req.signedCookies.rSid;
     const headers = req.headers;
@@ -45,11 +59,6 @@ exports.protected = async (req, res, next) => {
 
         const sessionDeviceInfo = session.deviceInfo;
         console.log("Existing vistor", sessionDeviceInfo)
-
-        // const clientIPs = clientFingerPrint.deviceIp.split(",").map(ip => ip.trim());
-        // const sessionIPs = sessionDeviceInfo.deviceIp.split(",").map(ip => ip.trim());
-
-        // const doesMatch = clientIPs.some(ip => sessionIPs.includes(ip));
 
         if (
             clientFingerPrint.visitorId !== sessionDeviceInfo.visitorId ||

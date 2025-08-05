@@ -61,7 +61,7 @@ const MobileProfile = () => {
           onClick={() => navigate(-1)}
           className="ri-arrow-left-long-line text-2xl text-white font-medium"
         ></i>
-        {!AppLoading ? (
+        {(!AppLoading || !deviceId) ? (
           <div className="flex items-center justify-between mt-7">
             <div>
               <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs">

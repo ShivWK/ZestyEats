@@ -12,6 +12,9 @@ export const recentLocationModifier = async (locations, loggedIn, deviceId) => {
                 "Content-Type": "application/json",
                 "x-device-id": deviceId,
                 "x-user-agent": navigator.userAgent,
+                "x-language": navigator.language,
+                "x-resolution": `${screen.height}x${screen.width}`,
+                "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
             },
             credentials: "include"
         })
@@ -37,6 +40,9 @@ export const favRestaurantsModifier = async (restaurants, loggedIn, deviceId) =>
                 "Content-Type": "application/json",
                 "x-device-id": deviceId,
                 "x-user-agent": navigator.userAgent,
+                "x-language": navigator.language,
+                "x-resolution": `${screen.height}x${screen.width}`,
+                "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
             },
             credentials: "include"
         })
@@ -62,6 +68,9 @@ export const wishListedItemsModifier = async (items, loggedIn, deviceId) => {
                 "Content-Type": "application/json",
                 "x-device-id": deviceId,
                 "x-user-agent": navigator.userAgent,
+                "x-language": navigator.language,
+                "x-resolution": `${screen.height}x${screen.width}`,
+                "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
             },
             credentials: "include"
         })
@@ -87,6 +96,9 @@ export const itemsToBeAddedInCartModifier = async (items, loggedIn, deviceId) =>
                 "Content-Type": "application/json",
                 "x-device-id": deviceId,
                 "x-user-agent": navigator.userAgent,
+                "x-language": navigator.language,
+                "x-resolution": `${screen.height}x${screen.width}`,
+                "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
             },
             credentials: "include"
         })
@@ -113,6 +125,9 @@ export const cartItemsModifier = async (items, loggedIn, deviceId) => {
                 "Content-Type": "application/json",
                 "x-device-id": deviceId,
                 "x-user-agent": navigator.userAgent,
+                "x-language": navigator.language,
+                "x-resolution": `${screen.height}x${screen.width}`,
+                "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
             },
             credentials: "include"
         })

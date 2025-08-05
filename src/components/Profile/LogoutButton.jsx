@@ -25,6 +25,9 @@ const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter 
                         "Content-Type": "application/json",
                         "x-device-id": deviceFingerPrint,
                         "x-user-agent": navigator.userAgent,
+                        "x-language": navigator.language,
+                        "x-resolution": `${screen.height}x${screen.width}`,
+                        "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
                     },
                     body: JSON.stringify({
                         id: sessionId,

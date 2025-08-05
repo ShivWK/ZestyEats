@@ -121,6 +121,9 @@ const SignUp = memo(({ recaptchaRef }) => {
           "Content-Type": "application/json",
           "x-device-id": deviceFingerPrint,
           "x-user-agent": navigator.userAgent,
+          "x-language": navigator.language,
+          "x-resolution": `${screen.height}x${screen.width}`,
+          "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
         },
         body: JSON.stringify({
           userData,
@@ -171,6 +174,9 @@ const SignUp = memo(({ recaptchaRef }) => {
             "Content-Type": "application/json",
             "x-device-id": deviceFingerPrint,
             "x-user-agent": navigator.userAgent,
+            "x-language": navigator.language,
+            "x-resolution": `${screen.height}x${screen.width}`,
+            "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
           },
           body: JSON.stringify({
             OTP,

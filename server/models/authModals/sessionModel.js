@@ -9,6 +9,9 @@ const deviceInfoSchema = new mongoose.Schema({
     oSVersion: String,
     browserName: String,
     browserVersion: String,
+    timeZone: String,
+    language: String,
+    resolution: String,
     uA: String
 }, { _id: false})
 

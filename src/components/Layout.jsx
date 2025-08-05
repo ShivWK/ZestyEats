@@ -101,6 +101,9 @@ export default function Layout() {
             "Content-Type": "application/json",
             "x-device-id": deviceFingerPrint,
             "x-user-agent": navigator.userAgent,
+            "x-language": navigator.language,
+            "x-resolution": `${screen.height}x${screen.width}`,
+            "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
           },
           credentials: "include"
         });
@@ -120,6 +123,9 @@ export default function Layout() {
               "Content-Type": "application/json",
               "x-device-id": deviceFingerPrint,
               "x-user-agent": navigator.userAgent,
+              "x-language": navigator.language,
+              "x-resolution": `${screen.height}x${screen.width}`,
+              "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
             }
           });
 
@@ -169,6 +175,9 @@ export default function Layout() {
                 headers: {
                   "x-device-id": deviceFingerPrint,
                   "x-user-agent": navigator.userAgent,
+                  "x-language": navigator.language,
+                  "x-resolution": `${screen.height}x${screen.width}`,
+                  "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
                 },
                 credentials: "include"
               })
@@ -180,7 +189,7 @@ export default function Layout() {
               console.log("registered data", data);
 
               UpdateStorage({
-                data, 
+                data,
                 dispatch,
                 setItemToCart,
                 toggleItemsToBeAddedInCart,
@@ -205,7 +214,7 @@ export default function Layout() {
       createGuestSession();
       handleGuestSession();
     }
-  }, [ deviceFingerPrint, isLoggedIn ])
+  }, [deviceFingerPrint, isLoggedIn])
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));

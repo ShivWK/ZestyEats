@@ -45,7 +45,7 @@ const Login = ({ recaptchaRef }) => {
     setLOginFormData(prv => {
       return {
         ...prv,
-        [e.target.name] : e.target.value,
+        [e.target.name]: e.target.value,
       }
     })
   }
@@ -129,6 +129,9 @@ const Login = ({ recaptchaRef }) => {
           "Content-Type": "application/json",
           "x-device-id": deviceFingerPrint,
           "x-user-agent": navigator.userAgent,
+          "x-language": navigator.language,
+          "x-resolution": `${screen.height}x${screen.width}`,
+          "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
         },
         body: JSON.stringify({
           otpFor,
@@ -178,6 +181,10 @@ const Login = ({ recaptchaRef }) => {
             "Content-Type": "application/json",
             "x-device-id": deviceFingerPrint,
             "x-user-agent": navigator.userAgent,
+            "x-language": navigator.language,
+            "x-language": navigator.language,
+            "x-resolution": `${screen.height}x${screen.width}`,
+            "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
           },
           body: JSON.stringify({
             OTP,
@@ -226,7 +233,7 @@ const Login = ({ recaptchaRef }) => {
         </div>
       )}
       <div className="mt-5">
-        {!isOtpSend &&  ( otpOnPhone ? (
+        {!isOtpSend && (otpOnPhone ? (
           <p className="text-xs mt-2 font-bold text-gray-600 dark:text-gray-300 tracking-wide">
             OTP will be sent to {" "}
             <span className="text-black dark:text-white">
@@ -290,7 +297,7 @@ const Login = ({ recaptchaRef }) => {
             fallbackPlaceholder="One Time Password"
             changeIsEntryMade={changeOtpIsEntryMade}
             changeHasValue={changeOtpHasValue}
-            otpFormData={{ phone: loginFormData.phone, email: loginFormData.email}}
+            otpFormData={{ phone: loginFormData.phone, email: loginFormData.email }}
             focus="true"
             onChangeHandler={handleChange}
             recaptchaRef={recaptchaRef}

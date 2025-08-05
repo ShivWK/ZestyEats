@@ -56,6 +56,9 @@ const Logout = ({ mainData }) => {
                         "Content-Type": "application/json",
                         "x-device-id": deviceFingerPrint,
                         "x-user-agent": navigator.userAgent,
+                        "x-language": navigator.language,
+                        "x-resolution": `${screen.height}x${screen.width}`,
+                        "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
                     },
                     credentials: "include",
                 }
