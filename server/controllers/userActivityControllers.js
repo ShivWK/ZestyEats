@@ -39,12 +39,10 @@ exports.protected = async (req, res, next) => {
     const headers = req.headers;
     const clientUa = headers["x-user-agent"];
     const uaResult = UAParser(clientUa);
-
-    console.log("Protext vistor", headers["x-device-id"])
-
+    
     const clientDeviceInfo = deviceFingerPrinter(uaResult, req);
 
-    // console.log(clientDeviceInfo);
+    console.log("Client", clientDeviceInfo);
 
     if (!rSid) {
         return res.status(401).json({
@@ -64,7 +62,7 @@ exports.protected = async (req, res, next) => {
         }
 
         const sessionDeviceInfo = session.deviceInfo;
-        // console.log("Existing vistor", sessionDeviceInfo)
+        console.log("Existing visitor", sessionDeviceInfo)
 
         const score = calSessionValidationScore(sessionDeviceInfo, clientDeviceInfo);
         console.log(score)
