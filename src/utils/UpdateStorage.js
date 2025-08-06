@@ -45,7 +45,7 @@ const UpdateStorage = ({
     }
 
     const recentLocations = mainData?.recentLocations;
-    if (recentLocations != null && recentLocations.length !== 0 ) {
+    if (recentLocations != null && recentLocations.length !== 0) {
         dispatch(addRecentLocations(recentLocations));
         localStorage.setItem(RECENTLOCATIONS, JSON.stringify(recentLocations))
     } else {

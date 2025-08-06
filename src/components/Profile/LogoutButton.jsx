@@ -1,13 +1,23 @@
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { selectDeviceFingerPrint, setIsLoggedInHome } from "../../features/home/homeSlice";
 import { setIsLoggedIn } from "../../features/Login/loginSlice";
-import { setIsLoggedInRestro } from "../../features/home/restaurantsSlice";
+import { 
+    setIsLoggedInRestro, 
+    setItemToCart, 
+    toggleItemsToBeAddedInCart, 
+    addToWishlistItem, 
+    setFavoriteRestro 
+} from "../../features/home/restaurantsSlice";
+import { addRecentLocations } from "../../features/home/homeSlice";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { toast } from "react-toastify";
+import cleanOnLogout from "../../utils/logoutCleaner";
 
 const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter = null }) => {
     const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +60,15 @@ const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter 
                     return update;
                 });
             } else {
-                window.location.href = "/";
+                navigate("/");
+                cleanOnLogout({
+                    dispatch,
+                    setItemToCart,
+                    toggleItemsToBeAddedInCart,
+                    setFavoriteRestro,
+                    addRecentLocations,
+                    addToWishlistItem
+                })
                 dispatch(setIsLoggedIn(false));
                 dispatch(setIsLoggedInHome(false));
                 dispatch(setIsLoggedInRestro(false));

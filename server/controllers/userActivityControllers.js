@@ -2,6 +2,7 @@ const UserActivityModal = require("./../models/userActivityModel");
 const SessionModel = require("./../models/authModals/sessionModel");
 const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 const { UAParser } = require("ua-parser-js");
+const calSessionValidationScore = require("./../utils/calSessionValidationScore");
 
 exports.checkSessionId = (req, res, next) => {
     if (!req.signedCookies.rSid) {
@@ -14,23 +15,23 @@ exports.checkSessionId = (req, res, next) => {
     next();
 }
 
-const calSessionValidationScore = (stored, current) => {
-    let score = 0;
+// const calSessionValidationScore = (stored, current) => {
+//     let score = 0;
 
-    if (stored.visitorId === current.visitorId) score += 5;
-    if (stored.deviceIp === current.deviceIp) score += 1;
-    if (stored.browserName === current.browserName) score += 3;
-    if (stored.browserVersion === current.browserVersion) score += 2;
-    if (stored.oSName === current.oSName) score += 2;
-    if (stored.oSVersion === current.oSVersion) score += 1;
-    if (stored.uA === current.uA) score += 2;
-    if (stored.deviceModal === current.deviceModal) score += 1;
-    if (stored.deviceVender === current.deviceVender) score += 1;
-    if (stored.language === current.language) score += 1;
-    if (stored.resolution === current.resolution) score += 1;
+//     if (stored.visitorId === current.visitorId) score += 5;
+//     if (stored.deviceIp === current.deviceIp) score += 1;
+//     if (stored.browserName === current.browserName) score += 3;
+//     if (stored.browserVersion === current.browserVersion) score += 2;
+//     if (stored.oSName === current.oSName) score += 2;
+//     if (stored.oSVersion === current.oSVersion) score += 1;
+//     if (stored.uA === current.uA) score += 2;
+//     if (stored.deviceModal === current.deviceModal) score += 1;
+//     if (stored.deviceVender === current.deviceVender) score += 1;
+//     if (stored.language === current.language) score += 1;
+//     if (stored.resolution === current.resolution) score += 1;
 
-    return score;
-}
+//     return score;
+// }
 
 exports.protected = async (req, res, next) => {
     const rSid = req.signedCookies.rSid;

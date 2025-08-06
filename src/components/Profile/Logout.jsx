@@ -1,17 +1,27 @@
 import { useState, useEffect } from "react"
+import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { selectDeviceFingerPrint, setIsLoggedInHome } from "../../features/home/homeSlice";
 import { setIsLoggedIn } from "../../features/Login/loginSlice";
-import { setIsLoggedInRestro } from "../../features/home/restaurantsSlice";
+import {
+    setIsLoggedInRestro,
+    setItemToCart,
+    toggleItemsToBeAddedInCart,
+    addToWishlistItem,
+    setFavoriteRestro
+} from "../../features/home/restaurantsSlice";
+import { addRecentLocations } from "../../features/home/homeSlice";
 import LogoutButton from "./LogoutButton";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { toast } from "react-toastify";
+import cleanOnLogout from "../../utils/logoutCleaner";
 
 const Logout = ({ mainData }) => {
     const [currentActiveSession, setCurrentActiveSession] = useState({});
     const [deleteLoading, setDeleteLoading] = useState(false);
     const [otherActiveSessions, setOtherActiveSessions] = useState([]);
     const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
+    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -58,7 +68,6 @@ const Logout = ({ mainData }) => {
                         "x-user-agent": navigator.userAgent,
                         "x-language": navigator.language,
                         "x-resolution": `${screen.height}x${screen.width}`,
-                        "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
                     },
                     credentials: "include",
                 }
@@ -70,7 +79,15 @@ const Logout = ({ mainData }) => {
 
             console.log(data);
 
-            window.location.href = "/";
+            navigate("/");
+            cleanOnLogout({
+                dispatch,
+                setItemToCart,
+                toggleItemsToBeAddedInCart,
+                setFavoriteRestro,
+                addRecentLocations,
+                addToWishlistItem
+            })
             setOtherActiveSessions([]);
             setCurrentActiveSession({});
             dispatch(setIsLoggedIn(false));

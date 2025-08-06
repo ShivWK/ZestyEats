@@ -511,6 +511,7 @@ exports.verifyOTP = async (req, res, next) => {
     const forWhat = req.params.forWhat;
     const gSid = req.signedCookies.gSid;
     const body = req.body;
+    const otpFor = body.otpFor;
 
     console.log(mode, forWhat, body.OTP, body.otpFor);
 
@@ -536,14 +537,14 @@ exports.verifyOTP = async (req, res, next) => {
         }
     } else {
         if (mode === "phone") {
-            if (!phoneRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP.trim())) {
+            if (!phoneRule.test(otpFor.trim()) || !otpRule.test(body.OTP.trim())) {
                 return res.status(401).json({
                     status: "failed",
                     message: "Invalid Credentials",
                 })
             }
         } else {
-            if (!emailRule.test(body.otpFor.trim()) || !otpRule.test(body.OTP.trim())) {
+            if (!emailRule.test(otpFor.trim()) || !otpRule.test(body.OTP.trim())) {
                 return res.status(401).json({
                     status: "failed",
                     message: "Invalid Credentials",
@@ -564,12 +565,10 @@ exports.verifyOTP = async (req, res, next) => {
         cleanEmail = body.email.trim();
     }
 
-    let OtpDoc = null;
-    if (mode === "phone") {
-        OtpDoc = await OtpModal.findOne({ phone: body.otpFor.trim() })
-    } else {
-        OtpDoc = await OtpModal.findOne({ email: body.otpFor.trim() })
-    }
+    let OtpDoc = await OtpModal.findOne({ [mode]: otpFor.trim() });;
+
+    // if (mode === "phone") OtpDoc = await OtpModal.findOne({ [mode]: otpFor.trim() });
+    // else OtpDoc = await OtpModal.findOne({ email: otpFor.trim() });
 
     if (!OtpDoc) return res.status(410).json({ status: "failed", message: "OTP expired" });
 
@@ -587,8 +586,8 @@ exports.verifyOTP = async (req, res, next) => {
                 isEmailVerified: mode === "email",
             })
         } else {
-            if (mode === "phone") User = await UserModal.findOne({ phone: body.otpFor });
-            else User = await UserModal.findOne({ email: body.otpFor });
+            if (mode === "phone") User = await UserModal.findOne({ phone: otpFor });
+            else User = await UserModal.findOne({ email: otpFor });
         }
 
         // Create a registered session
@@ -598,6 +597,26 @@ exports.verifyOTP = async (req, res, next) => {
             deviceInfo: deviceFingerPrinter(uaResult, req),
             type: "registered"
         });
+
+        res.cookie("rSid", session.id, {
+            maxAge: 1000 * 60 * 60 * 24,
+            httpOnly: true,
+            signed: true,
+            secure: true,
+            sameSite: "None",
+            path: "/"
+        })
+
+        res.status(200).json({
+            status: "success",
+            data: {
+                userName: User.name,
+                userEmail: User.email,
+                userPhone: User.phone,
+                isEmailVerified: User.isEmailVerified,
+                isPhoneVerified: User.isNumberVerified,
+            }
+        })
 
         // Generate user activity doc
 
@@ -613,29 +632,25 @@ exports.verifyOTP = async (req, res, next) => {
                 recentLocations: gData.data.recentLocations || [],
             })
         } else {
-            
+
         };
 
-        res.cookie("rSid", session.id, {
-            maxAge: 1000 * 60 * 60 * 24,
-            httpOnly: true,
-            signed: true,
-            secure: true,
-            sameSite: "None",
-            path: "/"
-        })
-
-        return res.status(200).json({
-            status: "success",
-            data: {
-                userName: User.name,
-                userEmail: User.email,
-                userPhone: User.phone,
-                isEmailVerified: User.isEmailVerified,
-                isPhoneVerified: User.isNumberVerified,
+        await SessionModel.findByIdAndUpdate(gSid, {
+            $set: {
+                "data.cartItems": {},
+                "data.itemsToBeAddedInCart": {},
+                "data.wishListedItems": {},
+                "data.favRestaurants": [],
+                "data.recentLocations": []
             }
         })
     } else {
+        const updatedAccessDoc = await AccessModal.findOneAndUpdate(
+            { [mode]: otpFor }, 
+            { $inc: { attempts :  1} },
+            { new: true, upsert: true },
+        )
+
         return res.status(401).json({
             status: "failed",
             message: "Invalid OTP"
