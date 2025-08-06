@@ -5,7 +5,7 @@ import Cards from "../Home/Cards";
 const FavoriteRestros = () => {
     const restaurants = useSelector(selectFavoriteRestros);
 
-    return <div className="dark:bg-gray-800 pb-6">
+    return <div className="dark:bg-gray-800 pb-4 px-2">
         { restaurants.length !== 0 
         ? <div className="flex flex-col gap-4 pt-4 items-center">
             {
