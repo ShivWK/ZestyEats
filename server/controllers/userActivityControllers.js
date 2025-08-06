@@ -65,6 +65,7 @@ exports.protected = async (req, res, next) => {
         console.log("Existing vistor", sessionDeviceInfo)
 
         const score = calSessionValidationScore(sessionDeviceInfo, clientDeviceInfo);
+        console.log(score)
 
         if (score < 15) {
             return res.status(401).json({
