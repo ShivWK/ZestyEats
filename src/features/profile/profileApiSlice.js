@@ -10,7 +10,6 @@ const profileApiSlice = createApi({
             headers.set("x-user-agent", navigator.userAgent)
             headers.set("x-language", navigator.language)
             headers.set("x-resolution", `${screen.height}x${screen.width}`,)
-            headers.set("x-timeZone", Intl.DateTimeFormat().resolvedOptions().timeZone)
 
             return headers;
         },

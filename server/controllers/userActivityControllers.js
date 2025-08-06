@@ -18,6 +18,7 @@ const calSessionValidationScore = (stored, current) => {
     let score = 0;
 
     if (stored.visitorId === current.visitorId) score += 5;
+    if (stored.deviceIp === current.deviceIp) score += 1;
     if (stored.browserName === current.browserName) score += 3;
     if (stored.browserVersion === current.browserVersion) score += 2;
     if (stored.oSName === current.oSName) score += 2;
@@ -25,7 +26,10 @@ const calSessionValidationScore = (stored, current) => {
     if (stored.uA === current.uA) score += 2;
     if (stored.deviceModal === current.deviceModal) score += 1;
     if (stored.deviceVender === current.deviceVender) score += 1;
-    
+    if (stored.language === current.language) score += 1;
+    if (stored.resolution === current.resolution) score += 1;
+
+    return score;
 }
 
 exports.protected = async (req, res, next) => {
@@ -36,9 +40,9 @@ exports.protected = async (req, res, next) => {
 
     console.log("Protext vistor", headers["x-device-id"])
 
-    const clientFingerPrint = deviceFingerPrinter(uaResult, req);
+    const clientDeviceInfo = deviceFingerPrinter(uaResult, req);
 
-    console.log(clientFingerPrint);
+    console.log(clientDeviceInfo);
 
     if (!rSid) {
         return res.status(401).json({
@@ -60,16 +64,9 @@ exports.protected = async (req, res, next) => {
         const sessionDeviceInfo = session.deviceInfo;
         console.log("Existing vistor", sessionDeviceInfo)
 
-        if (
-            clientFingerPrint.visitorId !== sessionDeviceInfo.visitorId ||
-            clientFingerPrint.browserName !== sessionDeviceInfo.browserName ||
-            clientFingerPrint.browserVersion !== sessionDeviceInfo.browserVersion ||
-            clientFingerPrint.deviceModal !== sessionDeviceInfo.deviceModal ||
-            clientFingerPrint.deviceVender !== sessionDeviceInfo.deviceVender ||
-            clientFingerPrint.oSName !== sessionDeviceInfo.oSName ||
-            clientFingerPrint.oSVersion !== sessionDeviceInfo.oSVersion ||
-            clientFingerPrint.uA !== sessionDeviceInfo.uA
-        ) {
+        const score = calSessionValidationScore(sessionDeviceInfo, clientDeviceInfo);
+
+        if (score < 15) {
             return res.status(401).json({
                 status: "failed",
                 message: "Not a valid session. Please login again.",

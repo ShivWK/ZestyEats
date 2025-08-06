@@ -105,6 +105,7 @@ export default function App() {
     const deviceInfo = async () => {
       const fp = await FingerprintJS.load();
       const result = await fp.get();
+      console.log(result.components.timezone.value)
       dispatch(setDeviceFingerPrint(result.visitorId));
       dispatch(setDeviceFingerPrintRestro(result.visitorId));
     }

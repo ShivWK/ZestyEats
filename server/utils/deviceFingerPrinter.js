@@ -10,7 +10,6 @@ const deviceFingerPrinter = (UAResult, req) => {
         oSVersion: UAResult.os?.version?.trim()?.split(".")[0],
         browserName: UAResult.browser?.name?.trim()?.toLowerCase(),
         browserVersion: UAResult.browser?.version?.trim()?.split(".")[0],
-        timeZone: headers["x-timeZone"],
         language: headers["x-language"],
         resolution: headers["x-resolution"],
         uA: UAResult.ua?.trim()?.toLowerCase()

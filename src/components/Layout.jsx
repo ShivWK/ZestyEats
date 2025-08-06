@@ -102,8 +102,7 @@ export default function Layout() {
             "x-device-id": deviceFingerPrint,
             "x-user-agent": navigator.userAgent,
             "x-language": navigator.language,
-            "x-resolution": `${screen.height}x${screen.width}`,
-            "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
+            "x-resolution": `${screen.height}x${screen.width}`,   
           },
           credentials: "include"
         });
@@ -125,7 +124,6 @@ export default function Layout() {
               "x-user-agent": navigator.userAgent,
               "x-language": navigator.language,
               "x-resolution": `${screen.height}x${screen.width}`,
-              "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
             }
           });
 
@@ -177,7 +175,6 @@ export default function Layout() {
                   "x-user-agent": navigator.userAgent,
                   "x-language": navigator.language,
                   "x-resolution": `${screen.height}x${screen.width}`,
-                  "x-timeZone": Intl.DateTimeFormat().resolvedOptions().timeZone
                 },
                 credentials: "include"
               })
