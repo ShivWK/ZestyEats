@@ -1,7 +1,7 @@
 const calSessionValidationScore = (stored, current) => {
     let score = 0;
 
-    if (stored.visitorId === current.visitorId) score += 5;
+    // if (stored.visitorId === current.visitorId) score += 5;
     if (stored.deviceIp === current.deviceIp) score += 1;
     if (stored.browserName === current.browserName) score += 3;
     if (stored.browserVersion === current.browserVersion) score += 2;
