@@ -36,7 +36,7 @@ exports.protected = async (req, res, next) => {
 
     console.log("Protext vistor", headers["x-device-id"])
 
-    const clientFingerPrint = deviceFingerPrinter(headers, uaResult, req);
+    const clientFingerPrint = deviceFingerPrinter(uaResult, req);
 
     console.log(clientFingerPrint);
 

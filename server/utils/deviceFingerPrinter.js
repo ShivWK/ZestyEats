@@ -1,4 +1,6 @@
-const deviceFingerPrinter = (headers, UAResult, req) => {
+const deviceFingerPrinter = (UAResult, req) => {
+    const headers = req.headers;
+
     return {
         visitorId: headers["x-device-id"],
         deviceIp: headers["x-forwarded-for"] || req.socket.remoteAddress,
@@ -8,6 +10,9 @@ const deviceFingerPrinter = (headers, UAResult, req) => {
         oSVersion: UAResult.os?.version?.trim()?.split(".")[0],
         browserName: UAResult.browser?.name?.trim()?.toLowerCase(),
         browserVersion: UAResult.browser?.version?.trim()?.split(".")[0],
+        timeZone: headers["x-timeZone"],
+        language: headers["x-language"],
+        resolution: headers["x-resolution"],
         uA: UAResult.ua?.trim()?.toLowerCase()
     }
 }

@@ -14,7 +14,6 @@ const mongooseURI = process.env.MONGOOSE_URI;
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://swiggy-clone-beige-gamma.vercel.app",
   "https://zestyeats-beige-gamma.vercel.app",
   "https://zestyeats.shivendra.site"
 ];

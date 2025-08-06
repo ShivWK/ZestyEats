@@ -23,7 +23,7 @@ exports.guestSession = async (req, res, next) => {
         const session = await SessionModel.findById(gSid);
         if (!session) {
             const session = await SessionModel.create({
-                deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                deviceInfo: deviceFingerPrinter(uaResult, req),
                 type: "guest"
             });
 
@@ -146,7 +146,7 @@ exports.signup = async (req, res) => {
                     // Generate Access Doc
                     await AccessModal.create({
                         sessionId: req.signedCookies.gSid,
-                        deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                        deviceInfo: deviceFingerPrinter(uaResult, req),
                         phone: cleanPhone,
                     })
 
@@ -182,7 +182,7 @@ exports.signup = async (req, res) => {
                 // Generate Access Doc
                 await AccessModal.create({
                     sessionId: req.signedCookies.gSid,
-                    deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                    deviceInfo: deviceFingerPrinter(uaResult, req),
                     email: cleanEmail,
                 })
 
@@ -294,7 +294,7 @@ exports.login = async (req, res, next) => {
                     // Generate Access Doc
                     await AccessModal.create({
                         sessionId: req.signedCookies.gSid,
-                        deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                        deviceInfo: deviceFingerPrinter(uaResult, req),
                         phone: cleanPhone,
                     })
 
@@ -330,7 +330,7 @@ exports.login = async (req, res, next) => {
                 // Generate Access Doc
                 await AccessModal.create({
                     sessionId: req.signedCookies.gSid,
-                    deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                    deviceInfo: deviceFingerPrinter(uaResult, req),
                     email: cleanEmail,
                 })
 
@@ -595,7 +595,7 @@ exports.verifyOTP = async (req, res, next) => {
 
         const session = await SessionModel.create({
             userId: User.id,
-            deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+            deviceInfo: deviceFingerPrinter(uaResult, req),
             type: "registered"
         });
 
@@ -694,7 +694,7 @@ exports.getGuestSessionData = async (req, res, next) => {
 
         try {
             const session = await SessionModel.create({
-                deviceInfo: deviceFingerPrinter(headers, uaResult, req),
+                deviceInfo: deviceFingerPrinter(uaResult, req),
                 type: "guest"
             });
 
