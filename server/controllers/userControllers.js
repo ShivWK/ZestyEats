@@ -509,7 +509,7 @@ exports.verifyOTP = async (req, res, next) => {
     const headers = req.headers;
     const mode = req.params.mode;
     const forWhat = req.params.forWhat;
-    const visiterId = headers["x-device-id"];
+    const gSid = req.signedCookies.gSid;
     const body = req.body;
 
     console.log(mode, forWhat, body.OTP, body.otpFor);
@@ -600,7 +600,21 @@ exports.verifyOTP = async (req, res, next) => {
         });
 
         // Generate user activity doc
-        if (forWhat === "signup") await UserActivityModal.create({ userId: User.id });
+
+        const gData = await SessionModel.findById(gSid);
+
+        if (forWhat === "signup") {
+            await UserActivityModal.create({
+                userId: User.id,
+                cartItems: gData.data.cartItems || {},
+                itemsToBeAddedInCart: gData.data.itemsToBeAddedInCart || {},
+                wishListedItems: gData.data.wishListedItems || {},
+                favRestaurants: gData.data.favRestaurants || [],
+                recentLocations: gData.data.recentLocations || [],
+            })
+        } else {
+            
+        };
 
         res.cookie("rSid", session.id, {
             maxAge: 1000 * 60 * 60 * 24,

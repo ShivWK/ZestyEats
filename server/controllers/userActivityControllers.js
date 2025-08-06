@@ -42,7 +42,7 @@ exports.protected = async (req, res, next) => {
 
     const clientDeviceInfo = deviceFingerPrinter(uaResult, req);
 
-    console.log(clientDeviceInfo);
+    // console.log(clientDeviceInfo);
 
     if (!rSid) {
         return res.status(401).json({
@@ -62,7 +62,7 @@ exports.protected = async (req, res, next) => {
         }
 
         const sessionDeviceInfo = session.deviceInfo;
-        console.log("Existing vistor", sessionDeviceInfo)
+        // console.log("Existing vistor", sessionDeviceInfo)
 
         const score = calSessionValidationScore(sessionDeviceInfo, clientDeviceInfo);
         console.log(score)
