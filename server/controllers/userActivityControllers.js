@@ -3,6 +3,7 @@ const SessionModel = require("./../models/authModals/sessionModel");
 const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 const { UAParser } = require("ua-parser-js");
 const calSessionValidationScore = require("./../utils/calSessionValidationScore");
+const cleanGuestSessionData = require("./../utils/cleanGuestSessionData");
 
 exports.checkSessionId = (req, res, next) => {
     if (!req.signedCookies.rSid) {
@@ -275,6 +276,7 @@ exports.setUserItemsToBeAddedInCartData = async (req, res, next) => {
 }
 
 exports.logTheUserOut = async (req, res, next) => {
+    const gSid = req.signedCookies.gSid;
     const mode = req.params.mode;
     const sessionId = req.body.id;
     const userId = req.UserID;
@@ -297,8 +299,7 @@ exports.logTheUserOut = async (req, res, next) => {
                 })
             }
 
-
-            return res.status(200).json({
+            res.status(200).json({
                 status: "success",
                 message: "User logged out successfully",
             })
@@ -308,7 +309,7 @@ exports.logTheUserOut = async (req, res, next) => {
 
             return res.status(500).json({
                 status: "error",
-                login: "Internal server error"
+                message: "Internal server error"
             })
         }
     } else {
@@ -322,8 +323,9 @@ exports.logTheUserOut = async (req, res, next) => {
                 })
             }
 
+            await cleanGuestSessionData(gSid);
 
-            return res.status(200).json({
+            res.status(200).json({
                 status: "success",
                 message: "User logged out from all sessions successfully",
             })
@@ -337,4 +339,6 @@ exports.logTheUserOut = async (req, res, next) => {
             })
         }
     }
+
+    await cleanGuestSessionData(gSid);
 }

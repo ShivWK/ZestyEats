@@ -10,6 +10,7 @@ const sms = require("./../utils/sms");
 const { UAParser } = require('ua-parser-js');
 const signupEmail = require("./../utils/emailTemplates/signupEmail");
 const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
+const cleanGuestSessionData = require("./../utils/cleanGuestSessionData");
 
 exports.guestSession = async (req, res, next) => {
     const headers = req.headers;
@@ -635,15 +636,16 @@ exports.verifyOTP = async (req, res, next) => {
 
         };
 
-        await SessionModel.findByIdAndUpdate(gSid, {
-            $set: {
-                "data.cartItems": {},
-                "data.itemsToBeAddedInCart": {},
-                "data.wishListedItems": {},
-                "data.favRestaurants": [],
-                "data.recentLocations": []
-            }
-        })
+        // await SessionModel.findByIdAndUpdate(gSid, {
+        //     $set: {
+        //         "data.cartItems": {},
+        //         "data.itemsToBeAddedInCart": {},
+        //         "data.wishListedItems": {},
+        //         "data.favRestaurants": [],
+        //         "data.recentLocations": []
+        //     }
+        // })
+        await cleanGuestSessionData(gSid);
     } else {
         const updatedAccessDoc = await AccessModal.findOneAndUpdate(
             { [mode]: otpFor }, 
