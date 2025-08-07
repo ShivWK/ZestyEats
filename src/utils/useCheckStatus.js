@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import haversineFormula from "./haversineFormula";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { selectLatAndLng } from "../features/home/homeSlice";
 import { useLazyGetSpecificRestaurantDataQuery } from "../features/home/restaurantsApiSlice";
+import { setIsDeliveryRestaurantOpen } from "../features/home/restaurantsSlice";
 
 const useCheckStatus = (lat, lng, restaurant_id) => {
+    const dispatch = useDispatch();
     const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
     const [trigger] = useLazyGetSpecificRestaurantDataQuery();
     const [status, setStatus] = useState({ opened: true, isDeliverable: true, loading: true });
@@ -16,14 +18,13 @@ const useCheckStatus = (lat, lng, restaurant_id) => {
                 const info = data.data.cards[2].card.card.info;
 
                 const opened = info?.availability?.opened;
+                dispatch(setIsDeliveryRestaurantOpen(opened));
+
                 const [latRestro, lngRestro] = info?.latLong?.split(",") || [];
-                
-                // console.log(latRestro, latCurrent, lngRestro, lngCurrent)
 
                 let distance = haversineFormula(latRestro, latCurrent, lngRestro, lngCurrent);
                 const isDeliverable = distance <= 10;
-                
-                // console.log(opened, isDeliverable, distance.toFixed(2))
+            
                 distance = distance.toFixed(2)
                 setStatus({opened, isDeliverable, loading: false, distance})
             } catch (err) {

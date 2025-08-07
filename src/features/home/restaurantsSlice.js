@@ -18,12 +18,17 @@ const restaurantSlice = createSlice({
     cart: {},
     favoriteRestro: [],
     isLoggedIn: false,
-    deviceFingerPrint: null
+    deviceFingerPrint: null,
+    isDeliveryRestaurantOpen: true,
   },
 
   reducers: {
     setDeviceFingerPrintRestro: (state, action) => {
       state.deviceFingerPrint = action.payload
+    },
+
+    setIsDeliveryRestaurantOpen: (state, action) => {
+      state.isDeliveryRestaurantOpen = action.payload;
     },
 
     setIsLoggedInRestro: (state, action) => {
@@ -206,11 +211,13 @@ export const selectCart = (state) => state.restaurant.cart;
 export const selectItemsToBeAddedInCart = state => state.restaurant.itemsToBeAddedInCart;
 export const selectFavoriteRestros = state => state.restaurant.favoriteRestro;
 export const selectHideMenu = (state) => state.restaurant.hideMenu;
+export const selectIsRestaurantOpen = (state) => state.restaurant.isDeliveryRestaurantOpen;
 
 export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({ vegOption: veg, nonVegOption: non_veg }))
 
 export const {
   setIsLoggedInRestro,
+  setIsDeliveryRestaurantOpen,
   addCurrentRestaurant,
   setVegOption,
   setNonVegOption,

@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import haversineFormula from "./../../utils/haversineFormula";
 import { Link } from "react-router";
+import { selectIsRestaurantOpen } from "../../features/home/restaurantsSlice";
 
-const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery }) => {
+const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, isDeliverable }) => {
   console.log(latDelivery, lngDelivery)
 
   const cart = useSelector(selectCart);
+  const isRestaurantOpen = useSelector(selectIsRestaurantOpen);
+
   const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
 
   const [restroDemographics, setRestroDemographics] = useState([]);
@@ -80,6 +83,23 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
     setCouponsOpen(false);
     setOpenInfo(false);
   };
+
+  const checkoutClickHandler = (e) => {
+    if (!isDeliverable) {
+      e.preventDefault();
+    }
+  }
+
+  const proceedFurtherClickHandler = (e) => {
+    if (!isRestaurantOpen) {
+      e.preventDefault();
+    } else {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      })
+    }
+  }
 
   return (
     <section className="rounded-md md:basis-[39%] dark:bg-gray-300 bg-white p-2 md:p-5 md:self-start">
@@ -233,12 +253,13 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
         {!checkout ? (
           <Link
             to={`/paymentsAndAddresses?restroDemographics=${restroDemographics}`}
-            className="bg-green-400 py-1.5 lg:py-1 rounded text-white font-sans font-medium tracking-wide cursor-pointer text-center active:scale-95 transform transition-all duration-150">
-            Proceed Further
+            onClick={proceedFurtherClickHandler}
+            className={`${isRestaurantOpen ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700" } py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isRestaurantOpen && "active:scale-95" } transform transition-all duration-150`} >
+            {isRestaurantOpen ? "Proceed Further" : "Restaurant is closed"}
           </Link>
         )
           : (
-            <Link className="bg-green-400 py-1.5 lg:py-1 rounded text-white font-sans font-medium tracking-wide cursor-pointer text-center active:scale-95 transform transition-all duration-150">Checkout</Link>
+            <Link onClick={checkoutClickHandler} className={`${isDeliverable ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isDeliverable && "active:scale-95"} transform transition-all duration-150`}>Checkout</Link>
           )
         }
       </div>
