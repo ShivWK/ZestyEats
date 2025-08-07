@@ -6,9 +6,10 @@ import GeoLocation from "../Location/GeoLocation";
 import Billing from "./Billing";
 import { useSelector } from "react-redux";
 import haversineFormula from "./../../utils/haversineFormula";
-
+import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 
 const PaymentsAndAddress = () => {
+    const [trigger] = useLazyLocationByCoordinatesQuery();
     const [searchParams] = useSearchParams();
     const [latRestro, lngRestro] = searchParams.get("restroDemographics").split(",")
     const { lat, lng } = useSelector(selectLatAndLng);
@@ -17,7 +18,8 @@ const PaymentsAndAddress = () => {
     const [latDelivery, setLatDelivery] = useState(lat)
     const [lngDelivery, setLngDelivery] = useState(lng);
     const [isDeliverable, setIsDeliverable] = useState(true);
-    // const [distance, setDistance] = useState(0);
+    const [currentLocationLoading, setCurrentLocationLoading] = useState(false);
+    const [deliverAddress, setDeliveryAddress] = useState({});
 
     useEffect(() => {
         const checkOverflow = () => {
@@ -43,21 +45,53 @@ const PaymentsAndAddress = () => {
 
         if (distance > 10) setIsDeliverable(false)
         else setIsDeliverable(true);
-        // setDistance(distance.toFixed(2));
 
     }, [latDelivery, lngDelivery, latRestro, lngRestro]);
 
     const getCurrentLocation = () => {
         if (!isDeliverable) return
         if (navigator.geolocation) {
+            let lat = null;
+            let lng = null;
+            setCurrentLocationLoading(true);
 
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                lat = position.coords.latitude;
+                lng = position.coords.longitude;
+
+                setLatDelivery(lat);
+                setLngDelivery(lng);
+
+                try {
+                    const result = await trigger({
+                        lat1: lat,
+                        lng1: lng
+                    }).unwrap();
+
+                    const mainData = result.data[0].address_components;
+                    const deliverAt = {
+                        number: mainData[0].long_name,
+                        locality: mainData[1].long_name,
+                        district: mainData[2].long_name,
+                        state: mainData[4].long_name,
+                        country: mainData[5].long_name,
+                        pinCode: mainData[6].long_name, 
+                    }
+
+                    setDeliveryAddress(deliverAt);
+                    setCurrentLocationLoading(false);
+                } catch (err) {
+                    console.log("Error fetching location data. Please try again later.", err);
+                    setCurrentLocationLoading(false)
+                }
+            })
         }
     }
 
     return <main className={`lg:pt-28 pt-20 w-full min-h-[110%] ${!overflowing && "h-full"} dark:bg-black bg-gray-200`} >
         <div className="w-full flex flex-col max-md:gap-3 md:flex-row justify-between md:max-w-[1070px] max-md:px-1.5 pb-20 mx-auto md:px-3">
-            <section className="md:basis-[59%] flex flex-col gap-2 p-4 dark:bg-gray-300 bg-white rounded">
-                <div className="p-2 w-fit mx-auto">
+            <section className="md:basis-[59%] flex flex-col gap-2 p-2 lg:p-4 dark:bg-gray-300 bg-white rounded">
+                <div className=" w-fit mx-auto">
                     <p className="inline font-medium">Delivery Status: </p>
                     {isDeliverable ? (
                         <div className="inline-flex items-center gap-1">
@@ -69,7 +103,7 @@ const PaymentsAndAddress = () => {
                     ) : (
                         <>
                             <p className="text-red-500 font-medium inline leading-4">
-                                Not delivering to your area. Please select different address{" "}
+                                Not delivering to your address. Please select different address{" "}
                             </p>
                             <div className="relative inline-flex gap-1.5 items-center">
                                 <div id="No delivery" className="relative mt-0.5">
@@ -85,8 +119,6 @@ const PaymentsAndAddress = () => {
                     <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">ADD ADDRESS</h2>
                     </div>
-                    
-
                     <div className="bg-white p-5 w-[86%] mx-auto rounded my-3">
 
                     </div>
@@ -96,10 +128,7 @@ const PaymentsAndAddress = () => {
                     <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
                     </div>
-                    
-
                     <div className="bg-white p-5 w-[86%] mx-auto rounded my-3">
-
                     </div>
                 </div>
             </section>
@@ -113,9 +142,13 @@ const PaymentsAndAddress = () => {
                             onClick={getCurrentLocation}
                             className={`relative group border-[1px] dark:border-gray-400 border-black ${isDeliverable && "active:border-primary cursor-pointer"} py-2 px-3 md:py-2 md:px-5`}
                         >
-                            {!isDeliverable && <div className="absolute flex items-center justify-center top-0 left-0 h-full w-full dark:bg-gray-400/60 bg-black/60">
-                                <p className="font-semibold text-white select-none">Not deliverable</p>
-                            </div>}
+                            {(!isDeliverable || currentLocationLoading) &&
+                                <div className="absolute flex items-center justify-center top-0 left-0 h-full w-full dark:bg-gray-400/60 bg-black/60">
+                                    {currentLocationLoading ?
+                                        (<div className="rounded-full border-4 h-7 w-7 border-t-primary border-white animate-spin" />)
+                                        : (<p className="font-semibold text-white select-none">Not deliverable</p>)}
+                                </div>}
+
                             <div className="flex gap-2.5">
                                 <i className={`ri-crosshair-2-line text-xl text-gray-500 ${isDeliverable && "group-hover:text-primary"} dark:text-gray-300`}></i>
                                 <div>

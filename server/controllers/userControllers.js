@@ -670,7 +670,15 @@ exports.getGuestSessionData = async (req, res, next) => {
         try {
             const session = await SessionModel.findById(rSid);
             if (session) {
-                const user = await UserModal.findById(session.userId);
+                const User = await UserModal.findById(session.userId);
+
+                const user = {
+                    name: User.name,
+                    phone: User.phone,
+                    email: User.email,
+                    isEmailVerified: User.isEmailVerified,
+                    isNumberVerified: User.isNumberVerified,
+                }
 
                 return res.status(200).json({
                     status: "success",

@@ -9,13 +9,12 @@ const ErrorBoundary = () => {
     // useOnlineStatus();
     const navigate = useNavigate();
     const error = useRouteError() // {status, error};
+
     const isOnline = useSelector(selectOnlineStatus);
 
     let message = "Something went wrong. Our team has been notified";
 
     if (!isOnline) return <Offline />
-
-    if (error.status !== 401) return <GeneralError error={error} />
 
     if (error.status === 401) return <UnauthorizedError />
 

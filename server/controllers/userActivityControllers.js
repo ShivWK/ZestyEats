@@ -1,5 +1,6 @@
 const UserActivityModal = require("./../models/userActivityModel");
 const SessionModel = require("./../models/authModals/sessionModel");
+const UserModal = require("./../models/userModel");
 const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 const { UAParser } = require("ua-parser-js");
 const calSessionValidationScore = require("./../utils/calSessionValidationScore");
@@ -21,7 +22,7 @@ exports.protected = async (req, res, next) => {
     const headers = req.headers;
     const clientUa = headers["x-user-agent"];
     const uaResult = UAParser(clientUa);
-    
+
     const clientDeviceInfo = deviceFingerPrinter(uaResult, req);
 
     console.log("Client", clientDeviceInfo);
@@ -58,7 +59,7 @@ exports.protected = async (req, res, next) => {
         }
 
         req.UserID = session.userId;
-        
+
         next();
     } catch (err) {
         console.log("Error in getting session", err);
@@ -129,6 +130,46 @@ exports.getLiveSessions = async (req, res, next) => {
 
 exports.setAllDataAtOnce = async (req, res, next) => {
 
+}
+
+exports.getUserAddress = async (req, res, next) => {
+    const userId = req.UserID;
+
+    try {
+        const result = await UserModal.findById(userId);
+
+        return res.status(200).json({
+            status: "success",
+            data: result.address,
+        })
+    } catch (err) {
+        console.log("Error in fetching user address", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error."
+        })
+    }
+}
+
+exports.getUserPaymentMethods = async (req, res, next) => {
+    const userId = req.UserID;
+
+    try {
+        const result = await UserModal.findById(userId);
+
+        return res.status(200).json({
+            status: "success",
+            data: result.payments,
+        })
+    } catch (err) {
+        console.log("Error in fetching user payment methods", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error."
+        })
+    }
 }
 
 exports.setUserCartData = async (req, res, next) => {

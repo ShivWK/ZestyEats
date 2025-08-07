@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  address: [String],
+  address: [mongoose.Schema.Types.Mixed],
   payments: {
     type: [
       {

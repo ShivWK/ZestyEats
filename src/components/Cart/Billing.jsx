@@ -7,7 +7,7 @@ import { Link } from "react-router";
 import { selectIsRestaurantOpen } from "../../features/home/restaurantsSlice";
 
 const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, isDeliverable }) => {
-  console.log(latDelivery, lngDelivery)
+  // console.log(latDelivery, lngDelivery)
 
   const cart = useSelector(selectCart);
   const isRestaurantOpen = useSelector(selectIsRestaurantOpen);
@@ -32,8 +32,8 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
   useEffect(() => {
     const cartItem = Object.values(cart);
     const [latRestro, lngRestro] =
-      cartItem[0].restaurantData.metadata?.latLong.split(",") ||
-      cartItem[0].restaurantData.latLong.split(",");
+      cartItem[0]?.restaurantData.metadata?.latLong.split(",") ||
+      cartItem[0]?.restaurantData.latLong.split(",");
 
     setRestroDemographics([latRestro, lngRestro])
 

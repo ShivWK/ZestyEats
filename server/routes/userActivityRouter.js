@@ -13,6 +13,8 @@ const {
     setAllDataAtOnce,
     getLiveSessions,
     logTheUserOut,
+    getUserAddress,
+    getUserPaymentMethods
 } = require("../controllers/userActivityControllers");
 
 userActivityRouter.use(checkSessionId);
@@ -20,6 +22,8 @@ userActivityRouter.use(protected);
 
 userActivityRouter.route("/userActivityData").get(getUserActivityData);
 userActivityRouter.route("/loggedInSession").get(getLiveSessions);
+userActivityRouter.route("/userAddress").get(getUserAddress);
+userActivityRouter.route("/userPaymentMethods").get(getUserPaymentMethods);
 
 userActivityRouter.route("/logout/:mode").post(logTheUserOut);
 
