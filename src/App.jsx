@@ -1,5 +1,5 @@
 import { createBrowserRouter, Route, RouterProvider, createRoutesFromElements } from "react-router-dom";
-import { Suspense, lazy, useEffect } from "react";
+import React, { Suspense, lazy, useEffect } from "react";
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
 
@@ -26,7 +26,7 @@ import RestaurantResultPage from "./components/Search/RestaurantResultPage";
 import DishResultPage from "./components/Search/DishResultPage";
 import CityHome from "./components/cityHome/CityHome";
 
-import { specificRestroLoader, specificFoodLoader, profileResponseLoader } from "./loaders/loaders";
+import { specificRestroLoader, specificFoodLoader, profileResponseLoader, paymentsAndAddressesLoader } from "./loaders/loaders";
 import { searchHomeLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
 import CuisinesResultPage from "./components/Search/CuisinesResultPage";
 import OptionsPage from "./components/MobilePages/OptionsPage";
@@ -41,6 +41,7 @@ import PopularDishes from "./components/cityHome/DishPage/PopularDishes";
 import CompanyPolicies from "./components/CompanyPolicies";
 import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
 import useOnlineStatus from "./utils/useOnlineStatus";
+import PaymentsAndAddress from "./components/Cart/PaymentsAndAddress";
 
 import {
   selectLocationModal,
@@ -316,9 +317,12 @@ export default function App() {
         <Route path='*' element={<PageNotFound />} />
         <Route path="legalAndPolicies" element={<CompanyPolicies />} />
         <Route path="mobileProfileResponse" loader={profileResponseLoader} element={<MobileProfileResponse />} />
+        <Route path="paymentsAndAddresses"  element={<PaymentsAndAddress />} />
       </Route>
     )
   );
+
+  // loader={paymentsAndAddressesLoader}
 
   return (
     <>

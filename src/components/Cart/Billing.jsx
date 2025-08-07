@@ -3,11 +3,15 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import haversineFormula from "./../../utils/haversineFormula";
+import { Link } from "react-router";
 
-const Billing = () => {
+const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery }) => {
+  console.log(latDelivery, lngDelivery)
+
   const cart = useSelector(selectCart);
   const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
 
+  const [restroDemographics, setRestroDemographics] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
   const [GST, setGST] = useState(0);
   const [distance, setDistance] = useState(0);
@@ -28,11 +32,13 @@ const Billing = () => {
       cartItem[0].restaurantData.metadata?.latLong.split(",") ||
       cartItem[0].restaurantData.latLong.split(",");
 
+    setRestroDemographics([latRestro, lngRestro])
+
     const distance = haversineFormula(
       latRestro,
-      latCurrent,
+      checkout ? latDelivery : latCurrent,
       lngRestro,
-      lngCurrent
+      checkout ? lngDelivery : lngCurrent,
     ).toFixed(2);
     setDistance(distance);
 
@@ -81,9 +87,9 @@ const Billing = () => {
         onClick={containerClickHandler}
         className="h-full w-full flex flex-col gap-4"
       >
-        <h2 className="font-sans text-xl font-semibold underline underline-offset-4">
+        {heading && <h2 className="font-sans text-xl font-semibold underline underline-offset-4">
           Bill Details
-        </h2>
+        </h2>}
         <div
           onClick={handlerCouponClick}
           id="coupon"
@@ -132,30 +138,30 @@ const Billing = () => {
                 onMouseLeave={() => setOpenDeliveryInfo(false)}
               >
 
-              <div
-                onClick={(e) => e.stopPropagation()}
-                id="delivery_dropdown"
-                className="absolute -top-[325%] -left-[130%] h-[4.2rem] w-48 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
-                style={{
-                  display: openDeliveryInfo ? "block" : "none",
-                }}
-              >
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="relative h-full"
+                  id="delivery_dropdown"
+                  className="absolute -top-[325%] -left-[130%] h-[4.2rem] w-48 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                  style={{
+                    display: openDeliveryInfo ? "block" : "none",
+                  }}
                 >
-                  <div className="font-sans">
-                    <div className="flex items-center font-normal grow-0 justify-between text-xs text-gray-600">
-                      <p className="text-black font-semibold">Delivery Fee</p>
-                      <p className="font-semibold text-black">₹{deliveryFee}</p>
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative h-full"
+                  >
+                    <div className="font-sans">
+                      <div className="flex items-center font-normal grow-0 justify-between text-xs text-gray-600">
+                        <p className="text-black font-semibold">Delivery Fee</p>
+                        <p className="font-semibold text-black">₹{deliveryFee}</p>
+                      </div>
+                      <p className="text-[12px] tracking-wide mt-1 text-gray-700">
+                        Calculated based on distance: ₹10 base + ₹5/km after 1 km
+                      </p>
                     </div>
-                    <p className="text-[12px] tracking-wide mt-1 text-gray-700">
-                      Calculated based on distance: ₹10 base + ₹5/km after 1 km
-                    </p>
+                    <div className="absolute top-[115%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                   </div>
-                  <div className="absolute top-[115%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
                 </div>
-              </div>
               </i>
             </p>
             <span className="text-gray-700 dark:text-black font-semibold">₹{deliveryFee}</span>
@@ -175,46 +181,46 @@ const Billing = () => {
                 onMouseLeave={() => setOpenInfo(false)}
               >
 
-              <div
-                onClick={(e) => e.stopPropagation()}
-                id="dropdown"
-                className="absolute -top-[760%] -left-[130%] h-[10.5rem] w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
-                style={{
-                  display: openInfo ? "block" : "none",
-                }}
-              >
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className="relative h-full"
+                  id="dropdown"
+                  className="absolute -top-[760%] -left-[130%] h-[10.5rem] w-52 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white"
+                  style={{
+                    display: openInfo ? "block" : "none",
+                  }}
                 >
-                  <div className="font-sans">
-                    <p className="break-words text-xs font-semibold text-black">
-                      GST & Other Charges
-                    </p>
-                    <div className="flex items-center font-medium justify-between text-xs text-black mt-2">
-                      <p>Restaurant Packaging</p>
-                      <p className="font-semibold">₹{packagingCharge}</p>
+                  <div
+                    onClick={(e) => e.stopPropagation()}
+                    className="relative h-full"
+                  >
+                    <div className="font-sans">
+                      <p className="break-words text-xs font-semibold text-black">
+                        GST & Other Charges
+                      </p>
+                      <div className="flex items-center font-medium justify-between text-xs text-black mt-2">
+                        <p>Restaurant Packaging</p>
+                        <p className="font-semibold">₹{packagingCharge}</p>
+                      </div>
+                      <div className="flex items-center font-medium justify-between text-xs text-black mt-1.5">
+                        <p>GST(5%)</p>
+                        <p className="font-semibold">₹{+GST.toFixed(2)}</p>
+                      </div>
+                      <p className="text-[12px] font-sans leading-4 mt-0.5 text-gray-700" >
+                        A government tax calculated as 5% of the total item cost.
+                      </p>
+                      <div className="flex items-center font-medium justify-between text-xs text-black mt-1.5">
+                        <p>Platform Fee</p>
+                        <p className="font-semibold">₹{platformFee}</p>
+                      </div>
+                      <p className="text-[12px] font-sans leading-4 mt-0.5 text-gray-700">
+                        A fixed service charge to support app maintenance and
+                        operations.
+                      </p>
                     </div>
-                    <div className="flex items-center font-medium justify-between text-xs text-black mt-1.5">
-                      <p>GST(5%)</p>
-                      <p className="font-semibold">₹{+GST.toFixed(2)}</p>
-                    </div>
-                    <p className="text-[12px] font-sans leading-4 mt-0.5 text-gray-700" >
-                      A government tax calculated as 5% of the total item cost.
-                    </p>
-                    <div className="flex items-center font-medium justify-between text-xs text-black mt-1.5">
-                      <p>Platform Fee</p>
-                      <p className="font-semibold">₹{platformFee}</p>
-                    </div>
-                    <p className="text-[12px] font-sans leading-4 mt-0.5 text-gray-700">
-                      A fixed service charge to support app maintenance and
-                      operations.
-                    </p>
-                  </div>
 
-                  <div className="absolute top-[104%] left-3.5 bottom-full h-0 w-0 border-t-10 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
+                    <div className="absolute top-[104%] left-3.5 bottom-full h-0 w-0 border-t-10 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
+                  </div>
                 </div>
-              </div>
               </i>
             </div>
             <span className="text-gray-700 dark:text-black font-semibold">₹{GSTAndOther}</span>
@@ -224,10 +230,22 @@ const Billing = () => {
             <span className="text-black font-bold">₹{grandTotal}</span>
           </div>
         </div>
-        <button className="bg-green-400 py-1.5 lg:py-1 rounded text-white font-sans font-medium tracking-wide cursor-pointer active:scale-95 transform transition-all duration-150">Proceed Further</button>
+        {!checkout ? (
+          <Link
+            to={`/paymentsAndAddresses?restroDemographics=${restroDemographics}`}
+            className="bg-green-400 py-1.5 lg:py-1 rounded text-white font-sans font-medium tracking-wide cursor-pointer text-center active:scale-95 transform transition-all duration-150">
+            Proceed Further
+          </Link>
+        )
+          : (
+            <Link className="bg-green-400 py-1.5 lg:py-1 rounded text-white font-sans font-medium tracking-wide cursor-pointer text-center active:scale-95 transform transition-all duration-150">Checkout</Link>
+          )
+        }
       </div>
     </section>
   );
 };
+
+// to={"/checkout"}
 
 export default Billing;

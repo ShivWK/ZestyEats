@@ -58,6 +58,7 @@ exports.protected = async (req, res, next) => {
         }
 
         req.UserID = session.userId;
+        
         next();
     } catch (err) {
         console.log("Error in getting session", err);

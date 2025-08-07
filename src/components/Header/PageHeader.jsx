@@ -26,9 +26,10 @@ const PageHeader = memo(() => {
     return <GeneralHeader placeholder={"Search"} />
   } else if (pathname === "/help" || pathname === "/support") {
     return <GeneralHeader placeholder={"Help & Support"} />;
-  } else if (pathname === "/profile" || pathname === "/mobileProfile" || pathname === "/mobileProfileResponse") {
+  } else if (pathname === "/profile" || pathname === "/mobileProfile" || pathname === "/mobileProfileResponse"
+  ) {
     return <GeneralHeader placeholder={"My Account"} />;
-  } else if (pathname === "/cart") {
+  } else if (pathname === "/cart" || pathname === "/paymentsAndAddresses") {
     return isSmall ? <MobileCartHeader /> : <CartHeader />;
   } else if (pathname.includes("restaurantSpecific") || pathname.includes("dishSearch")) {
     return <RestaurantsHeader />;

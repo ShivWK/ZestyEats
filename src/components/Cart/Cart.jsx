@@ -37,7 +37,7 @@ const Cart = () => {
 
         return <>
             <main className={`w-full min-h-[110%] ${!overflowing && "h-full"} dark:bg-black bg-gray-200`}>
-                <div className="w-full flex flex-col max-md:gap-3 md:flex-row justify-between  md:max-w-[1070px] pt-20 max-md:px-1.5 md:pt-28 pb-28 mx-auto md:px-3">
+                <div className="w-full flex flex-col max-md:gap-3 md:flex-row justify-between md:max-w-[1070px] pt-20 max-md:px-1.5 md:pt-28 pb-28 mx-auto md:px-3">
                     <RestaurantCard data={cart} />
                     <Billing />
                 </div>

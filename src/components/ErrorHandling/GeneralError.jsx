@@ -1,6 +1,8 @@
 import { useNavigate } from "react-router"
 
 const GeneralError = ({ error }) => {
+    console.log(error)
+
     const navigate = useNavigate();
     const isDev = import.meta.env.DEV;
 
