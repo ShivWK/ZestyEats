@@ -47,7 +47,7 @@ const MobileProfile = () => {
   const clickHandler = (mode, e) => {
     if (AppLoading) {
       e.preventDefault();
-    } else if (mode === "address" || mode === "payment") {
+    } else if (mode === "payment") {
       e.preventDefault();
     }
   };

@@ -12,6 +12,7 @@ import ScooterAnimation from "../../utils/ScooterAnimation";
 import ProfileResponseShimmer from "./ProfileResponseShimmer";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import Logout from "./Logout";
+import Address from "./Address";
 import { selectIsLoggedIn } from "../../features/Login/loginSlice";
 import UnauthorizedError from "../ErrorHandling/UnauthorizedError";
 
@@ -21,7 +22,7 @@ const MainContent = ({ mainData }) => {
     const [searchParams] = useSearchParams();
     const mode = searchParams.get("mode");
 
-    console.log(mainData);
+    console.log("main", mainData);
 
     if (!isLoggedIn) return <UnauthorizedError />
 
@@ -37,13 +38,13 @@ const MainContent = ({ mainData }) => {
                         {mode}
                     </h1>
                 </section>
-                <div className="my-4">
+                {mode === "Logout Options" && <div className="my-4">
                     <ScooterAnimation />
-                </div>
+                </div>}
                 {mode === "Logout Options" ? (
                     <Logout mainData={mainData} />
                 ) : mode === "Saved Address" ? (
-                    ""
+                    <Address data={mainData} />
                 ) : (
                     ""
                 )}
