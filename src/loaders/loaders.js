@@ -73,6 +73,7 @@ export const profileResponseLoader = ({ request }) => {
 }
 
 export const paymentsAndAddressesLoader = ({ request }) => {
+  
   // const searchObject = new URL(request.url).searchParams;
   // const forWhat = searchObject.get("for");
   // const deviceId = searchObject.get("deviceId")
