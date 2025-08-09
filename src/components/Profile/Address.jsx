@@ -27,7 +27,7 @@ const Address = (data) => {
         setSearchedCountries(searchedData);
     };
 
-
+    console.log(searchedCountries)
 
     const countryClickHandler = (e) => {
         e.stopPropagation();
@@ -36,14 +36,6 @@ const Address = (data) => {
 
         setTimeout(() => setOpenDropDown(false), 100)
     };
-
-    let mapOnData = [];
-
-    if (selectedCountry.length !== 0) {
-        mapOnData = searchedCountries;
-    } else {
-        mapOnData = allCountries;
-    }
 
     useEffect(() => {
         if (selectedCountry.length !== 0) {
@@ -84,9 +76,9 @@ const Address = (data) => {
 
                             <div
                                 onBlur={() => setOpenDropDown(false)}
-                                className={`absolute top-[110%] ${(openDropDown) ? "max-h-0" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
+                                className={`absolute top-[110%] ${(openDropDown) ? "max-h-80" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
                             >
-                                {mapOnData.map((country, index) => (
+                                {searchedCountries.map((country, index) => (
                                     <p
                                         onClick={countryClickHandler}
                                         key={index}
@@ -98,32 +90,32 @@ const Address = (data) => {
                             </div>
                         </div>
 
-                        <div className="mt-2">
+                        <div className="mt-2.5">
                             <p className="text-sm dark:text-white text-black">Full Name</p>
                             <input type="text" name="name" placeholder="Enter your name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2">
+                        <div className="mt-2.5">
                             <p className="text-sm dark:text-white text-black">Phone number</p>
                             <input type="tel" name="phone" placeholder="Enter your phone number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2">
+                        <div className="mt-2.5">
                             <p className="text-sm dark:text-white text-black">Flat no./ House no./ Building / Company</p>
                             <input type="text" name="flatNumber" placeholder="Enter flat, house number, building, or company" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2">
+                        <div className="mt-2.5">
                             <p className="text-sm dark:text-white text-black">Landmark</p>
                             <input type="text" name="flatNumber" placeholder="Enter your landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2">
+                        <div className="mt-2.5">
                             <p className="text-sm dark:text-white text-black">Pin Code</p>
                             <input type="number" name="flatNumber" placeholder="Enter your pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
                     </form>
-                    <button className=" mt-5 bg-primary mx-auto w-44 h-7 dark:bg-darkPrimary block rounded-md font-medium text-white">
+                    <button className=" mt-5 bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary block rounded-md font-medium text-white">
                         Save
                     </button>
                 </div>
