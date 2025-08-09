@@ -295,7 +295,9 @@ const Address = (data) => {
                     <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
                     </div>
-                    {savedAddresses && savedAddresses.map(address => <UserAddress address={address} /> )}
+                    {savedAddresses.length !== 0
+                        ? savedAddresses.map(address => <UserAddress address={address} />)
+                        : <p className="text-center font-semibold tracking-wide text-black dark:text-gray-200">No Saved address</p>}
                 </div>
 
             </section>
