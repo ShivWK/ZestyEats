@@ -21,7 +21,9 @@ exports.getUserAddress = async (req, res, next) => {
 }
 
 exports.setUserAddress = async (req, res, next) => {
-    const userId = req.userID;
+    const userId = req.UserID;
+    console.log(userId)
+
     const data = req.body.address;
 
     try {
@@ -54,6 +56,29 @@ exports.updateUserAddress = (req, res, next) => {
 
 }
 
-exports.deleteUserAddress = (req, res, next) => {
+exports.deleteUserAddress = async (req, res, next) => {
+    const id = req.body.addressId;
 
+    if (!id) {
+        return res.status(400).json({
+            status: "failed",
+            message: "Please provide address id."
+        })
+    }
+
+    try {
+        await AddressModel.findByIdAndDelete({ id });
+
+        return res.status(200).json({
+            status: "success",
+            message: "Address deleted successfully"
+        })
+    } catch (err) {
+        console.log("Error occurred while fetching address", err)
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error"
+        })
+    }
 }

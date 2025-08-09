@@ -6,9 +6,10 @@ import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import DotBounceLoader from "./../../utils/DotBounceLoader";
 import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
+import UserAddress from "./UserAddress";
 
 const Address = (data) => {
-    // console.log(data.data.data);
+    console.log(data);
 
     const pathName = useLocation().pathname;
     const deviceId = useSelector(selectDeviceFingerPrint);
@@ -282,8 +283,8 @@ const Address = (data) => {
                                 </button>
 
                                 <button type="button" onClick={() => setShowForm(false)} className="active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary flex items-center justify-center rounded-md font-medium text-white">
-                                Close
-                            </button>
+                                    Close
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -294,30 +295,9 @@ const Address = (data) => {
                     <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
                     </div>
-                    {savedAddresses.map(address => <div 
-                    className="p-2 rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
-                    >
-                    <p className="font-semibold tracking-wide">{address.name}</p>
-                    <p className="whitespace-normal">{address.flatNumber}</p>
-                    <p>{`${address.state}, ${address.pinCode}, ${address.country}.`}</p>
-                    {address.landmark && <p>Landmark: {address.landmark}</p>}
-                    <p>{address.phone}</p>
-
-                    <div className="flex items-center gap-2 text-sm ml-auto mt-2">
-                        <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                            Edit
-                        </button>
-                        {pathName !== "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                            Use
-                        </button>}
-
-                        {pathName === "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                            Remove
-                        </button>}
-                    </div>
-                </div>)}
+                    {savedAddresses && savedAddresses.map(address => <UserAddress address={address} /> )}
                 </div>
-                
+
             </section>
         </>
 

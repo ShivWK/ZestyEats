@@ -30,7 +30,8 @@ userActivityRouter.use(protected);
 
 userActivityRouter.route("/userActivityData").get(getUserActivityData);
 userActivityRouter.route("/loggedInSession").get(getLiveSessions);
-userActivityRouter.route("/userAddress").get(getUserAddress).post(setUserAddress);
+userActivityRouter.route("/userAddress").get(getUserAddress).post(setUserAddress).delete(deleteUserAddress);
+// userActivityRouter.route("/")
 userActivityRouter.route("/userPaymentMethods").get(getUserPaymentMethods);
 
 userActivityRouter.route("/logout/:mode").post(logTheUserOut);
