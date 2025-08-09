@@ -297,7 +297,7 @@ const Address = (data) => {
                     </div>
                     {savedAddresses.length !== 0
                         ? savedAddresses.map(address => <UserAddress address={address} />)
-                        : <p className="text-center font-semibold tracking-wide text-black dark:text-gray-200">No Saved address</p>}
+                        : <p className="text-center font-semibold tracking-wide text-black dark:text-gray-200">No Saved Address</p>}
                 </div>
 
             </section>

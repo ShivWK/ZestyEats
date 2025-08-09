@@ -3,7 +3,7 @@ const AddressModel = require("./../models/userAddressModel");
 exports.getUserAddress = async (req, res, next) => {
     const userId = req.userID;
 
-    console.log(userId);
+    console.log("userID" , userId);
 
     try {
         const result = await AddressModel.find({ userId });

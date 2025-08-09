@@ -648,8 +648,8 @@ exports.verifyOTP = async (req, res, next) => {
         await cleanGuestSessionData(gSid);
     } else {
         const updatedAccessDoc = await AccessModal.findOneAndUpdate(
-            { [mode]: otpFor }, 
-            { $inc: { attempts :  1} },
+            { [mode]: otpFor },
+            { $inc: { attempts: 1 } },
             { new: true, upsert: true },
         )
 
@@ -837,7 +837,7 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
 }
 
 exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
-    console.log("Hit items to be added in cart", req.body);
+    // console.log("Hit items to be added in cart", req.body);
 
     const gSid = req.signedCookies?.gSid;
 
@@ -861,7 +861,7 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
 }
 
 exports.addGuestSessionCartItems = async (req, res, next) => {
-    console.log("Hit cart items", req.body);
+    // console.log("Hit cart items", req.body);
 
     const gSid = req.signedCookies?.gSid;
 
