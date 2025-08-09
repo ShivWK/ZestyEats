@@ -68,7 +68,7 @@ exports.deleteUserAddress = async (req, res, next) => {
     }
 
     try {
-        await AddressModel.findByIdAndDelete({ id });
+        await AddressModel.findByIdAndDelete(id);
 
         return res.status(200).json({
             status: "success",
