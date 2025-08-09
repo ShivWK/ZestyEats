@@ -13,10 +13,17 @@ const {
     setAllDataAtOnce,
     getLiveSessions,
     logTheUserOut,
-    getUserAddress,
+    // getUserAddress,
     getUserPaymentMethods,
-    setUserAddress
+    // setUserAddress
 } = require("../controllers/userActivityControllers");
+
+const {  
+    setUserAddress,
+    getUserAddress,
+    updateUserAddress,
+    deleteUserAddress,
+} = require("./../controllers/addressController")
 
 userActivityRouter.use(checkSessionId);
 userActivityRouter.use(protected);

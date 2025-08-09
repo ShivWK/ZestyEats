@@ -123,7 +123,14 @@ const Address = (data) => {
             obj[key] = value;
         })
 
+        const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}.`;
+
         try {
+            const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchString}`);
+
+            const data = await latLong.json();
+            console.log(data)
+
             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
                 method: "POST",
                 headers: {
@@ -284,7 +291,7 @@ const Address = (data) => {
             </section>
             <section className="mt-3">
                 <div className="flex flex-col gap-3 w-full rounded-2xl overflow-x-hidden">
-                    <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
+                    <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
                     </div>
                     {savedAddresses.map(address => <div 
@@ -292,16 +299,20 @@ const Address = (data) => {
                     >
                     <p className="font-semibold tracking-wide">{address.name}</p>
                     <p className="whitespace-normal">{address.flatNumber}</p>
-                    <p>{address.landmark}</p>
+                    <p>{`${address.state}, ${address.pinCode}, ${address.country}.`}</p>
+                    {address.landmark && <p>Landmark: {address.landmark}</p>}
                     <p>{address.phone}</p>
-                    <p>{address.pinCode}</p>
 
                     <div className="flex items-center gap-2 text-sm ml-auto mt-2">
-                        <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded">
+                        <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
                             Edit
                         </button>
-                        {pathName !== "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded">
+                        {pathName !== "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
                             Use
+                        </button>}
+
+                        {pathName === "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                            Remove
                         </button>}
                     </div>
                 </div>)}
