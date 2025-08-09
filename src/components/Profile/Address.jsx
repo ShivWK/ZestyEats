@@ -283,12 +283,12 @@ const Address = (data) => {
                 )}
             </section>
             <section className="mt-3">
-                <div className="flex flex-col gap-3 w-[95%] mx-auto rounded overflow-x-hidden">
+                <div className="flex flex-col gap-3 w-[95%] mx-auto rounded-md overflow-x-hidden">
                     <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
                     </div>
                     {savedAddresses.map(address => <div 
-                    className="p-2 rounded-md bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
+                    className="p-2 rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
                     >
                     <p className="font-semibold tracking-wide">{address.name}</p>
                     <p className="whitespace-normal">{address.flatNumber}</p>
