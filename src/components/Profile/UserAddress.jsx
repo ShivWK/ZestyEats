@@ -1,11 +1,17 @@
 import { useLocation } from "react-router";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import DotBounceLoader from "../../utils/DotBounceLoader";
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { useSelector } from "react-redux";
 
 const UserAddress = ({ address }) => {
     const [ delLoading, setDelLOading ] = useState(false);
+    const deviceId = useSelector(selectDeviceFingerPrint);
 
     const removeClickHandler = async (id) => {
+        // console.log(id) 
+        // return
         setDelLOading(true);
 
         try {
@@ -30,7 +36,7 @@ const UserAddress = ({ address }) => {
             console.log(result.message)
         } catch (err) {
             console.log("Error in deleting the address", err);
-
+            setDelLOading(false);
             toast.error(err.message);
         }
     }
@@ -55,8 +61,8 @@ const UserAddress = ({ address }) => {
             </button>}
 
             {pathName === "/mobileProfileResponse" &&
-                <button onClick={() => removeClickHandler(address.id)} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                    Remove
+                <button onClick={() => removeClickHandler(address._id)} className="flex items-center justify-center w-18 h-6 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                    {delLoading ? <DotBounceLoader /> : "Remove"}
                 </button>}
         </div>
     </div>

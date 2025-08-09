@@ -57,6 +57,7 @@ exports.updateUserAddress = (req, res, next) => {
 }
 
 exports.deleteUserAddress = async (req, res, next) => {
+    console.log("delete hit")
     const id = req.body.addressId;
 
     if (!id) {
