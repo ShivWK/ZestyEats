@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { State } from "country-state-city";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import DotBounceLoader from "./../../utils/DotBounceLoader";
+import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
 
 const Address = (data) => {
@@ -108,7 +109,8 @@ const Address = (data) => {
         if (stateDropDown) setStateDropDown(false);
     }
 
-    const saveHandler = async () => {
+    const submitHandler = async (e) => {
+        e.preventDefault();
         setSaveLoading(true);
 
         const data = new FormData(formRef.current);
@@ -164,15 +166,20 @@ const Address = (data) => {
             {showForm && (
                 <div className="pb-2">
                     <form
+                        onSubmit={submitHandler}
                         onClick={outSideClickHandler}
                         ref={formRef}
                         className="p-4 lg:p-5 border-[1px] dark:border-2 border-primary w-[95%] lg:w-[70%] max-lg:mx-auto rounded-xl"
                     >
-                        <p className="text-sm dark:text-white text-black">Country</p>
+                        <p className="relative text-sm dark:text-white text-black">
+                            Country
+                            <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                        </p>
 
                         <div className="relative group border bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300 border-primary rounded py-0.5 px-1 w-full inline-flex items-center gap-1">
                             <input
                                 type="text"
+                                required={true}
                                 name="country"
                                 placeholder="Select your country"
                                 className="inline w-full border-none outline-none truncate"
@@ -196,33 +203,51 @@ const Address = (data) => {
                         </div>
 
                         <div className="mt-3">
-                            <p className="text-sm dark:text-white text-black">Full Name</p>
-                            <input type="text" name="name" placeholder="Your full name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <p className="relative text-sm dark:text-white text-black">
+                                Full Name
+                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                            </p>
+                            <input type="text" name="name" required={true} placeholder="Your full name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3">
-                            <p className="text-sm dark:text-white text-black">Phone number</p>
-                            <input type="tel" name="phone" placeholder="10-digit mobile number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <p className="relative text-sm dark:text-white text-black">
+                                Phone number
+                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                            </p>
+                            <input type="tel" name="phone" required={true} placeholder="10-digit mobile number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3">
-                            <p className="text-sm dark:text-white text-black">Flat no. / House no. / Building / Company</p>
-                            <input type="text" name="flatNumber" placeholder="Enter flat, house number, building, or company" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <p className="relative text-sm dark:text-white text-black">
+                                Flat no. / House no. / Building / Company
+                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                            </p>
+                            <input type="text" name="flatNumber" required={true} placeholder="Enter flat, house number, building, or company" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3">
-                            <p className="text-sm dark:text-white text-black">Landmark</p>
+                            <p className="text-sm dark:text-white text-black">
+                                Landmark
+                                {/* <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" /> */}
+                            </p>
                             <input type="text" name="landmark" placeholder="Nearby landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3">
-                            <p className="text-sm dark:text-white text-black">Pin Code</p>
-                            <input type="number" name="pinCode" placeholder="Area pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <p className="relative text-sm dark:text-white text-black">
+                                Pin Code
+                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                            </p>
+                            <input type="number" name="pinCode" required={true} placeholder="Area pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3 relative">
-                            <p className="text-sm dark:text-white text-black">State</p>
-                            <input type="text" value={selectedState} onChange={stateChangeHandler} name="state" placeholder="Select your state" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <p className="relative text-sm dark:text-white text-black">
+                                State
+                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                            </p>
+                            <input type="text" value={selectedState} required={true} onChange={stateChangeHandler} name="state" placeholder="Select your state" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
 
                             <div
                                 className={`absolute top-[105%] ${(stateDropDown) ? "max-h-40" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
@@ -239,12 +264,10 @@ const Address = (data) => {
                             </div>
                         </div>
 
+                        <button type="submit" disabled={saveLoading} className="mt-5 active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary flex items-center justify-center rounded-md font-medium text-white">
+                            {saveLoading ? <DotBounceLoader /> : "Save"}
+                        </button>
                     </form>
-
-                    <button onClick={saveHandler} disabled={saveLoading} className="mt-5 active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary flex items-center justify-center rounded-md font-medium text-white">
-                        {saveLoading ? <DotBounceLoader /> : "Save"}
-                    </button>
-
                 </div>
             )}
         </section>
