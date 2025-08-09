@@ -283,7 +283,7 @@ const Address = (data) => {
                 )}
             </section>
             <section className="mt-3">
-                <div className="flex flex-col gap-3 w-[95%] mx-auto rounded-md overflow-x-hidden">
+                <div className="flex flex-col gap-3 w-full rounded-2xl overflow-x-hidden">
                     <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
                     </div>
