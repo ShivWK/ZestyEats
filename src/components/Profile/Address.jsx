@@ -1,13 +1,17 @@
 import { useState, useRef, useEffect } from "react";
+import { State } from "country-state-city";
 
 const Address = (data) => {
     // console.log(data);
     const [searchedCountries, setSearchedCountries] = useState([]);
+    const [countryStates, setCountryStates] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("");
+    const [selectedCountryCode, setSelectedCountryCode] = useState("");
     const [openDropDown, setOpenDropDown] = useState(false);
     const [showForm, setShowForm] = useState(false);
     const formRef = useRef(null);
+    const timer = useRef(null);
 
     useEffect(() => {
         fetch("https://restcountries.com/v3.1/all?fields=name,cca2,flag")
@@ -18,21 +22,29 @@ const Address = (data) => {
             });
     }, []);
 
-    const countrySelectHandler = (e) => {
+    const countryChangeHandler = (e) => {
         setSelectedCountry(e.target.value);
 
         const searchedData = allCountries.filter((data) =>
-            data.name.common.toLowerCase().startsWith(selectedCountry.toLowerCase())
+            data.name.common.toLowerCase().startsWith(e.target.value.toLowerCase())
         );
         setSearchedCountries(searchedData);
+
+        const className = e.target.value.trim().toLowerCase();
+
+        clearTimeout(timer.current);
+        timer.current = setTimeout(() => {
+            const selectedCountry = allCountries.find(data => data.name.common.toLowerCase() === className);
+            setSelectedCountryCode(selectedCountry.cca2);
+        }, 400)
+
     };
 
-    console.log(searchedCountries)
-
-    const countryClickHandler = (e) => {
+    const countryClickHandler = (e, code) => {
         e.stopPropagation();
         const country = e.target.innerText;
         setSelectedCountry(country);
+        setSelectedCountryCode(code)
 
         setTimeout(() => setOpenDropDown(false), 100)
     };
@@ -44,6 +56,14 @@ const Address = (data) => {
             setOpenDropDown(false);
         }
     }, [selectedCountry])
+
+    useEffect(() => {   
+        const states = State.getStatesOfCountry(selectedCountryCode);
+        
+        setCountryStates(states);
+    }, [selectedCountryCode])
+
+    // console.log(countryStates)
 
     return (
         <section onClick={() => setOpenDropDown(false)} className="px-1 mt-4 w-full h-full">
@@ -68,10 +88,10 @@ const Address = (data) => {
                         <div className="relative group border bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300 border-primary rounded py-0.5 px-1 w-full inline-flex items-center gap-1">
                             <input
                                 type="text"
-                                placeholder="select country"
+                                placeholder="Enter country"
                                 className="inline w-full border-none outline-none truncate"
                                 value={selectedCountry}
-                                onChange={countrySelectHandler}
+                                onChange={countryChangeHandler}
                             ></input>
 
                             <div
@@ -80,7 +100,7 @@ const Address = (data) => {
                             >
                                 {searchedCountries.map((country, index) => (
                                     <p
-                                        onClick={countryClickHandler}
+                                        onClick={(e) => countryClickHandler(e, country.cca2)}
                                         key={index}
                                         className="p-0.5 px-1 rounded leading-5 hover:bg-blue-600 active:bg-blue-500 active:text-white"
                                     >
@@ -90,34 +110,42 @@ const Address = (data) => {
                             </div>
                         </div>
 
-                        <div className="mt-2.5">
+                        <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Full Name</p>
                             <input type="text" name="name" placeholder="Enter your name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2.5">
+                        <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Phone number</p>
                             <input type="tel" name="phone" placeholder="Enter your phone number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2.5">
-                            <p className="text-sm dark:text-white text-black">Flat no./ House no./ Building / Company</p>
+                        <div className="mt-3">
+                            <p className="text-sm dark:text-white text-black">Flat no. / House no. / Building / Company</p>
                             <input type="text" name="flatNumber" placeholder="Enter flat, house number, building, or company" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2.5">
+                        <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Landmark</p>
-                            <input type="text" name="flatNumber" placeholder="Enter your landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <input type="text" name="landmark" placeholder="Enter your landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
-                        <div className="mt-2.5">
+                        <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Pin Code</p>
-                            <input type="number" name="flatNumber" placeholder="Enter your pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <input type="number" name="pinCode" placeholder="Enter your pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
+
+                        <div className="mt-3">
+                            <p className="text-sm dark:text-white text-black">State</p>
+                            <input type="text" name="state" placeholder="Enter your state" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                        </div>
+
                     </form>
-                    <button className=" mt-5 bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary block rounded-md font-medium text-white">
+
+                    <button className=" mt-5 active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary block rounded-md font-medium text-white">
                         Save
                     </button>
+
                 </div>
             )}
         </section>

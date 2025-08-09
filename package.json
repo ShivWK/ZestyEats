@@ -13,6 +13,7 @@
     "@fingerprintjs/fingerprintjs": "^4.6.2",
     "@reduxjs/toolkit": "^2.6.1",
     "@tailwindcss/vite": "^4.0.15",
+    "country-state-city": "^3.2.1",
     "esbuild": "^0.25.8",
     "firebase": "^11.6.0",
     "lucide-react": "^0.525.0",
