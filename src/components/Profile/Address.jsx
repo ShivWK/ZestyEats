@@ -1,8 +1,13 @@
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { State } from "country-state-city";
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import DotBounceLoader from "./../../utils/DotBounceLoader";
+import { toast } from "react-toastify";
 
 const Address = (data) => {
     // console.log(data);
+    const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("");
@@ -16,6 +21,7 @@ const Address = (data) => {
     const [stateDropDown, setStateDropDown] = useState(false);
 
     const [showForm, setShowForm] = useState(false);
+    const [saveLoading, setSaveLoading] = useState(false);
 
     const formRef = useRef(null);
     const timer = useRef(null);
@@ -86,10 +92,7 @@ const Address = (data) => {
     const stateChangeHandler = (e) => {
         setSelectedState(e.target.value);
 
-        // console.log("States", countryStates)
-
         const result = countryStates.filter(data => data.name.toLowerCase().startsWith(e.target.value.toLowerCase()));
-        // console.log("Result", result)
         setSearchedStates(result);
     }
 
@@ -105,7 +108,47 @@ const Address = (data) => {
         if (stateDropDown) setStateDropDown(false);
     }
 
-    // console.log(searchedSates)
+    const saveHandler = async () => {
+        setSaveLoading(true);
+
+        const data = new FormData(formRef.current);
+        let obj = {}
+
+        data.forEach((value, key) => {
+            obj[key] = value;
+        })
+
+        try {
+            const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
+                method: "POST",
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+                body: JSON.stringify({
+                    address: obj
+                })
+            });
+
+            const response = result.json();
+
+            if (!result.ok) throw new Error(response.message);
+
+            setSaveLoading(false);
+            setShowForm(false);
+
+            toast.info(response.message)
+            console.log(response);
+        } catch (err) {
+            console.log("Error in adding address", err);
+            setSaveLoading(false)
+            toast.error(err.message);
+        }
+    }
 
     return (
         <section onClick={outSideClickHandler} className="px-1 mt-4 w-full h-full">
@@ -130,7 +173,8 @@ const Address = (data) => {
                         <div className="relative group border bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300 border-primary rounded py-0.5 px-1 w-full inline-flex items-center gap-1">
                             <input
                                 type="text"
-                                placeholder="Enter country"
+                                name="country"
+                                placeholder="Select your country"
                                 className="inline w-full border-none outline-none truncate"
                                 value={selectedCountry}
                                 onChange={countryChangeHandler}
@@ -153,12 +197,12 @@ const Address = (data) => {
 
                         <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Full Name</p>
-                            <input type="text" name="name" placeholder="Enter your name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <input type="text" name="name" placeholder="Your full name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Phone number</p>
-                            <input type="tel" name="phone" placeholder="Enter your phone number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <input type="tel" name="phone" placeholder="10-digit mobile number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3">
@@ -168,20 +212,20 @@ const Address = (data) => {
 
                         <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Landmark</p>
-                            <input type="text" name="landmark" placeholder="Enter your landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <input type="text" name="landmark" placeholder="Nearby landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3">
                             <p className="text-sm dark:text-white text-black">Pin Code</p>
-                            <input type="number" name="pinCode" placeholder="Enter your pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <input type="number" name="pinCode" placeholder="Area pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                         </div>
 
                         <div className="mt-3 relative">
                             <p className="text-sm dark:text-white text-black">State</p>
-                            <input type="text" value={selectedState} onChange={stateChangeHandler} name="state" placeholder="Enter your state" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            <input type="text" value={selectedState} onChange={stateChangeHandler} name="state" placeholder="Select your state" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
 
                             <div
-                                className={`absolute top-[100%] ${(stateDropDown) ? "max-h-40" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
+                                className={`absolute top-[105%] ${(stateDropDown) ? "max-h-40" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
                             >
                                 {searchedSates.map((state, index) => (
                                     <p
@@ -197,8 +241,8 @@ const Address = (data) => {
 
                     </form>
 
-                    <button className=" mt-5 active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary block rounded-md font-medium text-white">
-                        Save
+                    <button onClick={saveHandler} disabled={saveLoading} className="mt-5 active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary flex items-center justify-center rounded-md font-medium text-white">
+                        {saveLoading ? <DotBounceLoader /> : "Save"}
                     </button>
 
                 </div>

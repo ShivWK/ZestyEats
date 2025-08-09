@@ -152,6 +152,35 @@ exports.getUserAddress = async (req, res, next) => {
     }
 }
 
+exports.setUserAddress = async (req, res, next) => {
+    const userId = req.UserID;
+    const data = req.body.address;
+
+    if (!data) {
+        return res.status(400).json({
+            status: "failed",
+            message: "Please Proved the address"
+        })
+    }
+
+    try {
+        const result = await UserModal.findByIdAndUpdate(userId, { $push: { address: data } });
+
+        return res.status(200).json({
+            status: "success",
+            message: "Address added successfully",
+            data: result.address,
+        })
+    } catch (err) {
+        console.log("Error in fetching user address", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error."
+        })
+    }
+}
+
 exports.getUserPaymentMethods = async (req, res, next) => {
     const userId = req.UserID;
 

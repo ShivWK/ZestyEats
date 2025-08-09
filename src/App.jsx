@@ -317,7 +317,7 @@ export default function App() {
         <Route path='*' element={<PageNotFound />} />
         <Route path="legalAndPolicies" element={<CompanyPolicies />} />
         <Route path="mobileProfileResponse" loader={profileResponseLoader} element={<MobileProfileResponse />} />
-        <Route path="paymentsAndAddresses"  element={<PaymentsAndAddress />} />
+        <Route path="paymentsAndAddresses" element={<PaymentsAndAddress />} />
       </Route>
     )
   );
