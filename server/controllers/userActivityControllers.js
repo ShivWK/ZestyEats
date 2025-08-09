@@ -153,6 +153,8 @@ exports.getUserAddress = async (req, res, next) => {
 }
 
 exports.setUserAddress = async (req, res, next) => {
+    console.log("HIT", req.body)
+
     const userId = req.UserID;
     const data = req.body.address;
 
