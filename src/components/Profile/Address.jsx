@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import { State } from "country-state-city";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
@@ -7,12 +8,15 @@ import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
 
 const Address = (data) => {
-    console.log(data);
+    // console.log(data.data.data);
+
+    const pathName = useLocation().pathname;
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("");
     const [openDropDown, setOpenDropDown] = useState(false);
+    const [savedAddresses, setSavedAddresses] = useState(data.data.data)
 
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
 
@@ -77,7 +81,6 @@ const Address = (data) => {
                 setSelectedCountryCode(selectedCountry.cca2);
             }
         }, 400)
-
     };
 
     const countryClickHandler = (e, code) => {
@@ -154,124 +157,159 @@ const Address = (data) => {
     }
 
     return (
-        <section onClick={outSideClickHandler} className="px-1 mt-4 w-full h-full">
-            {!showForm && (
-                <button
-                    onClick={() => setShowForm(true)}
-                    className="bg-primary mx-auto dark:bg-darkPrimary px-3 py-1 rounded-md font-medium text-white block"
-                >
-                    Add Address
-                </button>
-            )}
-
-            {showForm && (
-                <div className="pb-2">
-                    <form
-                        onSubmit={submitHandler}
-                        onClick={outSideClickHandler}
-                        ref={formRef}
-                        className="p-4 lg:p-5 border-[1px] dark:border-2 border-primary w-[95%] lg:w-[70%] max-lg:mx-auto rounded-xl"
+        <>
+            <section onClick={outSideClickHandler} className="px-1 mt-4 w-full">
+                {!showForm && (
+                    <button
+                        onClick={() => setShowForm(true)}
+                        className="bg-primary mx-auto dark:bg-darkPrimary px-3 py-1 rounded-md font-medium text-white block"
                     >
-                        <p className="relative text-sm dark:text-white text-black">
-                            Country
-                            <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
-                        </p>
+                        Add Address
+                    </button>
+                )}
 
-                        <div className="relative group border bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300 border-primary rounded py-0.5 px-1 w-full inline-flex items-center gap-1">
-                            <input
-                                type="text"
-                                required={true}
-                                name="country"
-                                placeholder="Select your country"
-                                className="inline w-full border-none outline-none truncate"
-                                value={selectedCountry}
-                                onChange={countryChangeHandler}
-                            ></input>
+                {showForm && (
+                    <div className="pb-2">
+                        <form
+                            onSubmit={submitHandler}
+                            onClick={outSideClickHandler}
+                            ref={formRef}
+                            className="p-4 lg:p-5 border-[1px] dark:border-2 border-primary w-[95%] lg:w-[70%] max-lg:mx-auto rounded-xl"
+                        >
+                            <p className="relative text-sm dark:text-white text-black">
+                                Country
+                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                            </p>
 
-                            <div
-                                className={`absolute top-[110%] ${(openDropDown) ? "max-h-70" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
-                            >
-                                {searchedCountries.map((country, index) => (
-                                    <p
-                                        onClick={(e) => countryClickHandler(e, country.cca2)}
-                                        key={index}
-                                        className="p-0.5 px-1 rounded leading-5 hover:bg-blue-600 active:bg-blue-500 active:text-white"
-                                    >
-                                        {country.name.common}
-                                    </p>
-                                ))}
+                            <div className="relative group border bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300 border-primary rounded py-0.5 px-1 w-full inline-flex items-center gap-1">
+                                <input
+                                    type="text"
+                                    required={true}
+                                    name="country"
+                                    placeholder="Select your country"
+                                    className="inline w-full border-none outline-none truncate"
+                                    value={selectedCountry}
+                                    onChange={countryChangeHandler}
+                                ></input>
+
+                                <div
+                                    className={`absolute top-[110%] ${(openDropDown) ? "max-h-70" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md z-10`}
+                                >
+                                    {searchedCountries.map((country, index) => (
+                                        <p
+                                            onClick={(e) => countryClickHandler(e, country.cca2)}
+                                            key={index}
+                                            className="p-0.5 px-1 rounded leading-5 hover:bg-blue-600 active:bg-blue-500 active:text-white"
+                                        >
+                                            {country.name.common}
+                                        </p>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
 
-                        <div className="mt-3">
-                            <p className="relative text-sm dark:text-white text-black">
-                                Full Name
-                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
-                            </p>
-                            <input type="text" name="name" required={true} placeholder="Your full name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
-                        </div>
-
-                        <div className="mt-3">
-                            <p className="relative text-sm dark:text-white text-black">
-                                Phone number
-                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
-                            </p>
-                            <input type="tel" name="phone" required={true} placeholder="10-digit mobile number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
-                        </div>
-
-                        <div className="mt-3">
-                            <p className="relative text-sm dark:text-white text-black">
-                                Flat no. / House no. / Building / Company / City
-                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
-                            </p>
-                            <input type="text" name="flatNumber" required={true} placeholder="Enter flat, house number, building, or company" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
-                        </div>
-
-                        <div className="mt-3">
-                            <p className="text-sm dark:text-white text-black">
-                                Landmark
-                                {/* <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" /> */}
-                            </p>
-                            <input type="text" name="landmark" placeholder="Nearby landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
-                        </div>
-
-                        <div className="mt-3">
-                            <p className="relative text-sm dark:text-white text-black">
-                                Pin Code
-                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
-                            </p>
-                            <input type="number" name="pinCode" required={true} placeholder="Area pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
-                        </div>
-
-                        <div className="mt-3 relative">
-                            <p className="relative text-sm dark:text-white text-black">
-                                State
-                                <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
-                            </p>
-                            <input type="text" value={selectedState} required={true} onChange={stateChangeHandler} name="state" placeholder="Select your state" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
-
-                            <div
-                                className={`absolute top-[105%] ${(stateDropDown) ? "max-h-40" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
-                            >
-                                {searchedSates.map((state, index) => (
-                                    <p
-                                        onClick={(e) => stateClickHandler(e, state.name)}
-                                        key={index}
-                                        className="p-0.5 px-1 rounded leading-5 hover:bg-blue-600 active:bg-blue-500 active:text-white"
-                                    >
-                                        {state.name}
-                                    </p>
-                                ))}
+                            <div className="mt-3">
+                                <p className="relative text-sm dark:text-white text-black">
+                                    Full Name
+                                    <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                                </p>
+                                <input type="text" name="name" required={true} placeholder="Your full name" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
                             </div>
-                        </div>
 
-                        <button type="submit" disabled={saveLoading} className="mt-5 active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary flex items-center justify-center rounded-md font-medium text-white">
-                            {saveLoading ? <DotBounceLoader /> : "Save"}
+                            <div className="mt-3">
+                                <p className="relative text-sm dark:text-white text-black">
+                                    Phone number
+                                    <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                                </p>
+                                <input type="tel" name="phone" required={true} placeholder="10-digit mobile number" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            </div>
+
+                            <div className="mt-3">
+                                <p className="relative text-sm dark:text-white text-black">
+                                    Flat no. / House no. / Building / Company / City
+                                    <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                                </p>
+                                <input type="text" name="flatNumber" required={true} placeholder="Enter flat, house number, building, or company" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            </div>
+
+                            <div className="mt-3">
+                                <p className="text-sm dark:text-white text-black">
+                                    Landmark
+                                    {/* <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" /> */}
+                                </p>
+                                <input type="text" name="landmark" placeholder="Nearby landmark" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            </div>
+
+                            <div className="mt-3">
+                                <p className="relative text-sm dark:text-white text-black">
+                                    Pin Code
+                                    <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                                </p>
+                                <input type="number" name="pinCode" required={true} placeholder="Area pin code" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+                            </div>
+
+                            <div className="mt-3 relative">
+                                <p className="relative text-sm dark:text-white text-black">
+                                    State
+                                    <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
+                                </p>
+                                <input type="text" value={selectedState} required={true} onChange={stateChangeHandler} name="state" placeholder="Select your state" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />
+
+                                <div
+                                    className={`absolute top-[105%] ${(stateDropDown) ? "max-h-40" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md`}
+                                >
+                                    {searchedSates.map((state, index) => (
+                                        <p
+                                            onClick={(e) => stateClickHandler(e, state.name)}
+                                            key={index}
+                                            className="p-0.5 px-1 rounded leading-5 hover:bg-blue-600 active:bg-blue-500 active:text-white"
+                                        >
+                                            {state.name}
+                                        </p>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="mt-5 flex gap-2">
+                                <button type="submit" disabled={saveLoading} className="active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary flex items-center justify-center rounded-md font-medium text-white">
+                                    {saveLoading ? <DotBounceLoader /> : "Save"}
+                                </button>
+
+                                <button type="button" onClick={() => setShowForm(false)} className="active:scale-95 transition-all duration-75 ease-linear bg-primary mx-auto w-44 h-8 dark:bg-darkPrimary flex items-center justify-center rounded-md font-medium text-white">
+                                Close
+                            </button>
+                            </div>
+                        </form>
+                    </div>
+                )}
+            </section>
+            <section className="mt-3">
+                <div className="flex flex-col gap-3 w-[95%] mx-auto rounded overflow-x-hidden">
+                    <div className="px-1 py-2 w-full bg-primary dark:bg-darkPrimary">
+                        <h2 className="text-white text-lg">SAVED ADDRESS</h2>
+                    </div>
+                    {savedAddresses.map(address => <div 
+                    className="p-2 rounded-md bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
+                    >
+                    <p className="font-semibold tracking-wide">{address.name}</p>
+                    <p className="whitespace-normal">{address.flatNumber}</p>
+                    <p>{address.landmark}</p>
+                    <p>{address.phone}</p>
+                    <p>{address.pinCode}</p>
+
+                    <div className="flex items-center gap-2 text-sm ml-auto mt-2">
+                        <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded">
+                            Edit
                         </button>
-                    </form>
+                        {pathName !== "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded">
+                            Use
+                        </button>}
+                    </div>
+                </div>)}
                 </div>
-            )}
-        </section>
+                
+            </section>
+        </>
+
     );
 };
 
