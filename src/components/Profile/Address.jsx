@@ -7,7 +7,7 @@ import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
 
 const Address = (data) => {
-    // console.log(data);
+    console.log(data);
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
@@ -133,10 +133,11 @@ const Address = (data) => {
                 },
                 body: JSON.stringify({
                     address: obj
-                })
+                }),
+                credentials: "include",
             });
 
-            const response = result.json();
+            const response = await result.json();
 
             if (!result.ok) throw new Error(response.message);
 
@@ -220,7 +221,7 @@ const Address = (data) => {
 
                         <div className="mt-3">
                             <p className="relative text-sm dark:text-white text-black">
-                                Flat no. / House no. / Building / Company
+                                Flat no. / House no. / Building / Company / City
                                 <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
                             </p>
                             <input type="text" name="flatNumber" required={true} placeholder="Enter flat, house number, building, or company" className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300" />

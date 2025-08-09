@@ -14,6 +14,7 @@ import cityHomeApiSlice from "../features/cityHome/cityHomeApiSlice";
 import cityHomeReducer from "../features/cityHome/cityHomeSlice";
 import homeSearchSliceReducer from "../features/search/homeSearchSlice";
 import profileApiSlice from "../features/profile/profileApiSlice";
+import deliverySliceReducer from "../features/delivery/deliverySlice";
 
 const store = configureStore({
   reducer: {
@@ -31,6 +32,7 @@ const store = configureStore({
     help: helpReducer,
     cityHomeSlice: cityHomeReducer,
     homeSearchSlice: homeSearchSliceReducer,
+    delivery: deliverySliceReducer,
   },
   middleware: (defaultMiddlewares) => [
     ...defaultMiddlewares(),
