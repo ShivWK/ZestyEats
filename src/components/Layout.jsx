@@ -131,7 +131,7 @@ export default function Layout() {
           });
 
           const sessionData = await result.json();
-          console.log("Log", sessionData);
+          // console.log("Log", sessionData);
 
           if (sessionData.auth === false) {
             dispatch(setIsLoggedIn(false));
@@ -157,7 +157,7 @@ export default function Layout() {
 
             const userData = sessionData.data;
 
-            console.log("AUTHO", userData);
+            // console.log("AUTHO", userData);
 
             const userProfileData = {
               userName: userData.name,
@@ -186,7 +186,7 @@ export default function Layout() {
 
               if (!response.ok) throw new Error(respData.message);
               const data = respData.data;
-              console.log("registered data", data);
+              // console.log("registered data", data);
 
               UpdateStorage({
                 data,

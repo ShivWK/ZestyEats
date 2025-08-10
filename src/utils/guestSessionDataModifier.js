@@ -116,7 +116,7 @@ export const cartItemsModifier = async (items, loggedIn, deviceId) => {
     if (loggedIn) path = `${import.meta.env.VITE_BASE_URL}/api/userActivity/userCartData`;
     else path = `${import.meta.env.VITE_BASE_URL}/api/user/cartItems`;
 
-    console.log("Called")
+    // console.log("Called")
     try {
         const res = await fetch(path, {
             method: "PATCH",

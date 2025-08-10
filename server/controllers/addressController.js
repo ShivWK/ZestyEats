@@ -56,8 +56,37 @@ exports.setUserAddress = async (req, res, next) => {
     }
 }
 
-exports.updateUserAddress = (req, res, next) => {
+exports.updateUserAddress = async (req, res, next) => {
+    const userId = req.UserID;
+    const addressId = req.body.addressId;
+    const data = req.body.address;
 
+    try {
+        await AddressModel.findByIdAndUpdate(addressId, { 
+            userId,
+            country: data.country,
+            userName: data.name,
+            userPhone: data.phone,
+            flatNumber: data.flatNumber,
+            landmark: data.landmark,
+            pinCode: data.pinCode,
+            state: data.state,
+            countryCode: data.countryCode,
+            latLong: data.latLong,
+        });
+
+        return res.status(200).json({
+            status: "success",
+            message: "Address updated successfully."
+        })
+    } catch (err) {
+        console.log("Error occurred while adding address", err)
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error"
+        })
+    }
 }
 
 exports.deleteUserAddress = async (req, res, next) => {

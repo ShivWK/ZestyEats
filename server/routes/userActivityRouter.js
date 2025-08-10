@@ -1,7 +1,7 @@
 const express = require("express");
 const userActivityRouter = express.Router();
 
-const { 
+const {
     checkSessionId,
     protected,
     getUserActivityData,
@@ -18,7 +18,7 @@ const {
     // setUserAddress
 } = require("../controllers/userActivityControllers");
 
-const {  
+const {
     setUserAddress,
     getUserAddress,
     updateUserAddress,
@@ -30,8 +30,12 @@ userActivityRouter.use(protected);
 
 userActivityRouter.route("/userActivityData").get(getUserActivityData);
 userActivityRouter.route("/loggedInSession").get(getLiveSessions);
-userActivityRouter.route("/userAddress").get(getUserAddress).post(setUserAddress).delete(deleteUserAddress);
-// userActivityRouter.route("/")
+userActivityRouter.route("/userAddress")
+    .get(getUserAddress)
+    .post(setUserAddress)
+    .delete(deleteUserAddress)
+    .put(updateUserAddress);
+
 userActivityRouter.route("/userPaymentMethods").get(getUserPaymentMethods);
 
 userActivityRouter.route("/logout/:mode").post(logTheUserOut);

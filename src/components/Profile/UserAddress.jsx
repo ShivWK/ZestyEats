@@ -4,24 +4,24 @@ import { toast } from "react-toastify";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 
-import { 
-    selectEditAddressModal, 
+import {
+    selectEditAddressModal,
     setEditAddressModal,
-    setHideEditAddressModal 
+    setHideEditAddressModal,
+    setSavedAddress,
+    setAddressLoading,
 } from "../../features/delivery/deliverySlice";
 
 import { useSelector, useDispatch } from "react-redux";
 import AddressEditForm from "./AddressEditForm";
 
-const UserAddress = ({ address }) => {
+const UserAddress = ({ address, key }) => {
     const [delLoading, setDelLOading] = useState(false);
     const deviceId = useSelector(selectDeviceFingerPrint);
     const dispatch = useDispatch();
     const editAddressModal = useSelector(selectEditAddressModal);
 
     const removeClickHandler = async (id) => {
-        // console.log(id) 
-        // return
         setDelLOading(true);
 
         try {
@@ -43,10 +43,33 @@ const UserAddress = ({ address }) => {
 
             if (!res.ok) throw new Error(result.message);
             setDelLOading(false);
-            console.log(result.message)
+            console.log(result.message);
+
+            dispatch(setAddressLoading(true));
+
+            const resp = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
+                method: "GET",
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+                credentials: "include"
+            })
+
+            const addresses = await resp.json();
+            if (!resp.ok) throw new Error(addresses.message)
+
+            dispatch(setAddressLoading(false));
+            console.log("new address", addresses);
+            dispatch(setSavedAddress(addresses.data));
         } catch (err) {
             console.log("Error in deleting the address", err);
             setDelLOading(false);
+            dispatch(setAddressLoading(false));
             toast.error(err.message);
         }
     }
@@ -55,6 +78,7 @@ const UserAddress = ({ address }) => {
 
     return <>
         <div
+            key={key}
             className="p-2 rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
         >
             <p className="font-semibold tracking-wide">{address.userName}</p>
@@ -81,7 +105,7 @@ const UserAddress = ({ address }) => {
             </div>
         </div>
         {editAddressModal && (
-            <div className="absolute top-0 left-0 h-full w-full bg-black/70 z-50">
+            <div onClick={() => dispatch(setHideEditAddressModal(true))} className="absolute top-0 left-0 h-full w-full bg-black/70 z-50">
                 <AddressEditForm data={address} />
             </div>
         )}

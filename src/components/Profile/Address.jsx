@@ -1,21 +1,28 @@
 import { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { State } from "country-state-city";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import DotBounceLoader from "./../../utils/DotBounceLoader";
 import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
 import UserAddress from "./UserAddress";
+import {
+    selectSavedAddress,
+    selectAddressLoading,
+    setAddressLoading,
+    setSavedAddress
+} from "../../features/delivery/deliverySlice";
 
 const Address = (data) => {
-    console.log(data);
+    // console.log(data);
 
+    const dispatch = useDispatch();
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("");
     const [openDropDown, setOpenDropDown] = useState(false);
-    const [savedAddresses, setSavedAddresses] = useState(data.data.data)
+    // const [savedAddresses, setSavedAddresses] = useState(data.data.data)
 
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
 
@@ -26,9 +33,16 @@ const Address = (data) => {
 
     const [showForm, setShowForm] = useState(false);
     const [saveLoading, setSaveLoading] = useState(false);
+    // const [addressLoading, setAddressLoading] = useState(false);
+    const savedAddresses = useSelector(selectSavedAddress);
+    const addressLoading = useSelector(selectAddressLoading);
 
     const formRef = useRef(null);
     const timer = useRef(null);
+
+    useEffect(() => {
+        dispatch(setSavedAddress(data.data.data));
+    }, [data.data.data]);
 
     useEffect(() => {
         fetch("https://restcountries.com/v3.1/all?fields=name,cca2,flag")
@@ -122,13 +136,18 @@ const Address = (data) => {
             obj[key] = value;
         })
 
-        const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}.`;
+        const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
+        console.log(searchString);
 
         try {
-            const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchString}`);
+            // const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchString)}`, {
+            //     headers: {
+            //         "User-Agent": navigator.userAgent,
+            //     }
+            // });
 
-            const data = await latLong.json();
-            console.log("latLong" , data);
+            // const data = await latLong.json();
+            // console.log("latLong", data);
 
             obj.latLong = "";
 
@@ -157,9 +176,32 @@ const Address = (data) => {
 
             toast.info(response.message)
             console.log(response);
+
+            dispatch(setAddressLoading(true))
+
+            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
+                method: "GET",
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+                credentials: "include"
+            })
+
+            const addresses = await res.json();
+            if (!res.ok) throw new Error(addresses.message)
+
+            dispatch(setAddressLoading(false));
+            console.log("new address", addresses);
+            dispatch(setSavedAddress(addresses.data));
         } catch (err) {
-            console.log("Error in adding address", err);
+            console.log("Error in adding/getting address", err);
             setSaveLoading(false)
+            dispatch(setAddressLoading(false));
             toast.error(err.message);
         }
     }
@@ -199,7 +241,7 @@ const Address = (data) => {
                                     value={selectedCountry}
                                     onChange={countryChangeHandler}
                                 ></input>
-                                <input type="text" name="countryCode" value={selectedCountryCode} hidden />
+                                <input type="text" name="countryCode" defaultValue={selectedCountryCode} hidden />
                                 <div
                                     className={`absolute top-[110%] ${(openDropDown) ? "max-h-70" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md z-10`}
                                 >
@@ -292,11 +334,12 @@ const Address = (data) => {
             </section>
             <section className="mt-3">
                 <div className="flex flex-col gap-3 w-full rounded-2xl overflow-x-hidden">
-                    <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
+                    <div className="flex items-center justify-between px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
+                        {addressLoading && <div className="h-6 w-6 border-4 border-t-black border-white animate-spin rounded-full bg-transparent"></div>}
                     </div>
                     {savedAddresses.length !== 0
-                        ? savedAddresses.map(address => <UserAddress address={address} />)
+                        ? savedAddresses.map((address) => <UserAddress key={address.id} address={address} />)
                         : <p className="text-center font-semibold tracking-wide text-black dark:text-gray-200">No Saved Address</p>}
                 </div>
 

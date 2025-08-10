@@ -2,7 +2,15 @@ import { useState, useRef, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { State } from "country-state-city";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
-import { setHideEditAddressModal, selectEditAddressModal, setEditAddressModal, selectHideEditAddressModal } from "../../features/delivery/deliverySlice";
+
+import {
+    setHideEditAddressModal,
+    setEditAddressModal,
+    selectHideEditAddressModal,
+    setSavedAddress,
+    setAddressLoading
+} from "../../features/delivery/deliverySlice";
+
 import DotBounceLoader from "./../../utils/DotBounceLoader";
 import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
@@ -27,16 +35,6 @@ const AddressEditForm = ({ data }) => {
     const hideEditAddressModal = useSelector(selectHideEditAddressModal);
 
     const dispatch = useDispatch();
-
-    // const [editFormData, setEditFromData] = useState({
-    //     name: data.name,
-    //     phone: data.phone,
-    //     flatNumber: data.flatNumber,
-    //     pinCode: data.pinCode,
-    //     landmark: data.landmark,
-    //     addressId: data.id,
-    // });
-
     const formRef = useRef(null);
     const timer = useRef(null);
 
@@ -121,7 +119,7 @@ const AddressEditForm = ({ data }) => {
         if (stateDropDown) setStateDropDown(false);
     }
 
-    const submitHandler = async (e, id) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
         setSaveLoading(true);
 
@@ -132,16 +130,18 @@ const AddressEditForm = ({ data }) => {
             obj[key] = value;
         })
 
-        const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}.`;
+        // const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}.`;
 
         try {
-            const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchString}`);
+            // const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchString}`);
 
-            const data = await latLong.json();
-            console.log(data)
+            // const data = await latLong.json();
+            // console.log(data)
+
+            obj.latLong = ""
 
             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
                     "Content-Type": "application/json",
@@ -151,7 +151,7 @@ const AddressEditForm = ({ data }) => {
                     "x-device-id": deviceId,
                 },
                 body: JSON.stringify({
-                    addressId: data.id,
+                    addressId: data._id,
                     address: obj
                 }),
                 credentials: "include",
@@ -162,13 +162,34 @@ const AddressEditForm = ({ data }) => {
             if (!result.ok) throw new Error(response.message);
 
             setSaveLoading(false);
-            setShowForm(false);
+            dispatch(setAddressLoading(true));
+            dispatch(setHideEditAddressModal(true));
+
+            const resp = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
+                method: "GET",
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+                credentials: "include"
+            })
+
+            const addresses = await resp.json();
+            if (!resp.ok) throw new Error(addresses.message)
+
+            dispatch(setAddressLoading(false));
+            dispatch(setSavedAddress(addresses.data));
 
             toast.info(response.message)
             console.log(response);
         } catch (err) {
             console.log("Error in adding address", err);
-            setSaveLoading(false)
+            setSaveLoading(false);
+            dispatch(setAddressLoading(false));
             toast.error(err.message);
         }
     }
@@ -195,8 +216,12 @@ const AddressEditForm = ({ data }) => {
         ref={formRef}
         className={`absolute p-4 lg:p-5 border-[1px] dark:border-2 ${!hideEditAddressModal ? "animate-showEditAddressModal" : "animate-hideEditAddressModal"} bg-white dark:bg-black border-primary w-[95%] lg:w-[70%] left-1/2 transform -translate-x-1/2 rounded-xl`}
     >
-        <input type="text" name="addressId" value={data.id} hidden />
-        <input type="text" name="countryCode" value={selectedCountryCode} hidden />
+        <p className="text-center font-semibold tracking-wide text-xl text-black dark:text-gray-200">
+            Edit Address
+        </p>
+
+        <input type="text" name="addressId" defaultValue={data.id} hidden />
+        <input type="text" name="countryCode" defaultValue={selectedCountryCode} hidden />
 
         <p className="relative text-sm dark:text-white text-black">
             Country
