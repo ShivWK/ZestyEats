@@ -23,6 +23,8 @@ exports.protected = async (req, res, next) => {
     const clientUa = headers["x-user-agent"];
     const uaResult = UAParser(clientUa);
 
+    console.log("Protection HIT")
+
     const clientDeviceInfo = deviceFingerPrinter(uaResult, req);
 
     // console.log("Client", clientDeviceInfo);
