@@ -1,7 +1,7 @@
 const AddressModel = require("./../models/userAddressModel");
 
 exports.getUserAddress = async (req, res, next) => {
-    const userId = req.userID;
+    const userId = req.UserID;
 
     console.log("userID" , userId);
 
