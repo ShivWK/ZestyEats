@@ -61,7 +61,8 @@ exports.updateUserAddress = async (req, res, next) => {
     const addressId = req.body.addressId;
     const data = req.body.address;
 
-    console.log(data)
+    console.log("addressID", addressId)
+    console.log("data", data)
 
     try {
         await AddressModel.findByIdAndUpdate(addressId, { 
