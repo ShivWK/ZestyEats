@@ -65,7 +65,7 @@ exports.updateUserAddress = async (req, res, next) => {
     console.log("data", data)
 
     try {
-        await AddressModel.findByIdAndUpdate(addressId, { 
+        await AddressModel.findByIdAndUpdate(data.addressId , { 
             userId,
             country: data.country,
             userName: data.name,

@@ -16,7 +16,7 @@ import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
 
 const AddressEditForm = ({ data }) => {
-    // console.log("Pre address", data)
+    console.log("Pre address", data._id)
 
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
@@ -195,23 +195,12 @@ const AddressEditForm = ({ data }) => {
         }
     }
 
-    const changeHandler = (e) => {
-        setEditFromData(prv => ({
-            ...prv,
-            [e.target.name]: e.target.value,
-        }))
-    }
-
     const animationEndHandler = (e) => {
         const classList = e.target.classList;
 
         if (classList.contains("animate-hideEditAddressModal")) {
             dispatch(setEditAddressModal(false))
         }
-    }
-
-    const inputClickHandler = (e) => {
-        // e.preventDefault
     }
 
     return <form
@@ -225,7 +214,7 @@ const AddressEditForm = ({ data }) => {
             Edit Address
         </p>
 
-        <input type="text" name="addressId" defaultValue={data.id} hidden />
+        <input type="text" name="addressId" defaultValue={data._id} hidden />
         <input type="text" name="countryCode" defaultValue={selectedCountryCode} hidden />
 
         <p className="relative text-sm dark:text-white text-black">
@@ -327,7 +316,7 @@ const AddressEditForm = ({ data }) => {
                 <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
             </p>
             <input
-                type="number"
+                type="number" 
                 name="pinCode"
                 defaultValue={data.pinCode}
                 // onChange={changeHandler}
