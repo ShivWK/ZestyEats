@@ -42,7 +42,6 @@ const UserAddress = ({ address, key }) => {
             const result = await res.json();
 
             if (!res.ok) throw new Error(result.message);
-            setDelLOading(false);
             console.log(result.message);
 
             dispatch(setAddressLoading(true));
@@ -64,6 +63,8 @@ const UserAddress = ({ address, key }) => {
             if (!resp.ok) throw new Error(addresses.message)
 
             dispatch(setAddressLoading(false));
+            setDelLOading(false);
+
             console.log("new address", addresses);
             dispatch(setSavedAddress(addresses.data));
         } catch (err) {

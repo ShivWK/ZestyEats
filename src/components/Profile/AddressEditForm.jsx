@@ -152,7 +152,6 @@ const AddressEditForm = ({ data }) => {
                     "x-device-id": deviceId,
                 },
                 body: JSON.stringify({
-                    addressId: data._id,
                     address: obj
                 }),
                 credentials: "include",
