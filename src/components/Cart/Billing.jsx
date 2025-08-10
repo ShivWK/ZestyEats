@@ -259,7 +259,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
           </Link>
         )
           : (
-            <Link onClick={checkoutClickHandler} className={`${isDeliverable ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isDeliverable && "active:scale-95"} transform transition-all duration-150`}>Checkout</Link>
+            <Link onClick={checkoutClickHandler} className={`${isDeliverable ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isDeliverable && "active:scale-95"} transform transition-all duration-150`}>Place Order</Link>
           )
         }
       </div>

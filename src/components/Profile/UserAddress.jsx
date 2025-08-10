@@ -16,6 +16,8 @@ import { useSelector, useDispatch } from "react-redux";
 import AddressEditForm from "./AddressEditForm";
 
 const UserAddress = ({ address, key }) => {
+
+
     const [delLoading, setDelLOading] = useState(false);
     const deviceId = useSelector(selectDeviceFingerPrint);
     const dispatch = useDispatch();
@@ -80,7 +82,7 @@ const UserAddress = ({ address, key }) => {
     return <>
         <div
             key={key}
-            className="p-2 rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
+            className="p-2 shrink-0 self-start rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
         >
             <p className="font-semibold tracking-wide">{address.userName}</p>
             <p className="whitespace-normal">{address.flatNumber}</p>

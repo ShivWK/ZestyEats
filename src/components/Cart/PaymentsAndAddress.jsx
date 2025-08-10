@@ -1,25 +1,76 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
-import GeoLocation from "../Location/GeoLocation";
 import Billing from "./Billing";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import haversineFormula from "./../../utils/haversineFormula";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
+import { useLazyGetAddressQuery } from "../../features/profile/profileApiSlice";
+import AddressEditForm from "../Profile/AddressEditForm";
+
+import { 
+    setSavedAddress, 
+    selectSavedAddress, 
+    selectAddressLoading, 
+    selectEditAddressModal, 
+    setEditAddressModal,
+    setHideEditAddressModal 
+} from "../../features/delivery/deliverySlice";
+
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import UserAddress from "../Profile/UserAddress";
 
 const PaymentsAndAddress = () => {
+    const shimmerArray = Array.from({ length: 2 });
+    const editAddressModal = useSelector(selectEditAddressModal)
+
     const [trigger] = useLazyLocationByCoordinatesQuery();
     const [searchParams] = useSearchParams();
     const [latRestro, lngRestro] = searchParams.get("restroDemographics").split(",")
     const { lat, lng } = useSelector(selectLatAndLng);
 
+    const dispatch = useDispatch();
+    const [addressLoading, setAddressLoading] = useState(true)
     const [overflowing, setOverflowing] = useState(false);
     const [latDelivery, setLatDelivery] = useState(lat)
     const [lngDelivery, setLngDelivery] = useState(lng);
+    const [showDirection, setShowDirection] = useState(false);
     const [isDeliverable, setIsDeliverable] = useState(true);
     const [currentLocationLoading, setCurrentLocationLoading] = useState(false);
     const [deliverAddress, setDeliveryAddress] = useState({});
+    const savedAddresses = useSelector(selectSavedAddress);
+    const [triggerSavedAddress] = useLazyGetAddressQuery();
+    const deviceId = useSelector(selectDeviceFingerPrint);
+    const storeAddressLoading = useSelector(selectAddressLoading);
+
+    const scrollRef = useRef(null);
+
+    useEffect(() => {
+        if (scrollRef.current) {
+            const ele = scrollRef.current;
+            const overflow = ele.scrollWidth > ele.clientWidth;
+
+            if (overflow) {
+                setShowDirection(true);
+            }
+        }
+    }, [savedAddresses])
+
+    useEffect(() => {
+        const fetchAddress = async () => {
+            try {
+                const address = await triggerSavedAddress({ deviceId }).unwrap();
+
+                dispatch(setSavedAddress(address.data))
+                setAddressLoading(false)
+            } catch (err) {
+                console.log("Error in fetching address", err);
+                setAddressLoading(false)
+            }
+        }
+        fetchAddress()
+    }, [])
 
     useEffect(() => {
         const checkOverflow = () => {
@@ -75,7 +126,7 @@ const PaymentsAndAddress = () => {
                         district: mainData[2].long_name,
                         state: mainData[4].long_name,
                         country: mainData[5].long_name,
-                        pinCode: mainData[6].long_name, 
+                        pinCode: mainData[6].long_name,
                     }
 
                     setDeliveryAddress(deliverAt);
@@ -115,22 +166,44 @@ const PaymentsAndAddress = () => {
                     )}
                 </div>
 
-                <div className="rounded overflow-hidden bg-gray-100 dark:bg-gray-800 ">
-                    <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
-                        <h2 className="text-white text-lg">ADD ADDRESS</h2>
-                    </div>
-                    <div className="bg-white p-5 w-[86%] mx-auto rounded my-3">
-
-                    </div>
-                </div>
-
-                <div className="rounded overflow-hidden bg-gray-100 dark:bg-gray-800 mt-4">
-                    <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
+                <div className="rounded overflow-hidden bg-gray-100 dark:bg-gray-800 mt-1">
+                    <div className="flex items-center justify-between px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
+
+                        {(addressLoading || storeAddressLoading) && (
+                            <div className="h-6 w-6 border-4 border-t-black border-white animate-spin rounded-full bg-transparent"></div>
+                        )}
+
+                        {(showDirection && !addressLoading && !storeAddressLoading) 
+                        && <i className="ri-arrow-right-double-line text-2xl text-white"></i>}
                     </div>
-                    <div className="bg-white p-5 w-[86%] mx-auto rounded my-3">
+                    <div ref={scrollRef} className="w-full hide-scrollbar flex flex-nowrap overflow-auto gap-3 h-full border-2 p-2">
+                        {(addressLoading || storeAddressLoading) ?
+                            shimmerArray.map((_, i) => <div key={i} className="flex shrink-0 flex-col gap-2.5 rounded-xl justify-center items-center p-2 border border-gray-400 w-[85%]">
+                                <div className="w-[100%] h-4 rounded shimmerBg"></div>
+                                <div className="w-[100%] h-4 rounded shimmerBg"></div>
+                                <div className="w-[100%] h-4 rounded shimmerBg"></div>
+                                <div className="w-[100%] h-4 rounded shimmerBg"></div>
+                                <div className="flex self-start gap-2">
+                                    <div className="w-18 h-5 rounded shimmerBg"></div>
+                                    <div className="w-18 h-5 rounded shimmerBg"></div>
+                                </div>
+                            </div>)
+                            : savedAddresses.map(address => <UserAddress key={address._id} address={address} />)
+                        }
                     </div>
                 </div>
+
+                <button
+                    onClick={() => {
+                        dispatch(setHideEditAddressModal(false));
+                        dispatch(setEditAddressModal(true));
+                    }}
+                    className="bg-primary mx-auto dark:bg-darkPrimary px-3 py-1 rounded-md font-medium text-white block mt-2"
+                >
+                    Add Address
+                </button>
+
             </section>
             <section className="rounded-md md:basis-[39%] dark:bg-gray-300 bg-white p-2 md:p-5 md:self-start">
                 <div className="rounded overflow-hidden bg-gray-100 dark:bg-gray-800">
@@ -176,6 +249,11 @@ const PaymentsAndAddress = () => {
             </section>
         </div>
         <MobileFooterMenu />
+        {editAddressModal && (
+            <div onClick={() => dispatch(setHideEditAddressModal(true))} className="absolute top-0 left-0 h-full w-full bg-black/70 z-50">
+                <AddressEditForm forWhat="Add" />
+            </div>
+        )}
     </main>
 }
 

@@ -15,20 +15,18 @@ import DotBounceLoader from "./../../utils/DotBounceLoader";
 import { Asterisk } from "lucide-react";
 import { toast } from "react-toastify";
 
-const AddressEditForm = ({ data }) => {
-    console.log("Pre address", data._id)
-
+const AddressEditForm = ({ data = null, forWhat = "edit" }) => {
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState(data.country);
+    const [selectedCountry, setSelectedCountry] = useState(data?.country || "");
     const [openDropDown, setOpenDropDown] = useState(false);
 
-    const [selectedCountryCode, setSelectedCountryCode] = useState(data.countryCode);
+    const [selectedCountryCode, setSelectedCountryCode] = useState(data?.countryCode || "");
 
     const [countryStates, setCountryStates] = useState([]);
     const [searchedSates, setSearchedStates] = useState([]);
-    const [selectedState, setSelectedState] = useState(data.state);
+    const [selectedState, setSelectedState] = useState(data?.state || "");
     const [stateDropDown, setStateDropDown] = useState(false);
 
     const [saveLoading, setSaveLoading] = useState(false);
@@ -142,7 +140,7 @@ const AddressEditForm = ({ data }) => {
             obj.latLong = ""
 
             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
-                method: "PUT",
+                method: forWhat === "edit" ? "PUT" : "POST",
                 headers: {
                     "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
                     "Content-Type": "application/json",
@@ -210,10 +208,10 @@ const AddressEditForm = ({ data }) => {
         className={`absolute p-4 lg:p-5 border-[1px] dark:border-2 ${!hideEditAddressModal ? "animate-showEditAddressModal" : "animate-hideEditAddressModal"} bg-white dark:bg-black border-primary w-[95%] lg:w-[70%] left-1/2 transform -translate-x-1/2 rounded-xl z-50`}
     >
         <p className="text-center font-semibold tracking-wide text-xl text-black dark:text-gray-200">
-            Edit Address
+            {forWhat === "edit" ? "Edit Address" : "Add Address"}
         </p>
 
-        <input type="text" name="addressId" defaultValue={data._id} hidden />
+        {data && <input type="text" name="addressId" defaultValue={data?._id} hidden />}
         <input type="text" name="countryCode" defaultValue={selectedCountryCode} hidden />
 
         <p className="relative text-sm dark:text-white text-black">
@@ -255,8 +253,7 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="text"
                 name="name"
-                defaultValue={data.userName}
-                // onChange={changeHandler}
+                defaultValue={data?.userName || ""}
                 required={true}
                 placeholder="Your full name"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
@@ -271,8 +268,7 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="tel"
                 name="phone"
-                defaultValue={data.userPhone}
-                // onChange={changeHandler}
+                defaultValue={data?.userPhone || ""}
                 required={true}
                 placeholder="10-digit mobile number"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
@@ -287,8 +283,7 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="text"
                 name="flatNumber"
-                defaultValue={data.flatNumber}
-                // onChange={changeHandler}
+                defaultValue={data?.flatNumber || ""}
                 required={true}
                 placeholder="Enter flat, house number, building, or company"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
@@ -302,8 +297,7 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="text"
                 name="landmark"
-                defaultValue={data.landmark}
-                // onChange={changeHandler}
+                defaultValue={data?.landmark || ""}
                 placeholder="Nearby landmark"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
             />
@@ -317,8 +311,7 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="number" 
                 name="pinCode"
-                defaultValue={data.pinCode}
-                // onChange={changeHandler}
+                defaultValue={data?.pinCode || ""}
                 required={true}
                 placeholder="Area pin code"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"

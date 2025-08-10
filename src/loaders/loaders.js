@@ -72,22 +72,21 @@ export const profileResponseLoader = ({ request }) => {
     return { data: result };
 }
 
-export const paymentsAndAddressesLoader = ({ request }) => {
-  
-  // const searchObject = new URL(request.url).searchParams;
-  // const forWhat = searchObject.get("for");
-  // const deviceId = searchObject.get("deviceId")
+// export const paymentsAndAddressesLoader = ({ request }) => {
+//   const searchObject = new URL(request.url).searchParams;
+//   const forWhat = searchObject.get("for");
+//   const deviceId = searchObject.get("deviceId")
 
-  // let api = forWhat === "logout"
-  //   ? "getLoggedInSessions"
-  //   : forWhat === "payment"
-  //     ? "getPaymentMethods"
-  //     : "getAddress";
+//   let api = forWhat === "logout"
+//     ? "getLoggedInSessions"
+//     : forWhat === "payment"
+//       ? "getPaymentMethods"
+//       : "getAddress";
 
-  //   const result = store.dispatch(profileApiSlice.endpoints[api].initiate({ deviceId })).unwrap();
+//     const result = store.dispatch(profileApiSlice.endpoints[api].initiate({ deviceId })).unwrap();
   
-  //   return { data: result };
-}
+//     return { data: result };
+// }
 
 // } catch (err) {
 //     console.log("failed to failed specific food data");

@@ -5,7 +5,7 @@ const profileApiSlice = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: `${import.meta.env.VITE_BASE_URL}/api/userActivity`,
         prepareHeaders: (headers) => {
-            headers.set("x-identifier" , import.meta.env.VITE_HASHED_IDENTIFIER)
+            headers.set("x-identifier", import.meta.env.VITE_HASHED_IDENTIFIER)
             headers.set("Content-Type", "application/json")
             headers.set("x-user-agent", navigator.userAgent)
             headers.set("x-language", navigator.language)
@@ -16,7 +16,8 @@ const profileApiSlice = createApi({
 
         credentials: "include"
     }),
-    
+    keepUnusedDataFor: 0,
+
     endpoints: (builder) => ({
         getAddress: builder.query({
             query: ({ deviceId }) => ({
@@ -30,7 +31,7 @@ const profileApiSlice = createApi({
 
         getPaymentMethods: builder.query({
             query: ({ deviceId }) => ({
-                url : "/userPaymentMethods",
+                url: "/userPaymentMethods",
                 method: "GET",
                 headers: {
                     "x-device-id": deviceId,
@@ -51,3 +52,9 @@ const profileApiSlice = createApi({
 })
 
 export default profileApiSlice;
+
+export const {
+    useLazyGetAddressQuery,
+    useLazyGetPaymentMethodsQuery,
+    useLazyGetLoggedInSessionsQuery
+} = profileApiSlice;
