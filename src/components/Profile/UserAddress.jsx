@@ -10,18 +10,20 @@ import {
     setHideEditAddressModal,
     setSavedAddress,
     setAddressLoading,
+    setDeliveryAddress,
+    selectDeliveryAddress
 } from "../../features/delivery/deliverySlice";
 
 import { useSelector, useDispatch } from "react-redux";
 import AddressEditForm from "./AddressEditForm";
 
-const UserAddress = ({ address, key }) => {
-
+const UserAddress = ({ address, key, width = "w-[85%]" }) => {
 
     const [delLoading, setDelLOading] = useState(false);
     const deviceId = useSelector(selectDeviceFingerPrint);
     const dispatch = useDispatch();
     const editAddressModal = useSelector(selectEditAddressModal);
+    const deliverAt = useSelector(selectDeliveryAddress);
 
     const removeClickHandler = async (id) => {
         setDelLOading(true);
@@ -79,10 +81,14 @@ const UserAddress = ({ address, key }) => {
 
     const pathName = useLocation().pathname;
 
+    const useClickHandler = () => {
+        dispatch(setDeliveryAddress(address))
+    }
+
     return <>
         <div
             key={key}
-            className="p-2 shrink-0 self-start rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
+            className={`p-2 shrink-0 self-start rounded-xl bg-gray-100 ${width} dark:bg-gray-300  mx-auto border border-primary`}
         >
             <p className="font-semibold tracking-wide">{address.userName}</p>
             <p className="whitespace-normal">{address.flatNumber}</p>
@@ -97,9 +103,14 @@ const UserAddress = ({ address, key }) => {
                 }} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
                     Edit
                 </button>
-                {pathName !== "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                {pathName !== "/mobileProfileResponse" 
+                && deliverAt._id !== address._id ? <button onClick={useClickHandler} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
                     Use
-                </button>}
+                </button>
+                : <i class="ri-checkbox-circle-fill text-lg text-green-500">{" "}
+                    <span className="font-sans text-lg">Deliver here</span>
+                </i>    
+            }
 
                 {pathName === "/mobileProfileResponse" &&
                     <button onClick={() => removeClickHandler(address._id)} className="flex items-center justify-center w-18 h-6 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
@@ -108,8 +119,8 @@ const UserAddress = ({ address, key }) => {
             </div>
         </div>
         {editAddressModal && (
-            <div onClick={() => dispatch(setHideEditAddressModal(true))} className="absolute top-0 left-0 h-full w-full bg-black/70 z-50">
-                <AddressEditForm data={address} />
+            <div onClick={() => dispatch(setHideEditAddressModal(true))} className="absolute top-0 left-0 h-full w-full bg-black/60 z-50">
+                <AddressEditForm data={address} forWhat="edit" />
             </div>
         )}
     </>

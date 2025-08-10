@@ -8,7 +8,8 @@ import {
     setEditAddressModal,
     selectHideEditAddressModal,
     setSavedAddress,
-    setAddressLoading
+    setAddressLoading,
+    setAddAddressModal
 } from "../../features/delivery/deliverySlice";
 
 import DotBounceLoader from "./../../utils/DotBounceLoader";
@@ -196,7 +197,8 @@ const AddressEditForm = ({ data = null, forWhat = "edit" }) => {
         const classList = e.target.classList;
 
         if (classList.contains("animate-hideEditAddressModal")) {
-            dispatch(setEditAddressModal(false))
+            dispatch(setEditAddressModal(false));
+            dispatch(setAddAddressModal(false));
         }
     }
 
@@ -205,7 +207,7 @@ const AddressEditForm = ({ data = null, forWhat = "edit" }) => {
         onSubmit={submitHandler}
         onClick={outSideClickHandler}
         ref={formRef}
-        className={`absolute p-4 lg:p-5 border-[1px] dark:border-2 ${!hideEditAddressModal ? "animate-showEditAddressModal" : "animate-hideEditAddressModal"} bg-white dark:bg-black border-primary w-[95%] lg:w-[70%] left-1/2 transform -translate-x-1/2 rounded-xl z-50`}
+        className={`absolute p-4 lg:p-5 border-[1px] dark:border-2 ${!hideEditAddressModal ? "animate-showEditAddressModal" : "animate-hideEditAddressModal"} bg-white dark:bg-black border-primary w-[95%] lg:w-[40%] left-1/2 transform -translate-x-1/2 rounded-xl z-50`}
     >
         <p className="text-center font-semibold tracking-wide text-xl text-black dark:text-gray-200">
             {forWhat === "edit" ? "Edit Address" : "Add Address"}
@@ -309,7 +311,7 @@ const AddressEditForm = ({ data = null, forWhat = "edit" }) => {
                 <Asterisk size={14} className="absolute -top-0.5 text-red-600 inline" />
             </p>
             <input
-                type="number" 
+                type="number"
                 name="pinCode"
                 defaultValue={data?.pinCode || ""}
                 required={true}

@@ -9,13 +9,17 @@ import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApi
 import { useLazyGetAddressQuery } from "../../features/profile/profileApiSlice";
 import AddressEditForm from "../Profile/AddressEditForm";
 
-import { 
-    setSavedAddress, 
-    selectSavedAddress, 
-    selectAddressLoading, 
-    selectEditAddressModal, 
+import {
+    setSavedAddress,
+    selectSavedAddress,
+    selectAddressLoading,
+    selectEditAddressModal,
     setEditAddressModal,
-    setHideEditAddressModal 
+    setHideEditAddressModal,
+    selectDeliveryAddress,
+    selectAddAddressModal,
+    setAddAddressModal,
+    setDeliveryAddress,
 } from "../../features/delivery/deliverySlice";
 
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
@@ -23,12 +27,16 @@ import UserAddress from "../Profile/UserAddress";
 
 const PaymentsAndAddress = () => {
     const shimmerArray = Array.from({ length: 2 });
-    const editAddressModal = useSelector(selectEditAddressModal)
+    const editAddressModal = useSelector(selectEditAddressModal);
+
+    // const deliveryAt = useSelector(selectDeliveryAddress);
+    // console.log(deliveryAt);
 
     const [trigger] = useLazyLocationByCoordinatesQuery();
     const [searchParams] = useSearchParams();
     const [latRestro, lngRestro] = searchParams.get("restroDemographics").split(",")
     const { lat, lng } = useSelector(selectLatAndLng);
+    const addAddress = useSelector(selectAddAddressModal);
 
     const dispatch = useDispatch();
     const [addressLoading, setAddressLoading] = useState(true)
@@ -37,8 +45,10 @@ const PaymentsAndAddress = () => {
     const [lngDelivery, setLngDelivery] = useState(lng);
     const [showDirection, setShowDirection] = useState(false);
     const [isDeliverable, setIsDeliverable] = useState(true);
-    const [currentLocationLoading, setCurrentLocationLoading] = useState(false);
-    const [deliverAddress, setDeliveryAddress] = useState({});
+    
+    const [currentLocationLoading, setCurrentLocationLoading] = useState(true);
+    const [deliveryToCurrentLocation, setDeliveryToCurrentLocation] = useState(true);
+
     const savedAddresses = useSelector(selectSavedAddress);
     const [triggerSavedAddress] = useLazyGetAddressQuery();
     const deviceId = useSelector(selectDeviceFingerPrint);
@@ -51,11 +61,32 @@ const PaymentsAndAddress = () => {
             const ele = scrollRef.current;
             const overflow = ele.scrollWidth > ele.clientWidth;
 
-            if (overflow) {
-                setShowDirection(true);
+            setShowDirection(overflow);
+        }
+    }, [savedAddresses]);
+
+    useEffect(() => {
+        if (navigator.geolocation) {
+            let lat = null;
+            let lng = null;
+            setCurrentLocationLoading(true);
+
+            navigator.geolocation.getCurrentPosition(async (position) => {
+                lat = position.coords.latitude;
+                lng = position.coords.longitude;
+            })
+
+            const distance = haversineFormula(latRestro, lat, lngRestro, lng);
+
+            if (distance > 10) {
+                setCurrentLocationLoading(false);
+                setDeliveryToCurrentLocation(false);
+            } else {
+                setCurrentLocationLoading(false);
+                setDeliveryToCurrentLocation(true);
             }
         }
-    }, [savedAddresses])
+    }, []);
 
     useEffect(() => {
         const fetchAddress = async () => {
@@ -100,7 +131,7 @@ const PaymentsAndAddress = () => {
     }, [latDelivery, lngDelivery, latRestro, lngRestro]);
 
     const getCurrentLocation = () => {
-        if (!isDeliverable) return
+        if (!deliveryToCurrentLocation) return
         if (navigator.geolocation) {
             let lat = null;
             let lng = null;
@@ -129,7 +160,7 @@ const PaymentsAndAddress = () => {
                         pinCode: mainData[6].long_name,
                     }
 
-                    setDeliveryAddress(deliverAt);
+                    dispatch(setDeliveryAddress(deliverAt));
                     setCurrentLocationLoading(false);
                 } catch (err) {
                     console.log("Error fetching location data. Please try again later.", err);
@@ -154,7 +185,7 @@ const PaymentsAndAddress = () => {
                     ) : (
                         <>
                             <p className="text-red-500 font-medium inline leading-4">
-                                Not delivering to your address. Please select different address{" "}
+                                Not delivering to your current address. Please select different address{" "}
                             </p>
                             <div className="relative inline-flex gap-1.5 items-center">
                                 <div id="No delivery" className="relative mt-0.5">
@@ -174,10 +205,10 @@ const PaymentsAndAddress = () => {
                             <div className="h-6 w-6 border-4 border-t-black border-white animate-spin rounded-full bg-transparent"></div>
                         )}
 
-                        {(showDirection && !addressLoading && !storeAddressLoading) 
-                        && <i className="ri-arrow-right-double-line text-2xl text-white"></i>}
+                        {(showDirection && !addressLoading && !storeAddressLoading)
+                            && <i className="ri-arrow-right-double-line text-2xl text-white"></i>}
                     </div>
-                    <div ref={scrollRef} className="w-full hide-scrollbar flex flex-nowrap overflow-auto gap-3 h-full border-2 p-2">
+                    <div ref={scrollRef} className="w-full hide-scrollbar flex flex-nowrap overflow-auto gap-3 h-full p-2">
                         {(addressLoading || storeAddressLoading) ?
                             shimmerArray.map((_, i) => <div key={i} className="flex shrink-0 flex-col gap-2.5 rounded-xl justify-center items-center p-2 border border-gray-400 w-[85%]">
                                 <div className="w-[100%] h-4 rounded shimmerBg"></div>
@@ -189,13 +220,14 @@ const PaymentsAndAddress = () => {
                                     <div className="w-18 h-5 rounded shimmerBg"></div>
                                 </div>
                             </div>)
-                            : savedAddresses.map(address => <UserAddress key={address._id} address={address} />)
+                            : savedAddresses.map(address => <UserAddress width="w-[90%]" key={address._id} address={address} />)
                         }
                     </div>
                 </div>
 
                 <button
                     onClick={() => {
+                        dispatch(setAddAddressModal(true));
                         dispatch(setHideEditAddressModal(false));
                         dispatch(setEditAddressModal(true));
                     }}
@@ -213,9 +245,9 @@ const PaymentsAndAddress = () => {
                     <div className="w-[90%] mx-auto items-center px-2 py-3 overflow-hidden">
                         <div
                             onClick={getCurrentLocation}
-                            className={`relative group border-[1px] dark:border-gray-400 border-black ${isDeliverable && "active:border-primary cursor-pointer"} py-2 px-3 md:py-2 md:px-5`}
+                            className={`relative group border-[1px] dark:border-gray-400 border-black ${deliveryToCurrentLocation && "active:border-primary cursor-pointer"} py-2 px-3 md:py-2 md:px-5`}
                         >
-                            {(!isDeliverable || currentLocationLoading) &&
+                            {(!deliveryToCurrentLocation || currentLocationLoading) &&
                                 <div className="absolute flex items-center justify-center top-0 left-0 h-full w-full dark:bg-gray-400/60 bg-black/60">
                                     {currentLocationLoading ?
                                         (<div className="rounded-full border-4 h-7 w-7 border-t-primary border-white animate-spin" />)
@@ -249,8 +281,11 @@ const PaymentsAndAddress = () => {
             </section>
         </div>
         <MobileFooterMenu />
-        {editAddressModal && (
-            <div onClick={() => dispatch(setHideEditAddressModal(true))} className="absolute top-0 left-0 h-full w-full bg-black/70 z-50">
+        {(editAddressModal && addAddress) && (
+            <div onClick={() => {
+                dispatch(setHideEditAddressModal(true));
+                dispatch(setAddAddressModal(false));
+            }} className="absolute top-0 left-0 h-full w-full bg-black/60 z-50">
                 <AddressEditForm forWhat="Add" />
             </div>
         )}
