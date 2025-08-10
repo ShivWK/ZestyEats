@@ -106,26 +106,13 @@ export default function App() {
     const deviceInfo = async () => {
       const fp = await FingerprintJS.load();
       const result = await fp.get();
-      console.log(result.components.timezone.value)
+
       dispatch(setDeviceFingerPrint(result.visitorId));
       dispatch(setDeviceFingerPrintRestro(result.visitorId));
     }
 
     deviceInfo();
   }, [])
-
-  // useEffect(() => {
-  //   const unloadHandler = () => {
-  //     console.log(isLoginOpen, isLocationModelOpen);
-
-  //     if (isLoginOpen || isLocationModelOpen) {
-  //       window.history.back();
-  //     }
-  //   }
-
-  //   window.addEventListener("beforeunload", unloadHandler);
-  //   return () => window.removeEventListener("beforeunload", unloadHandler);
-  // }, [isLoginOpen, isLocationModelOpen])
 
   useEffect(() => {
     const history = pathHistory.map((item) => {
@@ -321,8 +308,6 @@ export default function App() {
       </Route>
     )
   );
-
-  // loader={paymentsAndAddressesLoader}
 
   return (
     <>

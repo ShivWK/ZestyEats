@@ -22,7 +22,7 @@ const MainContent = ({ mainData }) => {
     const [searchParams] = useSearchParams();
     const mode = searchParams.get("mode");
 
-    console.log("main", mainData);
+    // console.log("main", mainData);
 
     if (!isLoggedIn) return <UnauthorizedError />
 

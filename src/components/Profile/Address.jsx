@@ -136,8 +136,8 @@ const Address = (data) => {
             obj[key] = value;
         })
 
-        const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
-        console.log(searchString);
+        // const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
+        // console.log(searchString);
 
         try {
             // const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchString)}`, {
