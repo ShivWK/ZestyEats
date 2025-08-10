@@ -114,7 +114,8 @@ const AddressEditForm = ({ data }) => {
         setTimeout(() => setStateDropDown(false), 100)
     }
 
-    const outSideClickHandler = () => {
+    const outSideClickHandler = (e) => {
+        e.stopPropagation();
         if (openDropDown) setOpenDropDown(false);
         if (stateDropDown) setStateDropDown(false);
     }
@@ -209,12 +210,16 @@ const AddressEditForm = ({ data }) => {
         }
     }
 
+    const inputClickHandler = (e) => {
+        // e.preventDefault
+    }
+
     return <form
         onAnimationEnd={animationEndHandler}
         onSubmit={submitHandler}
         onClick={outSideClickHandler}
         ref={formRef}
-        className={`absolute p-4 lg:p-5 border-[1px] dark:border-2 ${!hideEditAddressModal ? "animate-showEditAddressModal" : "animate-hideEditAddressModal"} bg-white dark:bg-black border-primary w-[95%] lg:w-[70%] left-1/2 transform -translate-x-1/2 rounded-xl`}
+        className={`absolute p-4 lg:p-5 border-[1px] dark:border-2 ${!hideEditAddressModal ? "animate-showEditAddressModal" : "animate-hideEditAddressModal"} bg-white dark:bg-black border-primary w-[95%] lg:w-[70%] left-1/2 transform -translate-x-1/2 rounded-xl z-50`}
     >
         <p className="text-center font-semibold tracking-wide text-xl text-black dark:text-gray-200">
             Edit Address
@@ -262,8 +267,8 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="text"
                 name="name"
-                value={data.userName}
-                onChange={changeHandler}
+                defaultValue={data.userName}
+                // onChange={changeHandler}
                 required={true}
                 placeholder="Your full name"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
@@ -278,8 +283,8 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="tel"
                 name="phone"
-                value={data.userPhone}
-                onChange={changeHandler}
+                defaultValue={data.userPhone}
+                // onChange={changeHandler}
                 required={true}
                 placeholder="10-digit mobile number"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
@@ -294,8 +299,8 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="text"
                 name="flatNumber"
-                value={data.flatNumber}
-                onChange={changeHandler}
+                defaultValue={data.flatNumber}
+                // onChange={changeHandler}
                 required={true}
                 placeholder="Enter flat, house number, building, or company"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
@@ -309,8 +314,8 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="text"
                 name="landmark"
-                value={data.landmark}
-                onChange={changeHandler}
+                defaultValue={data.landmark}
+                // onChange={changeHandler}
                 placeholder="Nearby landmark"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
             />
@@ -324,8 +329,8 @@ const AddressEditForm = ({ data }) => {
             <input
                 type="number"
                 name="pinCode"
-                value={data.pinCode}
-                onChange={changeHandler}
+                defaultValue={data.pinCode}
+                // onChange={changeHandler}
                 required={true}
                 placeholder="Area pin code"
                 className="p-0.5 px-1 truncate border border-primary rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300"
