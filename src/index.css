@@ -7,6 +7,9 @@
 
     --animate-height: height 0.6s ease forwards;
 
+    --animate-showEditAddressModal: showEditAddress 0.3s ease forwards;
+    --animate-hideEditAddressModal: hideEditAddress 0.3s ease forwards;
+
     @keyframes height {
         0% {
             height: 0px;
@@ -26,6 +29,26 @@
 
         100% {
             transform: translateY(-5px);
+        }
+    }
+
+    @keyframes showEditAddress {
+        0% {
+            top: 100%
+        }
+
+        100% {
+            top: 5rem
+        }
+    }
+
+    @keyframes hideEditAddress {
+        0% {
+            top: 5rem
+        }
+
+        100% {
+            top: 100%
         }
     }
 }

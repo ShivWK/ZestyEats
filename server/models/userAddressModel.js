@@ -7,6 +7,11 @@ const addressSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+
+    countryCode: {
+        type: String,
+        required: true
+    },
     
     userName: {
         type: String,
@@ -34,6 +39,8 @@ const addressSchema = new mongoose.Schema({
         type: String,
         require: true
     },
+
+    latLong: String
 })
 
 const AddressModel = mongoose.model("Address", addressSchema);

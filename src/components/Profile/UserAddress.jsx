@@ -3,11 +3,21 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
-import { useSelector } from "react-redux";
+
+import { 
+    selectEditAddressModal, 
+    setEditAddressModal,
+    setHideEditAddressModal 
+} from "../../features/delivery/deliverySlice";
+
+import { useSelector, useDispatch } from "react-redux";
+import AddressEditForm from "./AddressEditForm";
 
 const UserAddress = ({ address }) => {
-    const [ delLoading, setDelLOading ] = useState(false);
+    const [delLoading, setDelLOading] = useState(false);
     const deviceId = useSelector(selectDeviceFingerPrint);
+    const dispatch = useDispatch();
+    const editAddressModal = useSelector(selectEditAddressModal);
 
     const removeClickHandler = async (id) => {
         // console.log(id) 
@@ -29,7 +39,7 @@ const UserAddress = ({ address }) => {
                 credentials: "include",
             })
 
-            const result  = await res.json();
+            const result = await res.json();
 
             if (!res.ok) throw new Error(result.message);
             setDelLOading(false);
@@ -43,29 +53,39 @@ const UserAddress = ({ address }) => {
 
     const pathName = useLocation().pathname;
 
-    return <div
-        className="p-2 rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
-    >
-        <p className="font-semibold tracking-wide">{address.userName}</p>
-        <p className="whitespace-normal">{address.flatNumber}</p>
-        <p>{`${address.state}, ${address.pinCode}, ${address.country}.`}</p>
-        {address.landmark && <p>Landmark: {address.landmark}</p>}
-        <p>{address.userPhone}</p>
+    return <>
+        <div
+            className="p-2 rounded-xl bg-gray-100 dark:bg-gray-300 w-[85%] mx-auto border border-primary"
+        >
+            <p className="font-semibold tracking-wide">{address.userName}</p>
+            <p className="whitespace-normal">{address.flatNumber}</p>
+            <p>{`${address.state}, ${address.pinCode}, ${address.country}.`}</p>
+            {address.landmark && <p>Landmark: {address.landmark}</p>}
+            <p>{address.userPhone}</p>
 
-        <div className="flex items-center gap-2 text-sm ml-auto mt-2">
-            <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                Edit
-            </button>
-            {pathName !== "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                Use
-            </button>}
-
-            {pathName === "/mobileProfileResponse" &&
-                <button onClick={() => removeClickHandler(address._id)} className="flex items-center justify-center w-18 h-6 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                    {delLoading ? <DotBounceLoader /> : "Remove"}
+            <div className="flex items-center gap-2 text-sm ml-auto mt-2">
+                <button onClick={() => {
+                    dispatch(setHideEditAddressModal(false));
+                    dispatch(setEditAddressModal(true));
+                }} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                    Edit
+                </button>
+                {pathName !== "/mobileProfileResponse" && <button className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                    Use
                 </button>}
+
+                {pathName === "/mobileProfileResponse" &&
+                    <button onClick={() => removeClickHandler(address._id)} className="flex items-center justify-center w-18 h-6 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                        {delLoading ? <DotBounceLoader /> : "Remove"}
+                    </button>}
+            </div>
         </div>
-    </div>
+        {editAddressModal && (
+            <div className="absolute top-0 left-0 h-full w-full bg-black/70 z-50">
+                <AddressEditForm data={address} />
+            </div>
+        )}
+    </>
 }
 
 export default UserAddress;

@@ -37,7 +37,9 @@ exports.setUserAddress = async (req, res, next) => {
             flatNumber: data.flatNumber,
             landmark: data.landmark,
             pinCode: data.pinCode,
-            state: data.state
+            state: data.state,
+            countryCode: data.countryCode,
+            latLong: data.latLong,
         });
 
         return res.status(200).json({

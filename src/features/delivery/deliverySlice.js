@@ -11,6 +11,8 @@ const initialState = {
     deliveryAddress: {},
     deliveryLat: null,
     deliveryLng: null,
+    editAddressModal : false,
+    hideEditAddressModal: true,
 }
 
 const deliverySlice = createSlice({
@@ -28,6 +30,14 @@ const deliverySlice = createSlice({
 
         setDeliveryLng: (state, action) => {
             state.deliveryLng = action.payload;
+        },
+
+        setEditAddressModal: (state, action) => {
+            state.editAddressModal = action.payload;
+        },
+
+        setHideEditAddressModal: (state, action) => {
+            state.hideEditAddressModal = action.payload;
         }
     }
 });
@@ -35,11 +45,15 @@ const deliverySlice = createSlice({
 export const selectDeliveryAddress = (state) => state.delivery.deliveryAddress;
 export const selectDeliveryLat = (state) => state.delivery.deliveryLat;
 export const selectDeliveryLng = (state) => state.delivery.deliveryLng;
+export const selectEditAddressModal = (state) => state.delivery.editAddressModal;
+export const selectHideEditAddressModal = (state) => state.delivery.hideEditAddressModal;
 
 export const {
     setDeliveryAddress,
+    setEditAddressModal,
+    setHideEditAddressModal,
     setDeliveryLat,
-    setDeliveryLng
+    setDeliveryLng,
 } = deliverySlice.actions;
 
 export default deliverySlice.reducer;

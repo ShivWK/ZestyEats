@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { useLocation } from "react-router";
 import { useSelector } from "react-redux";
 import { State } from "country-state-city";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
@@ -11,7 +10,6 @@ import UserAddress from "./UserAddress";
 const Address = (data) => {
     console.log(data);
 
-    const pathName = useLocation().pathname;
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
     const [allCountries, setAllCountries] = useState([]);
@@ -130,7 +128,9 @@ const Address = (data) => {
             const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchString}`);
 
             const data = await latLong.json();
-            console.log(data)
+            console.log("latLong" , data);
+
+            obj.latLong = "";
 
             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
                 method: "POST",
@@ -199,7 +199,7 @@ const Address = (data) => {
                                     value={selectedCountry}
                                     onChange={countryChangeHandler}
                                 ></input>
-
+                                <input type="text" name="countryCode" value={selectedCountryCode} hidden />
                                 <div
                                     className={`absolute top-[110%] ${(openDropDown) ? "max-h-70" : "h-0"} drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] transition-all duration-150 ease-linear overflow-auto bg-gray-100 dark:bg-gray-300 left-0 w-full rounded-b-md z-10`}
                                 >

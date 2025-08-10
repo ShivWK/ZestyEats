@@ -48,6 +48,8 @@ import {
   setIsLoggedInRestro
 } from "../features/home/restaurantsSlice";
 
+import { selectEditAddressModal } from "../features/delivery/deliverySlice";
+
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import useTrackNavigation from "../utils/useTrackNavigation";
@@ -89,6 +91,7 @@ export default function Layout() {
   const { OpenLocationInfoModal } = useSelector(selectLocationInfoModal)
   const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const editAddressModal = useSelector(selectEditAddressModal);
 
   useTrackNavigation();
 
@@ -340,7 +343,7 @@ export default function Layout() {
 
     const isLargeScreen = window.innerWidth >= 768;
 
-    if (isLoginOpen || isLocationOpen || menuModel || OpenLocationInfoModal) {
+    if (isLoginOpen || isLocationOpen || menuModel || OpenLocationInfoModal || editAddressModal) {
       html.classList.add("overflow-hidden");
       html.style.paddingRight = isLargeScreen ? scrollbarWidth : "0px";
     } else {
@@ -353,7 +356,7 @@ export default function Layout() {
       html.style.paddingRight = "0px";
     };
 
-  }, [isLoginOpen, isLocationOpen, menuModel, OpenLocationInfoModal]);
+  }, [isLoginOpen, isLocationOpen, menuModel, OpenLocationInfoModal, editAddressModal]);
 
   useEffect((e) => {
     const handleModelClose = (e) => {
