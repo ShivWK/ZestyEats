@@ -31,9 +31,10 @@ exports.setUserAddress = async (req, res, next) => {
         const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${process.env.VITE_GOOGLE_MAPS_KEY}`);
 
         const locationData = await response.json();
+        console.log("google response", locationData)
+
         const latLong = locationData?.results?.[0].geometry?.location;
 
-        console.log("google response", locationData)
         console.log("latLong", latLong);
 
         await AddressModel.create({

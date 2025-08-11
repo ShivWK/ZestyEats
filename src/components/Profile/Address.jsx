@@ -136,22 +136,12 @@ const Address = (data) => {
             obj[key] = value;
         })
 
-        let searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
-        searchString.replace(/^[^ ]+\s*/, "");
+        // let searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
+        // searchString.replace(/^[^ ]+\s*/, "");
 
-        console.log(searchString);
+        // console.log(searchString);
 
         try {
-            const resp = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${import.meta.env.VITE_GOOGLE_MAPS_KEY}`);
-
-            const data = await resp.json();
-            const latLong = data?.results?.[0].geometry?.location;
-
-            console.log("google response", data)
-            console.log("latLong", latLong);
-
-            obj.latLong = "";
-
             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
                 method: "POST",
                 headers: {

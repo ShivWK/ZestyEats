@@ -130,16 +130,7 @@ const AddressEditForm = ({ data = null, forWhat = "edit" }) => {
             obj[key] = value;
         })
 
-        // const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}.`;
-
         try {
-            // const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchString}`);
-
-            // const data = await latLong.json();
-            // console.log(data)
-
-            obj.latLong = ""
-
             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {
                 method: forWhat === "edit" ? "PUT" : "POST",
                 headers: {
@@ -201,8 +192,6 @@ const AddressEditForm = ({ data = null, forWhat = "edit" }) => {
             dispatch(setAddAddressModal(false));
         }
     }
-
-    
 
     return <form
         onAnimationEnd={animationEndHandler}
