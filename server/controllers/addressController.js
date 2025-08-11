@@ -3,8 +3,6 @@ const AddressModel = require("./../models/userAddressModel");
 exports.getUserAddress = async (req, res, next) => {
     const userId = req.UserID;
 
-    console.log("userID" , userId);
-
     try {
         const result = await AddressModel.find({ userId });
 
@@ -24,12 +22,21 @@ exports.getUserAddress = async (req, res, next) => {
 
 exports.setUserAddress = async (req, res, next) => {
     const userId = req.UserID;
-    console.log(userId)
-
     const data = req.body.address;
 
     try {
-        await AddressModel.create({ 
+        let searchString = `${data.flatNumber}, ${data.state}, ${data.pinCode}, ${data.country}`;
+        searchString.replace(/^[^ ]+\s*/, "");
+
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${import.meta.env.VITE_GOOGLE_MAPS_KEY}`);
+
+        const locationData = await response.json();
+        const latLong = locationData?.results?.[0].geometry?.location;
+
+        console.log("google response", locationData)
+        console.log("latLong", latLong);
+
+        await AddressModel.create({
             userId,
             country: data.country,
             userName: data.name,
@@ -39,7 +46,7 @@ exports.setUserAddress = async (req, res, next) => {
             pinCode: data.pinCode,
             state: data.state,
             countryCode: data.countryCode,
-            latLong: data.latLong,
+            latLong: latLong,
         });
 
         return res.status(200).json({
@@ -61,7 +68,7 @@ exports.updateUserAddress = async (req, res, next) => {
     const data = req.body.address;
 
     try {
-        await AddressModel.findByIdAndUpdate(data.addressId , { 
+        await AddressModel.findByIdAndUpdate(data.addressId, {
             userId,
             country: data.country,
             userName: data.name,

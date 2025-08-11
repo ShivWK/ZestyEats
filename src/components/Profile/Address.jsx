@@ -136,18 +136,19 @@ const Address = (data) => {
             obj[key] = value;
         })
 
-        // const searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
-        // console.log(searchString);
+        let searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
+        searchString.replace(/^[^ ]+\s*/, "");
+
+        console.log(searchString);
 
         try {
-            // const latLong = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchString)}`, {
-            //     headers: {
-            //         "User-Agent": navigator.userAgent,
-            //     }
-            // });
+            const resp = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${import.meta.env.VITE_GOOGLE_MAPS_KEY}`);
 
-            // const data = await latLong.json();
-            // console.log("latLong", data);
+            const data = await resp.json();
+            const latLong = data?.results?.[0].geometry?.location;
+
+            console.log("google response", data)
+            console.log("latLong", latLong);
 
             obj.latLong = "";
 
@@ -174,7 +175,7 @@ const Address = (data) => {
             setSaveLoading(false);
             setShowForm(false);
 
-            toast.info(response.message)
+            // toast.info(response.message)
             console.log(response);
 
             dispatch(setAddressLoading(true))

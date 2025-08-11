@@ -40,7 +40,7 @@ const addressSchema = new mongoose.Schema({
         require: true
     },
 
-    latLong: String
+    latLong: mongoose.Schema.Types.Mixed,
 })
 
 const AddressModel = mongoose.model("Address", addressSchema);
