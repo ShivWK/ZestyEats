@@ -17,6 +17,7 @@ const profileApiSlice = createApi({
         credentials: "include"
     }),
     keepUnusedDataFor: 0,
+    refetchOnMountOrArgChange: true,
 
     endpoints: (builder) => ({
         getAddress: builder.query({

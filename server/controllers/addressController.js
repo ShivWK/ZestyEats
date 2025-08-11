@@ -28,7 +28,7 @@ exports.setUserAddress = async (req, res, next) => {
         let searchString = `${data.flatNumber}, ${data.state}, ${data.pinCode}, ${data.country}`;
         searchString.replace(/^[^ ]+\s*/, "");
 
-        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${import.meta.env.VITE_GOOGLE_MAPS_KEY}`);
+        const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${process.env.VITE_GOOGLE_MAPS_KEY}`);
 
         const locationData = await response.json();
         const latLong = locationData?.results?.[0].geometry?.location;
