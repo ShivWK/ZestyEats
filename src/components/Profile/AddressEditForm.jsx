@@ -180,6 +180,7 @@ const AddressEditForm = ({ data = null, forWhat = "edit" }) => {
             console.log("Error in adding address", err);
             setSaveLoading(false);
             dispatch(setAddressLoading(false));
+            dispatch(setHideEditAddressModal(true));
             toast.error(err.message);
         }
     }
