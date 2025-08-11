@@ -11,19 +11,22 @@ import {
     setSavedAddress,
     setAddressLoading,
     setDeliveryAddress,
-    selectDeliveryAddress
+    selectDeliveryAddress,
+    selectAddAddressModal
 } from "../../features/delivery/deliverySlice";
 
 import { useSelector, useDispatch } from "react-redux";
 import AddressEditForm from "./AddressEditForm";
+import { CircleCheckBig } from "lucide-react";
 
-const UserAddress = ({ address, key, width = "w-[85%]" }) => {
+const UserAddress = ({ address, width = "w-[85%]" }) => {
 
     const [delLoading, setDelLOading] = useState(false);
     const deviceId = useSelector(selectDeviceFingerPrint);
     const dispatch = useDispatch();
     const editAddressModal = useSelector(selectEditAddressModal);
     const deliverAt = useSelector(selectDeliveryAddress);
+    const addAddressModal = useSelector(selectAddAddressModal)
 
     const removeClickHandler = async (id) => {
         setDelLOading(true);
@@ -87,8 +90,7 @@ const UserAddress = ({ address, key, width = "w-[85%]" }) => {
 
     return <>
         <div
-            key={key}
-            className={`p-2 shrink-0 self-start rounded-xl bg-gray-100 ${width} dark:bg-gray-300  mx-auto border border-primary`}
+            className={`p-2 shrink-0 self-start rounded-xl bg-gray-100 ${width} lg:w-[55%] dark:bg-gray-300  mx-auto border border-primary`}
         >
             <p className="font-semibold tracking-wide">{address.userName}</p>
             <p className="whitespace-normal">{address.flatNumber}</p>
@@ -103,14 +105,18 @@ const UserAddress = ({ address, key, width = "w-[85%]" }) => {
                 }} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
                     Edit
                 </button>
-                {pathName !== "/mobileProfileResponse" 
-                && deliverAt._id !== address._id ? <button onClick={useClickHandler} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                    Use
-                </button>
-                : <i class="ri-checkbox-circle-fill text-lg text-green-500">{" "}
-                    <span className="font-sans text-lg">Deliver here</span>
-                </i>    
-            }
+                {pathName === "/paymentsAndAddresses"
+                    && (
+                        deliverAt._id !== address._id ? <button onClick={useClickHandler} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                            Use
+                        </button>
+                            : <div className="flex items-center gap-1">
+                                <CircleCheckBig size={16} strokeWidth={4} className="ri-checkbox-circle-fill text-lg text-green-500 p-0"/>
+                                <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
+                            </div>
+
+                    )
+                }
 
                 {pathName === "/mobileProfileResponse" &&
                     <button onClick={() => removeClickHandler(address._id)} className="flex items-center justify-center w-18 h-6 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
@@ -118,7 +124,7 @@ const UserAddress = ({ address, key, width = "w-[85%]" }) => {
                     </button>}
             </div>
         </div>
-        {editAddressModal && (
+        {(editAddressModal && !addAddressModal) && (
             <div onClick={() => dispatch(setHideEditAddressModal(true))} className="absolute top-0 left-0 h-full w-full bg-black/60 z-50">
                 <AddressEditForm data={address} forWhat="edit" />
             </div>

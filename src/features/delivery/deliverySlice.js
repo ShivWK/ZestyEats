@@ -9,6 +9,7 @@ const initialState = {
     hideEditAddressModal: true,
     addressLoading: false,
     addAddressModal: false,
+    paymentMethod: "",
 }
 
 const deliverySlice = createSlice({
@@ -46,6 +47,10 @@ const deliverySlice = createSlice({
 
         setAddAddressModal: (state, action) => {
             state.addAddressModal = action.payload;
+        },
+
+        setPaymentMethod: (state, action) => {
+            state.paymentMethod = action.payload;
         }
     }
 });
@@ -57,7 +62,8 @@ export const selectDeliveryLat = (state) => state.delivery.deliveryLat;
 export const selectDeliveryLng = (state) => state.delivery.deliveryLng;
 export const selectEditAddressModal = (state) => state.delivery.editAddressModal;
 export const selectHideEditAddressModal = (state) => state.delivery.hideEditAddressModal;
-export const selectAddAddressModal = (state) => state.delivery.addAddressModal
+export const selectAddAddressModal = (state) => state.delivery.addAddressModal;
+export const selectPaymentMethod = (state) => state.delivery.paymentMethod;
 
 export const {
     setDeliveryAddress,
@@ -67,7 +73,8 @@ export const {
     setHideEditAddressModal,
     setDeliveryLat,
     setDeliveryLng,
-    setAddAddressModal
+    setAddAddressModal,
+    setPaymentMethod,
 } = deliverySlice.actions;
 
 export default deliverySlice.reducer;

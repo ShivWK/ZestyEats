@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
-import { selectLatAndLng } from "../../features/home/homeSlice";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import Billing from "./Billing";
 import { useSelector, useDispatch } from "react-redux";
 import haversineFormula from "./../../utils/haversineFormula";
-import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetAddressQuery } from "../../features/profile/profileApiSlice";
 import AddressEditForm from "../Profile/AddressEditForm";
+import CurrentLocation from "./CurrentLocation";
 
 import {
     setSavedAddress,
@@ -16,10 +15,12 @@ import {
     selectEditAddressModal,
     setEditAddressModal,
     setHideEditAddressModal,
-    selectDeliveryAddress,
     selectAddAddressModal,
     setAddAddressModal,
-    setDeliveryAddress,
+    setPaymentMethod,
+    selectPaymentMethod,
+    selectDeliveryLat,
+    selectDeliveryLng
 } from "../../features/delivery/deliverySlice";
 
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
@@ -32,29 +33,25 @@ const PaymentsAndAddress = () => {
     // const deliveryAt = useSelector(selectDeliveryAddress);
     // console.log(deliveryAt);
 
-    const [trigger] = useLazyLocationByCoordinatesQuery();
+    const scrollRef = useRef(null);
+
     const [searchParams] = useSearchParams();
     const [latRestro, lngRestro] = searchParams.get("restroDemographics").split(",")
-    const { lat, lng } = useSelector(selectLatAndLng);
     const addAddress = useSelector(selectAddAddressModal);
+    const latDelivery = useSelector(selectDeliveryLat);
+    const lngDelivery = useSelector(selectDeliveryLng);
 
     const dispatch = useDispatch();
     const [addressLoading, setAddressLoading] = useState(true)
     const [overflowing, setOverflowing] = useState(false);
-    const [latDelivery, setLatDelivery] = useState(lat)
-    const [lngDelivery, setLngDelivery] = useState(lng);
     const [showDirection, setShowDirection] = useState(false);
     const [isDeliverable, setIsDeliverable] = useState(true);
-    
-    const [currentLocationLoading, setCurrentLocationLoading] = useState(true);
-    const [deliveryToCurrentLocation, setDeliveryToCurrentLocation] = useState(true);
 
     const savedAddresses = useSelector(selectSavedAddress);
     const [triggerSavedAddress] = useLazyGetAddressQuery();
     const deviceId = useSelector(selectDeviceFingerPrint);
     const storeAddressLoading = useSelector(selectAddressLoading);
-
-    const scrollRef = useRef(null);
+    const paymentMethod = useSelector(selectPaymentMethod);
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -64,29 +61,6 @@ const PaymentsAndAddress = () => {
             setShowDirection(overflow);
         }
     }, [savedAddresses]);
-
-    useEffect(() => {
-        if (navigator.geolocation) {
-            let lat = null;
-            let lng = null;
-            setCurrentLocationLoading(true);
-
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                lat = position.coords.latitude;
-                lng = position.coords.longitude;
-            })
-
-            const distance = haversineFormula(latRestro, lat, lngRestro, lng);
-
-            if (distance > 10) {
-                setCurrentLocationLoading(false);
-                setDeliveryToCurrentLocation(false);
-            } else {
-                setCurrentLocationLoading(false);
-                setDeliveryToCurrentLocation(true);
-            }
-        }
-    }, []);
 
     useEffect(() => {
         const fetchAddress = async () => {
@@ -130,43 +104,19 @@ const PaymentsAndAddress = () => {
 
     }, [latDelivery, lngDelivery, latRestro, lngRestro]);
 
-    const getCurrentLocation = () => {
-        if (!deliveryToCurrentLocation) return
-        if (navigator.geolocation) {
-            let lat = null;
-            let lng = null;
-            setCurrentLocationLoading(true);
+    const handleScroll = (direction) => {
+        const ele = scrollRef.current;
 
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                lat = position.coords.latitude;
-                lng = position.coords.longitude;
-
-                setLatDelivery(lat);
-                setLngDelivery(lng);
-
-                try {
-                    const result = await trigger({
-                        lat1: lat,
-                        lng1: lng
-                    }).unwrap();
-
-                    const mainData = result.data[0].address_components;
-                    const deliverAt = {
-                        number: mainData[0].long_name,
-                        locality: mainData[1].long_name,
-                        district: mainData[2].long_name,
-                        state: mainData[4].long_name,
-                        country: mainData[5].long_name,
-                        pinCode: mainData[6].long_name,
-                    }
-
-                    dispatch(setDeliveryAddress(deliverAt));
-                    setCurrentLocationLoading(false);
-                } catch (err) {
-                    console.log("Error fetching location data. Please try again later.", err);
-                    setCurrentLocationLoading(false)
-                }
-            })
+        if (direction === "right") {
+            ele.scrollBy({
+                left: 200,
+                behavior: "smooth"
+            });
+        } else {
+            ele.scrollBy({
+                left: -200,
+                behavior: "smooth"
+            });
         }
     }
 
@@ -206,7 +156,11 @@ const PaymentsAndAddress = () => {
                         )}
 
                         {(showDirection && !addressLoading && !storeAddressLoading)
-                            && <i className="ri-arrow-right-double-line text-2xl text-white"></i>}
+                            && <div className="flex gap-0.5 text-2xl text-white">
+                                <i onClick={() => handleScroll("left")} className="ri-arrow-left-double-line cursor-pointer"></i>
+                                <i onClick={() => handleScroll("right")} className="ri-arrow-right-double-line cursor-pointer"></i>
+                            </div>
+                        }
                     </div>
                     <div ref={scrollRef} className="w-full hide-scrollbar flex flex-nowrap overflow-auto gap-3 h-full p-2">
                         {(addressLoading || storeAddressLoading) ?
@@ -220,7 +174,7 @@ const PaymentsAndAddress = () => {
                                     <div className="w-18 h-5 rounded shimmerBg"></div>
                                 </div>
                             </div>)
-                            : savedAddresses.map(address => <UserAddress width="w-[90%]" key={address._id} address={address} />)
+                            : savedAddresses.map(address => <UserAddress key={address._id} width="w-[90%]" address={address} />)
                         }
                     </div>
                 </div>
@@ -238,40 +192,41 @@ const PaymentsAndAddress = () => {
 
             </section>
             <section className="rounded-md md:basis-[39%] dark:bg-gray-300 bg-white p-2 md:p-5 md:self-start">
-                <div className="rounded overflow-hidden bg-gray-100 dark:bg-gray-800">
-                    <div className="px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
-                        <h2 className="text-white text-lg">CURRENT LOCATION</h2>
-                    </div>
-                    <div className="w-[90%] mx-auto items-center px-2 py-3 overflow-hidden">
-                        <div
-                            onClick={getCurrentLocation}
-                            className={`relative group border-[1px] dark:border-gray-400 border-black ${deliveryToCurrentLocation && "active:border-primary cursor-pointer"} py-2 px-3 md:py-2 md:px-5`}
-                        >
-                            {(!deliveryToCurrentLocation || currentLocationLoading) &&
-                                <div className="absolute flex items-center justify-center top-0 left-0 h-full w-full dark:bg-gray-400/60 bg-black/60">
-                                    {currentLocationLoading ?
-                                        (<div className="rounded-full border-4 h-7 w-7 border-t-primary border-white animate-spin" />)
-                                        : (<p className="font-semibold text-white select-none">Not deliverable</p>)}
-                                </div>}
+                <CurrentLocation latRestro={latRestro} lngRestro={lngRestro} />
 
-                            <div className="flex gap-2.5">
-                                <i className={`ri-crosshair-2-line text-xl text-gray-500 ${isDeliverable && "group-hover:text-primary"} dark:text-gray-300`}></i>
-                                <div>
-                                    <p className={`font-medium dark:text-gray-200 ${isDeliverable && "group-hover:text-primary group-active:text-primary"} text-lg select-none`}>
-                                        Use my current location
-                                    </p>
-                                    <p className="text-sm font-semibold select-none text-gray-400 tracking-wide">Using GPS</p>
-                                </div>
+                <div className="mt-3">
+                    <h2 className="text-gray-800 text-xl">Payment Method</h2>
+                    <div className="flex flex-col gap-2 items-start p-2">
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="radio"
+                                name="payment"
+                                value={"COD"}
+                                checked={paymentMethod === "COD"}
+                                onChange={() => dispatch(setPaymentMethod("COD"))}
+                            />
+                            <div>
+                                <p className="font-medium">Cash on delivery</p>
+                                <p className="text-gray-600 text-sm">A convenience fee ₹10 will apply.</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="radio"
+                                name="payment"
+                                value={"Online"}
+                                checked={paymentMethod === "Online"}
+                                onChange={() => dispatch(setPaymentMethod("Online"))}
+                            />
+                            <div>
+                                <p className="font-medium">Online</p>
+                                <p className="text-gray-600 text-sm">Pay using UPI, Cards, Netbanking via Razorpay.</p>
                             </div>
                         </div>
                     </div>
-
-                    {/* <div className="bg-white p-5 w-[86%] mx-auto rounded mb-3">
-
-                    </div> */}
                 </div>
 
-                <div className="rounded overflow-hidden mt-4">
+                <div className="rounded overflow-hidden mt-3">
                     <div className=" w-fully">
                         <h2 className="text-gray-800 text-xl">Final Billing</h2>
                     </div>

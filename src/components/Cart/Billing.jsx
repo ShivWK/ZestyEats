@@ -110,32 +110,34 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
         {heading && <h2 className="font-sans text-xl font-semibold underline underline-offset-4">
           Bill Details
         </h2>}
-        <div
-          onClick={handlerCouponClick}
-          id="coupon"
-          className="flex items-center justify-between px-3 h-14 border-[1px] border-dashed cursor-pointer"
-        >
-          <div className="flex items-center gap-3">
-            <i className="ri-discount-percent-fill text-4xl font-extralight"></i>
-            {coupon ? (
-              <p className="font-bold text-gray-500 select-none">{coupon}</p>
-            ) : (
-              <p className="select-none">Apply Coupon</p>
-            )}
+        {checkout === false && (<>
+          <div
+            onClick={handlerCouponClick}
+            id="coupon"
+            className="flex items-center justify-between px-3 h-14 border-[1px] border-dashed cursor-pointer"
+          >
+            <div className="flex items-center gap-3">
+              <i className="ri-discount-percent-fill text-4xl font-extralight"></i>
+              {coupon ? (
+                <p className="font-bold text-gray-500 select-none">{coupon}</p>
+              ) : (
+                <p className="select-none">Apply Coupon</p>
+              )}
+            </div>
+            <i
+              className="fa-solid fa-caret-down  text-black transform transition-transform duration-200 ease-linear"
+              style={{
+                transform: couponsOpen && "rotate(-180deg)",
+              }}
+            ></i>
           </div>
-          <i
-            className="fa-solid fa-caret-down  text-black transform transition-transform duration-200 ease-linear"
-            style={{
-              transform: couponsOpen && "rotate(-180deg)",
-            }}
-          ></i>
-        </div>
-        <div
-          className={`-mt-3 bg-gray-200 ${couponsOpen ? "h-18" : "h-0"
-            } transition-all duration-150 ease-linear flex items-center justify-center`}
-        >
-          <p className={`${couponsOpen ? "block" : "hidden"} text-sm text-gray-900 font-semibold break-words`}>We are working on coupons</p>
-        </div>
+          <div
+            className={`-mt-3 bg-gray-200 ${couponsOpen ? "h-18" : "h-0"
+              } transition-all duration-150 ease-linear flex items-center justify-center`}
+          >
+            <p className={`${couponsOpen ? "block" : "hidden"} text-sm text-gray-900 font-semibold break-words`}>We are working on coupons</p>
+          </div>
+        </>)}
 
         <div className="text-sm">
           <div className="flex justify-between py-1">
@@ -254,7 +256,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
           <Link
             to={`/paymentsAndAddresses?restroDemographics=${restroDemographics}`}
             onClick={proceedFurtherClickHandler}
-            className={`${isRestaurantOpen ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700" } py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isRestaurantOpen && "active:scale-95" } transform transition-all duration-150`} >
+            className={`${isRestaurantOpen ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isRestaurantOpen && "active:scale-95"} transform transition-all duration-150`} >
             {isRestaurantOpen ? "Proceed Further" : "Restaurant is closed"}
           </Link>
         )
