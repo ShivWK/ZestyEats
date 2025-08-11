@@ -37,7 +37,7 @@ const Menu = () => {
     >
       <div onAnimationEnd={handleAnimationEnd} className={`menu-wrapper fixed ${!isMenuModelOpen ? "show-menu" : "hide-menu"} left-1/2 transform -translate-x-1/2 z-50 max-md:min-w-[75%] max-md:max-w-[80%] min-w-[28%] max-w-[40%] bg-primary dark:bg-red-800/99 rounded-xl py-1 pt-0.5 overflow-hidden max-lg:flex flex-col`}>
 
-        <div className="pretty-scrollbar text-gray-300 max-h-80 overflow-auto px-3 py-2">
+        <div className="pretty-scrollbar text-gray-300 max-h-80 overflow-auto px-3 py-1">
           {menuItems.length > 0 ? (
             menuItems.map((item) => {
               if (!vegOption && item.veg) return;

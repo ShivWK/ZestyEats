@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
+import { addCurrentRestaurant, setDeliveryRestaurantLoading } from "../../features/home/restaurantsSlice";
 import ItemCard from "./ItemCard";
 import useCheckStatus from "../../utils/useCheckStatus";
+import { useEffect } from "react";
 
 const RestaurantCard = ({ data }) => {
   const dispatch = useDispatch();
   const restaurantData = data[0].metadata || data[0];
   const items = data.slice(1);
-  // console.log(restaurantData, items)
 
   const [lat, lng] = restaurantData.latLong.split(",");
 
@@ -29,6 +29,13 @@ const RestaurantCard = ({ data }) => {
   const ClickHandler = () => {
     dispatch(addCurrentRestaurant(name));
   };
+
+  useEffect(() => {
+    if (!status.loading) {
+      dispatch(setDeliveryRestaurantLoading(false))
+    }
+
+  }, [status.loading])
 
   return (
     <section className="md:basis-[59%] flex flex-col gap-2">

@@ -383,7 +383,6 @@ export default function Layout() {
       {isLocationOpen && (<LocationModal />)}
 
       <PageFooter />
-
       {OpenLocationInfoModal && <LocationInfoModal />}
     </>
   );

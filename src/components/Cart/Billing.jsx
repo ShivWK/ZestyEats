@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import haversineFormula from "./../../utils/haversineFormula";
 import { Link } from "react-router";
-import { selectIsRestaurantOpen } from "../../features/home/restaurantsSlice";
+import { selectIsRestaurantOpen, selectDeliveryRestaurantStatus } from "../../features/home/restaurantsSlice";
+import DotBounceLoader from "../../utils/DotBounceLoader";
 
 const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, isDeliverable }) => {
-  // console.log(latDelivery, lngDelivery)
 
   const cart = useSelector(selectCart);
   const isRestaurantOpen = useSelector(selectIsRestaurantOpen);
 
   const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
+  const statusLoading = useSelector(selectDeliveryRestaurantStatus);
 
   const [restroDemographics, setRestroDemographics] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -91,7 +92,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
   }
 
   const proceedFurtherClickHandler = (e) => {
-    if (!isRestaurantOpen) {
+    if (!isRestaurantOpen || statusLoading) {
       e.preventDefault();
     } else {
       window.scrollTo({
@@ -256,8 +257,8 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
           <Link
             to={`/paymentsAndAddresses?restroDemographics=${restroDemographics}`}
             onClick={proceedFurtherClickHandler}
-            className={`${isRestaurantOpen ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isRestaurantOpen && "active:scale-95"} transform transition-all duration-150`} >
-            {isRestaurantOpen ? "Proceed Further" : "Restaurant is closed"}
+            className={`${isRestaurantOpen ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} h-8 rounded flex items-center justify-center font-sans font-medium tracking-wide cursor-pointer text-center ${isRestaurantOpen && "active:scale-95"} transform transition-all duration-150`} >
+            {statusLoading ? <DotBounceLoader /> : isRestaurantOpen ? "Proceed Further" : "Restaurant is closed"}
           </Link>
         )
           : (

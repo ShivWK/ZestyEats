@@ -1,5 +1,4 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { activeAnimations } from "motion";
 import { cartItemsModifier, favRestaurantsModifier, itemsToBeAddedInCartModifier, wishListedItemsModifier } from "../../utils/guestSessionDataModifier";
 
 const restaurantSlice = createSlice({
@@ -20,6 +19,7 @@ const restaurantSlice = createSlice({
     isLoggedIn: false,
     deviceFingerPrint: null,
     isDeliveryRestaurantOpen: true,
+    deliveryRestaurantLoading: true
   },
 
   reducers: {
@@ -29,6 +29,10 @@ const restaurantSlice = createSlice({
 
     setIsDeliveryRestaurantOpen: (state, action) => {
       state.isDeliveryRestaurantOpen = action.payload;
+    },
+
+    setDeliveryRestaurantLoading: (state, action) => {
+      state.deliveryRestaurantLoading = action.payload;
     },
 
     setIsLoggedInRestro: (state, action) => {
@@ -212,6 +216,7 @@ export const selectItemsToBeAddedInCart = state => state.restaurant.itemsToBeAdd
 export const selectFavoriteRestros = state => state.restaurant.favoriteRestro;
 export const selectHideMenu = (state) => state.restaurant.hideMenu;
 export const selectIsRestaurantOpen = (state) => state.restaurant.isDeliveryRestaurantOpen;
+export const selectDeliveryRestaurantStatus = (state) => state.restaurant.deliveryRestaurantLoading;
 
 export const selectVegVariant = createSelector([state => state.restaurant.veg, state => state.restaurant.non_veg], (veg, non_veg) => ({ vegOption: veg, nonVegOption: non_veg }))
 
@@ -232,4 +237,5 @@ export const {
   setItemQuantity,
   setHideMenu,
   setDeviceFingerPrintRestro,
+  setDeliveryRestaurantLoading,
 } = restaurantSlice.actions;

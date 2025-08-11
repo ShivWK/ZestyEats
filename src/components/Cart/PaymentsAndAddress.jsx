@@ -196,8 +196,8 @@ const PaymentsAndAddress = () => {
 
                 <div className="mt-3">
                     <h2 className="text-gray-800 text-xl">Payment Method</h2>
-                    <div className="flex flex-col gap-2 items-start p-2">
-                        <div className="flex items-center gap-2">
+                    <div className="flex flex-col items-start p-2">
+                        <div className="flex items-center gap-2 border-b-[1px] border-b-gray-950 w-full py-2">
                             <input
                                 type="radio"
                                 name="payment"
@@ -210,7 +210,7 @@ const PaymentsAndAddress = () => {
                                 <p className="text-gray-600 text-sm">A convenience fee ₹10 will apply.</p>
                             </div>
                         </div>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 py-2">
                             <input
                                 type="radio"
                                 name="payment"
@@ -226,7 +226,7 @@ const PaymentsAndAddress = () => {
                     </div>
                 </div>
 
-                <div className="rounded overflow-hidden mt-3">
+                <div className="rounded overflow-hidden mt-2">
                     <div className=" w-fully">
                         <h2 className="text-gray-800 text-xl">Final Billing</h2>
                     </div>
