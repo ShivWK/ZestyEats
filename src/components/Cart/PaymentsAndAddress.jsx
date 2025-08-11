@@ -20,7 +20,9 @@ import {
     setPaymentMethod,
     selectPaymentMethod,
     selectDeliveryLat,
-    selectDeliveryLng
+    selectDeliveryLng,
+    selectDeliveryAddress,
+    selectIsDeliverable
 } from "../../features/delivery/deliverySlice";
 
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
@@ -40,12 +42,12 @@ const PaymentsAndAddress = () => {
     const addAddress = useSelector(selectAddAddressModal);
     const latDelivery = useSelector(selectDeliveryLat);
     const lngDelivery = useSelector(selectDeliveryLng);
+    const isDeliverable = useSelector(selectIsDeliverable);
 
     const dispatch = useDispatch();
     const [addressLoading, setAddressLoading] = useState(true)
     const [overflowing, setOverflowing] = useState(false);
     const [showDirection, setShowDirection] = useState(false);
-    const [isDeliverable, setIsDeliverable] = useState(true);
 
     const savedAddresses = useSelector(selectSavedAddress);
     const [triggerSavedAddress] = useLazyGetAddressQuery();
@@ -96,14 +98,6 @@ const PaymentsAndAddress = () => {
         return () => window.removeEventListener("resize", checkOverflow);
     }, [document.documentElement.scrollHeight]);
 
-    useEffect(() => {
-        const distance = haversineFormula(latRestro, latDelivery, lngRestro, lngDelivery);
-
-        if (distance > 10) setIsDeliverable(false)
-        else setIsDeliverable(true);
-
-    }, [latDelivery, lngDelivery, latRestro, lngRestro]);
-
     const handleScroll = (direction) => {
         const ele = scrollRef.current;
 
@@ -123,30 +117,10 @@ const PaymentsAndAddress = () => {
     return <main className={`lg:pt-28 pt-20 w-full min-h-[110%] ${!overflowing && "h-full"} dark:bg-black bg-gray-200`} >
         <div className="w-full flex flex-col max-md:gap-3 md:flex-row justify-between md:max-w-[1070px] max-md:px-1.5 pb-20 mx-auto md:px-3">
             <section className="md:basis-[59%] flex flex-col gap-2 p-2 lg:p-4 dark:bg-gray-300 bg-white rounded">
-                <div className=" w-fit mx-auto">
-                    <p className="inline font-medium">Delivery Status: </p>
-                    {isDeliverable ? (
-                        <div className="inline-flex items-center gap-1">
-                            <p className="text-green-500 font-medium">
-                                Delivering to your area
-                            </p>
-                            <i className="fas fa-shipping-fast text-black mt-0.5"></i>
-                        </div>
-                    ) : (
-                        <>
-                            <p className="text-red-500 font-medium inline leading-4">
-                                Not delivering to your current address. Please select different address{" "}
-                            </p>
-                            <div className="relative inline-flex gap-1.5 items-center">
-                                <div id="No delivery" className="relative mt-0.5">
-                                    <i className="fas fa-shipping-fast text-black"></i>
-                                    <div className="absolute ml-2 rounded bottom-0 h-7 w-0.5 bg-red-500 transform rotate-45"></div>
-                                </div>
-                            </div>
-                        </>
-                    )}
-                </div>
 
+                <h1 className="text-gray-800 text-xl tracking-wider text-center" aria-label="Page to set delivery address and payment method">
+                    Delivery & Payment Setup
+                </h1>
                 <div className="rounded overflow-hidden bg-gray-100 dark:bg-gray-800 mt-1">
                     <div className="flex items-center justify-between px-2 py-2 w-full bg-primary dark:bg-darkPrimary">
                         <h2 className="text-white text-lg">SAVED ADDRESS</h2>
@@ -174,10 +148,14 @@ const PaymentsAndAddress = () => {
                                     <div className="w-18 h-5 rounded shimmerBg"></div>
                                 </div>
                             </div>)
-                            : savedAddresses.map(address => <UserAddress key={address._id} width="w-[90%]" address={address} />)
+                            : savedAddresses.map(address => <UserAddress key={address._id} width="w-[90%]" address={address} latRestro={latRestro} lngRestro={lngRestro} />)
                         }
                     </div>
                 </div>
+
+                {!isDeliverable && <p className="text-gray-600 text-sm text-center">
+                    No deliverable address found. Add a new one below.
+                </p>}
 
                 <button
                     onClick={() => {
@@ -230,7 +208,7 @@ const PaymentsAndAddress = () => {
                     <div className=" w-fully">
                         <h2 className="text-gray-800 text-xl">Final Billing</h2>
                     </div>
-                    <Billing heading={false} checkout={true} latDelivery={latDelivery} lngDelivery={lngDelivery} isDeliverable={isDeliverable} />
+                    <Billing heading={false} checkout={true} latDelivery={latDelivery} lngDelivery={lngDelivery} />
                 </div>
 
             </section>

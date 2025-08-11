@@ -1,8 +1,10 @@
 import { useLocation } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { setIsDeliverable } from "../../features/delivery/deliverySlice";
+import haversineFormula from "./../../utils/haversineFormula";
 
 import {
     selectEditAddressModal,
@@ -17,16 +19,38 @@ import {
 
 import { useSelector, useDispatch } from "react-redux";
 import AddressEditForm from "./AddressEditForm";
-import { CircleCheckBig } from "lucide-react";
+import { CircleCheckBig, CircleX } from "lucide-react";
 
-const UserAddress = ({ address, width = "w-[85%]" }) => {
+const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro = null }) => {
 
     const [delLoading, setDelLOading] = useState(false);
+    const [isDeliverableCompo, setIsDeliverableCompo] = useState(true);
     const deviceId = useSelector(selectDeviceFingerPrint);
     const dispatch = useDispatch();
     const editAddressModal = useSelector(selectEditAddressModal);
     const deliverAt = useSelector(selectDeliveryAddress);
-    const addAddressModal = useSelector(selectAddAddressModal)
+    const addAddressModal = useSelector(selectAddAddressModal);
+    const pathName = useLocation().pathname;
+    const addressLat = address.latLong.lat;
+    const addressLng = address.latLong.lng;
+
+    useEffect(() => {
+        // what if address doesn't have latLong
+
+        if (latRestro && lngRestro) {
+            if (pathName === "/paymentsAndAddresses") {
+                const distance = haversineFormula(latRestro, addressLat, lngRestro, addressLng);
+
+                if (distance <= 10) {
+                    dispatch(setIsDeliverable(true));
+                    setIsDeliverableCompo(true);
+                } else {
+                    setIsDeliverableCompo(false);
+                }
+            }
+        }
+
+    }, [latRestro, lngRestro])
 
     const removeClickHandler = async (id) => {
         setDelLOading(true);
@@ -82,8 +106,6 @@ const UserAddress = ({ address, width = "w-[85%]" }) => {
         }
     }
 
-    const pathName = useLocation().pathname;
-
     const useClickHandler = () => {
         dispatch(setDeliveryAddress(address))
     }
@@ -106,15 +128,19 @@ const UserAddress = ({ address, width = "w-[85%]" }) => {
                     Edit
                 </button>
                 {pathName === "/paymentsAndAddresses"
-                    && (
+                    && (isDeliverableCompo ? (
                         deliverAt._id !== address._id ? <button onClick={useClickHandler} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
                             Use
                         </button>
                             : <div className="flex items-center gap-1">
-                                <CircleCheckBig size={16} strokeWidth={4} className="ri-checkbox-circle-fill text-lg text-green-500 p-0"/>
+                                <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
                                 <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
                             </div>
-
+                    )
+                        : <div className="flex items-center gap-1">
+                            <CircleX size={16} strokeWidth={3} className="text-lg text-red-500 p-0" />
+                            <span className="text-red-500 font-sans text-sm font-semibold tracking-wider">Not Deliverable</span>
+                        </div>
                     )
                 }
 

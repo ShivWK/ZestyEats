@@ -10,6 +10,7 @@ const initialState = {
     addressLoading: false,
     addAddressModal: false,
     paymentMethod: "",
+    isDeliverable: false,
 }
 
 const deliverySlice = createSlice({
@@ -19,6 +20,10 @@ const deliverySlice = createSlice({
     reducers: {
         setDeliveryAddress: (state, action) => {
             state.deliveryAddress = action.payload;
+        },
+
+        setIsDeliverable: (state, action) => {
+            state.isDeliverable = action.payload;
         },
 
         setSavedAddress: (state, action) => {
@@ -56,6 +61,7 @@ const deliverySlice = createSlice({
 });
 
 export const selectDeliveryAddress = (state) => state.delivery.deliveryAddress;
+export const selectIsDeliverable = (state) => state.delivery.isDeliverable;
 export const selectSavedAddress = (state) => state.delivery.savedAddress;
 export const selectAddressLoading = (state) => state.delivery.addressLoading;
 export const selectDeliveryLat = (state) => state.delivery.deliveryLat;
@@ -67,6 +73,7 @@ export const selectPaymentMethod = (state) => state.delivery.paymentMethod;
 
 export const {
     setDeliveryAddress,
+    setIsDeliverable,
     setSavedAddress,
     setAddressLoading,
     setEditAddressModal,

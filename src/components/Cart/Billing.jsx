@@ -6,11 +6,14 @@ import haversineFormula from "./../../utils/haversineFormula";
 import { Link } from "react-router";
 import { selectIsRestaurantOpen, selectDeliveryRestaurantStatus } from "../../features/home/restaurantsSlice";
 import DotBounceLoader from "../../utils/DotBounceLoader";
+import { selectDeliveryAddress, selectPaymentMethod } from "../../features/delivery/deliverySlice";
 
-const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, isDeliverable }) => {
+const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery }) => {
 
   const cart = useSelector(selectCart);
   const isRestaurantOpen = useSelector(selectIsRestaurantOpen);
+  const deliveryAddress = useSelector(selectDeliveryAddress);
+  const paymentMethod = useSelector(selectPaymentMethod);
 
   const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
   const statusLoading = useSelector(selectDeliveryRestaurantStatus);
@@ -86,7 +89,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
   };
 
   const checkoutClickHandler = (e) => {
-    if (!isDeliverable) {
+    if (Object.keys(deliveryAddress).length === 0 || paymentMethod === "") {
       e.preventDefault();
     }
   }
@@ -97,7 +100,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
     } else {
       window.scrollTo({
         top: 0,
-        behavior: "smooth"
+        behavior: "smooth",
       })
     }
   }
@@ -262,7 +265,11 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery, i
           </Link>
         )
           : (
-            <Link onClick={checkoutClickHandler} className={`${isDeliverable ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${isDeliverable && "active:scale-95"} transform transition-all duration-150`}>Place Order</Link>
+            <>
+              {(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") 
+              && <p className="text-red-500 text-sm">Please complete your delivery and payment details to proceed.</p> }
+              <Link onClick={checkoutClickHandler} className={`${(Object.keys(deliveryAddress).length === 0 || paymentMethod === "")  ? "bg-gray-400 text-gray-700 border border-gray-700" : "bg-green-400 text-white"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${!(Object.keys(deliveryAddress).length === 0 || paymentMethod === "")  && "active:scale-95"} transform transition-all duration-150`}>Place Order</Link>
+            </>
           )
         }
       </div>

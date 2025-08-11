@@ -4,6 +4,7 @@ import { setDeliveryAddress, setDeliveryLat, setDeliveryLng } from "../../featur
 import haversineFormula from "./../../utils/haversineFormula";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { selectUserDetails } from "../../features/home/homeSlice";
+import { setIsDeliverable } from "../../features/delivery/deliverySlice";
 
 const CurrentLocation = ({ latRestro, lngRestro }) => {
     const [currentLocationLoading, setCurrentLocationLoading] = useState(false);
@@ -34,6 +35,7 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
                 } else {
                     setCurrentLocationLoading(false);
                     setDeliveryToCurrentLocation(true);
+                    dispatch(setIsDeliverable(true));
                 }
             }
 
