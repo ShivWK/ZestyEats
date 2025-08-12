@@ -117,27 +117,25 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
         </div>
 
         {Object.keys(currentDelivery).length !== 0 && (
-            <div className="p-2">
-                <p className="font-semibold tracking-wide dark:text-gray-200">{currentDelivery.userName}</p>
-                <p className="whitespace-normal dark:text-gray-300">
-                    {currentDelivery.flatNumber},{" "}
-                    {currentDelivery.locality},{" "}
-                    {currentDelivery.district}.
-                </p>
-                <p className="dark:text-gray-300">{`${currentDelivery.state}, ${currentDelivery.pinCode}, ${currentDelivery.country}.`}</p>
-                <div className="flex items-center gap-2">
-                    <p className="dark:text-gray-300">{currentDelivery.userPhone}</p>
-                    {(deliverAt?.latLong?.lat === currentDelivery?.latLong?.lat && deliverAt?.latLong?.lng === currentDelivery?.latLong?.lng) &&
-                        <div className="flex items-center gap-1">
-                            <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
-                            <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
-                        </div>
-                    }
+                <div className="px-2.5 py-1 pb-2">
+                    <p className="font-semibold tracking-wide dark:text-gray-200">{currentDelivery.userName}</p>
+                    <p className="whitespace-normal dark:text-gray-300">
+                        {currentDelivery.flatNumber},{" "}
+                        {currentDelivery.locality},{" "}
+                        {currentDelivery.district}.
+                    </p>
+                    <p className="dark:text-gray-300">{`${currentDelivery.state}, ${currentDelivery.pinCode}, ${currentDelivery.country}.`}</p>
+                    <div className="flex items-center gap-2">
+                        <p className="dark:text-gray-300">{currentDelivery.userPhone}</p>
+                        {(deliverAt?.latLong?.lat === currentDelivery?.latLong?.lat && deliverAt?.latLong?.lng === currentDelivery?.latLong?.lng) &&
+                            <div className="flex items-center gap-1">
+                                <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
+                                <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
+                            </div>
+                        }
+                    </div>
                 </div>
-            </div>
-        )
-        }
-
+        )}
     </div>
 }
 

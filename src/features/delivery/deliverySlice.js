@@ -1,16 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSelector, createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     deliveryAddress: {},
     savedAddress: [],
     deliveryLat: null,
     deliveryLng: null,
-    editAddressModal : false,
+    editAddressModal: false,
     hideEditAddressModal: true,
     addressLoading: false,
     addAddressModal: false,
     paymentMethod: "",
     isDeliverable: false,
+    totalItemsCost: "",
+    deliveryCharge: "",
+    deliveryKilometers: "",
+    payableAmount: "",
+    GSTCharge: "",
 }
 
 const deliverySlice = createSlice({
@@ -56,7 +61,33 @@ const deliverySlice = createSlice({
 
         setPaymentMethod: (state, action) => {
             state.paymentMethod = action.payload;
-        }
+        },
+
+        setItemsTotalCost: (state, action) => {
+            state.totalItemsCost = action.payload;
+        },
+
+        setGSTCharge: (state, action) => {
+            state.GSTCharge = action.payload;
+        },
+
+        setDeliveryCharge: (state, action) => {
+            const distance = action.payload;
+            state.deliveryKilometers = distance;
+
+            const deliveryCharge = 10 + Math.max(0, Math.floor(distance - 1)) * 5;
+            state.deliveryCharge = deliveryCharge;
+        },
+
+        setPayableAmount: (state, action) => {
+            const mode = action.payload.mode;
+
+            if (mode === "initial") {
+                state.totalItemsCost = action.payload.cost;
+            } else {
+                state.totalItemsCost += action.payload.cost;
+            }
+        },
     }
 });
 
@@ -70,6 +101,27 @@ export const selectEditAddressModal = (state) => state.delivery.editAddressModal
 export const selectHideEditAddressModal = (state) => state.delivery.hideEditAddressModal;
 export const selectAddAddressModal = (state) => state.delivery.addAddressModal;
 export const selectPaymentMethod = (state) => state.delivery.paymentMethod;
+export const selectFinalBilling = createSelector(
+    [
+        state => state.delivery.totalItemsCost,
+        state => state.delivery.deliveryCharge,
+        state => state.delivery.deliveryKilometers,
+        state => state.delivery.GSTCharge,
+        state => state.delivery.payableAmount,
+    ],
+    (
+        totalItemCost,
+        deliveryCharge,
+        deliveryKilometers,
+        GSTCharge,
+        payableAmount
+    ) => ({
+        totalItemCost,
+        deliveryCharge,
+        deliveryKilometers,
+        GSTCharge,
+        payableAmount
+    }))
 
 export const {
     setDeliveryAddress,
@@ -82,6 +134,10 @@ export const {
     setDeliveryLng,
     setAddAddressModal,
     setPaymentMethod,
+    setItemsTotalCost,
+    setDeliveryCharge,
+    setGSTCharge,
+    setPayableAmount
 } = deliverySlice.actions;
 
 export default deliverySlice.reducer;
