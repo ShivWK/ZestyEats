@@ -48,6 +48,7 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
 
     const getCurrentLocation = () => {
         if (!deliveryToCurrentLocation) return
+        if (currentLocationLoading) return
         if (navigator.geolocation) {
             const call = async (lat, lng) => {
                 dispatch(setDeliveryLat(lat));
@@ -117,15 +118,15 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
 
         {Object.keys(currentDelivery).length !== 0 && (
             <div className="p-2">
-                <p className="font-semibold tracking-wide">{currentDelivery.userName}</p>
-                <p className="whitespace-normal">
+                <p className="font-semibold tracking-wide dark:text-gray-200">{currentDelivery.userName}</p>
+                <p className="whitespace-normal dark:text-gray-300">
                     {currentDelivery.flatNumber},{" "}
                     {currentDelivery.locality},{" "}
                     {currentDelivery.district}.
                 </p>
-                <p>{`${currentDelivery.state}, ${currentDelivery.pinCode}, ${currentDelivery.country}.`}</p>
+                <p className="dark:text-gray-300">{`${currentDelivery.state}, ${currentDelivery.pinCode}, ${currentDelivery.country}.`}</p>
                 <div className="flex items-center gap-2">
-                    <p>{currentDelivery.userPhone}</p>
+                    <p className="dark:text-gray-300">{currentDelivery.userPhone}</p>
                     {(deliverAt?.latLong?.lat === currentDelivery?.latLong?.lat && deliverAt?.latLong?.lng === currentDelivery?.latLong?.lng) &&
                         <div className="flex items-center gap-1">
                             <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
