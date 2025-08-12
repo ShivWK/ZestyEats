@@ -34,6 +34,9 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
     const addressLat = address.latLong.lat;
     const addressLng = address.latLong.lng;
 
+    console.log("stored", deliverAt);
+    console.log("Given", address);
+
     useEffect(() => {
         // what if address doesn't have latLong
 
@@ -129,13 +132,14 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
                 </button>
                 {pathName === "/paymentsAndAddresses"
                     && (isDeliverableCompo ? (
-                        deliverAt._id !== address._id ? <button onClick={useClickHandler} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
-                            Use
-                        </button>
-                            : <div className="flex items-center gap-1">
+                        (deliverAt?.latLong?.lat === address?.latLong?.lat && deliverAt?.latLong?.lng === address?.latLong?.lng) ?
+                            <div className="flex items-center gap-1">
                                 <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
                                 <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
                             </div>
+                            : <button onClick={useClickHandler} className="px-3 py-0.5 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
+                                Use
+                            </button>
                     )
                         : <div className="flex items-center gap-1">
                             <CircleX size={16} strokeWidth={3} className="text-lg text-red-500 p-0" />
@@ -148,6 +152,7 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
                     <button onClick={() => removeClickHandler(address._id)} className="flex items-center justify-center w-18 h-6 text-white font-medium tracking-wide bg-primary dark:bg-darkPrimary rounded active:scale-95 transition-all duration-75 ease-linear">
                         {delLoading ? <DotBounceLoader /> : "Remove"}
                     </button>}
+
             </div>
         </div>
         {(editAddressModal && !addAddressModal) && (

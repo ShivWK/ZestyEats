@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDeliveryAddress, setDeliveryLat, setDeliveryLng } from "../../features/delivery/deliverySlice";
+import { setDeliveryAddress, setDeliveryLat, setDeliveryLng, selectDeliveryAddress } from "../../features/delivery/deliverySlice";
 import haversineFormula from "./../../utils/haversineFormula";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { selectUserDetails } from "../../features/home/homeSlice";
 import { setIsDeliverable } from "../../features/delivery/deliverySlice";
+import { CircleCheckBig } from "lucide-react";
 
 const CurrentLocation = ({ latRestro, lngRestro }) => {
     const [currentLocationLoading, setCurrentLocationLoading] = useState(false);
     const [deliveryToCurrentLocation, setDeliveryToCurrentLocation] = useState(true);
+    const [currentDelivery, setCurrentDelivery] = useState({});
     const [trigger] = useLazyLocationByCoordinatesQuery();
     const userDetails = useSelector(selectUserDetails);
+    const deliverAt = useSelector(selectDeliveryAddress);
     const dispatch = useDispatch();
 
     const getCurrentLatLong = (method) => {
@@ -53,8 +56,10 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
                 try {
                     const result = await trigger({
                         lat1: lat,
-                        lng1: lng
+                        lng1: lng,
                     }).unwrap();
+
+                    console.log(result);
 
                     const mainData = result.data[0].address_components;
                     const deliverAt = {
@@ -66,8 +71,10 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
                         state: mainData[4].long_name,
                         country: mainData[5].long_name,
                         pinCode: mainData[6].long_name,
+                        latLong: { lat, lng }
                     }
 
+                    setCurrentDelivery(deliverAt);
                     dispatch(setDeliveryAddress(deliverAt));
                     setCurrentLocationLoading(false);
                 } catch (err) {
@@ -107,6 +114,29 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
                 </div>
             </div>
         </div>
+
+        {Object.keys(currentDelivery).length !== 0 && (
+            <div className="p-2">
+                <p className="font-semibold tracking-wide">{currentDelivery.userName}</p>
+                <p className="whitespace-normal">
+                    {currentDelivery.flatNumber},{" "}
+                    {currentDelivery.locality},{" "}
+                    {currentDelivery.district}.
+                </p>
+                <p>{`${currentDelivery.state}, ${currentDelivery.pinCode}, ${currentDelivery.country}.`}</p>
+                <div className="flex items-center gap-2">
+                    <p>{currentDelivery.userPhone}</p>
+                    {(deliverAt?.latLong?.lat === currentDelivery?.latLong?.lat && deliverAt?.latLong?.lng === currentDelivery?.latLong?.lng) &&
+                        <div className="flex items-center gap-1">
+                            <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
+                            <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
+                        </div>
+                    }
+                </div>
+            </div>
+        )
+        }
+
     </div>
 }
 
