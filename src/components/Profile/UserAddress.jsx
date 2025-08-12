@@ -34,9 +34,6 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
     const addressLat = address.latLong.lat;
     const addressLng = address.latLong.lng;
 
-    // console.log("stored", deliverAt);
-    // console.log("Given", address);
-
     useEffect(() => {
         // what if address doesn't have latLong
 

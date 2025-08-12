@@ -12,10 +12,11 @@ const initialState = {
     paymentMethod: "",
     isDeliverable: false,
     totalItemsCost: "",
-    deliveryCharge: "",
-    deliveryKilometers: "",
+    deliveryCharge: 0,
+    deliveryKilometers: 0,
     payableAmount: "",
-    GSTCharge: "",
+    GSTAndOtherCharges: "",
+    isPaymentChanged: false,
 }
 
 const deliverySlice = createSlice({
@@ -61,14 +62,24 @@ const deliverySlice = createSlice({
 
         setPaymentMethod: (state, action) => {
             state.paymentMethod = action.payload;
+
+            if (action.payload === "COD") {
+                state.payableAmount += 10;
+                state.isPaymentChanged = true;
+            } else {
+                if (state.isPaymentChanged) {
+                    state.payableAmount -= 10;
+                    state.isPaymentChanged = false;
+                }
+            }
         },
 
         setItemsTotalCost: (state, action) => {
             state.totalItemsCost = action.payload;
         },
 
-        setGSTCharge: (state, action) => {
-            state.GSTCharge = action.payload;
+        setGSTAndOtherCharges: (state, action) => {
+            state.GSTAndOtherCharges = action.payload;
         },
 
         setDeliveryCharge: (state, action) => {
@@ -77,15 +88,16 @@ const deliverySlice = createSlice({
 
             const deliveryCharge = 10 + Math.max(0, Math.floor(distance - 1)) * 5;
             state.deliveryCharge = deliveryCharge;
+            state.payableAmount += deliveryCharge;
         },
 
         setPayableAmount: (state, action) => {
             const mode = action.payload.mode;
 
             if (mode === "initial") {
-                state.totalItemsCost = action.payload.cost;
+                state.payableAmount = action.payload.cost;
             } else {
-                state.totalItemsCost += action.payload.cost;
+                state.payableAmount += action.payload.cost;
             }
         },
     }
@@ -106,20 +118,20 @@ export const selectFinalBilling = createSelector(
         state => state.delivery.totalItemsCost,
         state => state.delivery.deliveryCharge,
         state => state.delivery.deliveryKilometers,
-        state => state.delivery.GSTCharge,
+        state => state.delivery.GSTAndOtherCharges,
         state => state.delivery.payableAmount,
     ],
     (
         totalItemCost,
         deliveryCharge,
         deliveryKilometers,
-        GSTCharge,
+        GSTAndOtherCharges,
         payableAmount
     ) => ({
         totalItemCost,
         deliveryCharge,
         deliveryKilometers,
-        GSTCharge,
+        GSTAndOtherCharges,
         payableAmount
     }))
 
@@ -136,7 +148,7 @@ export const {
     setPaymentMethod,
     setItemsTotalCost,
     setDeliveryCharge,
-    setGSTCharge,
+    setGSTAndOtherCharges,
     setPayableAmount
 } = deliverySlice.actions;
 

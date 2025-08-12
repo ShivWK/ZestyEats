@@ -77,7 +77,7 @@ const RestaurantCard = ({ data }) => {
                   {!status.isDeliverable ? (
                     <>
                       <p className="text-red-500 font-medium">
-                        Not delivering to your area{" "}
+                        Not delivering to your current location{" "}
                       </p>
                       <div className="relative flex gap-1.5 items-center">
                         <div id="No delivery" className="relative mt-0.5">
@@ -114,7 +114,7 @@ const RestaurantCard = ({ data }) => {
             ) : !status.isDeliverable ? (
               <div className="-my-0.5 flex items-center gap-1">
                 <p className="text-red-500 font-medium text-sm">
-                  (Not delivering to your area)
+                 Not delivering to your current location{" "}
                 </p>
                 <div className="relative flex gap-1.5 items-center">
                   <div id="No delivery" className="relative mt-0.5">
@@ -129,8 +129,9 @@ const RestaurantCard = ({ data }) => {
             ) : (
               <div className="flex items-center gap-1 my-[1px]">
                 <p className="text-green-500 dark:text-green-400 font-medium text-sm">
-                  (Delivering to your area)
+                  Delivering to your area
                 </p>
+                {" "}
                 <i className="fas fa-shipping-fast text-sm text-black mt-0.5"></i>
               </div>
             )}

@@ -1,6 +1,14 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setDeliveryAddress, setDeliveryLat, setDeliveryLng, selectDeliveryAddress } from "../../features/delivery/deliverySlice";
+
+import { 
+    setDeliveryAddress, 
+    setDeliveryLat, 
+    setDeliveryLng, 
+    selectDeliveryAddress, 
+    setDeliveryCharge 
+} from "../../features/delivery/deliverySlice";
+
 import haversineFormula from "./../../utils/haversineFormula";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { selectUserDetails } from "../../features/home/homeSlice";
@@ -51,36 +59,47 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
         if (currentLocationLoading) return
         if (navigator.geolocation) {
             const call = async (lat, lng) => {
-                dispatch(setDeliveryLat(lat));
-                dispatch(setDeliveryLng(lng));
+                const distance = haversineFormula(latRestro, lat, lngRestro, lng);
 
-                try {
-                    const result = await trigger({
-                        lat1: lat,
-                        lng1: lng,
-                    }).unwrap();
-
-                    console.log(result);
-
-                    const mainData = result.data[0].address_components;
-                    const deliverAt = {
-                        userName: userDetails.userName,
-                        userPhone: userDetails.userPhone,
-                        flatNumber: mainData[0].long_name,
-                        locality: mainData[1].long_name,
-                        district: mainData[2].long_name,
-                        state: mainData[4].long_name,
-                        country: mainData[5].long_name,
-                        pinCode: mainData[6].long_name,
-                        latLong: { lat, lng }
-                    }
-
-                    setCurrentDelivery(deliverAt);
-                    dispatch(setDeliveryAddress(deliverAt));
+                if (distance > 10) {
                     setCurrentLocationLoading(false);
-                } catch (err) {
-                    console.log("Error fetching location data. Please try again later.", err);
-                    setCurrentLocationLoading(false)
+                    setDeliveryToCurrentLocation(false);
+                    dispatch(setIsDeliverable(false));
+
+                    return;
+                } else {
+                    dispatch(setDeliveryCharge(distance.toFixed(2)));
+                    dispatch(setDeliveryLat(lat));
+                    dispatch(setDeliveryLng(lng));
+
+                    try {
+                        const result = await trigger({
+                            lat1: lat,
+                            lng1: lng,
+                        }).unwrap();
+
+                        console.log(result);
+
+                        const mainData = result.data[0].address_components;
+                        const deliverAt = {
+                            userName: userDetails.userName,
+                            userPhone: userDetails.userPhone,
+                            flatNumber: mainData[0].long_name,
+                            locality: mainData[1].long_name,
+                            district: mainData[2].long_name,
+                            state: mainData[4].long_name,
+                            country: mainData[5].long_name,
+                            pinCode: mainData[6].long_name,
+                            latLong: { lat, lng }
+                        }
+
+                        setCurrentDelivery(deliverAt);
+                        dispatch(setDeliveryAddress(deliverAt));
+                        setCurrentLocationLoading(false);
+                    } catch (err) {
+                        console.log("Error fetching location data. Please try again later.", err);
+                        setCurrentLocationLoading(false)
+                    }
                 }
             }
 
@@ -117,24 +136,24 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
         </div>
 
         {Object.keys(currentDelivery).length !== 0 && (
-                <div className="px-2.5 py-1 pb-2">
-                    <p className="font-semibold tracking-wide dark:text-gray-200">{currentDelivery.userName}</p>
-                    <p className="whitespace-normal dark:text-gray-300">
-                        {currentDelivery.flatNumber},{" "}
-                        {currentDelivery.locality},{" "}
-                        {currentDelivery.district}.
-                    </p>
-                    <p className="dark:text-gray-300">{`${currentDelivery.state}, ${currentDelivery.pinCode}, ${currentDelivery.country}.`}</p>
-                    <div className="flex items-center gap-2">
-                        <p className="dark:text-gray-300">{currentDelivery.userPhone}</p>
-                        {(deliverAt?.latLong?.lat === currentDelivery?.latLong?.lat && deliverAt?.latLong?.lng === currentDelivery?.latLong?.lng) &&
-                            <div className="flex items-center gap-1">
-                                <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
-                                <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
-                            </div>
-                        }
-                    </div>
+            <div className="px-2.5 py-1 pb-2">
+                <p className="font-semibold tracking-wide dark:text-gray-200">{currentDelivery.userName}</p>
+                <p className="whitespace-normal dark:text-gray-300">
+                    {currentDelivery.flatNumber},{" "}
+                    {currentDelivery.locality},{" "}
+                    {currentDelivery.district}.
+                </p>
+                <p className="dark:text-gray-300">{`${currentDelivery.state}, ${currentDelivery.pinCode}, ${currentDelivery.country}.`}</p>
+                <div className="flex items-center gap-2">
+                    <p className="dark:text-gray-300">{currentDelivery.userPhone}</p>
+                    {(deliverAt?.latLong?.lat === currentDelivery?.latLong?.lat && deliverAt?.latLong?.lng === currentDelivery?.latLong?.lng) &&
+                        <div className="flex items-center gap-1">
+                            <CircleCheckBig size={16} strokeWidth={3} className="text-lg text-green-500 p-0" />
+                            <span className="text-green-500 font-sans text-sm font-semibold tracking-wider">Deliver here</span>
+                        </div>
+                    }
                 </div>
+            </div>
         )}
     </div>
 }

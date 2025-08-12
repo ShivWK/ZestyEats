@@ -21,19 +21,27 @@ import {
     selectPaymentMethod,
     selectDeliveryLat,
     selectDeliveryLng,
-    selectDeliveryAddress,
-    selectIsDeliverable
+    selectIsDeliverable,
+    selectFinalBilling
 } from "../../features/delivery/deliverySlice";
 
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import UserAddress from "../Profile/UserAddress";
+import FinalBilling from "./FinalBilling";
 
 const PaymentsAndAddress = () => {
     const shimmerArray = Array.from({ length: 2 });
     const editAddressModal = useSelector(selectEditAddressModal);
 
-    // const deliveryAt = useSelector(selectDeliveryAddress);
-    // console.log(deliveryAt);
+    const {
+        totalItemCost,
+        deliveryCharge,
+        deliveryKilometers,
+        GSTAndOtherCharges,
+        payableAmount
+    } = useSelector(selectFinalBilling)
+
+    // console.log("TotalItemCost", totalItemCost, "DeliverChager", deliveryCharge, "delikilome", deliveryKilometers, "gst and other", GSTAndOtherCharges, "NEt", payableAmount)
 
     const scrollRef = useRef(null);
 
@@ -204,12 +212,12 @@ const PaymentsAndAddress = () => {
                     </div>
                 </div>
 
-                <div className="rounded overflow-hidden mt-2">
+                <section className="rounded overflow-hidden mt-2">
                     <div className=" w-fully">
                         <h2 className="text-gray-800 text-xl">Final Billing</h2>
                     </div>
-                    <Billing heading={false} checkout={true} latDelivery={latDelivery} lngDelivery={lngDelivery} />
-                </div>
+                    <FinalBilling />
+                </section>
 
             </section>
         </div>

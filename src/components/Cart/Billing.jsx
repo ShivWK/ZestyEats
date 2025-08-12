@@ -1,14 +1,27 @@
 import { selectCart } from "../../features/home/restaurantsSlice";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import haversineFormula from "./../../utils/haversineFormula";
 import { Link } from "react-router";
 import { selectIsRestaurantOpen, selectDeliveryRestaurantStatus } from "../../features/home/restaurantsSlice";
 import DotBounceLoader from "../../utils/DotBounceLoader";
-import { selectDeliveryAddress, selectPaymentMethod } from "../../features/delivery/deliverySlice";
+import { 
+  selectDeliveryAddress, 
+  selectPaymentMethod,
+  selectFinalBilling,
+  setItemsTotalCost,
+  setGSTAndOtherCharges,
+  setPayableAmount,
+} from "../../features/delivery/deliverySlice";
 
 const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery }) => {
+
+  const {
+    totalItemCost,
+    GSTAndOtherCharges,
+    payableAmount
+  } = useSelector(selectFinalBilling);
 
   const cart = useSelector(selectCart);
   const isRestaurantOpen = useSelector(selectIsRestaurantOpen);
@@ -32,6 +45,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
 
   const [GSTAndOther, setGSTAndOther] = useState(0);
   const [grandTotal, setGrandTotal] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const cartItem = Object.values(cart);
@@ -41,17 +55,17 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
 
     setRestroDemographics([latRestro, lngRestro])
 
-    const distance = haversineFormula(
-      latRestro,
-      checkout ? latDelivery : latCurrent,
-      lngRestro,
-      checkout ? lngDelivery : lngCurrent,
-    ).toFixed(2);
-    setDistance(distance);
+    // const distance = haversineFormula(
+    //   latRestro,
+    //   checkout ? latDelivery : latCurrent,
+    //   lngRestro,
+    //   checkout ? lngDelivery : lngCurrent,
+    // ).toFixed(2);
+    // setDistance(distance);
+    // // dispatch(setDeliveryCharge(distance));
 
-    //base delivery fee = 10 for within and upto 1 km, and 5 per km after 1 km.
-    const deliveryFee = 10 + Math.max(0, Math.floor(distance - 1)) * 5;
-    setDeliveryFee(deliveryFee);
+    // const deliveryFee = 10 + Math.max(0, Math.floor(distance - 1)) * 5;
+    // setDeliveryFee(deliveryFee);
 
     const total = cartItem.reduce((acc, { item, quantity }) => {
       const defaultPrice = item?.price / 100 || item?.defaultPrice / 100 || 0;
@@ -62,6 +76,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
     }, 0);
 
     setTotalAmount(total);
+    dispatch(setItemsTotalCost(total));
   }, [cart]);
 
   useEffect(() => {
@@ -70,9 +85,11 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
 
     const GSTAndOther = +(gstAmount + packagingCharge + platformFee).toFixed(2);
     setGSTAndOther(GSTAndOther);
+    dispatch(setGSTAndOtherCharges(GSTAndOther));
 
-    const grandTotalAmount = +(totalAmount + GSTAndOther + deliveryFee).toFixed(2);
+    const grandTotalAmount = +( totalAmount + GSTAndOther ).toFixed(2);
     setGrandTotal(grandTotalAmount);
+    dispatch(setPayableAmount({ mode: "initial", cost : grandTotalAmount }));
   }, [totalAmount]);
 
   const [couponsOpen, setCouponsOpen] = useState(false);
@@ -148,7 +165,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
             <span className="text-gray-600 dark:text-gray-950">Item Total</span>
             <span className="text-gray-700 dark:text-black font-semibold">₹{totalAmount}</span>
           </div>
-          <div className="flex justify-between items-center py-1">
+          {/* <div className="flex justify-between items-center py-1">
             <p className="text-gray-600 flex items-center gap-0.5">
               <span className="dark:text-gray-950">Delivery Fee</span>
               <span className="dark:text-gray-950">┃</span>
@@ -191,7 +208,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
               </i>
             </p>
             <span className="text-gray-700 dark:text-black font-semibold">₹{deliveryFee}</span>
-          </div>
+          </div> */}
 
           <div className="flex justify-between py-1 pt-1.5 border-t-[1px] mt-2 border-gray-400 border-dashed">
             <div className="flex gap-1 items-center">
@@ -260,7 +277,7 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
           <Link
             to={`/paymentsAndAddresses?restroDemographics=${restroDemographics}`}
             onClick={proceedFurtherClickHandler}
-            className={`${isRestaurantOpen ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} h-8 rounded flex items-center justify-center font-sans font-medium tracking-wide cursor-pointer text-center ${isRestaurantOpen && "active:scale-95"} transform transition-all duration-150`} >
+            className={`${isRestaurantOpen ? "bg-green-400 text-white" : "bg-gray-400 text-gray-700 border border-gray-700"} h-9 rounded flex items-center justify-center font-sans font-medium tracking-wide cursor-pointer text-center ${isRestaurantOpen && "active:scale-95"} transform transition-all duration-150`} >
             {statusLoading ? <DotBounceLoader /> : isRestaurantOpen ? "Proceed Further" : "Restaurant is closed"}
           </Link>
         )
