@@ -5,6 +5,7 @@ const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 const { UAParser } = require("ua-parser-js");
 const calSessionValidationScore = require("./../utils/calSessionValidationScore");
 const cleanGuestSessionData = require("./../utils/cleanGuestSessionData");
+const instance = require("./../index")
 
 exports.checkSessionId = (req, res, next) => {
     if (!req.signedCookies.rSid) {
@@ -395,3 +396,4 @@ exports.logTheUserOut = async (req, res, next) => {
 
     await cleanGuestSessionData(gSid);
 }
+

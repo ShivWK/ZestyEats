@@ -3,11 +3,13 @@ const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
+const Razorpay = require("razorpay")
 
 const swiggyRouter = require("./routes/swiggyRouter");
 const userRouter = require("./routes/userRouter");
 const userActivityRouter = require("./routes/userActivityRouter");
-
+const paymentRouter = require("./routes/paymentRouter");
+ 
 const secret = process.env.COOKIE_SECRET;
 const PORT = process.env.PORT || 5000;
 const mongooseURI = process.env.MONGOOSE_URI;
@@ -58,6 +60,7 @@ app.get("/api/server/wake-up", (req, res) => {
 app.use("/api/zestyeats", swiggyRouter);
 app.use("/api/user", userRouter);
 app.use("/api/userActivity", userActivityRouter);
+app.use("/api/payments", paymentRouter);
 
 // Catch All route middleware runs for endpoint which is not handled, no need to call next() because there is no middleware or route handler is present after it.
 
@@ -65,9 +68,25 @@ app.use((req, res) => {
   res.status(404).send("Not Found");
 });
 
+const instance = new Razorpay({
+  key_id: process.env.RAZORPAY_TEST_API_KEY,
+  key_secret: process.env.RAZORPAY_TEST_API_SECRET,
+})
+
 app.listen(PORT, () => {
   console.log(`Proxy server running on ${PORT}`);
 });
+
+module.exports = instance;
+
+
+
+
+
+
+
+
+
 
 
 // Activity-based session extension
