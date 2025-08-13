@@ -5,7 +5,6 @@ const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 const { UAParser } = require("ua-parser-js");
 const calSessionValidationScore = require("./../utils/calSessionValidationScore");
 const cleanGuestSessionData = require("./../utils/cleanGuestSessionData");
-const instance = require("./../index")
 
 exports.checkSessionId = (req, res, next) => {
     if (!req.signedCookies.rSid) {
@@ -63,6 +62,7 @@ exports.protected = async (req, res, next) => {
 
         req.UserID = session.userId;
 
+        await SessionModel.findByIdAndUpdate(rSid, {$set: {createdAt: new Date()}});
         next();
     } catch (err) {
         console.log("Error in getting session", err);

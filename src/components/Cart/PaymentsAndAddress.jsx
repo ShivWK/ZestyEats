@@ -182,7 +182,7 @@ const PaymentsAndAddress = () => {
 
                 <div className="mt-3">
                     <h2 className="text-gray-800 text-xl">Payment Method</h2>
-                    <div className="flex flex-col items-start p-2">
+                    <div className="flex flex-col items-start px-2">
                         <div className="flex items-center gap-2 border-b-[1px] border-b-gray-950 w-full py-2">
                             <input
                                 type="radio"

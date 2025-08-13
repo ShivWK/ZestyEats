@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { 
-    setDeliveryAddress, 
-    setDeliveryLat, 
-    setDeliveryLng, 
-    selectDeliveryAddress, 
-    setDeliveryCharge 
+import {
+    setDeliveryAddress,
+    setDeliveryLat,
+    setDeliveryLng,
+    selectDeliveryAddress,
+    setDeliveryCharge
 } from "../../features/delivery/deliverySlice";
 
 import haversineFormula from "./../../utils/haversineFormula";
@@ -68,17 +68,13 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
 
                     return;
                 } else {
-                    dispatch(setDeliveryCharge(distance.toFixed(2)));
-                    dispatch(setDeliveryLat(lat));
-                    dispatch(setDeliveryLng(lng));
-
                     try {
                         const result = await trigger({
                             lat1: lat,
                             lng1: lng,
                         }).unwrap();
 
-                        console.log(result);
+                        // console.log(result);
 
                         const mainData = result.data[0].address_components;
                         const deliverAt = {
@@ -96,6 +92,9 @@ const CurrentLocation = ({ latRestro, lngRestro }) => {
                         setCurrentDelivery(deliverAt);
                         dispatch(setDeliveryAddress(deliverAt));
                         setCurrentLocationLoading(false);
+                        dispatch(setDeliveryCharge(distance.toFixed(2)));
+                        dispatch(setDeliveryLat(lat));
+                        dispatch(setDeliveryLng(lng));
                     } catch (err) {
                         console.log("Error fetching location data. Please try again later.", err);
                         setCurrentLocationLoading(false)

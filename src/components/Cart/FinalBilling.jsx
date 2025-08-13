@@ -22,6 +22,10 @@ const FinalBilling = () => {
         if (Object.keys(deliveryAddress).length === 0 || paymentMethod === "") {
             e.preventDefault();
         }
+
+        if (paymentMethod === "Online") {
+            
+        }
     }
 
     return <div className="rounded-md dark:bg-gray-300 bg-white p-2 md:self-start">
