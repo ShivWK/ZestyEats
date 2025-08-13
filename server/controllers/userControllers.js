@@ -587,8 +587,17 @@ exports.verifyOTP = async (req, res, next) => {
                 isEmailVerified: mode === "email",
             })
         } else {
-            if (mode === "phone") User = await UserModal.findOne({ phone: otpFor });
-            else User = await UserModal.findOne({ email: otpFor });
+            if (mode === "phone") {
+                User = await UserModal.findOne({ phone: otpFor });
+                if (!User.isNumberVerified) {
+                    await UserModal.findOneAndUpdate({ phone: otpFor }, { $set: { isNumberVerified: true } })
+                }
+            } else {
+                User = await UserModal.findOne({ email: otpFor });
+                if (!User.isEmailVerified) {
+                    await UserModal.findOneAndUpdate({ email: otpFor }, { $set: { isEmailVerified: true } })
+                }
+            }
         }
 
         // Create a registered session
@@ -636,15 +645,6 @@ exports.verifyOTP = async (req, res, next) => {
 
         };
 
-        // await SessionModel.findByIdAndUpdate(gSid, {
-        //     $set: {
-        //         "data.cartItems": {},
-        //         "data.itemsToBeAddedInCart": {},
-        //         "data.wishListedItems": {},
-        //         "data.favRestaurants": [],
-        //         "data.recentLocations": []
-        //     }
-        // })
         await cleanGuestSessionData(gSid);
     } else {
         const updatedAccessDoc = await AccessModal.findOneAndUpdate(
@@ -712,6 +712,7 @@ exports.getGuestSessionData = async (req, res, next) => {
     if (gSid) {
         try {
             const sessionData = await SessionModel.findById(gSid);
+            await SessionModel.findByIdAndUpdate(gSid, { $set: { createdAt: new Date() } });
 
             return res.status(200).json({
                 status: "success",
