@@ -7,22 +7,27 @@ const userActivitySchema = new mongoose.Schema({
         required: true,
         ref: "User"
     },
+
     cartItems: {
         type : mongoose.Schema.Types.Mixed,
         default: {}
     },
+
     itemsToBeAddedInCart: {
         type : mongoose.Schema.Types.Mixed,
         default: {}
     },
+
     wishListedItems: {
         type : mongoose.Schema.Types.Mixed,
         default: {}
     },
+
     favRestaurants: {
         type: [ mongoose.Schema.Types.Mixed ],
         default: []
     },
+
     recentLocations:{
         type: [ mongoose.Schema.Types.Mixed ],
         default: []
@@ -30,5 +35,4 @@ const userActivitySchema = new mongoose.Schema({
 })
 
 const UserActivityModal = mongoose.model("UserActivity", userActivitySchema);
-
 module.exports = UserActivityModal;

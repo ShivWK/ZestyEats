@@ -1,10 +1,17 @@
 const UserActivityModal = require("./../models/userActivityModel");
 const SessionModel = require("./../models/authModals/sessionModel");
 const UserModal = require("./../models/userModel");
+const OtpModel = require("../models/authModals/otpModel");
+const AddressModel = require("./../models/userAddressModel");
+
 const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 const { UAParser } = require("ua-parser-js");
 const calSessionValidationScore = require("./../utils/calSessionValidationScore");
 const cleanGuestSessionData = require("./../utils/cleanGuestSessionData");
+
+const mailTemplate = require("./../utils/emailTemplates/signupEmail");
+const crypto = require("crypto");
+const sendEmail = require("./../utils/email");
 
 exports.checkSessionId = (req, res, next) => {
     if (!req.signedCookies.rSid) {
@@ -62,7 +69,7 @@ exports.protected = async (req, res, next) => {
 
         req.UserID = session.userId;
 
-        await SessionModel.findByIdAndUpdate(rSid, {$set: {createdAt: new Date()}});
+        await SessionModel.findByIdAndUpdate(rSid, { $set: { createdAt: new Date() } });
         next();
     } catch (err) {
         console.log("Error in getting session", err);
@@ -397,3 +404,53 @@ exports.logTheUserOut = async (req, res, next) => {
     await cleanGuestSessionData(gSid);
 }
 
+exports.deleteAccount = async (req, res, next) => {
+    const userId = req.UserID;
+    const mode = req.params.mode;
+
+    try {
+        if (mode === "sendOTP") {
+            const user = await UserModal.findById(userId);
+            const email = user.email;
+
+            await OtpModel.findOneAndDelete({ email });
+
+            const deleteOTP = crypto.randomInt(100000, 1000000);
+            const text = mailTemplate(user.name, deleteOTP, "account deletion");
+
+            const resp = await sendEmail(email, text);
+
+            console.log("deletion mail send", resp);
+
+            const hashedOTP = crypto.createHash("sha256").update(String(deleteOTP)).digest("hex");
+            await OtpModel.create({
+                email,
+                for: "delete",
+                hashedOTP
+            });
+
+            return res.status(200).json({
+                status: "success",
+                message: "OTP send successfully to your email"
+            })
+        } else if (mode === "deleteAccount") {
+            await UserModal.findByIdAndDelete(userId);
+            await SessionModel.findOneAndDelete({ userId, type: "registered" });
+            await AddressModel.findOneAndDelete({ userId });
+            await UserActivityModal.findOneAndDelete({ userId });
+
+            return res.status(200).json({
+                status: "success",
+                message: "Account deleted successfully"
+            })
+        }
+
+    } catch (err) {
+        console.log("Error in sending deletion OTP", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error. Please try after sometime."
+        })
+    }
+}

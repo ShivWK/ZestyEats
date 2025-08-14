@@ -13,10 +13,8 @@ const {
     setAllDataAtOnce,
     getLiveSessions,
     logTheUserOut,
-    // getUserAddress,
     getUserPaymentMethods,
-    // paymentProcessor,
-    // setUserAddress
+    deleteAccount,
 } = require("../controllers/userActivityControllers");
 
 const {
@@ -36,6 +34,8 @@ userActivityRouter.route("/userAddress")
     .post(setUserAddress)
     .delete(deleteUserAddress)
     .put(updateUserAddress);
+
+userActivityRouter.route("/deleteAccount/:mode").post(deleteAccount);
 
 userActivityRouter.route("/userPaymentMethods").get(getUserPaymentMethods);
 

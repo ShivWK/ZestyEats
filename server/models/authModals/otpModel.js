@@ -13,7 +13,7 @@ const otpSchema = new mongoose.Schema({
 
     for: {
         type: String,
-        enum: ["signup", "login"],
+        enum: ["signup", "login", "delete", "email verify", "phone verify"],
         required: true,
     },
 

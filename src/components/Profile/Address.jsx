@@ -22,8 +22,6 @@ const Address = (data) => {
     const [allCountries, setAllCountries] = useState([]);
     const [selectedCountry, setSelectedCountry] = useState("");
     const [openDropDown, setOpenDropDown] = useState(false);
-    // const [savedAddresses, setSavedAddresses] = useState(data.data.data)
-
     const [selectedCountryCode, setSelectedCountryCode] = useState("");
 
     const [countryStates, setCountryStates] = useState([]);
@@ -33,7 +31,6 @@ const Address = (data) => {
 
     const [showForm, setShowForm] = useState(false);
     const [saveLoading, setSaveLoading] = useState(false);
-    // const [addressLoading, setAddressLoading] = useState(false);
     const savedAddresses = useSelector(selectSavedAddress);
     const addressLoading = useSelector(selectAddressLoading);
 
@@ -135,11 +132,6 @@ const Address = (data) => {
         data.forEach((value, key) => {
             obj[key] = value;
         })
-
-        // let searchString = `${obj.flatNumber}, ${obj.state}, ${obj.pinCode}, ${obj.country}`;
-        // searchString.replace(/^[^ ]+\s*/, "");
-
-        // console.log(searchString);
 
         try {
             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/userAddress`, {

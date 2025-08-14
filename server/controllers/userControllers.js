@@ -18,8 +18,6 @@ exports.guestSession = async (req, res, next) => {
     const uaResult = UAParser(ua);
     const gSid = req.signedCookies.gSid;
 
-    console.log(req.signedCookies);
-
     try {
         const session = await SessionModel.findById(gSid);
         if (!session) {
@@ -72,7 +70,6 @@ exports.signup = async (req, res) => {
     const mode = req.params.mode;
 
     const visiterId = headers["x-device-id"]
-    // console.log("SignUp visitor", visiterId)
 
     const ua = headers["x-user-agent"];
     const uaResult = UAParser(ua);
@@ -194,8 +191,8 @@ exports.signup = async (req, res) => {
             } catch (err) {
                 console.log("Error in sending OTP", err);
                 return res.status(500).json({
-                    status: "failed",
-                    message: "OTP not send"
+                    status: "error",
+                    message: "Internal server error. Please try after sometime."
                 })
             }
         }
@@ -380,8 +377,6 @@ exports.resendOtp = async (req, res, next) => {
 
         for (const doc of result) {
             const block = doc.resendBlocked;
-
-            // console.log(block)
 
             if (block?.value && block.blockedAt) {
                 const blockExpiresAt = new Date(block.blockedAt.getTime() + 5 * 60 * 1000);
@@ -643,6 +638,8 @@ exports.verifyOTP = async (req, res, next) => {
         };
 
         await cleanGuestSessionData(gSid);
+
+        await OtpModal.findOneAndDelete({ [mode] : otpFor.trim() })
     } else {
         const updatedAccessDoc = await AccessModal.findOneAndUpdate(
             { [mode]: otpFor },
@@ -658,8 +655,6 @@ exports.verifyOTP = async (req, res, next) => {
 }
 
 exports.getGuestSessionData = async (req, res, next) => {
-    // console.log("Hit", req.body);
-
     const gSid = req.signedCookies?.gSid;
     const rSid = req.signedCookies?.rSid;
 
@@ -765,8 +760,6 @@ exports.getGuestSessionData = async (req, res, next) => {
 }
 
 exports.addGuestSessionRecentLocation = async (req, res, next) => {
-    console.log("Hit", req.body);
-
     const gSid = req.signedCookies?.gSid;
 
     try {
@@ -787,8 +780,6 @@ exports.addGuestSessionRecentLocation = async (req, res, next) => {
 }
 
 exports.addGuestSessionFavRestaurants = async (req, res, next) => {
-    // console.log("Hit fav restaurant", req.body);
-
     const gSid = req.signedCookies?.gSid;
 
     try {
@@ -798,8 +789,6 @@ exports.addGuestSessionFavRestaurants = async (req, res, next) => {
             status: "success",
             data: favRestaurants,
         })
-
-        // console.log("Added", favRestaurants)
     } catch (err) {
         console.error("Error in favorite restaurant addition", err);
 
@@ -811,8 +800,6 @@ exports.addGuestSessionFavRestaurants = async (req, res, next) => {
 }
 
 exports.addGuestSessionWishListedItems = async (req, res, next) => {
-    // console.log("Hit wishlist items", req.body);
-
     const gSid = req.signedCookies?.gSid;
 
     try {
@@ -822,8 +809,6 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
             status: "success",
             data: wishListedItems,
         })
-
-        // console.log("Added", wishListedItems);
     } catch (err) {
         console.error("Error in adding items to wishlist", err);
 
@@ -835,8 +820,6 @@ exports.addGuestSessionWishListedItems = async (req, res, next) => {
 }
 
 exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
-    // console.log("Hit items to be added in cart", req.body);
-
     const gSid = req.signedCookies?.gSid;
 
     try {
@@ -846,8 +829,6 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
             status: "success",
             data: itemsToBeAddedInCart,
         })
-
-        // console.log("Added", itemsToBeAddedInCart);
     } catch (err) {
         console.error("Error in adding items to wishlist", err);
 
@@ -859,8 +840,6 @@ exports.addGuestSessionItemsToBeAddedInCart = async (req, res, next) => {
 }
 
 exports.addGuestSessionCartItems = async (req, res, next) => {
-    // console.log("Hit cart items", req.body);
-
     const gSid = req.signedCookies?.gSid;
 
     try {
@@ -870,7 +849,6 @@ exports.addGuestSessionCartItems = async (req, res, next) => {
             status: "success",
             data: cartItems,
         })
-        // console.log("Added", cartItems)
     } catch (err) {
         console.error("Error in adding items to wishlist", err);
 
@@ -881,4 +859,12 @@ exports.addGuestSessionCartItems = async (req, res, next) => {
     }
 }
 
-exports.oAuthAuthorization = (req, res, next) => { }
+exports.oAuthAuthorization = async (req, res, next) => {
+    const userId = req.UserId;
+
+    try {
+        
+    } catch (err) {
+
+    }
+ }
