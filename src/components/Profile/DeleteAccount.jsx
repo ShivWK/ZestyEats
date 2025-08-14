@@ -2,11 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import DotBounceLoader from "../../utils/DotBounceLoader";
+import { setDeleteModalOpen, setHideDeleteModal } from "../../features/Login/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const DeleteAccount = () => {
     const [OTPLoading, setOTPLoading] = useState(false);
     const [verifyLoading, setVErifyLOading] = useState(false);
     const [OTPSend, setOTPSend] = useState(false);
+    const dispatch = useDispatch();
 
     return <main className="pt-20 lg:pt24 px-1">
         <h1 className="dark:text-white text-2xl">Delete Your Account</h1>
@@ -16,17 +19,13 @@ const DeleteAccount = () => {
             <p>You will not be able to recover your account once deleted.</p>
         </div>
 
-        {OTPSend ? ""
-            : <>
-                <p className="text-center dark:text-gray-300">We will send a <span className="dark:text-gray-100 font font-semibold">one-time password (OTP)</span> to your registered email address.</p>
-                <p className="text-center dark:text-gray-300 mt-1"><span className="font-semibold dark:text-gray-100">Please make sure you have access to this email before proceeding.</span>
-                    You will need to enter this OTP to confirm deletion.</p>
-            </>
-        }
+        <p className="text-center dark:text-gray-300">We will send a <span className="dark:text-gray-100 text-black font font-semibold">one-time password (OTP)</span> to your registered email address.</p>
+        <p className="text-center dark:text-gray-300 mt-1"><span className="font-semibold dark:text-gray-100 text-black ">Please make sure you have access to your registered email before proceeding.</span>
+            You will need to enter this OTP to confirm deletion.</p>
 
-        {!OTPSend && <button className="flex items-center justify-center mx-auto rounded-md w-28 h-9 bg-primary text-white dark:bg-darkPrimary text-semibold tracking-wider mt-5">
+        <button onClick={() => dispatch(setDeleteModalOpen(true))} className="flex items-center justify-center mx-auto rounded-md w-28 h-9 bg-primary text-white dark:bg-darkPrimary text-semibold tracking-wider mt-5 active:scale-95 transform transition-all duration-100 ease-linear">
             {OTPLoading ? <DotBounceLoader /> : "Send OTP"}
-        </button>}
+        </button>
 
         <MobileFooterMenu />
     </main>

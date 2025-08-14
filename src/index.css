@@ -7,9 +7,6 @@
 
     --animate-height: height 0.6s ease forwards;
 
-    --animate-showEditAddressModal: showEditAddress 0.23s ease forwards;
-    --animate-hideEditAddressModal: hideEditAddress 0.23s ease forwards;
-
     @keyframes height {
         0% {
             height: 0px;
@@ -20,17 +17,8 @@
         }
     }
 
-    --animate-dotBounce: animateDot 0.4s infinite alternate;
-
-    @keyframes animateDot {
-        0% {
-            transform: translateY(0);
-        }
-
-        100% {
-            transform: translateY(-5px);
-        }
-    }
+    --animate-showEditAddressModal: showEditAddress 0.23s ease forwards;
+    --animate-hideEditAddressModal: hideEditAddress 0.23s ease forwards;
 
     @keyframes showEditAddress {
         0% {
@@ -51,6 +39,41 @@
 
         100% {
             top: 100%
+        }
+    }
+
+    --animate-showDeleteModal: showDelete 0.3s ease forwards;
+    --animate-hideDeleteModal: hideDelete 0.3s ease forwards;
+
+    @keyframes showDelete {
+        0% {
+            transform: scale(0,0); opacity: 0;
+        }
+
+        100% {
+            transform: scale(1, 1); opacity: 1;
+        }
+    }
+
+    @keyframes hideDelete {
+        0% {
+            transform: scale(1, 1); opacity: 1;
+        }
+
+        100% {
+            transform: scale(0,0); opacity: 0;
+        }
+    }
+
+    --animate-dotBounce: animateDot 0.4s infinite alternate;
+
+    @keyframes animateDot {
+        0% {
+            transform: translateY(0);
+        }
+
+        100% {
+            transform: translateY(-5px);
         }
     }
 }

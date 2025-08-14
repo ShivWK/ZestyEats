@@ -20,6 +20,8 @@ const initialState = {
   errorMessage: "",
   fullDisable: false,
   appLoading: false,
+  isDeleteModalOpen: false,
+  hideDeleteModal: false,
 };
 
 const loginSlice = createSlice({
@@ -90,7 +92,7 @@ const loginSlice = createSlice({
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
 
-      {action.payload ? localStorage.setItem("auth", "true") : localStorage.setItem("auth", "false")}
+      { action.payload ? localStorage.setItem("auth", "true") : localStorage.setItem("auth", "false") }
     },
 
     setLoading: (state, action) => {
@@ -116,6 +118,14 @@ const loginSlice = createSlice({
     toggleOtpOnPhone: (state) => {
       state.otpOnPhone = !state.otpOnPhone;
     },
+
+    setDeleteModalOpen: (state, action) => {
+      state.isDeleteModalOpen = action.payload;
+    },
+
+    setHideDeleteModal: (state, action) => {
+      state.hideDeleteModal = action.payload;
+    }
   },
 });
 
@@ -136,6 +146,17 @@ export const selectLocationInfoModalReason = (state) => state.login.locationInfo
 export const selectGrantBtnClicked = (state) => state.login.isGrantClicked;
 export const selectErrorMessage = (state) => state.login.errorMessage;
 export const selectFullDisable = (state) => state.login.fullDisable;
+
+export const selectDeleteModal = createSelector(
+  [
+    state => state.login.isDeleteModalOpen,
+    state => state.login.hideDeleteModal
+  ],
+  (deleteModal, hideDeleteModal) => ({
+    deleteModal,
+    hideDeleteModal
+  })
+)
 
 export const selectLocationInfoModal = createSelector(
   [
@@ -178,4 +199,6 @@ export const {
   setGrantBTnClicked,
   setErrorMessage,
   setFullDisable,
+  setDeleteModalOpen,
+  setHideDeleteModal
 } = loginSlice.actions;

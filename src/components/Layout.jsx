@@ -4,6 +4,7 @@ import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
 import LoginModal from "./Login/LoginModal";
 import LocationInfoModal from "./Location/LocationInfoModal";
+import DeleteModal from "./Profile/DeleteModal";
 
 import LocationModal from "./Location/LocationModal";
 import { toast } from "react-toastify";
@@ -18,7 +19,8 @@ import {
   setLocationInfoModal,
   setAppLoading,
   setIsLoggedIn,
-  selectIsLoggedIn
+  selectIsLoggedIn,
+  selectDeleteModal
 } from "../features/Login/loginSlice";
 
 import {
@@ -92,6 +94,7 @@ export default function Layout() {
   const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const editAddressModal = useSelector(selectEditAddressModal);
+  const { deleteModal } = useSelector(selectDeleteModal)
 
   useTrackNavigation();
 
@@ -381,6 +384,7 @@ export default function Layout() {
 
       {isLoginOpen && (<LoginModal />)}
       {isLocationOpen && (<LocationModal />)}
+      {deleteModal && <DeleteModal />}
 
       <PageFooter />
       {OpenLocationInfoModal && <LocationInfoModal />}
