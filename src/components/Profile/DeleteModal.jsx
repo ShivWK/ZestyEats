@@ -32,7 +32,7 @@ const DeleteModal = () => {
     return <div onClick={() => {
         dispatch(setHideDeleteModal(true));
     }} className="absolute top-0 left-0 h-full w-full z-60 bg-black/60 flex items-center justify-center">
-        <div onAnimationEnd={animationEndHandler} className={`p-2 bg-white dark:bg-gray-800 ${!hideDeleteModal ? "animate-showDeleteModal" : "animate-hideDeleteModal"} w-[80%] lg:w-[25%] rounded-md`}>
+        <div onAnimationEnd={animationEndHandler} className={`p-3 bg-white dark:bg-gray-800 ${!hideDeleteModal ? "animate-showDeleteModal" : "animate-hideDeleteModal"} w-[80%] lg:w-[25%] rounded-md`}>
             <p className="text-black dark:text-gray-200 text-center">{`OTP is send to your email ${email}`}</p>
 
             <OtpEntry count={6} />
