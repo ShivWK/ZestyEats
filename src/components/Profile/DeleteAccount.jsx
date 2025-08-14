@@ -9,11 +9,11 @@ import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 
 const DeleteAccount = () => {
     const [OTPLoading, setOTPLoading] = useState(false);
-    const [verifyLoading, setVErifyLOading] = useState(false);
     const dispatch = useDispatch();
     const deviceId = useSelector(selectDeviceFingerPrint);
 
     const sendOtpHandler = async () => {
+        if (OTPLoading) return;
         setOTPLoading(true);
 
         try {
@@ -56,7 +56,7 @@ const DeleteAccount = () => {
         <p className="text-center dark:text-gray-300 mt-1"><span className="font-semibold dark:text-gray-100 text-black ">Please make sure you have access to your registered email before proceeding.</span>
             You will need to enter this OTP to confirm deletion.</p>
 
-        <button onClick={sendOtpHandler} className="flex items-center justify-center mx-auto rounded-md w-28 h-9 bg-primary text-white dark:bg-darkPrimary text-semibold tracking-wider mt-5 active:scale-95 transform transition-all duration-100 ease-linear">
+        <button onClick={sendOtpHandler} className="flex items-center justify-center mx-auto rounded-md w-28 h-8 bg-primary text-white dark:bg-darkPrimary text-semibold tracking-wider mt-5 active:scale-95 transform transition-all duration-100 ease-linear">
             {OTPLoading ? <DotBounceLoader /> : "Send OTP"}
         </button>
 

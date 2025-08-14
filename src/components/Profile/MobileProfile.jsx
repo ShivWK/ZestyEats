@@ -27,19 +27,19 @@ const MobileProfile = () => {
   const buttons = [
 
     {
-      icon: "ri-map-pin-user-fill",
+      icon: "ri-map-pin-user-fill text-xl",
       text: "Address",
       link: "Saved Address"
     },
 
     {
-      icon: "ri-logout-circle-r-line",
+      icon: "ri-logout-circle-r-line text-xl",
       text: "Logout",
       link: "Logout Options"
     },
 
     {
-      icon: "ri-delete-bin-5-fill",
+      icon: "fa-solid fa-trash-can mr-1 text-lg",
       text: "Delete Account",
       link: "Delete Account"
     },
@@ -119,7 +119,7 @@ const MobileProfile = () => {
               ? (<div className="w-[100%] self-center shimmerBg h-7 rounded-md" />)
               : (<>
                 <i
-                  className={`${button.icon} text-gray-700 text-xl dark:text-primary`}
+                  className={`${button.icon} text-gray-700 dark:text-primary`}
                 ></i>
                 <p className="text-gray-600 dark:text-gray-100">{button.text}</p>
                 <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
