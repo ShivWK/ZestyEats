@@ -426,7 +426,7 @@ exports.deleteAccount = async (req, res, next) => {
             await OtpModel.create({
                 email,
                 for: "delete",
-                hashedOTP
+                hashedOtp: hashedOTP
             });
 
             return res.status(200).json({

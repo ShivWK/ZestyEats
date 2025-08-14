@@ -5,12 +5,13 @@ import DotBounceLoader from "../../utils/DotBounceLoader";
 import { setDeleteModalOpen, setHideDeleteModal } from "../../features/Login/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 
 const DeleteAccount = () => {
     const [OTPLoading, setOTPLoading] = useState(false);
     const [verifyLoading, setVErifyLOading] = useState(false);
-    const [OTPSend, setOTPSend] = useState(false);
     const dispatch = useDispatch();
+    const deviceId = useSelector(selectDeviceFingerPrint);
 
     const sendOtpHandler = async () => {
         setOTPLoading(true);
@@ -38,7 +39,7 @@ const DeleteAccount = () => {
         } catch (err) {
             console.log("Error in sending OTP", err);
             toast.error(err.message);
-            
+
             setOTPLoading(false)
         }
     }
