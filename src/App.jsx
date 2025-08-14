@@ -42,6 +42,7 @@ import CompanyPolicies from "./components/CompanyPolicies";
 import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
 import useOnlineStatus from "./utils/useOnlineStatus";
 import PaymentsAndAddress from "./components/Cart/PaymentsAndAddress";
+import DeleteAccount from "./components/Profile/DeleteAccount";
 
 import {
   selectLocationModal,
@@ -305,6 +306,7 @@ export default function App() {
         <Route path="legalAndPolicies" element={<CompanyPolicies />} />
         <Route path="mobileProfileResponse" loader={profileResponseLoader} element={<MobileProfileResponse />} />
         <Route path="paymentsAndAddresses" element={<PaymentsAndAddress />} />
+        <Route path="deleteAccount" element={<DeleteAccount />} />
       </Route>
     )
   );

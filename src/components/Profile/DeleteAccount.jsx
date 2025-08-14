@@ -1,0 +1,35 @@
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import MobileFooterMenu from "../Footer/MobileFooterMenu";
+import DotBounceLoader from "../../utils/DotBounceLoader";
+
+const DeleteAccount = () => {
+    const [OTPLoading, setOTPLoading] = useState(false);
+    const [verifyLoading, setVErifyLOading] = useState(false);
+    const [OTPSend, setOTPSend] = useState(false);
+
+    return <main className="pt-20 lg:pt24 px-1">
+        <h1 className="dark:text-white text-2xl">Delete Your Account</h1>
+        <p className="dark:text-gray-300">We're sorry to see you go. Before we proceed, please review the details below.</p>
+        <div className="bg-red-300 dark:bg-[rgb(87,16,16)] dark:text-gray-100 w-[90%] mx-auto rounded-md p-2 text-justify leading-5 my-3">
+            <p className="mb-2">Deleting your account will permanently remove all your order history, saved addresses, and preferences</p>
+            <p>You will not be able to recover your account once deleted.</p>
+        </div>
+
+        {OTPSend ? ""
+            : <>
+                <p className="text-center dark:text-gray-300">We will send a <span className="dark:text-gray-100 font font-semibold">one-time password (OTP)</span> to your registered email address.</p>
+                <p className="text-center dark:text-gray-300 mt-1"><span className="font-semibold dark:text-gray-100">Please make sure you have access to this email before proceeding.</span>
+                    You will need to enter this OTP to confirm deletion.</p>
+            </>
+        }
+
+        {!OTPSend && <button className="flex items-center justify-center mx-auto rounded-md w-28 h-9 bg-primary text-white dark:bg-darkPrimary text-semibold tracking-wider mt-5">
+            {OTPLoading ? <DotBounceLoader /> : "Send OTP"}
+        </button>}
+
+        <MobileFooterMenu />
+    </main>
+}
+
+export default DeleteAccount

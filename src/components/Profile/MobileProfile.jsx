@@ -25,11 +25,6 @@ const MobileProfile = () => {
   const isEmailVerified = userDetails.isEmailVerified;
 
   const buttons = [
-    {
-      icon: "fas fa-credit-card",
-      text: "Payment",
-      link: "Payment Methods"
-    },
 
     {
       icon: "ri-map-pin-user-fill",
@@ -41,6 +36,12 @@ const MobileProfile = () => {
       icon: "ri-logout-circle-r-line",
       text: "Logout",
       link: "Logout Options"
+    },
+
+    {
+      icon: "ri-delete-bin-5-fill",
+      text: "Delete Account",
+      link: "Delete Account"
     },
   ];
 
@@ -108,7 +109,11 @@ const MobileProfile = () => {
       </div>
       <section className="mx-auto w-[90%] rounded-2xl p-2 bg-white border not-dark:border-gray-400 dark:bg-gray-800">
         {buttons.map((button, index) => (
-          <Link key={index} onClick={(e) => clickHandler(button.text.toLowerCase(), e)} to={`/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}`}
+          <Link key={index} onClick={(e) => clickHandler(button.text.toLowerCase(), e)} to={
+            button.text === "Delete Account" 
+            ? "/deleteAccount"
+            : `/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}` 
+          }
             className={`flex gap-2 items-center px-2 py-4 ${index !== (buttons.length - 1) && "border-b-[1px] dark:border-b-white border-gray-400"}`}>
             {AppLoading
               ? (<div className="w-[100%] self-center shimmerBg h-7 rounded-md" />)

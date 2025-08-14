@@ -568,9 +568,6 @@ exports.verifyOTP = async (req, res, next) => {
 
     let OtpDoc = await OtpModal.findOne({ [mode]: otpFor.trim() });;
 
-    // if (mode === "phone") OtpDoc = await OtpModal.findOne({ [mode]: otpFor.trim() });
-    // else OtpDoc = await OtpModal.findOne({ email: otpFor.trim() });
-
     if (!OtpDoc) return res.status(410).json({ status: "failed", message: "OTP expired" });
 
     const userOTP = crypto.createHash("sha256").update(String(body.OTP)).digest('hex');
