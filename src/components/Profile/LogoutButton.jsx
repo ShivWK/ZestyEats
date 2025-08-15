@@ -68,7 +68,7 @@ const LogoutButton = ({ sessionId, index = null, type, otherActiveSessionSetter 
                     setFavoriteRestro,
                     addRecentLocations,
                     addToWishlistItem
-                })
+                });
                 dispatch(setIsLoggedIn(false));
                 dispatch(setIsLoggedInHome(false));
                 dispatch(setIsLoggedInRestro(false));

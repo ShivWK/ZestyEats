@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { setDeleteModalOpen, setHideDeleteModal } from "../../features/Login/loginSlice";
@@ -52,7 +51,7 @@ const DeleteAccount = () => {
             <p>You will not be able to recover your account once deleted.</p>
         </div>
 
-        <p className="text-center dark:text-gray-300">We will send a <span className="dark:text-gray-100 text-black font font-semibold">one-time password (OTP)</span> to your registered email address.</p>
+        <p className="text-center dark:text-gray-300 mt-1">We will send a <span className="dark:text-gray-100 text-black font font-semibold">one-time password (OTP)</span> to your registered email address.</p>
         <p className="text-center dark:text-gray-300 mt-1"><span className="font-semibold dark:text-gray-100 text-black ">Please make sure you have access to your registered email before proceeding.</span>
             You will need to enter this OTP to confirm deletion.</p>
 
