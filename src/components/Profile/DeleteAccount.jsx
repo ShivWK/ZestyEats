@@ -3,12 +3,14 @@ import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { setDeleteModalOpen, setHideDeleteModal } from "../../features/Login/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 
 const DeleteAccount = () => {
     const [OTPLoading, setOTPLoading] = useState(false);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const deviceId = useSelector(selectDeviceFingerPrint);
 
     const sendOtpHandler = async () => {
@@ -44,6 +46,7 @@ const DeleteAccount = () => {
     }
 
     return <main className="pt-20 lg:pt24 px-1">
+        <i onClick={() => navigate(-1)} className="ri-arrow-left-long-fill dark:text-white mb-1.5"><span className="ml-1 font-sans">Back</span></i>
         <h1 className="dark:text-white text-2xl">Delete Your Account</h1>
         <p className="dark:text-gray-300">We're sorry to see you go. Before we proceed, please review the details below.</p>
         <div className="bg-red-300 dark:bg-[rgb(87,16,16)] dark:text-gray-100 w-[90%] mx-auto rounded-md p-2 text-justify leading-5 my-3">
