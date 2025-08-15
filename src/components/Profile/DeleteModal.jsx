@@ -170,7 +170,7 @@ const DeleteModal = () => {
 
                         : <button
                             onClick={verifyClickHandler}
-                            className={`basis-[48%] h-8  font-bold tracking-wider flex items-center justify-center  rounded-md ${disableVerify ? "border border-gray-500 bg-gray-400 text-gray-800 cursor-not-allowed" :  "bg-red-500 hover:bg-red-600 text-white cursor-pointer active:scale-95"} transition-all duration-100 ease-linear`}>
+                            className={`basis-[48%] h-8  font-bold tracking-wider flex items-center justify-center  rounded-md ${disableVerify ? "border-2 border-gray-400 bg-gray-300 dark:text-gray-800 text-gray-400 cursor-not-allowed" :  "bg-red-500 hover:bg-red-600 text-white cursor-pointer active:scale-95"} transition-all duration-100 ease-linear`}>
                             {verifyLoading ? <DotBounceLoader /> : "Verify"}
                         </button>}
                 </div>
