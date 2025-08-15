@@ -3,8 +3,15 @@ import {
   selectCurrentTheme,
   selectDeviceFingerPrint,
 } from "./../../features/home/homeSlice";
-import { selectAppLoading, selectIsLoggedIn } from "../../features/Login/loginSlice";
-import { useSelector } from "react-redux";
+
+import { 
+  selectAppLoading, 
+  selectIsLoggedIn, 
+  setOpenEditModal, 
+  setToEdit 
+} from "../../features/Login/loginSlice";
+
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 import ScooterAnimation from "../../utils/ScooterAnimation";
@@ -23,6 +30,7 @@ const MobileProfile = () => {
   const phone = userDetails.userPhone;
   const isNumberVerified = userDetails.isPhoneVerified;
   const isEmailVerified = userDetails.isEmailVerified;
+  const dispatch = useDispatch();
 
   const buttons = [
 
@@ -39,7 +47,7 @@ const MobileProfile = () => {
     },
 
     {
-      icon: "fa-solid fa-trash-can mr-1 text-lg",
+      icon: "fa-solid fa-trash-can ml-0.5 text-lg",
       text: "Delete Account",
       link: "Delete Account"
     },
@@ -52,6 +60,11 @@ const MobileProfile = () => {
       e.preventDefault();
     }
   };
+
+  const editClickHandler = () => {
+    dispatch(setOpenEditModal(true));
+    dispatch(setToEdit("profile"));
+  }
 
   if (!isLoggedIn) return <UnauthorizedError />
 
@@ -89,7 +102,7 @@ const MobileProfile = () => {
                 )}
               </div>
             </div>
-            <button className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
+            <button onClick={editClickHandler} className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
               Edit
             </button>
           </div>
@@ -114,14 +127,16 @@ const MobileProfile = () => {
             ? "/deleteAccount"
             : `/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}` 
           }
-            className={`flex gap-2 items-center px-2 py-4 ${index !== (buttons.length - 1) && "border-b-[1px] dark:border-b-white border-gray-400"}`}>
+            className={`flex ${button.text === "Delete Account" ? "gap-2.5" : "gap-2"} items-center px-2 py-4 ${index !== (buttons.length - 1) && "border-b-[1px] dark:border-b-white border-gray-400"}`}>
             {AppLoading
               ? (<div className="w-[100%] self-center shimmerBg h-7 rounded-md" />)
               : (<>
                 <i
                   className={`${button.icon} text-gray-700 dark:text-primary`}
                 ></i>
-                <p className="text-gray-600 dark:text-gray-100">{button.text}</p>
+                <p className={`text-gray-600 dark:text-gray-100`}>
+                  {button.text}
+                  </p>
                 <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
               </>)
             }

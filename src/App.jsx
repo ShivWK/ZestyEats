@@ -65,6 +65,7 @@ import { selectMenuModel, setDeviceFingerPrintRestro, toggleMenuModel } from "./
 import { useSelector, useDispatch } from "react-redux";
 import MobileProfile from "./components/Profile/MobileProfile";
 import MobileProfileResponse from "./components/Profile/MobileProfileResponse";
+import EditProfile from "./components/Profile/EditProfile";
 
 export default function App() {
   useOnlineStatus();

@@ -22,6 +22,9 @@ const initialState = {
   appLoading: false,
   isDeleteModalOpen: false,
   hideDeleteModal: false,
+  OpenEditModal: false,
+  hideEditModal: false,
+  toEdit: "",
 };
 
 const loginSlice = createSlice({
@@ -125,6 +128,18 @@ const loginSlice = createSlice({
 
     setHideDeleteModal: (state, action) => {
       state.hideDeleteModal = action.payload;
+    },
+
+    setOpenEditModal: (state, action) => {
+      state.OpenEditModal = action.payload;
+    },
+
+    setHideEditModal: (state, action) => {
+      state.hideEditModal = action.payload;
+    },
+
+    setToEdit: (state, action) => {
+      state.toEdit = action.payload;
     }
   },
 });
@@ -146,6 +161,20 @@ export const selectLocationInfoModalReason = (state) => state.login.locationInfo
 export const selectGrantBtnClicked = (state) => state.login.isGrantClicked;
 export const selectErrorMessage = (state) => state.login.errorMessage;
 export const selectFullDisable = (state) => state.login.fullDisable;
+export const selectToEdit = (state) => state.login.toEdit;
+
+export const selectEditModal = createSelector(
+  [
+    state => state.login.OpenEditModal,
+    state => state.login.hideEditModal
+  ],
+  (
+    openEditModal,
+    hideEditModal
+  ) => ({
+    openEditModal,
+    hideEditModal
+  }))
 
 export const selectDeleteModal = createSelector(
   [
@@ -200,5 +229,8 @@ export const {
   setErrorMessage,
   setFullDisable,
   setDeleteModalOpen,
-  setHideDeleteModal
+  setHideDeleteModal,
+  setOpenEditModal,
+  setHideEditModal,
+  setToEdit,
 } = loginSlice.actions;

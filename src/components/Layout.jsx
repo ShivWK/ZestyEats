@@ -8,6 +8,7 @@ import DeleteModal from "./Profile/DeleteModal";
 
 import LocationModal from "./Location/LocationModal";
 import { toast } from "react-toastify";
+import EditProfile from "./Profile/EditProfile";
 
 import {
   selectLogInModal,
@@ -20,7 +21,9 @@ import {
   setAppLoading,
   setIsLoggedIn,
   selectIsLoggedIn,
-  selectDeleteModal
+  selectDeleteModal,
+  selectEditModal,
+  selectToEdit,
 } from "../features/Login/loginSlice";
 
 import {
@@ -63,6 +66,7 @@ import updateCityHomeData from "../utils/updateCityHomeData";
 import { setLocalityLatAndLng } from "../features/cityHome/cityHomeSlice";
 import useOnlineStatus from "../utils/useOnlineStatus";
 import UpdateStorage from "../utils/UpdateStorage";
+import EditModal from "./Modal/EditModal";
 
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
   try {
@@ -95,6 +99,8 @@ export default function Layout() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const editAddressModal = useSelector(selectEditAddressModal);
   const { deleteModal } = useSelector(selectDeleteModal)
+  const { openEditModal } = useSelector(selectEditModal);
+  const toEdit = useSelector(selectToEdit);
 
   useTrackNavigation();
 
@@ -385,6 +391,7 @@ export default function Layout() {
       {isLoginOpen && (<LoginModal />)}
       {isLocationOpen && (<LocationModal />)}
       {deleteModal && <DeleteModal />}
+      {openEditModal && <EditModal Component={toEdit === "profile" && EditProfile} />}
 
       <PageFooter />
       {OpenLocationInfoModal && <LocationInfoModal />}
