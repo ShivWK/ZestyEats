@@ -404,6 +404,44 @@ exports.logTheUserOut = async (req, res, next) => {
     await cleanGuestSessionData(gSid);
 }
 
+exports.verifyDeleteOtp = async (req, res, next) => {
+    const otp = req.body.otp;
+    const email = req.body.email;
+
+    const userHashedOTP = crypto.createHash("sha256").update(String(otp)).digest("hex");
+
+    try {
+        const otpDoc = await OtpModel.findOne({ email });
+
+        if (!otpDoc) {
+            return res.status(410).json({
+                status: "failed",
+                message: "OTP expired"
+            });
+        }
+
+        if (userHashedOTP === otpDoc.hashedOtp) {
+            return res.status(200).json({
+                status: "success",
+                message: "OTP verified"
+            })
+        } else {
+            return res.status(401).json({
+                status: "failed",
+                message: "invalid OTP"
+            })
+        }
+
+    } catch (err) {
+        console.log("Error in verifying the OTP", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error. Please try after sometime."
+        })
+    }
+}
+
 exports.deleteAccount = async (req, res, next) => {
     const userId = req.UserID;
     const mode = req.params.mode;

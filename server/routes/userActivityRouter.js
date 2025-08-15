@@ -15,6 +15,7 @@ const {
     logTheUserOut,
     getUserPaymentMethods,
     deleteAccount,
+    verifyDeleteOtp,
 } = require("../controllers/userActivityControllers");
 
 const {
@@ -36,6 +37,7 @@ userActivityRouter.route("/userAddress")
     .put(updateUserAddress);
 
 userActivityRouter.route("/deleteAccount/:mode").post(deleteAccount);
+userActivityRouter.route("/deleteOTP").post(verifyDeleteOtp);
 
 userActivityRouter.route("/userPaymentMethods").get(getUserPaymentMethods);
 
