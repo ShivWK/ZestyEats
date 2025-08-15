@@ -352,7 +352,15 @@ export default function Layout() {
 
     const isLargeScreen = window.innerWidth >= 768;
 
-    if (isLoginOpen || isLocationOpen || menuModel || OpenLocationInfoModal || editAddressModal) {
+    if (
+      isLoginOpen || 
+      isLocationOpen || 
+      menuModel || 
+      OpenLocationInfoModal || 
+      editAddressModal || 
+      deleteModal || 
+      EditModal
+    ) {
       html.classList.add("overflow-hidden");
       html.style.paddingRight = isLargeScreen ? scrollbarWidth : "0px";
     } else {
@@ -365,7 +373,7 @@ export default function Layout() {
       html.style.paddingRight = "0px";
     };
 
-  }, [isLoginOpen, isLocationOpen, menuModel, OpenLocationInfoModal, editAddressModal]);
+  }, [isLoginOpen, isLocationOpen, menuModel, OpenLocationInfoModal, editAddressModal, deleteModal, EditModal]);
 
   useEffect((e) => {
     const handleModelClose = (e) => {
