@@ -14,28 +14,29 @@ import {
 
 import { addRecentLocations } from "../../features/home/homeSlice";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import OtpEntry from "./OtpEntry";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
 import cleanOnLogout from "../../utils/logoutCleaner";
+import OtpCounter from "./OtpCounter";
 
 const DeleteModal = () => {
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [verifyLoading, setVerifyLoading] = useState(false);
     const [deleteAccount, setDeleteAccount] = useState(false);
     const [deleteLoading, setDeleteLoading] = useState(false);
+    const [disableVerify, setDisableVerify] = useState(false);
     const [verified, setVerified] = useState(false);
-    const [otp, setOtp] = useState([]);
+    const [otp, setOtp] = useState("");
     const navigate = useNavigate();
 
     const { hideDeleteModal } = useSelector(selectDeleteModal);
     const dispatch = useDispatch();
 
     const { userEmail } = useSelector(selectUserDetails);
-
-    const email = `${userEmail.slice(0, 2)}●●●●●●${userEmail.slice(10)}`
+    const email = `${userEmail.slice(0, 2)}●●●●●●${userEmail.slice(10)}`;
 
     const animationEndHandler = (e) => {
         const classList = e.target.classList;
@@ -47,10 +48,17 @@ const DeleteModal = () => {
     }
 
     const verifyClickHandler = async (e) => {
+        if (verifyLoading) return;
+        if (disableVerify) return;
+
+        if (otp.length !== 6) {
+            toast.info("Please enter six digit OTP");
+            return;
+        };
+
         e.stopPropagation();
 
         setVerifyLoading(true)
-        const OTP = otp.join("");
 
         try {
             const resp = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/deleteOTP`, {
@@ -66,7 +74,7 @@ const DeleteModal = () => {
                 },
 
                 body: JSON.stringify({
-                    otp: OTP,
+                    otp,
                     email: userEmail,
                 }),
 
@@ -86,6 +94,8 @@ const DeleteModal = () => {
             setVerifyLoading(false);
         }
     }
+
+    // session is not getting deleted
 
     const deleteHandler = async (e) => {
         e.stopPropagation();
@@ -135,18 +145,20 @@ const DeleteModal = () => {
     return <div onClick={() => {
         dispatch(setHideDeleteModal(true));
     }} className="absolute top-0 left-0 h-full w-full z-60 bg-black/60 flex items-center justify-center">
-        <div onAnimationEnd={animationEndHandler} className={`p-3 bg-white dark:bg-gray-800 ${!hideDeleteModal ? "animate-showDeleteModal" : "animate-hideDeleteModal"} w-[80%] lg:w-[25%] rounded-md`}>
+        <div onClick={(e) => e.stopPropagation()} onAnimationEnd={animationEndHandler} className={`p-3 bg-white dark:bg-gray-800 ${!hideDeleteModal ? "animate-showDeleteModal" : "animate-hideDeleteModal"} w-[80%] lg:w-[25%] rounded-md`}>
             <p className="text-black dark:text-gray-200 text-center">{`OTP is sent to your email ${email}`}</p>
 
             <OtpEntry setOtp={setOtp} verify={verified} count={6} />
 
+            {!verified && <OtpCounter disableVerify={setDisableVerify} />}
 
             <div >
                 {deleteAccount && <p className="dark:text-gray-200 text-center">OTP verified ✅
                     Are you sure? This action cannot be undone.</p>}
                 <div className="flex items-center justify-between mt-1.5">
                     <button
-                        className="basis-[48%] h-8 text-white font-bold tracking-wider flex items-center justify-center bg-green-500 rounded-md cursor-pointer hover:bg-green-600 transition-all duration-100 ease-linear">
+                        onClick={() => dispatch(setHideDeleteModal(true))}
+                        className="basis-[48%] h-8 text-white font-bold tracking-wider flex items-center justify-center bg-green-500 rounded-md cursor-pointer hover:bg-green-600 transition-all duration-100 ease-linear active:scale-95">
                         Cancel
                     </button>
 
@@ -158,7 +170,7 @@ const DeleteModal = () => {
 
                         : <button
                             onClick={verifyClickHandler}
-                            className="basis-[48%] h-8 text-white font-bold tracking-wider flex items-center justify-center bg-red-500 rounded-md cursor-pointer hover:bg-red-600 transition-all duration-100 ease-linear">
+                            className={`basis-[48%] h-8  font-bold tracking-wider flex items-center justify-center  rounded-md ${disableVerify ? "border border-gray-500 bg-gray-400 text-gray-800 cursor-not-allowed" :  "bg-red-500 hover:bg-red-600 text-white cursor-pointer active:scale-95"} transition-all duration-100 ease-linear`}>
                             {verifyLoading ? <DotBounceLoader /> : "Verify"}
                         </button>}
                 </div>

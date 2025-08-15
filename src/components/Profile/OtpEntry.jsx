@@ -6,7 +6,7 @@ const OtpEntry = ({ count, verify, setOtp }) => {
     const inputRef= useRef([]);
 
     useEffect(() => {
-        setOtp(inputValue);
+        setOtp(inputValue.join(""));
     }, [inputValue])
     
     const inputClickHandler = (e) => {
@@ -48,6 +48,7 @@ const OtpEntry = ({ count, verify, setOtp }) => {
             type="text"
             onChange={(e) => inputChangeHandler(e, i)}
             onKeyDown={(e) => keyDownHandler(e, i)}
+            inputMode="numeric"
         />
         )}
     </div>
