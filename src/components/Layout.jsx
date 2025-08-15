@@ -359,7 +359,7 @@ export default function Layout() {
       OpenLocationInfoModal || 
       editAddressModal || 
       deleteModal || 
-      EditModal
+      openEditModal
     ) {
       html.classList.add("overflow-hidden");
       html.style.paddingRight = isLargeScreen ? scrollbarWidth : "0px";
