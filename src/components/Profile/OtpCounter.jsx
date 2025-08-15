@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const OtpCounter = ({ disableVerify }) => {
     const [counterSecond, setCounterSecond] = useState(0);
-    const [counterMinutes, setCounterMinutes] = useState(1);
+    const [counterMinutes, setCounterMinutes] = useState(5);
     const [otpExpired, setOtpExpired] = useState(false);
 
     useEffect(() => {
