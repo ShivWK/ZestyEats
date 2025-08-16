@@ -102,7 +102,7 @@ const MobileProfile = () => {
                 )}
               </div>
             </div>
-            <button onClick={editClickHandler} className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600">
+            <button onClick={editClickHandler} className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600 transition-all duration-100 ease-linear active:scale-95">
               Edit
             </button>
           </div>

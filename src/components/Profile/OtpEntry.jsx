@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
-const OtpEntry = ({ count, verify, setOtp }) => {
+const OtpEntry = ({ count, verify = false, setOtp }) => {
     const inputBoxCount = Array.from({ length: count }, (_, i) => "");
     const [ inputValue, setInputValue ] = useState(inputBoxCount);
     const inputRef= useRef([]);
