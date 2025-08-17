@@ -1,8 +1,6 @@
 import { selectCart } from "../../features/home/restaurantsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { selectLatAndLng } from "../../features/home/homeSlice";
-import haversineFormula from "./../../utils/haversineFormula";
 import { Link } from "react-router";
 import { selectIsRestaurantOpen, selectDeliveryRestaurantStatus } from "../../features/home/restaurantsSlice";
 import DotBounceLoader from "../../utils/DotBounceLoader";
@@ -14,6 +12,8 @@ import {
   setGSTAndOtherCharges,
   setPayableAmount,
 } from "../../features/delivery/deliverySlice";
+
+import calBilling from "../../utils/calBilling";
 
 const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery }) => {
 
@@ -28,69 +28,29 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
   const deliveryAddress = useSelector(selectDeliveryAddress);
   const paymentMethod = useSelector(selectPaymentMethod);
 
-  const { lat: latCurrent, lng: lngCurrent } = useSelector(selectLatAndLng);
   const statusLoading = useSelector(selectDeliveryRestaurantStatus);
 
   const [restroDemographics, setRestroDemographics] = useState([]);
-  const [totalAmount, setTotalAmount] = useState(0);
   const [GST, setGST] = useState(0);
-  const [distance, setDistance] = useState(0);
-  const [deliveryFee, setDeliveryFee] = useState(30);
 
   const [openInfo, setOpenInfo] = useState(false);
-  const [openDeliveryInfo, setOpenDeliveryInfo] = useState(false);
 
   const packagingCharge = 35;
   const platformFee = 5;
 
-  const [GSTAndOther, setGSTAndOther] = useState(0);
-  const [grandTotal, setGrandTotal] = useState(0);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const cartItem = Object.values(cart);
+    const cartItems = Object.values(cart);
     const [latRestro, lngRestro] =
-      cartItem[0]?.restaurantData.metadata?.latLong.split(",") ||
-      cartItem[0]?.restaurantData.latLong.split(",");
+      cartItems[0]?.restaurantData.metadata?.latLong.split(",") ||
+      cartItems[0]?.restaurantData.latLong.split(",");
 
     setRestroDemographics([latRestro, lngRestro])
 
-    // const distance = haversineFormula(
-    //   latRestro,
-    //   checkout ? latDelivery : latCurrent,
-    //   lngRestro,
-    //   checkout ? lngDelivery : lngCurrent,
-    // ).toFixed(2);
-    // setDistance(distance);
-    // // dispatch(setDeliveryCharge(distance));
-
-    // const deliveryFee = 10 + Math.max(0, Math.floor(distance - 1)) * 5;
-    // setDeliveryFee(deliveryFee);
-
-    const total = cartItem.reduce((acc, { item, quantity }) => {
-      const defaultPrice = item?.price / 100 || item?.defaultPrice / 100 || 0;
-      const finalPrice = item?.finalPrice / 100;
-      let price = +(finalPrice || defaultPrice).toFixed(2);
-
-      return acc + quantity * price;
-    }, 0);
-
-    setTotalAmount(total);
-    dispatch(setItemsTotalCost(total));
+    const gst = calBilling({ dispatch, cartItems, setItemsTotalCost, setGSTAndOtherCharges, setPayableAmount });
+    setGST(gst);
   }, [cart]);
-
-  useEffect(() => {
-    const gstAmount = totalAmount * 0.05;
-    setGST(gstAmount);
-
-    const GSTAndOther = +(gstAmount + packagingCharge + platformFee).toFixed(2);
-    setGSTAndOther(GSTAndOther);
-    dispatch(setGSTAndOtherCharges(GSTAndOther));
-
-    const grandTotalAmount = +( totalAmount + GSTAndOther ).toFixed(2);
-    setGrandTotal(grandTotalAmount);
-    dispatch(setPayableAmount({ mode: "initial", cost : grandTotalAmount }));
-  }, [totalAmount]);
 
   const [couponsOpen, setCouponsOpen] = useState(false);
   const [coupon, setCoupon] = useState("");
@@ -163,52 +123,8 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
         <div className="text-sm">
           <div className="flex justify-between py-1">
             <span className="text-gray-600 dark:text-gray-950">Item Total</span>
-            <span className="text-gray-700 dark:text-black font-semibold">₹{totalAmount}</span>
+            <span className="text-gray-700 dark:text-black font-semibold">₹{totalItemCost}</span>
           </div>
-          {/* <div className="flex justify-between items-center py-1">
-            <p className="text-gray-600 flex items-center gap-0.5">
-              <span className="dark:text-gray-950">Delivery Fee</span>
-              <span className="dark:text-gray-950">┃</span>
-              <span className="dark:text-gray-950">{distance} kms</span>
-              <i
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setOpenDeliveryInfo(!openDeliveryInfo);
-                }}
-                className={`${openDeliveryInfo ? "ri-close-circle-fill" : "ri-information-2-line"
-                  } cursor-pointer text-[16px] text-black ml-0.5 relative`}
-                onMouseEnter={() => setOpenDeliveryInfo(true)}
-                onMouseLeave={() => setOpenDeliveryInfo(false)}
-              >
-
-                <div
-                  onClick={(e) => e.stopPropagation()}
-                  id="delivery_dropdown"
-                  className="absolute -top-[325%] -left-[130%] h-[4.2rem] w-48 rounded-md p-2 drop-shadow-[0_0_5px_rgba(0,0,0,0.5)] bg-white z-20"
-                  style={{
-                    display: openDeliveryInfo ? "block" : "none",
-                  }}
-                >
-                  <div
-                    onClick={(e) => e.stopPropagation()}
-                    className="relative h-full"
-                  >
-                    <div className="font-sans">
-                      <div className="flex items-center font-normal grow-0 justify-between text-xs text-gray-600">
-                        <p className="text-black font-semibold">Delivery Fee</p>
-                        <p className="font-semibold text-black">₹{deliveryFee}</p>
-                      </div>
-                      <p className="text-[12px] tracking-wide mt-1 text-gray-700">
-                        Calculated based on distance: ₹10 base + ₹5/km after 1 km
-                      </p>
-                    </div>
-                    <div className="absolute top-[115%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
-                  </div>
-                </div>
-              </i>
-            </p>
-            <span className="text-gray-700 dark:text-black font-semibold">₹{deliveryFee}</span>
-          </div> */}
 
           <div className="flex justify-between py-1 pt-1.5 border-t-[1px] mt-2 border-gray-400 border-dashed">
             <div className="flex gap-1 items-center">
@@ -266,11 +182,11 @@ const Billing = ({ heading = true, checkout = false, latDelivery, lngDelivery })
                 </div>
               </i>
             </div>
-            <span className="text-gray-700 dark:text-black font-semibold">₹{GSTAndOther}</span>
+            <span className="text-gray-700 dark:text-black font-semibold">₹{GSTAndOtherCharges}</span>
           </div>
           <div className="flex justify-between py-2 border-t mt-2 pt-2">
             <span className="text-black font-bold">Total Amount</span>
-            <span className="text-black font-bold">₹{grandTotal}</span>
+            <span className="text-black font-bold">₹{payableAmount}</span>
           </div>
         </div>
         {!checkout ? (

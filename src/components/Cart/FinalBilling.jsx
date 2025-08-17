@@ -1,8 +1,16 @@
-import { selectFinalBilling } from "../../features/delivery/deliverySlice";
+import { 
+    selectFinalBilling, 
+    setGSTAndOtherCharges, 
+    setPayableAmount, 
+    setItemsTotalCost 
+} from "../../features/delivery/deliverySlice";
+
 import { Link } from "react-router";
-import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
 import { selectDeliveryAddress, selectPaymentMethod } from "../../features/delivery/deliverySlice";
+import { selectCart } from "../../features/home/restaurantsSlice";
+import calBilling from "../../utils/calBilling";
 
 const FinalBilling = () => {
     const {
@@ -15,6 +23,9 @@ const FinalBilling = () => {
 
     const deliveryAddress = useSelector(selectDeliveryAddress);
     const paymentMethod = useSelector(selectPaymentMethod);
+    const cart = useSelector(selectCart);
+    const cartItems = Object.values(cart);
+    const dispatch = useDispatch();
 
     const [openDeliveryInfo, setOpenDeliveryInfo] = useState(false);
 
@@ -27,6 +38,16 @@ const FinalBilling = () => {
             
         }
     }
+
+    useEffect(() => {
+        const gst = calBilling({ 
+            dispatch, 
+            cartItems, 
+            setItemsTotalCost, 
+            setGSTAndOtherCharges, 
+            setPayableAmount 
+        })
+    }, [cart]);
 
     return <div className="rounded-md dark:bg-gray-300 bg-white p-2 md:self-start">
         <div

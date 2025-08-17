@@ -106,7 +106,7 @@ export default function Layout() {
   useTrackNavigation();
 
   useEffect(() => {
-    if (deviceFingerPrint) {
+    // if (deviceFingerPrint) {
       const createGuestSession = async () => {
         const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/session`, {
           method: "POST",
@@ -223,8 +223,8 @@ export default function Layout() {
 
       createGuestSession();
       handleGuestSession();
-    }
-  }, [deviceFingerPrint, isLoggedIn])
+    // }
+  }, [isLoggedIn])
 
   useEffect(() => {
     const HomeData = JSON.parse(localStorage.getItem("HomeAPIData"));

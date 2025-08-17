@@ -1,9 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
-import Billing from "./Billing";
 import { useSelector, useDispatch } from "react-redux";
-import haversineFormula from "./../../utils/haversineFormula";
 import { useLazyGetAddressQuery } from "../../features/profile/profileApiSlice";
 import AddressEditForm from "../Profile/AddressEditForm";
 import CurrentLocation from "./CurrentLocation";

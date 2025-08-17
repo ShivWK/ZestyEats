@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
-import { setIsDeliverable } from "../../features/delivery/deliverySlice";
+import { setDeliveryCharge, setIsDeliverable } from "../../features/delivery/deliverySlice";
 import haversineFormula from "./../../utils/haversineFormula";
 
 import {
@@ -25,6 +25,7 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
 
     const [delLoading, setDelLOading] = useState(false);
     const [isDeliverableCompo, setIsDeliverableCompo] = useState(true);
+    const [ distance, setDistance ] = useState(0);
     const deviceId = useSelector(selectDeviceFingerPrint);
     const dispatch = useDispatch();
     const editAddressModal = useSelector(selectEditAddressModal);
@@ -40,6 +41,7 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
         if (latRestro && lngRestro) {
             if (pathName === "/paymentsAndAddresses") {
                 const distance = haversineFormula(latRestro, addressLat, lngRestro, addressLng);
+                setDistance(distance);
 
                 if (distance <= 10) {
                     dispatch(setIsDeliverable(true));
@@ -107,7 +109,9 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
     }
 
     const useClickHandler = () => {
-        dispatch(setDeliveryAddress(address))
+        dispatch(setDeliveryAddress(address));
+        dispatch(setDeliveryCharge(+distance.toFixed(2)));
+        // add it to the delivery
     }
 
     return <>
