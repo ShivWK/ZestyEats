@@ -643,6 +643,7 @@ exports.getUserProfile = async (req, res, next) => {
 
     try {
         const User = await UserModal.findById(userId);
+        console.log(User)
 
         const user = {
             name: User.name,
