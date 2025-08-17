@@ -540,9 +540,7 @@ exports.sendEditOTP = async (req, res, next) => {
             const text = mailTemplate(user.name, editOTP, purpose);
 
             const result = await sendEmail(forWhat, text);
-            const response = await result.json();
-
-            console.log("OTP send successfully", response);
+            console.log("OTP send successfully", result);
 
             await OtpModel.create({
                 email: forWhat,
