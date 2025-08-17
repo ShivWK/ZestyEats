@@ -30,6 +30,7 @@ const DeleteModal = () => {
     const [disableVerify, setDisableVerify] = useState(false);
     const [verified, setVerified] = useState(false);
     const [otp, setOtp] = useState("");
+    const [stepCount, setStepCount] = useState(1)
     const navigate = useNavigate();
 
     const { hideDeleteModal } = useSelector(selectDeleteModal);
@@ -85,6 +86,7 @@ const DeleteModal = () => {
             if (!resp.ok) throw new Error(result.message);
 
             setVerified(true);
+            setStepCount(2);
             setDeleteAccount(true);
             setVerifyLoading(false);
         } catch (err) {
@@ -146,6 +148,8 @@ const DeleteModal = () => {
         dispatch(setHideDeleteModal(true));
     }} className="absolute top-0 left-0 h-full w-full z-60 bg-black/60 flex items-center justify-center">
         <div onClick={(e) => e.stopPropagation()} onAnimationEnd={animationEndHandler} className={`p-3 bg-white dark:bg-gray-800 ${!hideDeleteModal ? "animate-showDeleteModal" : "animate-hideDeleteModal"} w-[80%] lg:w-[25%] rounded-md`}>
+            <p className="text-center font-bold tracking-wider text-sm mb-1 text-gray-400">{`Step ${stepCount} of 2`}</p>
+
             <p className="text-black dark:text-gray-200 text-center">{`OTP is sent to your email ${email}`}</p>
 
             <OtpEntry setOtp={setOtp} verify={verified} count={6} />

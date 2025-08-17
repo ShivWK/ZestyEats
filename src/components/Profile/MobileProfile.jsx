@@ -86,9 +86,9 @@ const MobileProfile = () => {
                   {phone}
                 </p>
                 {!isNumberVerified && (
-                  <Link className=" dark:text-primary text-blue-600 tracking-wide font-[500]">
+                  <button className=" dark:text-primary text-blue-600 tracking-wide font-[500]">
                     <i className="ri-information-2-line"></i>
-                  </Link>
+                  </button>
                 )}
               </div>
               <div className="flex items-center gap-1 ">
@@ -96,9 +96,9 @@ const MobileProfile = () => {
                   {email}
                 </p>
                 {!isEmailVerified && (
-                  <Link className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]">
+                  <button className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]">
                     <i className="ri-information-2-line"></i>
-                  </Link>
+                  </button>
                 )}
               </div>
             </div>
