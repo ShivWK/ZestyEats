@@ -204,6 +204,7 @@ const EditProfile = () => {
 
             dispatch(setAppLoading(false));
             setVerifyLoading(false);
+            setSendOtpLoading(false);
         }
     }
 

@@ -1,6 +1,6 @@
-import { selectToEdit, setHideEditModal } from "../../features/Login/loginSlice";
+import { selectToEdit, setAppLoading, setHideEditModal } from "../../features/Login/loginSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUserDetails, selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { selectUserDetails, selectDeviceFingerPrint, setUserDetails } from "../../features/home/homeSlice";
 import OtpEntry from "./OtpEntry";
 import { useState } from "react";
 import DotBounceLoader from "../../utils/DotBounceLoader";
@@ -59,7 +59,7 @@ const Verification = () => {
         }
     }
 
-    const verifyClickHandler = () => {
+    const verifyClickHandler = async () => {
         if (disableVerify) return;
         if (verifyLoading) return;
 
@@ -68,10 +68,67 @@ const Verification = () => {
             return;
         }
 
-        try {
-            
-        } catch (err) {
+        setVerifyLoading(true);
 
+        try {
+            const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/verification/${type}`, {
+                method: "POST",
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    otpFor: sendTo,
+                    OTP: otp
+                })
+            });
+
+            const response = await result.json();
+            if (!result.ok) throw new Error(response.message);
+
+            console.log("Verified", response);
+            setVerifyLoading(false);
+            dispatch(setHideEditModal(true));
+
+            dispatch(setAppLoading(true));
+
+            const result2 = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/profile`, {
+                method: "GET",
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+                credentials: "include"
+            });
+
+            const user = await result2.json();
+            if (!result.ok) throw new Error(response.message);
+
+            const userProfileData = {
+                userName: user.data.name,
+                userEmail: user.data.email,
+                userPhone: user.data.phone,
+                isEmailVerified: user.data.isEmailVerified,
+                isPhoneVerified: user.data.isNumberVerified,
+            }
+
+            dispatch(setUserDetails(userProfileData));
+            dispatch(setAppLoading(false));
+        } catch (err) {
+            console.log("Error in verifying:", err);
+
+            dispatch(setAppLoading(false));
+            setSendOtpLoading(false);
+            setVerifyLoading(false);
         }
     }
 
