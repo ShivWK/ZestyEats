@@ -1,4 +1,4 @@
-import { selectUserDetails } from "../../features/home/homeSlice";
+import { selectUserDetails, selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, } from "react";
 import { setHideEditModal } from "../../features/Login/loginSlice";
@@ -8,6 +8,8 @@ import DotBounceLoader from "../../utils/DotBounceLoader";
 
 const EditProfile = () => {
     const data = useSelector(selectUserDetails);
+    const deviceId = useSelector(selectDeviceFingerPrint);
+
     const dispatch = useDispatch();
 
     const [warning, setWarning] = useState("");
@@ -67,7 +69,7 @@ const EditProfile = () => {
         })
     }
 
-    const sendOtpHandler = () => {
+    const sendOtpHandler = async () => {
         if (sendOtpLoading) return;
         if (nameInvalid || phoneInvalid || emailInvalid) {
             setWarning("Please enter valid data");
@@ -77,9 +79,36 @@ const EditProfile = () => {
         setSendOtpLoading(true);
 
         try {
+            const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/editOTP/email/editProfile`, {
+                method: "POst",
 
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+
+                body: JSON.stringify({
+                    forWhat: data.userEmail
+                }),
+                
+                credentials: "include"
+            });
+
+            const response = await result.json();
+            if (!result.ok) throw new Error(response.message);
+
+            setSendOtpLoading(false);
+            setOtpSend(true);
+            console.log(response.message);
         } catch (err) {
+            console.log("Error in sending OTP", err.message);
 
+            setOtpSend(false);
+            setSendOtpLoading(false);
         }
     }
 
@@ -108,7 +137,7 @@ const EditProfile = () => {
 
     return <div className="">
         <form>
-           { inputArray.map((data, index) =>  <div className={`${index !== 0 && "mt-3"}`}>
+           { inputArray.map((data, index) =>  <div key={index} className={`${index !== 0 && "mt-3"}`}>
                 <p className="relative text-sm dark:text-white text-black">
                     {data.text}
                 </p>

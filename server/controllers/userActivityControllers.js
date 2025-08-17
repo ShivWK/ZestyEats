@@ -498,6 +498,7 @@ exports.sendEditOTP = async (req, res, next) => {
     const forWhat = req.body.forWhat;
     const mode = req.params.mode;
     const action = req.params.action;
+    const userId = req.UserID;
 
     if (!forWhat) {
         return req.status(400).json({
@@ -510,6 +511,8 @@ exports.sendEditOTP = async (req, res, next) => {
     const hashedOTP = crypto.createHash("sha256").update(String(editOTP)).digest("hex");
 
     try {
+        const user = await UserModal.findById(userId);
+
         if (mode === "phone") {
             await OtpModel.deleteMany({ [mode]: forWhat });
 
