@@ -422,6 +422,8 @@ exports.verifyDeleteOtp = async (req, res, next) => {
         }
 
         if (userHashedOTP === otpDoc.hashedOtp) {
+            await OtpModel.deleteOne({ _id: otpDoc._id });
+
             return res.status(200).json({
                 status: "success",
                 message: "OTP verified"
@@ -554,7 +556,98 @@ exports.sendEditOTP = async (req, res, next) => {
             });
         }
     } catch (err) {
-        console.log("Error in sending deletion OTP", err);
+        console.log("Error in sending profile update OTP", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error. Please try after sometime."
+        })
+    }
+}
+
+exports.updateProfile = async (req, res, next) => {
+    const userId = req.UserID;
+
+    const body = req.body;
+    const data = body.data;
+    const otp = body.OTP;
+    const isEmailChanged = body.isEmailChanged;
+    const isPhoneChanged = body.isPhoneChanged;
+
+    if (!data || !otp) {
+        return res.status(400).json({
+            status: "failed",
+            message: "Please provide data",
+        })
+    }
+
+    try {
+        const userHashedOTP = crypto.createHash("sha256").update(String(otp)).digest("hex");
+        const otpDoc = await OtpModel.findOne({ email: data.oldEmail });
+
+        if (!otpDoc) {
+            return res.status(410).json({
+                status: "failed",
+                message: "OTP expired"
+            });
+        }
+
+        if (userHashedOTP === otpDoc.hashedOtp) {
+
+            const updateData = {
+                name: data.name,
+                phone: data.phone,
+                email: data.email,
+            }
+
+            if (isEmailChanged) updateData.isEmailVerified = false;
+            if (isPhoneChanged) updateData.isNumberVerified = false;
+
+            const result = await UserModal.findByIdAndUpdate(userId, { $set: updateData });
+            await OtpModel.deleteOne({ _id: otpDoc._id });
+
+            return res.status(200).json({
+                status: "success",
+                message: "Profile Updated successfully"
+            })
+        } else {
+            return res.status(401).json({
+                status: "failed",
+                message: "invalid OTP"
+            })
+        }
+
+    } catch (err) {
+        console.log("Error in updating the profile", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error. Please try after sometime."
+        })
+    }
+}
+
+exports.getUserProfile = async (req, res, next) => {
+    const userId = req.UserId;
+
+    try {
+        const User = await UserModal.findById(userId);
+
+        const user = {
+            name: User.name,
+            phone: User.phone,
+            email: User.email,
+            isEmailVerified: User.isEmailVerified,
+            isNumberVerified: User.isNumberVerified,
+        }
+
+        return res.status(200).json({
+            status: "success",
+            data: user,
+            auth: true
+        })
+    } catch (err) {
+        console.log("Error in fetching user details", err);
 
         return res.status(500).json({
             status: "error",

@@ -279,7 +279,7 @@ const EntryDiv = memo(({
           </button>
           {disable && <p className="text-xs text-gray-600 dark:text-gray-300 font-medium">
             <span className="tracking-wide">remaining time: </span>
-            <span>{seconds}</span>
+            <span>{`${seconds < 10 ? `0${seconds}`: seconds}`}</span>
           </p>}
         </div>
       ) : (

@@ -1,10 +1,11 @@
-import { selectUserDetails, selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { selectUserDetails, selectDeviceFingerPrint, setUserDetails } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, } from "react";
-import { setHideEditModal } from "../../features/Login/loginSlice";
+import { setAppLoading, setHideEditModal } from "../../features/Login/loginSlice";
 import OtpEntry from "./OtpEntry";
 import OtpCounter from "./OtpCounter";
 import DotBounceLoader from "../../utils/DotBounceLoader";
+import { toast } from "react-toastify";
 
 const EditProfile = () => {
     const data = useSelector(selectUserDetails);
@@ -76,11 +77,67 @@ const EditProfile = () => {
             return;
         }
 
-        setSendOtpLoading(true);
+        const isNameChanged = formData.username !== data.userName;
+        const isEmailChanged = formData.email !== data.userEmail;
+        const isPhoneChanged = formData.phone !== data.userPhone;
+
+        if (isNameChanged || isEmailChanged || isPhoneChanged) {
+            setSendOtpLoading(true);
+
+            try {
+                const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/editOTP/email/editProfile`, {
+                    method: "POST",
+
+                    headers: {
+                        "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                        "Content-Type": "application/json",
+                        "x-user-agent": navigator.userAgent,
+                        "x-language": navigator.language,
+                        "x-resolution": `${screen.height}x${screen.width}`,
+                        "x-device-id": deviceId,
+                    },
+
+                    body: JSON.stringify({
+                        forWhat: data.userEmail
+                    }),
+
+                    credentials: "include"
+                });
+
+                const response = await result.json();
+                if (!result.ok) throw new Error(response.message);
+
+                setSendOtpLoading(false);
+                setOtpSend(true);
+                console.log(response.message);
+            } catch (err) {
+                console.log("Error in sending OTP", err.message);
+
+                setOtpSend(false);
+                setSendOtpLoading(false);
+            }
+        } else {
+            toast.info("Update details before requesting OTP or close.");
+        }
+    }
+
+    const verifyAndSaveHandler = async () => {
+        if (disableVerify) return;
+        if (verifyLoading) return;
+
+        if (otp.length !== 6) {
+            toast.info("Please enter six digit OTP");
+            return;
+        };
 
         try {
-            const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/editOTP/email/editProfile`, {
-                method: "POst",
+            const isEmailChanged = formData.email !== data.userEmail;
+            const isPhoneChanged = formData.phone !== data.userPhone;
+
+            setVerifyLoading(true);
+
+            const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/profile`, {
+                method: "POST",
 
                 headers: {
                     "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
@@ -92,23 +149,61 @@ const EditProfile = () => {
                 },
 
                 body: JSON.stringify({
-                    forWhat: data.userEmail
+                    OTP: otp,
+                    data: {
+                        name: formData.username,
+                        email: formData.email,
+                        phone: formData.phone,
+                        oldEmail: data.userEmail,
+                    },
+                    isEmailChanged,
+                    isPhoneChanged,
                 }),
-                
+
                 credentials: "include"
             });
 
             const response = await result.json();
             if (!result.ok) throw new Error(response.message);
 
-            setSendOtpLoading(false);
-            setOtpSend(true);
-            console.log(response.message);
-        } catch (err) {
-            console.log("Error in sending OTP", err.message);
+            setVerifyLoading(false);
+            dispatch(setHideEditModal(true));
+            console.log("Profile updated successfully");
 
-            setOtpSend(false);
-            setSendOtpLoading(false);
+            dispatch(setAppLoading(true));
+
+            const result2 = await fetch(`${import.meta.env.VITE_BASE_URL}/api/userActivity/profile`, {
+                method: "GET",
+                headers: {
+                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                    "Content-Type": "application/json",
+                    "x-user-agent": navigator.userAgent,
+                    "x-language": navigator.language,
+                    "x-resolution": `${screen.height}x${screen.width}`,
+                    "x-device-id": deviceId,
+                },
+                credentials: "include"
+            });
+
+            const user = await result2.json();
+            if (!result.ok) throw new Error(response.message);
+
+            const userProfileData = {
+                userName: user.name,
+                userEmail: user.email,
+                userPhone: user.phone,
+                isEmailVerified: user.isEmailVerified,
+                isPhoneVerified: user.isNumberVerified,
+            }
+
+            dispatch(setUserDetails(userProfileData));
+            dispatch(setAppLoading(false));
+        } catch (err) {
+            toast.info(err.message);
+            console.log("Error in updating profile", err.message);
+
+            dispatch(setAppLoading(false));
+            setVerifyLoading(false);
         }
     }
 
@@ -137,7 +232,7 @@ const EditProfile = () => {
 
     return <div className="">
         <form>
-           { inputArray.map((data, index) =>  <div key={index} className={`${index !== 0 && "mt-3"}`}>
+            {inputArray.map((data, index) => <div key={index} className={`${index !== 0 && "mt-3"}`}>
                 <p className="relative text-sm dark:text-white text-black">
                     {data.text}
                 </p>
@@ -146,12 +241,13 @@ const EditProfile = () => {
                     name={data.name}
                     value={data.value}
                     placeholder="Enter name"
+                    readOnly={OtpSend}
                     className="p-0.5 px-1 truncate border-2 border-gray-400 rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300 mt-1"
                     onChange={inputChangeHandler}
                 />
             </div>)
 
-           }
+            }
         </form>
 
         {OtpSend
@@ -169,7 +265,7 @@ const EditProfile = () => {
 
         <div className="flex justify-between items-center mt-2">
             {OtpSend
-                ? <button className={`w-full h-8 text-white font-bold tracking-wider flex items-center rounded-md justify-center ${disableVerify ? "border-2 border-gray-400 bg-gray-300 dark:text-gray-800 text-gray-400 cursor-not-allowed" : "bg-primary/80 dark:bg-darkPrimary/80 cursor-pointer hover:bg-primary dark:hover:bg-darkPrimary"} transition-all duration-100 ease-linear active:scale-95`}>
+                ? <button onClick={verifyAndSaveHandler} className={`w-full h-8 text-white font-bold tracking-wider flex items-center rounded-md justify-center ${disableVerify ? "border-2 border-gray-500 bg-gray-300 dark:text-gray-500 text-gray-400 cursor-not-allowed" : "bg-primary/80 dark:bg-darkPrimary/80 cursor-pointer hover:bg-primary dark:hover:bg-darkPrimary active:scale-95"} transition-all duration-100 ease-linear`}>
                     {verifyLoading ? <DotBounceLoader /> : "Verify and Save"}
                 </button>
                 : <>

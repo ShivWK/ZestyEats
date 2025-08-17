@@ -639,7 +639,7 @@ exports.verifyOTP = async (req, res, next) => {
 
         await cleanGuestSessionData(gSid);
 
-        await OtpModal.findOneAndDelete({ [mode] : otpFor.trim() })
+        await OtpModal.deleteOne({ [mode] : otpFor.trim() })
     } else {
         const updatedAccessDoc = await AccessModal.findOneAndUpdate(
             { [mode]: otpFor },
