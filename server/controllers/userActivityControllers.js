@@ -523,7 +523,7 @@ exports.sendEditOTP = async (req, res, next) => {
 
             await OtpModel.create({
                 phone: forWhat,
-                type: "verification",
+                for: "verification",
                 hashedOtp: hashedOTP
             });
 
@@ -544,7 +544,7 @@ exports.sendEditOTP = async (req, res, next) => {
 
             await OtpModel.create({
                 email: forWhat,
-                type,
+                for: type,
                 hashedOtp: hashedOTP
             });
 
