@@ -594,6 +594,17 @@ exports.updateProfile = async (req, res, next) => {
 
         if (userHashedOTP === otpDoc.hashedOtp) {
 
+            if (isEmailChanged) {
+                const alreadyExists = await UserModal.findOne({ email: data.email })
+
+                if (alreadyExists) {
+                    return res.status(400).json({
+                        status: "failed",
+                        message: "Email already exist, use different email."
+                    })
+                }
+            }
+
             const updateData = {
                 name: data.name,
                 phone: data.phone,
@@ -603,7 +614,7 @@ exports.updateProfile = async (req, res, next) => {
             if (isEmailChanged) updateData.isEmailVerified = false;
             if (isPhoneChanged) updateData.isNumberVerified = false;
 
-            const result = await UserModal.findByIdAndUpdate(userId, { $set: updateData });
+            const result = await UserModal.findByIdAndUpdate(userId, { $set: updateData }, {runValidators: true});
             await OtpModel.deleteOne({ _id: otpDoc._id });
 
             return res.status(200).json({
@@ -632,6 +643,7 @@ exports.getUserProfile = async (req, res, next) => {
 
     try {
         const User = await UserModal.findById(userId);
+        console.log(User)
 
         const user = {
             name: User.name,
