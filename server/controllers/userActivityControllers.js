@@ -519,9 +519,7 @@ exports.sendEditOTP = async (req, res, next) => {
             const text = `Hi, your OTP is ${editOTP}. Do not share this code with anyone. This code is valid for 5 minutes.`;
 
             const result = await sendSMS(forWhat, text);
-            const response = await result.json();
-
-            console.log("OTP sms send", response);
+            console.log("OTP sms send", result);
 
             await OtpModel.create({
                 phone: forWhat,
