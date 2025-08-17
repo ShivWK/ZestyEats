@@ -639,12 +639,10 @@ exports.updateProfile = async (req, res, next) => {
 }
 
 exports.getUserProfile = async (req, res, next) => {
-    const userId = req.UserId;
-    console.log("USERID", userId);
+    const userId = req.UserID;
 
     try {
         const User = await UserModal.findById(userId);
-        console.log("USer", User)
 
         const user = {
             name: User.name,
