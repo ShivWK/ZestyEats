@@ -548,7 +548,7 @@ exports.sendEditOTP = async (req, res, next) => {
                 hashedOtp: hashedOTP
             });
 
-            return res.status.json({
+            return res.status(200).json({
                 status: "success",
                 message: "OTP send successfully to your email",
             });
