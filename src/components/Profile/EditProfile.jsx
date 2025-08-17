@@ -241,7 +241,7 @@ const EditProfile = () => {
                     name={data.name}
                     value={data.value}
                     placeholder="Enter name"
-                    readOnly={OtpSend}
+                    // readOnly={OtpSend}
                     className="p-0.5 px-1 truncate border-2 border-gray-400 rounded w-full outline-none bg-gray-100 dark:placeholder:text-gray-600 dark:bg-gray-300 mt-1"
                     onChange={inputChangeHandler}
                 />
