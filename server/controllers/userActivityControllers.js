@@ -12,6 +12,7 @@ const cleanGuestSessionData = require("./../utils/cleanGuestSessionData");
 const mailTemplate = require("./../utils/emailTemplates/signupEmail");
 const crypto = require("crypto");
 const sendEmail = require("./../utils/email");
+const sendSMS = require("./../utils/sms");
 
 exports.checkSessionId = (req, res, next) => {
     if (!req.signedCookies.rSid) {
@@ -451,7 +452,7 @@ exports.deleteAccount = async (req, res, next) => {
             const user = await UserModal.findById(userId);
             const email = user.email;
 
-            await OtpModel.findOneAndDelete({ email });
+            await OtpModel.deleteMany({ email });
 
             const deleteOTP = crypto.randomInt(100000, 1000000);
             const text = mailTemplate(user.name, deleteOTP, "account deletion");
@@ -483,6 +484,76 @@ exports.deleteAccount = async (req, res, next) => {
             })
         }
 
+    } catch (err) {
+        console.log("Error in sending deletion OTP", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error. Please try after sometime."
+        })
+    }
+}
+
+exports.sendEditOTP = async (req, res, next) => {
+    const forWhat = req.body.forWhat;
+    const mode = req.params.mode;
+    const action = req.params.action;
+
+    if (!forWhat) {
+        return req.status(400).json({
+            status: "failed",
+            message: "Please provide where to send the OTP"
+        })
+    }
+
+    const editOTP = crypto.randomInt(100000, 1000000);
+    const hashedOTP = crypto.createHash("sha256").update(String(editOTP)).digest("hex");
+
+    try {
+        if (mode === "phone") {
+            await OtpModel.deleteMany({ [mode]: forWhat });
+
+            const text = `Hi, your OTP is ${editOTP}. Do not share this code with anyone. This code is valid for 5 minutes.`;
+
+            const result = await sendSMS(forWhat, text);
+            const response = await result.json();
+
+            console.log("OTP sms send", response);
+
+            await OtpModel.create({
+                phone: forWhat,
+                type: "verification",
+                hashedOtp: hashedOTP
+            });
+
+            return res.status(200).json({
+                status: "success",
+                message: "OTP successfully send to your phone number."
+            })
+
+        } else if (mode === "email") {
+            await OtpModel.deleteMany({ [mode]: forWhat });
+            const purpose = action === "verification" ? "verification" : "account details update";
+            const type = action === "verification" ? "verification" : "edit";
+
+            const text = mailTemplate(user.name, editOTP, purpose);
+
+            const result = await sendEmail(forWhat, text);
+            const response = await result.json();
+
+            console.log("OTP send successfully", response);
+
+            await OtpModel.create({
+                email: forWhat,
+                type,
+                hashedOtp: hashedOTP
+            });
+
+            return res.status.json({
+                status: "success",
+                message: "OTP send successfully to your email",
+            });
+        }
     } catch (err) {
         console.log("Error in sending deletion OTP", err);
 

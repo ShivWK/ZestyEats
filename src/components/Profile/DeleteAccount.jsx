@@ -60,7 +60,7 @@ const DeleteAccount = () => {
         <section className="px-2 mt-4">
             <p className="dark:text-gray-300">We're sorry to see you go. Before we proceed, please review the details below.</p>
             <div className="bg-red-300 dark:bg-[rgb(87,16,16)] dark:text-gray-100 w-[90%] mx-auto rounded-md p-2 text-justify leading-5 my-3">
-                <p className="mb-2">Deleting your account will permanently remove all your order history, saved addresses, and preferences</p>
+                <p className="mb-2">Deleting your account will permanently remove all your order history, saved addresses, and preferences.</p>
                 <p>You will not be able to recover your account once deleted.</p>
             </div>
 
@@ -68,7 +68,7 @@ const DeleteAccount = () => {
             <p className="text-center dark:text-gray-300 mt-1"><span className="font-semibold dark:text-gray-100 text-black ">Please make sure you have access to your registered email before proceeding.</span>
                 You will need to enter this OTP to confirm deletion.</p>
 
-            <button onClick={sendOtpHandler} className="flex items-center justify-center mx-auto rounded-md w-28 h-8 bg-primary text-white dark:bg-darkPrimary text-bold tracking-wider mt-5 active:scale-95 transform transition-all duration-100 ease-linear">
+            <button onClick={sendOtpHandler} className="flex items-center justify-center mx-auto rounded-md w-28 h-8 bg-primary text-white dark:bg-darkPrimary font-bold tracking-wider mt-5 active:scale-95 transform transition-all duration-100 ease-linear">
                 {OTPLoading ? <DotBounceLoader /> : "Send OTP"}
             </button>
         </section>
