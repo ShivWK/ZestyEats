@@ -18,7 +18,8 @@ const {
     verifyDeleteOtp,
     sendEditOTP,
     updateProfile,
-    getUserProfile
+    getUserProfile,
+    verifyCredentials
 } = require("../controllers/userActivityControllers");
 
 const {
@@ -47,6 +48,7 @@ userActivityRouter.route("/userPaymentMethods").get(getUserPaymentMethods);
 userActivityRouter.route("/logout/:mode").post(logTheUserOut);
 userActivityRouter.route("/editOTP/:mode/:action").post(sendEditOTP);
 userActivityRouter.route("/profile").post(updateProfile).get(getUserProfile);
+userActivityRouter.route("/verification/:mode").post(verifyCredentials)
 
 userActivityRouter.route("/userCartData").patch(setUserCartData);
 userActivityRouter.route("/userWishListData").patch(setUserWishListData);

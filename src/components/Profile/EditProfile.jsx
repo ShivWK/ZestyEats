@@ -189,11 +189,11 @@ const EditProfile = () => {
             if (!result.ok) throw new Error(response.message);
 
             const userProfileData = {
-                userName: user.name,
-                userEmail: user.email,
-                userPhone: user.phone,
-                isEmailVerified: user.isEmailVerified,
-                isPhoneVerified: user.isNumberVerified,
+                userName: user.data.name,
+                userEmail: user.data.email,
+                userPhone: user.data.phone,
+                isEmailVerified: user.data.isEmailVerified,
+                isPhoneVerified: user.data.isNumberVerified,
             }
 
             dispatch(setUserDetails(userProfileData));

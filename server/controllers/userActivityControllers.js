@@ -614,7 +614,7 @@ exports.updateProfile = async (req, res, next) => {
             if (isEmailChanged) updateData.isEmailVerified = false;
             if (isPhoneChanged) updateData.isNumberVerified = false;
 
-            const result = await UserModal.findByIdAndUpdate(userId, { $set: updateData }, {runValidators: true});
+            const result = await UserModal.findByIdAndUpdate(userId, { $set: updateData }, { runValidators: true });
             await OtpModel.deleteOne({ _id: otpDoc._id });
 
             return res.status(200).json({
@@ -643,7 +643,6 @@ exports.getUserProfile = async (req, res, next) => {
 
     try {
         const User = await UserModal.findById(userId);
-        console.log(User)
 
         const user = {
             name: User.name,
@@ -660,6 +659,59 @@ exports.getUserProfile = async (req, res, next) => {
         })
     } catch (err) {
         console.log("Error in fetching user details", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error. Please try after sometime."
+        })
+    }
+}
+
+exports.verifyCredentials = async (req, res, next) => {
+    const userId = req.UserID;
+    const mode = req.params.mode;
+    const otpFor = req.body.otpFor;
+
+    const otp = req.body.OTP;
+    const userHashedOTP = crypto.createHash("sha256").update(String(otp)).digest("hex");
+
+    if (!otp || (mode !== "phone" && mode !== "email")) {
+        return req.status(400).json({
+            status: "success",
+            message: "Please provide valid data."
+        })
+    }
+
+    try {
+        const otpDoc = await OtpModel.findOne({ [mode]: otpFor });
+
+        if (!otpDoc) {
+            return res.status(410).json({
+                status: "failed",
+                message: "OTP expired"
+            });
+        }
+
+        if (userHashedOTP === otpDoc.hashedOtp) {
+            let updateData = null;
+
+            if (mode === "phone") updateData = { isNumberVerified: true };
+            else if (mode === "email") updateData = { isEmailVerified: true };
+
+            const updated = await UserModal.findByIdAndUpdate(userId, { $set: updateData });
+
+            return res.status(200).json({
+                status: "success",
+                message: `${mode === "phone" ? "Phone number verified" : "Email verified"}`
+            })
+        } else {
+            return res.status(401).json({
+                status: "failed",
+                message: "invalid OTP"
+            })
+        }
+    } catch (err) {
+        console.log("Error in verifying user details", err);
 
         return res.status(500).json({
             status: "error",
