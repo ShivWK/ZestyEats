@@ -117,7 +117,7 @@ const EditProfile = () => {
                 setSendOtpLoading(false);
             }
         } else {
-            toast.info("Update details before requesting OTP or close.");
+            setWarning("Update details before requesting OTP or close.");
         }
     }
 
@@ -126,7 +126,7 @@ const EditProfile = () => {
         if (verifyLoading) return;
 
         if (otp.length !== 6) {
-            toast.info("Please enter six digit OTP");
+            setWarning("Please enter six digit OTP");
             return;
         };
 
@@ -259,7 +259,7 @@ const EditProfile = () => {
                 <p className="text-center dark:text-gray-200 text-sm my-3">
                     OTP will be sent to registered email.
                 </p>
-                {warning && <p className="text-red-500 font-medium text-center mb-1.5 -mt-2">{warning}</p>}
+                {warning && <p className="text-red-500 font-medium text-center mb-1.5 -mt-2 leading-4">{warning}</p>}
             </>
         }
 

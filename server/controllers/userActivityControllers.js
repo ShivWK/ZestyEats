@@ -518,7 +518,7 @@ exports.sendEditOTP = async (req, res, next) => {
         if (mode === "phone") {
             await OtpModel.deleteMany({ [mode]: forWhat });
 
-            const text = `Hi, your OTP is ${editOTP}. Do not share this code with anyone. This code is valid for 5 minutes.`;
+            const text = `Hi, your OTP for verification is ${editOTP}. Do not share this code with anyone. This code is valid for 5 minutes.`;
 
             const result = await sendSMS(forWhat, text);
             console.log("OTP sms send", result);

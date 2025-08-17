@@ -66,6 +66,11 @@ const MobileProfile = () => {
     dispatch(setToEdit("profile"));
   }
 
+  const infoClickHandler = (type) => {
+    dispatch(setOpenEditModal(true));
+    dispatch(setToEdit(type));
+  }
+
   if (!isLoggedIn) return <UnauthorizedError />
 
   return (
@@ -86,7 +91,7 @@ const MobileProfile = () => {
                   {phone}
                 </p>
                 {!isNumberVerified && (
-                  <button className=" dark:text-primary text-blue-600 tracking-wide font-[500]">
+                  <button onClick={() => infoClickHandler("phone")} className=" dark:text-primary text-blue-600 tracking-wide font-[500]">
                     <i className="ri-information-2-line"></i>
                   </button>
                 )}
@@ -96,7 +101,7 @@ const MobileProfile = () => {
                   {email}
                 </p>
                 {!isEmailVerified && (
-                  <button className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]">
+                  <button onClick={() => infoClickHandler("email")} className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]">
                     <i className="ri-information-2-line"></i>
                   </button>
                 )}

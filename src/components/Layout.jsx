@@ -9,6 +9,7 @@ import DeleteModal from "./Profile/DeleteModal";
 import LocationModal from "./Location/LocationModal";
 import { toast } from "react-toastify";
 import EditProfile from "./Profile/EditProfile";
+import Verification from "./Profile/Verification";
 
 import {
   selectLogInModal,
@@ -399,7 +400,7 @@ export default function Layout() {
       {isLoginOpen && (<LoginModal />)}
       {isLocationOpen && (<LocationModal />)}
       {deleteModal && <DeleteModal />}
-      {openEditModal && <EditModal Component={toEdit === "profile" && EditProfile} />}
+      {openEditModal && <EditModal Component={toEdit === "profile" ? EditProfile : Verification } />}
 
       <PageFooter />
       {OpenLocationInfoModal && <LocationInfoModal />}
