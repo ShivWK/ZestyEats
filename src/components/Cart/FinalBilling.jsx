@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { selectCart } from "../../features/home/restaurantsSlice";
+import { selectCart, setItemToCart } from "../../features/home/restaurantsSlice";
 import calBilling from "../../utils/calBilling";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import DotBounceLoader from "../../utils/DotBounceLoader";
@@ -84,9 +84,10 @@ const FinalBilling = () => {
                 if (!result.ok) throw new Error(order.message);
 
                 setOrderPlaceLoading(false);
-                if (smallScreen) navigate("/ordersAndWishlist");
-                else navigate("/profile");
+                if (smallScreen) navigate("/ordersAndWishlist", { replace: true });
+                else navigate("/profile", { replace: true });
 
+                dispatch(setItemToCart({ mode: "initial", object: {}}));
             } catch (err) {
                 console.log("Error in placing order", err);
 
