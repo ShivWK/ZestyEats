@@ -75,7 +75,7 @@ exports.createOfflineOrder = async (req, res, next) => {
             orderStatus,
         });
 
-        return req.status(200).json({
+        return res.status(200).json({
             status: "success",
             message: "Order placed",
             data: order._id
@@ -83,7 +83,7 @@ exports.createOfflineOrder = async (req, res, next) => {
     } catch (err) {
         console.log("Error in placing order", err);
 
-        req.status(500).json({
+        res.status(500).json({
             status: "error",
             message: "Internal server error."
         })
