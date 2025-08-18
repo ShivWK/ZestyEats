@@ -2,8 +2,10 @@ const express = require("express");
 const paymentRouter = express.Router();
 
 const { protected, checkSessionId } = require("./../controllers/userActivityControllers");
+
 const { 
-    createOrder,
+    createOnlineOrder,
+    createOfflineOrder,
     getRazorpayAPIKey, 
 } = require("./../controllers/paymentsController");
 
@@ -12,8 +14,8 @@ const {
 paymentRouter.use(checkSessionId);
 paymentRouter.use(protected);
 
-paymentRouter.route("/order").post(createOrder);
+paymentRouter.route("/onlineOrder").post(createOnlineOrder);
+paymentRouter.route("/codOrder").post(createOfflineOrder);
 paymentRouter.route("/key").get(getRazorpayAPIKey);
-
 
 module.exports = paymentRouter;

@@ -1,16 +1,19 @@
-import { 
-    selectFinalBilling, 
-    setGSTAndOtherCharges, 
-    setPayableAmount, 
-    setItemsTotalCost 
+import {
+    selectFinalBilling,
+    setGSTAndOtherCharges,
+    setPayableAmount,
+    setItemsTotalCost,
+    selectDeliveryAddress,
+    selectPaymentMethod
 } from "../../features/delivery/deliverySlice";
 
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import { selectDeliveryAddress, selectPaymentMethod } from "../../features/delivery/deliverySlice";
 import { selectCart } from "../../features/home/restaurantsSlice";
 import calBilling from "../../utils/calBilling";
+import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import DotBounceLoader from "../../utils/DotBounceLoader";
 
 const FinalBilling = () => {
     const {
@@ -24,30 +27,100 @@ const FinalBilling = () => {
     const deliveryAddress = useSelector(selectDeliveryAddress);
     const paymentMethod = useSelector(selectPaymentMethod);
     const cart = useSelector(selectCart);
+    const deviceId = useSelector(selectDeviceFingerPrint)
     const cartItems = Object.values(cart);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
+    const [gst, setGst] = useState(0);
     const [openDeliveryInfo, setOpenDeliveryInfo] = useState(false);
+    const [orderPlaceLoading, setOrderPlaceLoading] = useState(false);
+    const [smallScreen, setSmallScreen] = useState(false);
 
-    const checkoutClickHandler = (e) => {
-        if (Object.keys(deliveryAddress).length === 0 || paymentMethod === "") {
-            e.preventDefault();
-        }
+    const checkoutClickHandler = async () => {
+        if (Object.keys(deliveryAddress).length === 0 || paymentMethod === "") return;
+        if (orderPlaceLoading) return;
+
+        setOrderPlaceLoading(true);
 
         if (paymentMethod === "Online") {
-            
+
+        } else if (paymentMethod === "COD") {
+            try {
+                const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/codOrder`, {
+                    method: "POST",
+                    headers: {
+                        "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                        "Content-Type": "application/json",
+                        "x-user-agent": navigator.userAgent,
+                        "x-language": navigator.language,
+                        "x-resolution": `${screen.height}x${screen.width}`,
+                        "x-device-id": deviceId,
+                    },
+                    body: JSON.stringify({
+                        items: cart,
+                        address: deliveryAddress,
+                        distance: deliveryKilometers,
+                        billing: {
+                            itemsTotal: totalItemCost,
+                            deliveryFee: deliveryCharge,
+                            GST: gst,
+                            packaging: 35,
+                            platformFee: 5,
+                            cashHandlingFee: 10,
+                            grandTotal: payableAmount,
+                        },
+
+                        payment: {
+                            method: "COD",
+                            status: "PENDING",
+                        },
+                        orderStatus: "PLACED",
+                    }),
+                    credentials: "include"
+                });
+
+                const order = await result.json();
+                if (!order.ok) throw new Error(order.message);
+
+                setOrderPlaceLoading(false);
+                if (smallScreen) navigate("/ordersAndWishlist");
+                else navigate("/profile");
+
+            } catch (err) {
+                console.log("Error in placing order", err);
+
+                setOrderPlaceLoading(false);
+            }
         }
     }
 
     useEffect(() => {
-        const gst = calBilling({ 
-            dispatch, 
-            cartItems, 
-            setItemsTotalCost, 
-            setGSTAndOtherCharges, 
-            setPayableAmount 
+        const gst = calBilling({
+            dispatch,
+            cartItems,
+            setItemsTotalCost,
+            setGSTAndOtherCharges,
+            setPayableAmount
         })
+
+        setGst(gst);
     }, [cart]);
+
+    useEffect(() => {
+        function resizeHandler() {
+            if (window.innerWidth <= 768) {
+                setSmallScreen(true);
+            } else {
+                setSmallScreen(false);
+            }
+        }
+
+        resizeHandler();
+
+        window.addEventListener("resize", resizeHandler);
+        return () => window.removeEventListener("resize", resizeHandler);
+    }, [])
 
     return <div className="rounded-md dark:bg-gray-300 bg-white p-2 md:self-start">
         <div
@@ -122,7 +195,9 @@ const FinalBilling = () => {
             <>
                 {(Object.keys(deliveryAddress).length === 0 || paymentMethod === "")
                     && <p className="text-red-500 text-sm">Please complete your delivery and payment details to proceed.</p>}
-                <Link onClick={checkoutClickHandler} className={`${(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") ? "bg-gray-400 text-gray-700 border border-gray-700" : "bg-green-400 text-white"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${!(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") && "active:scale-95"} transform transition-all duration-150`}>Place Order</Link>
+                <button onClick={checkoutClickHandler} className={`${(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") ? "bg-gray-400 text-gray-700 border border-gray-700" : "bg-green-400 text-white"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${!(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") && "active:scale-95"} transform transition-all duration-150`}>
+                    {orderPlaceLoading ? <DotBounceLoader /> : "Place Order"}
+                </button>
             </>
         </div>
     </div>
