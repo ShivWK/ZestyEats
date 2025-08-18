@@ -54,6 +54,8 @@ exports.createOfflineOrder = async (req, res, next) => {
     const payment = body.payment;
     const orderStatus = body.orderStatus;
 
+    console.log(items, address, billing, payment, orderStatus);
+
     if ( !items || !address || !billing || !payment || !orderStatus ) {
         return res.status(400).json({
             status: "failed",

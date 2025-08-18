@@ -81,7 +81,7 @@ const FinalBilling = () => {
                 });
 
                 const order = await result.json();
-                if (!order.ok) throw new Error(order.message);
+                if (!result.ok) throw new Error(order.message);
 
                 setOrderPlaceLoading(false);
                 if (smallScreen) navigate("/ordersAndWishlist");
@@ -195,7 +195,7 @@ const FinalBilling = () => {
             <>
                 {(Object.keys(deliveryAddress).length === 0 || paymentMethod === "")
                     && <p className="text-red-500 text-sm">Please complete your delivery and payment details to proceed.</p>}
-                <button onClick={checkoutClickHandler} className={`${(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") ? "bg-gray-400 text-gray-700 border border-gray-700" : "bg-green-400 text-white"} py-1.5 lg:py-1 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${!(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") && "active:scale-95"} transform transition-all duration-150`}>
+                <button onClick={checkoutClickHandler} className={`${(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") ? "bg-gray-400 text-gray-700 border border-gray-700" : "bg-green-400 text-white"} w-full h-9 rounded  font-sans font-medium tracking-wide cursor-pointer text-center ${!(Object.keys(deliveryAddress).length === 0 || paymentMethod === "") && "active:scale-95"} transform transition-all duration-150 flex items-center justify-center`}>
                     {orderPlaceLoading ? <DotBounceLoader /> : "Place Order"}
                 </button>
             </>
