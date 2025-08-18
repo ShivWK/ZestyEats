@@ -47,10 +47,9 @@ exports.createOfflineOrder = async (req, res, next) => {
     const body = req.body;
 
     const items = body.items;
-    const address = body.deliveryAddress;
+    const address = body.address;
     const distance = body.distance;
     const billing = body.billing;
-
     const payment = body.payment;
     const orderStatus = body.orderStatus;
 
