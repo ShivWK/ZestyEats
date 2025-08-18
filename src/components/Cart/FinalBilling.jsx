@@ -128,7 +128,7 @@ const FinalBilling = () => {
     }, [])
 
     return <div className="rounded-md dark:bg-gray-300 bg-white p-2 md:self-start">
-        {orderPlaced && <div className="fixed top-0 bottom-0 left-0 h-full w-full flex items-center justify-center bg-black/20">
+        {orderPlaced && <div className="fixed top-0 bottom-0 left-0 h-full w-full flex items-center justify-center bg-green-500 z-[100]">
             <div>
                 <Lottie
                     animationData={successAnimation}
@@ -139,7 +139,7 @@ const FinalBilling = () => {
                     }}
                     style={{ width: 300, height: 300 }}
                 />
-                <p className="text-4xl font-semibold text-green-500 text-center -mt-4">Order Placed!</p>
+                <p className="text-4xl font-semibold text-white text-center -mt-4">Order Placed!</p>
             </div>
         </div>}
         <div

@@ -123,7 +123,7 @@ const DeleteModal = () => {
             console.log(data.message);
             setDeleteLoading(false);
             dispatch(setHideDeleteModal(true));
-            navigate("/");
+            navigate("/", { replace: true });
             dispatch(setIsLoggedIn(false));
             dispatch(setIsLoggedInHome(false));
             dispatch(setIsLoggedInRestro(false));

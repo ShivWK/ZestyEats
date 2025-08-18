@@ -79,7 +79,7 @@ const Logout = ({ mainData }) => {
 
             console.log(data);
 
-            navigate("/");
+            navigate("/", { replace: true });
             cleanOnLogout({
                 dispatch,
                 setItemToCart,
