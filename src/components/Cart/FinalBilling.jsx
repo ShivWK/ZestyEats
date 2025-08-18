@@ -14,6 +14,8 @@ import { selectCart, setItemToCart } from "../../features/home/restaurantsSlice"
 import calBilling from "../../utils/calBilling";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import DotBounceLoader from "../../utils/DotBounceLoader";
+import Lottie from "lottie-react";
+import successAnimation from "./../../assets/Success.json"
 
 const FinalBilling = () => {
     const {
@@ -23,6 +25,8 @@ const FinalBilling = () => {
         GSTAndOtherCharges,
         payableAmount
     } = useSelector(selectFinalBilling);
+
+    // console.log(deliveryCharge);
 
     const deliveryAddress = useSelector(selectDeliveryAddress);
     const paymentMethod = useSelector(selectPaymentMethod);
@@ -36,6 +40,7 @@ const FinalBilling = () => {
     const [openDeliveryInfo, setOpenDeliveryInfo] = useState(false);
     const [orderPlaceLoading, setOrderPlaceLoading] = useState(false);
     const [smallScreen, setSmallScreen] = useState(false);
+    const [orderPlaced, setOrderPlaced] = useState(false)
 
     const checkoutClickHandler = async () => {
         if (Object.keys(deliveryAddress).length === 0 || paymentMethod === "") return;
@@ -84,10 +89,9 @@ const FinalBilling = () => {
                 if (!result.ok) throw new Error(order.message);
 
                 setOrderPlaceLoading(false);
-                if (smallScreen) navigate("/ordersAndWishlist", { replace: true });
-                else navigate("/profile", { replace: true });
+                setOrderPlaced(true);
 
-                dispatch(setItemToCart({ mode: "initial", object: {}}));
+                dispatch(setItemToCart({ mode: "initial", object: {} }));
             } catch (err) {
                 console.log("Error in placing order", err);
 
@@ -124,6 +128,20 @@ const FinalBilling = () => {
     }, [])
 
     return <div className="rounded-md dark:bg-gray-300 bg-white p-2 md:self-start">
+        {orderPlaced && <div className="fixed top-0 bottom-0 left-0 h-full w-full flex items-center justify-center bg-black/20">
+            <div>
+                <Lottie
+                    animationData={successAnimation}
+                    loop={false}
+                    onComplete={() => {
+                        if (smallScreen) navigate("/ordersAndWishlist", { replace: true });
+                        else navigate("/profile", { replace: true })
+                    }}
+                    style={{ width: 300, height: 300 }}
+                />
+                <p className="text-4xl font-semibold text-green-500 text-center -mt-4">Order Placed!</p>
+            </div>
+        </div>}
         <div
             className="h-full w-full flex flex-col gap-4"
         >

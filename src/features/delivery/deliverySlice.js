@@ -13,6 +13,7 @@ const initialState = {
     isDeliverable: false,
     totalItemsCost: "",
     deliveryCharge: 0,
+    lastDeliveryCharge: 0,
     deliveryKilometers: 0,
     payableAmount: "",
     GSTAndOtherCharges: "",
@@ -88,7 +89,12 @@ const deliverySlice = createSlice({
 
             const deliveryCharge = 10 + Math.max(0, Math.floor(distance - 1)) * 5;
             state.deliveryCharge = deliveryCharge;
+            
+            if (state.lastDeliveryCharge) {
+                state.payableAmount -= state.lastDeliveryCharge;
+            }
             state.payableAmount += deliveryCharge;
+            state.lastDeliveryCharge = deliveryCharge;
         },
 
         setPayableAmount: (state, action) => {

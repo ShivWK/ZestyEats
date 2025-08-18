@@ -19,7 +19,8 @@ const restaurantSlice = createSlice({
     isLoggedIn: false,
     deviceFingerPrint: null,
     isDeliveryRestaurantOpen: true,
-    deliveryRestaurantLoading: true
+    deliveryRestaurantLoading: true,
+    
   },
 
   reducers: {

@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import FavoriteRestros from "./FavoriteRestros";
 
 const OrdersAndWishlist = () => {
-    const [currentTab, setCurrentTab] = useState('Wishlist')
+    const [currentTab, setCurrentTab] = useState('Orders')
     const wishlist = useSelector(selectWishlistItems);
 
     return <main className={`pt-18 pb-16 px-1.5`}>
