@@ -157,7 +157,7 @@ const UserAddress = ({ address, width = "w-[85%]", latRestro = null, lngRestro =
             </div>
         </div>
         {(editAddressModal && !addAddressModal) && (
-            <div onClick={() => dispatch(setHideEditAddressModal(true))} className="absolute top-0 left-0 h-full w-full bg-black/60 z-50">
+            <div onClick={() => dispatch(setHideEditAddressModal(true))} className="fixed top-0 left-0 h-full w-full bg-black/60 z-50">
                 <AddressEditForm data={address} forWhat="edit" />
             </div>
         )}

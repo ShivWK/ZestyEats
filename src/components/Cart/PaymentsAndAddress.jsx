@@ -224,7 +224,7 @@ const PaymentsAndAddress = () => {
             <div onClick={() => {
                 dispatch(setHideEditAddressModal(true));
                 dispatch(setAddAddressModal(false));
-            }} className="absolute top-0 bottom-0 left-0 h-full w-full bg-black/60 z-50">
+            }} className="fixed top-0 bottom-0 left-0 h-full w-full bg-black/60 z-50">
                 <AddressEditForm forWhat="Add" />
             </div>
         )}
