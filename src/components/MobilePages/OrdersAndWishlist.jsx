@@ -5,6 +5,7 @@ import WishlistedItems from "./Wishlisttems/WishlistedItems";
 import { selectWishlistItems } from "../../features/home/restaurantsSlice";
 import { useSelector } from "react-redux";
 import FavoriteRestros from "./FavoriteRestros";
+import OrderMain from "../orders/OrderMain";
 
 const OrdersAndWishlist = () => {
     const [currentTab, setCurrentTab] = useState('Orders')
@@ -33,7 +34,7 @@ const OrdersAndWishlist = () => {
                     <div className="w-full bg-primary dark:bg-darkPrimary text-white font-semibold text-xl px-2 py-1.5 rounded ">
                         <p>Orders</p>
                     </div>
-                    <Construction />
+                    <OrderMain />
                 </section>
                 : (currentTab === "Wishlist") ? <section className="mt-1">
                     <div className="w-full bg-primary dark:bg-darkPrimary text-white font-semibold text-xl px-2 py-1.5 rounded ">

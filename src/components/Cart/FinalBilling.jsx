@@ -128,7 +128,7 @@ const FinalBilling = () => {
     }, [])
 
     return <div className="rounded-md dark:bg-gray-300 bg-white p-2 md:self-start">
-        {orderPlaced && <div className="fixed top-0 bottom-0 left-0 h-full w-full flex items-center justify-center bg-green-500 z-[100]">
+        {orderPlaced && <div className="fixed top-0 bottom-0 left-0 h-full w-full flex items-center justify-center bg-green-500 max-lg:z-[100]">
             <div>
                 <Lottie
                     animationData={successAnimation}

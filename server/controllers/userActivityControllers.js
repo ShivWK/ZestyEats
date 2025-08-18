@@ -3,6 +3,7 @@ const SessionModel = require("./../models/authModals/sessionModel");
 const UserModal = require("./../models/userModel");
 const OtpModel = require("../models/authModals/otpModel");
 const AddressModel = require("./../models/userAddressModel");
+const OrderModel = require("./../models/ordersModel");
 
 const deviceFingerPrinter = require("./../utils/deviceFingerPrinter");
 const { UAParser } = require("ua-parser-js");
@@ -139,10 +140,6 @@ exports.getLiveSessions = async (req, res, next) => {
     }
 }
 
-exports.setAllDataAtOnce = async (req, res, next) => {
-
-}
-
 exports.getUserAddress = async (req, res, next) => {
     const userId = req.UserID;
 
@@ -184,26 +181,6 @@ exports.setUserAddress = async (req, res, next) => {
         })
     } catch (err) {
         console.log("Error in fetching user address", err);
-
-        return res.status(500).json({
-            status: "error",
-            message: "Internal server error."
-        })
-    }
-}
-
-exports.getUserPaymentMethods = async (req, res, next) => {
-    const userId = req.UserID;
-
-    try {
-        const result = await UserModal.findById(userId);
-
-        return res.status(200).json({
-            status: "success",
-            data: result.payments,
-        })
-    } catch (err) {
-        console.log("Error in fetching user payment methods", err);
 
         return res.status(500).json({
             status: "error",
@@ -716,6 +693,26 @@ exports.verifyCredentials = async (req, res, next) => {
         return res.status(500).json({
             status: "error",
             message: "Internal server error. Please try after sometime."
+        })
+    }
+}
+
+exports.getOrders = async (req, res, next) => {
+    const userId = req.UserID;
+
+    try {
+        const orders = await OrderModel.find({ userId });
+
+        return res.status(200).json({
+            status: "success",
+            data: orders
+        })
+    } catch (err) {
+        console.log("Error in fetching orders", err);
+
+        return res.status(500).json({
+            status: "error",
+            message: "Internal server error"
         })
     }
 }
