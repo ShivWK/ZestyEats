@@ -10,10 +10,8 @@ const {
     setUserItemsToBeAddedInCartData,
     setUserRecentLocationData,
     setUserWishListData,
-    setAllDataAtOnce,
     getLiveSessions,
     logTheUserOut,
-    getUserPaymentMethods,
     deleteAccount,
     verifyDeleteOtp,
     sendEditOTP,
@@ -57,6 +55,5 @@ userActivityRouter.route("/userWishListData").patch(setUserWishListData);
 userActivityRouter.route("/userFavRestaurantData").patch(setUserFavRestaurantData);
 userActivityRouter.route("/userItemsToBeAddedInCartData").patch(setUserItemsToBeAddedInCartData);
 userActivityRouter.route("/userRecentLocationData").patch(setUserRecentLocationData);
-userActivityRouter.route("/transfer").patch(setAllDataAtOnce);
 
 module.exports = userActivityRouter;
