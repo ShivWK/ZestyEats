@@ -1,8 +1,24 @@
-import { Package, CircleUserRound, IndianRupee, MapPinCheck } from "lucide-react"
+import { Package, CircleUserRound, IndianRupee, MapPinCheck, CalendarCheck } from "lucide-react"
 
 const AddressCard = ({ data }) => {
-    const { deliveryAddress: { address }, payment } = data
-    // console.log(address, payment);
+    const { deliveryAddress: { address }, payment, createdAt } = data
+    console.log(data);
+
+    const giveHumanReadableDate = (dateString) => {
+        const date = new Date(dateString);
+
+        const inIndianTime = date.toLocaleString("en-IN", {
+            timeZone: "Asia/Kolkata",
+            month: "long",
+            year: "numeric",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: true,
+        });
+
+        return inIndianTime;
+    }
 
     const addressArr = [
         {
@@ -21,6 +37,12 @@ const AddressCard = ({ data }) => {
             textMain: "Delivery address",
             textSecondary: `${address.flatNumber}, ${address.state}, ${address.pinCode}, ${address.country}.`,
             logo: <MapPinCheck size={28} strokeWidth={1}/>
+        },
+
+        {
+            textMain: "Order placed on",
+            textSecondary: giveHumanReadableDate(createdAt),
+            logo: <CalendarCheck size={28} strokeWidth={1}/>
         },
     ]
 
