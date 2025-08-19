@@ -8,19 +8,19 @@ const AddressCard = ({ data }) => {
         {
             textMain: address.userName,
             textSecondary: address.userPhone,
-            logo: <CircleUserRound strokeWidth={2}/>
+            logo: <CircleUserRound size={28} strokeWidth={1}/>
         },
 
         {
             textMain: "Payment method",
             textSecondary: payment.method === "COD" ? "COD (Cash on delivery)" : `Online (${payment.transactionId})`,
-            logo: <IndianRupee strokeWidth={2}/>
+            logo: <IndianRupee size={28} strokeWidth={1}/>
         },
 
         {
             textMain: "Delivery address",
             textSecondary: `${address.flatNumber}, ${address.state}, ${address.pinCode}, ${address.country}.`,
-            logo: <MapPinCheck strokeWidth={2}/>
+            logo: <MapPinCheck size={28} strokeWidth={1}/>
         },
     ]
 
