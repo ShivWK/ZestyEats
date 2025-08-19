@@ -99,7 +99,7 @@ const OrderCard = ({ data, orderId }) => {
                 <span>Order ID:</span>
                 <span>{`#${orderId}`}</span>
                 {
-                    copied ? <CheckCheck size={17} strokeWidth={3} className="ml-1 text-green-400" /> : <button onClick={copyClickHandler}><Copy size={15} strokeWidth={3} className="ml-1" /></button>
+                    copied ? <CheckCheck size={17} strokeWidth={3} className="ml-1 text-green-500" /> : <button onClick={copyClickHandler}><Copy size={15} strokeWidth={3} className="ml-1" /></button>
                 }
             </h2>
 

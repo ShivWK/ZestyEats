@@ -11,10 +11,10 @@ const VegSvg = ({ veg = false }) => {
               width="90"
               height="90"
               fill="none"
-              stroke={veg ? "white" : "#05df72"}
+              stroke={veg ? "white" : "#00c951"}
               strokeWidth="8"
             />
-            <circle cx="50" cy="50" r="25" fill={!veg ? "#05df72" : "white"} />
+            <circle cx="50" cy="50" r="25" fill={!veg ? "#00c951" : "white"} />
           </svg>
 }
 

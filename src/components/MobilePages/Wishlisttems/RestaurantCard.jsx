@@ -134,7 +134,7 @@ const RestaurantCard = ({ data }) => {
           <div className="flex items-center gap-1.5 -mt-0.5">
             <p
               className={`${
-                status.opened ? "text-green-500 dark:text-green-400" : "text-red-600"
+                status.opened ? "text-green-500" : "text-red-600"
               } text-sm font-semibold`}
             >
               {status.opened ? "OPEN 😊" : "CLOSED 😟"}
@@ -162,7 +162,7 @@ const RestaurantCard = ({ data }) => {
         <div className="flex items-center justify-between">
           <div className="basis-[43%]">
             <div className="flex gap-1 items-center dark:text-gray-800 text-gray-500 font-semibold text-sm">
-              <i className="ri-star-fill text-green-700 dark:text-green-400 mb-0.5" />
+              <i className="ri-star-fill text-green-500 mb-0.5" />
               <p>{metadata?.avgRating || data.restro.avgRating}</p>
               <p>•</p>
               <p>

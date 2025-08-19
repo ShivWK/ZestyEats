@@ -2,7 +2,7 @@ import { Package, CircleUserRound, IndianRupee, MapPinCheck } from "lucide-react
 
 const AddressCard = ({ data }) => {
     const { deliveryAddress: { address }, payment } = data
-    console.log(address, payment);
+    // console.log(address, payment);
 
     const addressArr = [
         {
@@ -30,7 +30,7 @@ const AddressCard = ({ data }) => {
             <h2 className="text-lg">Delivery Details</h2>
         </div>
 
-        <div className="mt-4 flex flex-col gap-2">
+        <div className="mt-4 flex flex-col gap-2.5">
             {addressArr.map(data => {
                 return <div className="flex gap-3 items-center">
                     <div className="">{data.logo}</div>
