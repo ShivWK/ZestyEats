@@ -80,7 +80,7 @@ const OrderCard = ({ data, orderId }) => {
                 onClick={ClickHandler}
                 className="group flex items-center gap-1"
             >
-                <Store size={20} strokeWidth={2}/>
+                <Store size={20} strokeWidth={2} />
                 <p className="basis-[95%] truncate text-xl font-bold select-none">
                     {name}
                 </p>
@@ -121,14 +121,14 @@ const OrderCard = ({ data, orderId }) => {
                 })}
             </div>
 
-            <div className="flex justify-between items-center mt-3 text-sm">
+            {!openDetails && <div className="flex justify-between items-center mt-3 text-sm">
                 <span className="text-gray-600 tracking-wider font-semibold">{`Placed on: ${giveHumanReadableDate(data.createdAt)}`}</span>
-              <span className="py-1 px-2 rounded-md bg-primary dark:bg-darkPrimary text-white font-semibold tracking-wider">{`₹${data.billing.grandTotal}`}</span>
-            </div>
+                <span className="py-1 px-2 rounded-md bg-primary dark:bg-darkPrimary text-white font-semibold tracking-wider">{`₹${data.billing.grandTotal}`}</span>
+            </div>}
 
             <button
                 onClick={() => setOPendDetails(!openDetails)}
-                className="px-4 py-0.5 rounded-md bg-primary dark:bg-darkPrimary text-white font-bold tracking-wider mx-auto flex items-center gap-1.5 mt-2"
+                className={`px-4 py-0.5 rounded-md bg-primary dark:bg-darkPrimary text-white font-bold tracking-wider mx-auto flex items-center gap-1.5 ${openDetails ? "mt-4" : "mt-2"}`}
             >
                 <span>Details</span>
 

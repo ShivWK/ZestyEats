@@ -3,8 +3,6 @@ import { FileText } from "lucide-react";
 const BillingCard = ({ data }) => {
     const mainData = data.billing;
 
-    console.log("Billing", mainData)
-
     const billArr = [
         {
             text: "Item Total",
