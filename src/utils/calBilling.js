@@ -18,7 +18,7 @@ function calBilling({ dispatch, cartItems, setItemsTotalCost, setGSTAndOtherChar
     dispatch(setGSTAndOtherCharges(gstAndOtherCharges));
     dispatch(setPayableAmount({ mode: "initial", cost : +totalPayableAmount.toFixed(2) }));
 
-    return gst;
+    return +gst.toFixed(2);
 }
 
 export default calBilling;

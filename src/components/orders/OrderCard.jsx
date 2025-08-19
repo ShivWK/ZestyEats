@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
-import { Copy, CheckCheck, ChevronDown } from "lucide-react";
+import { Copy, CheckCheck, ChevronDown, Store } from "lucide-react";
 import { useState } from "react";
 import calFinalPrice from "../../utils/calFinalPrice";
 import VegSvg from "../../utils/VegSvg";
@@ -38,6 +38,10 @@ const OrderCard = ({ data, orderId }) => {
     const city = citySmall[0].toUpperCase() + citySmall.slice(1) + ".";
 
     const ClickHandler = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        })
         dispatch(addCurrentRestaurant(name));
     };
 
@@ -74,12 +78,13 @@ const OrderCard = ({ data, orderId }) => {
             <Link
                 to={`/restaurantSpecific/${lat}/${lng}/${id}/${name}`}
                 onClick={ClickHandler}
-                className="group flex items-center justify-between"
+                className="group flex items-center gap-1"
             >
+                <Store size={20} strokeWidth={2}/>
                 <p className="basis-[95%] truncate text-xl font-bold select-none">
                     {name}
                 </p>
-                <i className="basis-[4%] ri-arrow-right-long-fill text-2xl text-gray-800 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-200 ease-in-out p-0"></i>
+                <i className="basis-[4%] ri-arrow-right-long-fill text-2xl text-gray-800 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-200 ease-in-out p-0 ml-auto"></i>
             </Link>
 
             <p className="text-sm font-bold dark:text-gray-900 text-gray-700 truncate -mt-1 capitalize">
@@ -113,27 +118,27 @@ const OrderCard = ({ data, orderId }) => {
                             {`₹${price}`}
                         </span>}
                     </div>
-                })
-
-                }
+                })}
             </div>
 
             <div className="flex justify-between items-center mt-3 text-sm">
                 <span className="text-gray-600 tracking-wider font-semibold">{`Placed on: ${giveHumanReadableDate(data.createdAt)}`}</span>
-                {!openDetails && <span className="py-1 px-2 rounded-md bg-primary dark:bg-darkPrimary text-white font-semibold tracking-wide">{`₹${data.billing.grandTotal}`}</span>}
+              <span className="py-1 px-2 rounded-md bg-primary dark:bg-darkPrimary text-white font-semibold tracking-wider">{`₹${data.billing.grandTotal}`}</span>
             </div>
 
             <button
                 onClick={() => setOPendDetails(!openDetails)}
-                className="px-4 py-0.5 rounded-md bg-primary dark:bg-darkPrimary text-white font-bold tracking-wider mx-auto flex items-center gap-1.5 mt-2 mb-0.5"
+                className="px-4 py-0.5 rounded-md bg-primary dark:bg-darkPrimary text-white font-bold tracking-wider mx-auto flex items-center gap-1.5 mt-2"
             >
                 <span>Details</span>
 
                 <ChevronDown size={15} strokeWidth={4} className={`transform p-0 m-0 transition-all duration-200 ease-linear ${openDetails && "-rotate-180"}`} />
             </button>
 
-            <div className={`mt-1 flex flex-col gap-2 ${openDetails ? "h-auto" : "h-0"} overflow-hidden`}>
+            <div className={`mt-1 flex flex-col gap-1 ${openDetails ? "h-auto" : "h-0"} overflow-hidden`}>
+                <hr className="text-gray-500 my-3 mt-4" />
                 <BillingCard data={data} />
+                <hr className="text-gray-500 my-3 mt-4" />
                 <AddressCard data={data} />
             </div>
         </div>
