@@ -1,20 +1,25 @@
 import { Link } from "react-router";
 import { useDispatch } from "react-redux";
 import { addCurrentRestaurant } from "../../features/home/restaurantsSlice";
-import { Copy, CheckCheck } from "lucide-react";
+import { Copy, CheckCheck, ChevronDown } from "lucide-react";
 import { useState } from "react";
 import calFinalPrice from "../../utils/calFinalPrice";
 import VegSvg from "../../utils/VegSvg";
 import NonVegSvg from "../../utils/NonVegSvg";
+import BillingCard from "./BillingCard";
+import AddressCard from "./AddressCard";
 
-const OrderCard = ({ data, orderId, openDetails }) => {
+const OrderCard = ({ data, orderId }) => {
     const [copied, setCopied] = useState(false);
+    const [openDetails, setOPendDetails] = useState(false);
 
     const mainData = Object.values(data.items);
     const dataToMap = mainData.map(items => ({ item: items.item, quantity: items.quantity }));
-    const restaurantMetadata = mainData[0].restaurantData.metadata;
+    const restaurantMetadata = mainData[0].restaurantData.metadata || mainData[0].restaurantData;
 
-    console.log(data)
+    // console.log("Main data", mainData)
+    // console.log("metadata data", restaurantMetadata);
+    // console.log("given data", data)
 
     const dispatch = useDispatch();
 
@@ -115,7 +120,21 @@ const OrderCard = ({ data, orderId, openDetails }) => {
 
             <div className="flex justify-between items-center mt-3 text-sm">
                 <span className="text-gray-600 tracking-wider font-semibold">{`Placed on: ${giveHumanReadableDate(data.createdAt)}`}</span>
-                <span className="py-1 px-2 rounded-md bg-primary dark:bg-darkPrimary text-white font-semibold tracking-wide">{`₹${data.billing.grandTotal}`}</span>
+                {!openDetails && <span className="py-1 px-2 rounded-md bg-primary dark:bg-darkPrimary text-white font-semibold tracking-wide">{`₹${data.billing.grandTotal}`}</span>}
+            </div>
+
+            <button
+                onClick={() => setOPendDetails(!openDetails)}
+                className="px-4 py-0.5 rounded-md bg-primary dark:bg-darkPrimary text-white font-bold tracking-wider mx-auto flex items-center gap-1.5 mt-2 mb-0.5"
+            >
+                <span>Details</span>
+
+                <ChevronDown size={15} strokeWidth={4} className={`transform p-0 m-0 transition-all duration-200 ease-linear ${openDetails && "-rotate-180"}`} />
+            </button>
+
+            <div className={`mt-1 flex flex-col gap-2 ${openDetails ? "h-auto" : "h-0"} overflow-hidden`}>
+                <BillingCard data={data} />
+                <AddressCard data={data} />
             </div>
         </div>
     </div>
