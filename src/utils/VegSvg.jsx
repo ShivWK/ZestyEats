@@ -1,4 +1,4 @@
-const VegSvg = ({veg = false}) => {
+const VegSvg = ({ veg = false }) => {
     return <svg
             width="16"
             height="16"
