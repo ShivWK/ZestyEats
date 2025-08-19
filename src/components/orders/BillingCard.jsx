@@ -46,7 +46,7 @@ const BillingCard = ({ data }) => {
                 billArr.map(data => {
                     return <div className={`flex items-center justify-between text-gray-600 text-sm ${data.text === "Grand Total" && "border-t-[1px] border-dashed mt-1 pt-1"}`}>
                         <p>{data.text}</p>
-                        <span className="text-black font-semibold tracking-wider">{`₹${data.amount}`}</span>
+                        <span className="text-black font-semibold">{`₹${data.amount}`}</span>
                     </div>
                 })
             }
