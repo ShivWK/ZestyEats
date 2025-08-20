@@ -16,11 +16,6 @@ const OrderCard = ({ data, orderId }) => {
     const mainData = Object.values(data.items);
     const dataToMap = mainData.map(items => ({ item: items.item, quantity: items.quantity }));
     const restaurantMetadata = mainData[0].restaurantData.metadata || mainData[0].restaurantData;
-
-    // console.log("Main data", mainData)
-    // console.log("metadata data", restaurantMetadata);
-    // console.log("given data", data)
-
     const dispatch = useDispatch();
 
     const [lat, lng] = restaurantMetadata.latLong.split(",");

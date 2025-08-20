@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import OrderCard from "./OrderCard";
-import BillingCard from "./BillingCard";
-import AddressCard from "./AddressCard";
+import OrderShimmer from "./OrderShimmer";
 
 const OrderMain = () => {
     const [orders, setOrders] = useState([]);
@@ -42,8 +41,8 @@ const OrderMain = () => {
     }, [])
 
     return <section className="p-1 flex flex-col gap-2 bg-gray-200">
-        {ordersLoading
-            ? <h2>Loading...</h2>
+        {!ordersLoading
+            ? <OrderShimmer />
             : orders.reverse().map(data => {
                 return <div key={data._id} className="rounded-md dark:bg-black bg-gray-100 overflow-hidden">
                     <OrderCard data={data} orderId={data._id} />
