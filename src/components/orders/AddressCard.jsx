@@ -29,7 +29,7 @@ const AddressCard = ({ data }) => {
 
         {
             textMain: "Payment method",
-            textSecondary: payment.method === "COD" ? "COD (Cash on delivery)" : `Online (${payment.transactionId})`,
+            textSecondary: payment.method === "COD" ? "COD (Cash on delivery)" : `Online (Txn ID: ${payment.transactionId})`,
             logo: <IndianRupee size={28} strokeWidth={1}/>
         },
 

@@ -4,7 +4,10 @@ import {
     setPayableAmount,
     setItemsTotalCost,
     selectDeliveryAddress,
-    selectPaymentMethod
+    selectPaymentMethod,
+    setDeliveryAddress,
+    setPaymentMethod,
+    setDeliveryCharge
 } from "../../features/delivery/deliverySlice";
 
 import { useNavigate } from "react-router";
@@ -45,7 +48,7 @@ const FinalBilling = () => {
     const [orderPlaceLoading, setOrderPlaceLoading] = useState(false);
     const [smallScreen, setSmallScreen] = useState(false);
     const [orderPlaced, setOrderPlaced] = useState(false);
-    const [ verifyPayment, setVerifyPayment ] = useState(false);
+    const [verifyPayment, setVerifyPayment] = useState(false);
 
     function loadScript(src) {
         return new Promise((resolve) => {
@@ -59,6 +62,40 @@ const FinalBilling = () => {
             }
             document.body.appendChild(script)
         })
+    }
+
+    const placeOrder = async (payment) => {
+        const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/order`, {
+            method: "POST",
+            headers: {
+                "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                "Content-Type": "application/json",
+                "x-user-agent": navigator.userAgent,
+                "x-language": navigator.language,
+                "x-resolution": `${screen.height}x${screen.width}`,
+                "x-device-id": deviceId,
+            },
+            body: JSON.stringify({
+                items: cart,
+                address: deliveryAddress,
+                distance: deliveryKilometers,
+                billing: {
+                    itemsTotal: totalItemCost,
+                    deliveryFee: deliveryCharge,
+                    GST: gst,
+                    packaging: 35,
+                    platformFee: 5,
+                    cashHandlingFee: 10,
+                    grandTotal: payableAmount,
+                },
+
+                payment,
+                orderStatus: "PLACED",
+            }),
+            credentials: "include"
+        });
+
+        return result
     }
 
     const checkoutClickHandler = async () => {
@@ -114,10 +151,7 @@ const FinalBilling = () => {
 
                 const response2 = await result2.json();
                 if (!result2.ok) throw new Error(response2.message);
-
-                setOrderPlaceLoading(false);
                 const { key } = response2;
-                // console.log("key", key, "id", order.id);
 
                 const options = {
                     key,
@@ -150,9 +184,11 @@ const FinalBilling = () => {
                                     "x-device-id": deviceId,
                                 },
                                 body: JSON.stringify({
-                                    order_id: response.razorpay_order_id,
-                                    payment_id : response.razorpay_payment_id, 
-                                    signature: response.razorpay_signature,
+                                    data: {
+                                        order_id: response.razorpay_order_id,
+                                        payment_id: response.razorpay_payment_id,
+                                        signature: response.razorpay_signature,
+                                    }
                                 }),
                                 credentials: "include"
                             });
@@ -160,10 +196,33 @@ const FinalBilling = () => {
                             const beResponse = await result.json();
                             if (!result.ok) throw new Error(beResponse.message);
 
-                            
+                            const payment = {
+                                method: "ONLINE",
+                                status: "PENDING",
+                                transactionId: response.razorpay_payment_id,
+                                provider: "Rayzorpay",
+                                razorpayOrderId: response.razorpay_order_id,
+                                razorpayPaymentId: response.razorpay_payment_id,
+                                razorpaySignature: response.razorpay_signature,
+                            }
+                            const result2 = await placeOrder(payment);
+
+                            const order = await result2.json();
+                            if (!result.ok) throw new Error(order.message);
+
+                            setOrderPlaceLoading(false);
+                            setVerifyPayment(false);
+                            setOrderPlaced(true);
+
+                            // dispatch(setItemToCart({ mode: "initial", object: {} }));
+
+                            dispatch(setDeliveryAddress({}));
+                            dispatch(setPaymentMethod(""))
+                            dispatch(setDeliveryCharge(0));
+                            // reset these things on going back too
+                            // confirm payment from webhooks then mark payment success
                         } catch (err) {
                             console.log("Error in payment verification", err);
-
                             setOrderPlaceLoading(false);
                         }
                     }
@@ -179,38 +238,11 @@ const FinalBilling = () => {
             }
         } else if (paymentMethod === "COD") {
             try {
-                const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/order`, {
-                    method: "POST",
-                    headers: {
-                        "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
-                        "Content-Type": "application/json",
-                        "x-user-agent": navigator.userAgent,
-                        "x-language": navigator.language,
-                        "x-resolution": `${screen.height}x${screen.width}`,
-                        "x-device-id": deviceId,
-                    },
-                    body: JSON.stringify({
-                        items: cart,
-                        address: deliveryAddress,
-                        distance: deliveryKilometers,
-                        billing: {
-                            itemsTotal: totalItemCost,
-                            deliveryFee: deliveryCharge,
-                            GST: gst,
-                            packaging: 35,
-                            platformFee: 5,
-                            cashHandlingFee: 10,
-                            grandTotal: payableAmount,
-                        },
-
-                        payment: {
-                            method: "COD",
-                            status: "PENDING",
-                        },
-                        orderStatus: "PLACED",
-                    }),
-                    credentials: "include"
-                });
+                const payment = {
+                    method: "COD",
+                    status: "PENDING"
+                }
+                const result = await placeOrder(payment);
 
                 const order = await result.json();
                 if (!result.ok) throw new Error(order.message);
@@ -219,6 +251,9 @@ const FinalBilling = () => {
                 setOrderPlaced(true);
 
                 dispatch(setItemToCart({ mode: "initial", object: {} }));
+                dispatch(setDeliveryAddress({}));
+                dispatch(setPaymentMethod(""))
+                dispatch(setDeliveryCharge(0));
             } catch (err) {
                 console.log("Error in placing order", err);
                 setOrderPlaceLoading(false);
@@ -268,6 +303,14 @@ const FinalBilling = () => {
                 <p className="text-4xl font-semibold text-white text-center -mt-4">Order Placed!</p>
             </div>
         </div>}
+
+        {verifyPayment && <div className="fixed top-0 bottom-0 left-0 h-full w-full flex items-center justify-center bg-green-500 max-lg:z-[100]">
+            <div>
+                <div className="rounded-full h-24 w-24 border-8 border-white border-t-primary animate-spin mx-auto"></div>
+                <p className="text-2xl font-semibold text-white text-center mt-4">Confirming Payment</p>
+            </div>
+        </div>}
+
         <div
             className="h-full w-full flex flex-col gap-4"
         >
