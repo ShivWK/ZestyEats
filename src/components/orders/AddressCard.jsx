@@ -2,7 +2,7 @@ import { Package, CircleUserRound, IndianRupee, MapPinCheck, CalendarCheck } fro
 
 const AddressCard = ({ data }) => {
     const { deliveryAddress: { address }, payment, createdAt } = data
-    console.log(data);
+    // console.log(data);
 
     const giveHumanReadableDate = (dateString) => {
         const date = new Date(dateString);
@@ -58,7 +58,7 @@ const AddressCard = ({ data }) => {
                     <div className="">{data.logo}</div>
                     <div className="flex flex-col">
                         <p className="text-black font-semibold tracking-wider">{data.textMain}</p>
-                        <p className="line-clamp-2 text-sm text-gray-600">{data.textSecondary}</p>
+                        <p className="line-clamp-2 text-sm text-gray-600 leading-5">{data.textSecondary}</p>
                     </div>
                 </div>
             })

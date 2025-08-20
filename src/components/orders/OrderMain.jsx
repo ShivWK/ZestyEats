@@ -32,8 +32,6 @@ const OrderMain = () => {
 
                 setOrders(orders.data);
                 setOrdersLoading(false);
-
-                console.log(orders);
             } catch (err) {
                 console.log("Error in fetching orders", err);
                 setOrdersLoading(false);
@@ -46,7 +44,7 @@ const OrderMain = () => {
     return <section className="p-1 flex flex-col gap-2 bg-gray-200">
         {ordersLoading
             ? <h2>Loading...</h2>
-            : orders.map(data => {
+            : orders.reverse().map(data => {
                 return <div key={data._id} className="rounded-md dark:bg-black bg-gray-100 overflow-hidden">
                     <OrderCard data={data} orderId={data._id} />
                 </div>

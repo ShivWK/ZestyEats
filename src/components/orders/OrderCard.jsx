@@ -135,7 +135,7 @@ const OrderCard = ({ data, orderId }) => {
                 <ChevronDown size={15} strokeWidth={4} className={`transform p-0 m-0 transition-all duration-200 ease-linear ${openDetails && "-rotate-180"}`} />
             </button>
 
-            <div className={`mt-1 flex flex-col gap-1 ${openDetails ? "h-auto" : "h-0"} overflow-hidden`}>
+            <div className={`mt-1 flex flex-col gap-1 ${openDetails ? "h-[32.5rem]" : "h-0"} overflow-hidden transition-all duration-100 ease-linear`}>
                 <hr className="text-gray-500 my-3 mt-4" />
                 <BillingCard data={data} />
                 <hr className="text-gray-500 my-3 mt-4" />
