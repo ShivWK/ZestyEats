@@ -12,10 +12,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { selectCart, setItemToCart } from "../../features/home/restaurantsSlice";
 import calBilling from "../../utils/calBilling";
-import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
+import { selectDeviceFingerPrint, selectUserDetails, selectCurrentTheme } from "../../features/home/homeSlice";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import Lottie from "lottie-react";
 import successAnimation from "./../../assets/Success.json"
+// import Razorpay from "razorpay";
 
 const FinalBilling = () => {
     const {
@@ -25,6 +26,9 @@ const FinalBilling = () => {
         GSTAndOtherCharges,
         payableAmount
     } = useSelector(selectFinalBilling);
+
+    const { userName, userEmail, userPhone } = useSelector(selectUserDetails);
+    const theme = useSelector(selectCurrentTheme);
 
     // console.log(deliveryCharge);
 
@@ -71,10 +75,11 @@ const FinalBilling = () => {
                 const response = await result.json();
                 if (!result.ok) throw new Error(response.message);
 
-                console.log("order created", response);
+                const { order } = response;
+                // console.log("order created", response);
 
                 const result2 = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/key`, {
-                    method: "POST",
+                    method: "GET",
                     headers: {
                         "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
                         "Content-Type": "application/json",
@@ -90,7 +95,32 @@ const FinalBilling = () => {
                 if (!result2.ok) throw new Error(response2.message);
 
                 setOrderPlaceLoading(false);
-                console.log("key", response2);
+                const { key } = response2;
+                console.log("key", key, "id", order.id);
+
+                const options = {
+                    key,
+                    amount: order.amount, 
+                    currency: 'INR',
+                    name: 'ZestyEats',
+                    description: 'Test Transaction',
+                    Image: "/images/LogoSquare.png",
+                    order_id: order.id, 
+                    // callback_url: `${import.meta.env.VITE_BASE_URL}/api/payments/paymentVerification`, 
+                    prefill: {
+                        name: userName,
+                        email: userEmail,
+                        contact: userPhone,
+                    },
+                    theme: {
+                        color: theme === "dark" ? "#9f0712" : "#ff5200"
+                    },
+                };
+
+                console.log("options" , options)
+
+                const razorpayObj = new Razorpay(options);
+                razorpayObj.open();
             } catch (err) {
                 console.log("Error in creating order", err);
                 setOrderPlaceLoading(false);
