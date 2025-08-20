@@ -6,7 +6,8 @@ const { protected, checkSessionId } = require("./../controllers/userActivityCont
 const { 
     createOnlineOrder,
     createOfflineOrder,
-    getRazorpayAPIKey, 
+    getRazorpayAPIKey,
+    verifyPayment, 
 } = require("./../controllers/paymentsController");
 
 // pathname: /api/payments
@@ -17,5 +18,6 @@ paymentRouter.use(protected);
 paymentRouter.route("/onlineOrder").post(createOnlineOrder);
 paymentRouter.route("/codOrder").post(createOfflineOrder);
 paymentRouter.route("/key").get(getRazorpayAPIKey);
+paymentRouter.route("/paymentVerification").post(verifyPayment);
 
 module.exports = paymentRouter;

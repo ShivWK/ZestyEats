@@ -44,7 +44,21 @@ const FinalBilling = () => {
     const [openDeliveryInfo, setOpenDeliveryInfo] = useState(false);
     const [orderPlaceLoading, setOrderPlaceLoading] = useState(false);
     const [smallScreen, setSmallScreen] = useState(false);
-    const [orderPlaced, setOrderPlaced] = useState(false)
+    const [orderPlaced, setOrderPlaced] = useState(false);
+
+    function loadScript(src) {
+        return new Promise((resolve) => {
+            const script = document.createElement('script')
+            script.src = src
+            script.onload = () => {
+                resolve(true)
+            }
+            script.onerror = () => {
+                resolve(false)
+            }
+            document.body.appendChild(script)
+        })
+    }
 
     const checkoutClickHandler = async () => {
         if (Object.keys(deliveryAddress).length === 0 || paymentMethod === "") return;
@@ -54,6 +68,13 @@ const FinalBilling = () => {
 
         if (paymentMethod === "Online") {
             try {
+                const res = await loadScript('https://checkout.razorpay.com/v1/checkout.js')
+
+                if (!res) {
+                    alert('Razropay failed to load!!')
+                    return
+                }
+
                 const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/onlineOrder`, {
                     method: "POST",
                     headers: {
@@ -76,7 +97,6 @@ const FinalBilling = () => {
                 if (!result.ok) throw new Error(response.message);
 
                 const { order } = response;
-                // console.log("order created", response);
 
                 const result2 = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/key`, {
                     method: "GET",
@@ -96,17 +116,16 @@ const FinalBilling = () => {
 
                 setOrderPlaceLoading(false);
                 const { key } = response2;
-                console.log("key", key, "id", order.id);
+                // console.log("key", key, "id", order.id);
 
                 const options = {
                     key,
-                    amount: order.amount, 
+                    amount: order.amount,
                     currency: 'INR',
                     name: 'ZestyEats',
                     description: 'Test Transaction',
                     Image: "/images/LogoSquare.png",
-                    order_id: order.id, 
-                    // callback_url: `${import.meta.env.VITE_BASE_URL}/api/payments/paymentVerification`, 
+                    order_id: order.id,
                     prefill: {
                         name: userName,
                         email: userEmail,
@@ -115,12 +134,41 @@ const FinalBilling = () => {
                     theme: {
                         color: theme === "dark" ? "#9f0712" : "#ff5200"
                     },
+
+                    handler: async function (response) {
+                        try {
+                            const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/paymentVerification`, {
+                                method: "POST",
+                                headers: {
+                                    "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                                    "Content-Type": "application/json",
+                                    "x-user-agent": navigator.userAgent,
+                                    "x-language": navigator.language,
+                                    "x-resolution": `${screen.height}x${screen.width}`,
+                                    "x-device-id": deviceId,
+                                },
+                                body: JSON.stringify({
+                                    order_id: response.razorpay_order_id,
+                                    payment_id : response.razorpay_payment_id, 
+                                    signature: response.razorpay_signature,
+                                }),
+                                credentials: "include"
+                            });
+
+                            const beResponse = await result.json();
+                            if (!result.ok) throw new Error(beResponse.message);
+                        } catch (err) {
+                            console.log("Error in payment verification", err);
+                            
+                            setOrderPlaceLoading(false);
+                        }
+                    }
                 };
 
-                console.log("options" , options)
+                console.log("options", options)
 
-                const razorpayObj = new Razorpay(options);
-                razorpayObj.open();
+                const paymentObject = new window.Razorpay(options);
+                paymentObject.open();
             } catch (err) {
                 console.log("Error in creating order", err);
                 setOrderPlaceLoading(false);
@@ -169,7 +217,6 @@ const FinalBilling = () => {
                 dispatch(setItemToCart({ mode: "initial", object: {} }));
             } catch (err) {
                 console.log("Error in placing order", err);
-
                 setOrderPlaceLoading(false);
             }
         }

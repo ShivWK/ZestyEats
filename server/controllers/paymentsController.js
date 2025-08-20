@@ -1,5 +1,6 @@
 const instance = require("./../razorpay");
 const OrdersModel = require("./../models/ordersModel");
+const crypto = require("crypto");
 
 exports.createOnlineOrder = async (req, res, next) => {
     try {
@@ -41,6 +42,28 @@ exports.getRazorpayAPIKey = (req, res, next) => {
     })
 }
 
+exports.verifyPayment = async (req, res, next) => {
+    const { order_id, payment_id, signature } = req.body.data;
+    const signatureString = order_id + "|" + payment_id;
+
+    const expectedSignature = crypto.createHmac("sha256", process.env.RAZORPAY_TEST_API_SECRET).update(String(signatureString)).digest("hex");
+
+    if (expectedSignature === signature) {
+        return res.status(200).json({
+            status: "success",
+            message: "payment verified"
+        })
+    } else {
+        res.status(401).json({
+            status: "failed",
+            message: "payment verification failed"
+        })
+    }
+
+    // razorpay_order_id: "order_R7fHiwRavqlTM7"
+    // razorpay_payment_id: "pay_R7fI9DRE8iayZI"
+    // razorpay_signature: "65e08d3472d36f36f3326d50c03a24d4223899d7725ec82ed0b67141917c00dd"
+}
 
 exports.createOfflineOrder = async (req, res, next) => {
     const userId = req.UserID;
@@ -55,7 +78,7 @@ exports.createOfflineOrder = async (req, res, next) => {
 
     console.log(items, address, billing, payment, orderStatus);
 
-    if ( !items || !address || !billing || !payment || !orderStatus ) {
+    if (!items || !address || !billing || !payment || !orderStatus) {
         return res.status(400).json({
             status: "failed",
             message: "Please provide valid data"
