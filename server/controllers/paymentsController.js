@@ -1,4 +1,4 @@
-const instance = require("./../index");
+const instance = require("./../razorpay");
 const OrdersModel = require("./../models/ordersModel");
 
 exports.createOnlineOrder = async (req, res, next) => {
@@ -13,7 +13,7 @@ exports.createOnlineOrder = async (req, res, next) => {
         }
 
         const options = {
-            amount: Math.round(amountToPay * 100),
+            amount: amountToPay * 100,
             currency: "INR",
             receipt: `order_rcpt_${Date.now()}`
         }

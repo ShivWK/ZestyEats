@@ -68,16 +68,10 @@ app.use((req, res) => {
   res.status(404).send("Not Found");
 });
 
-const instance = new Razorpay({
-  key_id: process.env.RAZORPAY_TEST_API_KEY,
-  key_secret: process.env.RAZORPAY_TEST_API_SECRET,
-})
-
 app.listen(PORT, () => {
   console.log(`Proxy server running on ${PORT}`);
 });
 
-module.exports = instance;
 
 
 

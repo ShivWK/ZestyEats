@@ -49,7 +49,52 @@ const FinalBilling = () => {
         setOrderPlaceLoading(true);
 
         if (paymentMethod === "Online") {
+            try {
+                const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/onlineOrder`, {
+                    method: "POST",
+                    headers: {
+                        "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                        "Content-Type": "application/json",
+                        "x-user-agent": navigator.userAgent,
+                        "x-language": navigator.language,
+                        "x-resolution": `${screen.height}x${screen.width}`,
+                        "x-device-id": deviceId,
+                    },
 
+                    body: JSON.stringify({
+                        amount: payableAmount,
+                    }),
+
+                    credentials: "include"
+                });
+
+                const response = await result.json();
+                if (!result.ok) throw new Error(response.message);
+
+                console.log("order created", response);
+
+                const result2 = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/key`, {
+                    method: "POST",
+                    headers: {
+                        "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,
+                        "Content-Type": "application/json",
+                        "x-user-agent": navigator.userAgent,
+                        "x-language": navigator.language,
+                        "x-resolution": `${screen.height}x${screen.width}`,
+                        "x-device-id": deviceId,
+                    },
+                    credentials: "include"
+                })
+
+                const response2 = await result2.json();
+                if (!result2.ok) throw new Error(response2.message);
+
+                setOrderPlaceLoading(false);
+                console.log("key", response2);
+            } catch (err) {
+                console.log("Error in creating order", err);
+                setOrderPlaceLoading(false);
+            }
         } else if (paymentMethod === "COD") {
             try {
                 const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/codOrder`, {
