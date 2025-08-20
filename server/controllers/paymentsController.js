@@ -65,10 +65,10 @@ exports.verifyPayment = async (req, res, next) => {
     // razorpay_signature: "65e08d3472d36f36f3326d50c03a24d4223899d7725ec82ed0b67141917c00dd"
 }
 
-exports.createOfflineOrder = async (req, res, next) => {
+exports.placeOrder = async (req, res, next) => {
     const userId = req.UserID;
     const body = req.body;
-
+    
     const items = body.items;
     const address = body.address;
     const distance = body.distance;

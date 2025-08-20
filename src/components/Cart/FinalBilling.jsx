@@ -45,6 +45,7 @@ const FinalBilling = () => {
     const [orderPlaceLoading, setOrderPlaceLoading] = useState(false);
     const [smallScreen, setSmallScreen] = useState(false);
     const [orderPlaced, setOrderPlaced] = useState(false);
+    const [ verifyPayment, setVerifyPayment ] = useState(false);
 
     function loadScript(src) {
         return new Promise((resolve) => {
@@ -137,6 +138,7 @@ const FinalBilling = () => {
 
                     handler: async function (response) {
                         try {
+                            setVerifyPayment(true);
                             const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/paymentVerification`, {
                                 method: "POST",
                                 headers: {
@@ -157,9 +159,11 @@ const FinalBilling = () => {
 
                             const beResponse = await result.json();
                             if (!result.ok) throw new Error(beResponse.message);
+
+                            
                         } catch (err) {
                             console.log("Error in payment verification", err);
-                            
+
                             setOrderPlaceLoading(false);
                         }
                     }
@@ -175,7 +179,7 @@ const FinalBilling = () => {
             }
         } else if (paymentMethod === "COD") {
             try {
-                const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/codOrder`, {
+                const result = await fetch(`${import.meta.env.VITE_BASE_URL}/api/payments/order`, {
                     method: "POST",
                     headers: {
                         "x-identifier": import.meta.env.VITE_HASHED_IDENTIFIER,

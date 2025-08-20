@@ -16,11 +16,6 @@ const ordersSchema = new mongoose.Schema({
         }
     },
 
-    // createdAt: {
-    //     type: Date,
-    //     default: Date.now,
-    // },
-
     billing: {
         itemsTotal: Number,
         deliveryFee: Number,
@@ -48,6 +43,7 @@ const ordersSchema = new mongoose.Schema({
         transactionId: String,
         provider: String,
         razorpayOrderId: String,
+        razorpayPaymentId: String,
         razorpaySignature: String,
     },
 

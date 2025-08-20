@@ -3,11 +3,11 @@ const paymentRouter = express.Router();
 
 const { protected, checkSessionId } = require("./../controllers/userActivityControllers");
 
-const { 
+const {
     createOnlineOrder,
-    createOfflineOrder,
     getRazorpayAPIKey,
-    verifyPayment, 
+    verifyPayment,
+    placeOrder
 } = require("./../controllers/paymentsController");
 
 // pathname: /api/payments
@@ -16,7 +16,7 @@ paymentRouter.use(checkSessionId);
 paymentRouter.use(protected);
 
 paymentRouter.route("/onlineOrder").post(createOnlineOrder);
-paymentRouter.route("/codOrder").post(createOfflineOrder);
+paymentRouter.route("/order").post(placeOrder);
 paymentRouter.route("/key").get(getRazorpayAPIKey);
 paymentRouter.route("/paymentVerification").post(verifyPayment);
 
