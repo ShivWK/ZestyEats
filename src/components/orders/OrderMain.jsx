@@ -41,7 +41,7 @@ const OrderMain = () => {
     }, [])
 
     return <section className="p-1 flex flex-col gap-2 bg-gray-200">
-        {!ordersLoading
+        {ordersLoading
             ? <OrderShimmer />
             : orders.reverse().map(data => {
                 return <div key={data._id} className="rounded-md dark:bg-black bg-gray-100 overflow-hidden">
