@@ -7,7 +7,7 @@ const OrderShimmer = () => {
                 {arr.map((i) => {
                     return (
                         <div key={i} className="basis-full md:basis-[49%] pb-2 border-2 border-gray-300 rounded-md bg-white">
-                            <div className="flex flex-col gap-2 p-3 w-full">
+                            <div className="flex flex-col gap-2.5 p-3 w-full">
                                 <div className="h-4 w-[80%] shimmerBg rounded"></div>
                                 <div className="h-3 w-[70%] shimmerBg rounded"></div>
                             </div>
