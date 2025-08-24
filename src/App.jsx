@@ -1,5 +1,8 @@
 import { createBrowserRouter, Route, RouterProvider, createRoutesFromElements } from "react-router-dom";
-import React, { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import FingerprintJS from "@fingerprintjs/fingerprintjs";
+
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
 
@@ -12,44 +15,66 @@ const Profile = lazy(() => import("./components/Profile/Profile"));
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
 
-// const RestaurantSearch = lazy(() =>
-//   import("./components/RestaurantSpecific/RestraurantSearch")
-// );
+// const RestaurantSearch = lazy(() => import("./components/RestaurantSpecific/RestraurantSearch"));
 
 const RestaurantSpecific = lazy(() => import("./components/RestaurantSpecific/RestaurantSpecific"));
 const FoodSpecific = lazy(() => import("./components/FoodSpecific/FoodSpecific"));
 
-import SearchResult from "./components/Search/SearchResult";
-import SearchSuggestions from "./components/Search/SearchSuggestion";
-import SearchHome from "./components/Search/SearchHome";
-import RestaurantResultPage from "./components/Search/RestaurantResultPage";
-import DishResultPage from "./components/Search/DishResultPage";
-import CityHome from "./components/cityHome/CityHome";
+// import SearchResult from "./components/Search/SearchResult";
+const SearchResult = lazy(() => import("./components/Search/SearchResult"));
+// import SearchSuggestions from "./components/Search/SearchSuggestion";
+const SearchSuggestions = lazy(() => import("./components/Search/SearchSuggestion"));
+// import SearchHome from "./components/Search/SearchHome";
+const SearchHome = lazy(() => import("./components/Search/SearchHome"));
+// import RestaurantResultPage from "./components/Search/RestaurantResultPage";
+const RestaurantResultPage = lazy(() => import("./components/Search/RestaurantResultPage"));
+// import DishResultPage from "./components/Search/DishResultPage";
+const DishResultPage = lazy(() => import("./components/Search/DishResultPage"));
+// import CityHome from "./components/cityHome/CityHome";
+const CityHome = lazy(() => import("./components/cityHome/CityHome"));
 
-import { specificRestroLoader, specificFoodLoader, profileResponseLoader } from "./loaders/loaders";
-import { searchHomeLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
-import CuisinesResultPage from "./components/Search/CuisinesResultPage";
-import OptionsPage from "./components/MobilePages/OptionsPage";
-import ContentPage from "./components/MobilePages/ContentPage";
-import OrdersAndWishlist from "./components/MobilePages/OrdersAndWishlist";
-import CityCuisines from "./components/cityHome/CityCuisines";
-import { cuisineLoader, dishLoader, localityLoader, restaurantLoader } from "./loaders/cityPageLoaders";
-import PageNotFound from "./components/PageNotFound";
-import CityLocality from "./components/cityHome/CityLocality";
-import CityRestaurantPage from "./components/cityHome/CityRestaurantPage";
-import PopularDishes from "./components/cityHome/DishPage/PopularDishes";
-import CompanyPolicies from "./components/CompanyPolicies";
-import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
+// import CuisinesResultPage from "./components/Search/CuisinesResultPage";
+const CuisinesResultPage = lazy(() => import("./components/Search/CuisinesResultPage"))
+// import OptionsPage from "./components/MobilePages/OptionsPage";
+const OptionsPage = lazy(() => import("./components/MobilePages/OptionsPage"));
+// import ContentPage from "./components/MobilePages/ContentPage";
+const ContentPage = lazy(() => import("./components/MobilePages/ContentPage"));
+// import OrdersAndWishlist from "./components/MobilePages/OrdersAndWishlist";
+const OrdersAndWishlist = lazy(() => import("./components/MobilePages/OrdersAndWishlist"));
+// import CityCuisines from "./components/cityHome/CityCuisines";
+const CityCuisines = lazy(() => import("./components/cityHome/CityCuisines"));
+// import PageNotFound from "./components/PageNotFound";
+const PageNotFound = lazy(() => import("./components/PageNotFound"));
+// import CityLocality from "./components/cityHome/CityLocality";
+const CityLocality = lazy(() => import("./components/cityHome/CityLocality"));
+// import CityRestaurantPage from "./components/cityHome/CityRestaurantPage";
+const CityRestaurantPage = lazy(() => import("./components/cityHome/CityRestaurantPage"));
+// import PopularDishes from "./components/cityHome/DishPage/PopularDishes";
+const PopularDishes = lazy(() => import("./components/cityHome/DishPage/PopularDishes"));
+// import CompanyPolicies from "./components/CompanyPolicies";
+const CompanyPolicies = lazy(() => import("./components/CompanyPolicies"));
+// import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
+const ErrorBoundary = lazy(() => import("./components/ErrorHandling/ErrorBoundary"));
 import useOnlineStatus from "./utils/useOnlineStatus";
-import PaymentsAndAddress from "./components/Cart/PaymentsAndAddress";
-import DeleteAccount from "./components/Profile/DeleteAccount";
+// const useOnlineStatus = lazy(() => import("./utils/useOnlineStatus"));
+// import PaymentsAndAddress from "./components/Cart/PaymentsAndAddress";
+const PaymentsAndAddress = lazy(() => import("./components/Cart/PaymentsAndAddress"));
+// import DeleteAccount from "./components/Profile/DeleteAccount";
+const DeleteAccount = lazy(() => import("./components/Profile/DeleteAccount"));
+// import MobileProfile from "./components/Profile/MobileProfile";
+const MobileProfile = lazy(() => import("./components/Profile/MobileProfile"));
+// import MobileProfileResponse from "./components/Profile/MobileProfileResponse";
+const MobileProfileResponse = lazy(() => import("./components/Profile/MobileProfileResponse"));
+
+import { searchHomeLoader, resultDataLoader } from "./loaders/homeSearchLoaders";
+import { specificRestroLoader, specificFoodLoader, profileResponseLoader } from "./loaders/loaders";
+import { cuisineLoader, dishLoader, localityLoader, restaurantLoader } from "./loaders/cityPageLoaders";
 
 import {
   selectLocationModal,
   selectLogInModal,
   setHideLocation,
   setHideLogin,
-  selectLocationInfoModalReason
 } from "./features/Login/loginSlice";
 
 import {
@@ -60,12 +85,11 @@ import {
   setDeviceFingerPrint
 } from "./features/home/homeSlice";
 
-import FingerprintJS from "@fingerprintjs/fingerprintjs";
-import { selectMenuModel, setDeviceFingerPrintRestro, toggleMenuModel } from "./features/home/restaurantsSlice";
-import { useSelector, useDispatch } from "react-redux";
-import MobileProfile from "./components/Profile/MobileProfile";
-import MobileProfileResponse from "./components/Profile/MobileProfileResponse";
-import EditProfile from "./components/Profile/EditProfile";
+import {
+  selectMenuModel,
+  setDeviceFingerPrintRestro,
+  toggleMenuModel
+} from "./features/home/restaurantsSlice";
 
 export default function App() {
   useOnlineStatus();
@@ -223,12 +247,51 @@ export default function App() {
             </Suspense>
           }
         >
-          <Route index loader={searchHomeLoader} element={<SearchHome />} />
-          <Route path="suggestions" element={<SearchSuggestions />} />
-          <Route path="searchResult" element={<SearchResult />} >
-            <Route path="restaurantPage" loader={resultDataLoader} element={<RestaurantResultPage />} />
-            <Route path="dishPage" loader={resultDataLoader} element={<DishResultPage />} />
-            <Route path="cuisinesPage" loader={resultDataLoader} element={<CuisinesResultPage />} />
+          <Route index
+            loader={searchHomeLoader}
+            element={
+              <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+                <SearchHome />
+              </Suspense>
+            }
+          />
+          <Route
+            path="suggestions"
+            element={
+              <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+                <SearchSuggestions />
+              </Suspense>} />
+          <Route
+            path="searchResult"
+            element={
+              <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+                <SearchResult />
+              </Suspense>
+            }
+          >
+            <Route
+              path="restaurantPage"
+              loader={resultDataLoader} element={
+                <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+                  <RestaurantResultPage />
+                </Suspense>
+              } />
+            <Route
+              path="dishPage"
+              loader={resultDataLoader}
+              element={
+                <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+                  <DishResultPage />
+                </Suspense>
+              } />
+            <Route
+              path="cuisinesPage"
+              loader={resultDataLoader}
+              element={
+                <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+                  <CuisinesResultPage />
+                </Suspense>
+              } />
           </Route>
         </Route>
 
@@ -287,27 +350,117 @@ export default function App() {
         <Route
           path="specificFood/:food"
           element={
-            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>}>
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
               <FoodSpecific />
             </Suspense>
           }
           loader={specificFoodLoader}
         />
-        <Route path="cityPage/:cityName" element={<CityHome />} />
-        <Route path="cityCuisines/:cityName" element={<CityCuisines />} loader={cuisineLoader} />
-        <Route path="cityRestaurant/:cityName" element={<CityRestaurantPage />} loader={restaurantLoader} />
-        <Route path="cityLocality/:cityName/:locality" element={<CityLocality />} loader={localityLoader} />
-        <Route path="cityDishes/:cityName/:dish" element={<PopularDishes />} loader={dishLoader} />
+        <Route
+          path="cityPage/:cityName"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <CityHome />
+            </Suspense>
+          } />
+        <Route
+          path="cityCuisines/:cityName"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <CityCuisines />
+            </Suspense>
+          }
+          loader={cuisineLoader}
+        />
+        <Route
+          path="cityRestaurant/:cityName"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <CityRestaurantPage />
+            </Suspense>
+          }
+          loader={restaurantLoader} />
+        <Route
+          path="cityLocality/:cityName/:locality"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <CityLocality />
+            </Suspense>
+          }
+          loader={localityLoader} />
+        <Route
+          ath="cityDishes/:cityName/:dish"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <PopularDishes />
+            </Suspense>
+          }
+          loader={dishLoader} />
 
-        <Route path="support" element={<OptionsPage />} />
-        <Route path="mbAbout" element={<OptionsPage />} />
-        <Route path="mbStaticData" element={<ContentPage />} />
-        <Route path="ordersAndWishlist" element={<OrdersAndWishlist />} />
-        <Route path='*' element={<PageNotFound />} />
-        <Route path="legalAndPolicies" element={<CompanyPolicies />} />
-        <Route path="mobileProfileResponse" loader={profileResponseLoader} element={<MobileProfileResponse />} />
-        <Route path="paymentsAndAddresses" element={<PaymentsAndAddress />} />
-        <Route path="deleteAccount" element={<DeleteAccount />} />
+        <Route
+          path="support"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <OptionsPage />
+            </Suspense>
+          } />
+        <Route
+          path="mbAbout"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <OptionsPage />
+            </Suspense>
+          } />
+        <Route
+          path="mbStaticData"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <ContentPage />
+            </Suspense>
+          } />
+        <Route
+          path="ordersAndWishlist"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <OrdersAndWishlist />
+            </Suspense>
+          } />
+        <Route
+          path='*'
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <PageNotFound />
+            </Suspense>
+          } />
+        <Route
+          path="legalAndPolicies"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <CompanyPolicies />
+            </Suspense>
+          } />
+        <Route
+          path="mobileProfileResponse"
+          loader={profileResponseLoader}
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <MobileProfileResponse />
+            </Suspense>
+          } />
+        <Route
+          path="paymentsAndAddresses"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <PaymentsAndAddress />
+            </Suspense>
+          } />
+        <Route
+          path="deleteAccount"
+          element={
+            <Suspense fallback={<div className="h-[110vh]"><p>loading...</p></div>} >
+              <DeleteAccount />
+            </Suspense>
+          } />
       </Route>
     )
   );
