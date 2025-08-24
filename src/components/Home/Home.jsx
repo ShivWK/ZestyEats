@@ -114,8 +114,12 @@ const Home = memo(() => {
             <section className="w-full max-w-[1040px] mx-auto">
               <Suspense
                 fallback={
-                  <div className="flex justify-between max-md:gap-3 overflow-hidden max-md:px-1.5">
-                    {shimmerArray.map(i => <div key={i} className="w-56 md:w-60 h-40 rounded-xl shimmerBg shrink-0" />)}
+                  <div className="flex flex-col gap-6 max-md:gap-3 max-md:px-1.5">
+                    <div className="w-[80%] h-6 rounded-md shimmerBg" />
+
+                    <div className="flex justify-between max-md:gap-3 overflow-hidden">
+                      {shimmerArray.map(i => <div key={i} className="w-80 h-48 md:w-60 md:h-40 rounded-xl shimmerBg shrink-0" />)}
+                    </div>
                   </div>
                 }
               >
@@ -133,8 +137,8 @@ const Home = memo(() => {
             <section className="w-full">
               <Suspense
                 fallback={
-                  <div className="flex justify-between md:flex-row flex-col max-md:gap-3 max-md:px-1.5">
-                    {shimmerArray.map(i => <div key={i} className="w-full md:w-60 h-40 md:h-44 rounded-xl shimmerBg shrink-0" />)}
+                  <div className="flex justify-between md:flex-row flex-col gap-3 max-md:gap-3 max-md:px-1.5">
+                    {shimmerArray.map(i => <div key={i} className="w-full md:w-60 h-48 md:h-44 rounded-xl shimmerBg shrink-0" />)}
                   </div>
                 }
               >

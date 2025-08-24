@@ -86,9 +86,9 @@ const MainContainer = ({ data }) => {
           <ScooterAnimation />
         </div>
       </main>
-      <div className="hidden md:block">
+      {!noData && <div className="hidden md:block">
         <ScooterAnimation />
-      </div>
+      </div>}
     </>
     : <main className="flex items-center justify-center bg-gray-300">
       <p className="text-gray-800 font-semibold">{`Sorry we do not have any restaurants for ${title} in your location`}</p>

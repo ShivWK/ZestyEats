@@ -18,4 +18,3 @@ export default function MainHeader({
   );
 }
 
-// import react from 'react'; // This is not required in react 17 and above because here React.createElement() is not used for JSX to JS convertion instead special functions from react/jsx-runtime like:

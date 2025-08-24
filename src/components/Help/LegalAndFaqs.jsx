@@ -7,8 +7,6 @@ const LegalAndFaqs = memo(() => {
     const [activeIndex, setActiveIndex] = useState(0);
     const faqsStatus = useSelector(selectFaqs);
 
-    console.log(faqsStatus)
-
     const handleClick = (index) => {
         if (activeIndex === null) {
             setActiveIndex(index);

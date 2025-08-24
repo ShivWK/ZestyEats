@@ -101,17 +101,13 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
           <NavItem to="about" icon={"fa-utensils text-lg"} text="About" />
         )}
         {showSearch && (
-
           <NavItem
             to={`search?lat=${lat}&lng=${lng}`}
             icon={"fa-magnifying-glass text-lg"}
             text="Search"
           />
         )}
-
         <NavItem to="help" icon={"fa-solid fa-handshake-angle"} text="Help" />
-
- {/*  */}
 
         {loggedIn ? (
           <NavItem to={isSmall ? "/mobileProfile" : "/profile"} icon={"fa-user text-lg"} text={userDetails?.userName?.split(" ")[0] || "User"} />

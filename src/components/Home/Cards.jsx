@@ -1,4 +1,4 @@
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { selectLatAndLng } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -18,7 +18,6 @@ import textToZestyEats from "../../utils/textToZestyEats";
 import calDistance from "../../utils/haversineFormula";
 
 const Cards = memo(({ data, from }) => {
-  // console.log(data)
   const pathname = useLocation().pathname;
   let latAndLngSelector = selectLatAndLng;
   let mode = "homePage"

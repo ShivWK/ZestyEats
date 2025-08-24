@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import ScooterAnimation from "../../utils/ScooterAnimation";
 
 const CuisineShimmer = () => {
     function calArray() {
         const isLarge = window.innerWidth >= 768;
-
         return { topOnline: Array.from({ length: isLarge ? 8 : 9 }, (_, i) => i) }
     }
 
@@ -15,7 +13,6 @@ const CuisineShimmer = () => {
             setMappingArrays(calArray());
         }
 
-        // if u put outside the useEffect then on each rerender a new listner will will be attaiched to the window  = memory leak
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, [])

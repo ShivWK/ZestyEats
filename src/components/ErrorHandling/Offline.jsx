@@ -6,8 +6,7 @@ const Offline = () => {
     return (
         <main className="flex flex-col px-3 justify-center items-center h-full gap-3.5">
             <div className="flex flex-col gap-3 items-center justify-center">
-
-                <svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 926 584.958" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" artist="Katerina Limpitsouni" source="https://undraw.co/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="600" height="200" viewBox="0 0 926 584.958" xmlnsXlink="http://www.w3.org/1999/xlink" role="img" artist="Katerina Limpitsouni" source="https://undraw.co/">
                     <g id="Group_236" dataName="Group 236" transform="translate(-497 -248)">
                         <circle id="Ellipse_613" dataName="Ellipse 613" cx="83.979" cy="83.979" r="83.979" transform="translate(650.926 248)" fill="#ff5200" />
                         <path id="Path_3715-856" dataName="Path 3715" d="M1063,276.46V497.34c0,180.055-145.962,326.01-326.009,326H137V602.46c0-118.03,62.73-221.42,156.68-278.63a323.578,323.578,0,0,1,50.88-25.18,320.085,320.085,0,0,1,31.76-10.53c.21-.07.43-.13.64-.18q4.77-1.3,9.6-2.46c.18-.05.35-.09.53-.13a326.114,326.114,0,0,1,60.47-8.53c2.41-.11,4.82-.2,7.25-.25.87-.03,1.75-.05,2.64-.05q2.76-.06,5.55-.06Z" transform="translate(360 8.458)" fill="#090814" />

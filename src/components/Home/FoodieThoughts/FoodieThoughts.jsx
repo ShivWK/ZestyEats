@@ -1,10 +1,12 @@
-import { memo, useState } from "react";
+import { memo } from "react";
 import Cards from "./Cards";
 import HorizontalCarousel from "../../HorizontalCarousel";
+import { selectUserDetails } from "../../../features/home/homeSlice";
+import { useSelector } from "react-redux";
 
 const FoodieThoughts = memo(({ data }) => {
-  const [user, setUser] = useState("Shivendra");
-  const title = user ? `${user}, what's on your mind?` : "What's on your mind?";
+  let { userName } = useSelector(selectUserDetails);
+  const title = userName ? `${userName?.split(" ")[0]}, what's on your mind?` : "What's on your mind?";
 
   return (
     <HorizontalCarousel

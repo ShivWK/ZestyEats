@@ -6,7 +6,6 @@ import useScrollToTop from "../../utils/useScrollToTop";
 
 import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
 import TopRestaurantChains from "../Home/TopRestaurantChains";
-
 const OnlineDeliveryRestaurant = lazy(() => import("../Home/OnlineDeliveryRestaurant"));
 const PlaceCardsContainer = lazy(() => import("../Home/PlaceCardsContainer"));
 
@@ -31,11 +30,9 @@ const MainContent = ({ data }) => {
     const whatEatingCuisineTitle = mainData.cuisines.title;
     const localityLatAndLng = mainData.localityLatAndLng;
 
-    useEffect(() => {
-        dispatch(setLocalityLatAndLng(localityLatAndLng));
-    })
+    useEffect(() => dispatch(setLocalityLatAndLng(localityLatAndLng)))
 
-    const whatEatingClickHandler = async (data, trigger, setLoading, updateData, dispatch, setSecondaryCity) => {
+    const whatEatingClickHandler = async (dispatch, setSecondaryCity) => {
         dispatch(setSecondaryCity(secondaryCity))
 
         window.scrollTo({
@@ -142,7 +139,7 @@ const MainContent = ({ data }) => {
                 </section>
             )}
 
-            {/* <BackToTopBtn percentage={40} /> */}
+            {/* <BackToTopBtn /> */}
         </main>
     );
 };
@@ -163,7 +160,6 @@ const CityLocality = () => {
         <Await resolve={data}>
             {data => {
                 const cardData = data?.data?.props?.pageProps?.widgetResponse?.success?.cards;
-
                 if (!cardData) {
                     return <main className="w-full md:max-w-[1070px] mx-auto pb-4 pt-28 md:pt-40 overflow-x-hidden max-md:px-3 flex flex-col gap-2 items-center min-h-96">
                         <p className="text-5xl">😔</p>
@@ -171,7 +167,6 @@ const CityLocality = () => {
                         <p className="text-center text-xl font-semibold text-gray-600">We’re working to bring more restaurants and offers to this area. Stay tuned!</p>
                     </main>
                 }
-
                 return <MainContent data={cardData} />
             }}
         </Await>

@@ -25,7 +25,7 @@ const Filter = memo(({ text1 = "Pure Veg", text2 = "Veg & Non-Veg" }) => {
 
   const vegHandler = () => {
     dispatch(setVegOption(!veg)); 
-    setVeg(!veg); // false
+    setVeg(!veg); 
     setNonVeg(false)
     console.log()
   }

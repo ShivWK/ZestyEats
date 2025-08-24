@@ -24,9 +24,6 @@ const MainContent = () => {
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
   const data = useSelector(selectPageData);
   const secondaryCity = useSelector(selectSecondaryCity);
-  const cityLatAndLng = useSelector(selectCityLatAndLng);
-
-  // console.log(cityLatAndLng)
 
   const banner_text = data.cityBannerText;
   const foodieThoughtsData = data.cityFoodieData;
@@ -43,7 +40,7 @@ const MainContent = () => {
   const popularDishesTitle = data.popularDishInCityTitle;
   const popularDishesData = data.popularDishInCityData;
 
-  const placeCardClickHandler = async (data, trigger, setLoading, updataCityData, dispatch, setSecondaryCity) => {
+  const placeCardClickHandler = async (dispatch, setSecondaryCity) => {
     dispatch(setSecondaryCity(secondaryCity))
 
     window.scrollTo({
@@ -51,7 +48,6 @@ const MainContent = () => {
       behavior: "smooth"
     })
   }
-
 
   return (
     <main className="w-full md:max-w-[1070px] mx-auto pb-10 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
@@ -150,7 +146,6 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          {/* <hr className="mt-10 mb-8 text-gray-400" /> */}
         </>
       )}
 
@@ -180,7 +175,6 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          {/* <hr className="mt-10 mb-8 text-gray-400" /> */}
         </>
       )}
 
@@ -210,7 +204,6 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          {/* <hr className="mt-10 mb-8 text-gray-400" /> */}
         </>
       )}
 
@@ -218,10 +211,7 @@ const MainContent = () => {
 
       {popularDishesData?.length !== 0 && (
         <>
-          <section
-            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
-                   flex-col"
-          >
+          <section className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4 flex-col" >
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">

@@ -50,5 +50,3 @@ const AllCities = memo(() => {
 });
 
 export default AllCities;
-
-// dispatch(setCity(city.text)
