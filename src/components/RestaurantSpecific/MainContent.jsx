@@ -1,10 +1,12 @@
-import { useEffect, useMemo, lazy, Suspense, useState } from "react";
+import { useEffect, useMemo, lazy, Suspense, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addCurrentRestaurant, toggleMenuModel, selectMenuModel } from "../../features/home/restaurantsSlice";
+import { selectVegVariant } from "../../features/home/restaurantsSlice";
 import { useParams } from "react-router-dom";
 
 import Banner from "./Banner";
 import Footer from "./Footer";
+import NoData from "../../utils/NoData";
 
 import Offers from "./Offers";
 const SearchBar = lazy(() => import("./SearchBar"));
@@ -22,6 +24,10 @@ const MainContent = ({ data, routes = true }) => {
   useScrollToTop();
   const restaurantData = {};
   const [showMenu, setShowMenu] = useState(false);
+  const [noData, setNoData] = useState(false);
+  const mainRef = useRef(null);
+  const totalCount = useRef(0);
+
   const dispatch = useDispatch();
   const cards = data?.data?.cards;
 
@@ -40,9 +46,11 @@ const MainContent = ({ data, routes = true }) => {
     ?.groupedCard?.cardGroupMap?.REGULAR?.cards.slice(1) || [];
 
   const menuModel = useSelector(selectMenuModel);
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
 
   useEffect(() => {
     dispatch(addCurrentRestaurant(title));
+    if (mainRef.current) totalCount.current = mainRef.current.childElementCount;
   }, []);
 
   const topPicks = useMemo(
@@ -89,6 +97,18 @@ const MainContent = ({ data, routes = true }) => {
     });
   });
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (!mainRef.current) return;
+
+      const visibleElementsCount = Array.from(mainRef.current.children).filter(
+        (ele) => ele.style.display !== "none"
+      ).length
+
+      setNoData(visibleElementsCount === 0)
+    }, 500)
+  }, [vegOption, nonVegOption])
+
   return (
     <>
       <main className="flex items-center flex-col pt-18 md:pt-24 px-2 md:px-0 mx-auto w-full md:max-w-[800px] scroll-smooth">
@@ -122,9 +142,10 @@ const MainContent = ({ data, routes = true }) => {
       </section> */}
 
         {/* Top Picks */}
-        <section className="w-full mt-2">
+        <section ref={mainRef} className="w-full mt-2">
           {topPicks && (
             <Suspense
+              ref={mainRef}
               fallback={
                 <div className="flex justify-between overflow-hidden">
                   <div className="w-64 h-60 shrink-0 rounded-xl shimmerBg">
@@ -149,13 +170,15 @@ const MainContent = ({ data, routes = true }) => {
         {/* Menu */}
         {menuModel && <Menu clickHandler={setShowMenu} />}
 
-        <section className="w-full mt-4 first:border-t-gray-200 first:border-t-[16px]">
-          {restMenuData?.length > 0 &&
+        <section ref={mainRef} className="w-full mt-4 first:border-t-gray-200 first:border-t-[16px]">
+          {noData
+            ? <NoData />
+            : restMenuData?.length > 0 &&
             restMenuData?.map((item, index) => {
               if (item?.card?.card?.categories) {
                 return (
                   <Suspense
-                    key={item?.card?.card?.categoryId || Math.random()}
+                    key={index}
                     fallback={
                       <div className="w-full p-3 h-56 rounded-xl gap-2 my-2 flex flex-col md:flex-row border-[1px] border-gray-400">
                         <div className="basis-1/2 md:basis-[35%] h-full shimmerBg rounded-xl md:order-2"></div>
@@ -169,7 +192,6 @@ const MainContent = ({ data, routes = true }) => {
                     }
                   >
                     <ItemsMainHeading
-                      key={item?.card?.card?.categoryId || Math.random()}
                       heading={textToZestyEats(item?.card?.card?.title)}
                       categories={item?.card?.card?.categories}
                       topBorder={index === 0}
@@ -196,7 +218,6 @@ const MainContent = ({ data, routes = true }) => {
                   }
                 >
                   <ItemsMainHeading
-                    key={item?.card?.card?.categoryId || Math.random()}
                     heading={textToZestyEats(item?.card?.card?.title)}
                     items={item?.card?.card?.itemCards}
                     topBorder={index === 0}
