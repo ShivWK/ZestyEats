@@ -133,10 +133,10 @@ const Verification = () => {
     }
 
     return <div>
-        <h2 className="text-center">{title}</h2>
+        <h2 className="text-center dark:text-gray-200">{title}</h2>
         {otpSend
-            ? <p className="text-sm text-center">{`We sent a code to ${sendTo}.`}</p>
-            : <p className="text-sm text-center">{`We’ll send you a 6-digit code to ${sendTo} to complete verification.`}</p>
+            ? <p className="text-sm text-center dark:text-gray-300">{`We sent a code to ${sendTo}.`}</p>
+            : <p className="text-sm text-center dark:text-gray-300">{`We’ll send you a 6-digit code to ${sendTo} to complete verification.`}</p>
         }
 
         {otpSend && <OtpEntry count={6} setOtp={setOtp} />}
