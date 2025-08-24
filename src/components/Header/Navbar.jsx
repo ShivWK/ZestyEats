@@ -38,7 +38,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
           <button
             onBlur={() => setShowDrop(false)}
             onClick={() => setShowDrop(!showDrop)}
-            className="group relative cursor-pointer"
+            className="group relative cursor-pointer flex items-center justify-center"
           >
             <p className="group flex items-center justify-between gap-3 hover:cursor-pointer">
               {theme === "light" ? (
