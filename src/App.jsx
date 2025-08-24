@@ -2,6 +2,7 @@ import { createBrowserRouter, Route, RouterProvider, createRoutesFromElements } 
 import { Suspense, lazy, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import FingerprintJS from "@fingerprintjs/fingerprintjs";
+import useOnlineStatus from "./utils/useOnlineStatus";
 
 import Layout from "./components/Layout";
 import Home from "./components/Home/Home";
@@ -15,55 +16,32 @@ const Profile = lazy(() => import("./components/Profile/Profile"));
 import { Bounce, ToastContainer } from "react-toastify";
 import CloseToastBtn from "./components/CloseToastBtn";
 
-// const RestaurantSearch = lazy(() => import("./components/RestaurantSpecific/RestraurantSearch"));
-
 const RestaurantSpecific = lazy(() => import("./components/RestaurantSpecific/RestaurantSpecific"));
 const FoodSpecific = lazy(() => import("./components/FoodSpecific/FoodSpecific"));
 
-// import SearchResult from "./components/Search/SearchResult";
 const SearchResult = lazy(() => import("./components/Search/SearchResult"));
-// import SearchSuggestions from "./components/Search/SearchSuggestion";
 const SearchSuggestions = lazy(() => import("./components/Search/SearchSuggestion"));
-// import SearchHome from "./components/Search/SearchHome";
 const SearchHome = lazy(() => import("./components/Search/SearchHome"));
-// import RestaurantResultPage from "./components/Search/RestaurantResultPage";
 const RestaurantResultPage = lazy(() => import("./components/Search/RestaurantResultPage"));
-// import DishResultPage from "./components/Search/DishResultPage";
 const DishResultPage = lazy(() => import("./components/Search/DishResultPage"));
-// import CityHome from "./components/cityHome/CityHome";
 const CityHome = lazy(() => import("./components/cityHome/CityHome"));
+// const RestaurantSearch = lazy(() => import("./components/RestaurantSpecific/RestraurantSearch"));
 
-// import CuisinesResultPage from "./components/Search/CuisinesResultPage";
 const CuisinesResultPage = lazy(() => import("./components/Search/CuisinesResultPage"))
-// import OptionsPage from "./components/MobilePages/OptionsPage";
 const OptionsPage = lazy(() => import("./components/MobilePages/OptionsPage"));
-// import ContentPage from "./components/MobilePages/ContentPage";
 const ContentPage = lazy(() => import("./components/MobilePages/ContentPage"));
-// import OrdersAndWishlist from "./components/MobilePages/OrdersAndWishlist";
 const OrdersAndWishlist = lazy(() => import("./components/MobilePages/OrdersAndWishlist"));
-// import CityCuisines from "./components/cityHome/CityCuisines";
 const CityCuisines = lazy(() => import("./components/cityHome/CityCuisines"));
-// import PageNotFound from "./components/PageNotFound";
 const PageNotFound = lazy(() => import("./components/PageNotFound"));
-// import CityLocality from "./components/cityHome/CityLocality";
 const CityLocality = lazy(() => import("./components/cityHome/CityLocality"));
-// import CityRestaurantPage from "./components/cityHome/CityRestaurantPage";
+
 const CityRestaurantPage = lazy(() => import("./components/cityHome/CityRestaurantPage"));
-// import PopularDishes from "./components/cityHome/DishPage/PopularDishes";
 const PopularDishes = lazy(() => import("./components/cityHome/DishPage/PopularDishes"));
-// import CompanyPolicies from "./components/CompanyPolicies";
 const CompanyPolicies = lazy(() => import("./components/CompanyPolicies"));
-// import ErrorBoundary from "./components/ErrorHandling/ErrorBoundary";
 const ErrorBoundary = lazy(() => import("./components/ErrorHandling/ErrorBoundary"));
-import useOnlineStatus from "./utils/useOnlineStatus";
-// const useOnlineStatus = lazy(() => import("./utils/useOnlineStatus"));
-// import PaymentsAndAddress from "./components/Cart/PaymentsAndAddress";
 const PaymentsAndAddress = lazy(() => import("./components/Cart/PaymentsAndAddress"));
-// import DeleteAccount from "./components/Profile/DeleteAccount";
 const DeleteAccount = lazy(() => import("./components/Profile/DeleteAccount"));
-// import MobileProfile from "./components/Profile/MobileProfile";
 const MobileProfile = lazy(() => import("./components/Profile/MobileProfile"));
-// import MobileProfileResponse from "./components/Profile/MobileProfileResponse";
 const MobileProfileResponse = lazy(() => import("./components/Profile/MobileProfileResponse"));
 
 import { searchHomeLoader, resultDataLoader } from "./loaders/homeSearchLoaders";

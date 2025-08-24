@@ -26,7 +26,6 @@ const MainContent = ({ data, routes = true }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [noData, setNoData] = useState(false);
   const mainRef = useRef(null);
-  const totalCount = useRef(0);
 
   const dispatch = useDispatch();
   const cards = data?.data?.cards;
@@ -50,7 +49,6 @@ const MainContent = ({ data, routes = true }) => {
 
   useEffect(() => {
     dispatch(addCurrentRestaurant(title));
-    if (mainRef.current) totalCount.current = mainRef.current.childElementCount;
   }, []);
 
   const topPicks = useMemo(
@@ -103,11 +101,11 @@ const MainContent = ({ data, routes = true }) => {
 
       const visibleElementsCount = Array.from(mainRef.current.children).filter(
         (ele) => ele.style.display !== "none"
-      ).length
+      ).length;
 
-      setNoData(visibleElementsCount === 0)
+      setNoData(visibleElementsCount === 0);
     }, 500)
-  }, [vegOption, nonVegOption])
+  }, [vegOption, nonVegOption]);
 
   return (
     <>

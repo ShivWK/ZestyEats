@@ -2,14 +2,18 @@ import Cards from "./../Home/Cards";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentFoodCategory } from "./../../features/header/headerSlice";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 import Filter from "../Home/Filters";
 import ScooterAnimation from "../../utils/ScooterAnimation";
+import NoData from "../../utils/NoData";
 
 const MainContainer = ({ data }) => {
-  const dispatch = useDispatch();
+  const [noData, setNoData] = useState(false);
+  const mainRef = useRef(null);
+
   const { vegOption, nonVegOption } = useSelector(selectVegVariant);
+  const dispatch = useDispatch();
 
   const cards = data?.data?.cards;
   const banner = cards?.[0]?.card?.card;
@@ -26,11 +30,21 @@ const MainContainer = ({ data }) => {
     return type && !unwantedTypes.includes(type);
   });
 
-  const dataToSend = mainData.map((card) => card?.card?.card?.info);
+  const dataToSend = mainData?.map((card) => card?.card?.card?.info);
 
   useEffect(() => {
     dispatch(setCurrentFoodCategory(title));
   }, []);
+
+  useEffect(() => {
+    if (!mainRef.current) return;
+
+    const visibleElementsCount = Array.from(mainRef.current.children).filter(
+      ele => ele.style.display !== "none"
+    ).length;
+
+    setNoData(visibleElementsCount === 0);
+  }, [vegOption, nonVegOption])
 
   return (cards ?
     <>
@@ -55,14 +69,17 @@ const MainContainer = ({ data }) => {
           <p>Explore Restaurants</p>
         </div>
         <div className="flex justify-center">
-          <div className="flex w-full gap-9 py-1 flex-wrap">
-            {dataToSend.map((item, index) => {
+          <div ref={mainRef} className="flex w-full gap-9 py-1 flex-wrap">
+            {noData
+              ? <NoData text1="No restaurants available for the selected filter." text2="" />
+              : dataToSend.map((item, index) => {
 
-              if (!vegOption && item.veg) return;
-              if (!nonVegOption && !item.veg) return;
+                if (!vegOption && item.veg) return;
+                if (!nonVegOption && !item.veg) return;
 
-              return <Cards key={index} data={item} from="specificFood" />;
-            })}
+                return <Cards key={index} data={item} from="specificFood" />;
+              })
+            }
           </div>
         </div>
         <div className="md:hidden">
