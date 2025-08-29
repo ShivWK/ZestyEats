@@ -23,7 +23,7 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
       onClick={() => {
         handleClick(item);
       }}
-      className="group cursor-pointer not-last:border-b-[1px] border-gray-400 py-2 px-3 md:py-4 md:px-7 mt-3 w-full"
+      className="group cursor-pointer not-last:border-b-[1px] border-gray-400 py-2  md:py-4 md:px-7 mt-3 w-full"
     >
       <div className="flex gap-2.5 relative w-full">
         <i className={`${icon} text-xl text-gray-500 dark:text-gray-300`}></i>
@@ -37,7 +37,7 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
         </div>
         {index !== null && (
           <button
-            className="absolute cursor-pointer -right-4"
+            className="absolute cursor-pointer right-0"
             onClick={handleCrossClick}
           >
             <i

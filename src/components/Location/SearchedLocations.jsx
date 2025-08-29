@@ -16,11 +16,13 @@ import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
 import { memo, useCallback } from "react";
 
 import { recentLocationModifier } from "../../utils/guestSessionDataModifier";
+import Loader from "../Loader";
 
 const SearchedLocation = memo(({
   locationsfetched,
   setSearchedLocation,
   setSearchValue,
+  searchLoading
 }) => {
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
@@ -95,17 +97,23 @@ const SearchedLocation = memo(({
 
   return (
     <div className="mt-6 overflow-hidden border-[1px] border-gray-400 p-2 pb-3 overflow-y-auto pretty-scrollbar">
-      <h2 className="text-lg text-gray-400 ml-1 md:ml-2 mt-1 md:mt-2">Matching Locations</h2>
-      <div className="-mt-1">
-        {locationsfetched.map((location, index) => (
-          <Location
-            key={location.place_id}
-            icon="ri-map-pin-line"
-            item={location}
-            handleClick={() => handleSearchedLocationClick(location)}
-          />
-        ))}
-      </div>
+      <h2 className="text-lg text-gray-400 pl-1 md:pl-2 pt-1 md:pt-2">Matching Locations</h2>
+      {
+        searchLoading
+          ? <div className="flex items-center justify-center py-2">
+              <Loader size={"small"} />
+            </div>
+          : <div className="-mt-1">
+            {locationsfetched.map((location, index) => (
+              <Location
+                key={location.place_id}
+                icon="ri-map-pin-line"
+                item={location}
+                handleClick={() => handleSearchedLocationClick(location)}
+              />
+            ))}
+          </div>
+      }
     </div>
   );
 });

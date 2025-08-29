@@ -9,6 +9,7 @@ import SearchedLocation from "./SearchedLocations";
 const ModalSubContainer = memo(() => {
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
+  const [searchLoading, setSearchLoading] = useState(false);
   const [searchedLocation, setSearchedLocation] = useState([]);
   const [Focused, setFocused] = useState(false);
   const inputRef = useRef(null);
@@ -27,6 +28,7 @@ const ModalSubContainer = memo(() => {
       try {
         if (input) {
           const data = await triggerAutoCompleteSearch(input).unwrap();
+          setSearchLoading(false);
           if (data) setSearchedLocation(data?.data);
         }
       } catch (err) {
@@ -55,6 +57,7 @@ const ModalSubContainer = memo(() => {
 
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
+    setSearchLoading(true);
     debouncedHandleInputChange.current(e.target.value.trim());
   };
 
@@ -120,6 +123,7 @@ const ModalSubContainer = memo(() => {
           locationsfetched={searchedLocation}
           setSearchedLocation={setSearchedLocation}
           setSearchValue={setSearchValue}
+          searchLoading={searchLoading}
         />
       )}
     </div>
