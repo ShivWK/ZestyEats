@@ -1,9 +1,7 @@
-import { memo, useCallback, useEffect, useRef } from "react";
-import { motion, useScroll } from "motion/react";
+import { memo, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {
-  addRecentLocations,
+import {  
   selectRecentLocations,
   selectLatAndLng,
 } from "../../features/home/homeSlice";
@@ -22,7 +20,6 @@ const RecentLocations = memo(() => {
   const recentLocations = useSelector(selectRecentLocations);
   const { lat: latitude, lng: longitude } = useSelector(selectLatAndLng);
   const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({ container: containerRef });
   const dispatch = useDispatch();
   const [triggerLocationCall] = useLazySearchedLocationQuery();
   const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
