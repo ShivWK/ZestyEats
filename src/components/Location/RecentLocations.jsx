@@ -83,12 +83,8 @@ const RecentLocations = memo(() => {
   return (
     <div
       ref={containerRef}
-      className="relative border-[1px] border-gray-400 p-3.5 mt-6 md:p-6 overflow-auto"
+      className="relative border-[1px] border-gray-400 p-3.5 mt-6 md:p-6 overflow-y-auto overflow-x-hidden"
     >
-      <motion.div
-        className="fixed top-0 h-2bg-primary left-0 origin-left"
-        style={{ scaleX: scrollYProgress }}
-      />
       <p className="text-sm font-semibold text-gray-400 dark:text-gray-300">RECENT SEARCHES</p>
       {recentLocations.length !== 0 ? (
         recentLocations.map((location, index) => (
