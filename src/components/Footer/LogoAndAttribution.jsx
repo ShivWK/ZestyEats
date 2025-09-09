@@ -50,10 +50,22 @@ const LogoAndAttribution = () => {
           />
           <div className="flex flex-col justify-center italic dark:text-gray-200">
             <p className="text-lg ">Shivendra Dwivedi</p>
-            <p className="text-sm">Web Developer</p>
-            {/* <a href="" className="flex items-center text-primary gap-1 text-sm tracking-wider">
+            <p className="flex items-center gap-2 text-sm">
+              <span>Web Developer</span>
+              <p className="text-gray-800 lg:hidden dark:text-gray-300">•</p>
+              <a
+                href="https://portfolio.shivendra.site"
+                target="__blank"
+                className="lg:hidden text-primary text-sm tracking-wider underline underline-offset-2">
+                Portfolio
+              </a>
+            </p>
+            <a
+              href="https://portfolio.shivendra.site"
+              target="__blank"
+              className="hidden lg:inline text-primary text-sm tracking-wider underline underline-offset-2">
               Portfolio
-            </a> */}
+            </a>
             <div className="max-md:flex gap-3 mt-2 hidden">
               <a
                 href="https://www.linkedin.com/in/shivendra-dwivedi"
@@ -64,13 +76,13 @@ const LogoAndAttribution = () => {
                   className="fa-brands fa-linkedin text-xl text-[#0077b5] dark:text-[rgb(41,140,240)]"
                 ></i>
               </a>
-              <a
+              {/* <a
                 href="https://portfolio.shivendra.site"
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
                 target="__block"
               >
                 <i className="fa-solid fa-globe text-xl text-blue-500 dark:text-blue-400"></i>
-              </a>
+              </a> */}
               <a
                 href="https://github.com/ShivWK"
                 className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
@@ -119,13 +131,13 @@ const LogoAndAttribution = () => {
                 className="fa-brands fa-linkedin text-2xl text-[#0077b5] dark:text-[rgb(41,140,240)]"
               ></i>
             </a>
-            <a
+            {/* <a
               href="https://portfolio.shivendra.site"
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
               target="__block"
             >
               <i className="fa-solid fa-globe text-2xl text-blue-500 dark:text-blue-400"></i>
-            </a>
+            </a> */}
             <a
               href="https://github.com/ShivWK"
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
