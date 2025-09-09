@@ -32,7 +32,7 @@ const LogoAndAttribution = () => {
         </div>
         <p className="text-gray-800 text-sm dark:text-gray-200">
           <span className="whitespace-nowrap">© 2025 Shivendra</span><span>┃</span><span>Food delivery app built for learning and
-          demonstration.</span>
+            demonstration.</span>
         </p>
       </div>
       <div className="attibution text-gray-800 w-fit max-md:mb-3">
@@ -63,6 +63,13 @@ const LogoAndAttribution = () => {
                 <i
                   className="fa-brands fa-linkedin text-xl text-[#0077b5] dark:text-[rgb(41,140,240)]"
                 ></i>
+              </a>
+              <a
+                href="https://portfolio.shivendra.site"
+                className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
+                target="__block"
+              >
+                <i className="fa-solid fa-globe text-xl text-blue-500 dark:text-blue-400"></i>
               </a>
               <a
                 href="https://github.com/ShivWK"
@@ -102,7 +109,7 @@ const LogoAndAttribution = () => {
         </div>
         <div className="hidden md:flex flex-col gap-2 w-full mt-7">
           <p className="dark:text-white">Social Links</p>
-          <div className="flex gap-3"> 
+          <div className="flex gap-3">
             <a
               href="https://www.linkedin.com/in/shivendra-dwivedi"
               className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
@@ -110,8 +117,14 @@ const LogoAndAttribution = () => {
             >
               <i
                 className="fa-brands fa-linkedin text-2xl text-[#0077b5] dark:text-[rgb(41,140,240)]"
-                // style={{ color: "#0077b5" }}
               ></i>
+            </a>
+            <a
+              href="https://portfolio.shivendra.site"
+              className="hover:scale-[1.3] hover:shadow-lg transition-all duration-100 ease-in"
+              target="__block"
+            >
+              <i className="fa-solid fa-globe text-2xl text-blue-500 dark:text-blue-400"></i>
             </a>
             <a
               href="https://github.com/ShivWK"
@@ -143,7 +156,7 @@ const LogoAndAttribution = () => {
             >
               <i className="fa-solid fa-envelope text-2xl text-[#d93025]"></i>
             </a>
-            
+
           </div>
         </div>
       </div>
