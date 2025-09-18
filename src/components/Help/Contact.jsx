@@ -23,7 +23,7 @@ const Contact = memo(() => {
     const email = fieldValues.email;
     const message = fieldValues.query;
 
-    if (name.length === 0 || name.length > 100) {
+    if (name.length === 0 || name.length > 100 || /[^a-zA-z\s]/g.test(name)) {
       setErrorIn("name");
       toast.info("Name must be between 1 and 100 characters.", {
         autoClose: 3000,
@@ -37,7 +37,7 @@ const Contact = memo(() => {
       return;
     }
 
-    if (email.length === 0 || email.length > 254 || !email.includes("@")) {
+    if (email.length === 0 || email.length > 254 || !/^[^.][a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
       setErrorIn("email");
       toast.info("Enter a valid email address.", {
         autoClose: 3000,

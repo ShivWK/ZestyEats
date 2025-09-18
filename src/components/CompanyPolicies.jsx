@@ -57,7 +57,7 @@ const CompanyPolicies = () => {
                   <ul className="list-disc mt-1 ml-6">
                     {data.list.mainList.map((data, index) => (
                       <li
-                      key={index}
+                        key={index}
                         className="my-0.5 dark:text-gray-200"
                         dangerouslySetInnerHTML={{ __html: data }}
                       ></li>
@@ -66,7 +66,7 @@ const CompanyPolicies = () => {
                       <ul className="list-[circle] ml-6 mt-1">
                         {data.list.subList.map((data, index) => (
                           <li
-                          key={index}
+                            key={index}
                             className="my-0.5 dark:text-gray-200"
                             dangerouslySetInnerHTML={{ __html: data }}
                           ></li>
