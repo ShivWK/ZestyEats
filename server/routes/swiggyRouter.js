@@ -35,7 +35,4 @@ swiggyRouter.get("/city-locality-cuisine-data", cityLocalityCuisineCardHandler);
 swiggyRouter.get("/restaurant-chain-in-city", restaurantChainInCityHandler);
 swiggyRouter.get("/popular-dish-in-city", dishesInCityHandler);
 
-
-// https://swiggy-clone-klzu.onrender.com/api/swiggy/restaurants-near-me-data?place=north-indian
-
 module.exports = swiggyRouter;

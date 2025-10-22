@@ -10,8 +10,6 @@ const {
     placeOrder
 } = require("./../controllers/paymentsController");
 
-// pathname: /api/payments
-
 paymentRouter.use(checkSessionId);
 paymentRouter.use(protected);
 

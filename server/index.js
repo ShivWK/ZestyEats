@@ -9,7 +9,7 @@ const swiggyRouter = require("./routes/swiggyRouter");
 const userRouter = require("./routes/userRouter");
 const userActivityRouter = require("./routes/userActivityRouter");
 const paymentRouter = require("./routes/paymentRouter");
- 
+
 const secret = process.env.COOKIE_SECRET;
 const PORT = process.env.PORT || 5000;
 const mongooseURI = process.env.MONGOOSE_URI;
@@ -46,7 +46,7 @@ mongoose.connect(mongooseURI)
 })
 
 app.get("/", (req, res) => {
-  res.status(500).send(`Swiggy Proxy API is running.`);
+  res.status(200).send(`Swiggy Proxy API server is running.`);
 });
 
 app.get("/api/server/wake-up", (req, res) => {

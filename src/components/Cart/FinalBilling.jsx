@@ -311,9 +311,7 @@ const FinalBilling = () => {
             </div>
         </div>}
 
-        <div
-            className="h-full w-full flex flex-col gap-4"
-        >
+        <div className="h-full w-full flex flex-col gap-4">
             <div className="text-sm">
                 <div className="flex justify-between py-1">
                     <span className="text-gray-600 dark:text-gray-950">Item Total</span>
@@ -362,7 +360,7 @@ const FinalBilling = () => {
                                             Calculated based on distance: ₹10 base + ₹5/km after 1 km
                                         </p>
                                     </div>
-                                    <div className="absolute top-[115%] left-3.5 bottom-full h-0 w-0 border-t-8 border-t-white border-l-8 border-r-8 border-r-transparent border-l-transparent"></div>
+                                    <div className="absolute top-[115%] left-3.5 bottom-full h-0 w-0 border-t-8 border-l-8 border-r-8 border-t-white  border-r-transparent border-l-transparent"></div>
                                 </div>
                             </div>
                         </i>

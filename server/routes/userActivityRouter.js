@@ -44,7 +44,6 @@ userActivityRouter.route("/deleteOTP").post(verifyDeleteOtp);
 
 userActivityRouter.route("/orders").get(getOrders);
 
-
 userActivityRouter.route("/logout/:mode").post(logTheUserOut);
 userActivityRouter.route("/editOTP/:mode/:action").post(sendEditOTP);
 userActivityRouter.route("/profile").post(updateProfile).get(getUserProfile);
