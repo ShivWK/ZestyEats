@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { selectBottomMenu } from "../features/home/homeSlice";
 import { useSelector } from "react-redux";
 import { selectLogInModal, selectLocationModal } from "../features/Login/loginSlice";
 import { selectMenuModel } from "../features/home/restaurantsSlice";
 
 const BackToTopBtn = ({ extraMargin = false }) => {
     const [showBtn, setShowBtn] = useState(false);
-    const pathname = useLocation().pathname;
     const isLoginOpen = useSelector(selectLogInModal);
     const isLocationOpen = useSelector(selectLocationModal);
     const menuModel = useSelector(selectMenuModel);

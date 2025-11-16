@@ -33,10 +33,7 @@ exports.protected = async (req, res, next) => {
     const uaResult = UAParser(clientUa);
 
     console.log("Protection HIT")
-
     const clientDeviceInfo = deviceFingerPrinter(uaResult, req);
-
-    // console.log("Client", clientDeviceInfo);
 
     if (!rSid) {
         return res.status(401).json({
@@ -56,10 +53,7 @@ exports.protected = async (req, res, next) => {
         }
 
         const sessionDeviceInfo = session.deviceInfo;
-        // console.log("Existing visitor", sessionDeviceInfo)
-
         const score = calSessionValidationScore(sessionDeviceInfo, clientDeviceInfo);
-        // console.log(score)
 
         if (score < 10) {
             return res.status(401).json({
@@ -112,8 +106,6 @@ exports.getLiveSessions = async (req, res, next) => {
 
     try {
         const sessions = await SessionModel.find({ userId, type: "registered" });
-        console.log(sessions);
-
         const resultArr = sessions.map(session => {
             const activeNow = sid == session.id;
 

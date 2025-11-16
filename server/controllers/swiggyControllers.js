@@ -1,6 +1,5 @@
 const axios = require("axios");
 const { JSDOM } = require("jsdom");
-// const asyncErrorHandler = require("./../utils/asyncErrorHandler");
 
 const client = axios.create({
   headers: {
@@ -152,7 +151,6 @@ exports.addressFromCoordinates = async (req, res) => {
 };
 
 exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
-  // console.log(req.headers);
   const { lat, lng, id } = req.query;
 
   if (!lat || !lng || !id) {

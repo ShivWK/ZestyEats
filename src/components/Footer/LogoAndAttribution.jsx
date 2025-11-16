@@ -168,7 +168,6 @@ const LogoAndAttribution = () => {
             >
               <i className="fa-solid fa-envelope text-2xl text-[#d93025]"></i>
             </a>
-
           </div>
         </div>
       </div>
