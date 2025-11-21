@@ -154,7 +154,7 @@ const HorizontalCarousel = memo(({
           onScroll={handleScroll}
           ref={containerRef}
           className="flex justify-start gap-3 md:gap-7 overflow-y-visible overflow-x-auto hide-scrollbar py-2"
-          onTouchEnd={() => clicked.current = true}
+          onTouchMove={() => clicked.current = true}
         >
           {dataToMap.map((item, index) => (
             <Card key={item?.id + index} data={item} restaurantData={restaurantData} />
