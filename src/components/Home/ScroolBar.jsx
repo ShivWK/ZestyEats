@@ -1,24 +1,21 @@
-import { useEffect, useState, useRef, memo } from "react";
+// Done
 
-const Scrollbar = memo(({
-  scrolledPercentage,
-  marginTop,
-}) => {
-  const [adjudtedScroll, setAdjudtedScroll] = useState(0);
+import { useEffect, useState, useRef } from "react";
+
+const Scrollbar = ({ scrolledPercentage, marginTop }) => {
+  const [adjustedScroll, setAdjustedScroll] = useState(0);
   const scrollContainerRef = useRef(null);
-  const scrrollBarRef = useRef(null);
+  const scrollBarRef = useRef(null);
 
   useEffect(() => {
-    // Problem goes in left too much, right is fine
-
-    const adjudtedScrollValue =
+    const adjustedScrollValue =
       scrolledPercentage <= 0
         ? 0
         : scrolledPercentage -
-          (scrrollBarRef.current.clientWidth /
+          (scrollBarRef.current.clientWidth /
             scrollContainerRef.current.clientWidth) *
             100;
-    setAdjudtedScroll(adjudtedScrollValue);
+    setAdjustedScroll(adjustedScrollValue);
   }, [scrolledPercentage]);
 
   return (
@@ -31,13 +28,13 @@ const Scrollbar = memo(({
         className="w-[70px] h-[3px] rounded-full bg-gray-200 relative"
       >
         <div
-          ref={scrrollBarRef}
+          ref={scrollBarRef}
           className="absolute w-1/6 rounded-full bg-primary h-full transition-all duration-300 ease-in-out"
-          style={{ left: `${adjudtedScroll}%` }}
+          style={{ left: `${adjustedScroll}%` }}
         ></div>
       </div>
     </div>
   );
-});
+};
 
 export default Scrollbar;

@@ -1,9 +1,11 @@
+// Done
+
 import PlaceCards from "./PlaceCards";
 import ShowMoreBtn from "./ShowMoreBtn";
 import { useRef } from "react";
-import { memo, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
-const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, showHeading = true, targetedCity }) => {
+const PlaceCardsContainer = ({ data, heading = null, clickHandler, path, showHeading = true, targetedCity }) => {
   const [shownCards, setShownCards] = useState([]);
   const [lastEnd, setLastEnd] = useState(12)
   const [hideShowMoreBtn, setHideShowMoreBtn] = useState(false);
@@ -21,9 +23,6 @@ const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, sh
       setLastEnd(prev => prev + 12);
 
       if(newShowCards.length === data?.length) setHideShowMoreBtn(true);
-
-      // if we are adding removing elements from a container and we are doing some oparation based on number of children in the container then there is no guarantee that react will immediately update the children in the container so number could be wrong.
-
       return newShowCards
     });
 
@@ -45,6 +44,6 @@ const PlaceCardsContainer = memo(({ data, heading = null, clickHandler, path, sh
       )}
     </>
   );
-});
+};
 
 export default PlaceCardsContainer;

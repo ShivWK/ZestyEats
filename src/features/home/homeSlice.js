@@ -233,28 +233,21 @@ export default homeSlice.reducer;
 export const selectDeviceFingerPrint = (state) => state.home.deviceFingerprint;
 export const selectUserDetails = (state) => state.home.user;
 export const selectCurrentTheme = (state) => state.home.currentTheme;
-export const selectFoodieThoughtsData = (state) =>
-  state.home.foodieThoughtsData;
-export const selectTopRestaurantsTitle = (state) =>
-  state.home.topRestaurantsTitle;
-export const selectTopRestaurantsData = (state) =>
-  state.home.topRestaurantsData;
+export const selectFoodieThoughtsData = (state) => state.home.foodieThoughtsData;
+export const selectTopRestaurantsTitle = (state) => state.home.topRestaurantsTitle;
+export const selectTopRestaurantsData = (state) => state.home.topRestaurantsData;
 export const selectYourCurrentCity = (state) => state.home.yourCurrentCity;
 export const selectSearchedCity = (state) => state.home.searchedCity;
-export const selectSearchedCityAddress = (state) =>
-  state.home.searchedCityAddress;
+export const selectSearchedCityAddress = (state) => state.home.searchedCityAddress;
 export const selectIsLoading = (state) => state.home.isLoading;
 export const selectRecentLocations = (state) => state.home.recentLocations;
-export const selectOnlineDeliveryRestaurants = (state) =>
-  state.home.restaurantsWithOnlineDelivery;
-export const selectOnlineDeliveryTitle = (state) =>
-  state.home.onlineDeliveryTitle;
-export const selectBestCuisionsNearMe = (state) => state.home.bestNearCuisions;
+export const selectOnlineDeliveryRestaurants = (state) => state.home.restaurantsWithOnlineDelivery;
+export const selectOnlineDeliveryTitle = (state) => state.home.onlineDeliveryTitle;
+export const selectBestCuisinesNearMe = (state) => state.home.bestNearCuisions;
 export const selectOnlineStatus = (state) => state.home.isOnline;
 export const selectAvailableCities = (state) => state.home.availableInCities;
 export const selectPathHistory = (state) => state.home.pathHistory;
-export const selectUserFriendlyPathHistory = (state) =>
-  state.home.userFriendlyPathHistory;
+export const selectUserFriendlyPathHistory = (state) => state.home.userFriendlyPathHistory;
 export const selectLatAndLng = createSelector(
   [(state) => state.home.lat, (state) => state.home.lng],
   (lat, lng) => ({ lat, lng })

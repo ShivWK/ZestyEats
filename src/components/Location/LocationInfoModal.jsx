@@ -11,31 +11,15 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../../features/home/homeApiSlice";
-import { setLoading } from "../../features/home/homeSlice";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
 
-export const fetchDefaultHomeAPIData = async (
-    triggerHomeAPI,
-    dispatch,
-    lat,
-    lng
-) => {
-    try {
-        dispatch(setLoading(true));
-        let apiResponse = await triggerHomeAPI({
-            lat,
-            lng,
-        }).unwrap();
-        if (!apiResponse) return;
-        updateHomeRestaurantData(apiResponse, dispatch, lat, lng);
-    } catch (err) {
-        dispatch(setLoading(false));
-    }
-};
+// new
+import fetchHomeData from "../../services/homeService";
+import { defaultPlaces } from "../../utils/constants";
 
 const LocationInfoModal = () => {
     const dispatch = useDispatch();
@@ -47,27 +31,6 @@ const LocationInfoModal = () => {
     const [isUserInteracted, setIsUserInteracted] = useState(false)
     const locationInfoModalRef = useRef(null);
     const grantBtnClicked = useSelector(selectGrantBtnClicked);
-
-    const placeArray = [
-        {
-            city: "Delhi",
-            location: "India",
-            lat: 28.7040592,
-            lng: 77.10249019999999
-        },
-        {
-            city: "Bangalore",
-            location: "Karnataka, India",
-            lat: 12.9628669,
-            lng: 77.57750899999999
-        },
-        {
-            city: "Mumbai",
-            location: "Maharashtra, India",
-            lat: 18.9581934,
-            lng: 72.8320729
-        }
-    ]
 
     const permissionGrantHandler = () => {
         setIsUserInteracted(true)
@@ -135,9 +98,8 @@ const LocationInfoModal = () => {
     }
 
     const searchClickHandler = (e) => {
-        setIsUserInteracted(true);
-
         e.stopPropagation();
+        setIsUserInteracted(true);
         setShouldOpenLocationModal(true);
         dispatch(setHideLocationInfoModal(true));
     }
@@ -154,7 +116,7 @@ const LocationInfoModal = () => {
         }
 
         updateSearchedCity(location, dispatch);
-        fetchDefaultHomeAPIData(triggerHomeAPI, dispatch, data.lat, data.lng)
+        fetchHomeData(triggerHomeAPI, dispatch, data.lat, data.lng)
     }
 
     const runOnAnimationEnd = (e) => {
@@ -178,7 +140,7 @@ const LocationInfoModal = () => {
                     },
                     progressClassName: "progress-style",
                 })
-                placeClickHandler(placeArray[1]);
+                placeClickHandler(defaultPlaces[1]);
             }
         }
     }
@@ -213,11 +175,11 @@ const LocationInfoModal = () => {
 
                 {/* default city options */}
 
-                {placeArray.map((data, index) => {
+                {defaultPlaces.map((data, index) => {
                     return <div
                         key={index}
                         onClick={() => placeClickHandler(data)}
-                        className={`group cursor-pointer ${index !== placeArray.length - 1 && "border-b-[1px]"} dark:bg-gray-300 dark:border-gray-800 border-gray-400 py-2 px-3 md:py-3 md:px-4 w-full`}
+                        className={`group cursor-pointer ${index !== defaultPlaces.length - 1 && "border-b-[1px]"} dark:bg-gray-300 dark:border-gray-800 border-gray-400 py-2 px-3 md:py-3 md:px-4 w-full`}
                     >
                         <div className="flex gap-2.5 relative w-full items-center">
                             <i className={`ri-map-pin-line text-xl dark:text-gray-950 text-gray-500`}></i>

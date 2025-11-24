@@ -1,12 +1,15 @@
+// Done
+
 import { useSelector } from "react-redux";
 import Cards from "./Cards";
 import { selectTopRestaurantsTitle } from "../../features/home/homeSlice";
 import HorizontalCarousel from "../HorizontalCarousel";
-import { memo, useMemo } from "react";
+import { useMemo } from "react";
 
-const TopRestaurantChains = memo(({ data, heading = null }) => {
+const TopRestaurantChains = ({ data, heading = null }) => {
   const mainData = useMemo(() => data.map((item) => item?.info), [data]);
-  const title = heading || useSelector(selectTopRestaurantsTitle);
+  const default_heading = useSelector(selectTopRestaurantsTitle);
+  const title = heading || default_heading;
 
   return (
     <HorizontalCarousel
@@ -18,6 +21,6 @@ const TopRestaurantChains = memo(({ data, heading = null }) => {
       autoScrollWidth="260"
     />
   );
-});
+};
 
 export default TopRestaurantChains;

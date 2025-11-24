@@ -1,17 +1,20 @@
+// Done
+
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
-import { Suspense, useState, useRef, memo } from "react";
+import { Suspense, useState, useRef } from "react";
 import PlaceCardsContainer from "./PlaceCardsContainer";
 import PlaceCards from "./PlaceCards";
-import createDebounce from "../../utils/debounceCreater";
+import createDebounce from "../../utils/debounceCreator";
 import Loader from "../Loader";
+import dummyArray from "../../utils/DummyArray";
 
-const HomeCities = memo(() => {
+const HomeCities = () => {
     const cities = useSelector(selectAvailableCities);
     const [matchedCities, setMatchedCites] = useState(null);
     const [inputValue, setInputValue] = useState('');
     const shownCities = cities.slice(6);
-    const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
+    const SHIMMER_ARRAY = dummyArray(4);
 
     const changeHandler = useRef(createDebounce((text) => {
         if (text.trim() === "") return setMatchedCites([]);
@@ -56,7 +59,7 @@ const HomeCities = memo(() => {
         <Suspense
             fallback={
                 <div className="flex justify-between gap-4">
-                    {shimmerArray.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
+                    {SHIMMER_ARRAY.map(i => <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />)}
                 </div>
             }
         >   <>
@@ -94,7 +97,7 @@ const HomeCities = memo(() => {
             </>
         </Suspense>
     </section>
-});
+};
 
 export default HomeCities;
 

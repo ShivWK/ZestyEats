@@ -4,15 +4,15 @@ import { useLocation } from "react-router-dom";
 import { useEffect } from "react";
 
 const useTrackNavigation = () => {
-  const location = useLocation();
+  const pathname = useLocation().pathname;
   const dispatch = useDispatch();
   const pathHistory = useSelector(selectPathHistory);
 
   useEffect(() => {
-    if (location.pathname !== pathHistory[pathHistory.length - 1] && location.pathname !== undefined) {
-      dispatch(setPathHistory(location.pathname));
+    if (pathname !== pathHistory[pathHistory.length - 1] && pathname !== undefined) {
+      dispatch(setPathHistory(pathname));
     }
-  }, [location.pathname]);
+  }, [pathname, pathHistory, dispatch]);
 };
 
 export default useTrackNavigation;

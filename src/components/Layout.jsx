@@ -1,5 +1,4 @@
-import { Suspense, lazy } from "react";
-import { Outlet, useLocation, useSearchParams } from "react-router-dom";
+import { Outlet, useSearchParams } from "react-router-dom";
 import PageHeader from "./Header/PageHeader";
 import PageFooter from "./Footer/PageFooter";
 import LoginModal from "./Login/LoginModal";
@@ -7,7 +6,6 @@ import LocationInfoModal from "./Location/LocationInfoModal";
 import DeleteModal from "./Profile/DeleteModal";
 
 import LocationModal from "./Location/LocationModal";
-import { toast } from "react-toastify";
 import EditProfile from "./Profile/EditProfile";
 import Verification from "./Profile/Verification";
 
@@ -28,13 +26,11 @@ import {
 } from "../features/Login/loginSlice";
 
 import {
-  setOnline,
   setLoading,
   addYourCurrentCity,
   addSearchedCity,
   addSearchedCityAddress,
   selectDpModel,
-  setDpModelHide,
   addRecentLocations,
   setCurrentTheme,
   selectDeviceFingerPrint,
@@ -47,9 +43,8 @@ import {
   setRestaurantItems,
   addToWishlistItem,
   toggleItemsToBeAddedInCart,
-  setFavoriteRestro,
+  setFavoriteRestaurant,
   setItemToCart,
-  setHideMenu,
   toggleMenuModel,
   setIsLoggedInRestro
 } from "../features/home/restaurantsSlice";
@@ -58,17 +53,18 @@ import { selectEditAddressModal } from "../features/delivery/deliverySlice";
 
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
-import useTrackNavigation from "../utils/useTrackNavigation";
+import useTrackNavigation from "../hooks/useTrackNavigation";
 import { updateHomeRestaurantData } from "../utils/updateHomeData";
 import { useLazyGetHomePageDataQuery } from "../features/home/homeApiSlice";
 import { useLazyLocationByCoordinatesQuery } from "../features/home/searchApiSlice";
 import { updateCurrentCity } from "../utils/addCurrentCity";
 import updateCityHomeData from "../utils/updateCityHomeData";
 import { setLocalityLatAndLng } from "../features/cityHome/cityHomeSlice";
-import useOnlineStatus from "../utils/useOnlineStatus";
 import UpdateStorage from "../utils/UpdateStorage";
 import EditModal from "./Modal/EditModal";
 
+
+// FInd it where u have used it
 export const fetchDefaultHomeAPIData = async (triggerHomeAPI, dispatch, isLocationModelOpen) => {
   try {
     let apiResponse = await triggerHomeAPI({
@@ -155,7 +151,7 @@ export default function Layout() {
               dispatch,
               setItemToCart,
               toggleItemsToBeAddedInCart,
-              setFavoriteRestro,
+              setFavoriteRestro : setFavoriteRestaurant,
               addRecentLocations,
               addToWishlistItem
             });
@@ -203,7 +199,7 @@ export default function Layout() {
                 dispatch,
                 setItemToCart,
                 toggleItemsToBeAddedInCart,
-                setFavoriteRestro,
+                setFavoriteRestro : setFavoriteRestaurant,
                 addRecentLocations,
                 addToWishlistItem
               })
@@ -275,7 +271,7 @@ export default function Layout() {
 
       if (itemsToBeAddedToCart != null) dispatch(toggleItemsToBeAddedInCart({ mode: "initial", object: itemsToBeAddedToCart }));
 
-      if (favRestros != null) dispatch(setFavoriteRestro({ mode: "initial", object: favRestros }));
+      if (favRestros != null) dispatch(setFavoriteRestaurant({ mode: "initial", object: favRestros }));
 
       if (localityLatLng != null) dispatch(setLocalityLatAndLng(localityLatLng));
 
@@ -376,8 +372,8 @@ export default function Layout() {
 
   }, [isLoginOpen, isLocationOpen, menuModel, OpenLocationInfoModal, editAddressModal, deleteModal, EditModal]);
 
-  useEffect((e) => {
-    const handleModelClose = (e) => {
+  useEffect(() => {
+    const handleModelClose = () => {
       if (isLoginOpen) {
         dispatch(setHideLogin(true))
       } else if (isLocationOpen) {

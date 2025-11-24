@@ -1,10 +1,11 @@
-import { memo } from "react";
+// Done
+
 import Cards from "./Cards";
 import HorizontalCarousel from "../../HorizontalCarousel";
 import { selectUserDetails } from "../../../features/home/homeSlice";
 import { useSelector } from "react-redux";
 
-const FoodieThoughts = memo(({ data }) => {
+const FoodieThoughts = ({ data }) => {
   let { userName } = useSelector(selectUserDetails);
   const title = userName ? `${userName?.split(" ")[0]}, what's on your mind?` : "What's on your mind?";
 
@@ -18,6 +19,6 @@ const FoodieThoughts = memo(({ data }) => {
       margin_bottom="-15px"
     />
   );
-});
+};
 
 export default FoodieThoughts;

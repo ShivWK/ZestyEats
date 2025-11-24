@@ -1,15 +1,14 @@
+// Done
+
 import { useSelector } from "react-redux";
 import Cards from "./Cards";
 import Filter from "./Filters";
-import { selectCity } from "../../features/home/homeSlice";
-import { selectSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
-import { memo } from "react";
 
-const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
-  let defaultHeading = "Restaurants with online food delivery";
+const OnlineDeliveryRestaurant = ({ data, heading = null }) => {
+  let DEFAULT_HEADING = "Restaurants with online food delivery";
 
-  const title = heading || defaultHeading;
+  const title = heading || DEFAULT_HEADING;
   const { vegOption, nonVegOption } = useSelector(selectVegVariant);
 
   return (
@@ -48,6 +47,6 @@ const OnlineDeliveryRestaurant = memo(({ data, heading = null }) => {
       </div>
     </>
   );
-});
+};
 
 export default OnlineDeliveryRestaurant;

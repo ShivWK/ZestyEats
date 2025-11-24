@@ -1,5 +1,10 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { cartItemsModifier, favRestaurantsModifier, itemsToBeAddedInCartModifier, wishListedItemsModifier } from "../../utils/guestSessionDataModifier";
+import { 
+  cartItemsModifier, 
+  favRestaurantsModifier, 
+  itemsToBeAddedInCartModifier, 
+  wishListedItemsModifier 
+} from "../../utils/guestSessionDataModifier";
 
 const restaurantSlice = createSlice({
   name: "restaurant",
@@ -20,7 +25,6 @@ const restaurantSlice = createSlice({
     deviceFingerPrint: null,
     isDeliveryRestaurantOpen: true,
     deliveryRestaurantLoading: true,
-    
   },
 
   reducers: {
@@ -68,7 +72,6 @@ const restaurantSlice = createSlice({
 
     setMenuItems: (state, action) => {
       if (action.payload.mode === "empty") {
-        // never use return state in immer js, don’t return a value unless you are replacing the entire state slice
         state.menuItems = [];
       } else {
         const object = state.menuItems.find(obj => obj.title === action.payload.title)
@@ -184,7 +187,7 @@ const restaurantSlice = createSlice({
       localStorage.setItem("CartItems", JSON.stringify(state.cart));
     },
 
-    setFavoriteRestro: (state, action) => {
+    setFavoriteRestaurant: (state, action) => {
       if (action.payload.mode === "initial") {
         state.favoriteRestro = action.payload.object;
       } else {
@@ -214,7 +217,7 @@ export const selectRestaurantAllItems = (state) => state.restaurant.allProductsO
 export const selectWishlistItems = (state) => state.restaurant.wishListItems;
 export const selectCart = (state) => state.restaurant.cart;
 export const selectItemsToBeAddedInCart = state => state.restaurant.itemsToBeAddedInCart;
-export const selectFavoriteRestros = state => state.restaurant.favoriteRestro;
+export const selectFavoriteRestaurants = state => state.restaurant.favoriteRestro;
 export const selectHideMenu = (state) => state.restaurant.hideMenu;
 export const selectIsRestaurantOpen = (state) => state.restaurant.isDeliveryRestaurantOpen;
 export const selectDeliveryRestaurantStatus = (state) => state.restaurant.deliveryRestaurantLoading;
@@ -234,7 +237,7 @@ export const {
   deleteItemFromWishlist,
   toggleItemsToBeAddedInCart,
   setItemToCart,
-  setFavoriteRestro,
+  setFavoriteRestaurant,
   setItemQuantity,
   setHideMenu,
   setDeviceFingerPrintRestro,

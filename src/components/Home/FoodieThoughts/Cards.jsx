@@ -1,11 +1,13 @@
-import { memo, useState } from "react";
+// Done
+
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { selectLatAndLng } from "../../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentFoodCategory } from "../../../features/header/headerSlice";
 import { selectCityLatAndLng, selectLocalityLatAndLng } from "../../../features/cityHome/cityHomeSlice";
 
-const Cards = memo(({ data }) => {
+const Cards = ({ data }) => {
   const [isError, setIsError] = useState(false)
   const pathname = useLocation().pathname;
   let latLngSelector = selectLatAndLng;
@@ -39,7 +41,7 @@ const Cards = memo(({ data }) => {
       />
     </Link>
   );
-});
+};
 
 export default Cards;
 

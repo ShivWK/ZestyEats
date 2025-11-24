@@ -8,13 +8,13 @@ import {
     setIsLoggedInRestro,
     setItemToCart,
     toggleItemsToBeAddedInCart,
-    setFavoriteRestro,
+    setFavoriteRestaurant,
     addToWishlistItem
 } from "../../features/home/restaurantsSlice";
 
 import { addRecentLocations } from "../../features/home/homeSlice";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import DotBounceLoader from "../../utils/DotBounceLoader";
 import OtpEntry from "./OtpEntry";
 import { toast } from "react-toastify";
@@ -132,7 +132,7 @@ const DeleteModal = () => {
                 dispatch,
                 setItemToCart,
                 toggleItemsToBeAddedInCart,
-                setFavoriteRestro,
+                setFavoriteRestro : setFavoriteRestaurant,
                 addRecentLocations,
                 addToWishlistItem
             })

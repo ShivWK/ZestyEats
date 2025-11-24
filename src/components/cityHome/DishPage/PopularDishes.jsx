@@ -4,7 +4,7 @@ import dishPageDataFetcher from "../../../utils/dishPageDataFetcher";
 import BreadcrumbsWrapper from "../../BreadcrumbsWrapper";
 import ScooterAnimation from "../../../utils/ScooterAnimation";
 import RestaurantCart from "./RestaurantCard";
-import DishShimmer from "./DishShimmer";
+import DishShimmer from "./shimmer/DishShimmer";
 import { useDispatch } from "react-redux";
 import { setSecondaryCity } from "../../../features/cityHome/cityHomeSlice";
 import BackToTopBtn from "../../BackToTopBtn";

@@ -1,7 +1,7 @@
 import Scrollbar from "./Home/ScroolBar";
 import Button from "./Home/Button";
 import { useState, useEffect, useRef, memo } from "react";
-import createDebounce from "../utils/debounceCreater";
+import createDebounce from "../utils/debounceCreator";
 
 const HorizontalCarousel = memo(({
   heading = null,

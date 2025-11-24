@@ -17,6 +17,8 @@ Api to get live location area name after getting lat and lng
 
 // dotenv, package is required when we have our environment variables in local system, so to inject hem we need dotenv package, but if u have added environment vars on server dashboard like on Render then render will automatically add them to the process object.
 
+// if we are adding removing elements from a container and we are doing some oparation based on number of children in the container then there is no guarantee that react will immediately update the children in the container so number could be wrong.
+
 // data
 
 🧾 Terms and Conditions – ZeastyEats

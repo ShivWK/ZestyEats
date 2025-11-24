@@ -1,27 +1,29 @@
+// Done
+
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import dummyArray from "../../utils/DummyArray";
 
 const HomeShimmer = () => {
+    const [mappingArrays, setMappingArrays] = useState(calArray());
     const pathname = useLocation().pathname;
+
     function calArray() {
         const isLarge = window.innerWidth >= 768;
 
+        const sizeLarge = isLarge ? 8 : 9;
+        const foodieSize = isLarge ? 6 : 5;
+
         return {
-            foodie: Array.from({ length: isLarge ? 6 : 5 }, (_, i) => i),
-            topChain: Array.from({ length: 4 }, (_, i) => i),
-            topOnline: Array.from({ length: isLarge ? 8 : 9 }, (_, i) => i),
-            bestPlaces: Array.from({ length: isLarge ? 8 : 9 }, (_, i) => i),
+            foodie: dummyArray(foodieSize),
+            topChain: dummyArray(4),
+            topOnline: dummyArray(sizeLarge),
+            bestPlaces: dummyArray(sizeLarge),
         }
     }
 
-    const [mappingArrays, setMappingArrays] = useState(calArray());
-
     useEffect(() => {
-        const handleResize = () => {
-            setMappingArrays(calArray());
-        }
-
-        // if u put outside the useEffect then on each rerender a new listner will will be attaiched to the window  = memory leak
+        const handleResize = () =>  setMappingArrays(calArray());
         window.addEventListener("resize", handleResize);
         return () => window.removeEventListener("resize", handleResize);
     }, [])
@@ -80,10 +82,10 @@ const HomeShimmer = () => {
 
             {!pathname.includes("cityLocality") && (
                 <div className="flex justify-around gap-x-4 gap-y-4 md:gap-y-5 flex-wrap mt-1 max-md:px-3 md:mb-2">
-                {bestPlaces.map((i) => (
-                    <div key={i} className="w-[100px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg shrink-0"></div>
-                ))}
-            </div>
+                    {bestPlaces.map((i) => (
+                        <div key={i} className="w-[100px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg shrink-0"></div>
+                    ))}
+                </div>
             )}
         </div>
     );
