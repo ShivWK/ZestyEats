@@ -1,7 +1,9 @@
+// Done
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import Contact from "../Help/Contact";
 
 const ContentPage = () => {
+  // console.log("ContentPage rendered");
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");

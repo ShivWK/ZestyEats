@@ -1,9 +1,11 @@
-import { memo, useState } from "react";
+// Done
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setContact, setFaqs } from "../../features/home/helpPageSlice";
 import LeftMenu from "./LeftMenu";
 
-const MenuBar = memo(() => {
+const MenuBar = () => {
+  // console.log("help/MenuBar rendered")
   const menu = ["Contact Us", "FAQs", "Legal"];
   const [activeIndex, setActiveIndex] = useState(0);
   const dispatch = useDispatch();
@@ -30,6 +32,6 @@ const MenuBar = memo(() => {
       currentIndex={activeIndex}
     />
   );
-});
+};
 
 export default MenuBar;

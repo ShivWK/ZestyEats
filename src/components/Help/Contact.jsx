@@ -1,7 +1,12 @@
-import { memo, useRef, useState } from "react";
+// Done
+
+import { emailValidator, nameValidator, messageValidator } from "./validators";
+import { triggerToast } from "../../utils/triggerToast";
+import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 
-const Contact = memo(() => {
+const Contact = () => {
+  // console.log("help/Contact rendered");
   const formRef = useRef(null);
   const [errorIn, setErrorIn] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,47 +28,14 @@ const Contact = memo(() => {
     const email = fieldValues.email;
     const message = fieldValues.query;
 
-    if (name.length === 0 || name.length > 100 || /[^a-zA-z\s]/g.test(name)) {
-      setErrorIn("name");
-      toast.info("Name must be between 1 and 100 characters.", {
-        autoClose: 3000,
-        style: {
-          backgroundColor: "red",
-          color: "white",
-          fontWeight: "medium",
-        },
-        progressClassName: "progress-style",
-      });
-      return;
-    }
+    const nameValidated = nameValidator({ name, setErrorIn })
+    if (!nameValidated) return;
 
-    if (email.length === 0 || email.length > 254 || !/^[^.][a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-      setErrorIn("email");
-      toast.info("Enter a valid email address.", {
-        autoClose: 3000,
-        style: {
-          backgroundColor: "red",
-          color: "white",
-          fontWeight: "medium",
-        },
-        progressClassName: "progress-style",
-      });
-      return;
-    }
+    const emailValidated = emailValidator({ email, setErrorIn });
+    if (!emailValidated) return;
 
-    if (message.length === 0 || message.length > 1000) {
-      setErrorIn("query");
-      toast.info("Message must be between 1 and 1000 characters.", {
-        autoClose: 3000,
-        style: {
-          backgroundColor: "red",
-          color: "white",
-          fontWeight: "medium",
-        },
-        progressClassName: "progress-style",
-      });
-      return;
-    }
+    const messageValidated = messageValidator({ message, setErrorIn });
+    if (!messageValidated) return;
 
     const formData = new FormData(formRef.current);
 
@@ -78,15 +50,7 @@ const Contact = memo(() => {
 
       if (result.success) {
         setLoading(false);
-        toast.info("Message sent successfully!", {
-          autoClose: 3000,
-          style: {
-            backgroundColor: "green",
-            color: "white",
-            fontWeight: "medium",
-          },
-          progressClassName: "progress-style",
-        });
+        triggerToast("Message sent successfully!", "green");
 
         setFieldValues({
           name: "",
@@ -95,16 +59,10 @@ const Contact = memo(() => {
         });
       } else {
         setLoading(false);
-        toast.error("Failed to send message. Please try again later.", {
-          autoClose: 3000,
-          style: {
-            color: "white",
-            fontWeight: "medium",
-          },
-          progressClassName: "progress-style",
-        });
+        triggerToast("Failed to send message. Please try again later.", "red");
       }
     } catch (err) {
+      console.log("Failed to send email", err);
       setLoading(false);
       toast.error("An error occurred. Please try again.");
     }
@@ -201,6 +159,6 @@ const Contact = memo(() => {
       </button>
     </div>
   );
-});
+};
 
 export default Contact;

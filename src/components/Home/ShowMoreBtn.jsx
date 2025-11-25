@@ -1,6 +1,7 @@
 // Done
 
 const ShowMoreBtn = ({ handleClick }) => {
+  // console.log("ShowMoreBtn rendered")
   return (
     <button
       onClick={handleClick}

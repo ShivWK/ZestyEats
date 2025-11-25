@@ -4,26 +4,26 @@ import { useSelector } from "react-redux";
 import RestaurantCard from "./RestaurantCard";
 import Loader from "./../../Loader";
 
-const WishlistedItems = () => {
+const WishListedItems = () => {
+    console.log("WishListedItems rendered");
     const wishlistItems = useSelector(selectWishlistItems);
-    // console.log(wishlistItems)
     const [wishlist, setWishlist] = useState(null);
-    const wishlistItemsMap = new Map();
+    const wishListItemsMap = new Map();
 
     Object.values(wishlistItems).forEach(({ restaurantData, item }) => {
         const key = restaurantData.metadata?.id || restaurantData.id;
 
-        if (!wishlistItemsMap.has(key)) {
-            wishlistItemsMap.set(key, { restro: restaurantData, item: [item] })
+        if (!wishListItemsMap.has(key)) {
+            wishListItemsMap.set(key, { restro: restaurantData, item: [item] })
         } else {
-            wishlistItemsMap.get(key).item.push(item);
+            wishListItemsMap.get(key).item.push(item);
         }
     })
 
     useEffect(() => {
-        const wishlistArray = Array.from(wishlistItemsMap.values());
+        const wishlistArray = Array.from(wishListItemsMap.values());
         setWishlist(wishlistArray);
-    }, [wishlistItems])
+    }, [wishlistItems, wishListItemsMap])
 
     return <div className="">
         {wishlist ? (wishlist.length !== 0
@@ -40,4 +40,4 @@ const WishlistedItems = () => {
     </div>
 }
 
-export default WishlistedItems
+export default WishListedItems;

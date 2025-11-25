@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 
 const Scrollbar = ({ scrolledPercentage, marginTop }) => {
+  // console.log("ScrollBAr from Home rendered")
   const [adjustedScroll, setAdjustedScroll] = useState(0);
   const scrollContainerRef = useRef(null);
   const scrollBarRef = useRef(null);

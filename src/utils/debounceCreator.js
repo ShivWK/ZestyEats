@@ -1,8 +1,11 @@
-function createDebounce(toCall, delay) {
-  let timer;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => toCall(...args), delay);
+function createDebounce(func, delay) {
+  let timer = null;
+  return function (...value) {
+    if (timer) clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      func(...value);
+    }, delay);
   };
 }
 

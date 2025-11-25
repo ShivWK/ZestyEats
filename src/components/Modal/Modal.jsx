@@ -1,3 +1,4 @@
+// Done
 import Style from "./Modal.module.css";
 import { loginOtpSend, selectHideModel, setErrorMessage, signUpOtpSend } from "../../features/Login/loginSlice";
 import { useSelector } from "react-redux";
@@ -5,6 +6,7 @@ import { setLogInModal, setLocationModal } from "../../features/Login/loginSlice
 import { useDispatch } from "react-redux";
 
 const Modal = ({ children, modal }) => {
+  // console.log("Model rendered");
   const { loginHide, locationHide } = useSelector(selectHideModel);
   const dispatch = useDispatch();
 

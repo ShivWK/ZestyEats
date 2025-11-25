@@ -1,6 +1,9 @@
+// Done
+
 import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
 
 const BodyComponent = ({ heading, description, children }) => {
+    // console.log("help/BodyComponent rendered");
     return (
         <main className="bg-[rgb(55,113,142)] dark:bg-black w-[100%] pt-24 m-0 pb-12">
             <div className="text-white md:max-w-[1210px] mx-auto mt-2"><BreadcrumbsWrapper normalTextColor={"white"} mainTextColor={"white"} /></div>

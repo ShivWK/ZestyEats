@@ -1,4 +1,6 @@
-import Cards from "./../Home/Cards";
+// Done
+
+import Cards from "../Home/RestaurantCard";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentFoodCategory } from "./../../features/header/headerSlice";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
@@ -9,10 +11,10 @@ import ScooterAnimation from "../../utils/ScooterAnimation";
 import NoData from "../../utils/NoData";
 
 const MainContainer = ({ data }) => {
+  // console.log("FoodSpecific MainContainer rendered")
+  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
   const [noData, setNoData] = useState(false);
   const mainRef = useRef(null);
-
-  const { vegOption, nonVegOption } = useSelector(selectVegVariant);
   const dispatch = useDispatch();
 
   const cards = data?.data?.cards;
@@ -34,7 +36,7 @@ const MainContainer = ({ data }) => {
 
   useEffect(() => {
     dispatch(setCurrentFoodCategory(title));
-  }, []);
+  }, [dispatch, title]);
 
   useEffect(() => {
     if (!mainRef.current) return;

@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState, memo } from "react";
+// Done
+
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowBottomMenu, selectBottomMenu } from "../../features/home/homeSlice";
 import { NavLink } from "react-router-dom";
 import { selectCart } from "../../features/home/restaurantsSlice";
 
-const MobileFooterMenu = memo(() => {
+const MobileFooterMenu = () => {
+    // console.log("MobileFooterMenu rendered")
     const [showOnMobile, setShowOnMobile] = useState(false);
     const [cartItemsCount, setCartItemsCount] = useState(0);
     const lastScrollTop = useRef(window.scrollY);
@@ -43,7 +46,7 @@ const MobileFooterMenu = memo(() => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("resize", handleResize);
         };
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
         const values = Object.values(cart);
@@ -84,6 +87,6 @@ const MobileFooterMenu = memo(() => {
             </NavLink>
         </div>
     );
-});
+};
 
 export default MobileFooterMenu;

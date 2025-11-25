@@ -1,5 +1,9 @@
+// Done
+import dummyArray from "../../utils/DummyArray";
+
 const OrderShimmer = () => {
-    const arr = Array.from({ length: 2 }, (_, i) => i);
+    // console.log("OrderShimmer rendered");
+    const arr = dummyArray(2);
 
     return (
         <>
@@ -26,7 +30,6 @@ const OrderShimmer = () => {
                 })}
             </div>
         </>
-
     );
 };
 

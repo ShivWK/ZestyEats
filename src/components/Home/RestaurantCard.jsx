@@ -16,7 +16,8 @@ import NotAvailableCardOverlay from "./NotAvailableCardOverlay";
 import usePageLocation from "../../hooks/usePageLocation";
 import RestaurantImageCard from "./RestaurantImageCard";
 
-const Cards = ({ data, from }) => {
+const RestaurantCard = ({ data, from }) => {
+  // console.log("Restaurant Card of Home rendered");
   const dispatch = useDispatch();
   const pathname = useLocation().pathname;
   const { lat, lng, mode } = usePageLocation(pathname);
@@ -102,4 +103,4 @@ const Cards = ({ data, from }) => {
   );
 };
 
-export default Cards;
+export default RestaurantCard;

@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { useCallback, useEffect, useState } from "react";
 
 const PlaceCardsContainer = ({ data, heading = null, clickHandler, path, showHeading = true, targetedCity }) => {
+  // console.log("PlaceCardsContainer rendered")
   const [shownCards, setShownCards] = useState([]);
   const [lastEnd, setLastEnd] = useState(12)
   const [hideShowMoreBtn, setHideShowMoreBtn] = useState(false);

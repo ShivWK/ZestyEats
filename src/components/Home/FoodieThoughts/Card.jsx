@@ -7,7 +7,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentFoodCategory } from "../../../features/header/headerSlice";
 import { selectCityLatAndLng, selectLocalityLatAndLng } from "../../../features/cityHome/cityHomeSlice";
 
-const Cards = ({ data }) => {
+const Card = ({ data }) => {
+  // console.log("FoodieThoughts Card rendered")
   const [isError, setIsError] = useState(false)
   const pathname = useLocation().pathname;
   let latLngSelector = selectLatAndLng;
@@ -43,5 +44,5 @@ const Cards = ({ data }) => {
   );
 };
 
-export default Cards;
+export default Card;
 

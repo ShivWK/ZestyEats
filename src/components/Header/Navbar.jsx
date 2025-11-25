@@ -1,21 +1,18 @@
-import NavItem from "./NavItem";
-import {
-  setHideLocation,
-  setHideLogin,
-  setLogInModal,
-  selectIsLoggedIn
-} from "../../features/Login/loginSlice";
+// Done
+
+import { setHideLocation, setHideLogin, setLogInModal, selectIsLoggedIn } from "../../features/Login/loginSlice";
 import {
   selectLatAndLng,
   selectCurrentTheme,
   setCurrentTheme,
   selectUserDetails
 } from "../../features/home/homeSlice";
-
+import NavItem from "./NavItem";
 import { useDispatch, useSelector } from "react-redux";
-import { memo, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
-const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
+const Navbar = ({ showAbout, showSearch, showCart }) => {
+  // console.log("Navbar rendered")
   const { lat, lng } = useSelector(selectLatAndLng);
   const theme = useSelector(selectCurrentTheme);
   const loggedIn = useSelector(selectIsLoggedIn);
@@ -29,7 +26,7 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
     dispatch(setHideLogin(false));
     dispatch(setHideLocation(false));
     dispatch(setLogInModal(true));
-  }, [setLogInModal]);
+  }, [dispatch]);
 
   return (
     <nav className="max-md:pr-1.5">
@@ -127,6 +124,6 @@ const Navbar = memo(({ showAbout, showSearch, showOffers, showCart }) => {
       </ul>
     </nav>
   );
-});
+};
 
 export default Navbar;

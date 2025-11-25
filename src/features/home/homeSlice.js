@@ -21,8 +21,6 @@ const initialState = {
   availableInCities: [],
   pathHistory: [],
   userFriendlyPathHistory: [],
-  dbModelOpen: false,
-  dpModelHide: false,
   showBottomMenu: true,
   currentTheme:"system",
   deviceFingerprint: null,
@@ -217,14 +215,6 @@ const homeSlice = createSlice({
     setOnline: (state, action) => {
       state.isOnline = action.payload;
     },
-
-    setDpModelOpen: (state, action) => {
-      state.dbModelOpen = action.payload;
-    },
-
-    setDpModelHide: (state, action) => {
-      state.dpModelHide = action.payload;
-    },
   },
 });
 
@@ -253,9 +243,7 @@ export const selectLatAndLng = createSelector(
   (lat, lng) => ({ lat, lng })
 );
 export const selectCity = (state) => state.home.city;
-export const selectDpModel = (state) => state.home.dbModelOpen;
 export const selectBottomMenu = (state) => state.home.showBottomMenu;
-export const selectDpModelHide = (state) => state.home.dpModelHide;
 export const selectIsServiceable = (state) => state.home.isUnserviceable;
 
 export const {
@@ -283,8 +271,6 @@ export const {
   addLatAndLng,
   setPathHistory,
   setUserFriendlyPathHistory,
-  setDpModelOpen,
   setShowBottomMenu,
-  setDpModelHide,
   setDeviceFingerPrint
 } = homeSlice.actions;

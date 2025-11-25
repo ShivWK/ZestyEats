@@ -1,7 +1,10 @@
+// Done
+
 import MainHeader from "./MainHeader";
 import HeaderWrapper from "./HeaderWrapper";
 
 const CartHeader = () => {
+  // console.log("CartHeader rendered")
   return (
     <HeaderWrapper>
       <MainHeader

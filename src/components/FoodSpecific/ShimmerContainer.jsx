@@ -1,5 +1,10 @@
+// Done
+
+import dummyArray from "./../../utils/DummyArray"
+
 const ShimmerContainer = () => {
-  const arr = Array.from({ length: 8 }, (_, i) => i);
+  // console.log("FoodSpecific Shimmer rendered")
+  const SHIMMER_ARRAY = dummyArray(8);
 
   return (
     <main className="flex flex-col gap-3 md:gap-5 w-full md:max-w-[1210px] pt-20 md:pt-32 p-3 mx-auto">
@@ -12,7 +17,7 @@ const ShimmerContainer = () => {
       </div>
       <div className="restaurant-count rounded-md w-3xs h-7 shimmerBg"></div>
       <div className="flex w-full gap-3 flex-col md:flex-row md:gap-6 p-1 max-md:px-2 flex-wrap">
-        {arr.map((item, index) => {
+        {SHIMMER_ARRAY.map((_, index) => {
           return (
             <div
               key={index}

@@ -1,3 +1,5 @@
+// Done
+
 import Navbar from "./Navbar";
 import Logo from "./Logo";
 
@@ -8,6 +10,7 @@ export default function MainHeader({
   showOffers = true,
   showCart = true,
 }) {
+  // console.log("MainHeader rendered");
   return (
     <header className="w-full"> 
       <div className="flex justify-between w-full items-center mx-auto h-16 md:h-20 md:max-w-[1210px]">

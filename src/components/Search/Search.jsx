@@ -1,7 +1,7 @@
 import SearchContainer from "../SearchContainer";
 import { useRef, useState } from "react";
 import { Outlet, useSearchParams } from "react-router-dom";
-import createDebounce from "../../utils/debounceCreater";
+import createDebounce from "../../utils/debounceCreator";
 import { useDispatch } from "react-redux";
 import { setSuggestionsLoading, setSuggestions } from "../../features/search/homeSearchSlice";
 import { useLazyGetSearchedFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";

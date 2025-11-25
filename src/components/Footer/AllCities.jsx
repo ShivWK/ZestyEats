@@ -1,14 +1,16 @@
+// Done
+
 import { Link } from "react-router-dom";
 import { selectAvailableCities } from "../../features/home/homeSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
-import { memo } from "react";
 import updateCityHomeData from "../../utils/updateCityHomeData";
 
-const AllCities = memo(() => {
+const AllCities = () => {
+  // console.log("AllCities rendered");
   const cities = useSelector(selectAvailableCities);
-  const [ trigger ] = useLazyGetDataForCityLocalityCuisineQuery();
+  const [trigger] = useLazyGetDataForCityLocalityCuisineQuery();
   const citiesToPrint = cities.slice(6);
   const dispatch = useDispatch();
 
@@ -22,7 +24,7 @@ const AllCities = memo(() => {
     })
 
     try {
-      const data = await trigger({city: cityPath}).unwrap();
+      const data = await trigger({ city: cityPath }).unwrap();
       updateCityHomeData(data, dispatch);
     } catch (err) {
       console.log("Cant fetch city data", err);
@@ -47,6 +49,6 @@ const AllCities = memo(() => {
       </div>
     </div>
   );
-});
+};
 
 export default AllCities;

@@ -31,6 +31,7 @@ import HomeShimmer from "./HomeShimmer";
 import useModalTrace from "./../../utils/useModalTrace";
 
 const Home = () => {
+  // console.log("HOme rendered");
   useScrollToTop();
   useModalTrace();
   const topRestaurantsChainsData = useSelector(selectTopRestaurantsData);

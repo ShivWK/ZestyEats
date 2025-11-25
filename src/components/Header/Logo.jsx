@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
-import { memo } from "react";
+// Done
+
 import { setLocationModal, setHideLocation, setHideLogin } from "../../features/Login/loginSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { ChevronDown } from "lucide-react";
 
 import {
@@ -11,12 +11,12 @@ import {
 } from "../../features/home/homeSlice";
 import { Link } from "react-router-dom";
 
-const Logo = memo(({ searchPlaceholder }) => {
+const Logo = ({ searchPlaceholder }) => {
+  // console.log("Logo rendered");
   const dispatch = useDispatch();
   const yourCurrentCity = useSelector(selectYourCurrentCity);
   const searchedCity = useSelector(selectSearchedCity);
   const searchedCityAddress = useSelector(selectSearchedCityAddress);
-  const location = useLocation().pathname;
 
   const handleClick = () => {
     dispatch(setHideLocation(false));
@@ -53,6 +53,6 @@ const Logo = memo(({ searchPlaceholder }) => {
       )}
     </div>
   );
-});
+};
 
 export default Logo;

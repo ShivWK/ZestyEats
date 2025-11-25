@@ -11,13 +11,11 @@ import {
   toggleItemsToBeAddedInCart,
   setMenuItems,
 } from "../../../features/home/restaurantsSlice";
-import { toast } from "react-toastify";
-import { selectLatAndLng } from "../../../features/home/homeSlice";
-import haversineFormula from "./../../../utils/haversineFormula";
 import useCheckStatus from "./../../../utils/useCheckStatus";
+import { triggerToast } from "../../../utils/triggerToast";
 
 const RestaurantCard = ({ data }) => {
-  // console.log(data)
+  // console.log("RestaurantCard rendered");
 
   const metadata = data.restro.metadata;
   const [lat, lng] = metadata?.latLong.split(",") || data.restro.latLong.split(",");
@@ -50,19 +48,11 @@ const RestaurantCard = ({ data }) => {
       "ItemsToBeAddedInCart",
       JSON.stringify(itemsToAddInCart)
     );
-  }, [itemsToAddInCart]);
+  }, [itemsToAddInCart, restro_id]);
 
   const addItemsToCart = () => {
     if (restroItemsArray.length === 0) {
-      toast.info("You haven't selected any items to move.", {
-        autoClose: 3000,
-        style: {
-          backgroundColor: "#ff5200",
-          color: "white",
-          fontWeight: "medium",
-        },
-        progressClassName: "progress-style",
-      });
+      triggerToast("You haven't selected any items to move.", "#ff5200");
       return;
     }
 
@@ -72,15 +62,7 @@ const RestaurantCard = ({ data }) => {
       cart[firstKey]?.restaurantData?.id;
 
     if (presentRestaurant && presentRestaurant !== restro_id) {
-      toast.info("Clear cart to add items from this restaurant.", {
-        autoClose: 3000,
-        style: {
-          backgroundColor: "red",
-          color: "white",
-          fontWeight: "medium",
-        },
-        progressClassName: "progress-style",
-      });
+      triggerToast("Clear cart to add items from this restaurant.", "red");
       return;
     }
 

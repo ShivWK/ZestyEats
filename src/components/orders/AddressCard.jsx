@@ -1,9 +1,9 @@
-import { Package, CircleUserRound, IndianRupee, MapPinCheck, CalendarCheck } from "lucide-react"
+// Done
+import { Package, CircleUserRound, IndianRupee, MapPinCheck, CalendarCheck } from "lucide-react";
 
 const AddressCard = ({ data }) => {
+    // console.log("AddressCard");
     const { deliveryAddress: { address }, payment, createdAt } = data
-    // console.log(data);
-
     const giveHumanReadableDate = (dateString) => {
         const date = new Date(dateString);
 
@@ -20,40 +20,40 @@ const AddressCard = ({ data }) => {
         return inIndianTime;
     }
 
-    const addressArr = [
+    const addressArray = [
         {
             textMain: address.userName,
             textSecondary: address.userPhone,
-            logo: <CircleUserRound size={28} strokeWidth={1}/>
+            logo: <CircleUserRound size={28} strokeWidth={1} />
         },
 
         {
             textMain: "Payment method",
             textSecondary: payment.method === "COD" ? "COD (Cash on delivery)" : `Online (Txn ID: ${payment.transactionId})`,
-            logo: <IndianRupee size={28} strokeWidth={1}/>
+            logo: <IndianRupee size={28} strokeWidth={1} />
         },
 
         {
             textMain: "Delivery address",
             textSecondary: `${address.flatNumber}, ${address.state}, ${address.pinCode}, ${address.country}.`,
-            logo: <MapPinCheck size={28} strokeWidth={1}/>
+            logo: <MapPinCheck size={28} strokeWidth={1} />
         },
 
         {
             textMain: "Order placed on",
             textSecondary: giveHumanReadableDate(createdAt),
-            logo: <CalendarCheck size={28} strokeWidth={1}/>
+            logo: <CalendarCheck size={28} strokeWidth={1} />
         },
     ]
 
     return <section>
         <div className="flex items-center gap-1">
-            <Package size={18} strokeWidth={2}/>
+            <Package size={18} strokeWidth={2} />
             <h2 className="text-lg">Delivery Details</h2>
         </div>
 
         <div className="mt-4 flex flex-col gap-2.5">
-            {addressArr.map(data => {
+            {addressArray.map(data => {
                 return <div className="flex gap-3 items-center">
                     <div className="">{data.logo}</div>
                     <div className="flex flex-col">
@@ -61,9 +61,7 @@ const AddressCard = ({ data }) => {
                         <p className="line-clamp-2 text-sm text-gray-600 leading-5">{data.textSecondary}</p>
                     </div>
                 </div>
-            })
-
-            }
+            })}
         </div>
     </section>
 }

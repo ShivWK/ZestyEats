@@ -1,7 +1,10 @@
+// Done
+
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Disclaimer = () => {
+    // console.log("Disclaimer rendered");
     const [isSmall, setIsSmall] = useState(false);
 
     useEffect(() => {

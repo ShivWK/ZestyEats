@@ -1,9 +1,12 @@
+// Done
+
 import MainHeader from "./MainHeader";
 import HeaderWrapper from "./HeaderWrapper";
 import { selectCurrentRestaurant } from "../../features/home/restaurantsSlice";
 import { useSelector } from "react-redux";
 
 const RestaurantsHeader = () => {
+    // console.log("RestaurantsHeader rendered");
     const currentRestaurant = useSelector(selectCurrentRestaurant); 
 
     return <HeaderWrapper>

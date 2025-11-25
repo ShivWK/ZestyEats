@@ -22,6 +22,7 @@ const FilterButton = ({ applied, icon, text, handler, bgColor }) => {
 };
 
 const Filter = ({ text1 = "Pure Veg", text2 = "Veg & Non-Veg" }) => {
+  // console.log("Filters rendered")
   const [veg, setVeg] = useState(false);
   const [nonVeg, setNonVeg] = useState(false);
   const dispatch = useDispatch()

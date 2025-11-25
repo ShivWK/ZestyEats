@@ -1,4 +1,7 @@
+//  Done
+
 const LeftMenu = ({ data, width, clickHandler, currentIndex }) => {
+  console.log("help/LeftMenu rendered")
   return (
     <aside
       className="dark:bg-gray-400 bg-gray-200 py-6 pl-6"

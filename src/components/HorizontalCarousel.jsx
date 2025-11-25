@@ -1,4 +1,4 @@
-import Scrollbar from "./Home/ScroolBar";
+import Scrollbar from "./Home/ScrollBar";
 import Button from "./Home/Button";
 import { useState, useEffect, useRef, memo } from "react";
 import createDebounce from "../utils/debounceCreator";

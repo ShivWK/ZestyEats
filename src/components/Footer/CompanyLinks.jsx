@@ -1,12 +1,16 @@
-import { Link, useLocation } from "react-router-dom";
-import { selectAvailableCities } from "../../features/home/homeSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { memo, useEffect, useState } from "react";
-import updateCityHomeData from "../../utils/updateCityHomeData";
+// Done
+
 import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
 import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
+import { selectAvailableCities } from "../../features/home/homeSlice";
+import updateCityHomeData from "../../utils/updateCityHomeData";
+import { Link, useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { LEGAL_LINKS } from "../../utils/constants";
 
-const CompanyLinks = memo(({ isOpen, openCities }) => {
+const CompanyLinks = ({ isOpen, openCities }) => {
+  // console.log("Company links rendered");
   const [trigger] = useLazyGetDataForCityLocalityCuisineQuery();
   const pathname = useLocation().pathname;
   const cities = useSelector(selectAvailableCities);
@@ -58,7 +62,7 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
 
             return <li key={city.link} className="mb-3">
               <Link to={`cityPage/${city?.text}?mode=city`} onClick={() => clickHandler(city?.text, path)}>
-              <p className="dark:text-gray-200">{city.text}</p>
+                <p className="dark:text-gray-200">{city.text}</p>
               </Link>
             </li>
           })}
@@ -83,15 +87,9 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
       <div id="legal">
         <p className="font-semibold text-lg text-black mb-3 dark:text-white">Legal</p>
         <ul className="list-none text-gray-900 font-normal">
-          <li className="mb-3">
-            <Link to={"/legalAndPolicies?mode=termsAndConditions"} className="dark:text-gray-200">Terms & Conditions</Link>
-          </li>
-          <li className="mb-3">
-            <Link to={"/legalAndPolicies?mode=privacyPolicy"} className="dark:text-gray-200">Privacy Policy</Link>
-          </li>
-          <li className="mb-3">
-            <Link to={"/legalAndPolicies?mode=cookiesPolicy"} className="dark:text-gray-200">Cookie Policy</Link>
-          </li>
+          {LEGAL_LINKS.map((data, index) => <li key={index} className="mb-3">
+            <Link to={data.linkPath} className="dark:text-gray-200">{data.term}</Link>
+          </li>)}
         </ul>
       </div>
       <div id="Contact">
@@ -104,6 +102,6 @@ const CompanyLinks = memo(({ isOpen, openCities }) => {
       </div>
     </div>
   );
-});
+};
 
 export default CompanyLinks;

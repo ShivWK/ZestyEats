@@ -1,8 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { removeARecentLocation } from "../../features/home/homeSlice";
 import { useCallback } from "react";
 
-const Location = ({ index = null, icon, item, handleClick }) => {;
+const Location = ({ index = null, icon, item, handleClick }) => {
+  // console.log("location/Locations rendered");
   const dispatch = useDispatch();
 
   const handleCrossClick = useCallback((e) => {
@@ -16,13 +17,11 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
     }
 
     localStorage.setItem("recentLocations", JSON.stringify(recentLocation));
-  }, [index, dispatch, removeARecentLocation]);
+  }, [index, dispatch]);
 
   return (
     <div
-      onClick={() => {
-        handleClick(item);
-      }}
+      onClick={() => handleClick(item)}
       className="group cursor-pointer not-last:border-b-[1px] border-gray-400 py-2  md:py-4 md:px-7 mt-3 w-full"
     >
       <div className="flex gap-2.5 relative w-full">
@@ -51,5 +50,3 @@ const Location = ({ index = null, icon, item, handleClick }) => {;
 };
 
 export default Location;
-
-// <i class="ri-map-pin-line"></i>

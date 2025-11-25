@@ -1,3 +1,4 @@
+// Done
 import { useEffect, useState } from "react";
 import { selectDeviceFingerPrint } from "../../features/home/homeSlice";
 import { useSelector } from "react-redux";
@@ -5,6 +6,7 @@ import OrderCard from "./OrderCard";
 import OrderShimmer from "./OrderShimmer";
 
 const OrderMain = () => {
+    // console.log("Order/OrderMain rendered");
     const [orders, setOrders] = useState([]);
     const [ordersLoading, setOrdersLoading] = useState(true);
 
@@ -38,7 +40,7 @@ const OrderMain = () => {
         }
 
         fetchOrders();
-    }, [])
+    }, [deviceId])
 
     return <section className="p-1 flex flex-col gap-2 bg-gray-200">
         {ordersLoading
@@ -51,4 +53,4 @@ const OrderMain = () => {
     </section>
 }
 
-export default OrderMain
+export default OrderMain;

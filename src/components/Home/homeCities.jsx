@@ -10,6 +10,7 @@ import Loader from "../Loader";
 import dummyArray from "../../utils/DummyArray";
 
 const HomeCities = () => {
+    // console.log("HomeCities rendered")
     const cities = useSelector(selectAvailableCities);
     const [matchedCities, setMatchedCites] = useState(null);
     const [inputValue, setInputValue] = useState('');

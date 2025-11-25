@@ -1,48 +1,31 @@
+// Done (we aren't fetching recent locations from local storage )
 import { memo, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import {  
-  selectRecentLocations,
-  selectLatAndLng,
-} from "../../features/home/homeSlice";
-import Location from "./Loacations";
+import { selectRecentLocations, selectLatAndLng } from "../../features/home/homeSlice";
 import { useLazySearchedLocationQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
-import {
-  setLoading,
-  removeYourCurrentCity,
-} from "../../features/home/homeSlice";
+import { setLoading, removeYourCurrentCity } from "../../features/home/homeSlice";
 import { setHideLocation } from "../../features/Login/loginSlice";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
+import Location from "./Locations";
 
 const RecentLocations = memo(() => {
+  // console.log("RecentLocations rendered")
   const recentLocations = useSelector(selectRecentLocations);
   const { lat: latitude, lng: longitude } = useSelector(selectLatAndLng);
   const containerRef = useRef(null);
   const dispatch = useDispatch();
   const [triggerLocationCall] = useLazySearchedLocationQuery();
-  const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const [triggerRestaurantDataCall] = useLazyGetHomePageDataQuery();
   const navigate = useNavigate();
-  const location = useLocation();
-
-  const checkAndRedirect = () => {
-    if (location.pathname !== "/") {
-      navigate("/");
-    }
-  };
-
-  // useEffect(() => {
-  //   const recentLocations = JSON.parse(localStorage.getItem("recentLocations"));
-
-  //   if (recentLocations !== null) {
-  //     dispatch(addRecentLocations(recentLocations));
-  //   }
-  // }, []);
+  const pathname = useLocation().pathname;
 
   const handleRecentLocationClick = useCallback(
     async (location) => {
-      checkAndRedirect();
+      if (pathname !== "/") navigate("/");
+
       dispatch(setLoading(true));
       updateSearchedCity(location, dispatch);
 
@@ -58,24 +41,13 @@ const RecentLocations = memo(() => {
           return;
         }
 
-        const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
+        const res2 = await triggerRestaurantDataCall({ lat, lng }).unwrap();
         updateHomeRestaurantData(res2, dispatch, lat, lng);
       } catch (err) {
         alert(err.message);
         dispatch(setLoading(false));
       }
-    },
-    [
-      checkAndRedirect,
-      dispatch,
-      triggerLocationCall,
-      triggerRestaurentDataCall,
-      updateHomeRestaurantData,
-      setLoading,
-      removeYourCurrentCity,
-      updateSearchedCity,
-    ]
-  );
+    }, [dispatch, latitude, longitude, triggerLocationCall, triggerRestaurantDataCall, navigate, pathname]);
 
   return (
     <div

@@ -1,21 +1,21 @@
+// Done
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setLoading, selectLatAndLng } from "../../features/home/homeSlice";
+import { setHideLocation, selectLocationModal } from "../../features/Login/loginSlice";
 import { useLazyLocationByCoordinatesQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
-
-import { setHideLocation, selectLocationModal } from "../../features/Login/loginSlice";
-
-import { updateCurrentCity } from "../../utils/addCurrentCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
-import { memo, useState } from "react";
+import { updateCurrentCity } from "../../utils/addCurrentCity";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../Loader";
 
-const GeoLocation = memo(({ setSearchValue }) => {
+const GeoLocation = ({ setSearchValue }) => {
+  // console.log("location/GeoLocation rendered")
   const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
   const [triggerRestaurantDataCall] = useLazyGetHomePageDataQuery();
-  const [showLoader, setShowLoader] = useState(false)
+  const [showLoader, setShowLoader] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -30,11 +30,6 @@ const GeoLocation = memo(({ setSearchValue }) => {
   };
 
   const handleLocation = () => {
-    // 1: Get live lat and lng by GeoLoaction API.
-    // 2: Give this lat and lng to Swiggy API , which will give you the loaction according to it.
-    // 3: Swiggy given location will a new approx lat and lng , extarct that.
-    // 4: Now give this new lat and lng to the home API to ftech Restaurant's data.
-
     if (navigator.geolocation) {
       checkAndRedirect();
       setShowLoader(true);
@@ -45,7 +40,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
         try {
           setSearchValue("Fetching your location...");
           dispatch(setLoading(true));
-          dispatch(setHideLocation(true))
+          dispatch(setHideLocation(true));
           const data = await triggerLocationByCoordinates({
             lat1,
             lng1,
@@ -120,7 +115,7 @@ const GeoLocation = memo(({ setSearchValue }) => {
   return (
     <div
       onClick={handleLocation}
-      className={`group cursor-pointer ${ showLoader && "flex items-center justify-center" } border-[1px] border-gray-400 active:border-primary py-2 px-3 md:py-4 md:px-7 mt-8`}
+      className={`group cursor-pointer ${showLoader && "flex items-center justify-center"} border-[1px] border-gray-400 active:border-primary py-2 px-3 md:py-4 md:px-7 mt-8`}
     >
       {showLoader
         ? <Loader size={"small"} />
@@ -135,6 +130,6 @@ const GeoLocation = memo(({ setSearchValue }) => {
         </div>}
     </div>
   );
-});
+};
 
 export default GeoLocation;

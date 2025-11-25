@@ -1,12 +1,16 @@
-import { useState, useRef, memo } from "react";
+// Done
+
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useLazyGetAutoCompleteSearchQuery } from "../../features/home/searchApiSlice";
 import { setHideLocation } from "../../features/Login/loginSlice";
 import RecentLocations from "./RecentLocations";
 import GeoLocationFinder from "./GeoLocation";
 import SearchedLocation from "./SearchedLocations";
+import createDebounce from "../../utils/debounceCreator";
 
-const ModalSubContainer = memo(() => {
+const ModalSubContainer = () => {
+  // console.log("LocationModalSubContainer")
   const dispatch = useDispatch();
   const [searchValue, setSearchValue] = useState("");
   const [searchLoading, setSearchLoading] = useState(false);
@@ -15,16 +19,8 @@ const ModalSubContainer = memo(() => {
   const inputRef = useRef(null);
   const [triggerAutoCompleteSearch] = useLazyGetAutoCompleteSearchQuery();
 
-  // Store the debounced function in a ref so that:
-  // 1. It is created only once on initial render.
-  // 2. It preserves the internal timer between re-renders.
-  // This avoids creating a new debounced function on every input change,
-  // which would break debounce behavior by resetting the timer each time.
-  // Use function declaration for debounceCreater to avoid hoisting issues.
-  // and to ensure it is defined before being used in the useRef hook.
-
   const debouncedHandleInputChange = useRef(
-    debounceCreater(async (input) => {
+    createDebounce(async (input) => {
       try {
         if (input) {
           const data = await triggerAutoCompleteSearch(input).unwrap();
@@ -44,17 +40,6 @@ const ModalSubContainer = memo(() => {
     window.history.back();
   };
 
-  function debounceCreater(func, delay) {
-    let timer = null;
-    return function (...value) {
-      if (timer) clearTimeout(timer);
-
-      timer = setTimeout(() => {
-        func(...value);
-      }, delay);
-    };
-  }
-
   const handleInputChange = (e) => {
     setSearchValue(e.target.value);
     setSearchLoading(true);
@@ -67,17 +52,9 @@ const ModalSubContainer = memo(() => {
     setFocused(true);
   };
 
-  const handleContainerClick = (e) => {
-    setFocused(false);
-  };
-
-  const handeCancelClick = () => {
-    setSearchValue("");
-  };
-
   return (
     <div
-      onClick={handleContainerClick}
+      onClick={() => setFocused(false)}
       className="flex flex-col mt-7 w-[90%] md:w-[75%] h-[90%]"
     >
       <button
@@ -86,6 +63,7 @@ const ModalSubContainer = memo(() => {
       >
         <i className="ri-close-large-fill text-xl p-1 -ml-1 dark:group-hover:bg-gray-300/40 group-hover:bg-black/30 group-hover:text-white rounded-[50%] transition-all duration-150 ease-in-out"></i>
       </button>
+
       {/* Search locations */}
       <div
         onClick={handleDivClick}
@@ -102,13 +80,14 @@ const ModalSubContainer = memo(() => {
         />
         {searchValue.length !== 0 && (
           <button
-            onClick={handeCancelClick}
+            onClick={() => setSearchValue("")}
             className="font-bold text-[18px] text-primary cursor-pointer"
           >
             Cancel
           </button>
         )}
       </div>
+
       {/* {GPS} */}
       {searchValue.length === 0 && (
         <GeoLocationFinder setSearchValue={setSearchValue} />
@@ -120,7 +99,7 @@ const ModalSubContainer = memo(() => {
       {/* Searched Locations */}
       {searchValue.length !== 0 && (
         <SearchedLocation
-          locationsfetched={searchedLocation}
+          fetchedLocations={searchedLocation}
           setSearchedLocation={setSearchedLocation}
           setSearchValue={setSearchValue}
           searchLoading={searchLoading}
@@ -128,11 +107,6 @@ const ModalSubContainer = memo(() => {
       )}
     </div>
   );
-});
+};
 
 export default ModalSubContainer;
-
-
-// No, you don’t need to wrap a useState setter (like setLoading) in useCallback when passing it to a child.
-// The useState setter functions (like setLoading) are already stable and do not change between renders, so they do not need to be wrapped in useCallback.
-// Wrapping them in useCallback would not provide any performance benefit and could actually lead to unnecessary complexity.

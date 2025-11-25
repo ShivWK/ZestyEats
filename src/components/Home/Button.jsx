@@ -1,6 +1,7 @@
 // Done
 
 function Button({ ref, clickHandler, iconClass }) {
+    // console.log("Home Button rendered")
     return <button
         ref={ref}
         onClick={clickHandler}

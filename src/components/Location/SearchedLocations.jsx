@@ -1,4 +1,5 @@
-import Location from "./Loacations";
+// Done
+import Location from "./Locations";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { setHideLocation } from "../../features/Login/loginSlice";
@@ -10,36 +11,31 @@ import {
 } from "../../features/home/homeSlice";
 import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { updateHomeRestaurantData } from "../../utils/updateHomeData";
+import { getFromLocalStorage } from "../../utils/handleLocalStorage";
 
 import { useLazySearchedLocationQuery } from "../../features/home/searchApiSlice";
 import { useLazyGetHomePageDataQuery } from "../..//features/home/homeApiSlice";
-import { memo, useCallback } from "react";
+import { useCallback } from "react";
 
 import { recentLocationModifier } from "../../utils/guestSessionDataModifier";
 import Loader from "../Loader";
 
-const SearchedLocation = memo(({
-  locationsfetched,
+const SearchedLocation = ({
+  fetchedLocations,
   setSearchedLocation,
   setSearchValue,
   searchLoading
 }) => {
+  // console.log("SearchedLocation rendered")
   const [triggerLocationCall] = useLazySearchedLocationQuery();
-  const [triggerRestaurentDataCall] = useLazyGetHomePageDataQuery();
+  const [triggerRestaurantDataCall] = useLazyGetHomePageDataQuery();
   const { lat: latitude, lng: longitude } = useSelector(selectLatAndLng);
   const navigate = useNavigate();
-  const location = useLocation();
+  const pathname = useLocation().pathname;
   const dispatch = useDispatch();
 
-  const checkAndRedirect = () => {
-    if (location.pathname !== "/") {
-      navigate("/");
-    }
-  };
-
   const handleSearchedLocationClick = useCallback(async (location) => {
-    checkAndRedirect();
-
+    if (pathname !== "/") navigate("/")
     dispatch(setLoading(true));
     updateSearchedCity(location, dispatch);
 
@@ -57,7 +53,7 @@ const SearchedLocation = memo(({
         return;
       }
 
-      const res2 = await triggerRestaurentDataCall({ lat, lng }).unwrap();
+      const res2 = await triggerRestaurantDataCall({ lat, lng }).unwrap();
       updateHomeRestaurantData(res2, dispatch, lat, lng);
 
       if (
@@ -70,9 +66,8 @@ const SearchedLocation = memo(({
           })
         );
 
-        let previousLocations = JSON.parse(
-          localStorage.getItem("recentLocations")
-        );
+        let previousLocations = getFromLocalStorage({get: "recentLocations"});
+
         if (!Array.isArray(previousLocations)) previousLocations = [];
         const exists = previousLocations.some(item => item.place_id === location.place_id)
 
@@ -93,7 +88,7 @@ const SearchedLocation = memo(({
       console.log(err);
       dispatch(setLoading(false));
     }
-  }, [checkAndRedirect, updateSearchedCity, dispatch, triggerLocationCall, triggerRestaurentDataCall, setSearchedLocation, setSearchValue, updateHomeRestaurantData, setLoading, removeYourCurrentCity, addRecentLocations]);
+  }, [latitude, longitude, dispatch, triggerLocationCall, triggerRestaurantDataCall, setSearchedLocation, setSearchValue, navigate, pathname]);
 
   return (
     <div className="mt-6 overflow-hidden border-[1px] border-gray-400 p-2 pb-3 overflow-y-auto pretty-scrollbar">
@@ -104,7 +99,7 @@ const SearchedLocation = memo(({
               <Loader size={"small"} />
             </div>
           : <div className="-mt-1">
-            {locationsfetched.map((location, index) => (
+            {fetchedLocations.map((location) => (
               <Location
                 key={location.place_id}
                 icon="ri-map-pin-line"
@@ -116,6 +111,6 @@ const SearchedLocation = memo(({
       }
     </div>
   );
-});
+};
 
 export default SearchedLocation;

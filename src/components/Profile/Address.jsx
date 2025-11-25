@@ -14,8 +14,7 @@ import {
 } from "../../features/delivery/deliverySlice";
 
 const Address = (data) => {
-    // console.log(data);
-
+    console.log("Profile/Address rendered");
     const dispatch = useDispatch();
     const deviceId = useSelector(selectDeviceFingerPrint);
     const [searchedCountries, setSearchedCountries] = useState([]);
@@ -39,7 +38,7 @@ const Address = (data) => {
 
     useEffect(() => {
         dispatch(setSavedAddress(data.data.data));
-    }, [data.data.data]);
+    }, [data.data.data, dispatch]);
 
     useEffect(() => {
         fetch("https://restcountries.com/v3.1/all?fields=name,cca2,flag")

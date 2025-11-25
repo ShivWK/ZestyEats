@@ -1,6 +1,9 @@
+// Done
 import { Link } from "react-router-dom";
 
 const SectionAndOptions = ({ section }) => {
+  // console.log("SelectAndOptions rendered");
+  
   return (
     <section className="w-full border-b-10 border-gray-300  dark:bg-gray-800 bg-white">
       <div className="w-full dark:bg-darkPrimary bg-primary text-white font-semibold text-xl px-1.5 py-2">

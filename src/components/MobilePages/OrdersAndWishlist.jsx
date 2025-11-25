@@ -1,3 +1,4 @@
+// Done
 import { useState } from "react";
 import MobileFooterMenu from "./../Footer/MobileFooterMenu";
 import WishlistedItems from "./Wishlisttems/WishlistedItems";
@@ -5,7 +6,8 @@ import FavoriteRestros from "./FavoriteRestros";
 import OrderMain from "../orders/OrderMain";
 
 const OrdersAndWishlist = () => {
-    const [currentTab, setCurrentTab] = useState('Orders')
+    // console.log("MobilePages/OrdersAndWishlist rendered");
+    const [currentTab, setCurrentTab] = useState('Orders');
 
     return <main className={`pt-18 pb-16 px-1.5`}>
         <div className="bg-white dark:bg-gray-800 p-0.5 rounded ">

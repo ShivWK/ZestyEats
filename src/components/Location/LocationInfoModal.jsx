@@ -16,8 +16,6 @@ import { updateSearchedCity } from "../../utils/addSearchedCity";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { updateCurrentCity } from "../../utils/addCurrentCity";
-
-// new
 import fetchHomeData from "../../services/homeService";
 import { defaultPlaces } from "../../utils/constants";
 

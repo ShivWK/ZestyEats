@@ -1,6 +1,8 @@
+// Done
 import { FileText } from "lucide-react";
 
 const BillingCard = ({ data }) => {
+    // console.log("BillingCard rendered");
     const mainData = data.billing;
 
     const billArr = [

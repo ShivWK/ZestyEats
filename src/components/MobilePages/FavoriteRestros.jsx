@@ -1,9 +1,11 @@
-import { selectFavoriteRestros } from "../../features/home/restaurantsSlice";
+// Done
+import { selectFavoriteRestaurants } from "../../features/home/restaurantsSlice";
 import { useSelector } from "react-redux";
 import Cards from "../Home/Cards";
 
-const FavoriteRestros = () => {
-    const restaurants = useSelector(selectFavoriteRestros);
+const FavoriteRestaurants = () => {
+    // console.log("FavoriteRestaurants rendered")
+    const restaurants = useSelector(selectFavoriteRestaurants);
 
     return <div className="dark:bg-gray-800 pb-4 px-2">
         { restaurants.length !== 0 
@@ -21,5 +23,5 @@ const FavoriteRestros = () => {
     </div>
 }
 
-export default FavoriteRestros;
+export default FavoriteRestaurants;
 

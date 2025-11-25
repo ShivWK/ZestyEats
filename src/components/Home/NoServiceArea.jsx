@@ -1,6 +1,8 @@
 // Done
 
 const NoServiceArea = () => {
+    // console.log("NoServiceArea rendered");
+
     return (
         <section className="mb-6 lg:mb-10">
             <div className="relative flex items-center flex-col">

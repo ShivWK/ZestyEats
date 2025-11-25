@@ -1,9 +1,12 @@
-import { useState, memo } from "react";
+// Done
+
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { selectFaqs } from "../../features/home/helpPageSlice";
 import { legal, faqs } from "../../utils/helpAndSupportData";
 
-const LegalAndFaqs = memo(() => {
+const LegalAndFaqs = () => {
+    console.log("LegalAndFaqs rendered");
     const [activeIndex, setActiveIndex] = useState(0);
     const faqsStatus = useSelector(selectFaqs);
 
@@ -47,6 +50,6 @@ const LegalAndFaqs = memo(() => {
             );
         })}
     </div>)
-});
+};
 
 export default LegalAndFaqs;

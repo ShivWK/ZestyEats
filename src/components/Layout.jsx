@@ -30,7 +30,6 @@ import {
   addYourCurrentCity,
   addSearchedCity,
   addSearchedCityAddress,
-  selectDpModel,
   addRecentLocations,
   setCurrentTheme,
   selectDeviceFingerPrint,
@@ -86,7 +85,6 @@ export default function Layout() {
   const [triggerLocationByCoordinates] = useLazyLocationByCoordinatesQuery();
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
-  const dpModel = useSelector(selectDpModel);
   const isLocationModelOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel)
   const dispatch = useDispatch();

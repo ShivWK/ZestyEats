@@ -19,7 +19,11 @@ Api to get live location area name after getting lat and lng
 
 // if we are adding removing elements from a container and we are doing some oparation based on number of children in the container then there is no guarantee that react will immediately update the children in the container so number could be wrong.
 
-// data
+// If take any element out of the noemal flow of the document, then parents inherited props wont work on it nly its own props will worf.
+
+// No, you don’t need to wrap a useState setter (like setLoading) in useCallback when passing it to a child.
+// The useState setter functions (like setLoading) are already stable and do not change between renders, so they do not need to be wrapped in useCallback.
+// Wrapping them in useCallback would not provide any performance benefit and could actually lead to unnecessary complexity.
 
 🧾 Terms and Conditions – ZeastyEats
 Last updated: [Insert Date]

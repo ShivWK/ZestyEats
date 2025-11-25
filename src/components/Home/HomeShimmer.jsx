@@ -5,6 +5,7 @@ import { useLocation } from "react-router-dom";
 import dummyArray from "../../utils/DummyArray";
 
 const HomeShimmer = () => {
+    // console.log("HomeShimmer rendered")
     const [mappingArrays, setMappingArrays] = useState(calArray());
     const pathname = useLocation().pathname;
 

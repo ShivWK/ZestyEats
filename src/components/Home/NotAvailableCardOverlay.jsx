@@ -4,6 +4,7 @@ import { setFavoriteRestaurant } from "../../features/home/restaurantsSlice";
 import { useDispatch } from "react-redux";
 
 const NotAvailableCardOverlay = ({ disable, lat, lng, dataToMap }) => {
+    // console.log("NotAvailableCardOverlay rendered")
     const dispatch = useDispatch()
 
     const crossHandler = () => {

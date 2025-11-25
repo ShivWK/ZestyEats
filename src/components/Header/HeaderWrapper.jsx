@@ -1,3 +1,5 @@
+// Done
+
 import {
   selectLocationModal,
   selectLogInModal,
@@ -6,17 +8,15 @@ import {
   selectEditModal,
 } from "../../features/Login/loginSlice";
 import { selectMenuModel } from "../../features/home/restaurantsSlice";
-import { selectDpModel } from "../../features/home/homeSlice";
 import { selectEditAddressModal } from "../../features/delivery/deliverySlice";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
 
 const HeaderWrapper = ({ children }) => {
+  // console.log("HeaderWrapper rendered")
   const isLoginOpen = useSelector(selectLogInModal);
   const isLocationOpen = useSelector(selectLocationModal);
   const menuModel = useSelector(selectMenuModel);
   const { OpenLocationInfoModal } = useSelector(selectLocationInfoModal);
-  const pathname = useLocation().pathname;
   const editAddressModal = useSelector(selectEditAddressModal);
   const { deleteModal } = useSelector(selectDeleteModal);
   const { openEditModal } = useSelector(selectEditModal);

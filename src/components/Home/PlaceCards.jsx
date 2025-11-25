@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCity } from "../../features/home/homeSlice";
 
 const PlaceCards = ({ data, clickHandler = () => { }, path, targetedCity = null }) => {
+    // console.log("PlaceCards rendered")
     const [trigger] = useLazyGetDataForCityLocalityCuisineQuery();
     const dispatch = useDispatch();
     const mainCity = useSelector(selectCity);

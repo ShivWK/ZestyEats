@@ -1,11 +1,12 @@
 // Done
 
 import { useSelector } from "react-redux";
-import Cards from "./Cards";
+import RestaurantCard from "./RestaurantCard";
 import Filter from "./Filters";
 import { selectVegVariant } from "../../features/home/restaurantsSlice";
 
 const OnlineDeliveryRestaurant = ({ data, heading = null }) => {
+  // console.log("OnlineDeliveryRestaurant rendered");
   let DEFAULT_HEADING = "Restaurants with online food delivery";
 
   const title = heading || DEFAULT_HEADING;
@@ -23,7 +24,7 @@ const OnlineDeliveryRestaurant = ({ data, heading = null }) => {
 
           if (variant === "veg") {
             if (vegOption) {
-              return <Cards
+              return <RestaurantCard
                 key={item.info.id}
                 data={item.info}
                 imageWidth={240}
@@ -33,7 +34,7 @@ const OnlineDeliveryRestaurant = ({ data, heading = null }) => {
             }
           } else {
             if (nonVegOption) {
-              return <Cards
+              return <RestaurantCard
                 key={item.info.id}
                 data={item.info}
                 imageWidth={240}

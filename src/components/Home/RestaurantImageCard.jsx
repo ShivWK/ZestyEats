@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router";
 
 const RestaurantImageCard = ({ disable, dataToMap, from, userDistanceFromRestaurant, setDisable }) => {
+    // console.log("RestaurantImageCard rendered")
     const imageId = encodeURIComponent(dataToMap?.cloudinaryImageId?.trim());
     const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/${imageId}`;
 

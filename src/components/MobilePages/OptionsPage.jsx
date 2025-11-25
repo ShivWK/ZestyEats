@@ -1,3 +1,4 @@
+// Done
 import { Link, useSearchParams } from "react-router-dom";
 import { mobileHelpLegalFaqs } from "../../utils/helpAndSupportData";
 import { about } from "../../utils/aboutPageData";
@@ -5,6 +6,7 @@ import SectionAndOptions from "./SectionAndOptions";
 import MobileFooterMenu from "../Footer/MobileFooterMenu";
 
 const OptionsPage = () => {
+  // console.log("MobilePages/OptionsPages rendered");
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("mode");
 
