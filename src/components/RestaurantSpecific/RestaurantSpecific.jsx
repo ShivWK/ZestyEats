@@ -1,8 +1,8 @@
-import { useLoaderData, Await } from "react-router-dom";
-import { Suspense } from "react";
-import ShimmerContainer from "./ShimmerContainer";
-import useScrollToTop from "../../utils/useScrollToTop";
-import MainContent from "./MainContent";
+import { useLoaderData, Await } from 'react-router-dom';
+import { Suspense } from 'react';
+import ShimmerContainer from './ShimmerContainer';
+import useScrollToTop from '../../utils/useScrollToTop';
+import MainContent from './MainContent';
 
 const RestaurantSpecific = () => {
   const result = useLoaderData();

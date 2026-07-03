@@ -1,11 +1,15 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const blockedSchema = new mongoose.Schema({
+const blockedSchema = new mongoose.Schema(
+  {
     value: Boolean,
-    blockedAt: Date
-}, { _id: false });
+    blockedAt: Date,
+  },
+  { _id: false },
+);
 
-const deviceInfoSchema = new mongoose.Schema({
+const deviceInfoSchema = new mongoose.Schema(
+  {
     visitorId: String,
     deviceIp: String,
     deviceModal: String,
@@ -14,39 +18,41 @@ const deviceInfoSchema = new mongoose.Schema({
     oSVersion: String,
     browserName: String,
     browserVersion: String,
-    uA: String
-}, { _id: false});
+    uA: String,
+  },
+  { _id: false },
+);
 
 const accessSchema = new mongoose.Schema({
-    sessionId: mongoose.Schema.Types.ObjectId,
+  sessionId: mongoose.Schema.Types.ObjectId,
 
-    email: String,
+  email: String,
 
-    phone: Number,
-    
-    deviceInfo: deviceInfoSchema,
+  phone: Number,
 
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 60 * 60,
-    },
+  deviceInfo: deviceInfoSchema,
 
-    attempts: {
-        type: Number,
-        max: 5,
-        default: 0,
-    },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 60 * 60,
+  },
 
-    resendCount: {
-        type: Number,
-        max: 3,
-        default: 0
-    },
+  attempts: {
+    type: Number,
+    max: 5,
+    default: 0,
+  },
 
-    blocked: blockedSchema,
-    resendBlocked: blockedSchema,
-})
+  resendCount: {
+    type: Number,
+    max: 3,
+    default: 0,
+  },
 
-const AccessModal = mongoose.model("Access", accessSchema);
+  blocked: blockedSchema,
+  resendBlocked: blockedSchema,
+});
+
+const AccessModal = mongoose.model('Access', accessSchema);
 module.exports = AccessModal;

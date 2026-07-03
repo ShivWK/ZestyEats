@@ -1,18 +1,24 @@
-import { memo } from "react";
-import ItemCard2 from "./ItemCard2";
-import {
-  selectVegVariant
-} from "../../features/home/restaurantsSlice";
-import { useSelector } from "react-redux";
+import { memo } from 'react';
+import ItemCard2 from './ItemCard2';
+import { selectVegVariant } from '../../features/home/restaurantsSlice';
+import { useSelector } from 'react-redux';
 
-const ItemsCardContainer = memo(({ item, isParentOpen, restaurantData = null }) => {
-  const { vegOption, nonVegOption } = useSelector(selectVegVariant)
-  const veg = item?.itemAttribute?.vegClassifier === "VEG";
+const ItemsCardContainer = memo(
+  ({ item, isParentOpen, restaurantData = null }) => {
+    const { vegOption, nonVegOption } = useSelector(selectVegVariant);
+    const veg = item?.itemAttribute?.vegClassifier === 'VEG';
 
-  if (!vegOption && veg) return;
-  if (!nonVegOption && !veg) return;
+    if (!vegOption && veg) return;
+    if (!nonVegOption && !veg) return;
 
-  return <ItemCard2 item={item} isParentOpen={isParentOpen} restaurantData={restaurantData}/>;
-});
+    return (
+      <ItemCard2
+        item={item}
+        isParentOpen={isParentOpen}
+        restaurantData={restaurantData}
+      />
+    );
+  },
+);
 
 export default ItemsCardContainer;

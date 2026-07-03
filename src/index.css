@@ -1,360 +1,363 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-    --color-primary: #ff5200;
-    --color-darkPrimary: #9f0712;
+  --color-primary: #ff5200;
+  --color-darkPrimary: #9f0712;
 
-    --animate-height: height 0.6s ease forwards;
+  --animate-height: height 0.6s ease forwards;
 
-    @keyframes height {
-        0% {
-            height: 0px;
-        }
-
-        100% {
-            height: 100%
-        }
+  @keyframes height {
+    0% {
+      height: 0px;
     }
 
-    --animate-showEditAddressModal: showEditAddress 0.23s ease forwards;
-    --animate-hideEditAddressModal: hideEditAddress 0.23s ease forwards;
+    100% {
+      height: 100%;
+    }
+  }
 
-    @keyframes showEditAddress {
-        0% {
-            top: 100%
-        }
+  --animate-showEditAddressModal: showEditAddress 0.23s ease forwards;
+  --animate-hideEditAddressModal: hideEditAddress 0.23s ease forwards;
 
-        100% {
-            top: 50%;
-            transform: translateY(-48%)
-        }
+  @keyframes showEditAddress {
+    0% {
+      top: 100%;
     }
 
-    @keyframes hideEditAddress {
-        0% {
-            top: 50%;
-            transform: translateY(-48%)
-        }
+    100% {
+      top: 50%;
+      transform: translateY(-48%);
+    }
+  }
 
-        100% {
-            top: 100%
-        }
+  @keyframes hideEditAddress {
+    0% {
+      top: 50%;
+      transform: translateY(-48%);
     }
 
-    --animate-showDeleteModal: showDelete 0.3s ease forwards;
-    --animate-hideDeleteModal: hideDelete 0.3s ease forwards;
+    100% {
+      top: 100%;
+    }
+  }
 
-    @keyframes showDelete {
-        0% {
-            transform: scale(0,0); opacity: 0;
-        }
+  --animate-showDeleteModal: showDelete 0.3s ease forwards;
+  --animate-hideDeleteModal: hideDelete 0.3s ease forwards;
 
-        100% {
-            transform: scale(1, 1); opacity: 1;
-        }
+  @keyframes showDelete {
+    0% {
+      transform: scale(0, 0);
+      opacity: 0;
     }
 
-    @keyframes hideDelete {
-        0% {
-            transform: scale(1, 1); opacity: 1;
-        }
+    100% {
+      transform: scale(1, 1);
+      opacity: 1;
+    }
+  }
 
-        100% {
-            transform: scale(0,0); opacity: 0;
-        }
+  @keyframes hideDelete {
+    0% {
+      transform: scale(1, 1);
+      opacity: 1;
     }
 
-    --animate-dotBounce: animateDot 0.4s infinite alternate;
-
-    @keyframes animateDot {
-        0% {
-            transform: translateY(0);
-        }
-
-        100% {
-            transform: translateY(-5px);
-        }
+    100% {
+      transform: scale(0, 0);
+      opacity: 0;
     }
+  }
+
+  --animate-dotBounce: animateDot 0.4s infinite alternate;
+
+  @keyframes animateDot {
+    0% {
+      transform: translateY(0);
+    }
+
+    100% {
+      transform: translateY(-5px);
+    }
+  }
 }
 
 @layer utilities {
-    .hide-scrollbar::-webkit-scrollbar {
-        display: none;
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .main-large {
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+    border: 0.5em solid white;
+    border-top-color: #ff5200;
+    background-color: transparent;
+    animation: loader 1s ease infinite;
+  }
+
+  .main-small {
+    height: 4vh;
+    width: 4vh;
+    border-radius: 50%;
+    border: 0.3em solid white;
+    border-top-color: black;
+    background-color: transparent;
+    animation: loader 1s ease infinite;
+  }
+
+  @keyframes loader {
+    0% {
+      transform: rotate(0deg);
     }
 
-    .main-large {
-        height: 20vh;
-        width: 20vh;
-        border-radius: 50%;
-        border: 0.5em solid white;
-        border-top-color: #ff5200;
-        background-color: transparent;
-        animation: loader 1s ease infinite;
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .notFirst-notLast > div:not(:first-child):not(:last-child) {
+    border-top: none;
+  }
+
+  .shimmerBg {
+    position: relative;
+    animation: bgChange 1.5s ease-in infinite forwards;
+  }
+
+  .animate-dishes {
+    animation: dishes 3s ease-in-out infinite;
+  }
+
+  .animate-dp-show {
+    animation: animateDpShow 0.3s ease-in-out forwards;
+  }
+
+  .animate-dp-hide {
+    animation: animateDpHide 0.3s ease-in-out forwards;
+  }
+
+  .cart-animation {
+    animation: animateCart 0.8s ease-in-out infinite;
+  }
+
+  /* animation-fill-mode: forwards is important to persist the values set by the animation (100% values) otherwise as animation ends its set values are removed */
+
+  .show-menu {
+    animation: showMenu 0.3s ease forwards;
+  }
+
+  .hide-menu {
+    animation: hideMenu 0.3s ease forwards;
+  }
+
+  .menu-button {
+    animation: menuButton 0.5s ease forwards;
+  }
+
+  .show-locationInfoModal {
+    animation: showLocationInfoModal 0.3s ease forwards;
+  }
+
+  .hide-locationInfoModal {
+    animation: hideLocationInfoModal 0.3s ease forwards;
+  }
+
+  .profile-animation {
+    animation: animateProfile 0.6s ease forwards;
+  }
+
+  @keyframes animateProfile {
+    0% {
+      top: -300px;
     }
 
-    .main-small {
-        height: 4vh;
-        width: 4vh;
-        border-radius: 50%;
-        border: 0.3em solid white;
-        border-top-color: black;
-        background-color: transparent;
-        animation: loader 1s ease infinite;
+    100% {
+      top: 0;
+    }
+  }
+
+  @keyframes menuButton {
+    0% {
+      bottom: -2rem;
     }
 
-    @keyframes loader {
-        0% {
-            transform: rotate(0deg);
-        }
+    100% {
+      bottom: 1rem;
+    }
+  }
 
-        100% {
-            transform: rotate(360deg);
-        }
+  @keyframes bgChange {
+    0% {
+      background-color: #cfd1d1;
     }
 
-    .notFirst-notLast>div:not(:first-child):not(:last-child) {
-        border-top: none;
+    50% {
+      background-color: #b2b2b4;
     }
 
-    .shimmerBg {
-        position: relative;
-        animation: bgChange 1.5s ease-in infinite forwards;
+    100% {
+      background-color: #cfd1d1;
+    }
+  }
+
+  @keyframes dishes {
+    0% {
+      margin-left: -100%;
     }
 
-    .animate-dishes {
-        animation: dishes 3s ease-in-out infinite;
+    50% {
+      margin-left: 45%;
     }
 
-    .animate-dp-show {
-        animation: animateDpShow 0.3s ease-in-out forwards;
+    100% {
+      margin-left: 110%;
+    }
+  }
+
+  @keyframes animateDpShow {
+    0% {
+      transform: scale(0%);
     }
 
-    .animate-dp-hide {
-        animation: animateDpHide 0.3s ease-in-out forwards;
+    100% {
+      transform: scale(100%);
+    }
+  }
+
+  @keyframes animateDpHide {
+    0% {
+      transform: scale(100%);
     }
 
-    .cart-animation {
-        animation: animateCart 0.8s ease-in-out infinite;
+    100% {
+      transform: scale(0%);
+    }
+  }
+
+  @keyframes animateCart {
+    0% {
+      transform: translateX(0);
     }
 
-    /* animation-fill-mode: forwards is important to persist the values set by the animation (100% values) otherwise as animation ends its set values are removed */
-
-    .show-menu {
-        animation: showMenu 0.3s ease forwards;
+    50% {
+      transform: translateX(8px);
     }
 
-    .hide-menu {
-        animation: hideMenu 0.3s ease forwards;
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes textSlide {
+    0% {
+      transform: translateX(120%);
     }
 
-    .menu-button {
-        animation: menuButton 0.5s ease forwards;
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  @keyframes showMenu {
+    0% {
+      bottom: -110%;
     }
 
-    .show-locationInfoModal {
-        animation: showLocationInfoModal 0.3s ease forwards;
+    100% {
+      bottom: 4.5rem;
+    }
+  }
+
+  @keyframes hideMenu {
+    0% {
+      bottom: 4.5rem;
     }
 
-    .hide-locationInfoModal {
-        animation: hideLocationInfoModal 0.3s ease forwards;
+    100% {
+      bottom: -110%;
+    }
+  }
+
+  @keyframes showLocationInfoModal {
+    0% {
+      bottom: -110%;
     }
 
-    .profile-animation {
-        animation: animateProfile 0.6s ease forwards;
+    100% {
+      bottom: 1rem;
+    }
+  }
+
+  @keyframes hideLocationInfoModal {
+    0% {
+      bottom: 1rem;
     }
 
-    @keyframes animateProfile {
-        0% {
-            top: -300px;
-        }
-
-        100% {
-            top: 0;
-        }
+    100% {
+      bottom: -110%;
     }
-
-    @keyframes menuButton {
-        0% {
-            bottom: -2rem;
-        }
-
-        100% {
-            bottom: 1rem;
-        }
-    }
-
-    @keyframes bgChange {
-        0% {
-            background-color: #cfd1d1;
-        }
-
-        50% {
-            background-color: #b2b2b4;
-        }
-
-        100% {
-            background-color: #cfd1d1;
-        }
-    }
-
-    @keyframes dishes {
-        0% {
-            margin-left: -100%;
-        }
-
-        50% {
-            margin-left: 45%;
-        }
-
-        100% {
-            margin-left: 110%
-        }
-    }
-
-    @keyframes animateDpShow {
-        0% {
-            transform: scale(0%);
-        }
-
-        100% {
-            transform: scale(100%);
-        }
-    }
-
-    @keyframes animateDpHide {
-        0% {
-            transform: scale(100%);
-        }
-
-        100% {
-            transform: scale(0%);
-        }
-    }
-
-    @keyframes animateCart {
-        0% {
-            transform: translateX(0);
-        }
-
-        50% {
-            transform: translateX(8px);
-        }
-
-        100% {
-            transform: translateX(0);
-        }
-    }
-
-    @keyframes textSlide {
-        0% {
-            transform: translateX(120%);
-        }
-
-        100% {
-            transform: translateX(0%);
-        }
-    }
-
-    @keyframes showMenu {
-        0% {
-            bottom: -110%
-        }
-
-        100% {
-            bottom: 4.5rem;
-        }
-    }
-
-    @keyframes hideMenu {
-        0% {
-            bottom: 4.5rem
-        }
-
-        100% {
-            bottom: -110%;
-        }
-    }
-
-    @keyframes showLocationInfoModal {
-        0% {
-            bottom: -110%
-        }
-
-        100% {
-            bottom: 1rem;
-        }
-    }
-
-    @keyframes hideLocationInfoModal {
-        0% {
-            bottom: 1rem
-        }
-
-        100% {
-            bottom: -110%;
-        }
-    }
+  }
 }
 
 @layer base {
+  h1 {
+    font-weight: 750;
+    font-size: 27px;
+  }
 
-    h1 {
-        font-weight: 750;
-        font-size: 27px;
-    }
+  h2 {
+    font-weight: 750;
+    font-size: 21px;
+  }
 
-    h2 {
-        font-weight: 750;
-        font-size: 21px;
-    }
-
-    h3 {
-        font-weight: 750;
-        font-size: 25px;
-    }
+  h3 {
+    font-weight: 750;
+    font-size: 25px;
+  }
 }
 
 body {
-    scrollbar-gutter: stable both-edges;
-    font-family: sans-serif;
+  scrollbar-gutter: stable both-edges;
+  font-family: sans-serif;
 }
 
 .progress-style {
-    background-color: black;
+  background-color: black;
 }
 
 .progress-style-disclaimer {
-    background-color: white;
+  background-color: white;
 }
 
 .pretty-scrollbar::-webkit-scrollbar-track {
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 }
 
 .pretty-scrollbar::-webkit-scrollbar {
-    width: 0.5vw;
+  width: 0.5vw;
 }
 
 .pretty-scrollbar::-webkit-scrollbar-thumb {
-    background-color: #ff5200;
-    border-radius: 10px;
+  background-color: #ff5200;
+  border-radius: 10px;
 }
 
 @media screen and (max-width: 768px) {
-    .main-large {
-        height: 9vh;
-        width: 9vh;
-        border-width: 0.3em;
-    }
+  .main-large {
+    height: 9vh;
+    width: 9vh;
+    border-width: 0.3em;
+  }
 
-    .pretty-scrollbar::-webkit-scrollbar {
-        width: 0.8vw;
-    }
+  .pretty-scrollbar::-webkit-scrollbar {
+    width: 0.8vw;
+  }
 
-    h3 {
-        font-weight: 750;
-        font-size: 21px;
-    }
+  h3 {
+    font-weight: 750;
+    font-size: 21px;
+  }
 }

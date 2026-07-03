@@ -1,46 +1,54 @@
-import { useDispatch } from "react-redux";
-import { removeARecentLocation } from "../../features/home/homeSlice";
-import { useCallback } from "react";
+import { useDispatch } from 'react-redux';
+import { removeARecentLocation } from '../../features/home/homeSlice';
+import { useCallback } from 'react';
 
 const Location = ({ index = null, icon, item, handleClick }) => {
   // console.log("location/Locations rendered");
   const dispatch = useDispatch();
 
-  const handleCrossClick = useCallback((e) => {
-    e.stopPropagation();
-    dispatch(removeARecentLocation(index));
+  const handleCrossClick = useCallback(
+    (e) => {
+      e.stopPropagation();
+      dispatch(removeARecentLocation(index));
 
-    const recentLocation = JSON.parse(localStorage.getItem("recentLocations"));
+      const recentLocation = JSON.parse(
+        localStorage.getItem('recentLocations'),
+      );
 
-    if (recentLocation.length !== 0) {
-      recentLocation.splice(index, 1);
-    }
+      if (recentLocation.length !== 0) {
+        recentLocation.splice(index, 1);
+      }
 
-    localStorage.setItem("recentLocations", JSON.stringify(recentLocation));
-  }, [index, dispatch]);
+      localStorage.setItem('recentLocations', JSON.stringify(recentLocation));
+    },
+    [index, dispatch],
+  );
 
   return (
     <div
       onClick={() => handleClick(item)}
-      className="group cursor-pointer not-last:border-b-[1px] border-gray-400 py-2  md:py-4 md:px-7 mt-3 w-full"
+      className="group mt-3 w-full cursor-pointer border-gray-400 py-2 not-last:border-b-[1px] md:px-7 md:py-4"
     >
-      <div className="flex gap-2.5 relative w-full">
+      <div className="relative flex w-full gap-2.5">
         <i className={`${icon} text-xl text-gray-500 dark:text-gray-300`}></i>
         <div className="w-full">
-          <p className="font-medium w-[90%] group-hover:text-primary group-active:text-primary line-clamp-2 break-words leading-5 dark:text-gray-300">
+          <p className="group-hover:text-primary group-active:text-primary line-clamp-2 w-[90%] leading-5 font-medium break-words dark:text-gray-300">
             {item?.terms?.[0]?.value}
           </p>
-          <p className="text-sm font-medium tracking-wide dark:text-gray-400 text-gray-500 truncate w-[88%]">
-            {item?.terms?.[1]?.value}{item?.terms?.[2]?.value ? (", " + item?.terms?.[2]?.value + ".") : "."}
+          <p className="w-[88%] truncate text-sm font-medium tracking-wide text-gray-500 dark:text-gray-400">
+            {item?.terms?.[1]?.value}
+            {item?.terms?.[2]?.value
+              ? ', ' + item?.terms?.[2]?.value + '.'
+              : '.'}
           </p>
         </div>
         {index !== null && (
           <button
-            className="absolute cursor-pointer right-0"
+            className="absolute right-0 cursor-pointer"
             onClick={handleCrossClick}
           >
             <i
-              className={`ri-close-large-fill p-1 dark:text-gray-300 text-gray-500 hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.09)] rounded-[50%] transition-all duration-150 ease-in-out`}
+              className={`ri-close-large-fill rounded-[50%] p-1 text-gray-500 transition-all duration-150 ease-in-out hover:shadow-[inset_0_0_5px_5px_rgba(0,0,0,0.09)] dark:text-gray-300`}
             ></i>
           </button>
         )}

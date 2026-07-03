@@ -1,61 +1,61 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const profileApiSlice = createApi({
-    reducerPath: "profile",
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${import.meta.env.VITE_BASE_URL}/api/userActivity`,
-        prepareHeaders: (headers) => {
-            headers.set("x-identifier", import.meta.env.VITE_HASHED_IDENTIFIER)
-            headers.set("Content-Type", "application/json")
-            headers.set("x-user-agent", navigator.userAgent)
-            headers.set("x-language", navigator.language)
-            headers.set("x-resolution", `${screen.height}x${screen.width}`,)
+  reducerPath: 'profile',
+  baseQuery: fetchBaseQuery({
+    baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/userActivity`,
+    prepareHeaders: (headers) => {
+      headers.set('x-identifier', import.meta.env.VITE_HASHED_IDENTIFIER);
+      headers.set('Content-Type', 'application/json');
+      headers.set('x-user-agent', navigator.userAgent);
+      headers.set('x-language', navigator.language);
+      headers.set('x-resolution', `${screen.height}x${screen.width}`);
 
-            return headers;
+      return headers;
+    },
+
+    credentials: 'include',
+  }),
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
+
+  endpoints: (builder) => ({
+    getAddress: builder.query({
+      query: ({ deviceId }) => ({
+        url: '/userAddress',
+        method: 'GET',
+        headers: {
+          'x-device-id': deviceId,
         },
-
-        credentials: "include"
+      }),
     }),
-    keepUnusedDataFor: 0,
-    refetchOnMountOrArgChange: true,
 
-    endpoints: (builder) => ({
-        getAddress: builder.query({
-            query: ({ deviceId }) => ({
-                url: "/userAddress",
-                method: "GET",
-                headers: {
-                    "x-device-id": deviceId,
-                }
-            })
-        }),
+    getPaymentMethods: builder.query({
+      query: ({ deviceId }) => ({
+        url: '/userPaymentMethods',
+        method: 'GET',
+        headers: {
+          'x-device-id': deviceId,
+        },
+      }),
+    }),
 
-        getPaymentMethods: builder.query({
-            query: ({ deviceId }) => ({
-                url: "/userPaymentMethods",
-                method: "GET",
-                headers: {
-                    "x-device-id": deviceId,
-                }
-            })
-        }),
-
-        getLoggedInSessions: builder.query({
-            query: ({ deviceId }) => ({
-                url: "/loggedInSession",
-                method: "GET",
-                headers: {
-                    "x-device-id": deviceId,
-                }
-            })
-        })
-    })
-})
+    getLoggedInSessions: builder.query({
+      query: ({ deviceId }) => ({
+        url: '/loggedInSession',
+        method: 'GET',
+        headers: {
+          'x-device-id': deviceId,
+        },
+      }),
+    }),
+  }),
+});
 
 export default profileApiSlice;
 
 export const {
-    useLazyGetAddressQuery,
-    useLazyGetPaymentMethodsQuery,
-    useLazyGetLoggedInSessionsQuery
+  useLazyGetAddressQuery,
+  useLazyGetPaymentMethodsQuery,
+  useLazyGetLoggedInSessionsQuery,
 } = profileApiSlice;

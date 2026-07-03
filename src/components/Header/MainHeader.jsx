@@ -1,7 +1,7 @@
 // Done
 
-import Navbar from "./Navbar";
-import Logo from "./Logo";
+import Navbar from './Navbar';
+import Logo from './Logo';
 
 export default function MainHeader({
   searchPlaceholder = false,
@@ -12,12 +12,16 @@ export default function MainHeader({
 }) {
   // console.log("MainHeader rendered");
   return (
-    <header className="w-full"> 
-      <div className="flex justify-between w-full items-center mx-auto h-16 md:h-20 md:max-w-[1210px]">
-        <Logo searchPlaceholder={searchPlaceholder}/>
-        <Navbar showAbout={showAbout} showSearch={showSearch} showOffers={showOffers} showCart={showCart} />
+    <header className="w-full">
+      <div className="mx-auto flex h-16 w-full items-center justify-between md:h-20 md:max-w-[1210px]">
+        <Logo searchPlaceholder={searchPlaceholder} />
+        <Navbar
+          showAbout={showAbout}
+          showSearch={showSearch}
+          showOffers={showOffers}
+          showCart={showCart}
+        />
       </div>
     </header>
   );
 }
-

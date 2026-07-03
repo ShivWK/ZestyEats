@@ -1,12 +1,12 @@
 // Done
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { setContact, setFaqs } from "../../features/home/helpPageSlice";
-import LeftMenu from "./LeftMenu";
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setContact, setFaqs } from '../../features/home/helpPageSlice';
+import LeftMenu from './LeftMenu';
 
 const MenuBar = () => {
   // console.log("help/MenuBar rendered")
-  const menu = ["Contact Us", "FAQs", "Legal"];
+  const menu = ['Contact Us', 'FAQs', 'Legal'];
   const [activeIndex, setActiveIndex] = useState(0);
   const dispatch = useDispatch();
 
@@ -28,7 +28,7 @@ const MenuBar = () => {
     <LeftMenu
       data={menu}
       clickHandler={handleClick}
-      width={"25%"}
+      width={'25%'}
       currentIndex={activeIndex}
     />
   );

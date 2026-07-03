@@ -10,4 +10,3 @@ function createDebounce(func, delay) {
 }
 
 export default createDebounce;
-

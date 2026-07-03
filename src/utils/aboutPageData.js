@@ -1,28 +1,28 @@
 export const aboutHeadings = [
-  "Educational Use Disclaimer",
-  "About ZestyEats",
-  "Purpose Behind ZestyEats",
-  "Core Features",
-  "Performance Optimizations",
-  "Security Highlights",
-  "Tech Stack",
-  "User Role",
-  "What I Learned",
+  'Educational Use Disclaimer',
+  'About ZestyEats',
+  'Purpose Behind ZestyEats',
+  'Core Features',
+  'Performance Optimizations',
+  'Security Highlights',
+  'Tech Stack',
+  'User Role',
+  'What I Learned',
 ];
 
 export const about = [
   {
-    title: "Educational Use Disclaimer",
+    title: 'Educational Use Disclaimer',
     description: [
-      "<p>This application is created solely for educational, learning, and portfolio demonstration purposes.All content and data used here are fetched to replicate real - world scenarios for personal skill development.</p>",
+      '<p>This application is created solely for educational, learning, and portfolio demonstration purposes.All content and data used here are fetched to replicate real - world scenarios for personal skill development.</p>',
 
       "<p>This project is <span style='font-weight: bold'>not affiliated with, endorsed by, or representing any real-world brand, company, or service.</span></p>",
 
-      "<p> No data is used for commercial purposes, and no user information is collected or stored. If any data usage unintentionally violates any rights, please reach out via the contact section for immediate removal or correction.</p>",
+      '<p> No data is used for commercial purposes, and no user information is collected or stored. If any data usage unintentionally violates any rights, please reach out via the contact section for immediate removal or correction.</p>',
     ],
   },
   {
-    title: "About ZestyEats",
+    title: 'About ZestyEats',
     description: [
       "<p><span style='font-weight: bold'>ZestyEats</span> is a <span style='font-weight: bold'>full-stack</span>, production-grade <span style='font-weight: bold'>online food delivery web application</span> inspired by real-world food delivery platforms. It is built with a focus on real-world development practices, performance, and security — aimed at delivering a seamless and optimized food ordering experience to users.</p>",
 
@@ -31,7 +31,7 @@ export const about = [
   },
 
   {
-    title: "Purpose Behind ZestyEats",
+    title: 'Purpose Behind ZestyEats',
     description: [
       "<p>The primary goal of ZestyEats is to simulate a <span style='font-weight: bold'>real-world e-commerce experience</span> in the food delivery domain. This app helped me deeply understand:</p>",
     ],
@@ -44,13 +44,13 @@ export const about = [
       ],
     },
     lastDescription: [
-      "<p>It serves both as a learning platform and a demonstration of my software engineering capabilities.</p>",
+      '<p>It serves both as a learning platform and a demonstration of my software engineering capabilities.</p>',
     ],
   },
   {
-    title: "Core Features",
+    title: 'Core Features',
     description: [
-      "<p>This app offers a variety of features to simulate a complete food delivery experience.</p>",
+      '<p>This app offers a variety of features to simulate a complete food delivery experience.</p>',
     ],
     list: {
       mainList: [
@@ -69,8 +69,8 @@ export const about = [
   },
 
   {
-    title: "Performance Optimizations",
-    description: ["<p>ZestyEats is built to be fast and efficient:</p>"],
+    title: 'Performance Optimizations',
+    description: ['<p>ZestyEats is built to be fast and efficient:</p>'],
     list: {
       mainList: [
         "<p><span style='font-weight: bold'>Code Splitting & Lazy Loading:</span> Improve load speed by deferring heavy components.</p>",
@@ -79,17 +79,17 @@ export const about = [
         "<p><span style='font-weight: bold'>Smart Caching:</span></p>",
       ],
       subList: [
-        "<p>Uses RTK Query to automatically cache API responses (default: 60s).</p>",
-        "<p>Previously visited location data is stored to avoid repeated network calls.</p>",
-        "<p>Searched locations are cached for quick recall.</p>",
+        '<p>Uses RTK Query to automatically cache API responses (default: 60s).</p>',
+        '<p>Previously visited location data is stored to avoid repeated network calls.</p>',
+        '<p>Searched locations are cached for quick recall.</p>',
       ],
     },
   },
 
   {
-    title: "Security Highlights",
+    title: 'Security Highlights',
     description: [
-      "<p>Security is a core focus area in ZestyEats, including:</p>",
+      '<p>Security is a core focus area in ZestyEats, including:</p>',
     ],
     list: {
       mainList: [
@@ -103,7 +103,7 @@ export const about = [
   },
 
   {
-    title: "Tech Stack",
+    title: 'Tech Stack',
     description: [
       "<p>ZestyEats is built using a <span style='font-weight: bold'>modern MERN-based tech stack</span> to ensure a responsive, scalable, and secure user experience. It combines powerful frontend tools with a robust backend and secure authentication mechanisms to deliver a real-world production-grade food delivery app.</p>",
     ],
@@ -125,22 +125,22 @@ export const about = [
   },
 
   {
-    title: "User Role",
+    title: 'User Role',
     description: [
-      "<p>ZestyEats is a user-centric platform. While there's no dedicated admin panel, the backend is fully developer-controlled with secure logic for every user interaction — from searching to placing an order.</p>"
+      "<p>ZestyEats is a user-centric platform. While there's no dedicated admin panel, the backend is fully developer-controlled with secure logic for every user interaction — from searching to placing an order.</p>",
     ],
   },
 
   {
-    title: "What I Learned",
-    description: ["<p>This project deepened my understanding of:</p>"],
+    title: 'What I Learned',
+    description: ['<p>This project deepened my understanding of:</p>'],
     list: {
       mainList: [
-        "<p>Building secure, scalable REST APIs.</p>",
-        "<p>Managing auth flows with JWT, OAuth, and CSRF tokens.</p>",
-        "<p>Real time geolocation and dynamic UI rendering.</p>",
-        "<p>Performance engineering: caching, debouncing, lazy loading.</p>",
-        "<p>Production level backend architecture and deployment</p>",
+        '<p>Building secure, scalable REST APIs.</p>',
+        '<p>Managing auth flows with JWT, OAuth, and CSRF tokens.</p>',
+        '<p>Real time geolocation and dynamic UI rendering.</p>',
+        '<p>Performance engineering: caching, debouncing, lazy loading.</p>',
+        '<p>Production level backend architecture and deployment</p>',
       ],
     },
     lastDescription: [

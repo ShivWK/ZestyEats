@@ -1,4 +1,4 @@
-import { createSlice, createSelector } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from '@reduxjs/toolkit';
 
 const initialState = {
   isLoginModalOpen: false,
@@ -15,20 +15,20 @@ const initialState = {
   otpOnPhone: true,
   isLocationInfoModalOpen: false,
   hideLocationInfoModal: false,
-  locationInfoModalReason: "permission",
+  locationInfoModalReason: 'permission',
   isGrantClicked: false,
-  errorMessage: "",
+  errorMessage: '',
   fullDisable: false,
   appLoading: false,
   isDeleteModalOpen: false,
   hideDeleteModal: false,
   OpenEditModal: false,
   hideEditModal: false,
-  toEdit: "",
+  toEdit: '',
 };
 
 const loginSlice = createSlice({
-  name: "login",
+  name: 'login',
   initialState: initialState,
 
   reducers: {
@@ -48,7 +48,7 @@ const loginSlice = createSlice({
       state.isLoginModalOpen = action.payload;
 
       if (action.payload) {
-        window.history.pushState({ model: "login" }, "", location.href);
+        window.history.pushState({ model: 'login' }, '', location.href);
       }
     },
 
@@ -60,7 +60,7 @@ const loginSlice = createSlice({
       state.isLocationModalOpen = action.payload;
 
       if (action.payload) {
-        window.history.pushState({ model: "location" }, "", location.href);
+        window.history.pushState({ model: 'location' }, '', location.href);
       }
     },
 
@@ -95,7 +95,11 @@ const loginSlice = createSlice({
     setIsLoggedIn: (state, action) => {
       state.isLoggedIn = action.payload;
 
-      { action.payload ? localStorage.setItem("auth", "true") : localStorage.setItem("auth", "false") }
+      {
+        action.payload
+          ? localStorage.setItem('auth', 'true')
+          : localStorage.setItem('auth', 'false');
+      }
     },
 
     setLoading: (state, action) => {
@@ -111,7 +115,7 @@ const loginSlice = createSlice({
     },
 
     setModalTrace: (state, action) => {
-      if (action.payload.mode === "empty") {
+      if (action.payload.mode === 'empty') {
         state.modalTrace = [];
       } else {
         state.modalTrace.push(action.payload);
@@ -140,7 +144,7 @@ const loginSlice = createSlice({
 
     setToEdit: (state, action) => {
       state.toEdit = action.payload;
-    }
+    },
   },
 });
 
@@ -157,35 +161,31 @@ export const selectIsMember = (state) => state.login.isMember;
 export const selectLoginOpened = (state) => state.login.loginOpened;
 export const selectModalTrace = (state) => state.login.modalTrace;
 export const selectOtpOnPhone = (state) => state.login.otpOnPhone;
-export const selectLocationInfoModalReason = (state) => state.login.locationInfoModalReason;
+export const selectLocationInfoModalReason = (state) =>
+  state.login.locationInfoModalReason;
 export const selectGrantBtnClicked = (state) => state.login.isGrantClicked;
 export const selectErrorMessage = (state) => state.login.errorMessage;
 export const selectFullDisable = (state) => state.login.fullDisable;
 export const selectToEdit = (state) => state.login.toEdit;
 
 export const selectEditModal = createSelector(
-  [
-    state => state.login.OpenEditModal,
-    state => state.login.hideEditModal
-  ],
-  (
+  [(state) => state.login.OpenEditModal, (state) => state.login.hideEditModal],
+  (openEditModal, hideEditModal) => ({
     openEditModal,
-    hideEditModal
-  ) => ({
-    openEditModal,
-    hideEditModal
-  }))
+    hideEditModal,
+  }),
+);
 
 export const selectDeleteModal = createSelector(
   [
-    state => state.login.isDeleteModalOpen,
-    state => state.login.hideDeleteModal
+    (state) => state.login.isDeleteModalOpen,
+    (state) => state.login.hideDeleteModal,
   ],
   (deleteModal, hideDeleteModal) => ({
     deleteModal,
-    hideDeleteModal
-  })
-)
+    hideDeleteModal,
+  }),
+);
 
 export const selectLocationInfoModal = createSelector(
   [
@@ -194,8 +194,8 @@ export const selectLocationInfoModal = createSelector(
   ],
   (OpenLocationInfoModal, hideLocationInfoModal) => ({
     OpenLocationInfoModal,
-    hideLocationInfoModal
-  })
+    hideLocationInfoModal,
+  }),
 );
 
 export const selectHideModel = createSelector(
@@ -205,7 +205,7 @@ export const selectHideModel = createSelector(
       loginHide,
       locationHide,
     };
-  }
+  },
 );
 
 export const {

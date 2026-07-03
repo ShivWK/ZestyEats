@@ -1,12 +1,12 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 
 const homeSearchSlice = createSlice({
-  name: "homeSearchSlice",
+  name: 'homeSearchSlice',
   initialState: {
     isSuggestionsLoading: false,
     suggestions: [],
     tabSuggestionsData: [],
-    tabQueryData: "",
+    tabQueryData: '',
   },
 
   reducers: {
@@ -30,9 +30,11 @@ const homeSearchSlice = createSlice({
 
 export default homeSearchSlice.reducer;
 
-export const selectSuggestionsLoading = (state) => state.homeSearchSlice.isSuggestionsLoading;
+export const selectSuggestionsLoading = (state) =>
+  state.homeSearchSlice.isSuggestionsLoading;
 export const selectSuggestions = (state) => state.homeSearchSlice.suggestions;
-export const selectTabSuggestionData = (state) => state.homeSearchSlice.tabSuggestionsData;
+export const selectTabSuggestionData = (state) =>
+  state.homeSearchSlice.tabSuggestionsData;
 export const selectTabQueryData = (state) => state.homeSearchSlice.tabQueryData;
 
 export const {

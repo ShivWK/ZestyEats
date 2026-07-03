@@ -1,16 +1,16 @@
-import homeSearchApiSlice from "../features/search/homeSearchApiSlice";
-import store from "../app/store";
+import homeSearchApiSlice from '../features/search/homeSearchApiSlice';
+import store from '../app/store';
 
 export const searchHomeLoader = ({ request }) => {
   const searchObj = new URL(request.url).searchParams;
-  const lat = searchObj.get("lat");
-  const lng = searchObj.get("lng");
+  const lat = searchObj.get('lat');
+  const lng = searchObj.get('lng');
 
   const result = store.dispatch(
     homeSearchApiSlice.endpoints.getSearchHomeData.initiate({
       lat,
       lng,
-    })
+    }),
   );
 
   return { data: result };
@@ -18,16 +18,16 @@ export const searchHomeLoader = ({ request }) => {
 
 export const searchSuggestionsLoader = ({ request }) => {
   const searchObj = new URL(request.url).searchParams;
-  const lat = searchObj.get("lat");
-  const lng = searchObj.get("lng");
-  const food = searchObj.get("food");
+  const lat = searchObj.get('lat');
+  const lng = searchObj.get('lng');
+  const food = searchObj.get('food');
 
   const result = store.dispatch(
     homeSearchApiSlice.endpoints.getSearchedFoodSuggestions.initiate({
       lat,
       lng,
       food,
-    })
+    }),
   );
 
   return { data: result };
@@ -35,23 +35,23 @@ export const searchSuggestionsLoader = ({ request }) => {
 
 export const resultDataLoader = ({ request }) => {
   const searchObj = new URL(request.url).searchParams;
-  const lat = searchObj.get("lat");
-  const lng = searchObj.get("lng");
-  const str = searchObj.get("str");
-  const metadata = searchObj.get("metadata");
-  const mode = searchObj.get("mode");
-  const submitAction = searchObj.get("submitAction");
-  const selectedPLTab = searchObj.get("selectedPLTab")
+  const lat = searchObj.get('lat');
+  const lng = searchObj.get('lng');
+  const str = searchObj.get('str');
+  const metadata = searchObj.get('metadata');
+  const mode = searchObj.get('mode');
+  const submitAction = searchObj.get('submitAction');
+  const selectedPLTab = searchObj.get('selectedPLTab');
 
   const result =
-    mode === "parent"
+    mode === 'parent'
       ? store.dispatch(
           homeSearchApiSlice.endpoints.getSuggestedData.initiate({
             lat,
             lng,
             str,
             metadata,
-          })
+          }),
         )
       : store.dispatch(
           homeSearchApiSlice.endpoints.getTabClickData.initiate({
@@ -60,7 +60,7 @@ export const resultDataLoader = ({ request }) => {
             str,
             submitAction,
             selectedPLTab,
-          })
+          }),
         );
 
   return { data: result };

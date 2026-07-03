@@ -1,5 +1,5 @@
 const signupEmail = (name, otp, forWhat) => {
-    return `<!DOCTYPE html>
+  return `<!DOCTYPE html>
                 <html>
                     <head>
                         <meta charset="UTF-8" />
@@ -49,7 +49,7 @@ const signupEmail = (name, otp, forWhat) => {
                                 <div class="container">
                                 <div class="logo">ZestyEats</div>
                                 <div class="text">
-                                    Hi${name ? " " + name.split(" ")[0] : ""}, <br />
+                                    Hi${name ? ' ' + name.split(' ')[0] : ''}, <br />
                                     Use the OTP below to complete your ${forWhat}:
                                 </div>
                                     <div class="otp">${otp}</div>
@@ -63,6 +63,6 @@ const signupEmail = (name, otp, forWhat) => {
                                 </div>
                             </body>
                 </html>`;
-}
+};
 
 module.exports = signupEmail;

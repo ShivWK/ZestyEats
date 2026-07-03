@@ -1,22 +1,24 @@
 // Done
-import { Link, useSearchParams } from "react-router-dom";
-import { mobileHelpLegalFaqs } from "../../utils/helpAndSupportData";
-import { about } from "../../utils/aboutPageData";
-import SectionAndOptions from "./SectionAndOptions";
-import MobileFooterMenu from "../Footer/MobileFooterMenu";
+import { Link, useSearchParams } from 'react-router-dom';
+import { mobileHelpLegalFaqs } from '../../utils/helpAndSupportData';
+import { about } from '../../utils/aboutPageData';
+import SectionAndOptions from './SectionAndOptions';
+import MobileFooterMenu from '../Footer/MobileFooterMenu';
 
 const OptionsPage = () => {
   // console.log("MobilePages/OptionsPages rendered");
   const [searchParams] = useSearchParams();
-  const mode = searchParams.get("mode");
+  const mode = searchParams.get('mode');
 
   return (
-    <main className={`pt-16 w-full px-1.5 pb-20 dark:bg-black bg-[rgb(55,113,142)] ${mode === "about" && "h-full"}`}>
-      {mode === "about" ? (
-        <div className="p-2 mt-4 h-fit text-gray-700 font-medium flex flex-col justify-start gap-2 dark:bg-gray-800 bg-white rounded-md">
+    <main
+      className={`w-full bg-[rgb(55,113,142)] px-1.5 pt-16 pb-20 dark:bg-black ${mode === 'about' && 'h-full'}`}
+    >
+      {mode === 'about' ? (
+        <div className="mt-4 flex h-fit flex-col justify-start gap-2 rounded-md bg-white p-2 font-medium text-gray-700 dark:bg-gray-800">
           {about.map((item, index) => (
             <Link
-              className="py-1 pl-2 border-[1px] border-gray-300 rounded-md flex justify-between items-center"
+              className="flex items-center justify-between rounded-md border-[1px] border-gray-300 py-1 pl-2"
               key={index}
               to={`/mbStaticData?type=About`}
               state={{ data: item }}
@@ -27,7 +29,7 @@ const OptionsPage = () => {
           ))}
         </div>
       ) : (
-        <div className="flex mt-4 flex-col items-center justify-center p-1.5 rounded-md dark:bg-gray-800 bg-white h-fit">
+        <div className="mt-4 flex h-fit flex-col items-center justify-center rounded-md bg-white p-1.5 dark:bg-gray-800">
           {mobileHelpLegalFaqs.map((item, index) => {
             return <SectionAndOptions key={index} section={item} />;
           })}

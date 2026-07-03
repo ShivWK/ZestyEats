@@ -1,10 +1,10 @@
 // Done
 
-import { useSelector } from "react-redux";
-import RestaurantCard from "./RestaurantCard";
-import { selectTopRestaurantsTitle } from "../../features/home/homeSlice";
-import HorizontalCarousel from "../HorizontalCarousel";
-import { useMemo } from "react";
+import { useSelector } from 'react-redux';
+import RestaurantCard from './RestaurantCard';
+import { selectTopRestaurantsTitle } from '../../features/home/homeSlice';
+import HorizontalCarousel from '../HorizontalCarousel';
+import { useMemo } from 'react';
 
 const TopRestaurantChains = ({ data, heading = null }) => {
   // console.log("TopRestaurantChains rendered")
@@ -15,7 +15,7 @@ const TopRestaurantChains = ({ data, heading = null }) => {
   return (
     <HorizontalCarousel
       heading={title}
-      margin_bottom={20 + "px"}
+      margin_bottom={20 + 'px'}
       dataToMap={mainData}
       Card={RestaurantCard}
       scrollMargin="20"

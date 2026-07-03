@@ -1,6 +1,7 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const deviceInfoSchema = new mongoose.Schema({
+const deviceInfoSchema = new mongoose.Schema(
+  {
     visitorId: String,
     deviceIp: String,
     deviceModal: String,
@@ -11,40 +12,42 @@ const deviceInfoSchema = new mongoose.Schema({
     browserVersion: String,
     language: String,
     resolution: String,
-    uA: String
-}, { _id: false})
+    uA: String,
+  },
+  { _id: false },
+);
 
 const sessionSchema = new mongoose.Schema({
-    userId: mongoose.Schema.Types.ObjectId,
-    
-    deviceInfo : {
-        type: deviceInfoSchema,
-        required: true,
-    },
+  userId: mongoose.Schema.Types.ObjectId,
 
-    type: {
-        type: String,
-        enum: ["guest", "registered"],
-        required: true,
-    },
+  deviceInfo: {
+    type: deviceInfoSchema,
+    required: true,
+  },
 
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 60 * 60 * 25
-    },
+  type: {
+    type: String,
+    enum: ['guest', 'registered'],
+    required: true,
+  },
 
-    data: {
-        type: mongoose.Schema.Types.Mixed,
-        default: {
-            cartItems: {},
-            itemsToBeAddedInCart: {},
-            wishListedItems: {},
-            favRestaurants: [],
-            recentLocations: [],
-        }
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 60 * 60 * 25,
+  },
+
+  data: {
+    type: mongoose.Schema.Types.Mixed,
+    default: {
+      cartItems: {},
+      itemsToBeAddedInCart: {},
+      wishListedItems: {},
+      favRestaurants: [],
+      recentLocations: [],
     },
+  },
 });
 
-const SessionModel = mongoose.model("Session" ,sessionSchema);
+const SessionModel = mongoose.model('Session', sessionSchema);
 module.exports = SessionModel;

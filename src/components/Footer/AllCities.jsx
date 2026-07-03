@@ -1,11 +1,14 @@
 // Done
 
-import { Link } from "react-router-dom";
-import { selectAvailableCities } from "../../features/home/homeSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { setCityPageLoading, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
-import { useLazyGetDataForCityLocalityCuisineQuery } from "../../features/cityHome/cityHomeApiSlice";
-import updateCityHomeData from "../../utils/updateCityHomeData";
+import { Link } from 'react-router-dom';
+import { selectAvailableCities } from '../../features/home/homeSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  setCityPageLoading,
+  setSecondaryCity,
+} from '../../features/cityHome/cityHomeSlice';
+import { useLazyGetDataForCityLocalityCuisineQuery } from '../../features/cityHome/cityHomeApiSlice';
+import updateCityHomeData from '../../utils/updateCityHomeData';
 
 const AllCities = () => {
   // console.log("AllCities rendered");
@@ -20,30 +23,38 @@ const AllCities = () => {
 
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
-    })
+      behavior: 'smooth',
+    });
 
     try {
       const data = await trigger({ city: cityPath }).unwrap();
       updateCityHomeData(data, dispatch);
     } catch (err) {
-      console.log("Cant fetch city data", err);
+      console.log('Cant fetch city data', err);
       dispatch(setCityPageLoading(false));
-      throw new Error("Cant fetch city data");
+      throw new Error('Cant fetch city data');
     }
-  }
+  };
 
   return (
-    <div className="w-full md:max-w-[1210px] max-md:px-1.5 ">
-      <hr className="md:mt-13 md:mb-10 my-7 text-gray-800" />
-      <div className="w-full flex justify-center mb-4 md:mb-10 max-md:px-2">
-        <ul className="columns-2 md:columns-5 gap-7 w-fit">
+    <div className="w-full max-md:px-1.5 md:max-w-[1210px]">
+      <hr className="my-7 text-gray-800 md:mt-13 md:mb-10" />
+      <div className="mb-4 flex w-full justify-center max-md:px-2 md:mb-10">
+        <ul className="w-fit columns-2 gap-7 md:columns-5">
           {citiesToPrint.map((city) => {
-            const path = city.text.toLowerCase().replace(/\s/g, "-");
+            const path = city.text.toLowerCase().replace(/\s/g, '-');
 
-            return <li key={city.link} className="mb-2">
-              <Link className="dark:text-gray-200" to={`/cityPage/${city?.text}?mode=city`} onClick={() => clickHandler(city?.text, path)}>{city.text}</Link>
-            </li>;
+            return (
+              <li key={city.link} className="mb-2">
+                <Link
+                  className="dark:text-gray-200"
+                  to={`/cityPage/${city?.text}?mode=city`}
+                  onClick={() => clickHandler(city?.text, path)}
+                >
+                  {city.text}
+                </Link>
+              </li>
+            );
           })}
         </ul>
       </div>

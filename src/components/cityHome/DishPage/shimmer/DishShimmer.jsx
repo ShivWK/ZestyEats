@@ -1,15 +1,16 @@
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard from './RestaurantCard';
 
 const DishShimmer = () => {
-    // const restaurants = Array.from({ length: 5 }, (_, i) => i)
-    // const itemCards = Array.from({ length: 3 }, (_, i) => i)
+  // const restaurants = Array.from({ length: 5 }, (_, i) => i)
+  // const itemCards = Array.from({ length: 3 }, (_, i) => i)
 
-    return <main className="w-full md:max-w-[1070px] mx-auto overflow-hidden pb-2 md:pb-6 pt-[5rem] md:pt-28 overflow-x-hidden max-md:px-2 flex flex-col gap-2.5 md:gap-5">
-        <div id="breadrumbs" className="rounded-md w-[60%] h-5 shimmerBg" />
-        <div className="heading rounded-md w-64 md:w-xl h-9 shimmerBg"></div>
-        <section className="flex flex-col gap-0.5 md:gap-1 bg-gray-100 rounded p-2 pb-3 pt-3 md:p-7 mt-2 md:pb-5">
-            <div className="h-5 md:h-6 w-[40%] shimmerBg rounded"></div>
-            {/* {restaurants.map((_, index) => <div key={index} className="rounded-md border-[1px] flex flex-col justify-center gap-1 border-gray-300 p-2 py-5 mt-3">
+  return (
+    <main className="mx-auto flex w-full flex-col gap-2.5 overflow-hidden overflow-x-hidden pt-[5rem] pb-2 max-md:px-2 md:max-w-[1070px] md:gap-5 md:pt-28 md:pb-6">
+      <div id="breadrumbs" className="shimmerBg h-5 w-[60%] rounded-md" />
+      <div className="heading shimmerBg h-9 w-64 rounded-md md:w-xl"></div>
+      <section className="mt-2 flex flex-col gap-0.5 rounded bg-gray-100 p-2 pt-3 pb-3 md:gap-1 md:p-7 md:pb-5">
+        <div className="shimmerBg h-5 w-[40%] rounded md:h-6"></div>
+        {/* {restaurants.map((_, index) => <div key={index} className="rounded-md border-[1px] flex flex-col justify-center gap-1 border-gray-300 p-2 py-5 mt-3">
                 <div className="shimmerBg w-[35%] h-4 md:h-5 rounded"></div>
                 <div className="shimmerBg w-[25%] h-3 md:h-4 rounded"></div>
                 <div className="shimmerBg w-[20%] h-3 rounded"></div>
@@ -26,10 +27,11 @@ const DishShimmer = () => {
                     </div>)}
                 </div>
             </div>)} */}
-            <RestaurantCard />
-            <div className="shimmerBg w-[25%] md:w-[10%] h-7 self-center rounded mt-3"></div>
-        </section>
+        <RestaurantCard />
+        <div className="shimmerBg mt-3 h-7 w-[25%] self-center rounded md:w-[10%]"></div>
+      </section>
     </main>
-}
+  );
+};
 
 export default DishShimmer;

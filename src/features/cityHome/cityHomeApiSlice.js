@@ -1,30 +1,30 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const cityHomeApiSlice = createApi({
-  reducerPath: "cityHome",
+  reducerPath: 'cityHome',
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://swiggy-clone-klzu.onrender.com/api/zestyeats",
+    baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/zestyeats`,
   }),
-  keepUnusedDataFor: 120,
+  keepUnusedDataFor: 60*60,
 
   endpoints: (builder) => ({
     getDataForCityLocalityCuisine: builder.query({
       query: ({ city, type }) => ({
-        url: "/city-locality-cuisine-data",
+        url: '/city-locality-cuisine-data',
         params: { city, type },
       }),
     }),
 
     getRestaurantChainInCityData: builder.query({
       query: ({ city, restaurant }) => ({
-        url: "/restaurant-chain-in-city",
+        url: '/restaurant-chain-in-city',
         params: { city, restaurant },
       }),
     }),
 
     getDishInCityData: builder.query({
       query: ({ city, dish }) => ({
-        url: "/popular-dish-in-city",
+        url: '/popular-dish-in-city',
         params: { city, dish },
       }),
     }),

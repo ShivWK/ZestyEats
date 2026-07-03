@@ -1,18 +1,21 @@
-import { memo } from "react";
-import { NavLink } from "react-router-dom";
+import { memo } from 'react';
+import { NavLink } from 'react-router-dom';
 
 const SearchBar = memo(({ lat, lng, restaurant_Id, name }) => {
   return (
-    <div className="flex flex-col gap-6 w-full mt-2 items-center">
-      <div className="flex items-center gap-1.5 w-fit">
+    <div className="mt-2 flex w-full flex-col items-center gap-6">
+      <div className="flex w-fit items-center gap-1.5">
         <i className="fa-solid fa-utensils text-sm"></i>
-        <p className="text-gray-500 tracking-wider font-bold">MENU</p>
+        <p className="font-bold tracking-wider text-gray-500">MENU</p>
         <i className="fa-solid fa-utensils text-sm"></i>
       </div>
 
-      <NavLink to={`/dishSearch?lat=${lat}&lng=${lng}&restaurantId=${restaurant_Id}&title=${name}`} className="flex relative py-3 items-center justify-center w-full bg-gray-200 rounded-md cursor-pointer">
+      <NavLink
+        to={`/dishSearch?lat=${lat}&lng=${lng}&restaurantId=${restaurant_Id}&title=${name}`}
+        className="relative flex w-full cursor-pointer items-center justify-center rounded-md bg-gray-200 py-3"
+      >
         <p className="font-semibold text-gray-700">Search for dishes...</p>
-        <i className="absolute right-3 fa-solid fa-magnifying-glass text-xl text-gray-500"></i>
+        <i className="fa-solid fa-magnifying-glass absolute right-3 text-xl text-gray-500"></i>
       </NavLink>
     </div>
   );

@@ -1,7 +1,7 @@
-import { Link } from "react-router-dom";
-import ItemCard from "./ItemCard";
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
+import ItemCard from './ItemCard';
+import { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   selectItemsToBeAddedInCart,
   selectWishlistItems,
@@ -10,15 +10,16 @@ import {
   deleteItemFromWishlist,
   toggleItemsToBeAddedInCart,
   setMenuItems,
-} from "../../../features/home/restaurantsSlice";
-import useCheckStatus from "./../../../utils/useCheckStatus";
-import { triggerToast } from "../../../utils/triggerToast";
+} from '../../../features/home/restaurantsSlice';
+import useCheckStatus from './../../../utils/useCheckStatus';
+import { triggerToast } from '../../../utils/triggerToast';
 
 const RestaurantCard = ({ data }) => {
   // console.log("RestaurantCard rendered");
 
   const metadata = data.restro.metadata;
-  const [lat, lng] = metadata?.latLong.split(",") || data.restro.latLong.split(",");
+  const [lat, lng] =
+    metadata?.latLong.split(',') || data.restro.latLong.split(',');
 
   const restro_id = metadata?.id || data.restro.id;
   const status = useCheckStatus(lat, lng, restro_id);
@@ -35,24 +36,24 @@ const RestaurantCard = ({ data }) => {
 
   const areaName = data.restro.metadata?.areaName || data.restro.areaName;
   const locality = data.restro.metadata?.locality || data.restro.locality;
-  let areaOrLocality = locality + ", " + areaName;
+  let areaOrLocality = locality + ', ' + areaName;
 
   if (areaName === locality) areaOrLocality = locality;
 
   const citySmall = data.restro.metadata?.slugs?.city || data.restro.slugs.city;
-  const city = citySmall[0].toUpperCase() + citySmall.slice(1) + ".";
+  const city = citySmall[0].toUpperCase() + citySmall.slice(1) + '.';
 
   useEffect(() => {
     setItemsCount(itemsToAddInCart[restro_id]?.length || 0);
     localStorage.setItem(
-      "ItemsToBeAddedInCart",
-      JSON.stringify(itemsToAddInCart)
+      'ItemsToBeAddedInCart',
+      JSON.stringify(itemsToAddInCart),
     );
   }, [itemsToAddInCart, restro_id]);
 
   const addItemsToCart = () => {
     if (restroItemsArray.length === 0) {
-      triggerToast("You haven't selected any items to move.", "#ff5200");
+      triggerToast("You haven't selected any items to move.", '#ff5200');
       return;
     }
 
@@ -62,7 +63,7 @@ const RestaurantCard = ({ data }) => {
       cart[firstKey]?.restaurantData?.id;
 
     if (presentRestaurant && presentRestaurant !== restro_id) {
-      triggerToast("Clear cart to add items from this restaurant.", "red");
+      triggerToast('Clear cart to add items from this restaurant.', 'red');
       return;
     }
 
@@ -72,7 +73,7 @@ const RestaurantCard = ({ data }) => {
           add: true,
           id: element,
           data: wishlist[element],
-        })
+        }),
       );
 
       dispatch(deleteItemFromWishlist(element));
@@ -81,18 +82,18 @@ const RestaurantCard = ({ data }) => {
           add: false,
           id: element,
           restro_id,
-        })
+        }),
       );
     }
   };
 
   const ClickHandler = () => {
-    dispatch(setMenuItems({ mode: "empty" }));
+    dispatch(setMenuItems({ mode: 'empty' }));
   };
 
   return (
-    <section className="border-2 dark:bg-gray-300 border-gray-300 rounded m-0.5 my-2">
-      <div className="p-1.5 w-full flex flex-col gap-0.5">
+    <section className="m-0.5 my-2 rounded border-2 border-gray-300 dark:bg-gray-300">
+      <div className="flex w-full flex-col gap-0.5 p-1.5">
         <Link
           to={`/restaurantSpecific/${lat}/${lng}/${restro_id}/${name}`}
           onClick={ClickHandler}
@@ -101,37 +102,41 @@ const RestaurantCard = ({ data }) => {
           <p className="basis-[90%] truncate text-xl font-bold select-none">
             {name}
           </p>
-          <div className="basis-[8%] active:text-primary">
-            <i className="ri-arrow-right-long-fill text-2xl dark:text-black text-gray-800 cursor-pointer transform group-hover:translate-x-[6px] transition-all duration-150 ease-in-out p-0"></i>
+          <div className="active:text-primary basis-[8%]">
+            <i className="ri-arrow-right-long-fill transform cursor-pointer p-0 text-2xl text-gray-800 transition-all duration-150 ease-in-out group-hover:translate-x-[6px] dark:text-black"></i>
           </div>
         </Link>
 
-        <p className="text-xs font-bold text-gray-700 dark:text-gray-900 truncate -mt-1 capitalize">
-          {areaOrLocality + ", " + city}
+        <p className="-mt-1 truncate text-xs font-bold text-gray-700 capitalize dark:text-gray-900">
+          {areaOrLocality + ', ' + city}
         </p>
 
         {status.loading ? (
-          <div className="h-4 rounded shimmerBg w-[45%] mb-0.5"></div>
+          <div className="shimmerBg mb-0.5 h-4 w-[45%] rounded"></div>
         ) : (
-          <div className="flex items-center gap-1.5 -mt-0.5">
+          <div className="-mt-0.5 flex items-center gap-1.5">
             <p
               className={`${
-                status.opened ? "text-green-500" : "text-red-600"
+                status.opened ? 'text-green-500' : 'text-red-600'
               } text-sm font-semibold`}
             >
-              {status.opened ? "OPEN 😊" : "CLOSED 😟"}
+              {status.opened ? 'OPEN 😊' : 'CLOSED 😟'}
             </p>
             {!status.isDeliverable ? (
-              <div className="relative flex gap-1.5 text-sm items-center">
+              <div className="relative flex items-center gap-1.5 text-sm">
                 <p>•</p>
                 <div id="No delivery" className="relative">
                   <i className="fas fa-shipping-fast text-black"></i>
-                  <div className="absolute ml-2 -bottom-0.5 h-6 w-0.5 bg-red-500 transform rotate-45 rounded"></div>
+                  <div className="absolute -bottom-0.5 ml-2 h-6 w-0.5 rotate-45 transform rounded bg-red-500"></div>
                 </div>
-                {status.distance && <p className="text-gray-600 dark:text-gray-700">({status.distance} kms)</p>}
+                {status.distance && (
+                  <p className="text-gray-600 dark:text-gray-700">
+                    ({status.distance} kms)
+                  </p>
+                )}
               </div>
             ) : (
-              <div className="relative flex gap-1.5 text-sm items-center">
+              <div className="relative flex items-center gap-1.5 text-sm">
                 <p>•</p>
                 <div id="delivery" className="relative">
                   <i className="fas fa-shipping-fast text-black"></i>
@@ -143,27 +148,27 @@ const RestaurantCard = ({ data }) => {
 
         <div className="flex items-center justify-between">
           <div className="basis-[43%]">
-            <div className="flex gap-1 items-center dark:text-gray-800 text-gray-500 font-semibold text-sm">
-              <i className="ri-star-fill text-green-500 mb-0.5" />
+            <div className="flex items-center gap-1 text-sm font-semibold text-gray-500 dark:text-gray-800">
+              <i className="ri-star-fill mb-0.5 text-green-500" />
               <p>{metadata?.avgRating || data.restro.avgRating}</p>
               <p>•</p>
               <p>
                 {metadata?.sla?.slaString ||
                   data.restro.sla.slaString ||
-                  "25-30 MINS"}
+                  '25-30 MINS'}
               </p>
             </div>
           </div>
-          <div className="basis-[57%] flex">
+          <div className="flex basis-[57%]">
             <button
               onClick={addItemsToCart}
-              className="bg-green-500 inline-block text-white ml-auto font-semibold px-2 py-0.5 rounded active:scale-95 transition-all duration-100 ease-linear"
+              className="ml-auto inline-block rounded bg-green-500 px-2 py-0.5 font-semibold text-white transition-all duration-100 ease-linear active:scale-95"
             >{`Move ${
               itemsCount !== 0
                 ? itemsCount > 1
                   ? `${itemsCount} items`
                   : `${itemsCount} item`
-                : ""
+                : ''
             } to cart`}</button>
           </div>
         </div>

@@ -18,7 +18,7 @@ const RightContent = ({ data }) => {
             );
           })}
         {data?.list?.mainList && (
-          <ul className="list-disc ml-6 mt-2">
+          <ul className="mt-2 ml-6 list-disc">
             {data.list.mainList.map((item, index) => (
               <li
                 className="mt-1.5 dark:text-gray-200"
@@ -27,7 +27,7 @@ const RightContent = ({ data }) => {
               />
             ))}
             {data?.list?.subList && (
-              <ul className="list-[circle] ml-6">
+              <ul className="ml-6 list-[circle]">
                 {data.list.subList.map((item, index) => (
                   <li
                     className="mt-1.5 dark:text-gray-200"

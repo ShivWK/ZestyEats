@@ -1,6 +1,6 @@
 const Loader = ({ size }) => {
-  return size === "large" ? (
-    <div className="w-full h-[250px] md:h-[400px] dark:bg-gray-500 bg-gray-950 flex justify-center items-center pt-16 md:pt-20">
+  return size === 'large' ? (
+    <div className="flex h-[250px] w-full items-center justify-center bg-gray-950 pt-16 md:h-[400px] md:pt-20 dark:bg-gray-500">
       <div className="main-large"></div>
     </div>
   ) : (

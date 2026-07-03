@@ -1,17 +1,19 @@
 // Done
 
-import MainHeader from "./MainHeader";
-import HeaderWrapper from "./HeaderWrapper";
-import { selectCurrentRestaurant } from "../../features/home/restaurantsSlice";
-import { useSelector } from "react-redux";
+import MainHeader from './MainHeader';
+import HeaderWrapper from './HeaderWrapper';
+import { selectCurrentRestaurant } from '../../features/home/restaurantsSlice';
+import { useSelector } from 'react-redux';
 
 const RestaurantsHeader = () => {
-    // console.log("RestaurantsHeader rendered");
-    const currentRestaurant = useSelector(selectCurrentRestaurant); 
+  // console.log("RestaurantsHeader rendered");
+  const currentRestaurant = useSelector(selectCurrentRestaurant);
 
-    return <HeaderWrapper>
-        <MainHeader searchPlaceholder={currentRestaurant} />
+  return (
+    <HeaderWrapper>
+      <MainHeader searchPlaceholder={currentRestaurant} />
     </HeaderWrapper>
-}
+  );
+};
 
 export default RestaurantsHeader;

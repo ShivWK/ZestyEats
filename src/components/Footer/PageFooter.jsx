@@ -1,12 +1,12 @@
 // Done
 
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectIsLoading } from "../../features/home/homeSlice";
-import { useLocation } from "react-router-dom";
-import SubFooter from "./SubFooter";
-import AllCities from "./AllCities";
-import Disclaimer from "./Disclaimer";
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { selectIsLoading } from '../../features/home/homeSlice';
+import { useLocation } from 'react-router-dom';
+import SubFooter from './SubFooter';
+import AllCities from './AllCities';
+import Disclaimer from './Disclaimer';
 
 const PageFooter = () => {
   // console.log("PageFooter rendered")
@@ -15,16 +15,16 @@ const PageFooter = () => {
   const { pathname } = useLocation();
 
   if (
-    pathname === "/" ||
-    pathname.includes("cityPage") ||
-    pathname.includes("cityCuisines") ||
-    pathname.includes("cityRestaurant") ||
-    pathname.includes("cityLocality") ||
-    pathname.includes("cityDishes") 
+    pathname === '/' ||
+    pathname.includes('cityPage') ||
+    pathname.includes('cityCuisines') ||
+    pathname.includes('cityRestaurant') ||
+    pathname.includes('cityLocality') ||
+    pathname.includes('cityDishes')
   ) {
     return (
       !isLoading && (
-        <footer className="pt-0.5 md:pt-2.5 w-full flex flex-col justify-start items-center dark:bg-gray-800 bg-gray-200">
+        <footer className="flex w-full flex-col items-center justify-start bg-gray-200 pt-0.5 md:pt-2.5 dark:bg-gray-800">
           <SubFooter isOpen={isOpen} openCities={setIsOpen} />
           {isOpen && <AllCities />}
           <Disclaimer />

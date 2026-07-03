@@ -1,10 +1,10 @@
 //  Done
 
 const LeftMenu = ({ data, width, clickHandler, currentIndex }) => {
-  console.log("help/LeftMenu rendered")
+  console.log('help/LeftMenu rendered');
   return (
     <aside
-      className="dark:bg-gray-400 bg-gray-200 py-6 pl-6"
+      className="bg-gray-200 py-6 pl-6 dark:bg-gray-400"
       style={{
         flexBasis: width,
       }}
@@ -14,9 +14,9 @@ const LeftMenu = ({ data, width, clickHandler, currentIndex }) => {
           <div
             key={index}
             onClick={() => clickHandler(index)}
-            className={`group flex items-center justify-center py-6 cursor-pointer ${currentIndex === index ? "bg-white dark:bg-gray-200 text-black" : "bg-transparent text-[#4a5565] dark:text-gray-800"}`}
+            className={`group flex cursor-pointer items-center justify-center py-6 ${currentIndex === index ? 'bg-white text-black dark:bg-gray-200' : 'bg-transparent text-[#4a5565] dark:text-gray-800'}`}
           >
-            <p className="font-bold group-hover:text-black select-none">
+            <p className="font-bold select-none group-hover:text-black">
               {item}
             </p>
           </div>

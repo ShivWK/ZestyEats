@@ -1,6 +1,6 @@
 // Done
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from 'react';
 
 const Scrollbar = ({ scrolledPercentage, marginTop }) => {
   // console.log("ScrollBAr from Home rendered")
@@ -21,16 +21,16 @@ const Scrollbar = ({ scrolledPercentage, marginTop }) => {
 
   return (
     <div
-      className={`w-full flex justify-center`}
+      className={`flex w-full justify-center`}
       style={{ marginTop: `${marginTop}px` }}
     >
       <div
         ref={scrollContainerRef}
-        className="w-[70px] h-[3px] rounded-full bg-gray-200 relative"
+        className="relative h-[3px] w-[70px] rounded-full bg-gray-200"
       >
         <div
           ref={scrollBarRef}
-          className="absolute w-1/6 rounded-full bg-primary h-full transition-all duration-300 ease-in-out"
+          className="bg-primary absolute h-full w-1/6 rounded-full transition-all duration-300 ease-in-out"
           style={{ left: `${adjustedScroll}%` }}
         ></div>
       </div>

@@ -1,16 +1,16 @@
-const  { Resend } = require("resend");
+const { Resend } = require('resend');
 
 const sendMail = async (userEmail, text) => {
-    const resend = new Resend(process.env.RESEND_API_KEY);
+  const resend = new Resend(process.env.RESEND_API_KEY);
 
-    const send = await resend.emails.send({
-        from: "ZestyEats <zestyeats@shivendra.site>",
-        to: userEmail,
-        subject: "OTP from ZestyEats",
-        html: text
-    })
+  const send = await resend.emails.send({
+    from: 'ZestyEats <zestyeats@shivendra.site>',
+    to: userEmail,
+    subject: 'OTP from ZestyEats',
+    html: text,
+  });
 
-    return send;
-}
+  return send;
+};
 
 module.exports = sendMail;

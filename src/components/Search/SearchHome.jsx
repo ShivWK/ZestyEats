@@ -1,23 +1,30 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from 'react';
 import {
   useLoaderData,
   Await,
   Link,
   useSearchParams,
-  useOutletContext
-} from "react-router-dom";
-import useScrollToTop from "../../utils/useScrollToTop";
-import Ui1Shimmer from "./Ui1Shimmer";
-import { useLazyGetSearchedFoodSuggestionsQuery } from "../../features/search/homeSearchApiSlice";
-import { selectSuggestionsLoading, selectSuggestions, selectTabSuggestionData, selectTabQueryData, setTabQueryData, setTapSuggestionData } from "../../features/search/homeSearchSlice";
-import { useSelector, useDispatch } from "react-redux";
-import Ui2Shimmer from "./Ui2Shimmer";
-import SuggestionsCard from "./SuggestionsCard";
+  useOutletContext,
+} from 'react-router-dom';
+import useScrollToTop from '../../utils/useScrollToTop';
+import Ui1Shimmer from './Ui1Shimmer';
+import { useLazyGetSearchedFoodSuggestionsQuery } from '../../features/search/homeSearchApiSlice';
+import {
+  selectSuggestionsLoading,
+  selectSuggestions,
+  selectTabSuggestionData,
+  selectTabQueryData,
+  setTabQueryData,
+  setTapSuggestionData,
+} from '../../features/search/homeSearchSlice';
+import { useSelector, useDispatch } from 'react-redux';
+import Ui2Shimmer from './Ui2Shimmer';
+import SuggestionsCard from './SuggestionsCard';
 
 const MainContent = ({ data }) => {
   useScrollToTop();
   const [isLoading, setLoading] = useState(false);
-  const [isError, setIsError] = useState(false)
+  const [isError, setIsError] = useState(false);
 
   const query = useSelector(selectTabQueryData);
   const suggestionsData = useSelector(selectTabSuggestionData);
@@ -29,8 +36,8 @@ const MainContent = ({ data }) => {
 
   const [trigger] = useLazyGetSearchedFoodSuggestionsQuery();
   const [searchParams] = useSearchParams();
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
+  const lat = searchParams.get('lat');
+  const lng = searchParams.get('lng');
 
   const searchTerm = useOutletContext();
 
@@ -38,15 +45,18 @@ const MainContent = ({ data }) => {
   const itemCards = cards?.[1]?.card?.card?.imageGridCards?.info;
 
   useEffect(() => {
-    if ((storeSuggestionsData && storeSuggestionsData?.length !== 0) || searchTerm !== "") {
+    if (
+      (storeSuggestionsData && storeSuggestionsData?.length !== 0) ||
+      searchTerm !== ''
+    ) {
       dispatch(setTapSuggestionData([]));
-      dispatch(setTabQueryData(""))
+      dispatch(setTabQueryData(''));
     }
-  }, [storeSuggestionsData])
+  }, [storeSuggestionsData]);
 
   const clickHandler = async (food) => {
     setLoading(true);
-    dispatch(setTabQueryData(food))
+    dispatch(setTabQueryData(food));
 
     try {
       const data = await trigger({ lat, lng, food }).unwrap();
@@ -57,27 +67,35 @@ const MainContent = ({ data }) => {
       setLoading(false);
       throw new Error("Can't fetch suggestions data");
     }
-  }
+  };
 
-  const dataToMap = suggestionsData?.length !== 0 ? suggestionsData : storeSuggestionsData;
+  const dataToMap =
+    suggestionsData?.length !== 0 ? suggestionsData : storeSuggestionsData;
 
-  return ((searchTerm !== "" || query) ? (
-    (isLoading || suggestionLoading) ?
+  return searchTerm !== '' || query ? (
+    isLoading || suggestionLoading ? (
       <Ui2Shimmer />
-      : (
-        <div className="pb-16">
-          <div className="p-2 mt-14">
-            {query !== "" && <button onClick={() => dispatch(setTabQueryData(""))} className="w-fit flex items-center cursor-pointer">
-              <i className="ri-arrow-drop-left-line text-4xl -ml-3.5 dark:text-gray-200"></i>
+    ) : (
+      <div className="pb-16">
+        <div className="mt-14 p-2">
+          {query !== '' && (
+            <button
+              onClick={() => dispatch(setTabQueryData(''))}
+              className="flex w-fit cursor-pointer items-center"
+            >
+              <i className="ri-arrow-drop-left-line -ml-3.5 text-4xl dark:text-gray-200"></i>
               <p className="-ml-1 font-medium dark:text-gray-200">Back</p>
-            </button>}
-            {((suggestionsData && suggestionsData?.length !== 0) || storeSuggestionsData) ? dataToMap?.map((item) => {
+            </button>
+          )}
+          {(suggestionsData && suggestionsData?.length !== 0) ||
+          storeSuggestionsData ? (
+            dataToMap?.map((item) => {
               const imageUrl = `https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_112,h_112,c_fill/${item?.cloudinaryId}`;
 
               const urlObj = new URL(item?.cta?.link).searchParams;
               const str = encodeURIComponent(item?.text);
 
-              const metadata = encodeURIComponent(urlObj.get("metadata"));
+              const metadata = encodeURIComponent(urlObj.get('metadata'));
 
               const urlRestaurant = `/search/searchResult/restaurantPage?lat=${lat}&lng=${lng}&str=${str}&metadata=${metadata}&type=${item?.tagToDisplay}&name=${item?.text}&mode=parent`;
 
@@ -85,44 +103,59 @@ const MainContent = ({ data }) => {
 
               const urlCuisine = `/search/searchResult/cuisinesPage?lat=${lat}&lng=${lng}&str=${str}&metadata=${metadata}&type=${item?.tagToDisplay}&name=${item?.text}&mode=parent`;
 
-              const path = item?.tagToDisplay === "Restaurant" ? urlRestaurant : item?.tagToDisplay === "Cuisine" ? urlCuisine : urlDish;
+              const path =
+                item?.tagToDisplay === 'Restaurant'
+                  ? urlRestaurant
+                  : item?.tagToDisplay === 'Cuisine'
+                    ? urlCuisine
+                    : urlDish;
 
-              return <SuggestionsCard path={path} item={item} imageUrl={imageUrl} />;
+              return (
+                <SuggestionsCard path={path} item={item} imageUrl={imageUrl} />
+              );
             })
-
-              : <p className="text-gray-500 text-center dark:text-gray-200 py-3">No result for this search.</p>}
-          </div>
-          {((suggestionsData && suggestionsData?.length !== 0) || (storeSuggestionsData && storeSuggestionsData?.length !== 0)) && (
-            <Link
-              to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query || searchTerm}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query || searchTerm}`}
-              className={`flex gap-3 my-1 p-2 dark:hover:bg-gray-900 hover:bg-gray-200 rounded border-2 border-gray-300 dark:border-gray-400`}
-            >
-              <div className="rounded h-14 w-14 flex items-center justify-center border-2 dark:border-gray-400 border-gray-200">
-                <i className="ri-search-2-line text-3xl cursor-pointer dark:text-white" />
-              </div>
-              <div className="flex items-center ">
-                <p className="dark:text-gray-200">
-                  See all results for <span className="font-bold">{decodeURI(query || searchTerm)}</span>
-                </p>
-              </div>
-            </Link>
-          )
-
-          }
-        </div>)
-  ) :
-    <div className="flex flex-col mx-auto gap-5 mt-16">
+          ) : (
+            <p className="py-3 text-center text-gray-500 dark:text-gray-200">
+              No result for this search.
+            </p>
+          )}
+        </div>
+        {((suggestionsData && suggestionsData?.length !== 0) ||
+          (storeSuggestionsData && storeSuggestionsData?.length !== 0)) && (
+          <Link
+            to={`/search/searchResult/dishPage?lat=${lat}&lng=${lng}&str=${query || searchTerm}&submitAction=STORED_SEARCH&selectedPLTab=DISH&mode=tab&type=Dish&name=${query || searchTerm}`}
+            className={`my-1 flex gap-3 rounded border-2 border-gray-300 p-2 hover:bg-gray-200 dark:border-gray-400 dark:hover:bg-gray-900`}
+          >
+            <div className="flex h-14 w-14 items-center justify-center rounded border-2 border-gray-200 dark:border-gray-400">
+              <i className="ri-search-2-line cursor-pointer text-3xl dark:text-white" />
+            </div>
+            <div className="flex items-center">
+              <p className="dark:text-gray-200">
+                See all results for{' '}
+                <span className="font-bold">
+                  {decodeURI(query || searchTerm)}
+                </span>
+              </p>
+            </div>
+          </Link>
+        )}
+      </div>
+    )
+  ) : (
+    <div className="mx-auto mt-16 flex flex-col gap-5">
       {itemCards?.length > 0 && (
-        <div className="pb-8 pt-2">
-          <h1 className="max-md:text-2xl dark:text-white mb-3 ">Popular Cuisines</h1>
+        <div className="pt-2 pb-8">
+          <h1 className="mb-3 max-md:text-2xl dark:text-white">
+            Popular Cuisines
+          </h1>
           <div className="flex w-fit flex-wrap justify-evenly">
             {itemCards.map((item) => {
               const queryObj = new URL(item?.action?.link).searchParams;
               return (
                 <button
                   key={item.id}
-                  className="shimmerBg h-40 w-28 md:h-[180px] md:w-[130px] rounded-xl shrink-0 cursor-pointer border-[1px] overflow-hidden mt-2 border-gray-400 dark:shadow-[0_0_1px_1px_rgba(156,145,145,0.8)]"
-                  onClick={() => clickHandler(queryObj.get("query"))}
+                  className="shimmerBg mt-2 h-40 w-28 shrink-0 cursor-pointer overflow-hidden rounded-xl border-[1px] border-gray-400 md:h-[180px] md:w-[130px] dark:shadow-[0_0_1px_1px_rgba(156,145,145,0.8)]"
+                  onClick={() => clickHandler(queryObj.get('query'))}
                 >
                   <img
                     src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/${item?.imageId}`}
@@ -136,7 +169,6 @@ const MainContent = ({ data }) => {
         </div>
       )}
     </div>
-
   );
 };
 
@@ -148,7 +180,16 @@ const SearchHome = () => {
   const tabSuggestionsData = useSelector(selectTabSuggestionData);
 
   return (
-    <Suspense fallback={(storeSuggestionsData?.length !== 0 || tabSuggestionsData?.length !== 0) ? <Ui2Shimmer /> : <Ui1Shimmer />}>
+    <Suspense
+      fallback={
+        storeSuggestionsData?.length !== 0 ||
+        tabSuggestionsData?.length !== 0 ? (
+          <Ui2Shimmer />
+        ) : (
+          <Ui1Shimmer />
+        )
+      }
+    >
       <Await resolve={data?.data}>
         {(resolveData) => <MainContent data={resolveData} />}
       </Await>
@@ -157,5 +198,3 @@ const SearchHome = () => {
 };
 
 export default SearchHome;
-
-

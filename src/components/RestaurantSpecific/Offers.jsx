@@ -1,5 +1,5 @@
-import OfferCard from "./OfferCard";
-import HorizontalCarousel from "../HorizontalCarousel";
+import OfferCard from './OfferCard';
+import HorizontalCarousel from '../HorizontalCarousel';
 
 const Offers = ({ data }) => {
   const mainData = data?.card?.card?.gridElements?.infoWithStyle?.offers || [];

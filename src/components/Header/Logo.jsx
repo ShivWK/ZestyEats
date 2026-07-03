@@ -1,15 +1,19 @@
 // Done
 
-import { setLocationModal, setHideLocation, setHideLogin } from "../../features/Login/loginSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { ChevronDown } from "lucide-react";
+import {
+  setLocationModal,
+  setHideLocation,
+  setHideLogin,
+} from '../../features/Login/loginSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { ChevronDown } from 'lucide-react';
 
 import {
   selectSearchedCity,
   selectSearchedCityAddress,
   selectYourCurrentCity,
-} from "../../features/home/homeSlice";
-import { Link } from "react-router-dom";
+} from '../../features/home/homeSlice';
+import { Link } from 'react-router-dom';
 
 const Logo = ({ searchPlaceholder }) => {
   // console.log("Logo rendered");
@@ -25,29 +29,36 @@ const Logo = ({ searchPlaceholder }) => {
   };
 
   return (
-    <div className="flex gap-1.5 md:gap-6 items-center">
-      <Link to="/" className={`active:scale-95 shrink-0`}>
-        <img src="/images/square.png" alt="Sie logo" height={52} width={54} className="hover:scale-[1.12] transition-all duration-200 ease-linear max-lg:h-12 max-lg:w-12 rounded-md outline-none border-none" />
+    <div className="flex items-center gap-1.5 md:gap-6">
+      <Link to="/" className={`shrink-0 active:scale-95`}>
+        <img
+          src="/images/square.png"
+          alt="Sie logo"
+          height={52}
+          width={54}
+          className="rounded-md border-none transition-all duration-200 ease-linear outline-none hover:scale-[1.12] max-lg:h-12 max-lg:w-12"
+        />
       </Link>
       {searchPlaceholder ? (
-        <p className="flex items-center font-bold text-xl max-w-48 md:max-w-80 truncate"><span className="truncate">
-          {searchPlaceholder}</span></p>
+        <p className="flex max-w-48 items-center truncate text-xl font-bold md:max-w-80">
+          <span className="truncate">{searchPlaceholder}</span>
+        </p>
       ) : (
         <button
           onClick={handleClick}
-          className="group flex max-md:flex-col max-md:justify-center items-center gap-2 md:gap-2 cursor-pointer outline-none border-none"
+          className="group flex cursor-pointer items-center gap-2 border-none outline-none max-md:flex-col max-md:justify-center md:gap-2"
         >
-          <span className="font-[750] max-md:self-start max-md:text-sm underline underline-offset-5 max-md:underline-offset-4 decoration-2 group-hover:text-[#ff5200]">
-            {yourCurrentCity ? yourCurrentCity : "Location"}
+          <span className="font-[750] underline decoration-2 underline-offset-5 group-hover:text-[#ff5200] max-md:self-start max-md:text-sm max-md:underline-offset-4">
+            {yourCurrentCity ? yourCurrentCity : 'Location'}
           </span>
 
-          <div className="flex gap-1 md:gap-1 items-center justify-center max-md:-mt-1">
-            <span className="max-w-44 md:max-w-[12.5rem] truncate text-start font-medium dark:text-gray-300 text-gray-600 max-md:text-sm">
+          <div className="flex items-center justify-center gap-1 max-md:-mt-1 md:gap-1">
+            <span className="max-w-44 truncate text-start font-medium text-gray-600 max-md:text-sm md:max-w-[12.5rem] dark:text-gray-300">
               {yourCurrentCity
                 ? `${searchedCityAddress}`
                 : `${searchedCity}${searchedCityAddress}`}
             </span>
-            <ChevronDown size={18} strokeWidth={4} className="text-[#ff5200]"/>
+            <ChevronDown size={18} strokeWidth={4} className="text-[#ff5200]" />
           </div>
         </button>
       )}

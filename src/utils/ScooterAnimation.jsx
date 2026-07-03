@@ -1,9 +1,11 @@
 const ScooterAnimation = () => {
-    return <div className="flex items-center justify-center gap-2 w-fit max-md:mb-0 mt-2 animate-dishes">
-        <i className="ri-verified-badge-fill text-xl md:text-2xl dark:text-white text-black"></i>
-        <i className="ri-bowl-fill text-2xl md:text-3xl dark:text-white text-black"></i>
-        <i className="ri-e-bike-2-fill text-2xl md:text-3xl dark:text-white text-black"></i>
+  return (
+    <div className="animate-dishes mt-2 flex w-fit items-center justify-center gap-2 max-md:mb-0">
+      <i className="ri-verified-badge-fill text-xl text-black md:text-2xl dark:text-white"></i>
+      <i className="ri-bowl-fill text-2xl text-black md:text-3xl dark:text-white"></i>
+      <i className="ri-e-bike-2-fill text-2xl text-black md:text-3xl dark:text-white"></i>
     </div>
-}
+  );
+};
 
 export default ScooterAnimation;

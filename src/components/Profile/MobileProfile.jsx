@@ -2,20 +2,20 @@ import {
   selectUserDetails,
   selectCurrentTheme,
   selectDeviceFingerPrint,
-} from "./../../features/home/homeSlice";
+} from './../../features/home/homeSlice';
 
-import { 
-  selectAppLoading, 
-  selectIsLoggedIn, 
-  setOpenEditModal, 
-  setToEdit 
-} from "../../features/Login/loginSlice";
+import {
+  selectAppLoading,
+  selectIsLoggedIn,
+  setOpenEditModal,
+  setToEdit,
+} from '../../features/Login/loginSlice';
 
-import { useSelector, useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router";
-import MobileFooterMenu from "../Footer/MobileFooterMenu";
-import ScooterAnimation from "../../utils/ScooterAnimation";
-import UnauthorizedError from "../ErrorHandling/UnauthorizedError";
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router';
+import MobileFooterMenu from '../Footer/MobileFooterMenu';
+import ScooterAnimation from '../../utils/ScooterAnimation';
+import UnauthorizedError from '../ErrorHandling/UnauthorizedError';
 
 const MobileProfile = () => {
   const userDetails = useSelector(selectUserDetails);
@@ -33,125 +33,138 @@ const MobileProfile = () => {
   const dispatch = useDispatch();
 
   const buttons = [
-
     {
-      icon: "ri-map-pin-user-fill text-xl",
-      text: "Address",
-      link: "Saved Address"
+      icon: 'ri-map-pin-user-fill text-xl',
+      text: 'Address',
+      link: 'Saved Address',
     },
 
     {
-      icon: "ri-logout-circle-r-line text-xl",
-      text: "Logout",
-      link: "Logout Options"
+      icon: 'ri-logout-circle-r-line text-xl',
+      text: 'Logout',
+      link: 'Logout Options',
     },
 
     {
-      icon: "fa-solid fa-trash-can ml-0.5 text-lg",
-      text: "Delete Account",
-      link: "Delete Account"
+      icon: 'fa-solid fa-trash-can ml-0.5 text-lg',
+      text: 'Delete Account',
+      link: 'Delete Account',
     },
   ];
 
   const clickHandler = (mode, e) => {
     if (AppLoading) {
       e.preventDefault();
-    } else if (mode === "payment") {
+    } else if (mode === 'payment') {
       e.preventDefault();
     }
   };
 
   const editClickHandler = () => {
     dispatch(setOpenEditModal(true));
-    dispatch(setToEdit("profile"));
-  }
+    dispatch(setToEdit('profile'));
+  };
 
   const infoClickHandler = (type) => {
     dispatch(setOpenEditModal(true));
     dispatch(setToEdit(type));
-  }
+  };
 
-  if (!isLoggedIn) return <UnauthorizedError />
+  if (!isLoggedIn) return <UnauthorizedError />;
 
   return (
-    <main className="pt-14 overflow-x-hidden h-full pb-20">
-      <section className="relative px-3 pt-5 pb-2 dark:bg-gray-800 bg-primary rounded-b-3xl h-44 profile-animation overflow-hidden">
+    <main className="h-full overflow-x-hidden pt-14 pb-20">
+      <section className="bg-primary profile-animation relative h-44 overflow-hidden rounded-b-3xl px-3 pt-5 pb-2 dark:bg-gray-800">
         <i
           onClick={() => navigate(-1)}
-          className="ri-arrow-left-long-line text-2xl text-white font-medium"
+          className="ri-arrow-left-long-line text-2xl font-medium text-white"
         ></i>
-        {(!AppLoading || !deviceId) ? (
-          <div className="flex items-center justify-between mt-7">
+        {!AppLoading || !deviceId ? (
+          <div className="mt-7 flex items-center justify-between">
             <div>
-              <h1 className="text-2xl text-white dark:text-gray-100 text-shadow-2xs">
+              <h1 className="text-2xl text-white text-shadow-2xs dark:text-gray-100">
                 {name}
               </h1>
-              <div className="flex items-center gap-1 ">
+              <div className="flex items-center gap-1">
                 <p className="font-medium text-gray-100 dark:text-gray-200">
                   {phone}
                 </p>
                 {!isNumberVerified && (
-                  <button onClick={() => infoClickHandler("phone")} className=" dark:text-primary text-blue-600 tracking-wide font-[500]">
+                  <button
+                    onClick={() => infoClickHandler('phone')}
+                    className="dark:text-primary font-[500] tracking-wide text-blue-600"
+                  >
                     <i className="ri-information-2-line"></i>
                   </button>
                 )}
               </div>
-              <div className="flex items-center gap-1 ">
-                <p className="font-medium text-gray-100 dark:text-gray-200 -mt-1 tracking-wide">
+              <div className="flex items-center gap-1">
+                <p className="-mt-1 font-medium tracking-wide text-gray-100 dark:text-gray-200">
                   {email}
                 </p>
                 {!isEmailVerified && (
-                  <button onClick={() => infoClickHandler("email")} className="mb-0.5 dark:text-primary text-blue-600 tracking-wide font-[500]">
+                  <button
+                    onClick={() => infoClickHandler('email')}
+                    className="dark:text-primary mb-0.5 font-[500] tracking-wide text-blue-600"
+                  >
                     <i className="ri-information-2-line"></i>
                   </button>
                 )}
               </div>
             </div>
-            <button onClick={editClickHandler} className="px-5 py-1 rounded-md font-sans font-bold tracking-wide text-white bg-blue-600 transition-all duration-100 ease-linear active:scale-95">
+            <button
+              onClick={editClickHandler}
+              className="rounded-md bg-blue-600 px-5 py-1 font-sans font-bold tracking-wide text-white transition-all duration-100 ease-linear active:scale-95"
+            >
               Edit
             </button>
           </div>
         ) : (
-          <div className="flex items-center justify-between mt-7">
+          <div className="mt-7 flex items-center justify-between">
             <div className="w-full">
-              <div className="w-3/4 h-6 rounded-md shimmerBg my-1.5" />
-              <div className="w-3/5 h-4 rounded-md shimmerBg my-1.5" />
-              <div className="w-2/3 h-4 rounded-md shimmerBg my-1.5" />
+              <div className="shimmerBg my-1.5 h-6 w-3/4 rounded-md" />
+              <div className="shimmerBg my-1.5 h-4 w-3/5 rounded-md" />
+              <div className="shimmerBg my-1.5 h-4 w-2/3 rounded-md" />
             </div>
-            <div className="w-20 rounded-md shimmerBg h-7" />
+            <div className="shimmerBg h-7 w-20 rounded-md" />
           </div>
         )}
       </section>
       <div className="my-4">
         <ScooterAnimation />
       </div>
-      <section className="mx-auto w-[90%] rounded-2xl p-2 bg-white border not-dark:border-gray-400 dark:bg-gray-800">
+      <section className="mx-auto w-[90%] rounded-2xl border bg-white p-2 not-dark:border-gray-400 dark:bg-gray-800">
         {buttons.map((button, index) => (
-          <Link key={index} onClick={(e) => clickHandler(button.text.toLowerCase(), e)} to={
-            button.text === "Delete Account" 
-            ? "/deleteAccount"
-            : `/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}` 
-          }
-            className={`flex ${button.text === "Delete Account" ? "gap-2.5" : "gap-2"} items-center px-2 py-4 ${index !== (buttons.length - 1) && "border-b-[1px] dark:border-b-white border-gray-400"}`}>
-            {AppLoading
-              ? (<div className="w-[100%] self-center shimmerBg h-7 rounded-md" />)
-              : (<>
+          <Link
+            key={index}
+            onClick={(e) => clickHandler(button.text.toLowerCase(), e)}
+            to={
+              button.text === 'Delete Account'
+                ? '/deleteAccount'
+                : `/mobileProfileResponse?mode=${button.link}&for=${button.text.toLowerCase()}&deviceId=${deviceId}`
+            }
+            className={`flex ${button.text === 'Delete Account' ? 'gap-2.5' : 'gap-2'} items-center px-2 py-4 ${index !== buttons.length - 1 && 'border-b-[1px] border-gray-400 dark:border-b-white'}`}
+          >
+            {AppLoading ? (
+              <div className="shimmerBg h-7 w-[100%] self-center rounded-md" />
+            ) : (
+              <>
                 <i
-                  className={`${button.icon} text-gray-700 dark:text-primary`}
+                  className={`${button.icon} dark:text-primary text-gray-700`}
                 ></i>
                 <p className={`text-gray-600 dark:text-gray-100`}>
                   {button.text}
-                  </p>
-                <i className="ri-arrow-right-s-line ml-auto text-xl text-gray-700 dark:text-primary"></i>
-              </>)
-            }
+                </p>
+                <i className="ri-arrow-right-s-line dark:text-primary ml-auto text-xl text-gray-700"></i>
+              </>
+            )}
           </Link>
         ))}
       </section>
-      <section className="mx-auto w-[90%] flex items-center mt-11 gap-4">
+      <section className="mx-auto mt-11 flex w-[90%] items-center gap-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-[100px] h-[150px] ml-3"
+          className="ml-3 h-[150px] w-[100px]"
           viewBox="0 0 528.7404 823.33557"
           xmlnsXlink="http://www.w3.org/1999/xlink"
           role="img"
@@ -168,7 +181,7 @@ const MobileProfile = () => {
           />
           <path
             d="M238.45424,390.43862l-5.31615-25.25171s-5.89749-39.09123,16.27902-60.31499c0,0-45.12138,12.42881-43.32605,48.99776l-111.17285,53.84643,19.93556,356.182s-23.92267,21.2646,10.6323,35.88401c0,0,170.11678,41.20016,269.79458,14.61941l26.58075-6.64519,23.92267,6.64519s26.58075-19.93556,19.93556-45.18727l11.96134-95.69069,21.2646-275.11073-45.18727-23.92267s-3.98711-10.6323-17.27749-10.6323l-67.7809-37.21305s-32.49024-17.84513-51.46412-26.50979c-1.26548-.5779-2.32122,1.09496-1.26609,2.00166,9.78577,8.4091,17.27475,24.77666-23.02492,48.43081,0,0-18.93768,29.17572-15.44951,39.83957l-39.04102.03155Z"
-            fill={`${theme === "dark" ? "#ff5200" : "#9f0712"}`}
+            fill={`${theme === 'dark' ? '#ff5200' : '#9f0712'}`}
           />
           <path
             d="M154.75273,805.76454h-2.65807v-37.31168l6.79493-167.92465c-16.88942-91.0131,31.83622-209.41423,32.33071-210.6005l.34086-.81767h46.89302v2.65807h-45.11313c-4.28822,10.64917-47.8971,122.13256-31.81091,208.42005l.02758.14796-.00616.14926-6.79996,168.02069.00114,37.25847Z"
@@ -190,11 +203,11 @@ const MobileProfile = () => {
           />
           <path
             d="M498.94555,398.41284s34.55497,33.22593,29.23882,143.53603l-45.18727,123.60047s-41.20016,45.18727-42.52919,62.46475c-1.32904,17.27749-35.88401,34.55497-63.79379,34.55497s-48.81092,5.88352-48.81092,5.88352l-4.35057,6.07781-22.87692-6.07781-18.32324-4.55449-7.97422-11.96134,13.29037-6.64519,2.65807-10.6323s-49.17438-66.45187,0-108.98106l55.81957-7.97422,14.61941,9.30326,2.65807-79.74224,25.25171-58.47764"
-            fill={`${theme === "dark" ? "#ff5200" : "#9f0712"}`}
+            fill={`${theme === 'dark' ? '#ff5200' : '#9f0712'}`}
           />
           <path
             d="M94.91821,407.7161s-29.23882,46.51631-29.23882,69.10994c0,0-15.94845,18.60652-14.61941,39.87112,0,0-15.94845,17.27749-10.6323,35.88401,0,0-17.27749,10.6323-17.27749,47.84534,0,0-37.21305,13.29037-17.27749,41.20016l-5.87271,34.0967s8.53078,29.69709,8.53078,45.64553c0,15.94845,19.93556,26.58075,19.93556,26.58075l27.90978,5.31615s17.27749,25.25171,58.47764,10.6323c0,0-53.16149-6.64519-31.8969-41.20016,21.2646-34.55497,46.51631-61.13572,46.51631-61.13572l-.00003-.00003c-19.03246-16.13705-21.25148-44.69868-4.9398-63.58169l8.54859-9.89617-15.57009-62.08392"
-            fill={`${theme === "dark" ? "#ff5200" : "#9f0712"}`}
+            fill={`${theme === 'dark' ? '#ff5200' : '#9f0712'}`}
           />
           <path
             d="M330.82709,173.06838l13.69445,63.2881s7.43082-30.44743,15.01223-22.53342c7.58141,7.91401-4.24826-24.07022-4.24826-24.07022l-24.45842-16.68446Z"
@@ -202,17 +215,17 @@ const MobileProfile = () => {
           />
           <path
             d="M184.29428,206.52315l.49711-66.32237-25.41487-46.80201,9.30326-29.23882s5.31615-18.60652,18.60652-22.59363l17.27749-21.2646s7.97422-9.30326,17.27749-7.97422S268.35758.36616,268.35758.36616c0,0,16.61297-1.99356,27.24527,3.32259l38.54208,5.31615,6.64519,2.65807s11.96134,18.60652,29.23882,23.92267c0,0,9.30326,5.31615,11.96134,17.27749l17.27749,15.94845,2.65807,29.23882s1.32904,9.30326-1.32904,15.94845v15.94845l-11.96134,18.60652s2.65807,6.64519-15.94845,22.59363l-5.31615,49.17438s-.5434-9.18283-5.58785-.6043l-5.04445-12.68607s-23.92267-42.52919-65.12283-47.84534-86.55821-3.59375-107.32145,47.33703Z"
-            fill={`${theme === "dark" ? "#ffffff" : "#d1d5dc"}`}
+            fill={`${theme === 'dark' ? '#ffffff' : '#d1d5dc'}`}
           />
         </svg>
         <div>
-          <p className="dark:text-white text-2xl font-bold">
-            Explore{" "}
-            <span className="tracking-wider text-primary">ZestyEats</span>
+          <p className="text-2xl font-bold dark:text-white">
+            Explore{' '}
+            <span className="text-primary tracking-wider">ZestyEats</span>
           </p>
           <button
-            onClick={() => navigate("/")}
-            className="dark:bg-darkPrimary bg-primary font-bold px-4 py-1 rounded-md text-white mt-3 mx-auto block"
+            onClick={() => navigate('/')}
+            className="dark:bg-darkPrimary bg-primary mx-auto mt-3 block rounded-md px-4 py-1 font-bold text-white"
           >
             Home
           </button>

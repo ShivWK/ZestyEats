@@ -1,12 +1,12 @@
-import { useState, memo, useRef, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import ItemsSubHeading from "./ItemsSubHeading";
+import { useState, memo, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import ItemsSubHeading from './ItemsSubHeading';
 import {
   setMenuItems,
   selectVegVariant,
-  setRestaurantItems
-} from "../../features/home/restaurantsSlice";
-import ItemsCardContainer from "./ItemsCardContainer";
+  setRestaurantItems,
+} from '../../features/home/restaurantsSlice';
+import ItemsCardContainer from './ItemsCardContainer';
 
 const ItemsMainHeading = ({
   heading,
@@ -14,7 +14,7 @@ const ItemsMainHeading = ({
   topBorder,
   borderBottom,
   categories = null,
-  restaurantData = null
+  restaurantData = null,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [count, setCount] = useState(0);
@@ -53,7 +53,7 @@ const ItemsMainHeading = ({
 
     if (items) {
       if (itemsNonVegCount === initialCount) nonVeg = true;
-      if (itemsVegCount === initialCount) veg = true
+      if (itemsVegCount === initialCount) veg = true;
     }
 
     dispatch(setMenuItems({ title: heading, veg, nonVeg }));
@@ -79,109 +79,113 @@ const ItemsMainHeading = ({
     }
   }, [count]);
 
-  const path = heading.replace(/\s/g, "-");
+  const path = heading.replace(/\s/g, '-');
 
   return (
-     <div
-        className="w-full"
-        ref={mainRef}
-        style={{
-          borderTop: topBorder ? "16px solid #e5e7eb" : "none",
-          borderBottom: borderBottom ? "none" : "16px solid #e5e7eb",
-          display: shouldRender ? "block" : "none",
-        }}
-      >
-        {categories ? (
-          <>
-            <div
-              id={path}
-              className="flex justify-start items-center dark:bg-red-800 bg-primary text-white py-3 px-2 scroll-mt-28"
-            >
-              <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
-            </div>
-            <div
-              ref={containerRef}
-              className="overflow-hidden transition-all duration-300 ease-linear"
-              style={{
-                display: isOpen ? "block" : "none",
-              }}
-            >
-              {categories.map((category, index) => {
-                const countLength = category?.itemCards.length;
-                let vegCount = 0;
-                let nonVegCount = 0;
+    <div
+      className="w-full"
+      ref={mainRef}
+      style={{
+        borderTop: topBorder ? '16px solid #e5e7eb' : 'none',
+        borderBottom: borderBottom ? 'none' : '16px solid #e5e7eb',
+        display: shouldRender ? 'block' : 'none',
+      }}
+    >
+      {categories ? (
+        <>
+          <div
+            id={path}
+            className="bg-primary flex scroll-mt-28 items-center justify-start px-2 py-3 text-white dark:bg-red-800"
+          >
+            <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
+          </div>
+          <div
+            ref={containerRef}
+            className="overflow-hidden transition-all duration-300 ease-linear"
+            style={{
+              display: isOpen ? 'block' : 'none',
+            }}
+          >
+            {categories.map((category, index) => {
+              const countLength = category?.itemCards.length;
+              let vegCount = 0;
+              let nonVegCount = 0;
 
-                category?.itemCards.forEach((element) => {
-                  if (
-                    element?.card?.info?.itemAttribute?.vegClassifier === "VEG"
-                  ) {
-                    vegCount++;
-                  } else if (
-                    element?.card?.info?.itemAttribute?.vegClassifier === "NONVEG"
-                  ) {
-                    nonVegCount++;
-                  }
-                });
-
-                if (countLength === vegCount) {
-                  toDecreaseForVeg += 1;
-                } else if (countLength === nonVegCount) {
-                  toDecreaseForNonVeg += 1;
+              category?.itemCards.forEach((element) => {
+                if (
+                  element?.card?.info?.itemAttribute?.vegClassifier === 'VEG'
+                ) {
+                  vegCount++;
+                } else if (
+                  element?.card?.info?.itemAttribute?.vegClassifier === 'NONVEG'
+                ) {
+                  nonVegCount++;
                 }
+              });
 
-                return (
-                  <ItemsSubHeading
-                    key={category?.categoryId}
-                    title={category?.title}
-                    itemCards={category?.itemCards}
-                    borderBottom={index !== categories.length - 1}
-                    restaurantData={restaurantData}
-                  />
-                );
-              })}
-            </div>
-          </>
-        ) : (
-          <div>
-            <div
-              id={path}
-              onClick={handleClick}
-              className="flex justify-between items-center dark:bg-red-800 bg-primary p-2 text-white cursor-pointer scroll-mt-28"
-            >
-              <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
-              <i
-                className="ri-arrow-drop-down-line text-4xl font-[200] inline-block"
-                style={{
-                  transform: isOpen ? "rotate(-180deg)" : "rotate(0deg)",
-                  transition: "transform 0.2s ease-in-out",
-                }}
-              ></i>
-            </div>
-            <div
-              ref={containerRef}
-              className="overflow-hidden transition-all duration-300 linear p-0.5 "
+              if (countLength === vegCount) {
+                toDecreaseForVeg += 1;
+              } else if (countLength === nonVegCount) {
+                toDecreaseForNonVeg += 1;
+              }
+
+              return (
+                <ItemsSubHeading
+                  key={category?.categoryId}
+                  title={category?.title}
+                  itemCards={category?.itemCards}
+                  borderBottom={index !== categories.length - 1}
+                  restaurantData={restaurantData}
+                />
+              );
+            })}
+          </div>
+        </>
+      ) : (
+        <div>
+          <div
+            id={path}
+            onClick={handleClick}
+            className="bg-primary flex cursor-pointer scroll-mt-28 items-center justify-between p-2 text-white dark:bg-red-800"
+          >
+            <h1 className="text-lg font-bold tracking-tight">{`${heading} (${count})`}</h1>
+            <i
+              className="ri-arrow-drop-down-line inline-block text-4xl font-[200]"
               style={{
-                display: isOpen ? "block" : "none",
+                transform: isOpen ? 'rotate(-180deg)' : 'rotate(0deg)',
+                transition: 'transform 0.2s ease-in-out',
               }}
-            >
-              {items.map((item) => {
-                const itemData = item?.card?.info;
-                // dispatch(setRestaurantItems(itemData));
+            ></i>
+          </div>
+          <div
+            ref={containerRef}
+            className="linear overflow-hidden p-0.5 transition-all duration-300"
+            style={{
+              display: isOpen ? 'block' : 'none',
+            }}
+          >
+            {items.map((item) => {
+              const itemData = item?.card?.info;
+              // dispatch(setRestaurantItems(itemData));
 
-                if (itemData?.itemAttribute?.vegClassifier === "VEG") itemsVegCount++;
-                if (itemData?.itemAttribute?.vegClassifier === "NONVEG") itemsNonVegCount++;
+              if (itemData?.itemAttribute?.vegClassifier === 'VEG')
+                itemsVegCount++;
+              if (itemData?.itemAttribute?.vegClassifier === 'NONVEG')
+                itemsNonVegCount++;
 
-                return <ItemsCardContainer
+              return (
+                <ItemsCardContainer
                   key={itemData?.id}
                   item={itemData}
                   isParentOpen={isOpen}
                   restaurantData={restaurantData}
-                />;
-              })}
-            </div>
+                />
+              );
+            })}
           </div>
-        )}
-      </div>
+        </div>
+      )}
+    </div>
   );
 };
 

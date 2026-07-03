@@ -1,5 +1,3 @@
-const useLocationHanlder = () => {
-
-}
+const useLocationHanlder = () => {};
 
 export default useLocationHanlder;

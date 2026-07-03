@@ -1,7 +1,7 @@
 const dummyArray = (length) => {
-    const array = Array.from({ length }, (_, i) => i);
-    
-    return array;
-}
+  const array = Array.from({ length }, (_, i) => i);
+
+  return array;
+};
 
 export default dummyArray;

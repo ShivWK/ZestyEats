@@ -1,12 +1,12 @@
 // Done
 
-import LogoAndAttribution from "./LogoAndAttribution";
-import CompanyLinks from "./CompanyLinks";
+import LogoAndAttribution from './LogoAndAttribution';
+import CompanyLinks from './CompanyLinks';
 
 const SubFooter = ({ isOpen, openCities }) => {
   // console.log("SubFooter rendered")
   return (
-    <div className="flex flex-col md:flex-row max-w-[1210px] justify-between items-center text-white font-bold p-2 w-full mt-1.5 md:mt-3">
+    <div className="mt-1.5 flex w-full max-w-[1210px] flex-col items-center justify-between p-2 font-bold text-white md:mt-3 md:flex-row">
       <LogoAndAttribution />
       <CompanyLinks isOpen={isOpen} openCities={openCities} />
     </div>

@@ -16,14 +16,14 @@
 
 ZestyEats is built using a **modern MERN-based tech stack** to ensure a responsive, scalable, and secure user experience. It combines powerful frontend tools with a robust backend and secure authentication mechanisms to deliver a real-world production-grade food delivery app.
 
-| Category       | Technologies Used |
-|----------------|-------------------|
-| **Frontend**   | React, Redux Toolkit, React Router DOM, Tailwind CSS, RTK Query |
-| **Backend**    | Node.js, Express.js |
-| **Database**   | MongoDB (Mongoose) |
-| **APIs**       | RESTful APIs, Proxy integration with Swiggy APIs |
-| **Authentication** | JWT, OAuth 2.0, CSRF, OTP, Cookies |
-| **Deployment** | [Frontend – Vercel](https://vercel.com), [Backend – Render](https://render.com) |
+| Category           | Technologies Used                                                               |
+| ------------------ | ------------------------------------------------------------------------------- |
+| **Frontend**       | React, Redux Toolkit, React Router DOM, Tailwind CSS, RTK Query                 |
+| **Backend**        | Node.js, Express.js                                                             |
+| **Database**       | MongoDB (Mongoose)                                                              |
+| **APIs**           | RESTful APIs, Proxy integration with Swiggy APIs                                |
+| **Authentication** | JWT, OAuth 2.0, CSRF, OTP, Cookies                                              |
+| **Deployment**     | [Frontend – Vercel](https://vercel.com), [Backend – Render](https://render.com) |
 
 ---
 
@@ -62,8 +62,8 @@ Edit
 
 ## 📸 Screenshots
 
-| Home Page              | Restaurant Page         |
-|------------------------|-------------------------|
+| Home Page                                | Restaurant Page                                      |
+| ---------------------------------------- | ---------------------------------------------------- |
 | ![Home](https://your-image.com/home.png) | ![Restaurant](https://your-image.com/restaurant.png) |
 
 ---
@@ -112,3 +112,4 @@ Edit
 2. Add real screenshots in the `Screenshots` section if you have them.
 
 Let me know if you want a `.env.example` template or badges (e.g., for version, license, deployment status) as
+```

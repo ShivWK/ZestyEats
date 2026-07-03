@@ -1,95 +1,110 @@
 // Done
 
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import dummyArray from "../../utils/DummyArray";
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
+import dummyArray from '../../utils/DummyArray';
 
 const HomeShimmer = () => {
-    // console.log("HomeShimmer rendered")
-    const [mappingArrays, setMappingArrays] = useState(calArray());
-    const pathname = useLocation().pathname;
+  // console.log("HomeShimmer rendered")
+  const [mappingArrays, setMappingArrays] = useState(calArray());
+  const pathname = useLocation().pathname;
 
-    function calArray() {
-        const isLarge = window.innerWidth >= 768;
+  function calArray() {
+    const isLarge = window.innerWidth >= 768;
 
-        const sizeLarge = isLarge ? 8 : 9;
-        const foodieSize = isLarge ? 6 : 5;
+    const sizeLarge = isLarge ? 8 : 9;
+    const foodieSize = isLarge ? 6 : 5;
 
-        return {
-            foodie: dummyArray(foodieSize),
-            topChain: dummyArray(4),
-            topOnline: dummyArray(sizeLarge),
-            bestPlaces: dummyArray(sizeLarge),
-        }
-    }
+    return {
+      foodie: dummyArray(foodieSize),
+      topChain: dummyArray(4),
+      topOnline: dummyArray(sizeLarge),
+      bestPlaces: dummyArray(sizeLarge),
+    };
+  }
 
-    useEffect(() => {
-        const handleResize = () =>  setMappingArrays(calArray());
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [])
+  useEffect(() => {
+    const handleResize = () => setMappingArrays(calArray());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    const { foodie, topChain, topOnline, bestPlaces } = mappingArrays;
+  const { foodie, topChain, topOnline, bestPlaces } = mappingArrays;
 
-    return (
-        <div className={`w-full flex flex-col gap-2 md:gap-3 mt-2 md:mt-2`}>
-            {(pathname.includes("cityPage") || pathname.includes("cityLocality")) && (
-                <div id="banner" className="flex flex-col mt-0.5 md:mt-1 mb-8 w-full bg-cover md:h-[50vh] h-[30vh] shimmerBg max-md:bg-right max-md:rounded-e-4xl md:rounded-t-4xl">
-                </div>
-            )}
-            <div className="foodieThoughts flex justify-between border-2 -mt-3 border-gray-200 rounded p-5">
-                {foodie.map((i) => {
-                    return (
-                        <div key={i} className="flex flex-col items-center justify-center gap-4">
-                            <div className="rounded-full h-12 w-12 md:h-24 md:w-24 shimmerBg"></div>
-                            <div className="w-12 h-3 md:w-16 md:h-5 shimmerBg rounded-2xl"></div>
-                        </div>
-                    );
-                })}
+  return (
+    <div className={`mt-2 flex w-full flex-col gap-2 md:mt-2 md:gap-3`}>
+      {(pathname.includes('cityPage') || pathname.includes('cityLocality')) && (
+        <div
+          id="banner"
+          className="shimmerBg mt-0.5 mb-8 flex h-[30vh] w-full flex-col bg-cover max-md:rounded-e-4xl max-md:bg-right md:mt-1 md:h-[50vh] md:rounded-t-4xl"
+        ></div>
+      )}
+      <div className="foodieThoughts -mt-3 flex justify-between rounded border-2 border-gray-200 p-5">
+        {foodie.map((i) => {
+          return (
+            <div
+              key={i}
+              className="flex flex-col items-center justify-center gap-4"
+            >
+              <div className="shimmerBg h-12 w-12 rounded-full md:h-24 md:w-24"></div>
+              <div className="shimmerBg h-3 w-12 rounded-2xl md:h-5 md:w-16"></div>
             </div>
+          );
+        })}
+      </div>
 
-            <hr className="text-gray-300 my-2" />
+      <hr className="my-2 text-gray-300" />
 
-            <div className="flex justify-between overflow-hidden">
-                {topChain.map((index) => <div key={index} className="w-full md:w-[250px] h-52 md:h-72 rounded-2xl md:rounded-xl shrink-0 flex md:flex-col flex-row gap-1.5 p-1.5 border-[1px] border-gray-200">
-                    <div className="basis-1/2 md:basis-[65%] h-full shimmerBg rounded-xl"></div>
-                    <div className="h-full basis-[48%] md:basis-[35%] flex md:gap-1.5 gap-4 items-start justify-center flex-col">
-                        <div className="h-5 w-[80%] rounded shimmerBg"></div>
-                        <div className="h-5 w-[50%] rounded shimmerBg"></div>
-                        <div className="h-5 w-[60%] rounded shimmerBg"></div>
-                        <div className="md:hidden h-5 w-[70%] rounded shimmerBg"></div>
-                    </div>
-                </div>)
-                }
+      <div className="flex justify-between overflow-hidden">
+        {topChain.map((index) => (
+          <div
+            key={index}
+            className="flex h-52 w-full shrink-0 flex-row gap-1.5 rounded-2xl border-[1px] border-gray-200 p-1.5 md:h-72 md:w-[250px] md:flex-col md:rounded-xl"
+          >
+            <div className="shimmerBg h-full basis-1/2 rounded-xl md:basis-[65%]"></div>
+            <div className="flex h-full basis-[48%] flex-col items-start justify-center gap-4 md:basis-[35%] md:gap-1.5">
+              <div className="shimmerBg h-5 w-[80%] rounded"></div>
+              <div className="shimmerBg h-5 w-[50%] rounded"></div>
+              <div className="shimmerBg h-5 w-[60%] rounded"></div>
+              <div className="shimmerBg h-5 w-[70%] rounded md:hidden"></div>
             </div>
+          </div>
+        ))}
+      </div>
 
-            <hr className="text-gray-300 my-2" />
+      <hr className="my-2 text-gray-300" />
 
-            <div className="flex justify-start gap-2.5 items-center p-3 flex-wrap gap-y-5">
-                {topOnline.map((index) => (
-                    <div key={index} className="w-full md:w-[250px] h-52 md:h-72 rounded-2xl md:rounded-xl shrink-0 flex md:flex-col flex-row gap-1.5 p-1.5 border-[1px] border-gray-200">
-                        <div className="basis-1/2 md:basis-[65%] h-full shimmerBg rounded-xl"></div>
-                        <div className="h-full basis-[48%] md:basis-[35%] flex md:gap-1.5 gap-4 items-start justify-center flex-col">
-                            <div className="h-5 w-[80%] rounded shimmerBg"></div>
-                            <div className="h-5 w-[50%] rounded shimmerBg"></div>
-                            <div className="h-5 w-[60%] rounded shimmerBg"></div>
-                            <div className="md:hidden h-5 w-[70%] rounded shimmerBg"></div>
-                        </div>
-                    </div>
-                ))}
+      <div className="flex flex-wrap items-center justify-start gap-2.5 gap-y-5 p-3">
+        {topOnline.map((index) => (
+          <div
+            key={index}
+            className="flex h-52 w-full shrink-0 flex-row gap-1.5 rounded-2xl border-[1px] border-gray-200 p-1.5 md:h-72 md:w-[250px] md:flex-col md:rounded-xl"
+          >
+            <div className="shimmerBg h-full basis-1/2 rounded-xl md:basis-[65%]"></div>
+            <div className="flex h-full basis-[48%] flex-col items-start justify-center gap-4 md:basis-[35%] md:gap-1.5">
+              <div className="shimmerBg h-5 w-[80%] rounded"></div>
+              <div className="shimmerBg h-5 w-[50%] rounded"></div>
+              <div className="shimmerBg h-5 w-[60%] rounded"></div>
+              <div className="shimmerBg h-5 w-[70%] rounded md:hidden"></div>
             </div>
+          </div>
+        ))}
+      </div>
 
-            <hr className="text-gray-300 my-2" />
+      <hr className="my-2 text-gray-300" />
 
-            {!pathname.includes("cityLocality") && (
-                <div className="flex justify-around gap-x-4 gap-y-4 md:gap-y-5 flex-wrap mt-1 max-md:px-3 md:mb-2">
-                    {bestPlaces.map((i) => (
-                        <div key={i} className="w-[100px] h-10 md:w-60 md:h-20 rounded-xl shimmerBg shrink-0"></div>
-                    ))}
-                </div>
-            )}
+      {!pathname.includes('cityLocality') && (
+        <div className="mt-1 flex flex-wrap justify-around gap-x-4 gap-y-4 max-md:px-3 md:mb-2 md:gap-y-5">
+          {bestPlaces.map((i) => (
+            <div
+              key={i}
+              className="shimmerBg h-10 w-[100px] shrink-0 rounded-xl md:h-20 md:w-60"
+            ></div>
+          ))}
         </div>
-    );
+      )}
+    </div>
+  );
 };
 
 export default HomeShimmer;

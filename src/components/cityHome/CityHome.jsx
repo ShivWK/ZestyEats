@@ -1,24 +1,27 @@
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Suspense, useEffect, lazy } from "react";
-import { selectCityLatAndLng, setSecondaryCity } from "../../features/cityHome/cityHomeSlice";
-import useScrollToTop from "../../utils/useScrollToTop";
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Suspense, useEffect, lazy } from 'react';
+import {
+  selectCityLatAndLng,
+  setSecondaryCity,
+} from '../../features/cityHome/cityHomeSlice';
+import useScrollToTop from '../../utils/useScrollToTop';
 
-import FoodieThoughts from "../Home/FoodieThoughts/FoodieThoughts";
-import TopRestaurantChains from "../Home/TopRestaurantChains";
+import FoodieThoughts from '../Home/FoodieThoughts/FoodieThoughts';
+import TopRestaurantChains from '../Home/TopRestaurantChains';
 
-const OnlineDeliveryRestaurant = lazy(() =>
-  import("../Home/OnlineDeliveryRestaurant")
+const OnlineDeliveryRestaurant = lazy(
+  () => import('../Home/OnlineDeliveryRestaurant'),
 );
-const PlaceCardsContainer = lazy(() => import("../Home/PlaceCardsContainer"));
+const PlaceCardsContainer = lazy(() => import('../Home/PlaceCardsContainer'));
 
 import {
   selectCityLoading,
   selectPageData,
-  selectSecondaryCity
-} from "../../features/cityHome/cityHomeSlice";
-import BackToTopBtn from "../BackToTopBtn";
-import HomeShimmer from "../Home/HomeShimmer";
+  selectSecondaryCity,
+} from '../../features/cityHome/cityHomeSlice';
+import BackToTopBtn from '../BackToTopBtn';
+import HomeShimmer from '../Home/HomeShimmer';
 
 const MainContent = () => {
   const shimmerArray = Array.from({ length: 4 }, (_, i) => i);
@@ -41,26 +44,26 @@ const MainContent = () => {
   const popularDishesData = data.popularDishInCityData;
 
   const placeCardClickHandler = async (dispatch, setSecondaryCity) => {
-    dispatch(setSecondaryCity(secondaryCity))
+    dispatch(setSecondaryCity(secondaryCity));
 
     window.scrollTo({
       top: 0,
-      behavior: "smooth"
-    })
-  }
+      behavior: 'smooth',
+    });
+  };
 
   return (
-    <main className="w-full md:max-w-[1070px] mx-auto pb-10 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
+    <main className="mx-auto w-full overflow-x-hidden pt-20 pb-10 max-md:px-1.5 md:max-w-[1070px] md:pt-28 md:pb-10">
       {/* /Banner Image */}
 
       <div
         id="banner"
-        className="flex flex-col mt-0.5 md:mt-1 mb-4 md:mb-8 w-full bg-cover md:h-[45vh] h-[30vh] bg-[url('/images/food-banner.jpg')] p-5 pb-3 max-md:pl-2.5 max-md:bg-right max-md:rounded-e-3xl md:rounded-t-4xl"
+        className="mt-0.5 mb-4 flex h-[30vh] w-full flex-col bg-[url('/images/food-banner.jpg')] bg-cover p-5 pb-3 max-md:rounded-e-3xl max-md:bg-right max-md:pl-2.5 md:mt-1 md:mb-8 md:h-[45vh] md:rounded-t-4xl"
       >
-        <h1 className="mt-auto text-white text-2xl md:text-4xl max-md:leading-6 order-2">
+        <h1 className="order-2 mt-auto text-2xl text-white max-md:leading-6 md:text-4xl">
           {banner_text}
         </h1>
-        <h2 className="md:text-4xl text-white text-3xl order-1 max-md:-mt-2">
+        <h2 className="order-1 text-3xl text-white max-md:-mt-2 md:text-4xl">
           ZestyEats
         </h2>
       </div>
@@ -69,21 +72,21 @@ const MainContent = () => {
 
       {foodieThoughtsData?.length !== 0 && (
         <>
-          <section className="w-full max-w-[1040px] mx-auto ">
+          <section className="mx-auto w-full max-w-[1040px]">
             <FoodieThoughts data={foodieThoughtsData} />
           </section>
-          <hr className="mt-10 mb-4 md:mb-8 text-gray-400" />
+          <hr className="mt-10 mb-4 text-gray-400 md:mb-8" />
         </>
       )}
 
       {topRestaurantChainData?.length !== 0 && (
         <>
-          <section className="w-full max-w-[1040px] mx-auto">
+          <section className="mx-auto w-full max-w-[1040px]">
             <Suspense
               fallback={
                 <div className="flex justify-between">
                   {shimmerArray.map((i) => (
-                    <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />
+                    <div key={i} className="shimmerBg h-44 w-60 rounded-xl" />
                   ))}
                 </div>
               }
@@ -94,7 +97,7 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          <hr className="mt-10 mb-4 md:mb-8 text-gray-400" />
+          <hr className="mt-10 mb-4 text-gray-400 md:mb-8" />
         </>
       )}
 
@@ -105,7 +108,7 @@ const MainContent = () => {
               fallback={
                 <div className="flex justify-between">
                   {shimmerArray.map((i) => (
-                    <div key={i} className=" w-60 h-44 rounded-xl shimmerBg" />
+                    <div key={i} className="shimmerBg h-44 w-60 rounded-xl" />
                   ))}
                 </div>
               }
@@ -116,7 +119,7 @@ const MainContent = () => {
               />
             </Suspense>
           </section>
-          <hr className="mt-8 md:mt-10 mb-4 md:mb-8 text-gray-400" />
+          <hr className="mt-8 mb-4 text-gray-400 md:mt-10 md:mb-8" />
         </>
       )}
 
@@ -124,15 +127,12 @@ const MainContent = () => {
 
       {localitiesData?.length !== 0 && (
         <>
-          <section
-            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
-                   flex-col mb-7"
-          >
+          <section className="mx-auto mb-7 flex w-full flex-col items-center gap-4 md:max-w-[1000px]">
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">
                   {shimmerArray.map((i) => (
-                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                    <div key={i} className="shimmerBg h-20 w-60 rounded-xl" />
                   ))}
                 </div>
               }
@@ -153,15 +153,12 @@ const MainContent = () => {
 
       {whatEatingCuisineData?.length !== 0 && (
         <>
-          <section
-            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
-                   flex-col mb-7"
-          >
+          <section className="mx-auto mb-7 flex w-full flex-col items-center gap-4 md:max-w-[1000px]">
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">
                   {shimmerArray.map((i) => (
-                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                    <div key={i} className="shimmerBg h-20 w-60 rounded-xl" />
                   ))}
                 </div>
               }
@@ -171,7 +168,7 @@ const MainContent = () => {
                 heading={whatEatingCuisineTitle}
                 targetedCity={secondaryCity}
                 clickHandler={placeCardClickHandler}
-                path={"SetCuisine"}
+                path={'SetCuisine'}
               />
             </Suspense>
           </section>
@@ -182,15 +179,12 @@ const MainContent = () => {
 
       {restaurantChainInCityData?.length !== 0 && (
         <>
-          <section
-            className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4
-                   flex-col mb-7"
-          >
+          <section className="mx-auto mb-7 flex w-full flex-col items-center gap-4 md:max-w-[1000px]">
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">
                   {shimmerArray.map((i) => (
-                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                    <div key={i} className="shimmerBg h-20 w-60 rounded-xl" />
                   ))}
                 </div>
               }
@@ -211,12 +205,12 @@ const MainContent = () => {
 
       {popularDishesData?.length !== 0 && (
         <>
-          <section className="w-full md:max-w-[1000px] mx-auto flex items-center gap-4 flex-col" >
+          <section className="mx-auto flex w-full flex-col items-center gap-4 md:max-w-[1000px]">
             <Suspense
               fallback={
                 <div className="flex justify-between gap-4">
                   {shimmerArray.map((i) => (
-                    <div key={i} className="w-60 h-20 rounded-xl shimmerBg" />
+                    <div key={i} className="shimmerBg h-20 w-60 rounded-xl" />
                   ))}
                 </div>
               }
@@ -248,7 +242,7 @@ const CityHome = () => {
   }, []);
 
   return loading ? (
-    <main className="w-full md:max-w-[1070px] mx-auto pb-8 md:pb-10 pt-20 md:pt-28 overflow-x-hidden max-md:px-1.5">
+    <main className="mx-auto w-full overflow-x-hidden pt-20 pb-8 max-md:px-1.5 md:max-w-[1070px] md:pt-28 md:pb-10">
       <HomeShimmer />
     </main>
   ) : (

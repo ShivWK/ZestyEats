@@ -1,35 +1,35 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
-import { recentLocationModifier } from "../../utils/guestSessionDataModifier";
+import { createSelector, createSlice } from '@reduxjs/toolkit';
+import { recentLocationModifier } from '../../utils/guestSessionDataModifier';
 
 const initialState = {
   lat: 12.9715987,
   lng: 77.5945627,
-  city: "",
+  city: '',
   isUnserviceable: false,
   foodieThoughtsData: [],
   topRestaurantsData: [],
   recentLocations: [],
   bestNearCuisions: [],
   restaurantsWithOnlineDelivery: [],
-  yourCurrentCity: "",
-  searchedCity: "Bangalore",
-  searchedCityAddress: ", Karnataka, India",
-  topRestaurantsTitle: "Top restaurant chains in Bangalore",
-  onlineDeliveryTitle: "Restaurants with online food delivery in Bangalore",
+  yourCurrentCity: '',
+  searchedCity: 'Bangalore',
+  searchedCityAddress: ', Karnataka, India',
+  topRestaurantsTitle: 'Top restaurant chains in Bangalore',
+  onlineDeliveryTitle: 'Restaurants with online food delivery in Bangalore',
   isLoading: true,
   isOnline: true,
   availableInCities: [],
   pathHistory: [],
   userFriendlyPathHistory: [],
   showBottomMenu: true,
-  currentTheme:"system",
+  currentTheme: 'system',
   deviceFingerprint: null,
   user: {},
   isLoggedIn: false,
 };
 
 const homeSlice = createSlice({
-  name: "home",
+  name: 'home',
   initialState: initialState,
   reducers: {
     setUserDetails: (state, action) => {
@@ -47,7 +47,7 @@ const homeSlice = createSlice({
     setCurrentTheme: (state, action) => {
       state.currentTheme = action.payload;
 
-      localStorage.setItem("theme", state.currentTheme);
+      localStorage.setItem('theme', state.currentTheme);
     },
 
     addLatAndLng: (state, action) => {
@@ -75,23 +75,23 @@ const homeSlice = createSlice({
         state.pathHistory.push(newPath);
       }
 
-      const storedPath = JSON.parse(localStorage.getItem("pathHistory")) || [];
+      const storedPath = JSON.parse(localStorage.getItem('pathHistory')) || [];
       if (action.payload !== storedPath.at(-1) && action.payload) {
-        localStorage.setItem("pathHistory", JSON.stringify(state.pathHistory));
+        localStorage.setItem('pathHistory', JSON.stringify(state.pathHistory));
       }
     },
 
     setUserFriendlyPathHistory: (state, action) => {
       localStorage.setItem(
-        "userFriendlyPathHistory",
-        JSON.stringify(action.payload)
+        'userFriendlyPathHistory',
+        JSON.stringify(action.payload),
       );
       state.userFriendlyPathHistory = action.payload;
     },
 
     setUnserviceable: (state, action) => {
       const result = action.payload?.data?.cards?.find(
-        (item) => item?.card?.card?.id === "swiggy_not_present"
+        (item) => item?.card?.card?.id === 'swiggy_not_present',
       );
 
       if (result) {
@@ -105,7 +105,7 @@ const homeSlice = createSlice({
     addFoodieThoughtsData: (state, action) => {
       const result =
         action.payload?.data?.cards?.find(
-          (item) => item?.card?.card?.id === "whats_on_your_mind"
+          (item) => item?.card?.card?.id === 'whats_on_your_mind',
         )?.card?.card?.imageGridCards?.info || [];
 
       state.foodieThoughtsData = result;
@@ -114,7 +114,7 @@ const homeSlice = createSlice({
     addTopRestaurantsData: (state, action) => {
       const result =
         action.payload?.data?.cards?.find(
-          (item) => item?.card?.card?.id === "top_brands_for_you"
+          (item) => item?.card?.card?.id === 'top_brands_for_you',
         )?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
 
       state.topRestaurantsData = result;
@@ -123,7 +123,7 @@ const homeSlice = createSlice({
     addRestaurantsWithOnineDelivery: (state, action) => {
       const result =
         action.payload?.data?.cards?.find(
-          (item) => item?.card?.card?.id === "restaurant_grid_listing_v2"
+          (item) => item?.card?.card?.id === 'restaurant_grid_listing_v2',
         )?.card?.card?.gridElements?.infoWithStyle?.restaurants || [];
 
       state.restaurantsWithOnlineDelivery = result;
@@ -132,7 +132,7 @@ const homeSlice = createSlice({
     addBestNearCuisions: (state, action) => {
       const result =
         action.payload?.data?.cards?.find(
-          (item) => item?.card?.card?.title === "Best Cuisines Near Me"
+          (item) => item?.card?.card?.title === 'Best Cuisines Near Me',
         )?.card?.card?.brands || [];
 
       state.bestNearCuisions = result;
@@ -142,8 +142,8 @@ const homeSlice = createSlice({
       const result =
         action.payload?.data?.cards?.find(
           (item) =>
-            item?.card?.card?.["@type"] ===
-            "type.googleapis.com/swiggy.seo.widgets.v1.FooterContent"
+            item?.card?.card?.['@type'] ===
+            'type.googleapis.com/swiggy.seo.widgets.v1.FooterContent',
         )?.card?.card?.cities || [];
 
       state.availableInCities = result;
@@ -151,11 +151,11 @@ const homeSlice = createSlice({
 
     addTopRestaurantsTitle: (state, action) => {
       const title = action.payload?.data?.cards?.find(
-        (item) => item?.card?.card?.id === "top_brands_for_you"
+        (item) => item?.card?.card?.id === 'top_brands_for_you',
       )?.card?.card?.header?.title;
 
       state.topRestaurantsTitle = title;
-      state.city = title?.split(" ").at(-1);
+      state.city = title?.split(' ').at(-1);
     },
 
     addSearchedCity: (state, action) => {
@@ -164,11 +164,11 @@ const homeSlice = createSlice({
 
     addOnlineDeliveryTitle: (state, action) => {
       const title = action.payload.data.cards.find((item) => {
-        return item?.card?.card?.id === "popular_restaurants_title";
+        return item?.card?.card?.id === 'popular_restaurants_title';
       })?.card?.card?.title;
       state.onlineDeliveryTitle = title;
 
-      state.city = title?.split(" ").at(-1);
+      state.city = title?.split(' ').at(-1);
     },
 
     addSearchedCityAddress: (state, action) => {
@@ -180,7 +180,7 @@ const homeSlice = createSlice({
     },
 
     removeYourCurrentCity: (state) => {
-      state.yourCurrentCity = "";
+      state.yourCurrentCity = '';
     },
 
     addRecentLocations: (state, action) => {
@@ -195,17 +195,25 @@ const homeSlice = createSlice({
           }
           return acc;
         },
-        []
+        [],
       );
 
       state.recentLocations = combine;
-      recentLocationModifier(state.recentLocations, state.isLoggedIn, state.deviceFingerprint);
+      recentLocationModifier(
+        state.recentLocations,
+        state.isLoggedIn,
+        state.deviceFingerprint,
+      );
     },
 
     removeARecentLocation: (state, action) => {
       state.recentLocations.splice(action.payload, 1);
 
-      recentLocationModifier(state.recentLocations, state.isLoggedIn, state.deviceFingerprint);
+      recentLocationModifier(
+        state.recentLocations,
+        state.isLoggedIn,
+        state.deviceFingerprint,
+      );
     },
 
     setLoading: (state, action) => {
@@ -223,24 +231,31 @@ export default homeSlice.reducer;
 export const selectDeviceFingerPrint = (state) => state.home.deviceFingerprint;
 export const selectUserDetails = (state) => state.home.user;
 export const selectCurrentTheme = (state) => state.home.currentTheme;
-export const selectFoodieThoughtsData = (state) => state.home.foodieThoughtsData;
-export const selectTopRestaurantsTitle = (state) => state.home.topRestaurantsTitle;
-export const selectTopRestaurantsData = (state) => state.home.topRestaurantsData;
+export const selectFoodieThoughtsData = (state) =>
+  state.home.foodieThoughtsData;
+export const selectTopRestaurantsTitle = (state) =>
+  state.home.topRestaurantsTitle;
+export const selectTopRestaurantsData = (state) =>
+  state.home.topRestaurantsData;
 export const selectYourCurrentCity = (state) => state.home.yourCurrentCity;
 export const selectSearchedCity = (state) => state.home.searchedCity;
-export const selectSearchedCityAddress = (state) => state.home.searchedCityAddress;
+export const selectSearchedCityAddress = (state) =>
+  state.home.searchedCityAddress;
 export const selectIsLoading = (state) => state.home.isLoading;
 export const selectRecentLocations = (state) => state.home.recentLocations;
-export const selectOnlineDeliveryRestaurants = (state) => state.home.restaurantsWithOnlineDelivery;
-export const selectOnlineDeliveryTitle = (state) => state.home.onlineDeliveryTitle;
+export const selectOnlineDeliveryRestaurants = (state) =>
+  state.home.restaurantsWithOnlineDelivery;
+export const selectOnlineDeliveryTitle = (state) =>
+  state.home.onlineDeliveryTitle;
 export const selectBestCuisinesNearMe = (state) => state.home.bestNearCuisions;
 export const selectOnlineStatus = (state) => state.home.isOnline;
 export const selectAvailableCities = (state) => state.home.availableInCities;
 export const selectPathHistory = (state) => state.home.pathHistory;
-export const selectUserFriendlyPathHistory = (state) => state.home.userFriendlyPathHistory;
+export const selectUserFriendlyPathHistory = (state) =>
+  state.home.userFriendlyPathHistory;
 export const selectLatAndLng = createSelector(
   [(state) => state.home.lat, (state) => state.home.lng],
-  (lat, lng) => ({ lat, lng })
+  (lat, lng) => ({ lat, lng }),
 );
 export const selectCity = (state) => state.home.city;
 export const selectBottomMenu = (state) => state.home.showBottomMenu;
@@ -272,5 +287,5 @@ export const {
   setPathHistory,
   setUserFriendlyPathHistory,
   setShowBottomMenu,
-  setDeviceFingerPrint
+  setDeviceFingerPrint,
 } = homeSlice.actions;

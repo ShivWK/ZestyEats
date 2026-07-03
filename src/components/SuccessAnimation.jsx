@@ -1,8 +1,8 @@
-import Lottie from "lottie-react";
-import successAnimation from "./../../assets/Success.json"
+import Lottie from 'lottie-react';
+import successAnimation from './../../assets/Success.json';
 
 const SuccessAnimation = () => {
-    return 
-}
+  return;
+};
 
 export default SuccessAnimation;

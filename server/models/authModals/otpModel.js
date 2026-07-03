@@ -1,33 +1,33 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const otpSchema = new mongoose.Schema({
-    visiterId: String,
-    
-    phone: {
-        type: Number,
-    },
+  visiterId: String,
 
-    email: {
-        type: String,
-    },
+  phone: {
+    type: Number,
+  },
 
-    for: {
-        type: String,
-        enum: ["signup", "login", "delete", "verification", "edit"],
-        required: true,
-    },
+  email: {
+    type: String,
+  },
 
-    hashedOtp: {
-        type: String,
-        required: true
-    },
+  for: {
+    type: String,
+    enum: ['signup', 'login', 'delete', 'verification', 'edit'],
+    required: true,
+  },
 
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        expires: 60 * 5
-    },
-})
+  hashedOtp: {
+    type: String,
+    required: true,
+  },
 
-const OtpModel = mongoose.model("OTP", otpSchema);
+  createdAt: {
+    type: Date,
+    default: Date.now,
+    expires: 60 * 5,
+  },
+});
+
+const OtpModel = mongoose.model('OTP', otpSchema);
 module.exports = OtpModel;

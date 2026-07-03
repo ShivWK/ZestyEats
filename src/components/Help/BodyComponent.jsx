@@ -1,23 +1,23 @@
 // Done
 
-import BreadcrumbsWrapper from "../BreadcrumbsWrapper";
+import BreadcrumbsWrapper from '../BreadcrumbsWrapper';
 
 const BodyComponent = ({ heading, description, children }) => {
-    // console.log("help/BodyComponent rendered");
-    return (
-        <main className="bg-[rgb(55,113,142)] dark:bg-black w-[100%] pt-24 m-0 pb-12">
-            <div className="text-white md:max-w-[1210px] mx-auto mt-2"><BreadcrumbsWrapper normalTextColor={"white"} mainTextColor={"white"} /></div>
-            <section className="max-w-[1210px] mx-auto mt-8">
-                <h1 className="text-white tracking-tight text-3xl">{heading}</h1>
-                <p className="font-semibold text-white mt-1">{description}</p>
-            </section>
-            <section className="bg-white dark:bg-gray-800 flex items-center justify-center max-w-[1300px] mx-auto mt-8 p-14">
-                <div className="flex w-full">
-                    {children}
-                </div>
-            </section>
-        </main>
-    )
-}
+  // console.log("help/BodyComponent rendered");
+  return (
+    <main className="m-0 w-[100%] bg-[rgb(55,113,142)] pt-24 pb-12 dark:bg-black">
+      <div className="mx-auto mt-2 text-white md:max-w-[1210px]">
+        <BreadcrumbsWrapper normalTextColor={'white'} mainTextColor={'white'} />
+      </div>
+      <section className="mx-auto mt-8 max-w-[1210px]">
+        <h1 className="text-3xl tracking-tight text-white">{heading}</h1>
+        <p className="mt-1 font-semibold text-white">{description}</p>
+      </section>
+      <section className="mx-auto mt-8 flex max-w-[1300px] items-center justify-center bg-white p-14 dark:bg-gray-800">
+        <div className="flex w-full">{children}</div>
+      </section>
+    </main>
+  );
+};
 
 export default BodyComponent;

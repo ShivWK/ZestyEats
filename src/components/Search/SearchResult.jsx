@@ -1,20 +1,16 @@
-import {
-  Link,
-  useSearchParams,
-  Outlet
-} from "react-router-dom";
+import { Link, useSearchParams, Outlet } from 'react-router-dom';
 
-import { useRef, useState } from "react";;
-import useScrollToTop from "../../utils/useScrollToTop";
-import BackToTopBtn from "../BackToTopBtn";
+import { useRef, useState } from 'react';
+import useScrollToTop from '../../utils/useScrollToTop';
+import BackToTopBtn from '../BackToTopBtn';
 
 const SearchResult = () => {
   useScrollToTop();
   const [searchParams] = useSearchParams();
-  const type = searchParams.get("type");
-  const lat = searchParams.get("lat");
-  const lng = searchParams.get("lng");
-  const name = searchParams.get("name");
+  const type = searchParams.get('type');
+  const lat = searchParams.get('lat');
+  const lng = searchParams.get('lng');
+  const name = searchParams.get('name');
 
   const nameRef = useRef(name);
 
@@ -35,23 +31,23 @@ const SearchResult = () => {
 
   return (
     <div className="pb-16">
-      <div className="sticky top-[159px] md:top-[180px] flex gap-3 py-3 w-full z-20 dark:bg-black bg-white">
+      <div className="sticky top-[159px] z-20 flex w-full gap-3 bg-white py-3 md:top-[180px] dark:bg-black">
         <Link
           to={restroPath}
-          onClick={(e) => clickHandler(e, "Restaurant")}
-          className={`py-1.5 font-bold px-4 rounded-3xl dark:hover:bg-gray-600 dark:hover:text-black hover:bg-gray-200 border-[1px] border-gray-400 cursor-pointer ${(currentType === "Restaurant" || currentType === "Cuisine") ? "bg-black dark:bg-white text-white dark:text-black" : "bg-white dark:bg-black text-black dark:text-white"}`}
+          onClick={(e) => clickHandler(e, 'Restaurant')}
+          className={`cursor-pointer rounded-3xl border-[1px] border-gray-400 px-4 py-1.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-black ${currentType === 'Restaurant' || currentType === 'Cuisine' ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'}`}
         >
           Restaurant
         </Link>
         <Link
           to={dishPath}
-          onClick={(e) => clickHandler(e, "Dish")}
-          className={`py-1.5 font-bold px-4 rounded-3xl dark:hover:bg-gray-600 dark:hover:text-black  hover:bg-gray-200 border-[1px] border-gray-400 cursor-pointer ${(currentType === "Dish") ? "bg-black dark:bg-white text-white dark:text-black" : "bg-white dark:bg-black text-black dark:text-white"}`}
+          onClick={(e) => clickHandler(e, 'Dish')}
+          className={`cursor-pointer rounded-3xl border-[1px] border-gray-400 px-4 py-1.5 font-bold hover:bg-gray-200 dark:hover:bg-gray-600 dark:hover:text-black ${currentType === 'Dish' ? 'bg-black text-white dark:bg-white dark:text-black' : 'bg-white text-black dark:bg-black dark:text-white'}`}
         >
           Dish
         </Link>
       </div>
-      <Outlet />                          
+      <Outlet />
       <BackToTopBtn percentage={30} />
     </div>
   );

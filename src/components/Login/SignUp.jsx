@@ -1,7 +1,7 @@
-import { useState, useRef, memo, useCallback } from "react";
-import Form from "./Form";
-import EntryDiv from "./EntryDiv";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useRef, memo, useCallback } from 'react';
+import Form from './Form';
+import EntryDiv from './EntryDiv';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   selectSignUpOtp,
@@ -12,29 +12,35 @@ import {
   toggleOtpOnPhone,
   setHideLogin,
   setIsLoggedIn,
-  setErrorMessage
-} from "../../features/Login/loginSlice";
+  setErrorMessage,
+} from '../../features/Login/loginSlice';
 
-import { selectDeviceFingerPrint, setIsLoggedInHome, setUserDetails } from "../../features/home/homeSlice";
-import { Phone, Mail } from "lucide-react"
-import { toast } from "react-toastify";
-import { setIsLoggedInRestro } from "../../features/home/restaurantsSlice";
+import {
+  selectDeviceFingerPrint,
+  setIsLoggedInHome,
+  setUserDetails,
+} from '../../features/home/homeSlice';
+import { Phone, Mail } from 'lucide-react';
+import { toast } from 'react-toastify';
+import { setIsLoggedInRestro } from '../../features/home/restaurantsSlice';
 
 const SignUp = memo(({ recaptchaRef }) => {
-  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] = useState(undefined);
+  const [changePhoneIsEntryMade, setChangePhoneIsEntryMade] =
+    useState(undefined);
   const [changePhoneHasValue, setChangePhoneHasValue] = useState(undefined);
   const [changeOtpIsEntryMade, setChangeOtpIsEntryMade] = useState(undefined);
   const [changeOtpHasValue, setChangeOtpHasValue] = useState(undefined);
   const [changeNameIsEntryMade, setChangeNameIsEntryMade] = useState(undefined);
   const [changeNameHasValue, setChangeNameHasValue] = useState(undefined);
-  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] = useState(undefined);
+  const [changeEmailIsEntryMade, setChangeEmailIsEntryMade] =
+    useState(undefined);
   const [changeEmailHasValue, setChangeEmailHasValue] = useState(undefined);
 
   const [signUpFormData, setSignUpFormData] = useState({
-    phone: "",
-    name: "",
-    email: "",
-    opt: "",
+    phone: '',
+    name: '',
+    email: '',
+    opt: '',
   });
 
   const dispatch = useDispatch();
@@ -44,109 +50,135 @@ const SignUp = memo(({ recaptchaRef }) => {
   const deviceFingerPrint = useSelector(selectDeviceFingerPrint);
   const formRef = useRef(null);
 
-  const handleSignUpChange = useCallback((e) => {
-    setSignUpFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  }, [setSignUpFormData]);
+  const handleSignUpChange = useCallback(
+    (e) => {
+      setSignUpFormData((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    [setSignUpFormData],
+  );
 
-  const handleSignUp = useCallback(async (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    dispatch(setLoading(true));
-    const data = new FormData(formRef.current);
+  const handleSignUp = useCallback(
+    async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      dispatch(setLoading(true));
+      const data = new FormData(formRef.current);
 
-    if (data.get("phone").length === 0) {
-      setChangePhoneHasValue(true);
-      dispatch(setLoading(false));
-    }
-
-    if (data.get("name").length === 0) {
-      setChangeNameHasValue(true);
-      dispatch(setLoading(false));
-    }
-
-    if (data.get("email").length === 0) {
-      setChangeEmailHasValue(true);
-      dispatch(setLoading(false));
-      return;
-    }
-
-    if (!/^[2-9]\d{9}$/.test(data.get("phone"))) {
-      setChangePhoneIsEntryMade(true);
-      setChangePhoneHasValue(true);
-      dispatch(setLoading(false));
-    } else if (/[^a-zA-z\s]/g.test(data.get("name"))) {
-      setChangeNameIsEntryMade(true)
-      setChangeNameHasValue(true);
-      dispatch(setLoading(false));
-    } else if (!/^[^.][a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(data.get("email"))) {
-      setChangeEmailIsEntryMade(true);
-      setChangeEmailHasValue(true);
-      dispatch(setLoading(false));
-    } else {
-      try {
-        const token = await recaptchaRef.current.executeAsync();
-        recaptchaRef.current.reset();
-
-        sendOtp(data, token, otpOnPhone);
-      } catch (err) {
-        console.log("Recaptcha failed", err);
-        dispatch(setLoading(false))
-        toast.error("Recaptcha failed, please try again.", {
-          autoClose: 3000,
-          style: {
-            backgroundColor: "rgba(0,0,0,0.9)",
-            fontWeight: "medium",
-            color: "white",
-          },
-        })
+      if (data.get('phone').length === 0) {
+        setChangePhoneHasValue(true);
+        dispatch(setLoading(false));
       }
-    }
-  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangePhoneHasValue, setChangePhoneIsEntryMade, setChangeNameHasValue, setChangeNameIsEntryMade, setChangeEmailHasValue, setChangeEmailIsEntryMade, otpOnPhone]);
+
+      if (data.get('name').length === 0) {
+        setChangeNameHasValue(true);
+        dispatch(setLoading(false));
+      }
+
+      if (data.get('email').length === 0) {
+        setChangeEmailHasValue(true);
+        dispatch(setLoading(false));
+        return;
+      }
+
+      if (!/^[2-9]\d{9}$/.test(data.get('phone'))) {
+        setChangePhoneIsEntryMade(true);
+        setChangePhoneHasValue(true);
+        dispatch(setLoading(false));
+      } else if (/[^a-zA-z\s]/g.test(data.get('name'))) {
+        setChangeNameIsEntryMade(true);
+        setChangeNameHasValue(true);
+        dispatch(setLoading(false));
+      } else if (
+        !/^[^.][a-zA-Z0-9!#$%&'*+-/=?^_`{|}~.]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
+          data.get('email'),
+        )
+      ) {
+        setChangeEmailIsEntryMade(true);
+        setChangeEmailHasValue(true);
+        dispatch(setLoading(false));
+      } else {
+        try {
+          const token = await recaptchaRef.current.executeAsync();
+          recaptchaRef.current.reset();
+
+          sendOtp(data, token, otpOnPhone);
+        } catch (err) {
+          console.log('Recaptcha failed', err);
+          dispatch(setLoading(false));
+          toast.error('Recaptcha failed, please try again.', {
+            autoClose: 3000,
+            style: {
+              backgroundColor: 'rgba(0,0,0,0.9)',
+              fontWeight: 'medium',
+              color: 'white',
+            },
+          });
+        }
+      }
+    },
+    [
+      setSignUpFormData,
+      signUpFormData,
+      setLoading,
+      selectSignUpOtp,
+      selectIsLoading,
+      setChangePhoneHasValue,
+      setChangePhoneIsEntryMade,
+      setChangeNameHasValue,
+      setChangeNameIsEntryMade,
+      setChangeEmailHasValue,
+      setChangeEmailIsEntryMade,
+      otpOnPhone,
+    ],
+  );
 
   async function sendOtp(data, token, otpOnPhoneLog) {
-    const mode = otpOnPhoneLog ? "phone" : "email"
+    const mode = otpOnPhoneLog ? 'phone' : 'email';
     const userData = {
-      name: data.get("name"),
-      phone_number: data.get("phone"),
-      email: data.get("email"),
-    }
+      name: data.get('name'),
+      phone_number: data.get('phone'),
+      email: data.get('email'),
+    };
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/signup/sendOtp/${mode}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "x-device-id": deviceFingerPrint,
-          "x-user-agent": navigator.userAgent,
-          "x-language": navigator.language,
-          "x-resolution": `${screen.height}x${screen.width}`
+      const res = await fetch(
+        `${import.meta.env.VITE_BASE_URL}/api/user/signup/sendOtp/${mode}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'x-device-id': deviceFingerPrint,
+            'x-user-agent': navigator.userAgent,
+            'x-language': navigator.language,
+            'x-resolution': `${screen.height}x${screen.width}`,
+          },
+          body: JSON.stringify({
+            userData,
+            token,
+          }),
         },
-        body: JSON.stringify({
-          userData,
-          token
-        })
-      })
+      );
       const data = await res.json();
 
       if (!res.ok) throw new Error(data.message);
 
       console.log(data);
       dispatch(signUpOtpSend(true));
-      dispatch(setLoading(false))
+      dispatch(setLoading(false));
     } catch (err) {
-      console.log("Error in sending OTP", err.message);
+      console.log('Error in sending OTP', err.message);
       toast.error(err.message, {
         autoClose: 3000,
         style: {
-          backgroundColor: "rgba(0,0,0,0.9)",
-          fontWeight: "medium",
-          color: "white",
+          backgroundColor: 'rgba(0,0,0,0.9)',
+          fontWeight: 'medium',
+          color: 'white',
         },
-      })
-      dispatch(setLoading(false))
+      });
+      dispatch(setLoading(false));
     }
   }
 
@@ -154,112 +186,149 @@ const SignUp = memo(({ recaptchaRef }) => {
     const data = new FormData(formRef.current);
     dispatch(setLoading(true));
 
-    if (data.get("otp").length === 0) {
+    if (data.get('otp').length === 0) {
       setChangeOtpHasValue(true);
       dispatch(setLoading(false));
-    } else if (data.get("otp").length < 6) {
+    } else if (data.get('otp').length < 6) {
       setChangeOtpIsEntryMade(true);
       setChangeOtpHasValue(true);
       dispatch(setLoading(false));
     } else {
-      const OTP = data.get("otp");
-      const mode = otpOnPhone ? "phone" : "email";
-      const otpFor = mode === "phone" ? data.get("phone") : data.get("email");
+      const OTP = data.get('otp');
+      const mode = otpOnPhone ? 'phone' : 'email';
+      const otpFor = mode === 'phone' ? data.get('phone') : data.get('email');
 
       try {
-        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}/signup`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "x-device-id": deviceFingerPrint,
-            "x-user-agent": navigator.userAgent,
-            "x-language": navigator.language,
-            "x-resolution": `${screen.height}x${screen.width}`,
+        const res = await fetch(
+          `${import.meta.env.VITE_BASE_URL}/api/user/verifyOtp/${mode}/signup`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'x-device-id': deviceFingerPrint,
+              'x-user-agent': navigator.userAgent,
+              'x-language': navigator.language,
+              'x-resolution': `${screen.height}x${screen.width}`,
+            },
+            body: JSON.stringify({
+              OTP,
+              otpFor,
+              name: signUpFormData.name,
+              phone: signUpFormData.phone,
+              email: signUpFormData.email,
+            }),
+            credentials: 'include',
           },
-          body: JSON.stringify({
-            OTP,
-            otpFor,
-            name: signUpFormData.name,
-            phone: signUpFormData.phone,
-            email: signUpFormData.email,
-          }),
-          credentials: "include",
-        });
+        );
 
         const result = await res.json();
         if (!res.ok) throw new Error(result.message);
 
-        console.log("API response", result);
+        console.log('API response', result);
         dispatch(setUserDetails(result.data));
-        dispatch(setIsLoggedIn(true))
+        dispatch(setIsLoggedIn(true));
         dispatch(setIsLoggedInHome(true));
         dispatch(setIsLoggedInRestro(true));
         dispatch(setLoading(false));
         dispatch(setHideLogin(true));
         dispatch(signUpOtpSend(false));
       } catch (err) {
-        console.log("Error in verifying OTP:", err);
+        console.log('Error in verifying OTP:', err);
         dispatch(setLoading(false));
         dispatch(setErrorMessage(err.message));
       }
     }
-  }, [setSignUpFormData, signUpFormData, setLoading, selectSignUpOtp, selectIsLoading, setChangeOtpHasValue, setChangeOtpIsEntryMade, otpOnPhone]);
+  }, [
+    setSignUpFormData,
+    signUpFormData,
+    setLoading,
+    selectSignUpOtp,
+    selectIsLoading,
+    setChangeOtpHasValue,
+    setChangeOtpIsEntryMade,
+    otpOnPhone,
+  ]);
 
   const toggleHandler = () => {
     if (isSignUpOtpSend) return;
-    dispatch(toggleOtpOnPhone())
-  }
+    dispatch(toggleOtpOnPhone());
+  };
 
   return (
     <>
       {!isSignUpOtpSend && (
-        <div className="h-fit w-fit flex items-center gap-2">
-          <div id="toggle" onClick={toggleHandler} className="relative overflow-hidden border-2 border-gray-200 rounded-full w-16 h-8 flex items-center justify-between cursor-pointer bg-gray-200">
-            <Phone size={18} strokeWidth={2} className="text-green-500 ml-1.5" />
-            <Mail size={18} strokeWidth={2} className="text-red-500 mr-1.5" />
-            <div className={`absolute rounded-full h-full right-0 w-7 transition-all duration-150 ease-linear flex items-center justify-center bg-white dark:bg-black`}
-              style={{ left: otpOnPhone ? "0" : "2rem" }}
+        <div className="flex h-fit w-fit items-center gap-2">
+          <div
+            id="toggle"
+            onClick={toggleHandler}
+            className="relative flex h-8 w-16 cursor-pointer items-center justify-between overflow-hidden rounded-full border-2 border-gray-200 bg-gray-200"
+          >
+            <Phone
+              size={18}
+              strokeWidth={2}
+              className="ml-1.5 text-green-500"
+            />
+            <Mail size={18} strokeWidth={2} className="mr-1.5 text-red-500" />
+            <div
+              className={`absolute right-0 flex h-full w-7 items-center justify-center rounded-full bg-white transition-all duration-150 ease-linear dark:bg-black`}
+              style={{ left: otpOnPhone ? '0' : '2rem' }}
             >
-              {otpOnPhone ? <i className="fa-solid fa-phone text-green-400" />
-                : <i className="fa-solid fa-envelope text-red-500" />
-              }
+              {otpOnPhone ? (
+                <i className="fa-solid fa-phone text-green-400" />
+              ) : (
+                <i className="fa-solid fa-envelope text-red-500" />
+              )}
             </div>
           </div>
 
-          <div className="text-xs font-bold text-gray-600 tracking-wide">
-            {otpOnPhone ? <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">Indian number.</span></p>
-              : <p className="dark:text-gray-300">OTP to <span className="text-black dark:text-white">email (works globally).</span></p>
-            }
+          <div className="text-xs font-bold tracking-wide text-gray-600">
+            {otpOnPhone ? (
+              <p className="dark:text-gray-300">
+                OTP to{' '}
+                <span className="text-black dark:text-white">
+                  Indian number.
+                </span>
+              </p>
+            ) : (
+              <p className="dark:text-gray-300">
+                OTP to{' '}
+                <span className="text-black dark:text-white">
+                  email (works globally).
+                </span>
+              </p>
+            )}
           </div>
         </div>
       )}
       <Form
-        btnId={"SignUpBtn"}
+        btnId={'SignUpBtn'}
         reference={formRef}
         handleSubmit={handleSignUp}
         handleOtpVerification={handleOtpVerification}
-        signingStatement={"By creating an account"}
+        signingStatement={'By creating an account'}
         isOtpSend={isSignUpOtpSend}
         isLoading={isLoading}
       >
-        {(!isSignUpOtpSend || otpOnPhone) && <EntryDiv
-          type={"tel"}
-          inputMode={"numeric"}
-          purpose={"phone"}
-          // value={signUpFormData.phone}
-          onChangeHandler={handleSignUpChange}
-          placeholder="Phone number"
-          fallbackPlaceholder="Enter your phone number"
-          changeIsEntryMade={changePhoneIsEntryMade}
-          changeHasValue={changePhoneHasValue}
-          isReadOnly={isSignUpOtpSend}
-        />}
+        {(!isSignUpOtpSend || otpOnPhone) && (
+          <EntryDiv
+            type={'tel'}
+            inputMode={'numeric'}
+            purpose={'phone'}
+            // value={signUpFormData.phone}
+            onChangeHandler={handleSignUpChange}
+            placeholder="Phone number"
+            fallbackPlaceholder="Enter your phone number"
+            changeIsEntryMade={changePhoneIsEntryMade}
+            changeHasValue={changePhoneHasValue}
+            isReadOnly={isSignUpOtpSend}
+          />
+        )}
 
         {!isSignUpOtpSend && (
           <EntryDiv
-            type={"text"}
-            inputMode={"text"}
-            purpose={"name"}
+            type={'text'}
+            inputMode={'text'}
+            purpose={'name'}
             // value={signUpFormData.name}
             onChangeHandler={handleSignUpChange}
             placeholder="Name"
@@ -270,9 +339,9 @@ const SignUp = memo(({ recaptchaRef }) => {
         )}
         {(!isSignUpOtpSend || !otpOnPhone) && (
           <EntryDiv
-            type={"text"}
-            inputMode={"text"}
-            purpose={"email"}
+            type={'text'}
+            inputMode={'text'}
+            purpose={'email'}
             // value={signUpFormData.email}
             onChangeHandler={handleSignUpChange}
             placeholder="Email"
@@ -285,14 +354,17 @@ const SignUp = memo(({ recaptchaRef }) => {
           <EntryDiv
             type="text"
             inputMode="numeric"
-            purpose={"otp"}
+            purpose={'otp'}
             // value={signUpFormData.otp}
             onChangeHandler={handleSignUpChange}
             placeholder="One Time Password"
             fallbackPlaceholder="One Time Password"
             changeIsEntryMade={changeOtpIsEntryMade}
             changeHasValue={changeOtpHasValue}
-            otpFormData={{ phone: signUpFormData.phone, email: signUpFormData.email }}
+            otpFormData={{
+              phone: signUpFormData.phone,
+              email: signUpFormData.email,
+            }}
             recaptchaRef={recaptchaRef}
             focus="true"
           />

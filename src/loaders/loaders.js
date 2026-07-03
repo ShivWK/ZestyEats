@@ -1,8 +1,8 @@
-import store from "../app/store";
-import restaurantsApi from "../features/home/restaurantsApiSlice";
-import foodSpecificApiSlice from "../features/home/foodSpecificApiSlice";
-import cityHomeApiSlice from "../features/cityHome/cityHomeApiSlice";
-import profileApiSlice from "../features/profile/profileApiSlice";
+import store from '../app/store';
+import restaurantsApi from '../features/home/restaurantsApiSlice';
+import foodSpecificApiSlice from '../features/home/foodSpecificApiSlice';
+import cityHomeApiSlice from '../features/cityHome/cityHomeApiSlice';
+import profileApiSlice from '../features/profile/profileApiSlice';
 
 export const specificRestroLoader = ({ params }) => {
   const { lat, lng, id } = params;
@@ -13,7 +13,7 @@ export const specificRestroLoader = ({ params }) => {
         lat,
         lng,
         id,
-      })
+      }),
     )
     .unwrap();
 
@@ -22,10 +22,10 @@ export const specificRestroLoader = ({ params }) => {
 
 export const specificFoodLoader = ({ request }) => {
   const urlObj = new URL(request.url).searchParams;
-  const lat = urlObj.get("lat");
-  const lng = urlObj.get("lng");
-  const collection_id = urlObj.get("collection_id");
-  const tags = urlObj.get("tags");
+  const lat = urlObj.get('lat');
+  const lng = urlObj.get('lng');
+  const collection_id = urlObj.get('collection_id');
+  const tags = urlObj.get('tags');
 
   const result = store
     .dispatch(
@@ -34,7 +34,7 @@ export const specificFoodLoader = ({ request }) => {
         lng,
         collection_id,
         tags,
-      })
+      }),
     )
     .unwrap();
 
@@ -45,12 +45,15 @@ export const specificCityLoader = ({ params, request }) => {
   const searchObj = new URL(request.url).searchParams;
   const { cityName: city } = params;
 
-  const type = searchObj.get("type") || "";
+  const type = searchObj.get('type') || '';
 
-  const result = store.dispatch(cityHomeApiSlice.endpoints.getDataForCityLocalityCuisine.initiate({
-    city,
-    type
-  }))
+  const result = store
+    .dispatch(
+      cityHomeApiSlice.endpoints.getDataForCityLocalityCuisine.initiate({
+        city,
+        type,
+      }),
+    )
     .unwrap();
 
   return { data: result };
@@ -58,19 +61,22 @@ export const specificCityLoader = ({ params, request }) => {
 
 export const profileResponseLoader = ({ request }) => {
   const searchObject = new URL(request.url).searchParams;
-  const forWhat = searchObject.get("for");
-  const deviceId = searchObject.get("deviceId")
+  const forWhat = searchObject.get('for');
+  const deviceId = searchObject.get('deviceId');
 
-  let api = forWhat === "logout"
-    ? "getLoggedInSessions"
-    : forWhat === "payment"
-      ? "getPaymentMethods"
-      : "getAddress";
+  let api =
+    forWhat === 'logout'
+      ? 'getLoggedInSessions'
+      : forWhat === 'payment'
+        ? 'getPaymentMethods'
+        : 'getAddress';
 
-    const result = store.dispatch(profileApiSlice.endpoints[api].initiate({ deviceId })).unwrap();
-  
-    return { data: result };
-}
+  const result = store
+    .dispatch(profileApiSlice.endpoints[api].initiate({ deviceId }))
+    .unwrap();
+
+  return { data: result };
+};
 
 // export const paymentsAndAddressesLoader = ({ request }) => {
 //   const searchObject = new URL(request.url).searchParams;
@@ -84,7 +90,7 @@ export const profileResponseLoader = ({ request }) => {
 //       : "getAddress";
 
 //     const result = store.dispatch(profileApiSlice.endpoints[api].initiate({ deviceId })).unwrap();
-  
+
 //     return { data: result };
 // }
 

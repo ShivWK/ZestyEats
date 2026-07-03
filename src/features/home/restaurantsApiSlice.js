@@ -1,20 +1,20 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const restaurantsApi = createApi({
-  reducerPath: "restuarants",
+  reducerPath: 'restuarants',
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://swiggy-clone-klzu.onrender.com/api/zestyeats",
+    baseUrl: `${import.meta.env.VITE_SERVER_URL}/api/zestyeats`,
     prepareHeaders: (headers) => {
-      headers.set("x-identifier" , import.meta.env.VITE_HASHED_IDENTIFIER);
-      return headers
-    }
+      headers.set('x-identifier', import.meta.env.VITE_HASHED_IDENTIFIER);
+      return headers;
+    },
   }),
   keepUnusedDataFor: 120,
 
   endpoints: (builder) => ({
     getSpecificRestaurantData: builder.query({
       query: ({ lat, lng, id }) => ({
-        url: "/specific-restaurants",
+        url: '/specific-restaurants',
         params: { lat, lng, id },
       }),
     }),
@@ -22,7 +22,7 @@ const restaurantsApi = createApi({
     getSearchedDish: builder.query({
       query: ({ lat, lng, restro_Id, searchTerm }) => {
         return {
-          url: "/dish-search",
+          url: '/dish-search',
           params: { lat, lng, restro_Id, searchTerm },
         };
       },
@@ -32,4 +32,8 @@ const restaurantsApi = createApi({
 
 export default restaurantsApi;
 
-export const { useLazyGetSearchedDishQuery, useLazyGetSpecificRestaurantDataQuery, useGetSearchedDishQuery } = restaurantsApi;
+export const {
+  useLazyGetSearchedDishQuery,
+  useLazyGetSpecificRestaurantDataQuery,
+  useGetSearchedDishQuery,
+} = restaurantsApi;

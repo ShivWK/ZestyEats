@@ -1,11 +1,11 @@
-const axios = require("axios");
-const { JSDOM } = require("jsdom");
+const axios = require('axios');
+const { JSDOM } = require('jsdom');
 
 const client = axios.create({
   headers: {
-    "User-Agent": "Mozilla/5.0",
-    Accept: "application/json",
-    "Accept-Language": "en-US,en;q=0.9",
+    'User-Agent': 'Mozilla/5.0',
+    Accept: 'application/json',
+    'Accept-Language': 'en-US,en;q=0.9',
     Referer: process.env.BASE_URL,
     Origin: process.env.BASE_URL,
   },
@@ -14,10 +14,10 @@ const client = axios.create({
 const asyncErrorHandler = (func) => {
   return (req, res, next) => {
     func(req, res, next).catch((err) => {
-      console.log("Failed to fetch", err);
+      console.log('Failed to fetch', err);
       res.status(500).json({
-        status: "failed",
-        error: err.message || "Something went wrong",
+        status: 'failed',
+        error: err.message || 'Something went wrong',
       });
     });
   };
@@ -25,14 +25,14 @@ const asyncErrorHandler = (func) => {
 
 const missingParamsError = (msg, res) => {
   return res.status(400).json({
-    status: "failed",
+    status: 'failed',
     message: msg,
   });
 };
 
 exports.homePageData = async (req, res) => {
   console.log(req.headers);
-  console.log(req.signedCookies)
+  console.log(req.signedCookies);
 
   try {
     const { lat, lng } = req.query;
@@ -40,7 +40,7 @@ exports.homePageData = async (req, res) => {
     if (!lat || !lng) {
       return res
         .status(400)
-        .json({ error: "Both lat and lng query parameters are required" });
+        .json({ error: 'Both lat and lng query parameters are required' });
     }
 
     const mainUrl = `${process.env.BASE_URL}/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&page_type=DESKTOP_WEB_LISTING`;
@@ -49,15 +49,15 @@ exports.homePageData = async (req, res) => {
 
     const origin = req.headers.origin;
     res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
     });
 
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("Swiggy Proxy Error:", error.message);
+    console.error('Swiggy Proxy Error:', error.message);
     res.status(404).json({
-      status: "failed",
+      status: 'failed',
       error: error.message,
     });
   }
@@ -70,7 +70,7 @@ exports.addressRecommend = async (req, res) => {
     if (!place_id) {
       return res
         .status(400)
-        .json({ error: "place_id query parameter is required" });
+        .json({ error: 'place_id query parameter is required' });
     }
 
     const mainUrl = `${process.env.BASE_URL}/dapi/misc/address-recommend?place_id=${place_id}`;
@@ -79,14 +79,14 @@ exports.addressRecommend = async (req, res) => {
     const origin = req.headers.origin;
 
     res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
     });
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("Address Recommend Error:", error.message);
+    console.error('Address Recommend Error:', error.message);
     res.status(404).json({
-      status: "failed",
+      status: 'failed',
       error: error.message,
     });
   }
@@ -99,7 +99,7 @@ exports.addressAutoComplete = async (req, res) => {
     if (!input) {
       return res
         .status(400)
-        .json({ error: "Input query parameter is required" });
+        .json({ error: 'Input query parameter is required' });
     }
 
     const mainUrl = `${process.env.BASE_URL}/dapi/misc/place-autocomplete?input=${input}&types=`;
@@ -108,14 +108,14 @@ exports.addressAutoComplete = async (req, res) => {
     const origin = req.headers.origin;
 
     res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
     });
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("Place Autocomplete Error:", error.message);
+    console.error('Place Autocomplete Error:', error.message);
     res.status(404).json({
-      status: "failed",
+      status: 'failed',
       error: error.message,
     });
   }
@@ -127,7 +127,7 @@ exports.addressFromCoordinates = async (req, res) => {
 
     if (!lat1 || !lng1) {
       return res.status(400).json({
-        error: "Both lat and lng query parameters are required",
+        error: 'Both lat and lng query parameters are required',
       });
     }
 
@@ -137,14 +137,14 @@ exports.addressFromCoordinates = async (req, res) => {
     const origin = req.headers.origin;
 
     res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
     });
     res.status(200).json(response.data);
   } catch (error) {
-    console.error("Address from Coordinates Error:", error.message);
+    console.error('Address from Coordinates Error:', error.message);
     res.status(404).json({
-      status: "failed",
+      status: 'failed',
       error: error.message,
     });
   }
@@ -155,7 +155,7 @@ exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
 
   if (!lat || !lng || !id) {
     return res.status(400).json({
-      error: "lat, lng and id are required",
+      error: 'lat, lng and id are required',
     });
   }
 
@@ -165,8 +165,8 @@ exports.specificRestaurantData = asyncErrorHandler(async (req, res, next) => {
   const origin = req.headers.origin;
 
   res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET',
   });
 
   return res.status(200).json(response.data);
@@ -179,7 +179,7 @@ exports.dishSearchData = async (req, res) => {
 
   if (!lat || !lng || !restro_Id || !searchTerm) {
     return res.status(400).json({
-      error: "lat, lng, restro_id and searchTerm are required",
+      error: 'lat, lng, restro_id and searchTerm are required',
     });
   }
 
@@ -193,14 +193,14 @@ exports.dishSearchData = async (req, res) => {
     const origin = req.headers.origin;
 
     res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
     });
     res.status(200).json(response.data);
   } catch (err) {
     console.log("Dish search data can't be fetched; ", err);
     res.status(404).json({
-      status: "failed",
+      status: 'failed',
       error: err.message,
     });
   }
@@ -211,7 +211,7 @@ exports.specificFoodCategoryData = asyncErrorHandler(async (req, res) => {
 
   if (!lat || !lng || !collection_id || !tags) {
     return res.status(400).json({
-      error: "lat, lng, collection_id, and tags are required",
+      error: 'lat, lng, collection_id, and tags are required',
     });
   }
 
@@ -221,8 +221,8 @@ exports.specificFoodCategoryData = asyncErrorHandler(async (req, res) => {
   const origin = req.headers.origin;
 
   res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET',
   });
 
   return res.status(200).json(response?.data);
@@ -233,8 +233,8 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
 
   if (!lat || !lng) {
     return res.status(400).json({
-      status: "fail",
-      error: "Provide lat and lng",
+      status: 'fail',
+      error: 'Provide lat and lng',
     });
   }
 
@@ -250,8 +250,8 @@ exports.searchHomeData = asyncErrorHandler(async (req, res, next) => {
   const origin = req.headers.origin;
 
   res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET',
   });
 
   return res.status(200).json(result?.data);
@@ -262,7 +262,7 @@ exports.specificFoodSearchSuggestions = asyncErrorHandler(
     const { lat, lng, food } = req.query;
 
     if (!lat || !lng || !food) {
-      return missingParamsError("Please provide lat , lng, and food", res);
+      return missingParamsError('Please provide lat , lng, and food', res);
     }
 
     const mainUrl = `${process.env.BASE_URL}/dapi/restaurants/search/suggest?trackingId=null&includeIMItem=true`;
@@ -278,23 +278,22 @@ exports.specificFoodSearchSuggestions = asyncErrorHandler(
     const origin = req.headers.origin;
 
     res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
     });
 
     res.status(200).json(response.data);
-  }
+  },
 );
 
 exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
   const { lat, lng, food } = req.query;
 
   if (!lat || !lng || !food) {
-    return missingParamsError("Please provide lat , lng, and food", res);
+    return missingParamsError('Please provide lat , lng, and food', res);
   }
 
-  const mainUrl =
-    `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=null&submitAction=DEFAULT_SUGGESTION&queryUniqueId=14731ed6-27b3-ab73-ccc8-2c29158c3c5d`;
+  const mainUrl = `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=null&submitAction=DEFAULT_SUGGESTION&queryUniqueId=14731ed6-27b3-ab73-ccc8-2c29158c3c5d`;
 
   let response = await client.get(mainUrl, {
     params: {
@@ -307,8 +306,8 @@ exports.extraSuggestionsData = asyncErrorHandler(async (req, res, nest) => {
   const origin = req.headers.origin;
 
   res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET',
   });
 
   res.status(200).json(response.data);
@@ -319,13 +318,12 @@ exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
 
   if (!lat || !lng || !str || !metadata) {
     return missingParamsError(
-      "Please provide lat , lng, str and metadata",
-      res
+      'Please provide lat , lng, str and metadata',
+      res,
     );
   }
 
-  const mainUrl =
-    `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=`;
+  const mainUrl = `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=b3988e37-6215-174a-2625-44876a86072b&submitAction=SUGGESTION&queryUniqueId=`;
 
   let response = await client.get(mainUrl, {
     params: {
@@ -339,8 +337,8 @@ exports.suggestedDataHandler = asyncErrorHandler(async (req, res, next) => {
   const origin = req.headers.origin;
 
   res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET',
   });
 
   res.status(200).json(response.data);
@@ -350,11 +348,10 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   const { lat, lng, str, submitAction, selectedPLTab } = req.query;
 
   if (!lat || !lng || !str || !submitAction || !selectedPLTab) {
-    return missingParamsError("Please provide lat , lng, and ", res);
+    return missingParamsError('Please provide lat , lng, and ', res);
   }
 
-  const mainUrl =
-    `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=`;
+  const mainUrl = `${process.env.BASE_URL}/dapi/restaurants/search/v3?trackingId=undefined&queryUniqueId=`;
 
   let response = await client.get(mainUrl, {
     params: {
@@ -369,8 +366,8 @@ exports.searchOnTabClick = asyncErrorHandler(async (req, res, next) => {
   const origin = req.headers.origin;
 
   res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET',
   });
 
   res.status(200).json(response.data);
@@ -381,20 +378,23 @@ exports.cityLocalityCuisineCardHandler = asyncErrorHandler(
     const { city, type } = req.query;
 
     if (!city) {
-      return missingParamsError("Please provide city or locality or cuisine type", res);
+      return missingParamsError(
+        'Please provide city or locality or cuisine type',
+        res,
+      );
     }
 
-    const mainUrl = `${process.env.BASE_URL}/city/${city}/${type ? type : ""}order-online`;
+    const mainUrl = `${process.env.BASE_URL}/city/${city}/${type ? type : ''}order-online`;
 
-    console.log(mainUrl)
+    console.log(mainUrl);
 
     const html = await client.get(mainUrl);
     const dom = new JSDOM(html.data);
     const scriptContent =
-      dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
+      dom.window.document.getElementById('__NEXT_DATA__')?.textContent;
 
     if (!scriptContent) {
-      throw new Error("Script tag with restaurants data not found.");
+      throw new Error('Script tag with restaurants data not found.');
     }
 
     const restaurantData = JSON.parse(scriptContent);
@@ -402,58 +402,62 @@ exports.cityLocalityCuisineCardHandler = asyncErrorHandler(
     const origin = req.headers.origin;
 
     res.set({
-      "Access-Control-Allow-Origin": origin,
-      "Access-Control-Allow-Methods": "GET",
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
     });
 
     res.status(200).json(restaurantData);
-  }
+  },
 );
 
-exports.restaurantChainInCityHandler = asyncErrorHandler(async (req, res, next) => {
-  const { city, restaurant } = req.query;
-  console.log("hit", restaurant, city);
+exports.restaurantChainInCityHandler = asyncErrorHandler(
+  async (req, res, next) => {
+    const { city, restaurant } = req.query;
+    console.log('hit', restaurant, city);
 
-  if (!city || !restaurant) return missingParamsError("Please provide city and restaurant name", res);
-  
-  const mainUrl = `${process.env.BASE_URL}/city/${city}/${restaurant}`;
+    if (!city || !restaurant)
+      return missingParamsError('Please provide city and restaurant name', res);
 
-  const html = await client.get(mainUrl);
-  const dom = new JSDOM(html.data);
-  const scriptContent =
-    dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
+    const mainUrl = `${process.env.BASE_URL}/city/${city}/${restaurant}`;
 
-  if (!scriptContent) {
-    throw new Error("Script tag with restaurants data not found.");
-  }
+    const html = await client.get(mainUrl);
+    const dom = new JSDOM(html.data);
+    const scriptContent =
+      dom.window.document.getElementById('__NEXT_DATA__')?.textContent;
 
-  const restaurantData = JSON.parse(scriptContent);
+    if (!scriptContent) {
+      throw new Error('Script tag with restaurants data not found.');
+    }
 
-  const origin = req.headers.origin;
+    const restaurantData = JSON.parse(scriptContent);
 
-  res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
-  });
+    const origin = req.headers.origin;
 
-  res.status(200).json(restaurantData);
-});
+    res.set({
+      'Access-Control-Allow-Origin': origin,
+      'Access-Control-Allow-Methods': 'GET',
+    });
+
+    res.status(200).json(restaurantData);
+  },
+);
 
 exports.dishesInCityHandler = asyncErrorHandler(async (req, res, next) => {
   const { city, dish } = req.query;
-  console.log("hit", dish, city);
+  console.log('hit', dish, city);
 
-  if (!city || !dish) return missingParamsError("Please provide city and dish", res);
-  
+  if (!city || !dish)
+    return missingParamsError('Please provide city and dish', res);
+
   const mainUrl = `${process.env.BASE_URL}/city/${city}/${dish}-dish-restaurants`;
 
   const html = await client.get(mainUrl);
   const dom = new JSDOM(html.data);
   const scriptContent =
-    dom.window.document.getElementById("__NEXT_DATA__")?.textContent;
+    dom.window.document.getElementById('__NEXT_DATA__')?.textContent;
 
   if (!scriptContent) {
-    throw new Error("Script tag with restaurants data not found.");
+    throw new Error('Script tag with restaurants data not found.');
   }
 
   const restaurantData = JSON.parse(scriptContent);
@@ -461,8 +465,8 @@ exports.dishesInCityHandler = asyncErrorHandler(async (req, res, next) => {
   const origin = req.headers.origin;
 
   res.set({
-    "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "GET",
+    'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Methods': 'GET',
   });
 
   res.status(200).json(restaurantData);

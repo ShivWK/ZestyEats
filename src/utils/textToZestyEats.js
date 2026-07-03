@@ -1,8 +1,8 @@
 const textToZestyEats = (text) => {
-    if (!text) return
+  if (!text) return;
 
-    const newText = text.replace(/swiggy/ig, "ZestyEats");
-    return newText;
-}
+  const newText = text.replace(/swiggy/gi, 'ZestyEats');
+  return newText;
+};
 
 export default textToZestyEats;
