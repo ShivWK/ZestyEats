@@ -2,7 +2,7 @@ const cleanOnLogout = ({
   dispatch,
   setItemToCart,
   toggleItemsToBeAddedInCart,
-  setFavoriteRestro,
+  setFavoriteRestaurant,
   addRecentLocations,
   addToWishlistItem,
 }) => {
@@ -20,7 +20,7 @@ const cleanOnLogout = ({
   dispatch(toggleItemsToBeAddedInCart({ mode: 'initial', object: {} }));
   localStorage.removeItem(ITEMSTOBEADDEDINCART);
 
-  dispatch(setFavoriteRestro({ mode: 'initial', object: [] }));
+  dispatch(setFavoriteRestaurant({ mode: 'initial', object: [] }));
   localStorage.removeItem(FAVORITERESTROS);
 
   dispatch(addRecentLocations([]));

@@ -4,7 +4,7 @@ import Contact from './Contact';
 import LegalAndFaqs from './LegalAndFaqs';
 
 const ContentArea = () => {
-  console.log('help/ContentArea rendered');
+  // console.log('help/ContentArea rendered');
   const contact = useSelector(selectContact);
 
   return contact ? <Contact /> : <LegalAndFaqs />;

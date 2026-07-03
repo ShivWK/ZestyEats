@@ -11,7 +11,7 @@ import {
   setItemToCart,
   toggleItemsToBeAddedInCart,
   addToWishlistItem,
-  setFavoriteRestro,
+  setFavoriteRestaurant,
 } from '../../features/home/restaurantsSlice';
 import { addRecentLocations } from '../../features/home/homeSlice';
 import LogoutButton from './LogoutButton';
@@ -39,7 +39,7 @@ const Logout = ({ mainData }) => {
     );
 
     setOtherActiveSessions(otherSessions);
-  }, []);
+  }, [mainData.data]);
 
   const extractLastActive = (data) => {
     const date = new Date(data);
@@ -87,7 +87,7 @@ const Logout = ({ mainData }) => {
         dispatch,
         setItemToCart,
         toggleItemsToBeAddedInCart,
-        setFavoriteRestro,
+        setFavoriteRestaurant,
         addRecentLocations,
         addToWishlistItem,
       });

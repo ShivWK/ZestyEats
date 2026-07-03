@@ -11,7 +11,7 @@ import {
   setItemToCart,
   toggleItemsToBeAddedInCart,
   addToWishlistItem,
-  setFavoriteRestro,
+  setFavoriteRestaurant,
 } from '../../features/home/restaurantsSlice';
 import { addRecentLocations } from '../../features/home/homeSlice';
 import DotBounceLoader from '../../utils/DotBounceLoader';
@@ -72,7 +72,7 @@ const LogoutButton = ({
           dispatch,
           setItemToCart,
           toggleItemsToBeAddedInCart,
-          setFavoriteRestro,
+          setFavoriteRestaurant,
           addRecentLocations,
           addToWishlistItem,
         });
