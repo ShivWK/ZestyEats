@@ -46,8 +46,8 @@ const GeoLocation = ({ setSearchValue }) => {
             dispatch(setLoading(true));
             dispatch(setHideLocation(true));
             const data = await triggerLocationByCoordinates({
-              lat1,
-              lng1,
+              lat: lat1,
+              lng: lng1,
             }).unwrap();
             setSearchValue('');
 
@@ -73,13 +73,15 @@ const GeoLocation = ({ setSearchValue }) => {
               setShowLoader(false);
               dispatch(setLoading(false));
             }
-          } catch (err) {
+          } catch {
             setSearchValue('');
             setShowLoader(false);
             dispatch(setHideLocation(true));
             dispatch(setLoading(false));
-            alert('Error fetching location data. Please try again later.');
-            console.log(err.error);
+            toast.error('Something went wrong. Please try again later.', {
+              autoClose: 5000,
+              progressClassName: 'progress-style',
+            });
           }
         },
         (err) => {
