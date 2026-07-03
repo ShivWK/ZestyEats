@@ -39,11 +39,6 @@ const HorizontalCarousel = memo(
 
     useEffect(() => {
       const container = containerRef.current;
-      if (dataToMap.length) {
-        setTimeout(() => {
-          handleScroll();
-        }, 0);
-      }
 
       const scrollInterval = setInterval(() => {
         if (!clicked.current) {
@@ -84,35 +79,37 @@ const HorizontalCarousel = memo(
       });
 
       return () => clearInterval(scrollInterval);
-    }, [dataToMap]);
+    }, [dataToMap, autoScrollWidth]);
 
-    function handleScroll() {
-      const container = containerRef.current;
-      if (!container) return;
+    const calPercentage = (sl,sw,cw) => {
+      const totalViewed = ((sl + cw) / sw) * 100;
+      return totalViewed;
+    };
 
-      const clientWidth = container.clientWidth;
-      const scrollLeft = container.scrollLeft;
-      const scrollWidth = container.scrollWidth;
-      const viewed = clientWidth + scrollLeft;
+    useEffect(() => {
+      if (!containerRef.current) return;
+      const ele = containerRef.current;
 
-      if (viewed >= scrollWidth) {
-        rightBtnRef.current.disabled = true;
-      }
+      const scrollHandler = () => {
+        const {
+          scrollWidth: scrollW,
+          scrollLeft: scrollL,
+          clientWidth: clientW,
+        } = ele;
+        if (clientW >= scrollW) setHideScrollBar(true);
+        setScrollPercentage(calPercentage(scrollL, scrollW, clientW));
+      };
 
-      if (!(scrollLeft > 0)) {
-        leftBtnRef.current.disabled = true;
-      }
+      scrollHandler();
 
-      if (scrollLeft == 0 && clientWidth === scrollWidth) {
-        rightBtnRef.current.hidden = true;
-        leftBtnRef.current.hidden = true;
-        setHideScrollBar(true);
-      }
+      ele.addEventListener('scroll', scrollHandler);
+      ele.addEventListener('resize', scrollHandler);
 
-      const scrolledPercentage =
-        (scrollLeft / (scrollWidth - clientWidth)) * 100;
-      setScrollPercentage(scrolledPercentage);
-    }
+      return () => {
+        ele.removeEventListener('scroll', scrollHandler);
+        ele.removeEventListener('resize', scrollHandler);
+      };
+    }, []);
 
     function handleRightClick() {
       clicked.current = true;
@@ -126,7 +123,7 @@ const HorizontalCarousel = memo(
       });
     }
 
-    function handleLeftClick(e) {
+    function handleLeftClick() {
       rightBtnRef.current.disabled = false;
       clicked.current = true;
 
@@ -163,7 +160,6 @@ const HorizontalCarousel = memo(
         </div>
         <div className="relative">
           <div
-            onScroll={handleScroll}
             ref={containerRef}
             className="hide-scrollbar flex justify-start gap-3 overflow-x-auto overflow-y-visible py-2 md:gap-7"
             onTouchMove={() => (clicked.current = true)}
