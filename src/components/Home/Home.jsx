@@ -81,7 +81,7 @@ const Home = () => {
   ) : (
     <>
       <main className="mx-auto w-full overflow-x-hidden pt-[88px] pb-8 max-md:px-1.5 md:max-w-[1070px] md:pt-26 md:pb-14">
-        <div className="relative mx-auto mb-3 h-32 w-full overflow-hidden rounded-2xl max-md:-mt-2 md:rounded-4xl lg:h-80">
+        <div className="relative mx-auto mb-3 h-34 w-full overflow-hidden rounded-2xl max-md:-mt-2 md:rounded-4xl lg:h-80">
           <img
             src={theme === "dark" || theme === "system_dark" ? "/images/dark_home_banner.png" : "/images/light_home_banner.png"}
             className="r h-full w-full"
